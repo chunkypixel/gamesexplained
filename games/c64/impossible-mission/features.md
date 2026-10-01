@@ -52,7 +52,7 @@ Sources:
 | The end: reach Elvin's control room with the full password; an ending with more speech, in a female voice (search) | open | |
 | Score: points for puzzle pieces found and assembled, and for reaching the control room with time left (search) | open | |
 | Security terminal menu (game text): SECURITY TERMINAL, SELECT FUNCTION, RESET LIFTING PLATFORMS IN THIS ROOM., TEMPORARILY DISABLE ROBOTS IN THIS ROOM., LOG OFF.; PASSWORD REQUIRED / PASSWORD ACCEPTED | open | text `$A01E`, `$A229` |
-| Pocket computer messages (game text): PUSH BUTTON, COLORS MUST MATCH, IMAGES CAN'T OVERLAP, NO IMAGE SELECTED, END OF MEMORY, CAN'T UNDO, TIME IS SUSPENDED, WE JUST DID THIS ONE, ORIENTATION CORRECTED, NOTHING IN MEMORY | open | text `$7D1F`-`$82B7` |
+| Pocket computer messages (game text): PUSH BUTTON, COLORS MUST MATCH, IMAGES CAN'T OVERLAP, NO IMAGE SELECTED, END OF MEMORY, CAN'T UNDO, TIME IS SUSPENDED, WE JUST DID THIS ONE, NOTHING IN MEMORY, and a confirmation that the orientation has been put right (its exact wording is in the listing at `$7D22`) | open | text `$7D1F`-`$82B7` |
 | The phone (game text): HAVE WE ENOUGH PIECES TO SOLVE THE UPPER LEFT PUZZLE, A SOLUTION EXISTS / NEED MORE PIECES, CORRECT ORIENTATIONS OF LEFTMOST PIECES, HANG UP | open | text `$7C46`-`$7D1D` |
 | End of game tally (game text): PUZZLE PIECES FOUND, PASSWORDS FOUND, PUZZLES SOLVED, SECONDS REMAINING, MISSION COMPLETE or MISSION TERMINATED, TOTAL SCORE, THIS SURPASSES THE PREVIOUS HIGH SCORE OF, HALL OF FAME | open | text `$B8A7` |
 | High-score name entry (game text): ENTER YOUR I.D. CODE ON THE KEYBOARD; HIT RESTORE OR RUN/STOP FOR NEW GAME | open | text `$BD99` |
