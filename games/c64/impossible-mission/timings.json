@@ -1,0 +1,13 @@
+{
+ "schema": 1,
+ "entries": [
+  {
+   "step": "10-orient",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T10:43:21Z",
+   "end": "2026-10-01T10:56:34Z",
+   "minutes": 13.2,
+   "note": "G64 with true-drive loading at warp; loader traced to find $3855; pocket-computer controls found by trial"
+  }
+ ]
+}
