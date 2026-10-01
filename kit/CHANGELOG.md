@@ -23,6 +23,21 @@ calling 100 %, follow each start-up copy loop to its destination and
 check it against the ledger. Read a disk image's header, not its name:
 this one was called `.d64` and was a G64 that needed true drive
 emulation.
+## 0.0.51 · 1 October 2026 · Delta · chunkypixel with Claude
+
+**Name a requested number by the routine that takes it.** Delta asks
+for a tune by storing its number plus one in a request byte; the sound
+routine subtracts one before calling the driver. Its facts named the
+tunes from the callers' values and three of four were one off, until the
+page's music player was built from the driver's own tune numbers and
+disagreed. Verify now reads the consumer of a request or queue byte
+before stating what its values mean.
+
+**When every page fetch is refused, use search summaries, marked.** The
+session's network policy refused every web page with a 403 from the
+proxy, while web search still answered. The features step now takes
+plain claims from the search results' quotes, says they are second-hand
+and dated, and leaves the rest open.
 
 ## 0.0.48 · 30 September 2026 · Castle Master · 64kramsystem with Codex
 
