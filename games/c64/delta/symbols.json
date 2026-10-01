@@ -24525,7 +24525,7 @@
   {
    "address": 10305,
    "type": "line",
-   "text": "Draws enemy bomb 0 (2x2 characters) at pointer $F4: builds glyphs $C0-$C3 ($4800-$481F) from the four background cells under it, with the object's mask from $FFA0/$FFA8 shifted by $10B0, starting $10A6 rows down (rows above that copy the background unchanged), and puts the four characters on the screen."
+   "text": "Draws enemy bomb 0 (2x2 characters) at pointer $F4: builds glyphs $00-$03 ($4800-$481F) from the four cells beneath it, the rows above its pixel row $10A6 copied unchanged and the ball cut in from there with the mask table at $FF70 (the read's operands patched with $10B0, the position across the cell), so the bomb can sit at any pixel row and column; then puts the four characters ($C0-$C3) on the screen."
   },
   {
    "address": 10433,
@@ -24550,7 +24550,7 @@
   {
    "address": 10524,
    "type": "line",
-   "text": "As draw_enemy_bomb_0 for bomb 1: pointer $F6, rows $10A7, shift $10B1, masks $FFC0/$FFC8, glyphs $C4-$C7 at $4820."
+   "text": "As draw_enemy_bomb_0 for bomb 1: pointer $F6, pixel row $10A7, position $10B1 patched into the mask reads at $299C/$29A4/$29B9/$29C1, glyphs $04-$07 at $4820, characters $C4-$C7."
   },
   {
    "address": 10652,
