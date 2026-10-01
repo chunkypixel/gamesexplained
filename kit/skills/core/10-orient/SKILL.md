@@ -27,6 +27,12 @@ annotate it byte by byte.
    choose the plain game (no cheats) unless the contributor says
    otherwise, and record the choice in `orientation.md`.
 
+   **Read the file's header before trusting its name.** An extension
+   says what the file was called, not what it is: a file named as a
+   plain sector image can be a GCR image of a protected original, which
+   needs the drive emulation the platform's tool notes describe. Record
+   what the header says in `orientation.md`.
+
    **Ask what the image is before trusting it.** A backup of a running
    game (a snapshot saved by a freezer cartridge, a packed memory dump)
    is the game as it stood when it was saved, not as its loader left it,

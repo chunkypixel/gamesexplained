@@ -12,7 +12,12 @@
   "coverage_percent": 100,
   "copy": "agent-draft",
   "steward": "",
-  "credits": [],
+  "credits": [
+    {
+      "by": "Dennis Caswell",
+      "role": "design and programming"
+    }
+  ],
   "tools": {
     "host": "Linux 6.18 x86_64, Ubuntu 24.04 cloud container with four cores and no display",
     "emulator": "VICE, release v3.13.1, v3.13.1-linux-x86_64-gui.zip",
