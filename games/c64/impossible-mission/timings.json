@@ -37,9 +37,9 @@
    "step": "50-coverage",
    "model": "claude-opus-5-5",
    "start": "2026-10-01T11:02:32Z",
-   "end": null,
-   "minutes": null,
-   "note": ""
+   "end": "2026-10-01T11:32:20Z",
+   "minutes": 29.8,
+   "note": "single agent; ~20 KB code + 30 KB data annotated by reading disassembly in chunks; room records parsed by script"
   }
  ]
 }

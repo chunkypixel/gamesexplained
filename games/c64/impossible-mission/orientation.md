@@ -70,8 +70,8 @@ Snapshots in `work/`, each saved without ROMs:
 
 | File | State |
 |---|---|
-| `entry.vsf` | a stopping checkpoint on `$B000`, from a power-cycled machine: the loader's `jmp $B000` at `$C317`, the first instruction of the loaded program, before it moves and unpacks itself |
-| `gamestart.vsf` | from `entry.vsf`, a stopping checkpoint on `$3855`: the unpacked game's first instruction, `$01` = `$25` |
+| `loader-b000.vsf` | a stopping checkpoint on `$B000`, from a power-cycled machine: the loader's `jmp $B000` at `$C317`, the first instruction of the `bpage` unpacker, before the program is moved and unpacked |
+| `entry.vsf` (also kept as `gamestart.vsf`) | from `loader-b000.vsf`, a stopping checkpoint on `$3855`: the unpacked game's first instruction, `$01` = `$25`. This is the hand-over `listing.py` compares the play snapshot with |
 | `title.vsf` | the title state of step 4, before fire |
 | `play-room1.vsf` | step 6: the agent has just entered the first room. **The disassembler and the listing are built from this one** (why, below) |
 
@@ -87,12 +87,12 @@ which is the boundary between the room above and the pocket computer
 below. The video chip looks at bank 1 (`$DD00` = `$C6`, bits 0-1 `%10`,
 `$4000`-`$7FFF`).
 
-Compared byte for byte with `gamestart.vsf`, the play image differs in:
+Compared byte for byte with `entry.vsf`, the play image differs in:
 
 - `$3855`-`$3865`: the start-up clears these 17 bytes, its own first
   instructions, in the same loop that clears the sprite registers
   (`sta $D002,x / sta $3855,x` at `$389C`). The bytes as the loader left
-  them are in `gamestart.vsf`: `lda #$60 / sta $DD03 / nop / nop /
+  them are in `entry.vsf`: `lda #$60 / sta $DD03 / nop / nop /
   lda #$54 / sta $0318 / lda #$38 / sta $0319 / sei / cld`.
 - `$C000`-`$D7FF` and `$F800`-`$FFFF`: tables and graphics the start-up
   builds or moves there (at `$3855` the block that ends up at `$D000` is
@@ -128,7 +128,7 @@ from `$E000` instead of `$B000`, and the unpacker's `rts` a `sei`. So the
 program on the disk is broken on purpose, and the drive check is what
 repairs it: a copy that fails the check crashes after loading. With
 this image `$C3DA` was `$FF` and the three bytes were repaired (read in
-`entry.vsf` and in the file, 1 October 2026). `$B000` copies
+`loader-b000.vsf` and in the file, 1 October 2026). `$B000` copies
 itself to `$0400`, moves `$0800`-`$AEFF` up by `$2800` to `$3000`-`$D6FF`, top page first,
 unpacks it with a run-length decoder (`$BF` *n*: *n* zeros; `$CF` *n*
 *b*: *n* copies of *b*), and jumps to `$3855`, the game.
