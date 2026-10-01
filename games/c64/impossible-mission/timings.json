@@ -40,6 +40,14 @@
    "end": "2026-10-01T11:32:20Z",
    "minutes": 29.8,
    "note": "single agent; ~20 KB code + 30 KB data annotated by reading disassembly in chunks; room records parsed by script"
+  },
+  {
+   "step": "60-verify",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T11:32:34Z",
+   "end": "2026-10-01T11:41:23Z",
+   "minutes": 8.8,
+   "note": "live tests scripted (protections, clock, death, snooze, forced win, terminal, phone); facts.md written"
   }
  ]
 }

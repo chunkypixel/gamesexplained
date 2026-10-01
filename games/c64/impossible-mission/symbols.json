@@ -14094,6 +14094,11 @@
    "text": "The game's entry, where the loader's unpacker jumps with $01 = $25. In the image as loaded, $3855-$3865 held `lda #$60 / sta $DD03` (CIA 2 port B direction = $60, the `rts` opcode that wait_ticks executes at $DD03), NMI RAM vector $0318 = $3854, `sei / cld`; the loop at $389C clears those 17 bytes with the sprite registers, so in play they read as zeros. Then: builds a table at $CF00 ($71C0, $3875 loop), detects PAL or NTSC ($3FB9), clears zero page $10-$DA and the SID, sets up the variables, banks the KERNAL out ($01 = $25), installs the IRQ ($82F4, via $BEC2) and the temporary IRQ $8396, enables the raster interrupt, builds the bit-reversal table at $C500, selects video bank 1 ($DD00), screen $4000 and character set $4800, copies the letters and digits of the character ROM into both character sets, draws the pocket computer and the lift, and falls into the lift loop at $39CF."
   },
   {
+   "address": 14766,
+   "type": "line",
+   "text": "The start-up's greeting: voice line 2, a wait of 32 ticks, then voice line 3, spoken after the load and after every restart, before the title state; the agent has not been shown a room yet."
+  },
+  {
    "address": 14799,
    "type": "line",
    "text": "The loop that runs while the agent is in a lift or a corridor (also the title state, where the game waits in the lift): every pass waits for the frame ($83F4), updates the agent ($73E4) and fades the sound effect on voices 1 and 2 ($25/$26). Fire (debounced by $DE) with $3F = $0E opens the pocket computer ($3A80). With the agent's sprite inside the lift car (sprite 1 X $A2-$B6, high bit clear) and $3F = $0E, up on the stick moves the lift up ($8592) and down moves it down ($855C) until it stops at a floor ($1F/$20 = $0B); otherwise the agent walks ($860B)."
@@ -14231,7 +14236,7 @@
   {
    "address": 16313,
    "type": "line",
-   "text": "Tells PAL from NTSC: waits for raster line 259 (low byte 3 after a value above $FC) and watches the raster register. On an NTSC machine (263 lines) it wraps to 0 before reaching $20 and nothing changes; on PAL (312 lines) it reaches $20, and $6E is written into the operands at $AB2B, $AB39 and $AB49, adjusting the game for the PAL frame. The game was therefore written for NTSC timing."
+   "text": "Tells PAL from NTSC: waits for raster line 259 (low byte 3 after a value above $FC) and watches the raster register. On an NTSC machine (263 lines) it wraps to 0 before reaching $20 and nothing changes; on PAL (312 lines) it reaches $20, and $6E is written into the operands at $AB2B, $AB39 and $AB49, adjusting the game for the PAL frame. The game was therefore written for NTSC timing. Live: the three operands read $6E in play on the PAL machine."
   },
   {
    "address": 17408,
@@ -14291,12 +14296,12 @@
   {
    "address": 24576,
    "type": "line",
-   "text": "Sprite shapes $80-$8F: the agent's walking frames (three sprites a frame, stored facing one way and mirrored in place by agent_frame)."
+   "text": "Sprite shapes $80-$8F: the agent's walking frames (three sprites a frame, pointers from tbl_agent_pointers; each frame stored facing one way and mirrored in place by agent_frame)."
   },
   {
    "address": 25600,
    "type": "line",
-   "text": "Sprite shapes $90-$9F: more walking frames and the standing frame ($9C-$9E)."
+   "text": "Sprite shapes $90-$9F: the rest of the walking frames ($90-$9B), the standing frame ($9C-$9E) and the first sprite of frame $0F ($9F)."
   },
   {
    "address": 26368,
@@ -14321,12 +14326,12 @@
   {
    "address": 26624,
    "type": "line",
-   "text": "Sprite shapes $A0-$AF: the somersault frames."
+   "text": "Sprite shapes $A0-$AF: the rest of frame $0F and the first somersault frames (the somersault's frames start at $A2 and count up by three to $BD)."
   },
   {
    "address": 27648,
    "type": "line",
-   "text": "Sprite shapes $B0-$BF: the rest of the somersault and the searching frame."
+   "text": "Sprite shapes $B0-$BF: the rest of the somersault frames."
   },
   {
    "address": 28672,
@@ -14751,7 +14756,7 @@
   {
    "address": 32621,
    "type": "line",
-   "text": "Waits A ticks of the IRQ's counter $E0: adds A to $E0 and loops until $E0 equals the sum. Each pass calls `jsr $DD03`, which executes CIA 2's data direction register B: the start-up set it to $60, the opcode of `rts`, so the call returns at once. A copy whose start-up did not set it would crash here."
+   "text": "Waits A ticks of the IRQ's counter $E0: adds A to $E0 and loops until $E0 equals the sum. Each pass calls `jsr $DD03`, which executes CIA 2's data direction register B: the start-up set it to $60, the opcode of `rts`, so the call returns at once. A copy whose start-up did not set it would crash here. Live (1 October 2026): $DD03 reads $60 in play and was executed 47,272 times in 120 frames; with $EA written there the program crashed."
   },
   {
    "address": 32632,
@@ -14821,7 +14826,7 @@
   {
    "address": 33524,
    "type": "line",
-   "text": "The raster interrupt, two a frame. Below line $F0 (the interrupt at line $AA, where the pocket computer begins): next interrupt at $FF; unless $1A is set, the panel's colours ($D021 = 0, $D022 = $0E, $D023 = 6) and character set $5800 ($D018 = $06). At line $FF: next interrupt at $AA; unless $1A is set, the room's colours ($D021 = $0C, $D022/$D023 from $21/$22) and character set $4800; counts $A4 down and gates off voices 2 and 3 when it reaches 0; with $1A set, runs the robots and the agent from the interrupt ($9504, $8ECC, $92CB, saving zero page $79-$7D). Then every frame: the tick $E0 and $3E, the game clock ($83A2) and the noise and protection check ($84FA)."
+   "text": "The raster interrupt. In the shaft view ($1A = 0) there are two a frame. At line $AA, where the pocket computer begins: next interrupt at $FF, the panel's colours ($D021 = 0, $D022 = $0E, $D023 = 6) and character set $5800 ($D018 = $06). At line $FF: next interrupt at $AA, the shaft's colours ($D021 = $0C, $D022/$D023 from $21/$22) and character set $4800, and the count-down of $A4 that gates off voices 2 and 3. In a room ($1A set) there is one a frame, at line $FF, which re-arms itself and leaves the room's colours and character set alone; it runs the ball, the robots and the hit test from the interrupt ($9504, $8ECC, $92CB, saving zero page $79-$7D). Every frame: the tick $E0 and $3E, the game clock ($83A2) and the noise and protection check ($84FA). Measured: 120 entries in 120 frames in a room."
   },
   {
    "address": 33686,
@@ -14831,7 +14836,7 @@
   {
    "address": 33698,
    "type": "line",
-   "text": "Advances the game clock once a tick unless it is suspended ($D5) or already at six o'clock ($D4 = 6): $D1 counts 60 ticks, then the seconds $D2, minutes $D3 and hours $D4 (12-hour, 1-12) in decimal; $C1 counts the hours. At six o'clock $43 = $FF: time is up. The clock counts 60 ticks to the second, the NTSC frame rate."
+   "text": "Advances the game clock once a tick unless it is suspended ($D5) or already at six o'clock ($D4 = 6): $D1 counts 60 ticks, then the seconds $D2, minutes $D3 and hours $D4 (12-hour, 1-12) in decimal; $C1 counts the hours. At six o'clock $43 = $FF: time is up. The clock counts 60 ticks to the second, the NTSC frame rate. Live: 600 frames moved the clock on 10 seconds; the clock stood still with $D5 = 1."
   },
   {
    "address": 33740,
@@ -14861,7 +14866,7 @@
   {
    "address": 34042,
    "type": "line",
-   "text": "Called by the interrupt every frame: rotates the noise byte $E1; checks that $D024 (extra background colour 3) still holds $0A, the value the loader's last stage wrote at $B0AE, and if not jumps to $799A, the middle of an instruction where the byte $02 jams the processor: a protection check. Otherwise steps a second shift-register random source in $E3."
+   "text": "Called by the interrupt every frame: rotates the noise byte $E1; checks that $D024 (extra background colour 3) still holds $0A, the value the loader's last stage wrote at $B0AE, and if not jumps to $799A, the middle of an instruction where the byte $02 jams the processor: a protection check. Otherwise steps a second shift-register random source in $E3. Live: with $D024 set to 0 the processor jammed at $799A within 30 frames; the control run played on."
   },
   {
    "address": 34086,
@@ -15266,7 +15271,7 @@
   {
    "address": 38372,
    "type": "line",
-   "text": "What happens when $43 is set. $FF (time up): the end of the game ($83FC). In the shaft view: nothing. In a room: the sound stops and the agent's three sprite shapes are copied into the work shapes at $4D80 ($972A). $43 = 2, a fall: the agent's sprites go off, voice line 7 (the scream) is played ($BED9). Otherwise, electrocuted: the agent flashes ($9765) and his shapes are eaten away bit by bit with random masks ($97E1) in 32 passes with the crackling sound. $43 = 3 also calls $AE23. Then the room is reset: the robots and the ball restart ($A102, the room record through $0E70, $A68B, $A714), the agent stands at the entrance ($ABE2, frame $0E, pointers back with $9718), ten minutes are added to the clock (`lda #$10 / jsr $83CC` in decimal mode), and play resumes."
+   "text": "What happens when $43 is set. $FF (time up): the end of the game ($83FC). In the shaft view: nothing. In a room: the sound stops and the agent's three sprite shapes are copied into the work shapes at $4D80 ($972A). $43 = 2, a fall: the agent's sprites go off, voice line 7 (the scream) is played ($BED9). Otherwise, electrocuted: the agent flashes ($9765) and his shapes are eaten away bit by bit with random masks ($97E1) in 32 passes with the crackling sound. $43 = 3 also calls $AE23. Then the room is reset: the robots and the ball restart ($A102, the room record through $0E70, $A68B, $A714), the agent stands at the entrance ($ABE2, frame $0E, pointers back with $9718), ten minutes are added to the clock (`lda #$10 / jsr $83CC` in decimal mode), and play resumes. Live: setting $43 = 1 in a room ran the electrocution and moved the clock from 12:24:47 to 12:34:47."
   },
   {
    "address": 38674,
@@ -15441,7 +15446,7 @@
   {
    "address": 40214,
    "type": "line",
-   "text": "The security terminal. Blanks the screen, saves the screen ($4000-$43FF to $C100-$C4FF) and colour RAM ($D800-$DBFF to $0400-$07FF), and the video chip's sprite and colour registers on the stack. Draws the terminal's screen from two run-length lists of (count, value) pairs: characters from $3633 and colours from $37A9 (value $FF = the room's colour), 25 rows; sets the colours from tbl_terminal_colours, eight sprites from tbl_terminal_sprites and their pointers ($18-$1D), and the character set two below. Runs the terminal ($9F0E), then restores everything."
+   "text": "The security terminal. Blanks the screen, saves the screen ($4000-$43FF to $C100-$C4FF) and colour RAM ($D800-$DBFF to $0400-$07FF), and the video chip's sprite and colour registers on the stack. Draws the terminal's screen from two run-length lists of (count, value) pairs: characters from $3633 and colours from $37A9 (value $FF = the room's colour), 25 rows; sets the colours from tbl_terminal_colours, eight sprites from tbl_terminal_sprites and their pointers ($18-$1D), and the character set two below. Runs the terminal ($9F0E), then restores everything. Live: started from the room loop in room $1C, it showed SECURITY TERMINAL 28."
   },
   {
    "address": 40459,
@@ -15486,7 +15491,7 @@
   {
    "address": 40718,
    "type": "line",
-   "text": "The security terminal's menu: writes the room number $7E as two digits into the title line (the 00 of SECURITY TERMINAL 00, at $A048/$A049), then types the screen line by line, one line a frame (24-character lines from str_terminal at the offsets in tbl_terminal_lines), with a row of three $95 glyphs at the top. Puts the pointer `==>` at the first choice ($8A = 2) and loops: fire (on a fresh press, $DE) carries out the choice ($A0DE); up and down move the pointer between the three choices (rows apart by tbl_terminal_steps) with a short delay ($9791)."
+   "text": "The security terminal's menu: writes the room number $7E in decimal as two digits into the title line (the 00 of SECURITY TERMINAL 00, at $A048/$A049; room $1C shows as 28, seen live), then types the screen line by line, one line a frame (24-character lines from str_terminal at the offsets in tbl_terminal_lines), with a row of three $95 glyphs (`***`) at the top. Puts the pointer `==>` at LOG OFF ($8A = 2) and loops: fire (on a fresh press, $DE) carries out the choice ($A0DE); up and down move the pointer between the three choices (rows apart by tbl_terminal_steps) with a short delay ($9791)."
   },
   {
    "address": 40941,
@@ -15531,7 +15536,7 @@
   {
    "address": 41182,
    "type": "line",
-   "text": "Carries out the terminal choice under the pointer ($8A). The two password functions first check the password ($A1A1); without one nothing happens. $8A = 0, reset lifting platforms ($A102). $8A = 1, disable robots: $47 = $40, which stops the robots and the ball until the robots' counter, stepped every fourth tick, climbs back to $FF (764 ticks); if no ball is active, bit 0 of the saved sprite enable on the stack is cleared so the ball stays off. $8A = 2, LOG OFF: drops the return addresses and leaves the terminal."
+   "text": "Carries out the terminal choice under the pointer ($8A). The two password functions first check the password ($A1A1); without one nothing happens. $8A = 0, reset lifting platforms ($A102). $8A = 1, disable robots: $47 = $40, which stops the robots and the ball until the robots' counter, stepped every fourth tick, climbs back to $FF (764 ticks); if no ball is active, bit 0 of the saved sprite enable on the stack is cleared so the ball stays off. $8A = 2, LOG OFF: drops the return addresses and leaves the terminal. Live (the snooze's effect): $47 = $40 kept the robots still for 300 frames and returned to $FF after about 764 ticks."
   },
   {
    "address": 41218,
@@ -15681,7 +15686,7 @@
   {
    "address": 43584,
    "type": "line",
-   "text": "The object with contents $FE, Elvin's control: with any letter of the password line ($345D-$3465) still blank, nothing happens. With all nine found, the mission is won: $DC = 1, a frame shape in sprite 7 (pointer $36) opens over the screen, a 6 \u00d7 5 block of characters and colours from $2611/$25F3 is drawn at $4301, and the frame closes again row by row. Then the end picture: video bank 3 (screen $C000, character set $D000-$D7FF in the RAM under the I/O area), the screen copied from $DC00-$DFFF to $C000-$C3FF with all RAM banked in, the colours from $F800-$FBFF to colour RAM; voice line 4 ($BED9); the mouth animation, alternating the two mouth pictures ($AB84, $AB75) for the durations in tbl_end_timing while random cells twinkle ($ABBA); and finally $BECD and the score ($B786)."
+   "text": "The object with contents $FE, Elvin's control: with any letter of the password line ($345D-$3465) still blank, nothing happens. With all nine found, the mission is won: $DC = 1, a frame shape in sprite 7 (pointer $36) opens over the screen, a 6 \u00d7 5 block of characters and colours from $2611/$25F3 is drawn at $4301, and the frame closes again row by row. Then the end picture: video bank 3 (screen $C000, character set $D000-$D7FF in the RAM under the I/O area), the screen copied from $DC00-$DFFF to $C000-$C3FF with all RAM banked in, the colours from $F800-$FBFF to colour RAM; voice line 4 ($BED9); the mouth animation, alternating the two mouth pictures ($AB84, $AB75) for the durations in tbl_end_timing while random cells twinkle ($ABBA); and finally $BECD and the score ($B786). Live: forced by filling the password line and starting here; Elvin's face appeared, talking, then the tally."
   },
   {
    "address": 43819,
@@ -16106,7 +16111,7 @@
   {
    "address": 47624,
    "type": "line",
-   "text": "Works out and shows the score (decimal, $D9 units, $DA hundreds, $DB ten-thousands): puzzle pieces found ($D6) and passwords found ($D7) at 100 points each, puzzles solved ($D8) at 500 each, each line shown as count \u00d7 points = total ($BB7C template). If the mission was completed with time left, the seconds remaining until six o'clock (from the clock $D2/$D3/$D4, 12 o'clock counted as 0) at one point each, and a bonus of 1,000 for the mission; when time ran out, 000. Then the total ($BB08)."
+   "text": "Works out and shows the score (decimal, $D9 units, $DA hundreds, $DB ten-thousands): puzzle pieces found ($D6) and passwords found ($D7) at 100 points each, puzzles solved ($D8) at 500 each, each line shown as count \u00d7 points = total ($BB7C template). If the mission was completed with time left, the seconds remaining until six o'clock (from the clock $D2/$D3/$D4, 12 o'clock counted as 0) at one point each, and a bonus of 1,000 for the mission; when time ran out, 000. Then the total ($BB08). Live: a forced win at 12:24:47 with nothing found scored 20,113 seconds + 1,000 = 21,113."
   },
   {
    "address": 47860,
