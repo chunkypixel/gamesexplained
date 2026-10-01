@@ -6,7 +6,7 @@
   "year": 1984,
   "publisher": "Epyx",
   "developer": "Dennis Caswell",
-  "title_image": "",
+  "title_image": "reference/title.png",
   "build": "",
   "tier": "none",
   "coverage_percent": null,
@@ -24,8 +24,8 @@
   "kit_version": "0.0.49",
   "created": "2026-10-01",
   "video": {
-    "screen": "",
-    "charset": ""
+    "screen": "$4000",
+    "charset": "$4800"
   },
   "coverage": {
     "exclude": [],
@@ -35,7 +35,7 @@
   "io": [],
   "regions": [],
   "links": {
-    "wiki": "",
-    "manual": ""
+    "wiki": "https://www.c64-wiki.com/wiki/Impossible_Mission",
+    "manual": "https://www.lemon64.com/doc/impossible-mission/301"
   }
 }

@@ -8,6 +8,38 @@
    "end": "2026-10-01T10:56:34Z",
    "minutes": 13.2,
    "note": "G64 with true-drive loading at warp; loader traced to find $3855; pocket-computer controls found by trial"
+  },
+  {
+   "step": "20-features",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T10:56:46Z",
+   "end": "2026-10-01T10:57:58Z",
+   "minutes": 1.2,
+   "note": ""
+  },
+  {
+   "step": "30-text",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T10:57:58Z",
+   "end": "2026-10-01T10:59:37Z",
+   "minutes": 1.6,
+   "note": ""
+  },
+  {
+   "step": "40-sweep",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T10:59:37Z",
+   "end": "2026-10-01T11:02:32Z",
+   "minutes": 2.9,
+   "note": ""
+  },
+  {
+   "step": "50-coverage",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T11:02:32Z",
+   "end": null,
+   "minutes": null,
+   "note": ""
   }
  ]
 }
