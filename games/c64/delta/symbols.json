@@ -19353,32 +19353,8 @@
    "kind": "user"
   },
   {
-   "address": 65440,
-   "name": "bomb_masks",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 65448,
-   "name": "t_ffa8",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 65472,
-   "name": "t_ffc0",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 65480,
-   "name": "t_ffc8",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 65504,
-   "name": "fill_ffe0",
+   "address": 65520,
+   "name": "zero_fff0",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -25449,7 +25425,7 @@
   {
    "address": 18432,
    "type": "line",
-   "text": "The character set, 64 glyphs ($4800-$49FF; the screen runs in extended-colour mode, so a character's top two bits choose one of four background colours and only its low six bits pick the glyph). Glyphs $00-$07 are rebuilt every frame for the two enemy bombs and $08-$13 for the six enemy shots, each drawn over whatever is beneath it (draw_enemy_bomb_n, draw_enemy_shot_n); $2D is the enemy bullet; $2E is blank; $2F, $30 and $31 hold the three star layers' single pixels; $32-$3F are the player's weapons (lasers, beams, extra shots, orbiter). A glyph below $2E under the ship kills it (ship_hit_by_fire); one of $32 or above under an enemy hits it (enemies_hit_by_weapons)."
+   "text": "The character set, 64 glyphs ($4800-$49FF), inverted: a set bit draws the cell's colour from colour RAM, which clear_screen makes black everywhere, and a clear bit shows one of the four background colours of extended-colour mode ($D021-$D024), chosen by the character code's top two bits; the backgrounds cycle (colour_cycle_step). So the screen is black, and only clear bits have colour: the blank $2E is solid, each star glyph ($2F, $30, $31) has a single clear bit, and the stars use the codes $6F, $30 and $B1 to take three different background colours. Glyphs $00-$07 are rebuilt every frame for the two enemy bombs and $08-$13 for the six enemy shots, each the glyphs beneath with a ball-shaped hole cut in (draw_enemy_bomb_n, draw_enemy_shot_n); $2D is the enemy bullet; $32-$3F are the player's weapons. A glyph below $2E under the ship kills it (ship_hit_by_fire); one of $32 or above under an enemy hits it (enemies_hit_by_weapons)."
   },
   {
    "address": 18440,
@@ -28564,17 +28540,12 @@
   {
    "address": 65392,
    "type": "line",
-   "text": "Masks for drawing an enemy shot over the characters beneath it, two 8-byte columns per sub-cell position ($FF70/$FF78 and so on): the shot's pixels clear in a solid field, ANDed with the background glyphs."
+   "text": "The masks for every enemy shot and bomb, one table of eight positions ($FF70-$FFEF): position p (0, 16 ... 112, the shot's place within its cell) is two 8-byte columns, $FF70 + p and $FF78 + p, holding a round four-pixel ball as clear bits that moves one pixel right per position. ANDed into the glyphs under the shot, it clears those bits, and in this inverted character set a clear bit shows the cell's background colour: the shot appears in colour over whatever is there. The bomb drawers read the same table through their patched operands ($28C1, $299C)."
   },
   {
    "address": 65400,
    "type": "line",
-   "text": "Shot masks, second column (with $FF70)."
-  },
-  {
-   "address": 65440,
-   "type": "line",
-   "text": "Masks for the two enemy bombs: bomb 0 at $FFA0/$FFA8, bomb 1 at $FFC0/$FFC8, by sub-cell position."
+   "text": "Second columns of the mask table (with $FF70): the right-hand cell of each position."
   },
   {
    "address": 65448,
@@ -28592,9 +28563,9 @@
    "text": "Bomb 1's masks, second column."
   },
   {
-   "address": 65504,
+   "address": 65520,
    "type": "line",
-   "text": "Fill and leftover bytes before the vectors."
+   "text": "Eight zero bytes before the vectors, not read."
   },
   {
    "address": 65528,

@@ -188,6 +188,21 @@ The laser: up to three bolts, each a pair of characters moving one cell
 a frame (`lasers_move` `$356F`), fire delay 8 frames, one press per
 shot (`ship_fire`).
 
+## The character set and its colours
+
+The character set at `$4800` is inverted and the screen runs in
+extended-colour mode (`$D011` = `$5C`). Colour RAM is black everywhere
+(`clear_screen` `$0DDD`), so every set bit is black; a clear bit shows one
+of the four background colours `$D021`-`$D024`, picked by the top two bits
+of the character code, and those four colours cycle every fourth frame
+(`colour_cycle_step` `$1DDD`, `play_colours_set` `$363B`). The blank
+character `$2E` is solid; each star glyph has a single clear bit and the
+three layers use codes `$30`, `$6F` and `$B1` to take three different
+colours; the enemy fire and the player's weapons use the codes with both
+top bits set (`$C0`-`$FF`) or clear (`$32`-`$34`). Every enemy shot and
+bomb is a four-pixel ball cut out of the glyphs beneath it with one mask
+table (`shot_masks` `$FF70`, eight positions across two cells).
+
 ## Hits
 
 Every shot in the game, the player's and the enemies', is drawn with

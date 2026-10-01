@@ -48,6 +48,14 @@
    "end": "2026-10-01T06:30:08Z",
    "minutes": 5.3,
    "note": "live tests of pause, options, shop, weapons, stages, extra lives, demo, banking; found the screen-read hit detection while verifying and renamed those routines"
+  },
+  {
+   "step": "70-minisite",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T06:30:18Z",
+   "end": null,
+   "minutes": null,
+   "note": ""
   }
  ]
 }
