@@ -53,9 +53,25 @@
    "step": "70-minisite",
    "model": "claude-opus-5-5",
    "start": "2026-10-01T06:30:18Z",
-   "end": null,
-   "minutes": null,
-   "note": ""
+   "end": "2026-10-01T06:50:52Z",
+   "minutes": 20.6,
+   "note": "seven widgets on tested ports (music driver, stars, shots, shop, stage decoder); the wave flight-path viewer was dropped after its trace caught no enemies"
+  },
+  {
+   "step": "80-retro",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T06:50:52Z",
+   "end": "2026-10-01T06:52:08Z",
+   "minutes": 1.3,
+   "note": "kit edits (verify, features, minisite), retro files, game.json"
+  },
+  {
+   "step": "80-retro",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-01T06:52:15Z",
+   "end": "2026-10-01T06:53:21Z",
+   "minutes": 1.1,
+   "note": "kit edits (verify, features, minisite), cheats, history, TODO, game.json, kit-feedback"
   }
  ]
 }

@@ -87,7 +87,7 @@ SEATBELT, GAME OVER (`messages` `$FB70`); the stage words (`stage_words`
 ## Stages
 
 32 stages (`stage_advance` `$91EF`; after stage 32, `game_completed`
-plays tune `$0D`, shows DELTA MISSION COMPLETE and starts again at stage
+plays tune 12, shows DELTA MISSION COMPLETE and starts again at stage
 1 with the next difficulty). Each banner is three words from
 `stage_words`, chosen by `stage_banner_table` `$F880`; *live*: poking the
 stage-clear state in stage 1 brought up "ENTERING ROCKS OF DEATH /
@@ -285,8 +285,15 @@ allowed on screen on later passes.
   (`music_tune_table` `$C4F4`), 109 patterns, 22 instruments with
   vibrato, pulse sweeps, drums and filter sweeps.
 - In play the default is the effects (`$0FFD` = 1); F5 on the title
-  switches to the in-game music. Tunes: `$0B` title, `$0C` game over,
-  `$0D` game completed, 1 the next player's turn (`set_tune` `$C357`).
+  switches to the in-game music. Tunes are requested through `$117D`,
+  which holds the tune's number plus one (`sfx_queue_service`, `DEY`
+  before `set_tune` `$C357`): tune 0 when play starts and at each
+  player's turn (request 1 at `$16FA` and `next_player_tune`; with the
+  effects on, that request only gives the voices back to the effects),
+  tune 11 on the title (called directly at `$17C3`) and at game over and
+  name entry (request `$0C`), tune 12 when the game is completed
+  (request `$0D`, `game_completed`). Tunes 1-10 are in the driver and
+  nothing requests them.
 - Register census: the game writes `$D400`-`$D406` (indexed, all three
   voices), `$D416`, `$D417`, `$D418`; it never writes the filter
   cutoff's low bits (`$D415`).
