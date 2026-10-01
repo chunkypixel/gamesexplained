@@ -9952,7 +9952,7 @@
   },
   {
    "address": 11018,
-   "name": "sprites_hit_scenery",
+   "name": "enemies_hit_by_weapons",
    "type": "Jump",
    "kind": "user"
   },
@@ -9988,13 +9988,13 @@
   },
   {
    "address": 11132,
-   "name": "scenery_hit_handlers",
+   "name": "weapon_hit_handlers",
    "type": "UserDefined",
    "kind": "user"
   },
   {
    "address": 11196,
-   "name": "ship_on_scenery",
+   "name": "ship_hit_by_fire",
    "type": "Jump",
    "kind": "user"
   },
@@ -10168,7 +10168,7 @@
   },
   {
    "address": 11460,
-   "name": "scenery_hit_mark",
+   "name": "weapon_hit_mark",
    "type": "Jump",
    "kind": "user"
   },
@@ -16462,7 +16462,7 @@
   },
   {
    "address": 40660,
-   "name": "credit_drop",
+   "name": "credit_lose",
    "type": "Jump",
    "kind": "user"
   },
@@ -20669,12 +20669,12 @@
   {
    "address": 3840,
    "type": "line",
-   "text": "Weapon level of icon 1, the speed: 0-3, giving ship speeds 1, 2, 4 and 8 (ship_speed_set)."
+   "text": "Weapon level of icon 1, the speed: 0-3, ship speeds 1, 2, 4 and 8 (ship_speed_set). Buying it again at level 3 wraps it back to 0."
   },
   {
    "address": 3841,
    "type": "line",
-   "text": "Weapon level of icon 2, the fire rate: 0-2; added to the free shots, it decides whether a press can fire."
+   "text": "Weapon level of icon 2, the fire rate: 0-2. A press fires only if the laser shots free ($110A) plus this level reach 3, so level 0 allows one bolt on screen, 1 two, 2 three."
   },
   {
    "address": 3842,
@@ -20694,7 +20694,7 @@
   {
    "address": 3845,
    "type": "line",
-   "text": "Weapon of icon 6: 1 when owned; copied to $107B, it freezes the attack wave (wave_step), and it makes the enemy fire coarser."
+   "text": "Weapon of icon 6, the slow-down: 1 when owned. Its frame toggle ($0F2F) is copied into $107B every frame, so the attack wave moves and spawns only on every second frame."
   },
   {
    "address": 3846,
@@ -20864,7 +20864,7 @@
   {
    "address": 3918,
    "type": "line",
-   "text": "Jump vector used by sprites_hit_scenery (JMP ($0F4E)), low byte, set from the handler table at $0F50."
+   "text": "Jump vector used by enemies_hit_by_weapons (JMP ($0F4E)), low byte, set from the handler table at $0F50."
   },
   {
    "address": 3919,
@@ -20874,12 +20874,12 @@
   {
    "address": 3920,
    "type": "line",
-   "text": "Handler table for scenery hits, sixteen words by the character's low nibble: $2B5E (nothing) twice, $2BA4, $2BAC, $2BB4, $2CC4, $2B9C, $2B9C, $2B94, $2B94, $2B8C, $2B8C, $2B84, $2B84, $2B7C, $2B7C."
+   "text": "Handler table for weapon hits, sixteen words by the glyph's low nibble: $2B5E twice (no weapon to end), $2BA4, $2BAC, $2BB4, $2CC4 (the orbiter), $2B9C twice, $2B94 twice, $2B8C twice, $2B84 twice, $2B7C twice."
   },
   {
    "address": 3921,
    "type": "line",
-   "text": "High bytes and the rest of the scenery-hit handler table."
+   "text": "High bytes and the rest of the weapon-hit handler table."
   },
   {
    "address": 3952,
@@ -21134,12 +21134,12 @@
   {
    "address": 4093,
    "type": "line",
-   "text": "Music off during play (F5 on the title): the effect player runs instead of the tune."
+   "text": "In-game sound choice (F5 on the title): 1, the default, plays the sound effects; 0 plays Rob Hubbard's in-game music instead."
   },
   {
    "address": 4094,
    "type": "line",
-   "text": "The game state: 0 title, 1 a game starting, 2 and up the stage start and play."
+   "text": "Title-to-game handover: 0 on the title and in play, 1 when fire starts a game, 2-3 while the game is set up; back to 0 once the first stage runs ($0FA8 then marks play)."
   },
   {
    "address": 4095,
@@ -21359,42 +21359,42 @@
   {
    "address": 4208,
    "type": "line",
-   "text": "Per enemy slot (1-7 at $1071-$1077): set when the enemy has been shot this frame (or touched scenery), read by its mover; cleared after the movers."
+   "text": "Per enemy slot (1-7 at $1071-$1077): set when a weapon character hit the enemy this frame, read by its mover; cleared after the movers."
   },
   {
    "address": 4209,
    "type": "line",
-   "text": "Enemy slot 1 shot this frame (see $1070)."
+   "text": "Enemy slot 1 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4210,
    "type": "line",
-   "text": "Enemy slot 2 shot this frame (see $1070)."
+   "text": "Enemy slot 2 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4211,
    "type": "line",
-   "text": "Enemy slot 3 shot this frame (see $1070)."
+   "text": "Enemy slot 3 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4212,
    "type": "line",
-   "text": "Enemy slot 4 shot this frame (see $1070)."
+   "text": "Enemy slot 4 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4213,
    "type": "line",
-   "text": "Enemy slot 5 shot this frame (see $1070)."
+   "text": "Enemy slot 5 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4214,
    "type": "line",
-   "text": "Enemy slot 6 shot this frame (see $1070)."
+   "text": "Enemy slot 6 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4215,
    "type": "line",
-   "text": "Enemy slot 7 shot this frame (see $1070)."
+   "text": "Enemy slot 7 hit by a weapon this frame (see $1070)."
   },
   {
    "address": 4216,
@@ -21414,7 +21414,7 @@
   {
    "address": 4219,
    "type": "line",
-   "text": "The freeze: when set (weapon 6 owned and its toggle on) the attack wave does not move or spawn."
+   "text": "The slow-down: when set the attack wave neither moves nor spawns this frame. With icon 6 owned it is on every second frame (from the toggle $0F2F)."
   },
   {
    "address": 4220,
@@ -22019,7 +22019,7 @@
   {
    "address": 4372,
    "type": "line",
-   "text": "Rows left for the extra weapon's upward shot ($80 when parked, 0 when it hits scenery)."
+   "text": "Rows left for the extra weapon's upward shot ($80 when parked, 0 when it hits an enemy)."
   },
   {
    "address": 4373,
@@ -22289,7 +22289,7 @@
   {
    "address": 4494,
    "type": "line",
-   "text": "Icon 6's frame (freeze)."
+   "text": "Icon 6's frame (slow-down)."
   },
   {
    "address": 4495,
@@ -22694,7 +22694,7 @@
   {
    "address": 4616,
    "type": "line",
-   "text": "Base of a per-slot flag ($1209-$120F): $FF once an enemy has no further form to change into; such an enemy is also left out of the scenery test."
+   "text": "Base of a per-slot flag ($1209-$120F): $FF once an enemy has no further form to change into; such an enemy is also left out of the weapon test."
   },
   {
    "address": 4617,
@@ -23369,7 +23369,7 @@
   {
    "address": 4765,
    "type": "line",
-   "text": "Set when an enemy touched scenery this frame."
+   "text": "Set when an enemy touched the orbiter (or any weapon) this frame; with the wave timer it can end the wave."
   },
   {
    "address": 4766,
@@ -24424,7 +24424,7 @@
   {
    "address": 8801,
    "type": "line",
-   "text": "Buying in the shop ($1288 set) when the ship touches icon X and no purchase is under way ($12F7 clear): the price is X ($12F8); if the credits ($107C) cover it, keeps the change in $12FB, starts the icon's blink ($0F24 = X - 1, $0F23 = 14 blinks), sets $12F7, $12F9 and the icon's flag at $1221 + X, and goes on at $9EC4. Otherwise just stores Y in $1087."
+   "text": "Buying in the shop: the ship has touched the shop's sprite X, whose price is X credits. If the shop is not up ($1288 clear), a purchase was already made in this shop ($12F7), or the credits ($107C) do not cover the price, the touch counts as a hit ($1087 = Y = 1): an unaffordable (grey) icon kills, and only one icon can be bought per shop. Otherwise keeps the change in $12FB, starts the icon's blink ($0F24 = X - 1, $0F23 = 14 blinks), sets $12F7, $12F9 and the icon's flag at $1221 + X, and goes on at $9EC4 (the sound)."
   },
   {
    "address": 8812,
@@ -24434,7 +24434,7 @@
   {
    "address": 8856,
    "type": "line",
-   "text": "While a purchase is being paid ($12F9): unless $11AA, takes one credit a frame from $107C; when the price is paid off, clears $12F9 and adds the change $12FB to $11D5 (pending score). Then $22BD."
+   "text": "While a purchase is being paid ($12F9): one credit a frame comes off $107C (unless $11AA); when they are all gone, clears $12F9 and adds the change ($12FB) to the hundreds digit of the score: every credit left over after the price is worth 100 points. Then $22BD."
   },
   {
    "address": 8893,
@@ -24509,7 +24509,7 @@
   {
    "address": 9685,
    "type": "line",
-   "text": "Draws enemy shot 0 at the screen cell its pointer $E8 holds: takes the glyphs of the two background characters under it (their codes AND $3F, times 8, in the set at $4800), ANDs them with the shot's mask pair at $FF70/$FF78 shifted by its sub-cell position ($10A0), writes the result into the shot's own two glyphs ($D0/$D1 at $4880-$488F) and puts those characters on the screen. The shot so appears over the scenery at any pixel position."
+   "text": "Draws enemy shot 0 at the screen cell its pointer $E8 holds: takes the glyphs of the two background characters under it (their codes AND $3F, times 8, in the set at $4800), ANDs them with the shot's mask pair at $FF70/$FF78 shifted by its sub-cell position ($10A0), writes the result into the shot's own two glyphs ($D0/$D1 at $4880-$488F) and puts those characters on the screen. The shot so appears over the stars and anything else beneath, at any pixel position."
   },
   {
    "address": 9767,
@@ -24629,22 +24629,22 @@
   {
    "address": 11018,
    "type": "line",
-   "text": "For each of the seven enemy sprites that is alive ($11E0), not exploding ($12A8) and not marked $1208: looks at the four screen cells under it (offsets 0, 1, 40, 41 from sprite_to_screen_ptr); if any holds a character $32 or above (scenery), dispatches on the character's low nibble through the table at $0F50 (handlers $2B7C-$2BB4, which set flags $110F-$1116 and $12D2/$12D3) and records it in $129D; otherwise clears its $1070 flag. Then $9C0C."
+   "text": "How the player's weapons hit: every weapon is drawn with characters (glyphs $32-$3F), so for each of the seven enemy sprites that is alive ($11E0), not exploding ($12A8) and not final ($1208), the four screen cells under it are read (offsets 0, 1, 40, 41 from sprite_to_screen_ptr). A glyph of $32 or above is a weapon: the enemy is hit ($1070 + x = 1) and the glyph's low nibble picks a handler from $0F50 that ends the weapon that hit it (laser bolts 1-3, the two beams, the three extra shots; the orbiter, nibble 5, is not used up but marks $129D). Then $9C0C."
   },
   {
    "address": 11132,
    "type": "line",
-   "text": "Handlers for a sprite touching scenery, by the character's low nibble: $2B7C sets $110F = $24, $2B84 $1110, $2B8C $1111, $2B94 $12D2 = $25, $2B9C $12D3, $2BA4 $1114 = 0, $2BAC $1115 = 0, $2BB4 $1116 = $18; each then marks $129D (at $2CC4)."
+   "text": "Handlers for an enemy touching a weapon character, by its glyph's low nibble: $2B7C laser bolt 1 ($FE/$FF: column $24 ends it), $2B84 bolt 2 ($FC/$FD), $2B8C bolt 3 ($FA/$FB), $2B94 the upper beam ($F8/$F9), $2B9C the lower beam ($F6/$F7), $2BA4 the extra weapon's upward shot ($32), $2BAC its backward shot ($33), $2BB4 its downward shot ($34); each then goes to $2CC4."
   },
   {
    "address": 11196,
    "type": "line",
-   "text": "Clears $1087, then sets it if the cell 41 bytes on from the pointer at $71 (under the ship) holds a character below $2E; goes on to the controls."
+   "text": "How enemy fire hits the ship: clears $1087, then sets it if the cell 41 bytes on from the ship's cell pointer $71 (under the middle of the ship) holds a glyph below $2E, which are exactly the enemy fire's glyphs (the shots and bombs at $00-$13, the bullet $ED = glyph $2D). Then the controls."
   },
   {
    "address": 11209,
    "type": "line",
-   "text": "Immediate of the CMP #$2E in ship_on_scenery (characters below it are scenery that kills); the unreached cheat at $BA00 would set it to 0."
+   "text": "Immediate of the CMP #$2E in ship_hit_by_fire (glyphs below it are enemy fire); the unreached cheat at $BA00 would set it to 0, so nothing could hit the ship."
   },
   {
    "address": 11218,
@@ -24659,7 +24659,7 @@
   {
    "address": 11298,
    "type": "line",
-   "text": "Unless $12CC is set: copies the weapon $0F05's state ($0F2F if owned, else 0) to $107B and runs the attack wave ($8010); then the enemy update ($3C89), and sets $1087 when the ship's sprite collides with anything ($1117 or $112B bit 0). Goes on at $3880."
+   "text": "Unless $12CC is set: copies the slow-down's state ($0F2F if icon 6 is owned, else 0) to $107B and runs the attack wave ($8010); then the enemy update ($3C89), and sets $1087 when the ship's sprite collides with anything ($1117 or $112B bit 0). Goes on at $3880."
   },
   {
    "address": 11343,
@@ -24679,7 +24679,7 @@
   {
    "address": 11460,
    "type": "line",
-   "text": "Stores A in $129D and goes back into sprites_hit_scenery's loop."
+   "text": "Stores A in $129D and goes back into enemies_hit_by_weapons, which marks the enemy hit."
   },
   {
    "address": 11466,
@@ -25079,7 +25079,7 @@
   {
    "address": 15966,
    "type": "line",
-   "text": "The orbiter (icon 5, $0F04): while owned and not held by $12CD, sets $10D8 and takes the next of sixteen offsets round the ship from the circle table at $FB00 (columns into $10B8, rows into $10C0, $12CE stepping by two); then the scenery check."
+   "text": "The orbiter (icon 5, $0F04): while owned and not held by $12CD, sets $10D8 and takes the next of sixteen offsets round the ship from the circle table at $FB00 (columns into $10B8, rows into $10C0, $12CE stepping by two); then the weapon-hit check."
   },
   {
    "address": 16008,
@@ -25449,7 +25449,7 @@
   {
    "address": 18432,
    "type": "line",
-   "text": "The character set, 64 glyphs ($4800-$49FF; the screen runs in extended-colour mode, so a character's top two bits choose one of four background colours and only its low six bits pick the glyph). Glyphs $00-$07 are rebuilt every frame for the two enemy bombs and $08-$13 for the six enemy shots, each drawn over the scenery beneath it (draw_enemy_bomb_n, draw_enemy_shot_n); $2E is blank; $2F, $30 and $31 hold the three star layers' single pixels; $32 and up are scenery and weapons, the low nibble of a scenery character choosing what an enemy touching it does (sprites_hit_scenery)."
+   "text": "The character set, 64 glyphs ($4800-$49FF; the screen runs in extended-colour mode, so a character's top two bits choose one of four background colours and only its low six bits pick the glyph). Glyphs $00-$07 are rebuilt every frame for the two enemy bombs and $08-$13 for the six enemy shots, each drawn over whatever is beneath it (draw_enemy_bomb_n, draw_enemy_shot_n); $2D is the enemy bullet; $2E is blank; $2F, $30 and $31 hold the three star layers' single pixels; $32-$3F are the player's weapons (lasers, beams, extra shots, orbiter). A glyph below $2E under the ship kills it (ship_hit_by_fire); one of $32 or above under an enemy hits it (enemies_hit_by_weapons)."
   },
   {
    "address": 18440,
@@ -25544,7 +25544,7 @@
   {
    "address": 18584,
    "type": "line",
-   "text": "Glyph 19, enemy shot 1's right cell, and the fixed glyphs after it (scenery and weapons)."
+   "text": "Glyph 19, enemy shot 1's right cell, and the fixed glyphs after it (the bullet, the blank, the stars and the weapons)."
   },
   {
    "address": 18808,
@@ -25559,7 +25559,7 @@
   {
    "address": 18830,
    "type": "line",
-   "text": "Glyph $31, row 6: the fast star layer's pixel; the glyphs after it are scenery."
+   "text": "Glyph $31, row 6: the fast star layer's pixel; the glyphs after it ($32-$3F) are the player's weapons."
   },
   {
    "address": 18944,
@@ -25749,7 +25749,7 @@
   {
    "address": 32784,
    "type": "line",
-   "text": "The attack wave's spawner, once a frame (from wave_step, and from $0A47 on the title's demo page): unless the freeze weapon ($107B) is on. A pending wave type ($128E) dispatches through the table at $9F20 (type 1: $908F). Otherwise, while enemies of the current group are still to come ($128D), spawns the next into a free slot ($80C9); when the group is done and the delay $114B and the stage's limit allow, starts the next group: takes the next entry of the stage's wave list (from $B991 + $129A, times 8, at $AB00 + entry x 8, kept in $12F2/$12F3 and $08/$09), its enemy count ($1299, low three bits of byte 3) and sets the group going ($128D); with $1289/$128A it counts the enemies of a group that are to drop credits ($107C via $9ED4). Then the enemy movers ($9024)."
+   "text": "The attack wave's spawner, once a frame (from wave_step, and on the title's demo page): not on a slow-down frame ($107B). A pending wave type ($128E) dispatches through the table at $9F20 (type 1: $908F). Otherwise, while enemies of the current group are still to come ($128D), spawns the next into a free slot ($80C9); when the group is done and the delay $114B and the group's rule allow ($1298: all seven accounted for), starts the next group: takes the next entry of the stage's wave list ($B800 or $B900 + $129A), points $12F2/$12F3 and $08/$09 at its record ($AB00 + entry x 8) and its size ($1299). If no enemy of the finished group escaped ($128B clear), a group that carried a credit (bit 7 of its record's byte 3, $1289) adds one to the credits $107C; one marked with bit 6 ($128A) takes one away ($9ED4). Then the enemy movers ($9024)."
   },
   {
    "address": 32905,
@@ -25774,7 +25774,7 @@
   {
    "address": 32993,
    "type": "line",
-   "text": "Moves each live enemy (1-7, $11E0) by its velocity unless the freeze is on: X by $11E8 + x (signed, carrying into the high bit $28 + x) and Y by $11F0 + x."
+   "text": "Moves each live enemy (1-7, $11E0) by its velocity, except on a slow-down frame ($107B): X by $11E8 + x (signed, carrying into the high bit $28 + x) and Y by $11F0 + x."
   },
   {
    "address": 33055,
@@ -25799,7 +25799,7 @@
   {
    "address": 33451,
    "type": "line",
-   "text": "Moves the seven enemies, one unrolled copy of the same code per slot ($82CC slot 1, $84B4 slot 2, $869C slot 3, $8884 slot 4, $8A6C slot 5, $8C54 slot 6, $8E3C slot 7). First counts down each slot's spawn delay ($1248 + x) and makes the enemy alive ($11E0, $1270) when it ends; for a frozen wave ($107B) skips the paths."
+   "text": "Moves the seven enemies, one unrolled copy of the same code per slot ($82CC slot 1, $84B4 slot 2, $869C slot 3, $8884 slot 4, $8A6C slot 5, $8C54 slot 6, $8E3C slot 7). First counts down each slot's spawn delay ($1248 + x) and makes the enemy alive ($11E0, $1270) when it ends; on a slow-down frame ($107B) the paths are not stepped."
   },
   {
    "address": 33484,
@@ -25844,7 +25844,7 @@
   {
    "address": 36961,
    "type": "line",
-   "text": "After the movers: clears the per-slot 'shot' and 'icon touched' flags ($1070, $1220) and $129D, then applies the velocities ($80E1)."
+   "text": "After the movers: clears the per-slot 'hit' and 'icon touched' flags ($1070, $1220) and $129D, then applies the velocities ($80E1)."
   },
   {
    "address": 36980,
@@ -26339,12 +26339,12 @@
   {
    "address": 39936,
    "type": "line",
-   "text": "During a stage runs the wave step, otherwise the scenery check."
+   "text": "During a stage runs the wave step, otherwise the weapon-hit check."
   },
   {
    "address": 39948,
    "type": "line",
-   "text": "During a stage checks the ship against the scenery, otherwise leaves the interrupt."
+   "text": "During a stage checks whether enemy fire hit the ship, otherwise leaves the interrupt."
   },
   {
    "address": 39960,
@@ -26464,7 +26464,7 @@
   {
    "address": 40660,
    "type": "line",
-   "text": "A credit-carrying enemy: stores the new credit count Y in $107C, queues effect $47, and spawns the next enemy."
+   "text": "A group marked with bit 6 of its record's byte 3 has finished with no enemy escaping: stores the reduced credit count Y in $107C, queues effect $47, and spawns the next enemy."
   },
   {
    "address": 40672,
@@ -27699,7 +27699,7 @@
   {
    "address": 47616,
    "type": "line",
-   "text": "$BA00-$BA4B: a routine no instruction reaches, written to replace the jump to ship_move: F3 held sets the lives to 3; F5 toggles two code patches, the scenery test in ship_on_scenery ($2BC9: 0 means the scenery never kills) and the collision bit in ship_touch_icons ($2BDA), using $B9FF as the key latch; then ship_move. A trainer left in the code, not active in this image."
+   "text": "$BA00-$BA4B: a routine no instruction reaches, written to replace the jump to ship_move: F3 held sets the lives to 3; F5 toggles two code patches, the enemy-fire test in ship_hit_by_fire ($2BC9: 0 means enemy fire never hits) and the collision bit in ship_touch_icons ($2BDA), using $B9FF as the key latch; then ship_move. A trainer left in the code, not active in this image."
   },
   {
    "address": 47692,
@@ -28564,7 +28564,7 @@
   {
    "address": 65392,
    "type": "line",
-   "text": "Masks for drawing an enemy shot over the scenery, two 8-byte columns per sub-cell position ($FF70/$FF78 and so on): the shot's pixels clear in a solid field, ANDed with the background glyphs."
+   "text": "Masks for drawing an enemy shot over the characters beneath it, two 8-byte columns per sub-cell position ($FF70/$FF78 and so on): the shot's pixels clear in a solid field, ANDed with the background glyphs."
   },
   {
    "address": 65400,

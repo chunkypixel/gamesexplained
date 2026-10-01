@@ -9,7 +9,7 @@
   "title_image": "reference/title-screen.png",
   "build": "Reflex Cracking Squad crack, one file (delta.prg, 47,104 bytes); game entry $1770",
   "tier": "none",
-  "coverage_percent": null,
+  "coverage_percent": 100.0,
   "copy": "agent-draft",
   "steward": "",
   "credits": [
@@ -83,7 +83,158 @@
       "the four slot-start routines, called only from hazard_rows_spawn while banked out"
     ]
   ],
-  "regions": [],
+  "regions": [
+    [
+      "$0400",
+      "$07C9",
+      "sound",
+      "the sound-effect player and its 21 effects"
+    ],
+    [
+      "$0800",
+      "$0EFE",
+      "code",
+      "icons, title keys, controls, high-score entry, star and sprite copies"
+    ],
+    [
+      "$0EFF",
+      "$12FF",
+      "variables",
+      "game state, enemy slots, scores, purchase state"
+    ],
+    [
+      "$1300",
+      "$13FF",
+      "tables",
+      "sprite animation lists"
+    ],
+    [
+      "$1400",
+      "$3FFF",
+      "code",
+      "start-up, raster bands, multiplexer, hazard rows, character-drawn fire, ship, weapons, banner, deaths"
+    ],
+    [
+      "$4000",
+      "$43BF",
+      "graphics",
+      "sprite shapes 0-15: title text and interlude pictures"
+    ],
+    [
+      "$43C0",
+      "$43F7",
+      "variables",
+      "title, stage-change and extra-life variables"
+    ],
+    [
+      "$4800",
+      "$49FF",
+      "graphics",
+      "the character set (64 glyphs, extended-colour mode)"
+    ],
+    [
+      "$4A00",
+      "$7FFF",
+      "graphics",
+      "sprite shapes $28-$FF: banner, logo and rocks, hazards, icons, panel, explosion, ship, enemies"
+    ],
+    [
+      "$8000",
+      "$9EFF",
+      "code",
+      "attack waves, enemy movers, enemy fire, pause, stage changes, sound queue"
+    ],
+    [
+      "$9F00",
+      "$9FFF",
+      "tables",
+      "difficulty, demo input, hazard animation state, the other player's store"
+    ],
+    [
+      "$A000",
+      "$BBFF",
+      "levels",
+      "wave data: hit points, paths, colours, segments, wave records, velocity lists, stage wave lists"
+    ],
+    [
+      "$BC00",
+      "$BDE3",
+      "sound",
+      "music patterns and vibrato state"
+    ],
+    [
+      "$BDE4",
+      "$C38D",
+      "sound",
+      "Rob Hubbard's music player"
+    ],
+    [
+      "$C38E",
+      "$CFFF",
+      "sound",
+      "instruments, tunes, tracks and patterns"
+    ],
+    [
+      "$D000",
+      "$DEFF",
+      "levels",
+      "hazard animation tables and spawn lists, under the I/O area"
+    ],
+    [
+      "$E000",
+      "$EB7F",
+      "graphics",
+      "the second set of hazard shapes"
+    ],
+    [
+      "$EB80",
+      "$EC6F",
+      "text",
+      "stage-banner words"
+    ],
+    [
+      "$EFCF",
+      "$F7A1",
+      "graphics",
+      "title pictures and the logo/rock store"
+    ],
+    [
+      "$F7B0",
+      "$F87F",
+      "text",
+      "title texts and the high-score table"
+    ],
+    [
+      "$F880",
+      "$FAFF",
+      "tables",
+      "stage banners, hazard rows, aiming and difficulty by stage"
+    ],
+    [
+      "$FB00",
+      "$FB6F",
+      "tables",
+      "orbiter circle and score digits"
+    ],
+    [
+      "$FB70",
+      "$FBFF",
+      "text",
+      "banner messages"
+    ],
+    [
+      "$FC60",
+      "$FF6B",
+      "graphics",
+      "the font"
+    ],
+    [
+      "$FF70",
+      "$FFDF",
+      "graphics",
+      "masks for drawing enemy fire"
+    ]
+  ],
   "links": {
     "wiki": "https://www.c64-wiki.com/wiki/Delta",
     "manual": ""
