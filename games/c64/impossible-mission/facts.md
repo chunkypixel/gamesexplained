@@ -163,7 +163,10 @@ At the start of each game `new_game_setup` (`$7236`) randomises:
 - the nine puzzle images, from random 8-byte patterns
   (`make_puzzle_images`, `$B0F3`);
 - the 36 pieces: each puzzle cut by pairs of 16 mask shapes, no pair used
-  twice, with random flips (`make_pieces`, `$B180`);
+  twice, with random flips (`make_pieces`, `$B180`). The four pieces of a
+  puzzle divide its picture exactly (a first mask and its complement, each
+  split by its own second mask); every piece also carries the picture's
+  frame, the only part they share;
 - where the 36 pieces, 9 snooze passwords and 9 lift-init passwords are
   hidden among the 128 searchable pieces of furniture (`hide_items`,
   `$B26D`);

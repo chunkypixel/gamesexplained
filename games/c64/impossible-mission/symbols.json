@@ -12109,9 +12109,9 @@
   },
   {
    "address": 53632,
-   "name": "f_D180",
+   "name": "rom_digits_view",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 54272,
@@ -16276,7 +16276,7 @@
   {
    "address": 53632,
    "type": "line",
-   "text": "In the start-up's copy at $3980 the processor port is $21, so the CPU reads the character ROM here: $D180-$D1CF are the ROM's digits 0-9, copied into both game character sets. The RAM beneath holds glyphs $30-$39 of the end picture's character set."
+   "text": "In the start-up's copy at $3980 the processor port is $21, so the CPU reads the character ROM here: $D180-$D1CF are the ROM's digits 0-9, copied into both game character sets. The RAM beneath holds glyphs $30-$7F of the end picture's character set (the rest of gfx_end_charset_1)."
   },
   {
    "address": 54272,
