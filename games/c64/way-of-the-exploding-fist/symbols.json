@@ -12,17 +12,63 @@
     "stack"
    ],
    [
-    53248,
-    57343,
-    "I/O and colour RAM"
+    52224,
+    53247,
+    "screen RAM"
+   ],
+   [
+    49216,
+    51519,
+    "the fighters' sprite build buffers (two per fighter), rewritten from the shape cells at $8000 every time a pose changes; at the hand-over $C700-$C8FF held the speech period table that $18F8 copies to $0200"
    ],
    [
     52224,
     53247,
-    "screen RAM"
+    "screen memory and sprite pointers, written at run time"
+   ],
+   [
+    58944,
+    62783,
+    "the backdrop bitmap, the output of bitmap_unpack ($17BB) from the packed streams at $3F5F-$68CA"
+   ],
+   [
+    30482,
+    30495,
+    "14 bytes after the last reach profile; no pointer or instruction reaches them"
+   ],
+   [
+    31210,
+    31455,
+    "bytes after the last animation list (its end is $79EA) and before the frame tables; nothing reads them"
+   ],
+   [
+    32167,
+    32255,
+    "bytes after the ninth frame table and before the mirror table; nothing reads them"
+   ],
+   [
+    64723,
+    65234,
+    "512 bytes between speech samples 2 and 3; the sample table's offsets skip them"
+   ],
+   [
+    16000,
+    16222,
+    "a fill of $80/$FF bytes between the mirrored sprite builder's last operand ($3E7B) and the first packed backdrop ($3F5F); no instruction or pointer reaches it"
+   ],
+   [
+    65501,
+    65529,
+    "bytes between the end of speech sample 3 and the hardware vectors; nothing reads them"
    ]
   ],
-  "extra": []
+  "extra": [
+   [
+    57344,
+    59391,
+    "character set"
+   ]
+  ]
  },
  "blocks": [
   {
@@ -272,11 +318,66 @@
   },
   {
    "start": 16223,
-   "end": 29183,
+   "end": 30481,
    "type": "Byte"
   },
   {
-   "start": 29184,
+   "start": 30482,
+   "end": 30495,
+   "type": "Undefined"
+  },
+  {
+   "start": 30496,
+   "end": 30561,
+   "type": "Word"
+  },
+  {
+   "start": 30562,
+   "end": 31209,
+   "type": "Byte"
+  },
+  {
+   "start": 31210,
+   "end": 31455,
+   "type": "Undefined"
+  },
+  {
+   "start": 31456,
+   "end": 32166,
+   "type": "Byte"
+  },
+  {
+   "start": 32167,
+   "end": 32255,
+   "type": "Undefined"
+  },
+  {
+   "start": 32256,
+   "end": 49215,
+   "type": "Byte"
+  },
+  {
+   "start": 49216,
+   "end": 51519,
+   "type": "Undefined"
+  },
+  {
+   "start": 51520,
+   "end": 52223,
+   "type": "Byte"
+  },
+  {
+   "start": 52224,
+   "end": 53247,
+   "type": "Undefined"
+  },
+  {
+   "start": 53248,
+   "end": 58943,
+   "type": "Byte"
+  },
+  {
+   "start": 58944,
    "end": 62783,
    "type": "Undefined"
   },
@@ -297,8 +398,13 @@
   },
   {
    "start": 65501,
-   "end": 65535,
+   "end": 65529,
    "type": "Undefined"
+  },
+  {
+   "start": 65530,
+   "end": 65535,
+   "type": "Word"
   }
  ],
  "symbols": [
@@ -310,1035 +416,1035 @@
   },
   {
    "address": 1,
-   "name": "zpa_01",
+   "name": "cpu_port",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2,
-   "name": "f_0002",
+   "name": "fighter_ptr_r1c1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4,
-   "name": "zpf_04",
+   "name": "fighter_ptr_r1c2",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6,
-   "name": "zpf_06",
+   "name": "fighter_ptr_r1c3",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 8,
-   "name": "zpf_08",
+   "name": "fighter_ptr_r2c1",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 10,
-   "name": "zpf_0A",
+   "name": "fighter_ptr_r2c2",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 12,
-   "name": "zpf_0C",
+   "name": "fighter_ptr_r2c3",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 14,
-   "name": "zpf_0E",
+   "name": "fighter_ptr_r3c1",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 16,
-   "name": "zpf_10",
+   "name": "fighter_ptr_r3c2",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 18,
-   "name": "zpf_12",
+   "name": "fighter_ptr_r3c3",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 20,
-   "name": "zpf_14",
+   "name": "fighter_spr_x",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 22,
-   "name": "zpa_16",
+   "name": "fighter_spr_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 23,
-   "name": "zpa_17",
+   "name": "fighter_spr_y_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 24,
-   "name": "zpf_18",
+   "name": "fighter_spr_x_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 26,
-   "name": "zpa_1A",
+   "name": "mux_a_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 27,
-   "name": "zpa_1B",
+   "name": "mux_b_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 28,
-   "name": "zpa_1C",
+   "name": "mux_a_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 29,
-   "name": "zpa_1D",
+   "name": "mux_b_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30,
-   "name": "zpa_1E",
+   "name": "mux_a_xhi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31,
-   "name": "zpa_1F",
+   "name": "mux_b_xhi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32,
-   "name": "zpa_20",
+   "name": "mux_a_fighter",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33,
-   "name": "zpa_21",
+   "name": "mux_b_fighter",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 34,
-   "name": "zpa_22",
+   "name": "fighter_colour",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35,
-   "name": "zpa_23",
+   "name": "fighter_colour_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36,
-   "name": "zpa_24",
+   "name": "spr012_fighter",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37,
-   "name": "zpa_25",
+   "name": "after_mux_irq",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38,
-   "name": "zpa_26",
+   "name": "after_mux_irq_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39,
-   "name": "zpf_27",
+   "name": "fighter_row4_ptr_c1",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41,
-   "name": "zpf_29",
+   "name": "fighter_row4_ptr_c2",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 43,
-   "name": "zpf_2B",
+   "name": "fighter_row4_ptr_c3",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45,
-   "name": "zpp_2D",
+   "name": "speech_ptr",
    "type": "ZeroPagePointer",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46,
-   "name": "zpa_2E",
+   "name": "speech_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 47,
-   "name": "zpa_2F",
+   "name": "speech_volume",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49,
-   "name": "zpa_31",
+   "name": "speech_end",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50,
-   "name": "zpa_32",
+   "name": "speech_end_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51,
-   "name": "zpa_33",
+   "name": "speech_state",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 52,
-   "name": "zpa_34",
+   "name": "unpack_src",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 53,
-   "name": "zpa_35",
+   "name": "unpack_src_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 54,
-   "name": "zpa_36",
+   "name": "unpack_dst",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 55,
-   "name": "zpa_37",
+   "name": "unpack_dst_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 56,
-   "name": "zpa_38",
+   "name": "unpack_count",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62,
-   "name": "zpa_3E",
+   "name": "speech_save_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63,
-   "name": "zpa_3F",
+   "name": "colour_src",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64,
-   "name": "zpa_40",
+   "name": "colour_src_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 65,
-   "name": "zpa_41",
+   "name": "colour_nybble",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 66,
-   "name": "zpa_42",
+   "name": "colour_read_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 67,
-   "name": "zpa_43",
+   "name": "colour_write_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 68,
-   "name": "zpa_44",
+   "name": "colour_scratch",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 69,
-   "name": "zpa_45",
+   "name": "anim_request",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 70,
-   "name": "zpa_46",
+   "name": "anim_request_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 71,
-   "name": "zpa_47",
+   "name": "anim_loaded",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 72,
-   "name": "zpa_48",
+   "name": "anim_loaded_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 73,
-   "name": "zpf_49",
+   "name": "anim_timer",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 75,
-   "name": "zpa_4B",
+   "name": "anim_reverse",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 76,
-   "name": "zpa_4C",
+   "name": "anim_reverse_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 77,
-   "name": "zpf_4D",
+   "name": "anim_offset",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 79,
-   "name": "zpa_4F",
+   "name": "anim_list_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 80,
-   "name": "zpa_50",
+   "name": "anim_list_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 81,
-   "name": "zpa_51",
+   "name": "fighter_frame",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 82,
-   "name": "zpa_52",
+   "name": "fighter_frame_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 83,
-   "name": "zpa_53",
+   "name": "fighter_facing",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 84,
-   "name": "zpa_54",
+   "name": "fighter_facing_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 85,
-   "name": "zpf_55",
+   "name": "anim_dx",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 87,
-   "name": "zpf_57",
+   "name": "anim_dy",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 89,
-   "name": "zpf_59",
+   "name": "anim_ended",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 90,
-   "name": "zpa_5A",
+   "name": "anim_ended_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 91,
-   "name": "zpf_5B",
+   "name": "anim_length",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 93,
-   "name": "zpa_5D",
+   "name": "shape_direct",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 94,
-   "name": "zpa_5E",
+   "name": "knockdown_result",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 95,
-   "name": "zpa_5F",
+   "name": "hit_state",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 96,
-   "name": "zpa_60",
+   "name": "hit_state_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 97,
-   "name": "zpa_61",
+   "name": "fighter_move",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 99,
-   "name": "zpf_63",
+   "name": "move_request",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 101,
-   "name": "zpa_65",
+   "name": "is_computer",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 102,
-   "name": "zpa_66",
+   "name": "is_computer_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 103,
-   "name": "zpf_67",
+   "name": "fighter_flag_67",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 105,
-   "name": "zpa_69",
+   "name": "opponent",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 106,
-   "name": "zpa_6A",
+   "name": "fighter_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 107,
-   "name": "zpa_6B",
+   "name": "fighter_x_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 108,
-   "name": "zpa_6C",
+   "name": "fighter_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 109,
-   "name": "zpa_6D",
+   "name": "fighter_y_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 110,
-   "name": "zpf_6E",
+   "name": "blow_value",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 111,
-   "name": "zpa_6F",
+   "name": "blow_value_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 112,
-   "name": "zpa_70",
+   "name": "reach_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 113,
-   "name": "zpa_71",
+   "name": "reach_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 114,
-   "name": "zpa_72",
+   "name": "reach_aim",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 115,
-   "name": "zpa_73",
+   "name": "fighter_distance",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 116,
-   "name": "zpa_74",
+   "name": "move_hold",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 118,
-   "name": "zpa_76",
+   "name": "sprite_buffer",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 119,
-   "name": "zpa_77",
+   "name": "sprite_buffer_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 120,
-   "name": "zpa_78",
+   "name": "build_dst",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 121,
-   "name": "zpa_79",
+   "name": "build_dst_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 122,
-   "name": "f_007A",
+   "name": "build_ptr_0",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 123,
-   "name": "zpa_7B",
+   "name": "build_ptr_1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 124,
-   "name": "zpa_7C",
+   "name": "build_ptr_2",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 125,
-   "name": "zpa_7D",
+   "name": "build_ptr_3",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 126,
-   "name": "zpa_7E",
+   "name": "build_ptr_4",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 127,
-   "name": "zpa_7F",
+   "name": "build_ptr_5",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 128,
-   "name": "zpa_80",
+   "name": "build_ptr_6",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 129,
-   "name": "zpa_81",
+   "name": "build_ptr_7",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 130,
-   "name": "zpa_82",
+   "name": "build_ptr_8",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 131,
-   "name": "zpa_83",
+   "name": "build_save_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 134,
-   "name": "zpa_86",
+   "name": "reaction_delay",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 135,
-   "name": "zpa_87",
+   "name": "reaction_delay_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 136,
-   "name": "zpa_88",
+   "name": "anim_new_step",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 138,
-   "name": "zpa_8A",
+   "name": "halves",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 139,
-   "name": "zpa_8B",
+   "name": "halves_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 140,
-   "name": "zpa_8C",
+   "name": "scoring_move",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 141,
-   "name": "zpa_8D",
+   "name": "ai_hold_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 142,
-   "name": "zpf_8E",
+   "name": "ai_hold_timer",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 143,
-   "name": "zpa_8F",
+   "name": "ai_hold_timer_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 144,
-   "name": "zpf_90",
+   "name": "ai_chosen_move",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 145,
-   "name": "zpa_91",
+   "name": "ai_chosen_move_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 147,
-   "name": "zpa_93",
+   "name": "ai_scratch",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 148,
-   "name": "zpa_94",
+   "name": "ai_attack_spread",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 149,
-   "name": "zpf_95",
+   "name": "ai_close_timer",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 150,
-   "name": "zpa_96",
+   "name": "ai_close_timer_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 151,
-   "name": "zpa_97",
+   "name": "ai_close_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 152,
-   "name": "zpa_98",
+   "name": "random_state",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 153,
-   "name": "zpa_99",
+   "name": "random_frame",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 154,
-   "name": "zpf_9A",
+   "name": "ai_turning",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 155,
-   "name": "zpa_9B",
+   "name": "ai_turning_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 156,
-   "name": "zpa_9C",
+   "name": "ai_defence_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 157,
-   "name": "zpf_9D",
+   "name": "ai_plan",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 158,
-   "name": "zpa_9E",
+   "name": "ai_plan_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 159,
-   "name": "zpa_9F",
+   "name": "ai_plan_vector",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 160,
-   "name": "zpa_A0",
+   "name": "ai_plan_vector_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 161,
-   "name": "zpf_A1",
+   "name": "ai_forced_wait",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 162,
-   "name": "zpa_A2",
+   "name": "ai_forced_wait_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 163,
-   "name": "zpa_A3",
+   "name": "ai_back_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 164,
-   "name": "zpf_A4",
+   "name": "ai_walk_timer",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 165,
-   "name": "zpa_A5",
+   "name": "ai_walk_timer_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 166,
-   "name": "zpf_A6",
+   "name": "ai_pause_mask",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 168,
-   "name": "zpf_A8",
+   "name": "ai_walk_mask",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 170,
-   "name": "zpf_AA",
+   "name": "ai_react_timer",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 172,
-   "name": "zpa_AC",
+   "name": "ai_react_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 173,
-   "name": "zpa_AD",
+   "name": "panel_bg",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 174,
-   "name": "zpa_AE",
+   "name": "players_minus_one",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 175,
-   "name": "zpa_AF",
+   "name": "stage",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 176,
-   "name": "zpa_B0",
+   "name": "game_running",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 177,
-   "name": "zpa_B1",
+   "name": "clock_frames",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 178,
-   "name": "zpa_B2",
+   "name": "clock_seconds",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 179,
-   "name": "zpa_B3",
+   "name": "fighter_level",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 180,
-   "name": "zpa_B4",
+   "name": "fighter_level_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 181,
-   "name": "zpa_B5",
+   "name": "wins_to_rank",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 182,
-   "name": "zpa_B6",
+   "name": "backdrop_shown",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 187,
-   "name": "zpa_BB",
+   "name": "last_key_row",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 188,
-   "name": "zpa_BC",
+   "name": "time_up",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 189,
-   "name": "zpa_BD",
+   "name": "bout_points",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 190,
-   "name": "zpa_BE",
+   "name": "bout_points_f1",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 191,
-   "name": "zpa_BF",
+   "name": "text_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 192,
-   "name": "zpa_C0",
+   "name": "text_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 194,
-   "name": "zpa_C2",
+   "name": "bull_state",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 196,
-   "name": "zpa_C4",
+   "name": "key_scratch",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 197,
-   "name": "zpa_C5",
+   "name": "key_fire",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 198,
-   "name": "zpa_C6",
+   "name": "keyboard_mode",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 199,
-   "name": "zpa_C7",
+   "name": "last_key",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 200,
-   "name": "zpa_C8",
+   "name": "hiscore_index",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 201,
-   "name": "zpa_C9",
+   "name": "hiscore_rank",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 202,
-   "name": "zpa_CA",
+   "name": "rank_text_col",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 203,
-   "name": "zpa_CB",
+   "name": "hiscore_place",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 204,
-   "name": "zpa_CC",
+   "name": "colour_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 205,
-   "name": "zpa_CD",
+   "name": "colour_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 206,
-   "name": "zpa_CE",
+   "name": "scratch_ce",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 207,
-   "name": "zpa_CF",
+   "name": "speech_off",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 249,
-   "name": "zpa_F9",
+   "name": "music_order_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 250,
-   "name": "zpa_FA",
+   "name": "zp_music_order_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 251,
-   "name": "zpa_FB",
+   "name": "music_pattern_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 252,
-   "name": "zpa_FC",
+   "name": "zp_music_pattern_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 253,
-   "name": "zpa_FD",
+   "name": "music_vector",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 254,
-   "name": "zpa_FE",
+   "name": "music_vector_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 255,
-   "name": "zpa_FF",
+   "name": "song",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 512,
@@ -1535,6 +1641,12 @@
   {
    "address": 2035,
    "name": "song3_pattern_03",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 2048,
+   "name": "song3_pattern_03_0800",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -7899,148 +8011,556 @@
    "kind": "user"
   },
   {
+   "address": 29184,
+   "name": "reach_move06_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29243,
+   "name": "reach_move07_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29302,
+   "name": "reach_move0a_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29361,
+   "name": "reach_move0b_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29420,
+   "name": "reach_move0c_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29479,
+   "name": "reach_move0d_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29538,
+   "name": "reach_move0e_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29597,
+   "name": "reach_move0f_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29656,
+   "name": "reach_move18_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29715,
+   "name": "reach_move11_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29774,
+   "name": "reach_move10_facing",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29833,
+   "name": "reach_move06_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29892,
+   "name": "reach_move07_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 29951,
+   "name": "reach_move0a_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30010,
+   "name": "reach_move0b_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30069,
+   "name": "reach_move0c_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30128,
+   "name": "reach_move0d_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30187,
+   "name": "reach_move0e_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30246,
+   "name": "reach_move0f_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30305,
+   "name": "reach_move18_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30364,
+   "name": "reach_move11_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30423,
+   "name": "reach_move10_behind",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 30496,
-   "name": "f_7720",
+   "name": "anim_list_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30497,
-   "name": "f_7721",
+   "name": "anim_list_table_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30498,
-   "name": "f_7722",
+   "name": "anim_list_table_next",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 30562,
+   "name": "anim_01",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30566,
+   "name": "anim_02",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30650,
+   "name": "anim_03",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30734,
+   "name": "anim_04",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30750,
+   "name": "anim_05",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30770,
+   "name": "anim_06",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30782,
+   "name": "anim_07",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30786,
+   "name": "anim_08",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30814,
+   "name": "anim_09",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30846,
+   "name": "anim_0a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30854,
+   "name": "anim_0b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30862,
+   "name": "anim_0c",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30874,
+   "name": "anim_0d",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30886,
+   "name": "anim_0e",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30930,
+   "name": "anim_0f",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30942,
+   "name": "anim_10",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30958,
+   "name": "anim_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30974,
+   "name": "anim_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30978,
+   "name": "anim_13",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30982,
+   "name": "anim_14",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30986,
+   "name": "anim_15",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30994,
+   "name": "anim_16",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31026,
+   "name": "anim_17",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31046,
+   "name": "anim_18",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31058,
+   "name": "anim_19",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31078,
+   "name": "anim_1a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31094,
+   "name": "anim_1b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31106,
+   "name": "anim_1c",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31142,
+   "name": "anim_1d",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31170,
+   "name": "anim_1e",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31190,
+   "name": "anim_1f",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 31456,
-   "name": "f_7AE0",
+   "name": "frame_cells_slot0",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31535,
-   "name": "f_7B2F",
+   "name": "frame_cells_slot1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31614,
-   "name": "f_7B7E",
+   "name": "frame_cells_slot2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31693,
-   "name": "f_7BCD",
+   "name": "frame_cells_slot3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31772,
-   "name": "f_7C1C",
+   "name": "frame_cells_slot4",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31851,
-   "name": "f_7C6B",
+   "name": "frame_cells_slot5",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31930,
-   "name": "f_7CBA",
+   "name": "frame_cells_slot6",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32009,
-   "name": "f_7D09",
+   "name": "frame_cells_slot7",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32088,
-   "name": "f_7D58",
+   "name": "frame_cells_slot8",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32256,
-   "name": "f_7E00",
+   "name": "mirror_pairs",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32512,
-   "name": "f_7F00",
+   "name": "cell_page_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32768,
-   "name": "f_8000",
+   "name": "shape_cells_00",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32896,
-   "name": "f_8080",
+   "name": "shape_cell_02",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32960,
-   "name": "f_80C0",
+   "name": "shape_cell_03",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33024,
-   "name": "f_8100",
+   "name": "shape_cell_04",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33088,
-   "name": "f_8140",
+   "name": "shape_cell_05",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33216,
-   "name": "f_81C0",
+   "name": "shape_cell_07",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33280,
-   "name": "f_8200",
+   "name": "shape_cell_08",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33344,
-   "name": "f_8240",
+   "name": "shape_cell_09",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 33792,
+   "name": "shape_cells_10",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 34816,
+   "name": "shape_cells_20",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 35840,
+   "name": "shape_cells_30",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 36864,
+   "name": "shape_cells_40",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 37696,
-   "name": "f_9340",
+   "name": "shape_cell_4d",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 37888,
+   "name": "shape_cells_50",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 38912,
+   "name": "shape_cells_60",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 39936,
+   "name": "shape_cells_70",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 40960,
+   "name": "shape_cells_80",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 41984,
+   "name": "shape_cells_90",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 43008,
+   "name": "shape_cells_a0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 44032,
+   "name": "shape_cells_b0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 45056,
+   "name": "shape_cells_c0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 46080,
+   "name": "shape_cells_d0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 47104,
+   "name": "shape_cells_e0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 48128,
+   "name": "shape_cells_f0",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 49152,
-   "name": "f_C000",
+   "name": "blank_sprite",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50878,
@@ -8071,6 +8591,12 @@
    "name": "f_C800",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 51520,
+   "name": "bull_sprites_c940",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 52224,
@@ -8295,118 +8821,70 @@
    "kind": "auto"
   },
   {
-   "address": 55296,
-   "name": "f_D800",
-   "type": "Field",
-   "kind": "auto"
+   "address": 53248,
+   "name": "bull_sprites_d000",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55299,
-   "name": "a_D803",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 53760,
+   "name": "sprites_d200",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55300,
-   "name": "a_D804",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 54208,
+   "name": "bull_sprite_4f",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55302,
-   "name": "a_D806",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 54272,
+   "name": "judge_sprites",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55303,
-   "name": "a_D807",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 54400,
+   "name": "shadow_sprites",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55328,
-   "name": "a_D820",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 55424,
+   "name": "shadow_sprites_d880",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55329,
-   "name": "a_D821",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 56384,
+   "name": "bull_sprites_dc40",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55331,
-   "name": "a_D823",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 57344,
+   "name": "bull_sprites_e000",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55332,
-   "name": "a_D824",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 57600,
+   "name": "font",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55339,
-   "name": "a_D82B",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
+   "address": 58112,
+   "name": "bull_sprites_e300",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
-   "address": 55340,
-   "name": "a_D82C",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55342,
-   "name": "a_D82E",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55343,
-   "name": "a_D82F",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55368,
-   "name": "a_D848",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55369,
-   "name": "a_D849",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55371,
-   "name": "a_D84B",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55372,
-   "name": "a_D84C",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 55976,
-   "name": "f_DAA8",
-   "type": "Field",
-   "kind": "auto"
-  },
-  {
-   "address": 56064,
-   "name": "f_DB00",
-   "type": "Field",
-   "kind": "auto"
+   "address": 58816,
+   "name": "sprites_e5c0",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 62784,
@@ -8416,21 +8894,21 @@
   },
   {
    "address": 62785,
-   "name": "f_F541",
+   "name": "speech_sample_table_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62786,
-   "name": "f_F542",
+   "name": "speech_sample_table_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62787,
-   "name": "f_F543",
+   "name": "speech_sample_table_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62800,
@@ -8461,9 +8939,880 @@
    "name": "speech_sample3",
    "type": "UserDefined",
    "kind": "user"
+  },
+  {
+   "address": 65530,
+   "name": "hw_vectors",
+   "type": "UserDefined",
+   "kind": "user"
   }
  ],
  "comments": [
+  {
+   "address": 0,
+   "type": "line",
+   "text": "The 6510's data direction register. The game never addresses it by name; the symbol is the disassembler's start of memory."
+  },
+  {
+   "address": 1,
+   "type": "line",
+   "text": "The 6510's port: $05 in play (RAM at $A000 and $E000, I/O at $D000), set by machine_vectors ($1956)."
+  },
+  {
+   "address": 2,
+   "type": "line",
+   "text": "Sprite pointer for row 1, column 1 of fighter 0's 3 x 3 sprite grid; $03 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 4,
+   "type": "line",
+   "text": "Sprite pointer for row 1, column 2 of fighter 0's 3 x 3 sprite grid; $05 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 6,
+   "type": "line",
+   "text": "Sprite pointer for row 1, column 3 of fighter 0's 3 x 3 sprite grid; $07 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 8,
+   "type": "line",
+   "text": "Sprite pointer for row 2, column 1 of fighter 0's 3 x 3 sprite grid; $09 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 10,
+   "type": "line",
+   "text": "Sprite pointer for row 2, column 2 of fighter 0's 3 x 3 sprite grid; $0B is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 12,
+   "type": "line",
+   "text": "Sprite pointer for row 2, column 3 of fighter 0's 3 x 3 sprite grid; $0D is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 14,
+   "type": "line",
+   "text": "Sprite pointer for row 3, column 1 of fighter 0's 3 x 3 sprite grid; $0F is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 16,
+   "type": "line",
+   "text": "Sprite pointer for row 3, column 2 of fighter 0's 3 x 3 sprite grid; $11 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 18,
+   "type": "line",
+   "text": "Sprite pointer for row 3, column 3 of fighter 0's 3 x 3 sprite grid; $13 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+  },
+  {
+   "address": 20,
+   "type": "line",
+   "text": "Fighter's sprite X, low byte: fighter_x ($6A) doubled ($386C). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $15 fighter 1's."
+  },
+  {
+   "address": 22,
+   "type": "line",
+   "text": "Fighter's sprite Y for the top of the grid: fighter_y ($6C) doubled; $A0 when standing ($383E). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $17 fighter 1's."
+  },
+  {
+   "address": 23,
+   "type": "line",
+   "text": "Fighter 1's fighter_spr_y (the byte after $16, read as $16,X with X = 1)."
+  },
+  {
+   "address": 24,
+   "type": "line",
+   "text": "Bit 8 of each fighter's sprite X (0 or 1), the carry of doubling $6A ($3871-$387A); $18 for fighter 0 and $19 for fighter 1."
+  },
+  {
+   "address": 26,
+   "type": "line",
+   "text": "Multiplexer copy of the X of the fighter in sprites 0-2, taken by the line-0 interrupt ($3237-$3251) so the frame is drawn from one consistent set; $1B is the other fighter's (sprites 3-5)."
+  },
+  {
+   "address": 27,
+   "type": "line",
+   "text": "Multiplexer copy of the X of the fighter in sprites 3-5 ($3237-$3251; the bull round also writes it at $13FC)."
+  },
+  {
+   "address": 28,
+   "type": "line",
+   "text": "Multiplexer copy of the top Y of the fighter in sprites 0-2. Its difference from $1D picks one of seven raster chains ($32CD)."
+  },
+  {
+   "address": 29,
+   "type": "line",
+   "text": "Multiplexer copy of the top Y of the fighter in sprites 3-5."
+  },
+  {
+   "address": 30,
+   "type": "line",
+   "text": "Multiplexer copy of the X bit 8 of the fighter in sprites 0-2."
+  },
+  {
+   "address": 31,
+   "type": "line",
+   "text": "Multiplexer copy of the X bit 8 of the fighter in sprites 3-5."
+  },
+  {
+   "address": 32,
+   "type": "line",
+   "text": "Which fighter (0 or 1) is drawn with sprites 0-2 this frame, from $24 ($3220-$3235)."
+  },
+  {
+   "address": 33,
+   "type": "line",
+   "text": "Which fighter is drawn with sprites 3-5 this frame, the other one of $20."
+  },
+  {
+   "address": 34,
+   "type": "line",
+   "text": "Fighter's sprite colour: 1 (white) and 2 (red), set at $19C7; the bull round sets fighter 1's to 9 ($135A). Read at $362F-$363E. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $23 fighter 1's."
+  },
+  {
+   "address": 35,
+   "type": "line",
+   "text": "Fighter 1's fighter_colour (the byte after $22, read as $22,X with X = 1)."
+  },
+  {
+   "address": 36,
+   "type": "line",
+   "text": "The fighter drawn with sprites 0-2 (the others use 3-5). Written by fighter_update from the sprite collision register ($282C/$2831) and by set-up ($18EF) and the bull round ($1336). Whether 0-2 means in front was not checked."
+  },
+  {
+   "address": 37,
+   "type": "line",
+   "text": "Low byte of the address of the handler that runs after the sprite chain (one of $2FFF, $3039, $3073, $30C5), chosen at $3253-$3288 by which fighters are off the ground; $26 is the high byte."
+  },
+  {
+   "address": 38,
+   "type": "line",
+   "text": "High byte of after_mux_irq ($25)."
+  },
+  {
+   "address": 39,
+   "type": "line",
+   "text": "Sprite pointer for column 1 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $28 is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+  },
+  {
+   "address": 41,
+   "type": "line",
+   "text": "Sprite pointer for column 2 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2A is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+  },
+  {
+   "address": 43,
+   "type": "line",
+   "text": "Sprite pointer for column 3 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2C is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+  },
+  {
+   "address": 45,
+   "type": "line",
+   "text": "Low byte of the address of the next speech byte ($3128); $2E is the high byte."
+  },
+  {
+   "address": 46,
+   "type": "line",
+   "text": "High byte of speech_ptr."
+  },
+  {
+   "address": 47,
+   "type": "line",
+   "text": "$0F or $00, flipped by every speech interrupt and written to $D418 ($311D): one-bit speech by switching the master volume."
+  },
+  {
+   "address": 49,
+   "type": "line",
+   "text": "Low byte of the address where the playing sample ends ($313D); $32 is the high byte."
+  },
+  {
+   "address": 50,
+   "type": "line",
+   "text": "High byte of speech_end."
+  },
+  {
+   "address": 51,
+   "type": "line",
+   "text": "0 while a sample plays, $FF when it has finished ($3149, $31C3); the bull round sets $7F ($134A) and waits on it ($141B)."
+  },
+  {
+   "address": 52,
+   "type": "line",
+   "text": "bitmap_unpack's source pointer, low byte, moving backwards through a packed stream ($17C4-$1836); $35 is the high byte."
+  },
+  {
+   "address": 53,
+   "type": "line",
+   "text": "High byte of unpack_src."
+  },
+  {
+   "address": 54,
+   "type": "line",
+   "text": "Destination pointer, low byte, shared by bitmap_unpack (downwards from $F53F) and colour_unpack (upwards from $D8C8 or $CCC8); $37 is the high byte."
+  },
+  {
+   "address": 55,
+   "type": "line",
+   "text": "High byte of unpack_dst."
+  },
+  {
+   "address": 56,
+   "type": "line",
+   "text": "Run length in bitmap_unpack ($17ED, $1805)."
+  },
+  {
+   "address": 62,
+   "type": "line",
+   "text": "X saved by speech_say_0..3 ($3158-$316A) and restored at $31EF."
+  },
+  {
+   "address": 63,
+   "type": "line",
+   "text": "colour_unpack's nybble stream pointer, low byte ($1852, $18C0); $40 is the high byte."
+  },
+  {
+   "address": 64,
+   "type": "line",
+   "text": "High byte of colour_src."
+  },
+  {
+   "address": 65,
+   "type": "line",
+   "text": "The nybble colour_unpack read last ($18C6)."
+  },
+  {
+   "address": 66,
+   "type": "line",
+   "text": "$0F or $F0: which half of the stream byte colour_unpack reads next ($18C8)."
+  },
+  {
+   "address": 67,
+   "type": "line",
+   "text": "$F0 or $0F: which half of the destination byte colour_unpack keeps (it writes the other) ($185D-$187D)."
+  },
+  {
+   "address": 68,
+   "type": "line",
+   "text": "The kept half of the destination byte, while colour_unpack inserts a nybble ($18D1)."
+  },
+  {
+   "address": 69,
+   "type": "line",
+   "text": "Animation the fighter should play, which is the move number ($2B4C); 0 for none. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $46 fighter 1's."
+  },
+  {
+   "address": 70,
+   "type": "line",
+   "text": "Fighter 1's anim_request (the byte after $45, read as $45,X with X = 1)."
+  },
+  {
+   "address": 71,
+   "type": "line",
+   "text": "Animation number once fighter_animate has started it ($3893); set to 0 to force a restart ($2B59). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $48 fighter 1's."
+  },
+  {
+   "address": 72,
+   "type": "line",
+   "text": "Fighter 1's anim_loaded (the byte after $47, read as $47,X with X = 1)."
+  },
+  {
+   "address": 73,
+   "type": "line",
+   "text": "Ticks left in the current animation step ($37CC, $3823). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $4A fighter 1's."
+  },
+  {
+   "address": 75,
+   "type": "line",
+   "text": "Non-zero: the animation plays backwards and its X steps are negated against the facing ($37DC, $3843, $38A2). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $4C fighter 1's."
+  },
+  {
+   "address": 76,
+   "type": "line",
+   "text": "Fighter 1's anim_reverse (the byte after $4B, read as $4B,X with X = 1)."
+  },
+  {
+   "address": 77,
+   "type": "line",
+   "text": "Byte offset of fighter 0's current 4-byte step in its list ($37E0-$380F); fighter 1's is at $4E."
+  },
+  {
+   "address": 79,
+   "type": "line",
+   "text": "Pointer to the step list of the fighter being animated, low byte ($3818); $50 is the high byte."
+  },
+  {
+   "address": 80,
+   "type": "line",
+   "text": "High byte of anim_list_ptr."
+  },
+  {
+   "address": 81,
+   "type": "line",
+   "text": "Shape frame on show, 0-$4E (byte 2 of each step, $3828); the hit test reads it ($2B86). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $52 fighter 1's."
+  },
+  {
+   "address": 82,
+   "type": "line",
+   "text": "Fighter 1's fighter_frame (the byte after $51, read as $51,X with X = 1)."
+  },
+  {
+   "address": 83,
+   "type": "line",
+   "text": "0: facing right; non-zero: facing left, built mirrored ($3922) and with the stick's left and right swapped ($2857). Flipped when a turn ends ($2AAC) and by the computer ($23DF). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $54 fighter 1's."
+  },
+  {
+   "address": 84,
+   "type": "line",
+   "text": "Fighter 1's fighter_facing (the byte after $53, read as $53,X with X = 1)."
+  },
+  {
+   "address": 85,
+   "type": "line",
+   "text": "Fighter 0's X step per tick, from byte 3 of the step ($382D); $56 is fighter 1's."
+  },
+  {
+   "address": 87,
+   "type": "line",
+   "text": "Fighter 0's Y step per tick, from byte 4 of the step ($3832); $58 is fighter 1's."
+  },
+  {
+   "address": 89,
+   "type": "line",
+   "text": "Set to 1 when the fighter's animation has run out ($37E8, $380A), cleared at $2A95. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $5A fighter 1's."
+  },
+  {
+   "address": 90,
+   "type": "line",
+   "text": "Fighter 1's anim_ended (the byte after $59, read as $59,X with X = 1)."
+  },
+  {
+   "address": 91,
+   "type": "line",
+   "text": "Length in bytes of fighter 0's step list ($38A0); $5C is fighter 1's."
+  },
+  {
+   "address": 93,
+   "type": "line",
+   "text": "0: the sprite builder copies shape cells; $40 (the bull round, $133A/$13CD): frame bytes are used as sprite pointers directly."
+  },
+  {
+   "address": 94,
+   "type": "line",
+   "text": "Copy of a fighter's hit state ($5F,X) when its knock-down animation ends ($2A9B); a non-zero value ends the exchange ($1AB5) and the bull round reads it."
+  },
+  {
+   "address": 95,
+   "type": "line",
+   "text": "Non-zero while the fighter reacts to a blow: the reaction move, which control reading copies into the request ($2834); set by blow_reaction ($2CD9-$2CEF). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $60 fighter 1's."
+  },
+  {
+   "address": 96,
+   "type": "line",
+   "text": "Fighter 1's hit_state (the byte after $5F, read as $5F,X with X = 1)."
+  },
+  {
+   "address": 97,
+   "type": "line",
+   "text": "The fighter's current move, 1-$1F (see the stick table at $286C and anim_list_table at $7720); $17 at the start of an exchange ($1A79). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $62 fighter 1's."
+  },
+  {
+   "address": 99,
+   "type": "line",
+   "text": "Fighter 0's requested move, from the stick, the keyboard, the computer or a forced reaction ($2834-$2930); $64 is fighter 1's."
+  },
+  {
+   "address": 101,
+   "type": "line",
+   "text": "Non-zero when the computer plays the fighter ($283B): both in the attract mode ($1CF4), fighter 1 in a one-player game ($1BAD), neither with two players ($1B0D). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $66 fighter 1's."
+  },
+  {
+   "address": 102,
+   "type": "line",
+   "text": "Fighter 1's is_computer (the byte after $65, read as $65,X with X = 1)."
+  },
+  {
+   "address": 103,
+   "type": "line",
+   "text": "Written as $67,X at $1A73, $2A67, $2AB4 and $2ADF; no instruction reads it. Purpose unknown."
+  },
+  {
+   "address": 105,
+   "type": "line",
+   "text": "The other fighter's index (0 or 1) while fighter_update works on fighter X ($1AA1, $1AA8)."
+  },
+  {
+   "address": 106,
+   "type": "line",
+   "text": "Fighter's horizontal position in half-screen units (sprite X = 2 x this); clamped by $12E9/$12EB. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $6B fighter 1's."
+  },
+  {
+   "address": 107,
+   "type": "line",
+   "text": "Fighter 1's fighter_x (the byte after $6A, read as $6A,X with X = 1)."
+  },
+  {
+   "address": 108,
+   "type": "line",
+   "text": "Fighter's height in half units, $50 on the ground ($383C, $1AD6). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $6D fighter 1's."
+  },
+  {
+   "address": 109,
+   "type": "line",
+   "text": "Fighter 1's fighter_y (the byte after $6C, read as $6C,X with X = 1)."
+  },
+  {
+   "address": 110,
+   "type": "line",
+   "text": "Value of the fighter's last scoring blow: 2 whole point, 1 half ($2C20, $2C33). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $6F fighter 1's."
+  },
+  {
+   "address": 111,
+   "type": "line",
+   "text": "Fighter 1's blow_value (the byte after $6E, read as $6E,X with X = 1)."
+  },
+  {
+   "address": 112,
+   "type": "line",
+   "text": "Pointer to the reach profile chosen for the blow being tested, low byte ($2B9E); $71 is the high byte."
+  },
+  {
+   "address": 113,
+   "type": "line",
+   "text": "High byte of reach_ptr."
+  },
+  {
+   "address": 114,
+   "type": "line",
+   "text": "The reach profile's byte for the defender's frame: the distance at which the blow lands squarely ($2BB0)."
+  },
+  {
+   "address": 115,
+   "type": "line",
+   "text": "Signed distance from the fighter to its opponent along its own facing, used by the hit test ($2BE2) and the computer."
+  },
+  {
+   "address": 116,
+   "type": "line",
+   "text": "Non-zero while the fighter holds the last pose of a move ($29CA, $2AD4, $2B5F). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $75 fighter 1's."
+  },
+  {
+   "address": 118,
+   "type": "line",
+   "text": "Which of the fighter's two build buffers is shown (0/1 for fighter 0, 2/3 for fighter 1); flipped by every build ($391B, $1A56). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $77 fighter 1's."
+  },
+  {
+   "address": 119,
+   "type": "line",
+   "text": "Fighter 1's sprite_buffer (the byte after $76, read as $76,X with X = 1)."
+  },
+  {
+   "address": 120,
+   "type": "line",
+   "text": "Sprite builder destination pointer, low byte ($392C); $79 is the high byte."
+  },
+  {
+   "address": 121,
+   "type": "line",
+   "text": "High byte of build_dst."
+  },
+  {
+   "address": 122,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 0 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 123,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 1 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 124,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 2 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 125,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 3 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 126,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 4 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 127,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 5 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 128,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 6 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 129,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 7 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 130,
+   "type": "line",
+   "text": "Sprite pointer for grid slot 8 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+  },
+  {
+   "address": 131,
+   "type": "line",
+   "text": "X saved during the mirrored build ($3C08)."
+  },
+  {
+   "address": 134,
+   "type": "line",
+   "text": "Countdown before the fighter's next move is accepted ($29C2-$29C6). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $87 fighter 1's."
+  },
+  {
+   "address": 135,
+   "type": "line",
+   "text": "Fighter 1's reaction_delay (the byte after $86, read as $86,X with X = 1)."
+  },
+  {
+   "address": 136,
+   "type": "line",
+   "text": "1 on the tick an animation step starts ($37D2, $37DA); the hit test only fires then ($2B77). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $89 fighter 1's."
+  },
+  {
+   "address": 138,
+   "type": "line",
+   "text": "Half yin-yangs the fighter has scored this bout; 4 win it ($1D5F). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $8B fighter 1's."
+  },
+  {
+   "address": 139,
+   "type": "line",
+   "text": "Fighter 1's halves (the byte after $8A, read as $8A,X with X = 1)."
+  },
+  {
+   "address": 140,
+   "type": "line",
+   "text": "The attacker's move when a blow lands ($2CAC), the index into move_points ($206C)."
+  },
+  {
+   "address": 141,
+   "type": "line",
+   "text": "Per-level mask for how long the computer holds a move ($2593, from $27A9)."
+  },
+  {
+   "address": 142,
+   "type": "line",
+   "text": "Computer's countdown while holding a move. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $8F fighter 1's."
+  },
+  {
+   "address": 143,
+   "type": "line",
+   "text": "Fighter 1's ai_hold_timer (the byte after $8E, read as $8E,X with X = 1)."
+  },
+  {
+   "address": 144,
+   "type": "line",
+   "text": "The move the computer has decided on. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $91 fighter 1's."
+  },
+  {
+   "address": 145,
+   "type": "line",
+   "text": "Fighter 1's ai_chosen_move (the byte after $90, read as $90,X with X = 1)."
+  },
+  {
+   "address": 147,
+   "type": "line",
+   "text": "Computer opponent scratch, written at $24ED and $2549 and read just after."
+  },
+  {
+   "address": 148,
+   "type": "line",
+   "text": "Per-level mask for how widely the computer varies its attack ($27B5)."
+  },
+  {
+   "address": 149,
+   "type": "line",
+   "text": "Computer's wait at close range. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $96 fighter 1's."
+  },
+  {
+   "address": 150,
+   "type": "line",
+   "text": "Fighter 1's ai_close_timer (the byte after $95, read as $95,X with X = 1)."
+  },
+  {
+   "address": 151,
+   "type": "line",
+   "text": "Per-level mask for the close-range wait ($27C1)."
+  },
+  {
+   "address": 152,
+   "type": "line",
+   "text": "State of random_next ($2589): shifted left, XOR $1D on carry, cycling through all 255 non-zero values."
+  },
+  {
+   "address": 153,
+   "type": "line",
+   "text": "A second random byte, stepped every frame by $1AFF; seeded $53 at $190C."
+  },
+  {
+   "address": 154,
+   "type": "line",
+   "text": "Non-zero while the computer is turning round. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $9B fighter 1's."
+  },
+  {
+   "address": 155,
+   "type": "line",
+   "text": "Fighter 1's ai_turning (the byte after $9A, read as $9A,X with X = 1)."
+  },
+  {
+   "address": 156,
+   "type": "line",
+   "text": "Per-level mask for how the computer mixes block, plan and counter-attack ($27F0)."
+  },
+  {
+   "address": 157,
+   "type": "line",
+   "text": "The computer's scripted plan, 0 (none) to 9, dispatched through $2774. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $9E fighter 1's."
+  },
+  {
+   "address": 158,
+   "type": "line",
+   "text": "Fighter 1's ai_plan (the byte after $9D, read as $9D,X with X = 1)."
+  },
+  {
+   "address": 159,
+   "type": "line",
+   "text": "Plan handler address, low byte, for JMP ($9F) at $2695; $A0 is the high byte."
+  },
+  {
+   "address": 160,
+   "type": "line",
+   "text": "High byte of ai_plan_vector."
+  },
+  {
+   "address": 161,
+   "type": "line",
+   "text": "Computer's wait counter, loaded only at $2593, so it wraps to 255 after the first wait. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $A2 fighter 1's."
+  },
+  {
+   "address": 162,
+   "type": "line",
+   "text": "Fighter 1's ai_forced_wait (the byte after $A1, read as $A1,X with X = 1)."
+  },
+  {
+   "address": 163,
+   "type": "line",
+   "text": "Per-level mask for the computer's choice of backward moves ($27E4)."
+  },
+  {
+   "address": 164,
+   "type": "line",
+   "text": "Computer's walking countdown. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $A5 fighter 1's."
+  },
+  {
+   "address": 165,
+   "type": "line",
+   "text": "Fighter 1's ai_walk_timer (the byte after $A4, read as $A4,X with X = 1)."
+  },
+  {
+   "address": 166,
+   "type": "line",
+   "text": "Per-level pause mask ($27D8). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $A7 fighter 1's."
+  },
+  {
+   "address": 168,
+   "type": "line",
+   "text": "Per-level walk-time mask ($27CD). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $A9 fighter 1's."
+  },
+  {
+   "address": 170,
+   "type": "line",
+   "text": "Computer's reaction countdown. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $AB fighter 1's."
+  },
+  {
+   "address": 172,
+   "type": "line",
+   "text": "Per-level reaction-delay mask ($27FC)."
+  },
+  {
+   "address": 173,
+   "type": "line",
+   "text": "$D021 for the text panel at the top, written by the line-255 interrupt ($3108); set at $19AA."
+  },
+  {
+   "address": 174,
+   "type": "line",
+   "text": "0 for a one-player game, 1 for two players; F3 flips it in the attract mode ($1EAC). Checked live: 1 in a two-player game."
+  },
+  {
+   "address": 175,
+   "type": "line",
+   "text": "Progress: AND 3 picks the backdrop (0 Fuji, 1 lake, 2 dojo, 3 Buddha); counts stages cleared ($1C2F), and is $20 plus a count past tenth dan ($1C63)."
+  },
+  {
+   "address": 176,
+   "type": "line",
+   "text": "0 in the attract mode, 1 in a game; the menu keys work only at 0 ($1E90)."
+  },
+  {
+   "address": 177,
+   "type": "line",
+   "text": "Calls left in the current clock unit, reloaded with 50 ($212F)."
+  },
+  {
+   "address": 178,
+   "type": "line",
+   "text": "Units left on the bout clock, from 30 ($1B37, $2160)."
+  },
+  {
+   "address": 179,
+   "type": "line",
+   "text": "The fighter's level as a computer opponent, 0-11 ($2593); fighter 1's ($B4) is also the rank in a one-player game, shown through $22C3. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $B4 fighter 1's."
+  },
+  {
+   "address": 180,
+   "type": "line",
+   "text": "Fighter 1's fighter_level (the byte after $B3, read as $B3,X with X = 1)."
+  },
+  {
+   "address": 181,
+   "type": "line",
+   "text": "Bouts still to win before the rank goes up, from 2 ($1C14)."
+  },
+  {
+   "address": 182,
+   "type": "line",
+   "text": "Index of the backdrop now unpacked in the bitmap, so it is unpacked only on a change ($1F43; $FF-style reset at $1912)."
+  },
+  {
+   "address": 187,
+   "type": "line",
+   "text": "Keyboard row read last time, to act on a function key only once per press ($1E76)."
+  },
+  {
+   "address": 188,
+   "type": "line",
+   "text": "Set when the bout clock reaches zero ($2166)."
+  },
+  {
+   "address": 189,
+   "type": "line",
+   "text": "Total of the fighter's blow values this bout, the tie-break when time runs out ($2169, $1CAE). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $BE fighter 1's."
+  },
+  {
+   "address": 190,
+   "type": "line",
+   "text": "Fighter 1's bout_points (the byte after $BD, read as $BD,X with X = 1)."
+  },
+  {
+   "address": 191,
+   "type": "line",
+   "text": "Pointer to screen or table text for the score and high-score routines, low byte; $C0 is the high byte."
+  },
+  {
+   "address": 192,
+   "type": "line",
+   "text": "High byte of text_ptr."
+  },
+  {
+   "address": 194,
+   "type": "line",
+   "text": "Bonus round: 0 while the bull charges, 1 when it has hit the player, $80 when it is felled ($1368, $138F, $13BC)."
+  },
+  {
+   "address": 196,
+   "type": "line",
+   "text": "Scratch for the keyboard scans ($153C, the keyboard controls at $28B2-$29B3)."
+  },
+  {
+   "address": 197,
+   "type": "line",
+   "text": "The fire bit being built while reading the keyboard controls ($28A1-$2950)."
+  },
+  {
+   "address": 198,
+   "type": "line",
+   "text": "0: joystick control; non-zero: keyboard (F7 flips it, $1EC5)."
+  },
+  {
+   "address": 199,
+   "type": "line",
+   "text": "Last key read by the name-entry scanner, $40 for none ($155A, $1494)."
+  },
+  {
+   "address": 200,
+   "type": "line",
+   "text": "Loop and place index in the high-score table routines ($15D5-$16F3)."
+  },
+  {
+   "address": 201,
+   "type": "line",
+   "text": "The rank to store with a new high score ($1BDE, $1C3E, $16FB)."
+  },
+  {
+   "address": 202,
+   "type": "line",
+   "text": "Column offset used by rank_text_draw ($21FB) and the high-score table ($15CF)."
+  },
+  {
+   "address": 203,
+   "type": "line",
+   "text": "Place of a new high score, 0-4, or 5 for none ($166B)."
+  },
+  {
+   "address": 204,
+   "type": "line",
+   "text": "Colour RAM pointer for the name-entry screen, low byte ($14B9, $17B5); $CD is the high byte."
+  },
+  {
+   "address": 205,
+   "type": "line",
+   "text": "High byte of colour_ptr."
+  },
+  {
+   "address": 206,
+   "type": "line",
+   "text": "Scratch byte for the computer opponent and the panel code."
+  },
+  {
+   "address": 207,
+   "type": "line",
+   "text": "Non-zero switches the speech samples off (speech_start tests it, $3186). DEL flips it in the attract mode ($1ED8); the loader's menu calls this sound effects on and off."
+  },
+  {
+   "address": 249,
+   "type": "line",
+   "text": "Order-list pointer of the voice the music driver is playing, low byte ($0A66); $FA is the high byte."
+  },
+  {
+   "address": 250,
+   "type": "line",
+   "text": "High byte of music_order_ptr."
+  },
+  {
+   "address": 251,
+   "type": "line",
+   "text": "Pattern pointer of the voice being played, low byte ($0A70, $0ADA); $FC is the high byte."
+  },
+  {
+   "address": 252,
+   "type": "line",
+   "text": "High byte of music_pattern_ptr."
+  },
+  {
+   "address": 253,
+   "type": "line",
+   "text": "Music driver vector, low byte: the order-command handler for JMP ($FD) at $0A8B, then the instrument record pointer ($0D41); $FE is the high byte."
+  },
+  {
+   "address": 254,
+   "type": "line",
+   "text": "High byte of music_vector."
+  },
+  {
+   "address": 255,
+   "type": "line",
+   "text": "The song the game asks for: 0 silence, 1 attract mode ($1CF8), 2 one-player game ($1BE5), 3 two players ($1B31), 4 name entry ($1764)."
+  },
   {
    "address": 512,
    "type": "line",
@@ -8628,6 +9977,11 @@
    "address": 2035,
    "type": "line",
    "text": "Song 3 pattern 3 ($07F3-$0820, 46 bytes), played by voice 3: 22 note events (3 rests), instruments 18, ends $FF. Format: $80+n selects instrument n; any other byte is a note (bits 0-3 semitone 1-12 or 0 rest, bits 4-6 octave added to the instrument transpose) followed by a length byte (bits 0-3 index music_duration_table, bit 6 tie, bit 7 glide into the next note)."
+  },
+  {
+   "address": 2048,
+   "type": "line",
+   "text": "The last 33 bytes of song 3 pattern 3 ($07F3-$0820), which runs across $0800; the pattern and its format are described at $07F3."
   },
   {
    "address": 2081,
@@ -11445,9 +12799,544 @@
    "text": "Backdrop 3 (Buddha): its colours, packed as nybbles in the format described at $68CB, $6FE0-$71FF, ending in the high nybble of $71FF."
   },
   {
+   "address": 29184,
+   "type": "line",
+   "text": "Reach profile for blow $06 (up-forward: high punch) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29243,
+   "type": "line",
+   "text": "Reach profile for blow $07 (down-forward while crouching) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29302,
+   "type": "line",
+   "text": "Reach profile for blow $0A (fire + down) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29361,
+   "type": "line",
+   "text": "Reach profile for blow $0B (fire + down-forward) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29420,
+   "type": "line",
+   "text": "Reach profile for blow $0C (fire + forward) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29479,
+   "type": "line",
+   "text": "Reach profile for blow $0D (fire + up-forward) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29538,
+   "type": "line",
+   "text": "Reach profile for blow $0E (fire + up: flying kick) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29597,
+   "type": "line",
+   "text": "Reach profile for blow $0F (fire + up-back) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29656,
+   "type": "line",
+   "text": "Reach profile for blow $18 (down-forward from standing: mid punch) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29715,
+   "type": "line",
+   "text": "Reach profile for blow $11 (fire + back) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29774,
+   "type": "line",
+   "text": "Reach profile for blow $10 (fire + down-back) when the fighters face each other (pointer in move_reach_ptr_facing $121D): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29833,
+   "type": "line",
+   "text": "Reach profile for blow $06 (up-forward: high punch) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29892,
+   "type": "line",
+   "text": "Reach profile for blow $07 (down-forward while crouching) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 29951,
+   "type": "line",
+   "text": "Reach profile for blow $0A (fire + down) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30010,
+   "type": "line",
+   "text": "Reach profile for blow $0B (fire + down-forward) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30069,
+   "type": "line",
+   "text": "Reach profile for blow $0C (fire + forward) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30128,
+   "type": "line",
+   "text": "Reach profile for blow $0D (fire + up-forward) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30187,
+   "type": "line",
+   "text": "Reach profile for blow $0E (fire + up: flying kick) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30246,
+   "type": "line",
+   "text": "Reach profile for blow $0F (fire + up-back) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30305,
+   "type": "line",
+   "text": "Reach profile for blow $18 (down-forward from standing: mid punch) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30364,
+   "type": "line",
+   "text": "Reach profile for blow $11 (fire + back) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30423,
+   "type": "line",
+   "text": "Reach profile for blow $10 (fire + down-back) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+  },
+  {
+   "address": 30496,
+   "type": "line",
+   "text": "Animation step lists, one word per animation number (= move number, copied from $61,X at $2B4C): entries 1-31 point at $7762-$79D6, entry 0 is $0000 (no animation) and entry 32 ($79EA) marks the end of list 31. anim_start ($3885) takes a list's length as the difference of the low bytes of two consecutive words, so each list must be shorter than 256 bytes (all are)."
+  },
+  {
+   "address": 30497,
+   "type": "line",
+   "text": "Second byte of anim_list_table: fighter_animate reads each list address as $7720,Y (low) and $7721,Y (high) at $3815/$381A, so this symbol is only the table's high-byte view."
+  },
+  {
+   "address": 30498,
+   "type": "line",
+   "text": "anim_list_table read one entry on: anim_start ($3899) subtracts the low byte at $7720,Y from the one at $7722,Y to get a list's length in bytes."
+  },
+  {
+   "address": 30562,
+   "type": "line",
+   "text": "Animation $01 (standing): 1 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $00."
+  },
+  {
+   "address": 30566,
+   "type": "line",
+   "text": "Animation $02 (stick forward: walk forward): 21 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $00, $01, $02, $03, $30, $31, $32, $33."
+  },
+  {
+   "address": 30650,
+   "type": "line",
+   "text": "Animation $03 (stick back: walk back): 21 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $00, $01, $02, $03, $30, $31, $32, $33."
+  },
+  {
+   "address": 30734,
+   "type": "line",
+   "text": "Animation $04 (stick down: crouch): 4 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $00, $0C."
+  },
+  {
+   "address": 30750,
+   "type": "line",
+   "text": "Animation $05 (stick up: jump): 5 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $09, $19."
+  },
+  {
+   "address": 30770,
+   "type": "line",
+   "text": "Animation $06 (up-forward: high punch): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $06, $07."
+  },
+  {
+   "address": 30782,
+   "type": "line",
+   "text": "Animation $07 (down-forward while crouching): 1 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $0D."
+  },
+  {
+   "address": 30786,
+   "type": "line",
+   "text": "Animation $08 (down-back: somersault backwards): 7 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $14, $15, $16, $17, $19, $20."
+  },
+  {
+   "address": 30814,
+   "type": "line",
+   "text": "Animation $09 (up-back: somersault forwards): 8 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $14, $15, $16, $17, $19, $20."
+  },
+  {
+   "address": 30846,
+   "type": "line",
+   "text": "Animation $0A (fire + down): 2 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $0F, $10."
+  },
+  {
+   "address": 30854,
+   "type": "line",
+   "text": "Animation $0B (fire + down-forward): 2 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $04, $08."
+  },
+  {
+   "address": 30862,
+   "type": "line",
+   "text": "Animation $0C (fire + forward): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $04, $05, $18."
+  },
+  {
+   "address": 30874,
+   "type": "line",
+   "text": "Animation $0D (fire + up-forward): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $04, $0B, $1E."
+  },
+  {
+   "address": 30886,
+   "type": "line",
+   "text": "Animation $0E (fire + up: flying kick): 11 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $04, $09, $0A, $19, $3A."
+  },
+  {
+   "address": 30930,
+   "type": "line",
+   "text": "Animation $0F (fire + up-back): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $11, $12, $22."
+  },
+  {
+   "address": 30942,
+   "type": "line",
+   "text": "Animation $10 (fire + down-back): 4 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $34, $39."
+  },
+  {
+   "address": 30958,
+   "type": "line",
+   "text": "Animation $11 (fire + back): 4 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $1C, $1D, $1F, $24."
+  },
+  {
+   "address": 30974,
+   "type": "line",
+   "text": "Animation $12 (turn round (fire + back from standing becomes this)): 1 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $1B."
+  },
+  {
+   "address": 30978,
+   "type": "line",
+   "text": "Animation $13 (a block (from move_block_answer $118F)): 1 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $23."
+  },
+  {
+   "address": 30982,
+   "type": "line",
+   "text": "Animation $14 (the other block (from $118F)): 1 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $0E."
+  },
+  {
+   "address": 30986,
+   "type": "line",
+   "text": "Animation $15 (set by code outside the stick table; not identified): 2 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $04, $18."
+  },
+  {
+   "address": 30994,
+   "type": "line",
+   "text": "Animation $16 (a hit reaction, given to the defender at $2CA8): 8 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $29, $2A, $2B, $2C."
+  },
+  {
+   "address": 31026,
+   "type": "line",
+   "text": "Animation $17 (not identified): 5 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $1A, $21."
+  },
+  {
+   "address": 31046,
+   "type": "line",
+   "text": "Animation $18 (down-forward from standing: mid punch): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $06, $13."
+  },
+  {
+   "address": 31058,
+   "type": "line",
+   "text": "Animation $19 (not identified): 5 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $35, $36, $37, $38."
+  },
+  {
+   "address": 31078,
+   "type": "line",
+   "text": "Animation $1A (a hit reaction, given to the defender at $2CA8): 4 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $25, $26, $27, $28."
+  },
+  {
+   "address": 31094,
+   "type": "line",
+   "text": "Animation $1B (a hit reaction, given to the defender at $2CA8): 3 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $2D, $2E, $2F."
+  },
+  {
+   "address": 31106,
+   "type": "line",
+   "text": "Animation $1C (the bull (bonus round, $1344)): 9 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $3B, $3C, $3D, $3E, $3F."
+  },
+  {
+   "address": 31142,
+   "type": "line",
+   "text": "Animation $1D (the bull (bonus round)): 7 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $40, $41, $42."
+  },
+  {
+   "address": 31170,
+   "type": "line",
+   "text": "Animation $1E (the bull (bonus round)): 5 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $44, $45, $46."
+  },
+  {
+   "address": 31190,
+   "type": "line",
+   "text": "Animation $1F (the bull (bonus round)): 5 steps of 4 bytes (ticks to hold, shape frame, X step, Y step), read by fighter_animate ($37BD-$3884), forwards or backwards. Shape frames used: $48, $4C."
+  },
+  {
+   "address": 31456,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 0 of the 3 x 3 grid (row 1, column 1): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31535,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 1 of the 3 x 3 grid (row 1, column 2): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31614,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 2 of the 3 x 3 grid (row 1, column 3): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31693,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 3 of the 3 x 3 grid (row 2, column 1): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31772,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 4 of the 3 x 3 grid (row 2, column 2): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31851,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 5 of the 3 x 3 grid (row 2, column 3): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 31930,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 6 of the 3 x 3 grid (row 3, column 1): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 32009,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 7 of the 3 x 3 grid (row 3, column 2): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 32088,
+   "type": "line",
+   "text": "Shape frame to cell, sprite slot 8 of the 3 x 3 grid (row 3, column 3): 79 bytes, one per shape frame 0-$4E. Read by the sprite builder ($3936-$3B0C): cell 0 leaves the slot blank (pointer 0, the empty sprite at $C000); any other cell is copied from $8000 + 64 x cell. For the bull (frames $3B-$4C, with $5D = $40) the byte is used as the sprite pointer itself."
+  },
+  {
+   "address": 32256,
+   "type": "line",
+   "text": "Mirror table for multicolour sprites: entry n is n with its four bit pairs in reverse order ($01 becomes $40, $1B becomes $E4). The mirrored sprite build ($3BC5-$3E7F) passes every byte through it to turn a fighter round; checked for all 256 entries. The same 256 bytes are Fist II's mirror table."
+  },
+  {
+   "address": 32512,
+   "type": "line",
+   "text": "Page of each shape cell: entry n is $80 + n / 4, so cell n's 64 bytes start at $8000 + 64 x n (the low byte comes from cell_lo_offsets at $38B0). Read with the cell number as index by the sprite builder ($3956 and the eight like it)."
+  },
+  {
+   "address": 32768,
+   "type": "line",
+   "text": "Fighter shape cells $00-$0F: sixteen multicolour sprite images of 64 bytes each ($8000-$83FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 32896,
+   "type": "line",
+   "text": "Shape cell $02 ($8080-$80BF), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($399F)."
+  },
+  {
+   "address": 32960,
+   "type": "line",
+   "text": "Shape cell $03 ($80C0-$80FF), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($396B)."
+  },
+  {
+   "address": 33024,
+   "type": "line",
+   "text": "Shape cell $04 ($8100-$813F), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3A07)."
+  },
+  {
+   "address": 33088,
+   "type": "line",
+   "text": "Shape cell $05 ($8140-$817F), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3A3B)."
+  },
+  {
+   "address": 33216,
+   "type": "line",
+   "text": "Shape cell $07 ($81C0-$81FF), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3AA3)."
+  },
+  {
+   "address": 33280,
+   "type": "line",
+   "text": "Shape cell $08 ($8200-$823F), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3AD7)."
+  },
+  {
+   "address": 33344,
+   "type": "line",
+   "text": "Shape cell $09 ($8240-$827F), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3E5F/$3E69/$3E73)."
+  },
+  {
+   "address": 33792,
+   "type": "line",
+   "text": "Fighter shape cells $10-$1F: sixteen multicolour sprite images of 64 bytes each ($8400-$87FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 34816,
+   "type": "line",
+   "text": "Fighter shape cells $20-$2F: sixteen multicolour sprite images of 64 bytes each ($8800-$8BFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 35840,
+   "type": "line",
+   "text": "Fighter shape cells $30-$3F: sixteen multicolour sprite images of 64 bytes each ($8C00-$8FFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 36864,
+   "type": "line",
+   "text": "Fighter shape cells $40-$4F: sixteen multicolour sprite images of 64 bytes each ($9000-$93FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 37696,
+   "type": "line",
+   "text": "Shape cell $4D ($9340-$937F), one of the 64-byte images described at the start of its block of sixteen. The address is also the assembled value of an operand that the sprite builder rewrites before every use, so nothing actually reads here through it ($3B0B)."
+  },
+  {
+   "address": 37888,
+   "type": "line",
+   "text": "Fighter shape cells $50-$5F: sixteen multicolour sprite images of 64 bytes each ($9400-$97FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 38912,
+   "type": "line",
+   "text": "Fighter shape cells $60-$6F: sixteen multicolour sprite images of 64 bytes each ($9800-$9BFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 39936,
+   "type": "line",
+   "text": "Fighter shape cells $70-$7F: sixteen multicolour sprite images of 64 bytes each ($9C00-$9FFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 40960,
+   "type": "line",
+   "text": "Fighter shape cells $80-$8F: sixteen multicolour sprite images of 64 bytes each ($A000-$A3FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 41984,
+   "type": "line",
+   "text": "Fighter shape cells $90-$9F: sixteen multicolour sprite images of 64 bytes each ($A400-$A7FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 43008,
+   "type": "line",
+   "text": "Fighter shape cells $A0-$AF: sixteen multicolour sprite images of 64 bytes each ($A800-$ABFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 44032,
+   "type": "line",
+   "text": "Fighter shape cells $B0-$BF: sixteen multicolour sprite images of 64 bytes each ($AC00-$AFFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 45056,
+   "type": "line",
+   "text": "Fighter shape cells $C0-$CF: sixteen multicolour sprite images of 64 bytes each ($B000-$B3FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 46080,
+   "type": "line",
+   "text": "Fighter shape cells $D0-$DF: sixteen multicolour sprite images of 64 bytes each ($B400-$B7FF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 47104,
+   "type": "line",
+   "text": "Fighter shape cells $E0-$EF: sixteen multicolour sprite images of 64 bytes each ($B800-$BBFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 48128,
+   "type": "line",
+   "text": "Fighter shape cells $F0-$FF: sixteen multicolour sprite images of 64 bytes each ($BC00-$BFFF), parts of the fighters' poses. The sprite builder ($3936-$3B0C, mirrored $3BC5-$3E7F) copies cell n from $8000 + 64 x n into the fighter's build buffer at $C040-$C93F, using the frame tables at $7AE0. The whole set at $8000-$BFFF holds cells $01-$FF; cell $00 is never copied (a frame byte of 0 leaves the slot blank)."
+  },
+  {
+   "address": 49152,
+   "type": "line",
+   "text": "Sprite pointer 0: an empty sprite (63 zero bytes; the 64th byte, which no sprite shows, is $50). A grid slot whose frame byte is 0 gets pointer 0 and so shows nothing."
+  },
+  {
+   "address": 51520,
+   "type": "line",
+   "text": "The bull's sprite images for pointers $25-$2F ($C940-$CBFF), just past the fighters' build buffers. In the bonus round $5D = $40 makes the sprite builder use the bull's frame-table bytes as pointers, so these are shown directly, never copied. Loaded with the game and unchanged in play."
+  },
+  {
+   "address": 53248,
+   "type": "line",
+   "text": "RAM under the I/O chips, seen only by the video chip (VIC bank 3): sprite images shown directly by pointer. $D000-$D1FF, pointers $40-$47: parts of the bull."
+  },
+  {
+   "address": 53760,
+   "type": "line",
+   "text": "Sprite images for pointers $48-$4E ($D200-$D3BF). No frame table, pointer table or immediate load in the code was found to produce these pointers; their use is not known."
+  },
+  {
+   "address": 54208,
+   "type": "line",
+   "text": "Sprite image for pointer $4F, part of the bull (a cell in the bull's frames $3B-$4C)."
+  },
+  {
+   "address": 54272,
+   "type": "line",
+   "text": "Sprite images $50 and $51 ($D400-$D47F): with $5C, the images judge_decision ($1F93) puts on sprites 6 and 7 over the seated judge in the backdrop when a bout is decided (pointer $5C or $50 for sprite 6, by backdrop, and $51 for sprite 7). What they look like on screen was not checked live."
+  },
+  {
+   "address": 54400,
+   "type": "line",
+   "text": "Sprite images $52-$70 ($D480-$DC3F, $5C also the judge's): the fighters' lowest sprite row, used in place of built cells. The pointer table at $3B5D gives these for the shape frames drawn off the ground, and the handler on line $D9 ($2FFF/$3039/$3073/$30C5) shows them at Y $DA. Watching the pointers live through the attract mode found $52-$70 in sprites 0-5; the images are mostly flat white strips (the shadow under a jumping fighter)."
+  },
+  {
+   "address": 55424,
+   "type": "line",
+   "text": "Sprite images $62-$70 ($D880-$DC3F), the second part of the fighters' extra lowest row described at $D480 (pointers from the table at $3B5D)."
+  },
+  {
+   "address": 56384,
+   "type": "line",
+   "text": "Sprite images $71-$7F ($DC40-$DFFF): parts of the bull, pointed to directly by its frames. $77 also appeared in all eight sprite pointers at once in the attract mode."
+  },
+  {
+   "address": 57344,
+   "type": "line",
+   "text": "Sprite images $80-$83 ($E000-$E0FF), parts of the bull. The same bytes are font codes $00-$1F, which the game never prints, so they show as noise if rendered as characters."
+  },
+  {
+   "address": 57600,
+   "type": "line",
+   "text": "The game's font, codes $20-$5F in ASCII order ($41 = A), used by the text panel at the top of the screen ($D018 = $39: character base $E000). It is not the ROM font: 38 of the 64 glyphs differ from the ROM's."
+  },
+  {
+   "address": 58112,
+   "type": "line",
+   "text": "Sprite images $8C-$96 ($E300-$E5BF), parts of the bull; the bytes are also font codes $60-$B7, never printed. Pointers $84-$8B ($E100-$E2FF) are the font and are not used as sprites."
+  },
+  {
+   "address": 58816,
+   "type": "line",
+   "text": "$E5C0-$E63F, sprite pointers $97-$98: a shape in the first 64 bytes and a run of $55 bytes. Nothing found points here; their use is not known."
+  },
+  {
    "address": 62784,
    "type": "line",
    "text": "Speech sample table: four 4-byte entries, each the start and end offset of a sample from $F540 (read by speech_start at $3198-$31B3). Sample 0 $F580-$F662, sample 1 $F663-$F978, sample 2 $F979-$FCD2, sample 3 $FED3-$FFDC."
+  },
+  {
+   "address": 62785,
+   "type": "line",
+   "text": "speech_sample_table read one byte on: speech_start takes the start offset's high byte from $F541,Y ($319F)."
+  },
+  {
+   "address": 62786,
+   "type": "line",
+   "text": "speech_sample_table read two bytes on: the end offset's low byte, $F542,Y ($31A7)."
+  },
+  {
+   "address": 62787,
+   "type": "line",
+   "text": "speech_sample_table read three bytes on: the end offset's high byte, $F543,Y ($31AE)."
   },
   {
    "address": 62800,
@@ -11473,6 +13362,11 @@
    "address": 65235,
    "type": "line",
    "text": "Speech sample 3, $FED3-$FFDC, period indices like sample 0's; started by speech_say_3 ($316A). It ends just below the hardware vectors at $FFFA."
+  },
+  {
+   "address": 65530,
+   "type": "line",
+   "text": "The 6510's hardware vectors in the RAM under the KERNAL: NMI $2FF2 (written at $1973), RESET $1990 (an RTI, $1964) and IRQ, which each raster handler rewrites for the next one in the chain."
   }
  ]
 }
