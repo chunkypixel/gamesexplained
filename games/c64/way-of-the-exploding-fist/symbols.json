@@ -27,11 +27,11 @@
  "blocks": [
   {
    "start": 0,
-   "end": 1023,
+   "end": 511,
    "type": "Undefined"
   },
   {
-   "start": 1024,
+   "start": 512,
    "end": 2390,
    "type": "Byte"
   },
@@ -72,13 +72,8 @@
   },
   {
    "start": 4024,
-   "end": 4095,
-   "type": "Byte"
-  },
-  {
-   "start": 4096,
    "end": 4441,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 4442,
@@ -87,8 +82,23 @@
   },
   {
    "start": 4445,
-   "end": 4844,
+   "end": 4636,
+   "type": "Byte"
+  },
+  {
+   "start": 4637,
+   "end": 4736,
+   "type": "Word"
+  },
+  {
+   "start": 4737,
+   "end": 4760,
    "type": "Undefined"
+  },
+  {
+   "start": 4761,
+   "end": 4844,
+   "type": "Byte"
   },
   {
    "start": 4845,
@@ -98,7 +108,7 @@
   {
    "start": 5167,
    "end": 5225,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 5226,
@@ -118,7 +128,7 @@
   {
    "start": 5487,
    "end": 5550,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 5551,
@@ -128,7 +138,7 @@
   {
    "start": 5909,
    "end": 5973,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 5974,
@@ -267,6 +277,26 @@
   },
   {
    "start": 29184,
+   "end": 62783,
+   "type": "Undefined"
+  },
+  {
+   "start": 62784,
+   "end": 64722,
+   "type": "Byte"
+  },
+  {
+   "start": 64723,
+   "end": 65234,
+   "type": "Undefined"
+  },
+  {
+   "start": 65235,
+   "end": 65500,
+   "type": "Byte"
+  },
+  {
+   "start": 65501,
    "end": 65535,
    "type": "Undefined"
   }
@@ -1312,15 +1342,15 @@
   },
   {
    "address": 512,
-   "name": "f_0200",
+   "name": "speech_period_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 768,
-   "name": "f_0300",
+   "name": "speech_period_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1024,
@@ -2523,52 +2553,262 @@
    "kind": "user"
   },
   {
+   "address": 4096,
+   "name": "song1_voice3_order_tail",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4103,
+   "name": "song2_voice1_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4113,
+   "name": "song2_voice2_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4127,
+   "name": "song2_voice3_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4145,
+   "name": "song3_voice1_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4149,
+   "name": "song3_voice2_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4155,
+   "name": "song3_voice3_order",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4181,
+   "name": "song4_order_lists",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4192,
+   "name": "music_instr_00",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4203,
+   "name": "music_instr_01",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4214,
+   "name": "music_instr_02",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4220,
+   "name": "music_instr_03",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4231,
+   "name": "music_instr_04",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4237,
+   "name": "music_instr_05",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4248,
+   "name": "music_instr_06",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4259,
+   "name": "music_instr_07",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4265,
+   "name": "music_instr_08",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4271,
+   "name": "music_instr_09",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4282,
+   "name": "music_instr_10",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4295,
+   "name": "music_instr_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4308,
+   "name": "music_instr_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4326,
+   "name": "music_instr_13",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4339,
+   "name": "music_instr_14",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4345,
+   "name": "music_instr_15",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4351,
+   "name": "music_instr_16",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4362,
+   "name": "music_instr_17",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4368,
+   "name": "music_instr_18",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4386,
+   "name": "music_instr_19",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4392,
+   "name": "music_instr_20",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4398,
+   "name": "music_instr_21",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4411,
+   "name": "music_instr_22",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4417,
+   "name": "music_instr_23",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4423,
+   "name": "music_instr_24",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4442,
+   "name": "jmp_game_entry",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 4445,
-   "name": "f_115D",
+   "name": "move_end_kind",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4470,
-   "name": "f_1176",
+   "name": "move_is_blow",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4495,
-   "name": "f_118F",
+   "name": "move_block_answer",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4520,
-   "name": "f_11A8",
+   "name": "move_reach_reversed",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4541,
-   "name": "f_11BD",
+   "name": "move_full_window",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4566,
-   "name": "f_11D6",
+   "name": "move_half_window",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 4591,
+   "name": "move_table_unread",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 4612,
-   "name": "f_1204",
+   "name": "move_strike_frame",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4637,
-   "name": "f_121D",
+   "name": "move_reach_ptr_facing",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4638,
@@ -2578,9 +2818,9 @@
   },
   {
    "address": 4687,
-   "name": "f_124F",
+   "name": "move_reach_ptr_same_facing",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4688,
@@ -2589,58 +2829,70 @@
    "kind": "auto"
   },
   {
+   "address": 4737,
+   "name": "unused_words_1281",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 4761,
-   "name": "f_1299",
+   "name": "hiscore_1p",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4767,
-   "name": "f_129F",
+   "name": "hiscore_2p",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4773,
-   "name": "f_12A5",
+   "name": "move_points",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4798,
-   "name": "f_12BE",
+   "name": "str_1_player",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4806,
-   "name": "f_12C6",
+   "name": "str_2_player",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4814,
-   "name": "f_12CE",
+   "name": "yinyang_column",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4816,
-   "name": "f_12D0",
+   "name": "ai_low_answer",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4841,
-   "name": "f_12E9",
+   "name": "x_min_by_facing",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4843,
-   "name": "f_12EB",
+   "name": "x_max_by_facing",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 4845,
+   "name": "clear_zp_02_13",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 4849,
@@ -2650,21 +2902,21 @@
   },
   {
    "address": 4856,
-   "name": "s_12F8",
+   "name": "bull_round_player_step",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4878,
-   "name": "s_130E",
+   "name": "bull_round_place_player",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4908,
-   "name": "s_132C",
+   "name": "bull_round",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4961,
@@ -2698,9 +2950,9 @@
   },
   {
    "address": 5067,
-   "name": "s_13CB",
+   "name": "bull_round_bull_step",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5098,
@@ -2758,15 +3010,15 @@
   },
   {
    "address": 5167,
-   "name": "f_142F",
+   "name": "bull_hit_reach",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5226,
-   "name": "s_146A",
+   "name": "hiscore_after_game",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5285,
@@ -2818,9 +3070,9 @@
   },
   {
    "address": 5391,
-   "name": "s_150F",
+   "name": "keyboard_scan",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5403,
@@ -2848,27 +3100,27 @@
   },
   {
    "address": 5442,
-   "name": "f_1542",
+   "name": "kbd_row_select",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5450,
-   "name": "f_154A",
+   "name": "kbd_row_base",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5458,
-   "name": "f_1552",
+   "name": "kbd_ignore_mask",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5466,
-   "name": "s_155A",
+   "name": "key_read_new",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5484,
@@ -2878,15 +3130,15 @@
   },
   {
    "address": 5487,
-   "name": "f_156F",
+   "name": "key_ascii",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5551,
-   "name": "s_15AF",
+   "name": "hiscore_draw",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5591,
@@ -2908,9 +3160,9 @@
   },
   {
    "address": 5617,
-   "name": "s_15F1",
+   "name": "hiscore_copy_column",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5619,
@@ -2944,21 +3196,21 @@
   },
   {
    "address": 5646,
-   "name": "s_160E",
+   "name": "hiscore_draw_names",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5668,
-   "name": "s_1624",
+   "name": "hiscore_draw_scores",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5690,
-   "name": "s_163A",
+   "name": "hiscore_insert",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5702,
@@ -3004,9 +3256,9 @@
   },
   {
    "address": 5778,
-   "name": "s_1692",
+   "name": "hiscore_shift_names",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5780,
@@ -3022,9 +3274,9 @@
   },
   {
    "address": 5820,
-   "name": "s_16BC",
+   "name": "hiscore_shift_scores",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5822,
@@ -3040,9 +3292,9 @@
   },
   {
    "address": 5862,
-   "name": "s_16E6",
+   "name": "clear_top_rows",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5866,
@@ -3052,9 +3304,9 @@
   },
   {
    "address": 5875,
-   "name": "s_16F3",
+   "name": "hiscore_insert_rank",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5889,
@@ -3070,9 +3322,9 @@
   },
   {
    "address": 5909,
-   "name": "f_1715",
+   "name": "hiscore_names",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5915,
@@ -3100,9 +3352,9 @@
   },
   {
    "address": 5939,
-   "name": "f_1733",
+   "name": "hiscore_scores",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5945,
@@ -3130,9 +3382,9 @@
   },
   {
    "address": 5969,
-   "name": "f_1751",
+   "name": "hiscore_ranks",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5970,
@@ -3142,9 +3394,9 @@
   },
   {
    "address": 5974,
-   "name": "s_1756",
+   "name": "hiscore_blank_name",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5978,
@@ -3154,9 +3406,9 @@
   },
   {
    "address": 5986,
-   "name": "s_1762",
+   "name": "hiscore_type_name",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5990,
@@ -3184,9 +3436,9 @@
   },
   {
    "address": 6061,
-   "name": "s_17AD",
+   "name": "hiscore_put_char",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6064,
@@ -3202,9 +3454,9 @@
   },
   {
    "address": 6067,
-   "name": "s_17B3",
+   "name": "colour_fill_24",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6069,
@@ -3214,9 +3466,9 @@
   },
   {
    "address": 6075,
-   "name": "s_17BB",
+   "name": "bitmap_unpack",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6117,
@@ -8158,9 +8410,9 @@
   },
   {
    "address": 62784,
-   "name": "f_F540",
+   "name": "speech_sample_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62785,
@@ -8179,9 +8431,49 @@
    "name": "f_F543",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 62800,
+   "name": "speech_table_gap",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62848,
+   "name": "speech_sample0",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 63075,
+   "name": "speech_sample1",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 63865,
+   "name": "speech_sample2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 65235,
+   "name": "speech_sample3",
+   "type": "UserDefined",
+   "kind": "user"
   }
  ],
  "comments": [
+  {
+   "address": 512,
+   "type": "line",
+   "text": "Speech timing, low bytes: 256 entries, indexed by a speech data byte, giving the low byte of the CIA 1 timer B period until the next volume flip (speech_irq $311A reads it at $312B). Copied here from $C700 by machine_setup at $18F8; the bytes are the file m.spchtbl as the loader left it. The 16-bit periods run from $0001 up to $EA60, growing faster towards the top of the table."
+  },
+  {
+   "address": 768,
+   "type": "line",
+   "text": "Speech timing, high bytes: the high byte of each of the 256 timer periods whose low bytes are at $0200 (read at $3131). Copied from $C800 by $18F8."
+  },
   {
    "address": 1024,
    "type": "line",
@@ -8936,6 +9228,501 @@
    "address": 4084,
    "type": "line",
    "text": "Song 1 voice 3 order list (runs on to $1006): patterns 9 10 11 12 12 11, repeat (to index 17 once), pattern 13, jump to index 2."
+  },
+  {
+   "address": 4096,
+   "type": "line",
+   "text": "Music: the end of song 1's voice-3 order list, which starts at $0FF4 (pointer at $0F7E in the voice-3 list table $0F7C). Order-list commands, read by the player at $0A77 through the dispatch words at $0D31: 00 stop the voice, 01 n play pattern n, 02 i go to index i, 03 i c go back to index i c times. Here: ... 03 11 01 (repeat from position 17 once), 01 0D (pattern $0D), 02 02 (loop to position 2)."
+  },
+  {
+   "address": 4103,
+   "type": "line",
+   "text": "Music: song 2's voice-1 order list (pointer at $0F6C): patterns 0, 0, 0, 1, then 02 00 (loop to the start). Song 2 is the one set in $FF by $1BE5 when a one-player game begins."
+  },
+  {
+   "address": 4113,
+   "type": "line",
+   "text": "Music: song 2's voice-2 order list (pointer at $0F76): patterns 7, 8, $0A, 9, $0B, $0B, then 02 00 (loop to the start)."
+  },
+  {
+   "address": 4127,
+   "type": "line",
+   "text": "Music: song 2's voice-3 order list (pointer at $0F80): patterns 2, 2, 3, 2, 4, 5, 5, 6, then 02 00 (loop to the start)."
+  },
+  {
+   "address": 4145,
+   "type": "line",
+   "text": "Music: song 3's voice-1 order list (pointer at $0F6E): pattern 0 repeated forever (01 00 02 00). Song 3 is set in $FF at $1B2F, the two-player game's start."
+  },
+  {
+   "address": 4149,
+   "type": "line",
+   "text": "Music: song 3's voice-2 order list (pointer at $0F78): patterns 1, 2, then loop to the start."
+  },
+  {
+   "address": 4155,
+   "type": "line",
+   "text": "Music: song 3's voice-3 order list (pointer at $0F82): patterns 3 4 3 5 3 4 3 6 7 8 3 6, then loop to the start."
+  },
+  {
+   "address": 4181,
+   "type": "line",
+   "text": "Music: song 4's three order lists, played once and stopped (00): voice 1 at $1055 (patterns 0, 1), voice 2 at $105A (pattern 2), voice 3 at $105D (pattern 3); pointers at $0F70, $0F7A, $0F84. Song 4 is set in $FF by hiscore_type_name ($1764) while a name is typed."
+  },
+  {
+   "address": 4192,
+   "type": "line",
+   "text": "Music instrument records start here: 25 records, $1060-$1158, each pointed to by the word table at $0F86 (instrument i at $0F86+2i), chosen by a pattern byte with bit 7 set and loaded at $0D3C. Layout: waveform (SID control: $10 triangle, $20 sawtooth, $40 pulse, $80 noise); only if it is exactly $40, five more (pulse width lo, hi, then PWM source, PWM shift, LFO rate per the music-driver notes); then attack/decay, sustain/release, slide rate, transpose (added to the note's octave shift at $0B5D), filter flag; a non-zero flag adds seven (filter mode, resonance, cutoff lo, cutoff hi, sweep source, sweep shift, sweep direction). Lengths 6, 11, 13 or 18 bytes. Instrument 0, $1060-$106A (11 bytes): pulse; pulse width $800; PWM bytes 80 00 00; attack/decay $05, sustain/release $37; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4203,
+   "type": "line",
+   "text": "Instrument 1, $106B-$1075 (11 bytes): pulse; pulse width $600; PWM bytes 00 03 2A; attack/decay $08, sustain/release $77; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4214,
+   "type": "line",
+   "text": "Instrument 2, $1076-$107B (6 bytes): triangle; attack/decay $87, sustain/release $36; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4220,
+   "type": "line",
+   "text": "Instrument 3, $107C-$1086 (11 bytes): pulse; pulse width $400; PWM bytes 01 01 07; attack/decay $85, sustain/release $68; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4231,
+   "type": "line",
+   "text": "Instrument 4, $1087-$108C (6 bytes): triangle; attack/decay $68, sustain/release $36; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4237,
+   "type": "line",
+   "text": "Instrument 5, $108D-$1097 (11 bytes): pulse; pulse width $300; PWM bytes 01 01 00; attack/decay $65, sustain/release $B8; slide $00, transpose $FF; no filter."
+  },
+  {
+   "address": 4248,
+   "type": "line",
+   "text": "Instrument 6, $1098-$10A2 (11 bytes): pulse; pulse width $1C8; PWM bytes 80 00 00; attack/decay $03, sustain/release $1A; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4259,
+   "type": "line",
+   "text": "Instrument 7, $10A3-$10A8 (6 bytes): sawtooth; attack/decay $47, sustain/release $56; slide $0D, transpose $00; no filter."
+  },
+  {
+   "address": 4265,
+   "type": "line",
+   "text": "Instrument 8, $10A9-$10AE (6 bytes): triangle; attack/decay $AD, sustain/release $06; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4271,
+   "type": "line",
+   "text": "Instrument 9, $10AF-$10B9 (11 bytes): pulse; pulse width $400; PWM bytes 02 01 07; attack/decay $85, sustain/release $68; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4282,
+   "type": "line",
+   "text": "Instrument 10, $10BA-$10C6 (13 bytes): noise; attack/decay $09, sustain/release $0A; slide $00, transpose $00; filter on: mode $10, resonance $F0, cutoff $00/$8B, sweep 80 00 00."
+  },
+  {
+   "address": 4295,
+   "type": "line",
+   "text": "Instrument 11, $10C7-$10D3 (13 bytes): noise; attack/decay $09, sustain/release $0A; slide $00, transpose $01; filter on: mode $30, resonance $F0, cutoff $00/$5D, sweep 80 00 00."
+  },
+  {
+   "address": 4308,
+   "type": "line",
+   "text": "Instrument 12, $10D4-$10E5 (18 bytes): pulse; pulse width $700; PWM bytes 02 02 0C; attack/decay $47, sustain/release $B6; slide $05, transpose $00; filter on: mode $10, resonance $F0, cutoff $00/$46, sweep 80 00 00."
+  },
+  {
+   "address": 4326,
+   "type": "line",
+   "text": "Instrument 13, $10E6-$10F2 (13 bytes): sawtooth; attack/decay $0C, sustain/release $06; slide $00, transpose $00; filter on: mode $10, resonance $F0, cutoff $00/$4D, sweep 80 00 00."
+  },
+  {
+   "address": 4339,
+   "type": "line",
+   "text": "Instrument 14, $10F3-$10F8 (6 bytes): noise; attack/decay $08, sustain/release $00; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4345,
+   "type": "line",
+   "text": "Instrument 15, $10F9-$10FE (6 bytes): noise; attack/decay $38, sustain/release $15; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4351,
+   "type": "line",
+   "text": "Instrument 16, $10FF-$1109 (11 bytes): pulse; pulse width $800; PWM bytes 80 00 00; attack/decay $06, sustain/release $04; slide $00, transpose $02; no filter."
+  },
+  {
+   "address": 4362,
+   "type": "line",
+   "text": "Instrument 17, $110A-$110F (6 bytes): triangle; attack/decay $04, sustain/release $04; slide $00, transpose $02; no filter."
+  },
+  {
+   "address": 4368,
+   "type": "line",
+   "text": "Instrument 18, $1110-$1121 (18 bytes): pulse; pulse width $800; PWM bytes 02 02 29; attack/decay $8E, sustain/release $24; slide $0E, transpose $00; filter on: mode $10, resonance $F0, cutoff $00/$5A, sweep 03 02 00."
+  },
+  {
+   "address": 4386,
+   "type": "line",
+   "text": "Instrument 19, $1122-$1127 (6 bytes): triangle; attack/decay $07, sustain/release $00; slide $00, transpose $01; no filter."
+  },
+  {
+   "address": 4392,
+   "type": "line",
+   "text": "Instrument 20, $1128-$112D (6 bytes): triangle; attack/decay $08, sustain/release $00; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4398,
+   "type": "line",
+   "text": "Instrument 21, $112E-$113A (13 bytes): sawtooth; attack/decay $0A, sustain/release $08; slide $00, transpose $00; filter on: mode $10, resonance $E0, cutoff $00/$65, sweep 03 03 01."
+  },
+  {
+   "address": 4411,
+   "type": "line",
+   "text": "Instrument 22, $113B-$1140 (6 bytes): triangle; attack/decay $06, sustain/release $22; slide $00, transpose $01; no filter."
+  },
+  {
+   "address": 4417,
+   "type": "line",
+   "text": "Instrument 23, $1141-$1146 (6 bytes): triangle; attack/decay $C1, sustain/release $E2; slide $00, transpose $00; no filter."
+  },
+  {
+   "address": 4423,
+   "type": "line",
+   "text": "Instrument 24, $1147-$1158 (18 bytes): pulse; pulse width $400; PWM bytes 02 02 1F; attack/decay $0C, sustain/release $02; slide $07, transpose $FF; filter on: mode $10, resonance $90, cutoff $00/$64, sweep 03 01 00. The byte after it, $1159 ($00), is read by nothing."
+  },
+  {
+   "address": 4442,
+   "type": "line",
+   "text": "JMP $1AED (game_entry), three bytes between the music instruments and the per-move tables. No JSR, JMP or pointer to $115A was found in the image or in the disk files searched (game, loader, m.prerun, menu); the hand-over was caught at $1AED itself, so whether the loader starts the game here (it would be SYS 4442) or jumps to $1AED directly is not known."
+  },
+  {
+   "address": 4445,
+   "type": "line",
+   "text": "Per-move table, 25 bytes indexed by a fighter's move number ($61,X, moves $00-$18): what happens at the end of the move's animation. Read at $2A70 and $2ACD. $80 (moves 2 and 3, walking forward and back): the move is replaced at once by the requested move ($63,X; $11 becomes $12). 1 (moves 0, 1, 5, 8, 9, $0E, $16, $17): the fighter goes back to move 1 (standing) when it ends. 0 (the rest, the blows among them): the fighter holds the last frame ($74,X set at $2AD4) and the animation then runs backwards ($4B,X)."
+  },
+  {
+   "address": 4470,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: 1 for the eleven moves that can score, 0 otherwise. The blows are 6, 7 (the two diagonal-forward moves without fire), $0A-$11 (the eight directions with fire) and $18 (move 7 begun from a stance other than 4 or 7, $2B41). Read by the computer opponent ($22FA: is the other fighter attacking), the blocking code ($2B1D), the move start ($2B4F: a blow starts sound $3164), hit detection ($2B72: only a blow is tested) and $2827."
+  },
+  {
+   "address": 4495,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: the move that defends against each blow. $14 against 6, $0D, $0E, $0F, $11; $13 against 7, $0B, $0C, $18; 5 (the jump, joystick up) against $0A and $10; 0 for moves that are not blows. A player pulling back (requested move 3) while the opponent's blow is in range ($2D00) gets this move instead ($2B2D), and the computer opponent picks it too ($2309, $23B5)."
+  },
+  {
+   "address": 4520,
+   "type": "line",
+   "text": "Per-move table, 21 bytes (moves $15-$18 read on into move_full_window, all zero there): non-zero for moves 3, 9, $0F and $10. For the blows $0F and $10 the hit test ($2BE6, $2C71, $2CC4, ...) measures the distance the other way: the opponent must be at or beyond the reach instead of at or inside it."
+  },
+  {
+   "address": 4541,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: how far inside a blow's reach the opponent may stand and still be hit for a whole point (yin-yang). The hit test at $2BF4/$2C0D/$2C7E/$2C97 compares the distance between the fighters with the reach read for the opponent's current frame: equal, or short of it by up to this many units, scores 2 in $6E,X. Values 1-4; zero for moves that are not blows."
+  },
+  {
+   "address": 4566,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: the wider margin inside a blow's reach that still scores a half point (1 in $6E,X), tested after move_full_window at $2BFD/$2C16/$2C87/$2CA0. Values 5-$0A. An opponent closer than this is not hit at all."
+  },
+  {
+   "address": 4591,
+   "type": "line",
+   "text": "21 bytes laid out like a per-move table (1 at offsets 7, $0A, $0B, $0C and $11, all blow numbers; 0 elsewhere) that no instruction was found to read: the readers of move_half_window use indices up to $18 only, ending at $11EE. Purpose not known."
+  },
+  {
+   "address": 4612,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: the animation frame ($51,X) on which a blow is tested for a hit (compared at $2B83): move 6 frame 7, 7 $0D, $0A $10, $0B 8, $0C 5, $0D $0B, $0E $0A, $0F $12, $10 $39, $11 $24, $18 $13; 0 for moves that are not blows."
+  },
+  {
+   "address": 4637,
+   "type": "line",
+   "text": "Per-move word table (25 words, $121D-$124E): for each blow, the address of a reach table ($7200-$744E) indexed by the opponent's animation frame ($51 of the other fighter); a byte there is the reach in that frame, $80 meaning that frame cannot be hit. Used by $2B9B when the fighters face opposite ways ($53 differs). Zero for moves that are not blows."
+  },
+  {
+   "address": 4638,
+   "type": "line",
+   "text": "High-byte view of move_reach_ptr_facing: $2BA0 reads the second byte of each word here with the move number doubled."
+  },
+  {
+   "address": 4687,
+   "type": "line",
+   "text": "Per-move word table (25 words, $124F-$1280): the reach table for each blow ($7489-$76D7) used by $2BAC when both fighters face the same way, so the blow lands on the opponent's back; tested at $2C44 with the distance taken the other way round."
+  },
+  {
+   "address": 4688,
+   "type": "line",
+   "text": "High-byte view of move_reach_ptr_same_facing, read by $2BB1."
+  },
+  {
+   "address": 4737,
+   "type": "line",
+   "text": "Twelve words that no instruction was found to read: $E640 (the first byte of the backdrop bitmap that bitmap_unpack fills), $3600, $4500, $5400, $6300, then $64E0 to $7020 in steps of $1E0 (480 bytes, twelve 40-byte rows). Possibly a leftover; purpose not known."
+  },
+  {
+   "address": 4761,
+   "type": "line",
+   "text": "The one-player high score, six screen codes ('     0' in the image: blanks then a digit, same format as the scores on screen). Shown at $CCB1 (row 4, columns 17-22) by $2115 when $AE = 0; raised by hiscore_update ($200A) when player 1's score ($CC31) beats it."
+  },
+  {
+   "address": 4767,
+   "type": "line",
+   "text": "The two-player high score, six screen codes in the same format as hiscore_1p; shown at $CCB1 by $2115 when $AE is not 0, and raised by $200A from either player's score ($CC31 or $CC41)."
+  },
+  {
+   "address": 4773,
+   "type": "line",
+   "text": "Per-move table, 25 bytes: the points a blow earns, in hundreds. $206C reads it with the scoring move in $8C and adds that many hundreds to the score on screen; a half point ($6E/$6F not 2) earns half (LSR, rounded down). Move 6: 800, 7: 800, $0A: 400, $0B: 200, $0C: 200, $0D: 800, $0E: 1000, $0F: 800, $10: 800, $11: 1000, $18: 600. $2169 adds the same value (halved likewise) to the fighter's total in $BD,X."
+  },
+  {
+   "address": 4798,
+   "type": "line",
+   "text": "'1 PLAYER', eight screen codes (ASCII order in this font), copied to $CCBF (row 4, columns 31-38) by $2186 when $AE = 0."
+  },
+  {
+   "address": 4806,
+   "type": "line",
+   "text": "'2 PLAYER', eight screen codes, copied to $CCBF by $2186 when $AE = 1."
+  },
+  {
+   "address": 4814,
+   "type": "line",
+   "text": "Two bytes, one per fighter: the column offset of that fighter's yin-yang symbols on the top rows, 0 for fighter 0 (columns 3-4) and $1D for fighter 1 (columns 32-33). Passed in Y to $1DDE (whole symbol, characters $21-$24) or $1DF3 (characters $25-$28) by the hit test at $2C28/$2C3B, only in a two-player game ($AE = 1)."
+  },
+  {
+   "address": 4816,
+   "type": "line",
+   "text": "Per-move table, 25 bytes, read by $2698 (computer opponent): when the other fighter's move is 4, 7, $0A or $10 (low moves), the move the computer had chosen is swapped for this entry. Mostly the identity; blows map to $0A (moves 7, $0C, $0E, $11), $0B (6, $0D, $18) or $10 ($0F, $10)."
+  },
+  {
+   "address": 4841,
+   "type": "line",
+   "text": "Two bytes, indexed by a fighter's facing ($53,X): the smallest X position ($6A,X) allowed, $0C facing one way and 0 the other. Clamped at $3858; a position of $C8 or more counts as below the minimum (wrapped past zero)."
+  },
+  {
+   "address": 4843,
+   "type": "line",
+   "text": "Two bytes, indexed by facing ($53,X): the largest X position allowed, $95 and $89. Clamped at $3862 in the same routine as x_min_by_facing (only while the animation frame $51,X is below $3B)."
+  },
+  {
+   "address": 4845,
+   "type": "line",
+   "text": "Sets zero page $02-$13 to 0. No JSR, JMP or pointer to $12ED was found in the image; it decodes cleanly and ends in RTS, so it is probably code that nothing calls."
+  },
+  {
+   "address": 4856,
+   "type": "line",
+   "text": "Bonus round, one frame of the player (fighter 0): $5D = 0, read the controls or forced move ($2834), turn a request for move 7 into $18 ($2B33), then $29B4, start or continue the move ($2B46) and handle the end of its animation ($2A8F). Unlike a bout's fighter step ($2808) there is no hit test and no automatic block. Called from bull_round while the player is still up ($5E = 0)."
+  },
+  {
+   "address": 4878,
+   "type": "line",
+   "text": "Bonus round set-up of fighter 0: X position $6A = $3E, $6C = $50, facing $53 = 0, clears $4B, $74, $47, sets $45 = 1 and move $61 = 1 (standing), then one animation step ($37BD, X = 0)."
+  },
+  {
+   "address": 4908,
+   "type": "line",
+   "text": "The bonus round: a charging bull played by fighter slot 1. Called from the one-player game ($1C24) after a stage won on backdrop 3 ($AF & 3 = 3). Sprites 0-5 on, places the player (bull_round_place_player), puts the bull at X $6B = $B0 with animation $46 = $1C, and runs one pass per frame (waits for raster $FD). The bull is felled ($C2 = $80, animation $1D, 3000 points to player 1: thirty calls of $2095 with X = 9) when the player's frame $51 is $0D, the frame flag $88 is set and the bull is 25-29 units ahead ($6B - $6A in $19-$1D); frame $0D is move 7's strike frame (move_strike_frame), so in effect only that blow works. Otherwise the bull hits the player ($5F = $16, sound $315E, $C2 = 1) when its distance is no more than bull_hit_reach[$51]. Loops while bull_round_bull_step returns non-zero."
+  },
+  {
+   "address": 5067,
+   "type": "line",
+   "text": "Bonus round, one frame of the bull (fighter slot 1, $5D = $40): animation step ($37BD, X = 1). Once felled ($C2 negative) it returns $5A EOR 1, ending the round when that animation completes. While charging, at the end of each animation cycle ($5A set) it reads the bull's X position $6B: 0 sets it to $0C with animation $1E, 2 sets $0E with $1F, 1 ends the round (A = 0), adding 500 points (five calls of $2095) if the player is neither hit ($5F) nor down ($5E); any other position continues the charge (animation $1C, sound $316A while $33 is non-zero). Returns A = 1 to continue."
+  },
+  {
+   "address": 5167,
+   "type": "line",
+   "text": "Bonus round, 59 bytes indexed by the player's animation frame $51 ($00-$3A): how close the bull must come to hit the player in that frame, compared with $6B - $6A at $13AA. $80 means the bull cannot hit the player in that frame (frames $0A, $14-$17, $20-$21, $25-$2F, $35-$38 and $3A). Only read while the bull is not behind the player ($6B >= $6A).."
+  },
+  {
+   "address": 5226,
+   "type": "line",
+   "text": "End of a one-player game (called from $1F0D): enters player 1's score into the five-place high-score table (hiscore_insert), then, unless fire on joystick port 2 is held ($DC00 bit 4 low: return at once, which leaves an entered name as '......'), shows the table. If the score made the table ($CB = 0-4): draws it, points the self-modified store at $17AF to the name's screen cells ($CC13 + 40 x $CB) and $CC/$CD to its colour RAM row ($D808 + 40 x $CB), colours that row 0, lets the player type a name (hiscore_type_name), then colours the row 6. If not ($CB = 5): draws the table and waits up to 250 frames, ending early on fire (port 2) or F1 (row 0, column 4)."
+  },
+  {
+   "address": 5391,
+   "type": "line",
+   "text": "Scans the keyboard matrix itself, rows 7 down to 0 (row select from kbd_row_select into $DC00, columns read from $DC01), ignoring the keys set in kbd_ignore_mask. Returns A = 8 x row + column of the first key found (in a row, the highest column first), or $40 when none; uses $C4. Sets $DC02 = $FF and $DC03 = 0."
+  },
+  {
+   "address": 5442,
+   "type": "line",
+   "text": "Eight values for $DC00, one bit low each: $FE selects keyboard row 0 ... $7F row 7. Indexed by the row number in keyboard_scan."
+  },
+  {
+   "address": 5450,
+   "type": "line",
+   "text": "Eight bytes, 8 x row (0, 8, ... $38), the first code of each keyboard row; keyboard_scan ORs in the column."
+  },
+  {
+   "address": 5458,
+   "type": "line",
+   "text": "Eight bytes ORed into each row's column bits by keyboard_scan, so a set bit hides that key: row 0 $FC (only DEL and RETURN kept), row 1 $80 (left SHIFT), row 5 $F9 (only P and L), row 6 $FF (all), row 7 $A6 (only 1, 2, SPACE and Q). Rows 2-4 are read whole. What is left is the letters, the digits, SPACE, DEL and RETURN."
+  },
+  {
+   "address": 5466,
+   "type": "line",
+   "text": "Reads one key for name entry: keyboard_scan, then translates the code through key_ascii. Returns $40 when no key is down, and also while the same key is still held (the last key is kept in $C7), so a held key types once. Otherwise returns the character (ASCII order, which this font follows) and stores it in $C7."
+  },
+  {
+   "address": 5487,
+   "type": "line",
+   "text": "64 bytes, the character for each key code 8 x row + column, in the C64 matrix order: row 0 DEL $14, RETURN $0D, CRSR right $1D, F7 $88, F1 $85, F3 $86, F5 $87, CRSR down $11; row 1 '3WA4ZSE' and 0 for SHIFT; row 2 '5RD6CFTX'; row 3 '7YG8BHUV'; row 4 '9IJ0MKON'; row 5 0, 'PL-.:@,'; row 6 '&*;', $13, 0, '=', $7E, '/'; row 7 '1', 0, 0, '2', SPACE, 0, 'Q', 0. Used only by key_read_new for typing a high-score name; the fight's keyboard controls are read elsewhere ($288C)."
+  },
+  {
+   "address": 5551,
+   "type": "line",
+   "text": "Draws the high-score table on the five text rows at the top: clears them (clear_top_rows), puts the places '1'-'5' in column 8 of rows 0-4 ($CC08, $CC30, ...), and for each entry 4 down to 0 whose hiscore_ranks byte is not negative prints the rank reached ($21FB with $CA = 1, in columns 10-18 of the entry's row; $BF/$C0 walk up from $CCAA). Names and scores are drawn by the callers (hiscore_draw_names, hiscore_draw_scores). Uses $C8, $CA, $BF/$C0."
+  },
+  {
+   "address": 5617,
+   "type": "line",
+   "text": "Copies a 30-byte column of the high-score table (five 6-byte fields) to the screen, entry 4 at the row ($BF/$C0) given and each earlier entry one row (40 bytes) higher. The source is the operand of the LDA at $15F5, written by its callers ($1618/$161D, $162E/$1633). Leaves $BF/$C0 40 bytes above row 0."
+  },
+  {
+   "address": 5622,
+   "type": "line",
+   "text": "Low byte of the LDA operand at $15F5, the table hiscore_copy_column reads: written by $1616 ($15, names at $1715) and $162C ($33, scores at $1733)."
+  },
+  {
+   "address": 5623,
+   "type": "line",
+   "text": "High byte of the LDA operand at $15F5, written as $17 by $161B and $1631; the image holds $80 (the assembled placeholder $8000)."
+  },
+  {
+   "address": 5646,
+   "type": "line",
+   "text": "Draws the five names (hiscore_names, $1715) at columns 19-24 of rows 0-4: patches hiscore_copy_column's source to $1715 and starts it at $CCB3."
+  },
+  {
+   "address": 5668,
+   "type": "line",
+   "text": "Draws the five scores (hiscore_scores, $1733) at columns 26-31 of rows 0-4: patches hiscore_copy_column's source to $1733 and starts it at $CCBA."
+  },
+  {
+   "address": 5690,
+   "type": "line",
+   "text": "Finds player 1's place in the high-score table and makes room for it. Compares the score on screen ($CC31, six digits; $2049 with X = 9) with the stored scores from the fifth up; the place $CB is 0-4 above the first entry that is equal or higher, 5 when the score does not beat the fifth (nothing changes then; a tie never enters). Otherwise shifts the lower names, scores and ranks down one (hiscore_shift_names, hiscore_shift_scores, hiscore_insert_rank, which stores $C9), copies the score in ($205E) and blanks the name to '......' (hiscore_blank_name). Leaves $BF/$C0 pointing at the name."
+  },
+  {
+   "address": 5778,
+   "type": "line",
+   "text": "Moves the names at and below place Y (0-3) down one place, the fifth name dropping out: name 4 = name 3 always, then 3 = 2 if Y < 3, 2 = 1 if Y < 2, 1 = 0 if Y = 0. Six bytes each, X = 5 down to 0."
+  },
+  {
+   "address": 5820,
+   "type": "line",
+   "text": "Moves the scores at and below place Y (0-3) down one place, the same way hiscore_shift_names moves the names, in hiscore_scores ($1733-$1750)."
+  },
+  {
+   "address": 5862,
+   "type": "line",
+   "text": "Fills the first five text rows, screen $CC00-$CCC7 (200 bytes), with spaces. Called by hiscore_draw and after the high-score screen ($1F10)."
+  },
+  {
+   "address": 5875,
+   "type": "line",
+   "text": "Stores the rank $C9 (0 novice, 1-10 dan) for the new entry at place Y in hiscore_ranks, moving the entries from Y to 3 down one first; at place 4 it just stores. Keeps $C8 = Y."
+  },
+  {
+   "address": 5909,
+   "type": "line",
+   "text": "The high-score names: five 6-byte fields, first place at $1715, then $171B, $1721, $1727, $172D; '......' (six $2E) in the image, as the disk holds them. Written by hiscore_shift_names, hiscore_blank_name and hiscore_type_name; drawn by hiscore_draw_names."
+  },
+  {
+   "address": 5915,
+   "type": "line",
+   "text": "Second-place name (six characters), inside hiscore_names."
+  },
+  {
+   "address": 5921,
+   "type": "line",
+   "text": "Third-place name, inside hiscore_names."
+  },
+  {
+   "address": 5927,
+   "type": "line",
+   "text": "Fourth-place name, inside hiscore_names."
+  },
+  {
+   "address": 5933,
+   "type": "line",
+   "text": "Fifth-place name, inside hiscore_names: the one dropped when a new score enters."
+  },
+  {
+   "address": 5939,
+   "type": "line",
+   "text": "The high scores: five 6-byte fields in screen-code digits with leading spaces, first place at $1733, then $1739, $173F, $1745, $174B; all '     0' in the image. Compared and written by hiscore_insert, shifted by hiscore_shift_scores, drawn by hiscore_draw_scores."
+  },
+  {
+   "address": 5945,
+   "type": "line",
+   "text": "Second-place score (six screen codes), inside hiscore_scores."
+  },
+  {
+   "address": 5951,
+   "type": "line",
+   "text": "Third-place score, inside hiscore_scores."
+  },
+  {
+   "address": 5957,
+   "type": "line",
+   "text": "Fourth-place score, inside hiscore_scores."
+  },
+  {
+   "address": 5963,
+   "type": "line",
+   "text": "Fifth-place score, inside hiscore_scores; hiscore_insert starts its comparison here."
+  },
+  {
+   "address": 5969,
+   "type": "line",
+   "text": "The rank reached for each of the five high-score entries: 0 novice, 1-10 dan, $80 (all five in the image) for an empty place, which hiscore_draw leaves blank. Written by hiscore_insert_rank from $C9."
+  },
+  {
+   "address": 5970,
+   "type": "line",
+   "text": "Ranks of places 2-5, inside hiscore_ranks; hiscore_insert_rank shifts them by storing here ($1704)."
+  },
+  {
+   "address": 5974,
+   "type": "line",
+   "text": "Writes six '.' ($2E) at ($BF/$C0): the new entry's name before it is typed."
+  },
+  {
+   "address": 5986,
+   "type": "line",
+   "text": "Lets the player type a name of up to six characters into the entry at ($BF), echoed on screen through hiscore_put_char. Sets $FF = 4 (song 4). Each pass waits two frames ($21CA, X = 1, Y = 2) and reads a key (key_read_new). DEL ($14) steps back and blanks a character (not past the first); RETURN, or fire on joystick port 2, fills the rest with spaces and ends; any other character is stored and the sixth ends the entry. Uses $73 for the position."
+  },
+  {
+   "address": 6061,
+   "type": "line",
+   "text": "Stores A at ($BF),Y (the name in the table) and on screen; the screen address is the operand of the STA at $17AF, written by hiscore_after_game ($149C, $14AA, $14B0) as $CC13 + 40 x place."
+  },
+  {
+   "address": 6064,
+   "type": "line",
+   "text": "Low byte of the STA $CC00,Y operand at $17AF: the screen address of the name being typed, $13 + 40 x place, written by hiscore_after_game at $14B0."
+  },
+  {
+   "address": 6065,
+   "type": "line",
+   "text": "High byte of the STA operand at $17AF: $CC plus the carry of the place multiplication, written at $149C and $14AA."
+  },
+  {
+   "address": 6067,
+   "type": "line",
+   "text": "Fills 24 colour RAM cells from ($CC/$CD) with A: the high-score row being typed (columns 8-31)."
+  },
+  {
+   "address": 6075,
+   "type": "line",
+   "text": "Unpacks the backdrop for stage $AF & 3 into the bitmap: takes the backdrop's packed stream address from the word table at $1839, adds the stream's first word (the offset to its last byte) and reads backwards from there, writing downwards from $F53F. Control byte n < $80: copy the n bytes below it; n >= $80: repeat the byte below it n & $7F times; 0 ends. Pointers in $34/$35 (source), $36/$37 (destination), count in $38; uses $181D and $182B to step them. Called by $1F54 when the stage's backdrop changes."
   },
   {
    "address": 6144,
@@ -10055,7 +10842,7 @@
   {
    "address": 12287,
    "type": "line",
-   "text": "Raster handler; like every one it first tests CIA 1 (BIT $DC0D) and, if the timer of the sample player raised the interrupt, re-enables interrupts and jumps to $311A. One of the four handlers that follow the fighters' chain, chosen at $3253-$3264 when fighter A's top $1C is not $A0 and fighter B's $1D is (A off the ground): puts sprites 0-2 at Y $DA with pointers from $3015/$301A/$301F (written by $3291-$329B from $27/$29/$2B,X of fighter A), then line $FF and handler $30E5. The jump shadow (features.md); continues to $3038 in the next range."
+   "text": "Raster handler; like every one it first tests CIA 1 (BIT $DC0D) and, if the timer of the sample player raised the interrupt, re-enables interrupts and jumps to $311A. One of the four handlers that follow the fighters' chain, chosen at $3253-$3264 when fighter A's top $1C is not $A0 and fighter B's $1D is (A off the ground): puts sprites 0-2 at Y $DA with pointers from $3015/$301A/$301F (written by $3291-$329B from $27/$29/$2B,X of fighter A), then line $FF and handler $30E5. A fourth row at a fixed Y near the ground, drawn only while the fighter is off the ground (Y $A0 is standing: $29D1, $383E): by all appearances the shadow under a jumping fighter (features.md, live), not checked against the sprite images. The body runs on to $3038, in the next range."
   },
   {
    "address": 12309,
@@ -10656,6 +11443,36 @@
    "address": 28640,
    "type": "line",
    "text": "Backdrop 3 (Buddha): its colours, packed as nybbles in the format described at $68CB, $6FE0-$71FF, ending in the high nybble of $71FF."
+  },
+  {
+   "address": 62784,
+   "type": "line",
+   "text": "Speech sample table: four 4-byte entries, each the start and end offset of a sample from $F540 (read by speech_start at $3198-$31B3). Sample 0 $F580-$F662, sample 1 $F663-$F978, sample 2 $F979-$FCD2, sample 3 $FED3-$FFDC."
+  },
+  {
+   "address": 62800,
+   "type": "line",
+   "text": "48 bytes between the sample table and sample 0's data. Nothing reads them: speech_start reads only $F540-$F54F, and the first sample starts at $F580."
+  },
+  {
+   "address": 62848,
+   "type": "line",
+   "text": "Speech sample 0, $F580-$F662: one byte per volume flip, each indexing the period tables at $0200/$0300. Started by speech_say_0 ($3158). The RAM sits under the bitmap's floor rows, whose four colours are all yellow, so it never shows."
+  },
+  {
+   "address": 63075,
+   "type": "line",
+   "text": "Speech sample 1, $F663-$F978, period indices like sample 0's; started by speech_say_1 ($315E)."
+  },
+  {
+   "address": 63865,
+   "type": "line",
+   "text": "Speech sample 2, $F979-$FCD2, period indices like sample 0's; started by speech_say_2 ($3164)."
+  },
+  {
+   "address": 65235,
+   "type": "line",
+   "text": "Speech sample 3, $FED3-$FFDC, period indices like sample 0's; started by speech_say_3 ($316A). It ends just below the hardware vectors at $FFFA."
   }
  ]
 }
