@@ -133,6 +133,22 @@
    "end": "2026-10-02T16:43:31Z",
    "minutes": 0.0,
    "note": "Recorded start of human copy review and plain-language preference; existing house style covers this edit, so no kit change needed."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T16:50:11Z",
+   "end": "2026-10-02T17:11:28Z",
+   "minutes": 21.3,
+   "note": "Built before/after bomb-scene explorer in article and atlas;397 records and1191 complete bitmaps match original code. Plain-language notes for32 layouts. Native title/demo calls resolve status-colour clearing; six source comments updated. Chromium passes794 bomb selections plus all existing controls."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T17:11:28Z",
+   "end": "2026-10-02T17:12:39Z",
+   "minutes": 1.2,
+   "note": "Recorded drawing-only scope,1191 original-code comparisons and native status-clear evidence. Existing kit model-verification guidance suffices; no kit changes or maintainer asks added. Browser controls pass; source bytes and100%coverage preserved; native tools stopped."
   }
  ]
 }

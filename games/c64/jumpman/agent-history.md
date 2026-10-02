@@ -41,3 +41,8 @@ The native Freeze contact was replayed for150 frames with RIGHT+FIRE and neutral
 
 
 JankFoundry began the copy review by replacing both uses of “emit” with “choose” in the Randomizer paragraph and requested human-readable wording wherever possible. The page is marked silver-claimed with jankfoundry as steward; this starts curation without claiming a complete Gold pass. The local page generator carries the same wording so regeneration preserves the edit.
+
+
+The contributor chose interactive level changes as the next focus. The atlas and opening article section gained numbered bomb selection, map clicks, Before/After buttons and added/removed scenery highlighting. The page resets to the stored opening layout for each selection and explicitly omits private callbacks and later actor-driven changes. The existing renderer was composed with the original bomb eraser and checked against the unchanged collector tail for all397 initial-table records, independently and in forward/reverse orders:1,191 full bitmap comparisons passed. Every level also received a short reader-facing description, while address-level notes moved behind a disclosure.
+
+A related source audit found the supposedly unknown callers of$5006 through API$4367. Letting the native presentation run reached$94BE and$9949 without memory edits. Both cleared80 status colours while preserving the actual status characters, then wrote the32-character credit or40-character prompt. Screenshots and original before/after reads confirm that old characters are hidden by black colour; the different character destination remains documented. Six comments were edited and saved in the native resident project, then exported with unchanged bytes and full coverage.

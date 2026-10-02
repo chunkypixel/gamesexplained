@@ -1,0 +1,5396 @@
+{
+  "method": "Page excerpts and erase/redraw model versus unchanged original $567A collector tail, after original initial $4D0F rendering. Private bomb callbacks, scoring and movement are intentionally outside this comparison. Forward/reverse runs test drawing order, not legal pickup routes.",
+  "cases": 1191,
+  "bitmapBytesComparedPerCase": 8192,
+  "initialLayouts": 32,
+  "bombRecords": 397,
+  "snapshotSha256": {
+    "10": "7f3a111e118ea250a3fe2c150e98a2e743033d84b174066e0efec70c86dbe7e0",
+    "11": "e6f6c2bc04bf2217a6207357428bf152db8c9d696e184a83c91a8db7e105a1de",
+    "12": "e4ceea10abd4483bf14d4814e696dfcb292b1ec94413349f8d17c68173da019e",
+    "13": "3e2e904fe6a235d975c479732763a8376f0b2e0b85c1f2f858ef8e548ca182df",
+    "14": "52aceb98db6768fe3031abd1e96c157c897e07e2b510bdcfc423ed2955e829df",
+    "15": "be16a7909845ab992d1848274acc501f4015281a496fce089f26cb9269d7330d",
+    "16": "2c48c0b141d9ba7364ac9180699a9cfd87f5025a44c96bd183fb9a9ad1a6a1ee",
+    "17": "b171e54e8b27a81672dc2faf327f11a83dd6b61cfa4b721cefa0ff35f7bbecbd",
+    "18": "d3abb07c240bae51bf7c232e731b2fef891b85192bcd1f12e80b928076dbe11f",
+    "19": "864f146b56cec721ac287f998fb7c719442d08bf53f88f340f5ab3cb25084620",
+    "20": "dfab85a10381bc402436eec5df522d0800674d16972ad8eae792ceae4b92d547",
+    "21": "57a82219632e9813809e3f9c0f218b4d22be8a88ee54959c78cbf03b10bcf906",
+    "22": "44fcafcc675dba6992d56adbc3d21f2d75a9728da7e0bb768828d856c56579fd",
+    "23": "d6c469ea5ec702e2134318f6f79b7647ce3af64142ffa88128c9c7b632a5b8b4",
+    "24": "bd8ed8ab71f0a5137792cff3202794782f6bccc3a3eb8bb97a33a3971ffbedf6",
+    "26": "640a2c37988bdf48b665e971a71444855b2000af902836e3512d527e62eb5741",
+    "27": "9e54006a6a653907e791d9c8923de3dac4f1cfa8db864b69be8183ecb75b32f7",
+    "28": "db04bd239fc6cabbfaab265fa09c917a113fdbe30ee5185bdf043562b94dd4ae",
+    "29": "c38a9e6adf6b895f0372949a3d09b663a7b22eb30cef6d1ae79e05ae321aae31",
+    "30": "c06c91bdeb0eff74bb57816a18bdd5781d311241ca45a2c710dfcc049539886c",
+    "01": "1dc86cb0102ad1352531ceedafbe37302db9d97c9f59acbe5409f450f7269236",
+    "02": "0b6658fd65e5e8594b648f6221674e04561dcb7632bba2bc01afc3fae524f83e",
+    "03": "896d6dc7bc91fb9545bd0c838376c5031a0ae0579b40494a83706a010b5517ed",
+    "04": "329a41564276c9f9a3a7eec5369bfaf89def238e1d145d3a4673c003b466baf6",
+    "05": "1e1bf7b5be2d38a93d004235a6c8caf1f0d6c3d47a4da01146c752c37c6e001d",
+    "06": "2b5b1b94e99f7409d7291488b0e118856c061e226b8c9b5c38550744c0c92084",
+    "07": "397dd7c9436069230ed13176eaed9c3777ffa3e438470b0eafac6c6cb4d40c2e",
+    "08": "af153e728a8a7b8809cfb4ee7e10fc6296cd5c8c1868b42c11db198397b85025",
+    "09": "e53953a1439408435342c52bdfc77e77855c4668304ae9050913e5f04b4049df",
+    "2A": "fa60902b2035f5229318246b2e391393985afcc2639c8ec3382483e6f12815ad",
+    "2B": "5e71fc9787da84d8e664e31900ca5938b319a005e362c4b13bcddf4857e73be0",
+    "2C": "348fd734989fe6d621bcbd034056900d64c332e82353fc3c1538dc60a57891de"
+  },
+  "levels": [
+    {
+      "id": "01",
+      "bombs": 12,
+      "changes": [
+        {
+          "record": 12612,
+          "draw": 12697,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12710,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12723,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12733,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12675,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12682,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12689,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "bombs": 12,
+      "changes": [
+        {
+          "record": 12570,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12577,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12584,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12591,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12598,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12605,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12612,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "bombs": 12,
+      "changes": [
+        {
+          "record": 12542,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12549,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12556,
+          "draw": 12627,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12563,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12570,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12577,
+          "draw": 12637,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12584,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12591,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12598,
+          "draw": 12647,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12605,
+          "draw": 12657,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12612,
+          "draw": 12667,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12677,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 120,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12603,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12610,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12617,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12624,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12631,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12638,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12645,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12652,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12659,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12666,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12673,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12680,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12687,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12694,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12701,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12708,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12630,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12637,
+          "draw": 12729,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 40,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12644,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12651,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12658,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12665,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12672,
+          "draw": 12739,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12679,
+          "draw": 12749,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12686,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12693,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12700,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12707,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12714,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12721,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "bombs": 1,
+      "changes": [
+        {
+          "record": 12515,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12594,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12601,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12608,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12615,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12622,
+          "draw": 12707,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 16,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 28
+          }
+        },
+        {
+          "record": 12629,
+          "draw": 12717,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 16,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 28
+          }
+        },
+        {
+          "record": 12636,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12643,
+          "draw": 12727,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12650,
+          "draw": 12734,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12657,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12664,
+          "draw": 12741,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12671,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12678,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12685,
+          "draw": 12751,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12692,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12699,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12615,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12622,
+          "draw": 12728,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 10,
+            "climbAdded": 44,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 16,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12629,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12636,
+          "draw": 12738,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 240,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 320
+          }
+        },
+        {
+          "record": 12643,
+          "draw": 12770,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 2,
+            "climbAdded": 10,
+            "climbRemoved": 0,
+            "bombAdded": 24,
+            "bombRemoved": 12,
+            "changed": 42
+          }
+        },
+        {
+          "record": 12650,
+          "draw": 12754,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 240,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 320
+          }
+        },
+        {
+          "record": 12657,
+          "draw": 12789,
+          "delta": {
+            "platformAdded": 120,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12664,
+          "draw": 12799,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 24
+          }
+        },
+        {
+          "record": 12671,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12678,
+          "draw": 12806,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 24
+          }
+        },
+        {
+          "record": 12685,
+          "draw": 12813,
+          "delta": {
+            "platformAdded": 120,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12692,
+          "draw": 12823,
+          "delta": {
+            "platformAdded": 124,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 136
+          }
+        },
+        {
+          "record": 12699,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12706,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12713,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12720,
+          "draw": 12842,
+          "delta": {
+            "platformAdded": 124,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 136
+          }
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12577,
+          "draw": 12697,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12584,
+          "draw": 12704,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12591,
+          "draw": 12711,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12598,
+          "draw": 12718,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12605,
+          "draw": 12725,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12612,
+          "draw": 12732,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12739,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12746,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12753,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12760,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12767,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12774,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12781,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12788,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 20,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12578,
+          "draw": 12677,
+          "delta": {
+            "platformAdded": 80,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12585,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12592,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12599,
+          "draw": 12687,
+          "delta": {
+            "platformAdded": 80,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12606,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12613,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12620,
+          "draw": 12697,
+          "delta": {
+            "platformAdded": 220,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 232
+          }
+        },
+        {
+          "record": 12627,
+          "draw": 12707,
+          "delta": {
+            "platformAdded": 220,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 232
+          }
+        },
+        {
+          "record": 12634,
+          "draw": 12717,
+          "delta": {
+            "platformAdded": 60,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 152
+          }
+        },
+        {
+          "record": 12641,
+          "draw": 12739,
+          "delta": {
+            "platformAdded": 60,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 152
+          }
+        },
+        {
+          "record": 12648,
+          "draw": 12761,
+          "delta": {
+            "platformAdded": 20,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 22
+          }
+        },
+        {
+          "record": 12655,
+          "draw": 12775,
+          "delta": {
+            "platformAdded": 80,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 122
+          }
+        },
+        {
+          "record": 12662,
+          "draw": 12797,
+          "delta": {
+            "platformAdded": 80,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 122
+          }
+        },
+        {
+          "record": 12669,
+          "draw": 12768,
+          "delta": {
+            "platformAdded": 20,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "bombs": 18,
+      "changes": [
+        {
+          "record": 12514,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12521,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12528,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12535,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12542,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12549,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12556,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12563,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12570,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12577,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12584,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12591,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12598,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12605,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12612,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12597,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12604,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12611,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12618,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12625,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12632,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12639,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12646,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12653,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12660,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12667,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12674,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12681,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12688,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12695,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12702,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "bombs": 4,
+      "changes": [
+        {
+          "record": 12525,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12532,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12539,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12546,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "bombs": 1,
+      "changes": [
+        {
+          "record": 12547,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12586,
+          "draw": 12685,
+          "delta": {
+            "platformAdded": 14,
+            "platformRemoved": 36,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 62
+          }
+        },
+        {
+          "record": 12593,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12600,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12607,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12614,
+          "draw": 12704,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12621,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12628,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12635,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12642,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12649,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12656,
+          "draw": 12714,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 52,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12663,
+          "draw": 12721,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 76,
+            "changed": 76
+          }
+        },
+        {
+          "record": 12670,
+          "draw": 12728,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 63,
+            "changed": 63
+          }
+        },
+        {
+          "record": 12677,
+          "draw": 12735,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 46,
+            "changed": 46
+          }
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12718,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12728,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12675,
+          "draw": 12748,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 100,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 112
+          }
+        },
+        {
+          "record": 12682,
+          "draw": 12738,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 100,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 112
+          }
+        },
+        {
+          "record": 12689,
+          "draw": 12748,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 100,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 112
+          }
+        },
+        {
+          "record": 12696,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12703,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12710,
+          "draw": 12738,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 100,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 112
+          }
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "bombs": 12,
+      "changes": [
+        {
+          "record": 12621,
+          "draw": 12706,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 4,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 26
+          }
+        },
+        {
+          "record": 12628,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12635,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12642,
+          "draw": 12713,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 4,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 26
+          }
+        },
+        {
+          "record": 12649,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12656,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12663,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 4,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 4
+          }
+        },
+        {
+          "record": 12670,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12677,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12684,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12691,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12698,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 4,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12657,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12664,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12671,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12678,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12685,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12692,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12699,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12706,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12713,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12720,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12727,
+          "draw": 12756,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12734,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12741,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12748,
+          "draw": 12766,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12582,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12589,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12596,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12603,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12610,
+          "draw": 12681,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 164
+          }
+        },
+        {
+          "record": 12617,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12624,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 0,
+            "changed": 0
+          }
+        },
+        {
+          "record": 12631,
+          "draw": 12697,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 164
+          }
+        },
+        {
+          "record": 12638,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12645,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12652,
+          "draw": 12713,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 164
+          }
+        },
+        {
+          "record": 12659,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12666,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12673,
+          "draw": 12729,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 12,
+            "bombRemoved": 12,
+            "changed": 164
+          }
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12576,
+          "draw": 12675,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 4,
+            "climbAdded": 32,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 44
+          }
+        },
+        {
+          "record": 12583,
+          "draw": 12685,
+          "delta": {
+            "platformAdded": 16,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 28
+          }
+        },
+        {
+          "record": 12590,
+          "draw": 12695,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 200,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 212
+          }
+        },
+        {
+          "record": 12597,
+          "draw": 12705,
+          "delta": {
+            "platformAdded": 260,
+            "platformRemoved": 340,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 612
+          }
+        },
+        {
+          "record": 12604,
+          "draw": 12724,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12611,
+          "draw": 12822,
+          "delta": {
+            "platformAdded": 8,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 16
+          }
+        },
+        {
+          "record": 12618,
+          "draw": 12829,
+          "delta": {
+            "platformAdded": 8,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 16
+          }
+        },
+        {
+          "record": 12625,
+          "draw": 12734,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12632,
+          "draw": 12764,
+          "delta": {
+            "platformAdded": 324,
+            "platformRemoved": 324,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 660
+          }
+        },
+        {
+          "record": 12639,
+          "draw": 12744,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12646,
+          "draw": 12754,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12653,
+          "draw": 12792,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12660,
+          "draw": 12802,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 152
+          }
+        },
+        {
+          "record": 12667,
+          "draw": 12812,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 140,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 152
+          }
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "bombs": 13,
+      "changes": [
+        {
+          "record": 12618,
+          "draw": 12710,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12625,
+          "draw": 12720,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12632,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12639,
+          "draw": 12730,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12646,
+          "draw": 12737,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 40,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12653,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12660,
+          "draw": 12744,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12667,
+          "draw": 12754,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12674,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12681,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12688,
+          "draw": 12764,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12695,
+          "draw": 12784,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12702,
+          "draw": 12774,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12594,
+          "draw": 12693,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12601,
+          "draw": 12703,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12608,
+          "draw": 12713,
+          "delta": {
+            "platformAdded": 160,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 172
+          }
+        },
+        {
+          "record": 12615,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12622,
+          "draw": 12713,
+          "delta": {
+            "platformAdded": 160,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 172
+          }
+        },
+        {
+          "record": 12629,
+          "draw": 12693,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12636,
+          "draw": 12726,
+          "delta": {
+            "platformAdded": 160,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 32,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 176
+          }
+        },
+        {
+          "record": 12643,
+          "draw": 12726,
+          "delta": {
+            "platformAdded": 160,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 32,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 176
+          }
+        },
+        {
+          "record": 12650,
+          "draw": 12703,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12657,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12664,
+          "draw": 12726,
+          "delta": {
+            "platformAdded": 160,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 32,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 176
+          }
+        },
+        {
+          "record": 12671,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12678,
+          "draw": 12736,
+          "delta": {
+            "platformAdded": 120,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12685,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "bombs": 13,
+      "changes": [
+        {
+          "record": 12564,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12571,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12578,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12585,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12592,
+          "draw": 12656,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12599,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12606,
+          "draw": 12666,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12613,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12620,
+          "draw": 12676,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12627,
+          "draw": 12686,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12634,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12641,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12648,
+          "draw": 12696,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12687,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12694,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12701,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12708,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12715,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12722,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12729,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12736,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12743,
+          "draw": 12800,
+          "delta": {
+            "platformAdded": 8,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 14
+          }
+        },
+        {
+          "record": 12750,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12757,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12764,
+          "draw": 12810,
+          "delta": {
+            "platformAdded": 8,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 20
+          }
+        },
+        {
+          "record": 12771,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12778,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12785,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12792,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "2A",
+      "bombs": 11,
+      "changes": [
+        {
+          "record": 12588,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12595,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12602,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12609,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12616,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12623,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12630,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12637,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12644,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12651,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12658,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "2B",
+      "bombs": 10,
+      "changes": [
+        {
+          "record": 12594,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12601,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12608,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12615,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12622,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12629,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12636,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12643,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12650,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12657,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "2C",
+      "bombs": 11,
+      "changes": [
+        {
+          "record": 12612,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12675,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12682,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "bombs": 1,
+      "changes": [
+        {
+          "record": 12541,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "bombs": 18,
+      "changes": [
+        {
+          "record": 12612,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12751,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12761,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12675,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12682,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12689,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12696,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12703,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12710,
+          "draw": 12761,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12717,
+          "draw": 12751,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12724,
+          "draw": 12761,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        },
+        {
+          "record": 12731,
+          "draw": 12751,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 28,
+            "climbAdded": 120,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 132
+          }
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "bombs": 16,
+      "changes": [
+        {
+          "record": 12642,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12649,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12656,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12663,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12670,
+          "draw": 12755,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12677,
+          "draw": 12765,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12684,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12691,
+          "draw": 12775,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12698,
+          "draw": 12785,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12705,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12712,
+          "draw": 12795,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12719,
+          "draw": 12805,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12726,
+          "draw": 12815,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12733,
+          "draw": 12825,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12740,
+          "draw": 12835,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 60,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 72
+          }
+        },
+        {
+          "record": 12747,
+          "draw": 12815,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "bombs": 14,
+      "changes": [
+        {
+          "record": 12584,
+          "draw": 12683,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 160,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 172
+          }
+        },
+        {
+          "record": 12591,
+          "draw": 12693,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 160,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 172
+          }
+        },
+        {
+          "record": 12598,
+          "draw": 12703,
+          "delta": {
+            "platformAdded": 40,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12605,
+          "draw": 12713,
+          "delta": {
+            "platformAdded": 40,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 52
+          }
+        },
+        {
+          "record": 12612,
+          "draw": 12723,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12619,
+          "draw": 12733,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 80,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12626,
+          "draw": 12743,
+          "delta": {
+            "platformAdded": 16,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 28
+          }
+        },
+        {
+          "record": 12633,
+          "draw": 12753,
+          "delta": {
+            "platformAdded": 16,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 28
+          }
+        },
+        {
+          "record": 12640,
+          "draw": 12763,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12647,
+          "draw": 12773,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 80,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 92
+          }
+        },
+        {
+          "record": 12654,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12661,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12668,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12675,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "bombs": 12,
+      "changes": [
+        {
+          "record": 12629,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12636,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12643,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12650,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12657,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12664,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12671,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12678,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12685,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12692,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12699,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        },
+        {
+          "record": 12706,
+          "draw": 12342,
+          "delta": {
+            "platformAdded": 0,
+            "platformRemoved": 0,
+            "climbAdded": 0,
+            "climbRemoved": 0,
+            "bombAdded": 0,
+            "bombRemoved": 12,
+            "changed": 12
+          }
+        }
+      ]
+    }
+  ]
+}

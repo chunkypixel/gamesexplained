@@ -9090,7 +9090,7 @@
   {
    "address": 17255,
    "type": "line",
-   "text": "Stable overlay API entry: JMP $5003 runs the stored status clear routine (see its actual screen addresses)."
+   "text": "Stable resident API: JMP $5003 to $5006. Natural title call$94BE and demo call$9949 were observed. The routine zeros80 status colours at$DB98-$DBE7 while its80 character-space writes target$0498-$04E7, not the status glyphs."
   },
   {
    "address": 17258,
@@ -9510,7 +9510,7 @@
   {
    "address": 20486,
    "type": "line",
-   "text": "Write80 spaces to$0498-$04E7 and zero corresponding stored destination$DB98-$DBE7. The text destination differs from the visible panel$0798-$07E7; retain the actual addresses rather than silently correcting the source."
+   "text": "Write80 spaces to$0498-$04E7 and black to$DB98-$DBE7. Natural calls from$94BE and$9949 through$4367/$5003 were observed: all80 status characters at$0798-$07E7 remain unchanged and all80 status colours become0 against background0. The title caller then writes32 white credit characters; the demo caller writes40 coloured prompt characters. Unreplaced characters remain hidden by black colour. The character destination mismatch is preserved, not silently corrected."
   },
   {
    "address": 20502,
@@ -9700,7 +9700,7 @@
   {
    "address": 22033,
    "type": "line",
-   "text": "Read matched bomb record [key,x,y,callback low/high,drawing low/high]. Patch erasure position and call/drawing operands; invoke optional global callback$303A/B when its high byte is nonzero, then record callback. Queue collection sound, add overlay bomb value$3015/16 to24-bit total, update score/extra-life, erase bomb with shape$7F27, run record drawing stream, decrement remaining bombs$3013 and clear body materials."
+   "text": "Read matched bomb record [key,x,y,callback low/high,drawing low/high]. Patch erasure position and call/drawing operands; invoke optional global callback$303A/B when its high byte is nonzero, then record callback. Queue collection sound, add overlay bomb value$3015/16 to24-bit total, update score/extra-life, erase bomb with shape$7F27, run record drawing stream, decrement remaining bombs$3013 and clear body materials. The page isolates the erasure/redraw tail$567A:397 initial-table bomb records match all8192 bitmap bytes after original initial drawing, plus forward/reverse sequences (1191 comparisons). This does not execute private callbacks or prove pickup order."
   },
   {
    "address": 22084,
@@ -11175,7 +11175,12 @@
   {
    "address": 38034,
    "type": "line",
-   "text": "Wait for synthetic direction high nibble$B, then install$952E in$40CA/CB with sprite-command stream$94D4. Wait until$400D reaches$40, reset a shared actor state via$4367, replace copyright row with32-character Randy Glover credit and begin colour cycle."
+   "text": "Wait for synthetic direction high nibble$B, then install$952E in$40CA/CB with sprite-command stream$94D4. Wait until$400D reaches$40, clear the status colours via$4367, replace copyright row with32-character Randy Glover credit and begin colour cycle."
+  },
+  {
+   "address": 38078,
+   "type": "line",
+   "text": "Natural title-animation completion calls$4367->$5003->$5006 to blacken80 status colours. The following32-byte loop places the Randy Glover credit at$0798-$07B7 in white. Native unchanged-character/black-colour checks and final screenshot confirm this path."
   },
   {
    "address": 38100,
@@ -11266,6 +11271,11 @@
    "address": 39168,
    "type": "line",
    "text": "Reset display and actors; draw stream$9A27, set the player near X308,Y202, draw PRESS (RETURN) prompt and colours, then install synthetic-input callback$99DB with stream$998C and divisor2. Continue into the two-actor script setup$9BB6."
+  },
+  {
+   "address": 39241,
+   "type": "line",
+   "text": "Natural demo setup calls the same status-colour clear. The following40-byte loop writes the RETURN prompt and its colours at$0798/$DB98; the remaining40 status cells keep their old characters hidden in black. Native before/after checks confirm this path."
   },
   {
    "address": 39305,

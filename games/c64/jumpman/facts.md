@@ -22,6 +22,8 @@ Player and hazard dividers are `$4029/$402A`; pulses are `$402B/$402C`. After th
 
 The measured PAL configuration has 985,248 CPU cycles per second and 19,656 cycles per frame: **50.124542 frames/s**. Bonus counter `$4026` wraps every 256 services while `$4027` is enabled. `$57D9-$580E` subtracts 100 from [$3017/$3018](source.html?image=01#3017), approximately **5.107279 seconds** per subtraction at one service per frame. Zero bonus disables the countdown. Controlled live tests confirmed 1500→1400, 100→0, and disabling at zero (`work/live-tests.json`). Values below 100 are not clamped before subtraction.
 
+`$4367`→`$5003`→`$5006` is naturally called at `$94BE` after the title animation and at `$9949` during demonstration setup. **Live observation:** both calls leave all80 status characters at `$0798-$07E7` unchanged, write80 spaces to the different region `$0498-$04E7`, and zero all80 corresponding status colours at `$DB98-$DBE7`. With text background0, this hides the old status characters. The title caller then writes32 white credit characters; the demo caller writes40 prompt characters with their colours. Unreplaced cells remain black. The character-address mismatch is retained as a source property; these observed callers and their colour-based clearing effect are established. See [title credit](reference/status-title-credit.png), [demo prompt](reference/status-demo-prompt.png) and [compact results](reference/status-clear-verification.json).
+
 ## Controls, speed and player movement
 
 Joystick port 2 is read through `$DC00`. The active-low direction nibble indexes sixteen signed X/Y intent pairs at `$4320`, stored in `$4050/$4051`. A nonzero high nibble in `$4052` substitutes scripted direction and is mirrored into the low nibble. In `$4053`, bit 0 forces fire released; otherwise bit 1 forces it pressed; otherwise the IRQ reads joystick bit 4. Enabled RETURN and SPACE escape hooks use vectors `$4048/$404A` and gates `$404C/$404D`.
@@ -158,7 +160,6 @@ Demo `$9900` draws `$9A27`, displays the RETURN prompt and runs 26 input triples
 
 - `$45EB` preemption clears `$D404 + incoming release`, using X rather than the selected voice offset. Controlled CPU tests reproduce replacing voice 1 while clearing voice 0. Its audible effect during ordinary play is unverified.
 - `$464B` compares the sprite high-X condition against `$D00A` (sprite 5 X), rather than `$D010`. A controlled CPU test skips a needed X update; natural visible impact remains unverified.
-- `$5006` clears `$0498-$04E7` while the status panel is at `$0798-$07E7`. Its natural caller and visible effect remain open.
 - `$49BB` compares vertical intent with zero-page `$01`, not immediate 1. Ordinary-play consequences are unverified.
 - The demo frame loader clears offsets 1…128 of a 128-byte workspace, including one byte beyond its end. The next copy masks some effects; no visible corruption is established.
 - Fully climbable bitmap byte `$FF`, PLF13's missing bomb terminator, Randomizer's missing suffix and the final-life award overflow have the precise evidence limits stated above. Score-entry sentinel stores have been bounded and checked as described in the score section. None is promoted to a naturally reachable exploit without an input route.
@@ -195,6 +196,12 @@ Freeze's capture starts just before contact stores80. Contact reloads80 on frame
 The actual dispatcher confirms support-before-motion for PLF16/19 and countdown-before-contact for PLF22. Robots II and Freeze creatures have private four-/three-callback clocks independent of `$402C`; the other checked moving platforms and route programs use eligible hazard updates. Quoted route periods therefore count those updates, not video frames. The original divider was also checked for20 player/hazard combinations over40 services each: from counter zero the first pulse occurs on service n+1, then every n; divisor9 suppresses both streams.
 
 Follower delay uses the modular gap L=(next-write cursor−read cursor)&255 at creation. Replay increments its cursor before reading, then recording writes the next sample. After both callbacks, sample age is L−1 once that slot contains history: creation write cursors0,7,8,63,255 give ages55,62,7,62,254 respectively. This is a separately fixed delay for each follower, not a common delay. Deliberately early creation can read retained overlay bytes; legal reachability of that early pickup remains unknown.
+
+## Interactive bomb scenery comparisons
+
+The map viewer starts with each file's stored initial stream, erases one selected bomb with `$56BC`/shape`$7F27`, then executes the drawing pointer from its seven-byte record. **CPU checked:** all397 records in the32 initial bomb tables match the original collector tail `$567A-$569C` across every8,192-byte bitmap. Forward and reverse drawing sequences for each table also match, giving1,191 comparisons. Each starting layout was independently drawn by original `$4D0F`. The page uses only referenced drawing/shape excerpts; [scenery-verification.json](reference/scenery-verification.json) records per-bomb material changes and snapshot hashes.
+
+These comparisons deliberately omit the preceding private callbacks, score handling and player movement. They establish the drawing operations, not legal pickup orders or all consequences of collection. The viewer resets to the opening layout for each choice. It does not show Runaway's randomized initial placement, Grand Puzzle III's second stage, hidden-platform colour changes or drawings scheduled later by a moving actor. Such rules remain in the level notes. Added/removed highlights compare the two-bit bitmap materials; changing one material into another is marked separately. Bomb numbers select records, including special records that need not be visible in the opening layout.
 
 ## Private behavior in all 32 level files
 

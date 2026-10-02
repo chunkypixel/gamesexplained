@@ -4,7 +4,7 @@ The inventory began from the supplied game's screens and the C64 manual, before 
 
 | Feature | Status | Evidence / limits |
 |---|---|---|
-| Animated EPYX and JUMPMAN title, attract demonstration | live + traced | Captured title; scripts `$93EE/$94D4/$998C` and actor VM `$9A98` explain animation and synthetic controls. |
+| Animated EPYX and JUMPMAN title, attract demonstration | live + traced | Captured title; scripts `$93EE/$94D4/$998C` and actor VM `$9A98` explain animation and synthetic controls. Natural `$94BE/$9949` calls verify status-colour clearing before the credit/prompt;80 old status characters remain stored but hidden. |
 | Five modes: Beginner, Intermediate, Advanced, Grand Loop, Randomizer | live + traced | Options screenshot; `$7A1C`, starts `$7BF1/$7BF6`, termination `$5BB4/$5BB9`. |
 | Groups of 8, 10 and 12 numbered levels; 30 in Grand Loop | traced | Next-file markers 09,19,XX. Mystery Maze has three alternative files displaying25. All 32 files loaded and captured. |
 | One to four players, alternating turns | traced | `$7A9C` rejects5; four 11-byte records `$51C4`, rotation `$5106/$7400`. Full four-player campaign not played. |
@@ -17,7 +17,7 @@ The inventory began from the supplied game's screens and the C64 manual, before 
 | Collect all ordinary bombs; usually100 points | live + traced | Seven-byte records and `$55BF`; per-file points in `$3015`. Normal first-level joystick route earns100 and reduces targets12→11. Special records and callbacks change count/awards. |
 | Bonus falls100 about every five seconds | live + traced | `$4026` wraps every256 enabled IRQs, about5.107s PAL. Live1500→1400,100→0 and zero-disable checks. |
 | Completing a level adds remaining bonus to both totals | traced | `$5B00`; 24-bit score and cumulative-bonus fields `$40DA–$40DF`. |
-| Geometry changes after bomb collection | original-code tests | Every decoded initial and post-bomb stream, including level30 stage2, matches all8192 output bytes of `$4D0F`. |
+| Geometry changes after bomb collection | original-code tests | Every decoded initial and post-bomb stream, including level30 stage2, matches all8192 output bytes of `$4D0F`. The interactive comparison also matches the original erase/redraw tail for397 initial-table records, alone and in forward/reverse sequences (1191 full bitmaps); private callback effects and legal pickup order are outside this view. |
 | Fixed up/down rope routes | traced | Header arrays `$3020–$302D`, movement `$4900`; bitmap contact and column matching determine traversal. |
 | Moving blocks, lifts, robots, bats and level-specific hazards | live + CPU checked + traced | All32 private programs traced;14 have expanded CPU checks. Ordinary inputs verify Robots I release, Jumping Blocks forced jump and Ride Around carry after native level selection. Full legal completion, platform transfers and natural mixed-mask effects remain open. |
 | Shooting in Invasion, Dragon Slayer and Gunfighter | live + CPU checked | Ordinary inputs launch all three shots. Controlled cases verify eight-way shots, arc/cooldown/bounds, hit awards25/50/100 and all12 Dragon Slayer stairs. Legal hits/stair completion remain open. |
