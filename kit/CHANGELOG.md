@@ -14,6 +14,11 @@ Versions that taught nothing of the kind do not appear.
 
 ## next · 2 October 2026 · Jumpman · JankFoundry with Codex
 
+**A requested frame count is not elapsed time.** A rejected oversized frame
+advance leaves the machine unchanged. The VICE notes now require supported
+batches and a matching completed-frame count; the Python helper raises on
+errors or incomplete advances so replay scripts cannot silently skip time.
+
 **Count loaded programs, not just occupied addresses.** Jumpman's resident
 image loads thirty-two different 2 KB level programs into the same place.
 One play snapshot would miss thirty-one of them. `50-coverage` now inventories

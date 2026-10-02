@@ -165,6 +165,22 @@
    "end": "2026-10-02T17:45:06Z",
    "minutes": 2.1,
    "note": "Recorded robot explorer scope and evidence; existing kit guidance sufficed without new rules or maintainer asks. Original model checks, touch/desktop/mobile controls and all existing page widgets pass. Native source and100%coverage unchanged; no PR or issues opened."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T17:48:25Z",
+   "end": "2026-10-02T18:39:13Z",
+   "minutes": 50.8,
+   "note": "Native Dragon Slayer49-hit joystick route stays alive, builds12 stairs and matches13 complete bitmap states; hit49 leaves scenery unchanged. Invasion native wrong-target hit confirmed by real collision masks, VIC registers and original sprite-pixel pairs; no-fire controls pass. Added recorded stair viewer and plain-language collision diagram. Browser checks pass for new and existing controls; Gunfighter live hits remain open."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T18:39:13Z",
+   "end": "2026-10-02T18:43:13Z",
+   "minutes": 4.0,
+   "note": "Recorded ordinary-control shooting evidence and remaining routes; updated6 native source comments with unchanged bytes/types/labels/listing boundaries and100%coverage. Added frame-advance error checking,2 regression tests and batching guidance. All28 C64 tests, launcher checks and browser controls pass; native tools stopped. Prepared branch update without opening PR or issues."
   }
  ]
 }

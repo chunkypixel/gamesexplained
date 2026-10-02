@@ -152,7 +152,10 @@ def step_pass(rpc, timeout=5.0):
 
 def frames(rpc, n=1):
     """Run exactly n frames from a stopped machine and stop again (needs the frame-advance- checks)."""
-    return json.loads(call(rpc, "vice_frame_advance", {"frames": n}))
+    result = json.loads(call(rpc, "vice_frame_advance", {"frames": n}))
+    if not isinstance(result, dict) or result.get("status") != "ok" or result.get("frames") != n:
+        raise RuntimeError(f"frame advance did not complete {n} frames: {result}")
+    return result
 
 
 UP, DOWN, LEFT, RIGHT, FIRE = 1, 2, 4, 8, 16

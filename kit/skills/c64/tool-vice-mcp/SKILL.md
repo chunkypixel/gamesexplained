@@ -257,6 +257,12 @@ the batch.
   then runs faster than real time until it has caught up: half a second of
   wall clock read 700,000 cycles once. Count passes, frames or cycles on a
   stopped machine at both ends, and never compare against `sleep`.
+- **Check that frame advance completed.** The tool's schema gives the
+  maximum frames per call (1,000 in v3.13.2). Split longer runs into
+  supported batches and require the reply to report the requested count.
+  An out-of-range request can return an error without advancing the game.
+  The Python `frames()` helper raises on a rejected or incomplete request;
+  direct tool callers must check the reply themselves.
 - **Arm a stopping checkpoint on a stopped machine** when you set its
   ignore count or condition in a second call. On a running machine it can
   fire in between, and on a slow host it usually does.

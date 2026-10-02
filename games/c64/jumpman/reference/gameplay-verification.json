@@ -152,7 +152,7 @@
     },
     "06": {
       "mechanic": "$33B0 fires up to three directional shots. After launch, eight callback calls are blocked; another launch is possible on call9. Fire is consumed even for neutral direction or full slots. Hits at $3373 add25 and make a target fall before respawning. The exit bomb awards100; initial bonus is zero.",
-      "evidence_limits": "Live input confirms DOWN+FIRE launches a shot. CPU checks cover all eight directions, cooldown, bounds, score carry, falling/respawn and aggregate collision masks. Natural hits and mixed-contact consequences remain open."
+      "evidence_limits": "Live UP+RIGHT+FIRE produces three 25-point hits. Its first hit knocks down alien6 when shot3 touches alien4 and aliens5/6 touch separately; native states and original sprite-pixel overlaps confirm the shared-mask error. No-fire control scores0. CPU checks cover directions, cooldown, bounds and respawn. Full completion remains open."
     },
     "12": {
       "mechanic": "Four robots interpret $32B3-$33D2. Conditional commands `$10-$13` follow the player quadrant at $3508: hardwareX184 andY144 are the boundaries. $3402 advances every fourth eligible callback independently of the hazard pulse. A new segment moves immediately.",
@@ -160,7 +160,7 @@
     },
     "14": {
       "mechanic": "$339A/$342B reserve horizontal fire for a22-step arcing shot; vertical fire remains available to jump. Each hit awards50. Every fourth hit schedules one of twelve stairs, drawn by $34EA. After48 hits, the stair counter stops, but later hits still score. The goal bomb has zero initial bonus.",
-      "evidence_limits": "Live LEFT+FIRE launches and immediately moves the shot(\u22126,\u22122) without jumping. CPU checks cover the full arc, collision decisions and all12 rendered stairs through48 hits, plus hit49. A legal48-hit route remains open."
+      "evidence_limits": "Live joystick replay builds all12 stairs through48 hits in one life, scoring2400. Hit49 scores2450 with unchanged stairs. All13 distinct bitmap states match the original routines; no-fire control scores0. Full campaign entry and final-bomb collection remain open."
     },
     "16": {
       "mechanic": "$3266 moves two expanded platforms around264-update rectangles. Support $32C7 runs first, using the saved previous-leg direction at corners. It adds support and two to playerY when the selected platform delta is+1. Slot6 has priority if both platform shadows contain the player.",
@@ -343,5 +343,9 @@
         "until foreground restore $328B; matrix85, death state1"
       ]
     ]
+  },
+  "shooting_live_followup": {
+    "evidence": "shooting-live-verification.json",
+    "scope": "Within-level joystick routes after selected-level initialization; original native collision generation. Dragon Slayer49 hits in one life and all12 stairs; Invasion3 hits and one verified wrong-target selection. Gunfighter natural hits and complete level routes remain open."
   }
 }

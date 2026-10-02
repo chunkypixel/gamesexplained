@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,101 +113,26 @@
   },
   {
    "start": 12368,
-   "end": 12422,
-   "type": "Code"
-  },
-  {
-   "start": 12423,
-   "end": 12438,
-   "type": "Code"
-  },
-  {
-   "start": 12439,
    "end": 12468,
    "type": "Code"
   },
   {
    "start": 12469,
-   "end": 12514,
-   "type": "Byte"
-  },
-  {
-   "start": 12515,
    "end": 12522,
    "type": "Byte"
   },
   {
    "start": 12523,
-   "end": 12530,
-   "type": "Code"
-  },
-  {
-   "start": 12531,
-   "end": 12607,
-   "type": "Code"
-  },
-  {
-   "start": 12608,
    "end": 12720,
    "type": "Code"
   },
   {
    "start": 12721,
-   "end": 12752,
-   "type": "Byte"
-  },
-  {
-   "start": 12753,
-   "end": 12992,
-   "type": "Byte"
-  },
-  {
-   "start": 12993,
-   "end": 12994,
-   "type": "Byte"
-  },
-  {
-   "start": 12995,
-   "end": 13006,
-   "type": "Byte"
-  },
-  {
-   "start": 13007,
-   "end": 13022,
-   "type": "Byte"
-  },
-  {
-   "start": 13023,
-   "end": 13038,
-   "type": "Byte"
-  },
-  {
-   "start": 13039,
-   "end": 13054,
-   "type": "Byte"
-  },
-  {
-   "start": 13055,
    "end": 13070,
    "type": "Byte"
   },
   {
    "start": 13071,
-   "end": 13129,
-   "type": "Code"
-  },
-  {
-   "start": 13130,
-   "end": 13170,
-   "type": "Code"
-  },
-  {
-   "start": 13171,
-   "end": 13231,
-   "type": "Code"
-  },
-  {
-   "start": 13232,
    "end": 13355,
    "type": "Code"
   },
@@ -780,12 +655,12 @@
   {
    "address": 13171,
    "type": "line",
-   "text": "Search flying targets7 down4. Nonplayer projectile contact marks one falling and adds25 to the24-bit score, leaving bonus unchanged. CPU checked score carry, fall/removal/respawn and combined masks. These are whole VIC masks, not pair identities; injected mixed masks do not establish a natural exploit."
+   "text": "Search flying targets7 down4. A nonplayer collision mask containing a projectile bit marks one falling and adds25 to the24-bit score, leaving bonus unchanged. These are whole VIC masks, not pair identities. Native joystick replay UP+RIGHT+FIRE confirms a wrong-target hit: shot3 overlaps alien4 while aliens5/6 overlap separately, so shared mask$78 selects alien6. At$3394 X=6; after$33AF its state changes1 to2 and score0 to25 while player stays alive. Actual sprite registers, original opaque-pixel pairs and state reads agree; see reference/shooting-live-verification.json. CPU checks also cover score carry, falling/removal/respawn and controlled masks."
   },
   {
    "address": 13232,
    "type": "line",
-   "text": "Consume fire even for neutral direction, full slots or cooldown. Launch into first free shot1..3 and set cooldown8: next eight callback calls are blocked, next possible launch is call9. CPU checked all eight joystick directions, slot/boundary cases; native DOWN+FIRE launches slot1 at32,56. Direction selects velocity tables; sprite pointer$38, noise stream$342C at priority3/release0/noise$80."
+   "text": "Consume fire even for neutral direction, full slots or cooldown. Launch into first free shot1..3 and set cooldown8: next eight callback calls are blocked, next possible launch is call9. CPU checked all eight joystick directions, slot/boundary cases; native DOWN+FIRE launches slot1 at32,56. Direction selects velocity tables; sprite pointer$38, noise stream$342C at priority3/release0/noise$80. Native UP+RIGHT+FIRE for240 frames after normal spawn produces three25-point hits and ends with the player dying. The first selects a distant alien because separate contacts share the same collision mask; ordinary controls only after selected-level initialization. A no-fire control scores0 and leaves all four targets flying."
   },
   {
    "address": 13356,

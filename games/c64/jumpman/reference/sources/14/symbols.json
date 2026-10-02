@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,31 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12417,
-   "type": "Code"
-  },
-  {
-   "start": 12418,
-   "end": 12433,
-   "type": "Code"
-  },
-  {
-   "start": 12434,
    "end": 12458,
    "type": "Code"
   },
   {
    "start": 12459,
-   "end": 12546,
-   "type": "Byte"
-  },
-  {
-   "start": 12547,
-   "end": 12554,
-   "type": "Byte"
-  },
-  {
-   "start": 12555,
    "end": 12794,
    "type": "Byte"
   },
@@ -198,16 +128,6 @@
   },
   {
    "start": 12846,
-   "end": 12861,
-   "type": "Byte"
-  },
-  {
-   "start": 12862,
-   "end": 12917,
-   "type": "Byte"
-  },
-  {
-   "start": 12918,
    "end": 12995,
    "type": "Byte"
   },
@@ -218,76 +138,26 @@
   },
   {
    "start": 13185,
-   "end": 13185,
-   "type": "Byte"
-  },
-  {
-   "start": 13186,
-   "end": 13207,
-   "type": "Byte"
-  },
-  {
-   "start": 13208,
    "end": 13209,
    "type": "Byte"
   },
   {
    "start": 13210,
-   "end": 13354,
-   "type": "Code"
-  },
-  {
-   "start": 13355,
-   "end": 13371,
-   "type": "Code"
-  },
-  {
-   "start": 13372,
    "end": 13469,
    "type": "Code"
   },
   {
    "start": 13470,
-   "end": 13485,
-   "type": "Byte"
-  },
-  {
-   "start": 13486,
    "end": 13498,
    "type": "Byte"
   },
   {
    "start": 13499,
-   "end": 13545,
-   "type": "Code"
-  },
-  {
-   "start": 13546,
    "end": 13569,
    "type": "Code"
   },
   {
    "start": 13570,
-   "end": 13605,
-   "type": "Byte"
-  },
-  {
-   "start": 13606,
-   "end": 13615,
-   "type": "Byte"
-  },
-  {
-   "start": 13616,
-   "end": 13672,
-   "type": "Byte"
-  },
-  {
-   "start": 13673,
-   "end": 13674,
-   "type": "Byte"
-  },
-  {
-   "start": 13675,
    "end": 14335,
    "type": "Byte"
   },
@@ -793,7 +663,7 @@
   {
    "address": 13210,
    "type": "line",
-   "text": "Use fire saved at $3399 for a horizontal shot. Copy player position to sprite5, select pointer$16/$17 and apply first +/-6 X,-2 Y arc step in this call. CPU checked all22 steps/removal/relaunch; live LEFT+FIRE gives320,56 to314,54 with no player jump. Movement is gated by hazard pulses. After the22nd displacement pair, the counter reaches23 and clears shot state and Y in that same call."
+   "text": "On hazard ticks outside mode2, held saved fire plus horizontal intent launches sprite5 at the player position and moves immediately by X+6/-6 and the first Y delta. Execute22 arc entries at$3382-$3397; after the22nd move the index reaches23 and the same call clears shot state/Y. Held fire relaunches next eligible update. Native timed LEFT+FIRE pulses land hits without player-state edits."
   },
   {
    "address": 13355,
@@ -803,7 +673,7 @@
   {
    "address": 13372,
    "type": "line",
-   "text": "If projectile collision excludes playerbit0 and creature6/7 has a collision snapshot, reset that creature to route$3276 atX0,Y152, clear shot, play hit sound, add50 to24-bit score and update HUD/extra life. Then advance the stair-building hit counter and preserve fire input."
+   "text": "If projectile collision excludes playerbit0 and creature6/7 has a collision snapshot, reset that creature to route$3276 atX0,Y152, clear shot, play hit sound, add50 to24-bit score and update HUD/extra life. Then advance the stair-building hit counter and preserve fire input. Native selected-level joystick replay lands48 hits in one life, awarding2400; no RAM or collision edits. Short timed LEFT+FIRE pulses and RIGHT recovery hold player nearX240,Y56. Full input sequence and setup are in reference/shooting-live-verification.json."
   },
   {
    "address": 13470,
@@ -818,12 +688,12 @@
   {
    "address": 13499,
    "type": "line",
-   "text": "Every fourth hit schedule the next of12 stair placements; foreground $34EA renders it. CPU executed48 hits and all12 bitmap changes. Hit49 still adds50 but leaves hit counter48 and stair index12 unchanged."
+   "text": "Every fourth hit schedules the next of12 stair placements; foreground$34EA renders it. Native joystick replay lands49 hits in one life: hit48 gives2400 points and12 stairs; hit49 gives2450 while keeping hit counter48, stair index12 and the complete bitmap unchanged. All13 distinct native layouts match separate original-code rendering. Full campaign entry and final-bomb collection remain separate checks."
   },
   {
    "address": 13546,
    "type": "line",
-   "text": "Main-thread helper: if pending placement X byte$352C is nonzero, render stream$3526 and then clear that X byte. This consumes queued geometry from the shooting callback."
+   "text": "Main-thread helper: if pending placement X byte$352C is nonzero, render stream$3526 and then clear that X byte. This consumes queued geometry from the shooting callback. All12 drawing requests were also observed during a native48-hit joystick replay; each was consumed and produced a distinct bitmap."
   },
   {
    "address": 13570,
