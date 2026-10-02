@@ -25,6 +25,7 @@ give the platform's standard exclude/extra blocks) and "coverage" (extra
 exclusions and authored data), so every game is scored by the same rule.
 
 Usage:
+  coverage.py <game dir> --image <id>      inspect one named source image
   coverage.py <game dir>                 from symbols.json
   coverage.py <game dir> --live          from the running disassembler
   coverage.py <game dir> --top 40        longer work queue
@@ -33,28 +34,33 @@ Usage:
                                          for an agent that owns that range
 """
 import json, os, sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def load(gdir, live):
     from symbols_export import from_live, regions
-    game = json.load(open(os.path.join(gdir, "game.json")))
+    game = json.loads((Path(gdir) / "game.json").read_text())
     reg = regions(game)
     if live:
         blocks, syms, comments = from_live(game.get("platform", "c64"))
     else:
-        s = json.load(open(os.path.join(gdir, "symbols.json")))
+        s = json.loads((Path(gdir) / "symbols.json").read_text())
         blocks, syms, comments = s["blocks"], s["symbols"], s["comments"]
     return blocks, syms, comments, reg
 
 
 def tracked_count(gdir):
     """(tracked bytes, explained bytes) from symbols.json, for clock.py and build.py."""
-    blocks, syms, comments, reg = load(gdir, False)
+    from source_images import images
     from ledger import compute
-    state = compute(blocks, syms, comments, reg)["state"]
-    tracked = sum(1 for a in range(0x10000) if state[a])
-    return tracked, sum(1 for a in range(0x10000) if state[a] == 2)
+    tracked = explained = 0
+    for image in images(gdir):
+        blocks, syms, comments, reg = load(image["directory"], False)
+        state = compute(blocks, syms, comments, reg)["state"]
+        tracked += sum(bool(s) for s in state)
+        explained += state.count(2)
+    return tracked, explained
 
 
 def main():
@@ -62,6 +68,19 @@ def main():
     if not argv or argv[0] in ("-h", "--help"):
         print(__doc__); return
     gdir = argv[0]
+    from source_images import images
+    if "--image" in argv:
+        ident = argv[argv.index("--image") + 1]
+        choices = {i["id"]: i["directory"] for i in images(gdir)}
+        if ident not in choices:
+            sys.exit(f"unknown source image: {ident}")
+        gdir = choices[ident]
+    elif "--live" not in argv and "--range" not in argv:
+        choices = images(gdir)
+        if len(choices) > 1:
+            total, explained = tracked_count(gdir)
+            print(f"ALL {len(choices)} SOURCE IMAGES: {explained}/{total} bytes explained "
+                  f"({100*explained/max(total,1):.1f}%). Main image follows; use --image <id> for an overlay.\n")
     top = int(argv[argv.index("--top") + 1]) if "--top" in argv else 25
     only = "data" if "--data" in argv else ("code" if "--code" in argv else None)
     blocks, syms, comments, reg = load(gdir, "--live" in argv)

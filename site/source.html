@@ -10,6 +10,7 @@
   <p class="eyebrow">{{platform_name}} · {{year}} · {{publisher}}</p>
   <h1 style="margin-top:0">{{title}}: the source</h1>
   <p class="mute">Every routine, table and variable the game uses, with the names and descriptions given to them. Click an operand to follow it; the counter beside a label lists what refers to it. The reference below the fold is rendered from the game's facts file.</p>
+  <p id="source-choice" hidden><label>Source image <select id="source-image"></select></label></p>
   <details class="factsbox"><summary>Technical reference: memory map, timing, tables, cheats</summary>
   <!-- facts -->
   </details>
@@ -34,7 +35,17 @@
 </div>
 <script>
 (async function(){
-  const L = await fetch('listing.json').then(r=>r.json()).catch(()=>null);
+  const images=/* source images */[];
+  const requested=new URLSearchParams(location.search).get('image')||'main';
+  const chosen=images.find(i=>i.id===requested)||images[0]||{id:'main',listing:'listing.json'};
+  if(images.length>1){
+    document.getElementById('source-choice').hidden=false;
+    const select=document.getElementById('source-image');
+    for(const image of images){const option=document.createElement('option');option.value=image.id;option.textContent=image.title;select.append(option);}
+    select.value=chosen.id;
+    select.addEventListener('change',()=>{const url=new URL(location.href);url.searchParams.set('image',select.value);url.hash='';location.href=url.href;});
+  }
+  const L = await fetch(chosen.listing).then(r=>r.ok?r.json():null).catch(()=>null);
   const main=document.getElementById('main'), idx=document.getElementById('idx');
   if(!L){ main.innerHTML='<p class="mute">listing.json could not be loaded. Serve the site over http (python3 -m http.server) rather than opening the file directly.</p>'; return; }
   const hex4=a=>'$'+a.toString(16).toUpperCase().padStart(4,'0');
@@ -62,7 +73,7 @@
     let h=0, he=0;
     for(let k=done;k<end;k++){
       const r=recs[k];
-      if(r.t==='gap'){ rows.push(`<div class="gap" data-a="${r.a}">… ${r.n} bytes not used by the game (${hex4(r.a)}–${hex4(r.a+r.n-1)})</div>`); h+=GAP; continue; }
+      if(r.t==='gap'){ rows.push(`<div class="gap" data-a="${r.a}">… ${r.n} bytes outside this listing (${hex4(r.a)}–${hex4(r.a+r.n-1)})</div>`); h+=GAP; continue; }
       const id=id4(r.a);
       const own=commentedOwner(r.a);
       if(r.c){ rows.push(`<div class="cmt" data-a="${r.a}" data-own="1">${esc(r.c)}</div>`); const c=cmtH(r.c); h+=c; he+=c; }

@@ -36,6 +36,7 @@ measures whatever was installed. The measurements, each dated:
 | v3.13.1, from source (`get-vice build`) | Linux x86_64, no display | 24 September 2026 | 53, 54, 54 and 56 of 56, four runs |
 | v3.13.1 release, `v3.13.1-linux-x86_64-gui.zip` | Linux x86_64, no display | 26 September 2026 | 56 of 57, five runs: all but `pause-at-instruction` |
 | v3.13.1 release, `v3.13.1-macos-arm64-gui.dmg` | macOS arm64 | 28 September 2026 | 56 of 57: all but `pause-at-instruction` |
+| v3.13.2 release, `v3.13.2-linux-x86_64-gui.zip` | Linux x86_64, no display, Codex desktop session | 2 October 2026 | 56 of 57: only `warp` failed (46 versus 45 loop passes/second); exact instruction stopping and determinism passed |
 
 Add a row whenever a build is measured on a machine not listed, and bring
 that machine's `c64` cell in `site/status.json` into line with it. The two
@@ -121,14 +122,18 @@ Tell the contributor this before installing anything:
 | Emulator source and build, when built from source (`get-vice build`) | `tools/src/vice-mcp/`, with `tools/vice-mcp` a link into it | 550 MB (Linux) to 700 MB (macOS) |
 | Emulator's config, log and snapshots | `tools/vice-home/` | small; snapshots are 200 KB each |
 | Disassembler binary | `tools/cargo/` | about 20 MB |
+| Disassembler settings and alternate-port conversion | `tools/r2000-home/`, `tools/r2000-input.regen2000proj` | small; converted RAM projects include 64 KB before compression |
 | Logs | `tools/logs/` | small |
 
 **Uninstall:** delete the repository folder. These can be left outside
 it, and that is the complete list:
 
-- regenerator2000 writes a settings file of a few hundred bytes to its own
-  config folder (`~/Library/Application Support/regenerator2000` on macOS).
-  Delete it if you want no trace.
+- Older or independently launched regenerator2000 sessions may leave a
+  settings file of a few hundred bytes in their native config folder
+  (`~/Library/Application Support/regenerator2000` on macOS,
+  `~/.config/regenerator2000` on Linux). The launcher supplies XDG paths
+  under `tools/r2000-home/`, verified on Linux on 2 October 2026; native
+  config containment on macOS and Windows needs its own footprint check.
 - Rust itself, if the contributor installed it for this (`rustup self
   uninstall` removes it).
 - When the emulator was built from source: the build packages, if they
@@ -311,6 +316,39 @@ mid-line change of mode or scroll that the renderer does not follow to
 the pixel. On 26 September, on Linux x86_64 with the v3.13.1 release and
 node, the same.
 
+## Separate ports for concurrent checkouts
+
+The defaults are VICE 6510 and regenerator2000 3000. If they belong to
+another active project, leave that project running. This clone can choose
+unused ports in the gitignored `tools/ports.json`:
+
+```json
+{"vice": 16510, "r2000": 13000}
+```
+
+Both launchers and Python clients read the same file. Ports must be
+different integers from 1024 to 65535; malformed settings fail explicitly.
+A separately configured MCP client must also use those URLs; the static
+`.mcp.json` still names the defaults.
+
+VICE receives its configured port directly. regenerator2000 0.9.20 has a
+fixed HTTP port, so an alternate port uses its stdio server behind the kit's
+loopback HTTP bridge. That path accepts a `.vsf` or `.regen2000proj`; it does
+not accept a `.prg`. A snapshot is converted to a full-RAM project under
+`tools/r2000-input.regen2000proj`, with RAM only, not CPU/ROM metadata.
+Export annotations before another input replaces it. The bridge serializes
+requests and fails closed after a broken stream; restart and replay/export
+as appropriate rather than retrying mutations blindly. This stdio path was
+exercised on Linux on 2 October 2026; Windows pipe support is not verified.
+
+The launcher sets regenerator2000's XDG config/data/cache paths under
+`tools/r2000-home/`. On 2 October 2026, release VICE-MCP 3.13.2 plus an existing
+regenerator2000 0.9.20 binary copied into `tools/cargo/bin/` passed a complete
+launch/snapshot/disassembler/exit footprint check on Linux x86_64 with no
+display. No unexpected writes outside the repository were found. The
+existing Xvfb, Chromium and JavaScript packages were reused; no system
+package installation was needed for that run.
+
 ## macOS — known to work
 
 - **The emulator** serves MCP over HTTP; `.mcp.json` registers it as the
@@ -332,8 +370,9 @@ node, the same.
   fast, and a test that halts, pokes, runs and reads is a dozen calls. It
   also carries the joystick workaround; see
   `kit/skills/c64/tool-vice-mcp/workarounds.md`.
-- **The disassembler** binds port 3000 with no option to change it, and
-  only one instance can run at a time. Drive it with
+- **The disassembler** binds its native HTTP server to port 3000. An alternate
+  kit port uses the stdio bridge described above; that path has been tested
+  on Linux. Drive it with
   `python3 kit/c64/r2000.py <tool> '<json args>'`, which also logs
   every mutating call to the game's `work/annotations.jsonl`.
 
@@ -363,8 +402,9 @@ containers with no display (gcc 13.3, Python 3.11, cargo 1.94). The first
 run built v3.13.0 from source and measured `check-emulator` 56 of 56 three
 times, `verify-footprint` clean. A second run the same day used the
 v3.13.1 release zip and then a source build of the same tag (the table at
-the top of this file). No run is recorded on a Linux desktop, on ARM or on
-another distribution.
+the top of this file). A 2 October 2026 run used a Linux x86_64 Codex desktop session with no X
+display and the 3.13.2 release under Xvfb, as recorded above. ARM and other
+distributions have no recorded result here.
 
 **A network that refuses the GitHub API.** In those containers the proxy
 answered `api.github.com`, the project's web pages and `codeload` with 403
@@ -453,8 +493,9 @@ instead.
 its snapshots, PulseAudio's runtime directory, GTK's dconf store and Mesa's
 shader cache. `xvfb-run` keeps its X authority file in a temporary folder
 under `/tmp` and removes it on exit. regenerator2000 wrote nothing to
-`~/.config/regenerator2000` in this run; the path stays on the Uninstall
-list until a run shows where it writes. The apt packages above, if they
+`~/.config/regenerator2000` in the 2026-09-24 run. The launcher now supplies
+XDG paths under `tools/r2000-home/`; that containment passed a full run
+on 2026-10-02. The historical path stays listed for older launches. The apt packages above, if they
 were installed for this, are the Linux addition to that list, and so are the
 release zip's runtime packages (above).
 

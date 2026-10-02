@@ -392,7 +392,7 @@ def main():
     if os.path.exists(epath) and os.path.abspath(epath) != os.path.abspath(vsf):
         entry = open(epath, "rb").read()[VSF_RAM_OFFSET:VSF_RAM_OFFSET + 0x10000]
         assert len(entry) == 0x10000, "hand-over snapshot too short"
-    elif "--entry" in argv:
+    elif not os.path.exists(epath) and "--entry" in argv:
         sys.exit(f"no hand-over snapshot at {epath}")
 
     from symbols_export import regions

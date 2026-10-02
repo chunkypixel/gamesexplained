@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-02",
+  "coverage": {
+    "images": 33,
+    "tracked_bytes": 90583,
+    "explained_bytes": 90583
+  },
+  "frame": {
+    "compared_pixels": 104448,
+    "different_pixels": 0,
+    "character_rom_excerpt_bytes": 200
+  },
+  "geometry": {
+    "streams": 194,
+    "bitmap_bytes_checked_per_stream": 8192
+  },
+  "randomizer": {
+    "randomStates": 65536,
+    "chooserStates": 5042,
+    "examples": [
+      {
+        "input": 2,
+        "state": 264,
+        "suffix": "01",
+        "attempts": 1
+      },
+      {
+        "input": 7975,
+        "state": 61288,
+        "suffix": "01",
+        "attempts": 1
+      },
+      {
+        "input": 59815,
+        "state": 29991,
+        "suffix": "25",
+        "attempts": 1
+      }
+    ]
+  },
+  "controlled_live": [
+    {
+      "test": "randomizer controlled seed",
+      "seed": "0002",
+      "suffix": "01",
+      "state": [
+        8,
+        1
+      ],
+      "entry": "5B8F",
+      "exit": "5BA7"
+    },
+    {
+      "test": "randomizer controlled seed",
+      "seed": "1F27",
+      "suffix": "01",
+      "state": [
+        104,
+        239
+      ],
+      "entry": "5B8F",
+      "exit": "5BA7"
+    },
+    {
+      "test": "randomizer controlled seed",
+      "seed": "E9A7",
+      "suffix": "25",
+      "state": [
+        39,
+        117
+      ],
+      "entry": "5B8F",
+      "exit": "5BA7"
+    },
+    {
+      "test": "extra life threshold",
+      "score": 9999,
+      "reserves_before": 6,
+      "reserves_after": 6,
+      "next_threshold": 10000
+    },
+    {
+      "test": "extra life threshold",
+      "score": 10000,
+      "reserves_before": 6,
+      "reserves_after": 7,
+      "next_threshold": 20000
+    },
+    {
+      "test": "extra life threshold",
+      "score": 30000,
+      "reserves_before": 6,
+      "reserves_after": 7,
+      "next_threshold": 20000
+    },
+    {
+      "test": "final life award controlled overflow",
+      "lives": 88,
+      "rate": 750,
+      "display": 66000,
+      "stored": 464,
+      "total_added": 464,
+      "bonus_added": 464,
+      "natural_88_life_reachability": "not established"
+    },
+    {
+      "test": "bonus subtraction",
+      "before": 1500,
+      "after": 1400,
+      "entry": "57D9",
+      "exit": "580E"
+    },
+    {
+      "test": "bonus subtraction",
+      "before": 100,
+      "after": 0,
+      "entry": "57D9",
+      "exit": "580E"
+    },
+    {
+      "test": "zero bonus disables countdown",
+      "enabled": 0
+    }
+  ],
+  "persistence": {
+    "save_entry": "$2F84",
+    "save_return": "$C003",
+    "load_entry": "$2F13",
+    "load_return": "$2F2D",
+    "matched_bytes": 1024,
+    "controlled_initials": [
+      10,
+      1,
+      14
+    ],
+    "sha256": "db9090e11d54f72986126f04555d9f663bfc5231c64c939a8043855525eede2d",
+    "scope": "Native SAVE then zero RAM then native LOAD on working disk; not a natural qualification sequence"
+  },
+  "browser": {
+    "passed": true,
+    "browser": "Chromium1243 existing installation",
+    "checks": [
+      "All32 geometry selections and initialized screenshots",
+      "All33 source images render through selector",
+      "Exact-frame reconstruction and comparison toggle",
+      "Three jump directions and22-step scrubber",
+      "Repeated threshold checks",
+      "Randomizer01 and25examples",
+      "Actual AudioWorklet playback, mute and stop",
+      "Desktop/mobile page layout and no horizontal overflow",
+      "No JavaScript exceptions or localHTTP errors"
+    ],
+    "errors": [],
+    "http": []
+  },
+  "audio": {
+    "frame_state_comparisons": 23764,
+    "ordered_sid_writes": 23413,
+    "read_model": "last-write bus without decay; within-frame writes applied together",
+    "hardware_waveform_match": false
+  },
+  "limits": "Controlled states establish original routine behavior, not legal player routes. Initial level screenshots do not establish completion."
+}

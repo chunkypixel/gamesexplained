@@ -10,20 +10,21 @@ symbols.json that new_game.py writes needs no listing yet.
 Usage: check_listing.py [game dir ...]      default: every game
 """
 import glob, hashlib, json, os, sys
+from pathlib import Path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def check(gdir):
+def check_pair(gdir):
     lp, sp = os.path.join(gdir, "listing.json"), os.path.join(gdir, "symbols.json")
-    S = json.load(open(sp))
+    S = json.loads(Path(sp).read_text())
     if not os.path.exists(lp):
         if not (S["blocks"] or S["symbols"] or S["comments"]):
             return []   # a new game's empty map: nothing to list yet
         return [f"{gdir}: no listing.json (run kit/scripts/listing.py)"]
-    L = json.load(open(lp))
+    L = json.loads(Path(lp).read_text())
     errs = []
-    sha = hashlib.sha256(open(sp, "rb").read()).hexdigest()
+    sha = hashlib.sha256(Path(sp).read_bytes()).hexdigest()
     if L.get("symbols_sha256") != sha:
         errs.append("listing.json was built from a different symbols.json; rebuild it")
     labels = {r["a"]: r.get("l") for r in L["records"] if "l" in r}
@@ -35,6 +36,14 @@ def check(gdir):
         if c["type"] == "line" and c["text"].strip() and comments.get(c["address"]) != c["text"]:
             errs.append(f"line comment at ${c['address']:04X} missing or different in listing")
     return [f"{gdir}: {e}" for e in errs[:20]]
+
+
+def check(gdir):
+    from source_images import images
+    try:
+        return [error for image in images(gdir) for error in check_pair(image["directory"])]
+    except (ValueError, OSError) as error:
+        return [str(error)]
 
 
 def main():

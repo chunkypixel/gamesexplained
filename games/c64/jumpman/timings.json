@@ -1,0 +1,72 @@
+{
+ "schema": 1,
+ "entries": [
+  {
+   "step": "10-orient",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T12:54:57Z",
+   "end": "2026-10-02T13:07:13Z",
+   "minutes": 12.3,
+   "note": "Reached first-level play; collecting original loader hand-over at $2F03 while documenting features. Separate ports required for concurrent checkouts."
+  },
+  {
+   "step": "20-features",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T13:07:13Z",
+   "end": "2026-10-02T13:10:10Z",
+   "minutes": 3.0,
+   "note": ""
+  },
+  {
+   "step": "30-text",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T13:10:10Z",
+   "end": "2026-10-02T13:11:24Z",
+   "minutes": 1.2,
+   "note": ""
+  },
+  {
+   "step": "40-sweep",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T13:11:24Z",
+   "end": "2026-10-02T13:15:20Z",
+   "minutes": 3.9,
+   "note": ""
+  },
+  {
+   "step": "50-coverage",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T13:15:20Z",
+   "end": "2026-10-02T14:18:53Z",
+   "minutes": 63.5,
+   "note": "Four agents mapped the resident program and 32 separately loaded 2 KB overlays; all overlays captured through the native loader. Includes controlled live checks and renderer/audio port verification performed while annotation agents ran.",
+   "agents": 4
+  },
+  {
+   "step": "60-verify",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T14:18:54Z",
+   "end": "2026-10-02T14:30:49Z",
+   "minutes": 11.9,
+   "note": "Verified native movement/speed, score boundaries/ties, randomizer01/25, bonus, final-award carry, SID bus behavior and score SAVE/LOAD. Original-code checks cover all PRNG states,194 drawing streams, jumps and23764 sound frames. Coverage90583/90583 across33images.",
+   "agents": 4
+  },
+  {
+   "step": "70-minisite",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T14:30:49Z",
+   "end": "2026-10-02T14:43:27Z",
+   "minutes": 12.6,
+   "note": "Built self-contained article and32-file atlas, integrated verified drawing/jump/randomizer/audio models and exact reconstructed frame; all33 source selections and desktop/mobile controls pass Chromium. Copy rewritten after widgets; tool footprint also retested clean.",
+   "agents": 4
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T14:43:27Z",
+   "end": "2026-10-02T14:53:55Z",
+   "minutes": 10.5,
+   "note": "Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass."
+  }
+ ]
+}

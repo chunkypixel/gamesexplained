@@ -205,6 +205,17 @@ can open with that instead.
 - Reference images go in `reference/`; the page refers to them by
   relative path from the game folder (`reference/<name>.png`).
 
+### Writable chip registers read by a port
+
+An original driver may read a register whose normal purpose is writing.
+A test double that returns the last value written to that same register
+can make two wrong models agree. Check the read with the emulator's actual
+CPU instruction: change a different register, vary the delay, and observe
+the returned value. Distinguish a per-register shadow from a shared bus
+value. If the page omits bus decay or the time between writes, name that
+approximation beside the player; ordered register agreement does not prove
+waveform identity to physical hardware.
+
 ## Copy
 
 Write the copy **last**, as a separate pass, under `kit/style.md`. Then do

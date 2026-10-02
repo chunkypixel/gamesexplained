@@ -56,6 +56,16 @@ the reprisal) to a routine that returns early unless the player is still
 in the right place loses the rest whenever the player is not. For each,
 list what the test ignores, or what the deferred part requires, and try it.
 
+## A count is not necessarily the table boundary
+
+Trace the consumer before using a nearby count to split a record table.
+A completion target can differ from the number of records: special records
+may compensate a decrement or install another table. When the scanner
+actually stops at a sentinel, find that byte in the loaded image. If it is
+missing, preserve the following code/data as itself and record the missing
+terminator. Do not invent one, and do not claim a visible failure until a
+reachable unmatched key has exercised the overrun.
+
 ## Live verification
 
 Any claim that can be tested in the emulator in under a few minutes gets

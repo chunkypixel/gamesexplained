@@ -591,6 +591,9 @@ def build_game(gdir, out_root):
     if cheats.strip():
         facts += "<h2>Cheats</h2>" + markdown(cheats)
     src = fill(read(os.path.join(SITE, "source.html")), **common).replace("<!-- tabs -->", nav).replace("<!-- facts -->", facts)
+    from source_images import images
+    source_choices = [{k: image[k] for k in ("id", "title", "listing")} for image in images(gdir, game)]
+    src = src.replace("/* source images */[]", json.dumps(source_choices).replace("<", "\\u003c"))
     src = under_title(src, ban)
     if not links_asset(src, "site.js"):
         src += f'\n<script src="{lib}/site.js"></script>\n'

@@ -17,14 +17,16 @@ Parallel agents share one disassembler but must not share one log: appends
 from several processes interleave and the replay is then unusable. Give each
 agent its own --log (or set ANNOTATION_LOG) and merge the files afterwards.
 
-Requires `regenerator2000 --mcp-server <file>` listening on :3000.
+Requires the server started by tools.py, using tools/ports.json or default :3000.
 
 Calls that come back as an error are not logged, so a replay does not
 reproduce your mistakes. A batch is logged as a whole, so check its result.
 """
 import json, os, sys, urllib.request
 
-URL = "http://127.0.0.1:3000/mcp"
+from ports import R2000_PORT
+
+URL = f"http://127.0.0.1:{R2000_PORT}/mcp"
 MUTATING = {"r2000_set_label_name", "r2000_set_comment", "r2000_set_data_type",
             "r2000_disassemble", "r2000_batch_execute", "r2000_toggle_splitter",
             "r2000_add_scope", "r2000_set_immediate_format", "r2000_apply_enum_usage",

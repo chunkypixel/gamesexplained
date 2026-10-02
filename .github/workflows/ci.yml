@@ -26,6 +26,10 @@ jobs:
         run: node kit/c64/test_lockstep.js
       - name: The launcher dispatcher picks one platform per command
         run: python3 kit/scripts/test_tools.py
+      - name: Named source image checks
+        run: python3 kit/scripts/test_source_images.py
+      - name: C64 tool isolation checks
+        run: python3 kit/c64/test_tool_isolation.py
       - name: The page editor's self-test
         run: python3 kit/scripts/edit.py --test
       - name: No game binaries

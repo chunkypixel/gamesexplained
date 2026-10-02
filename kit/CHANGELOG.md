@@ -12,6 +12,27 @@ Changes to the site, the folder layout, the delivery process, the prose
 style or the install mechanics are in the pull requests, not here.
 Versions that taught nothing of the kind do not appear.
 
+## next · 2 October 2026 · Jumpman · JankFoundry with Codex
+
+**Count loaded programs, not just occupied addresses.** Jumpman's resident
+image loads thirty-two different 2 KB level programs into the same place.
+One play snapshot would miss thirty-one of them. `50-coverage` now inventories
+those files before dividing the work, preserves a real pre-initialization
+snapshot for each, and measures named source images independently. Retained
+tails are checked against their donors rather than mistaken for active code.
+
+**The collector's target count may not bound its records.** Some levels
+have special records beyond their ordinary target count; one has no
+terminator before the following code. `60-verify` follows the scanner's
+actual stop condition and keeps a missing sentinel separate from any claim
+that a player can trigger the overrun.
+
+**A readback model needs its own evidence.** The sound driver reads a
+writable SID register. Live CPU probes returned the last global SID write,
+not a per-voice shadow. `70-minisite` now checks that distinction before
+trusting register comparisons, and requires the page to name omitted bus
+decay and within-frame timing.
+
 ## 0.0.54 · 30 September 2026 · Doctor Who and the Mines of Terror · unorig with Claude
 
 **Look for the loaded data before splitting the work.** The flow trace of
