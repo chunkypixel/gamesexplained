@@ -1,6 +1,6 @@
 # Jumpman: next pass
 
-Silver, claimed by jankfoundry for curation: all 90,583 tracked bytes across the resident image and 32 loaded overlays are explained. The article, level atlas, source selector and interactive models are built and browser-checked. The atlas and opening section compare individual bomb scenery changes across397 initial-table records. Human editing has begun with the Randomizer paragraph. Gold still requires a human to curate every section.
+Silver, claimed by jankfoundry for curation: all 90,583 tracked bytes across the resident image and 32 loaded overlays are explained. The article, level atlas, source selector and interactive models are built and browser-checked. The atlas and opening section compare individual bomb scenery changes across397 initial-table records. The robot-route explorer shows three Robots III actors, target placement and both bomb openings; its model matches 21,456 original routine calls. Human editing has begun with the Randomizer paragraph. Gold still requires a human to curate every section.
 
 Verified follow-up: natural100-point/ABC score qualification, menu return and hard-reset persistence; bounded score-sentinel writes; exhaustive Mystery Maze reveal coordinates and Jungle buckets, with controlled native file transitions; final-puzzle death completion after a controlled transformation; title-lookup looping for requested25; and Hailstones normal-coordinate collection keys. See facts.md and reference/followup-verification.json for evidence limits.
 

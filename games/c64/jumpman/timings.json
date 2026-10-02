@@ -149,6 +149,22 @@
    "end": "2026-10-02T17:12:39Z",
    "minutes": 1.2,
    "note": "Recorded drawing-only scope,1191 original-code comparisons and native status-clear evidence. Existing kit model-verification guidance suffices; no kit changes or maintainer asks added. Browser controls pass; source bytes and100%coverage preserved; native tools stopped."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T17:28:05Z",
+   "end": "2026-10-02T17:42:59Z",
+   "minutes": 14.9,
+   "note": "Built Robots III explorer with three actors, free target placement, run/step controls and two bomb-opening examples. Exact model matches21456 original calls and65536 RNG states. Checked full edge travel, shared random order, rejection reasons, desktop/mobile/touch controls and existing widgets; plain-language copy and explicit model limits."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T17:43:00Z",
+   "end": "2026-10-02T17:45:06Z",
+   "minutes": 2.1,
+   "note": "Recorded robot explorer scope and evidence; existing kit guidance sufficed without new rules or maintainer asks. Original model checks, touch/desktop/mobile controls and all existing page widgets pass. Native source and100%coverage unchanged; no PR or issues opened."
   }
  ]
 }
