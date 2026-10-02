@@ -770,7 +770,7 @@
   {
    "address": 12699,
    "type": "line",
-   "text": "While player-active outside mode 2, map player position into the 40-column colour matrix. Reject Y outside 50..216 and X/2 outside 16..160. Compute row*40+column with shifts, patch matrix/colour store addresses, then paint 12 offsets (four columns by three rows) with matrix $85 and colour 6. Near Y=50..57 use eight offsets and a smaller Y origin. Revealed cells persist. The Y subtraction inherits carry from the X-column shift; preserve this detail in boundary tests."
+   "text": "While player-active outside mode 2, map player position into the 40-column colour matrix. Reject Y outside 50..216 and X/2 outside 16..160. Compute row*40+column with shifts, patch matrix/colour store addresses, then paint 12 offsets (four columns by three rows) with matrix $85 and colour 6. Near Y=50..57 use eight offsets and a smaller Y origin. Revealed cells persist. The Y subtraction inherits carry from the X-column shift; preserve this detail in boundary tests. Original CPU sweep of131072 X/Y cases verifies acceptedX32..321/Y50..216 and8/12 cells. C=(X>>2)&1; column=floor((X-32)/8), row=floor((Y-origin-1+C)/8), origin48 forY<58 otherwise56. No row wrap or display overrun; union offsets0..918. This tests controlled coordinates, not full legal routes."
   },
   {
    "address": 12903,

@@ -8075,7 +8075,7 @@
   {
    "address": 9555,
    "type": "line",
-   "text": "Format the player24-bit total $40DA-DC and bonus accumulation $40DD-DF into six candidate digits using $554B, mark the record through $26CD[$40FB], and independently insert them into the left/right20-row lists. If either qualifies, show tables and enter initials; otherwise only show tables."
+   "text": "Format and independently insert 24-bit total $40DA-DC and cumulative bonus $40DD-DF into two20-row lists. Failure returns $FEFE. If either qualifies, subtract4 from both destinations for initials. CPU checks bound failed-list glyph writes to underlying RAM $FEFE-$FF00/$E2FE-$E300 and highlight writes to old bitmap $B6FA-$B709 (both fail: $B6FE-$B70D). Vectors and mapped KERNAL reads stay unchanged; normal $447A clears the bitmap residue. Native100-point qualification with bonus0, joystick ABC entry and return/reboot passed."
   },
   {
    "address": 9707,
@@ -8130,7 +8130,7 @@
   {
    "address": 9795,
    "type": "line",
-   "text": "Play confirmation stream $26B8 via $4343 while preserving X/Y, then advance Y. Three positions4,5,6 complete the initials; waits for sound/fire release before another acceptance."
+   "text": "Accept current initial and queue $26B8, priority=current Y4/5/6, release0, pulse control$40. LDX0 precedes the stack save, resetting the next alphabet selector. Advance Y;7 enters $268E. This path does not draw a glyph: untouched positions stay blank. Held fire can accept again when all sound priorities clear (25ticks for this cue), without a release-edge test. Native joystick ABC entry verified."
   },
   {
    "address": 9828,
@@ -8540,7 +8540,7 @@
   {
    "address": 12164,
    "type": "line",
-   "text": "OPEN logical file2/device8/secondary15 with S0:SCORES, close, set filename SCORES on secondary3, then KERNAL SAVE with start pointer $3D/3E=$2000 and end X/Y=$2400. Exactly1024 score bytes are written; close file2 and return without explicit status/error check. Live controlled SAVE then clearing1024 RAM bytes and native LOAD restored all1024 bytes exactly on the working disk; natural qualification/reboot sequence not exercised."
+   "text": "OPEN logical file2/device8/secondary15 with S0:SCORES, close, set filename SCORES on secondary3, then KERNAL SAVE with start pointer $3D/3E=$2000 and end X/Y=$2400. Exactly1024 score bytes are written; close file2 and return without explicit status/error check. Live controlled SAVE then clearing1024 RAM bytes and native LOAD restored all1024 bytes exactly on the working disk; Natural100-point/ABC entry and menu return followed by hard reset and fresh native startup also restore all1024 saved bytes exactly."
   },
   {
    "address": 12230,
@@ -10615,7 +10615,7 @@
   {
    "address": 30111,
    "type": "line",
-   "text": "Build the NEXT LEVEL text card. Find requested suffix$40D3/$40D4 by scanning the32 filename pairs$763A, map its index through$767A, then read20 PETSCII title bytes from$5880+20*(titleIndex-1). Convert to reversed screen codes and display at$0612. Search has no table-end test; only listed suffixes are safe inputs."
+   "text": "Build the NEXT LEVEL text card. Scan requested suffix$40D3/$40D4 against pairs$763A, map index through$767A and draw20 reversed screen-code title bytes at$0612. X increments by2 modulo256, so a failed search cycles across128 pairs$763A-$7739. Original CPU tests: all128 lackASCII25, repeat identical state at$75E7, never restore display at$7636 or return for LOAD at$7413. Valid controls return. Natural Randomizer25 selection boundary remains unverified. Controlled live request25 also loops with interrupts enabled:203003 scan visits,239 IRQ control visits, zero match/restore/loader visits and display-enable clear after200 requested frames."
   },
   {
    "address": 30245,

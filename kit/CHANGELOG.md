@@ -25,7 +25,9 @@ tails are checked against their donors rather than mistaken for active code.
 have special records beyond their ordinary target count; one has no
 terminator before the following code. `60-verify` follows the scanner's
 actual stop condition and keeps a missing sentinel separate from any claim
-that a player can trigger the overrun.
+that a player can trigger the overrun. It also checks index wrapping and
+incidental terminators; exhaustive original-sampler tests over the actual
+geometry can bound normal contacts before a longer route search.
 
 **A readback model needs its own evidence.** The sound driver reads a
 writable SID register. Live CPU probes returned the last global SID write,

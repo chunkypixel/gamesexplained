@@ -738,7 +738,7 @@
   {
    "address": 12525,
    "type": "line",
-   "text": "4 seven-byte records [coarse key,x,y,callback low/high,post-draw low/high]. Terminator: MISSING: callback code starts immediately after the four records. Coordinates are160-wide bitmap positions. The resident scanner matches the key, calls both hooks, adds $3015 points, erases the bomb, follows the draw pointer and decrements $3013. This list is not bounded by the target counter."
+   "text": "4 seven-byte records [coarse key,x,y,callback low/high,post-draw low/high]. Terminator: MISSING: callback code starts immediately after the four records. Coordinates are160-wide bitmap positions. The resident scanner matches the key, calls both hooks, adds $3015 points, erases the bomb, follows the draw pointer and decrements $3013. This list is not bounded by the target counter. Original CPU sweep of262144 normal-position/mask cases gives1600 collectible contacts, all intended keys; all16 bomb-erasure subsets only remove collectible pixels. A forced noncanonical key22 scans244 candidates then returns at incidentalFF3192 without false callback. Y wraps within30ED-31EC. No legal failure is established."
   },
   {
    "address": 12553,

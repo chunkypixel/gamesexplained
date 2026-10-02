@@ -67,6 +67,31 @@
    "end": "2026-10-02T14:53:55Z",
    "minutes": 10.5,
    "note": "Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass."
+  },
+  {
+   "step": "60-verify",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T15:02:08Z",
+   "end": "2026-10-02T15:32:27Z",
+   "minutes": 30.3,
+   "note": "Follow-up: natural100-point joystick qualification, ABC entry, menu return and hard-reset1024-byte persistence; bounded sentinel writes; exhaustive maze/contact checks; native Jungle transitions, transformed-stage death completion and25 title stall. Legal routes to rare states remain distinguished.",
+   "agents": 4
+  },
+  {
+   "step": "70-minisite",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T15:32:27Z",
+   "end": "2026-10-02T15:37:52Z",
+   "minutes": 5.4,
+   "note": "Updated article/atlas with natural score evidence and controlled rare-state results; corrected initials sound priority and selector behavior. Chromium checks all32maps/all33sources, audio and desktop/mobile interactions pass."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T15:37:52Z",
+   "end": "2026-10-02T15:39:56Z",
+   "minutes": 2.1,
+   "note": "Recorded follow-up evidence and remaining legal-route/hardware limits; extended scanner verification guidance for index wrap and real-geometry contact bounds. Refreshed native comments, retained100%coverage, passed browser checks and prepared branch update withoutPR/issues."
   }
  ]
 }

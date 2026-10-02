@@ -1,0 +1,715 @@
+{
+  "date": "2026-10-02",
+  "scope": "Separate natural input, controlled VICE and original-CPU tests; these do not certify full level playthroughs. Raw binaries and traces remain in ignored work/.",
+  "natural_score": {
+    "entry": {
+      "pc": 9707,
+      "x": 0,
+      "y": 0,
+      "life": 2,
+      "reserves": 255,
+      "score": 100,
+      "bonus": 0,
+      "speed": 9,
+      "requested": 4,
+      "jump": 0,
+      "bombs": 11,
+      "bullet_limit": 0,
+      "name": "PLF02"
+    },
+    "pointers": [
+      162,
+      32,
+      250,
+      254
+    ],
+    "letters": [
+      {
+        "letter": "A",
+        "x": 30,
+        "y": 4
+      },
+      {
+        "letter": "B",
+        "x": 29,
+        "y": 5
+      },
+      {
+        "letter": "C",
+        "x": 28,
+        "y": 6
+      }
+    ],
+    "saved_table_sha256": "b94a91e9210282275e61a98148573b14fadd242048befc59280516c56f477302",
+    "total_first_record": [
+      1,
+      2,
+      3,
+      32,
+      32,
+      32,
+      32,
+      49,
+      48,
+      48,
+      32,
+      32
+    ],
+    "normal_return_menu": true,
+    "reboot": {
+      "method": "hard reset, LOAD JUMPMAN,8,1 and RUN; native startup loaded SCORES without RAM or PC pokes",
+      "stop": "2F2D",
+      "matched_bytes": 1024
+    }
+  },
+  "natural_route": {
+    "start": "stable-01, naturally reached Easy Does It, X176/Y168, divisor4, reserves5, score0",
+    "joystick_frames": [
+      [
+        "LEFT",
+        128
+      ],
+      [
+        "DOWN",
+        70
+      ],
+      [
+        "LEFT",
+        20
+      ]
+    ],
+    "then": "HoldLEFT until ordinary exhaustion enters25EB; UP updates2/3/4 and FIRE once per initial, with40 neutral frames after first and second confirmations.",
+    "result": "ABC /100 total, bonus0; normal menu return and hard-reset/native-load1024-byte identity"
+  },
+  "score_sentinels": {
+    "cases": 4,
+    "passed": true,
+    "acceptance": {
+      "nextAlphabetIndex": 0,
+      "nextPositionY": 5,
+      "firstLetterSoundPriority": 4,
+      "laterLetterSoundPriorities": [
+        5,
+        6
+      ],
+      "confirmationSoundTicks": 25,
+      "holdingFireAcceptedWithoutReleaseEdge": true
+    },
+    "destinations": [
+      "FEFE-FF00",
+      "E2FE-E300",
+      "B6FA-B709"
+    ],
+    "hardware_and_software_vectors_unchanged": true,
+    "mapped_kernal_bytes_unchanged": true,
+    "bitmap_residue_cleared": true
+  },
+  "jungle_cpu": {
+    "cases": 256,
+    "buckets": {
+      "A": 3,
+      "B": 2,
+      "C": 251
+    }
+  },
+  "jungle_live": [
+    {
+      "reserves": 2,
+      "filename": "PLF2A",
+      "all_2048_bytes_match": true,
+      "setup": "real initialized Jungle snapshot; set reserve bucket and remaining bombs=0 before ordinary completion"
+    },
+    {
+      "reserves": 4,
+      "filename": "PLF2B",
+      "all_2048_bytes_match": true,
+      "setup": "real initialized Jungle snapshot; set reserve bucket and remaining bombs=0 before ordinary completion"
+    },
+    {
+      "reserves": 5,
+      "filename": "PLF2C",
+      "all_2048_bytes_match": true,
+      "setup": "real initialized Jungle snapshot; set reserve bucket and remaining bombs=0 before ordinary completion"
+    }
+  ],
+  "maze_cpu": {
+    "mazeCoordinateCases": 393216,
+    "jungleReserveCases": 256,
+    "mazeGatingCases": 24,
+    "level30ExitCases": 24,
+    "formula": "Q=floor(X/2); accepted Q16..160,Y50..216. C=(X>>2)&1; col=floor((X-32)/8); origin=48/count8 if Y<58 else56/count12; row=floor((Y-origin-1+C)/8). Emit reverse-ordered offsets [0,1,2,3,40,41,42,43,(80,81,82,83)] at $8000+40*row+col and $D800+same, values $85 and6.",
+    "noVisualOverrun": "All 393216 legal-width coordinate input combinations stay within the 1000-cell display; accepted writes cover indices0..918 in union. No row wraps. Offset919 and the final two display rows are never written by reveal alone.",
+    "reachability": "No test proves a coordinate or remaining-life count can be achieved by normal play. Initial snapshots are authentic; changes are explicitly controlled routine inputs."
+  },
+  "maze_live": [
+    {
+      "variant": "2a",
+      "x": 32,
+      "y": 56,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43
+      ]
+    },
+    {
+      "variant": "2a",
+      "x": 36,
+      "y": 56,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2a",
+      "x": 32,
+      "y": 64,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2a",
+      "x": 36,
+      "y": 64,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83,
+        120,
+        121,
+        122,
+        123
+      ]
+    },
+    {
+      "variant": "2a",
+      "x": 321,
+      "y": 216,
+      "cells": [
+        796,
+        797,
+        798,
+        799,
+        836,
+        837,
+        838,
+        839,
+        876,
+        877,
+        878,
+        879
+      ]
+    },
+    {
+      "variant": "2a",
+      "x": 322,
+      "y": 216,
+      "cells": []
+    },
+    {
+      "variant": "2b",
+      "x": 32,
+      "y": 56,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43
+      ]
+    },
+    {
+      "variant": "2b",
+      "x": 36,
+      "y": 56,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2b",
+      "x": 32,
+      "y": 64,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2b",
+      "x": 36,
+      "y": 64,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83,
+        120,
+        121,
+        122,
+        123
+      ]
+    },
+    {
+      "variant": "2b",
+      "x": 321,
+      "y": 216,
+      "cells": [
+        796,
+        797,
+        798,
+        799,
+        836,
+        837,
+        838,
+        839,
+        876,
+        877,
+        878,
+        879
+      ]
+    },
+    {
+      "variant": "2b",
+      "x": 322,
+      "y": 216,
+      "cells": []
+    },
+    {
+      "variant": "2c",
+      "x": 32,
+      "y": 56,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43
+      ]
+    },
+    {
+      "variant": "2c",
+      "x": 36,
+      "y": 56,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2c",
+      "x": 32,
+      "y": 64,
+      "cells": [
+        0,
+        1,
+        2,
+        3,
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "variant": "2c",
+      "x": 36,
+      "y": 64,
+      "cells": [
+        40,
+        41,
+        42,
+        43,
+        80,
+        81,
+        82,
+        83,
+        120,
+        121,
+        122,
+        123
+      ]
+    },
+    {
+      "variant": "2c",
+      "x": 321,
+      "y": 216,
+      "cells": [
+        796,
+        797,
+        798,
+        799,
+        836,
+        837,
+        838,
+        839,
+        876,
+        877,
+        878,
+        879
+      ]
+    },
+    {
+      "variant": "2c",
+      "x": 322,
+      "y": 216,
+      "cells": []
+    }
+  ],
+  "final_puzzle_live": [
+    {
+      "stage": 1,
+      "setup": "none after initialized-stage snapshot",
+      "before": {
+        "pc": 17139,
+        "x": 208,
+        "y": 168,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLFXX"
+      },
+      "transformed": null,
+      "input": "holdLEFT until native death completes; no position or death-state edits",
+      "death_return": {
+        "pc": 12408,
+        "x": 160,
+        "y": 0,
+        "life": 0,
+        "reserves": 5,
+        "score": 0,
+        "bonus": 0,
+        "speed": 9,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLFXX"
+      },
+      "branch": {
+        "pc": 12368,
+        "x": 160,
+        "y": 0,
+        "life": 0,
+        "reserves": 5,
+        "score": 0,
+        "bonus": 0,
+        "speed": 9,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLFXX"
+      }
+    },
+    {
+      "stage": 2,
+      "setup": "poke remaining bombs=4 and transformation request=1; original3393 executes",
+      "before": {
+        "pc": 17139,
+        "x": 208,
+        "y": 168,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLFXX"
+      },
+      "transformed": {
+        "pc": 13335,
+        "x": 208,
+        "y": 168,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 4,
+        "bullet_limit": 5,
+        "name": "PLFXX"
+      },
+      "input": "holdLEFT until native death completes; no position or death-state edits",
+      "death_return": {
+        "pc": 12408,
+        "x": 160,
+        "y": 0,
+        "life": 0,
+        "reserves": 5,
+        "score": 0,
+        "bonus": 0,
+        "speed": 9,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 4,
+        "bullet_limit": 5,
+        "name": "PLFXX"
+      },
+      "branch": {
+        "pc": 23296,
+        "x": 160,
+        "y": 0,
+        "life": 0,
+        "reserves": 5,
+        "score": 0,
+        "bonus": 0,
+        "speed": 9,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 4,
+        "bullet_limit": 5,
+        "name": "PLFXX"
+      }
+    }
+  ],
+  "title_lookup_cpu": {
+    "records": [
+      {
+        "suffix": "01",
+        "stop": "returned",
+        "lookupVisits": 1
+      },
+      {
+        "suffix": "24",
+        "stop": "returned",
+        "lookupVisits": 24
+      },
+      {
+        "suffix": "2A",
+        "stop": "returned",
+        "lookupVisits": 25
+      },
+      {
+        "suffix": "2B",
+        "stop": "returned",
+        "lookupVisits": 26
+      },
+      {
+        "suffix": "2C",
+        "stop": "returned",
+        "lookupVisits": 27
+      },
+      {
+        "suffix": "26",
+        "stop": "returned",
+        "lookupVisits": 28
+      },
+      {
+        "suffix": "30",
+        "stop": "returned",
+        "lookupVisits": 32
+      },
+      {
+        "suffix": "25",
+        "stop": "repeated identical foreground CPU state after two full128-pair scans",
+        "lookupVisits": 256
+      }
+    ],
+    "scope": "Original $759F and its original $4355/$4349/$434F callees executed from ready-30.vsf. No code hooks replace instructions; hooks observe scan/title boundaries and stop only after an identical CPU state recurs. C64 memory map is active. I/O writes are recorded; only required read $D011 is represented by a register latch initially $3B. No IRQs, real VIC rendering, disk calls or VICE control occur."
+  },
+  "title_lookup_live": {
+    "setup": "native level-loader snapshot; set requested suffix25 and PC7410 to ordinary title call; IRQs retain original state",
+    "first": {
+      "PC": 30183,
+      "A": 7,
+      "X": 0,
+      "Y": 0,
+      "SP": 251,
+      "N": false,
+      "V": false,
+      "B": false,
+      "D": false,
+      "I": false,
+      "Z": true,
+      "C": true
+    },
+    "after_200_frames": {
+      "PC": 30186,
+      "A": 0,
+      "X": 246,
+      "Y": 0,
+      "SP": 251,
+      "N": false,
+      "V": false,
+      "B": false,
+      "D": false,
+      "I": false,
+      "Z": true,
+      "C": false
+    },
+    "D011": [
+      139
+    ],
+    "checkpoints": {
+      "checkpoints": [
+        {
+          "checkpoint_num": 2,
+          "start": 16640,
+          "end": 16640,
+          "hit_count": 239,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        },
+        {
+          "checkpoint_num": 5,
+          "start": 29715,
+          "end": 29715,
+          "hit_count": 0,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        },
+        {
+          "checkpoint_num": 6,
+          "start": 29891,
+          "end": 29891,
+          "hit_count": 0,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        },
+        {
+          "checkpoint_num": 1,
+          "start": 30183,
+          "end": 30183,
+          "hit_count": 203003,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        },
+        {
+          "checkpoint_num": 3,
+          "start": 30204,
+          "end": 30204,
+          "hit_count": 0,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        },
+        {
+          "checkpoint_num": 4,
+          "start": 30262,
+          "end": 30262,
+          "hit_count": 0,
+          "ignore_count": 0,
+          "stop": false,
+          "enabled": true,
+          "check_load": false,
+          "check_store": false,
+          "check_exec": true,
+          "temporary": false
+        }
+      ],
+      "count": 6
+    }
+  },
+  "hailstones": {
+    "scope": "Original $47C0 sampler over every lowX/Y pair and all three highX equivalence classes, both pose-mask classes; original $55BF key construction executed for each positive collectible contact. No movement or live-emulator reachability is inferred.",
+    "normal_coordinate_cases": 262144,
+    "normal_collectible_contacts": 1600,
+    "normal_unmatched_keys": 0,
+    "all_16_erasure_subsets_only_remove_collectible_pixels": true,
+    "noncanonical_alias": "highX2/lowX8/Y52 yields22, not proven reachable; native collector scans244 candidates then returns at incidentalFF3192",
+    "interrupt_margin_cases": 24000,
+    "limit": "No full proof of arbitrary interrupt interleavings/noncanonical coordinates; no legal failure route."
+  }
+}

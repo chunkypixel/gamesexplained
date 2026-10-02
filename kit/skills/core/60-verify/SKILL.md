@@ -66,6 +66,14 @@ missing, preserve the following code/data as itself and record the missing
 terminator. Do not invent one, and do not claim a visible failure until a
 reachable unmatched key has exercised the overrun.
 
+Trace the index width and pointer updates too: a scanner can wrap within a
+small window rather than advance through memory. Enumerate that window
+and check for incidental terminators or false matches. For a suspected
+collision-key mismatch, run the original sampler over the actual geometry
+and every relevant position/mask; then check whether geometry edits can
+introduce new contacts. This can settle the ordinary-contact question
+without pretending a bounded movement search proved all routes.
+
 ## Live verification
 
 Any claim that can be tested in the emulator in under a few minutes gets

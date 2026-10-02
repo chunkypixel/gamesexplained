@@ -28,6 +28,12 @@ No issue or pull request was opened, as requested. These two asks are prepared u
 1. Investigate the v3.13.2 warp speed-up result on this Linux host. The measurement is reproducible evidence of this test run, not proof of an emulator regression; the right upstream change is undetermined.
 2. Consider a shared SID bus-read/timing contract and a hardware comparison fixture. This game-local driver explicitly approximates the last global write without decay; the shared synth does not expose a cycle-accurate writable-register bus.
 
+## Follow-up verification
+
+The contributor's follow-up prompted normal100-point/ABC score entry, menu return and hard-reset persistence, exact score-sentinel write bounds,393216 maze-coordinate checks with18 native boundary cases, all256 Jungle reserve buckets with three native transitions, controlled transformed-stage death completion, and live25 title-loop verification. Hailstones normal-coordinate contacts all match intended keys. The initials cue priority is corrected to4 for the first-letter audition (native later positions use5/6); all23764 audio state and23413 write comparisons still pass. The article and atlas were rebuilt and all browser checks passed.
+
+The scanner rule now also checks index wrapping, incidental terminators and the original sampler over real geometry. It avoids wasting a full playthrough looking for a failure that ordinary contacts cannot trigger within the tested scope. Full legal routes into rare states and physical SID comparison remain explicit limits. No additional installation or issue/PR publication was needed.
+
 ## What took longest
 
 | Step | Minutes | Model | Sessions | What dominated |
@@ -37,9 +43,9 @@ No issue or pull request was opened, as requested. These two asks are prepared u
 | 30-text | 1 | gpt-6-astra | 1 |  |
 | 40-sweep | 4 | gpt-6-astra | 1 |  |
 | 50-coverage | 64 | gpt-6-astra | 1 | Four agents mapped the resident program and 32 separately loaded 2 KB overlays; all overlays captured through the native loader. Includes controlled live checks and renderer/audio port verification performed while annotation agents ran. |
-| 60-verify | 12 | gpt-6-astra | 1 | Verified native movement/speed, score boundaries/ties, randomizer01/25, bonus, final-award carry, SID bus behavior and score SAVE/LOAD. Original-code checks cover all PRNG states,194 drawing streams, jumps and23764 sound frames. Coverage90583/90583 across33images. |
-| 70-minisite | 13 | gpt-6-astra | 1 | Built self-contained article and32-file atlas, integrated verified drawing/jump/randomizer/audio models and exact reconstructed frame; all33 source selections and desktop/mobile controls pass Chromium. Copy rewritten after widgets; tool footprint also retested clean. |
-| 80-retro | 10 | gpt-6-astra | 1 | Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass. |
-| total | 120 | gpt-6-astra | | 2.0 h of work |
+| 60-verify | 42 | gpt-6-astra | 2 | Verified native movement/speed, score boundaries/ties, randomizer01/25, bonus, final-award carry, SID bus behavior and score SAVE/LOAD. Original-code checks cover all PRNG states,194 drawing streams, jumps and23764 sound frames. Coverage90583/90583 across33images.; Follow-up: natural100-point joystick qualification, ABC entry, menu return and hard-reset1024-byte persistence; bounded sentinel writes; exhaustive maze/contact checks; native Jungle transitions, transformed-stage death completion and25 title stall. Legal routes to rare states remain distinguished. |
+| 70-minisite | 18 | gpt-6-astra | 2 | Built self-contained article and32-file atlas, integrated verified drawing/jump/randomizer/audio models and exact reconstructed frame; all33 source selections and desktop/mobile controls pass Chromium. Copy rewritten after widgets; tool footprint also retested clean.; Updated article/atlas with natural score evidence and controlled rare-state results; corrected initials sound priority and selector behavior. Chromium checks all32maps/all33sources, audio and desktop/mobile interactions pass. |
+| 80-retro | 13 | gpt-6-astra | 2 | Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass.; Recorded follow-up evidence and remaining legal-route/hardware limits; extended scanner verification guidance for index wrap and real-geometry contact bounds. Refreshed native comments, retained100%coverage, passed browser checks and prepared branch update withoutPR/issues. |
+| total | 156 | gpt-6-astra | | 2.6 h of work, over 2.7 h |
 
 The single change that would have saved the most minutes is identifying independently loaded source images before annotation, so one play snapshot cannot be mistaken for the entire game.

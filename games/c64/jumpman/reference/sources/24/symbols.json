@@ -748,7 +748,7 @@
   {
    "address": 12820,
    "type": "line",
-   "text": "Cleanup chooses the next Mystery Maze filename letter from $322A using reserves $40E4: 0-2 selects A, 3-4 selects B, 5 or more selects C. Store the letter at $40D4; the tens character remains 2 from the header. Cleanup also runs on terminal death, but only completion advances to the selected file."
+   "text": "Cleanup chooses the next Mystery Maze filename letter from $322A using reserves $40E4: 0-2 selects A, 3-4 selects B, 5 or more selects C. Store the letter at $40D4; the tens character remains 2 from the header. Cleanup also runs on terminal death, but only completion advances to the selected file. All256 reserve inputs CPU checked. Controlled live completions with bombs0/reserves2,4,5 load exactPLF2A,2B,2C images; full legal Jungle exit not replayed."
   },
   {
    "address": 12842,
