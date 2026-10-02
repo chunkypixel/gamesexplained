@@ -8,7 +8,7 @@ The kit gains named source images so the Source tab, coverage and stale-listing 
 
 Validation: all 19 game minisites build; binary, documentation and listing checks pass; 4 source-image and 26 tool-isolation tests pass; launcher dispatch tests pass. Chromium exercises all 32 map images, all 33 source images and desktop/mobile controls with no script errors. Native and original-code tests are detailed in facts.md, including naturalABC score save/reboot, exhaustive maze bounds, controlled final-stage death completion,25 title-loop behavior and bounded Hailstones contacts. Broader checks cover14 private programs, with ordinary-input interactions in eight selected levels; corrected robot edge openings and follower delays are recorded alongside explicit legal-playthrough limits. The full tool footprint check is clean.
 
-This is Silver with agent-draft copy. Natural consequences of several traced edge cases remain explicitly open; the sound model omits SID bus decay and within-frame write timing. No full playable port or Gold curation is claimed.
+This is Silver, claimed by jankfoundry for curation. Human copy edits have begun in the Randomizer paragraph; full section-by-section review remains open. Natural consequences of several traced edge cases remain explicitly open; the sound model omits SID bus decay and within-frame write timing. No full playable port or Gold curation is claimed.
 
 ## Maintainer asks
 

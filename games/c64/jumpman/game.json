@@ -8,10 +8,10 @@
   "developer": "Randy Glover",
   "title_image": "reference/title.png",
   "build": "JUMPMAN REV 1.0, supplied GCR disk",
-  "tier": "silver",
+  "tier": "silver-claimed",
   "coverage_percent": 100,
-  "copy": "agent-draft",
-  "steward": "",
+  "copy": "human-edited",
+  "steward": "jankfoundry",
   "credits": [
     {
       "by": "Randy Glover",

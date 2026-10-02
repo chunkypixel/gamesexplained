@@ -1,6 +1,6 @@
 # Jumpman: kit feedback
 
-Run: 2 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver; agent-draft copy. The contributor authorized a pushed branch and requested review before any pull request or maintainer issues.
+Run: 2 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. The contributor authorized a pushed branch and requested review before any pull request or maintainer issues.
 
 ## Changes made
 
@@ -42,6 +42,10 @@ The article adds a recorded Freeze scrubber, and the atlas and exported native c
 
 `60-verify` now checks the original callback order and distinguishes timer-zero, override clearing and input polling. It also separates private callback clocks from hazard pulses and history-cursor gaps from displayed sample age. Isolated routine tests would miss those differences. The prepared review description retains both maintainer asks; no PR or issue was opened.
 
+## Copy review
+
+The contributor replaced “emit” with “choose” in the Randomizer paragraph and asked for plain language where possible. The authored page and local generator agree. No new kit rule is needed: this applies the existing house style. Curation status records that human review has begun, with the remaining sections still requiring review.
+
 ## What took longest
 
 | Step | Minutes | Model | Sessions | What dominated |
@@ -53,7 +57,8 @@ The article adds a recorded Freeze scrubber, and the atlas and exported native c
 | 50-coverage | 64 | gpt-6-astra | 1 | Four agents mapped the resident program and 32 separately loaded 2 KB overlays; all overlays captured through the native loader. Includes controlled live checks and renderer/audio port verification performed while annotation agents ran. |
 | 60-verify | 74 | gpt-6-astra | 3 | Verified native movement/speed, score boundaries/ties, randomizer01/25, bonus, final-award carry, SID bus behavior and score SAVE/LOAD. Original-code checks cover all PRNG states,194 drawing streams, jumps and23764 sound frames. Coverage90583/90583 across33images.; Follow-up: natural100-point joystick qualification, ABC entry, menu return and hard-reset1024-byte persistence; bounded sentinel writes; exhaustive maze/contact checks; native Jungle transitions, transformed-stage death completion and25 title stall. Legal routes to rare states remain distinguished.; Fourteen private programs checked with original CPU instructions; eight selected-level ordinary-input captures. Freeze paired150-frame replay, dual robot release, forced block jump, shooting, platform carry and palette/death restoration. |
 | 70-minisite | 24 | gpt-6-astra | 3 | Built self-contained article and32-file atlas, integrated verified drawing/jump/randomizer/audio models and exact reconstructed frame; all33 source selections and desktop/mobile controls pass Chromium. Copy rewritten after widgets; tool footprint also retested clean.; Updated article/atlas with natural score evidence and controlled rare-state results; corrected initials sound priority and selector behavior. Chromium checks all32maps/all33sources, audio and desktop/mobile interactions pass.; Updated14 atlas entries and added recorded Freeze countdown scrubber from paired native replays. Desktop/mobile Chromium passes all controls,32 maps and33 source selections; copy rewritten with evidence limits. |
-| 80-retro | 17 | gpt-6-astra | 3 | Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass.; Recorded follow-up evidence and remaining legal-route/hardware limits; extended scanner verification guidance for index wrap and real-geometry contact bounds. Refreshed native comments, retained100%coverage, passed browser checks and prepared branch update withoutPR/issues.; Recorded14-file gameplay scope, eight ordinary-input captures and remaining legal-route limits. Added original-callback order/private-clock/history-age guidance. All19 builds, repository checks,100%coverage and desktop/mobile controls pass; native tools stopped. |
+| 80-retro | 17 | gpt-6-astra | 4 | Added named-source workflow and CI checks, concurrent-port/stdio containment fixes, sentinel/readback verification lessons, dated Linux results and prepared maintainer asks. Full tool footprint clean; all19 game builds and repository checks pass.; Recorded follow-up evidence and remaining legal-route/hardware limits; extended scanner verification guidance for index wrap and real-geometry contact bounds. Refreshed native comments, retained100%coverage, passed browser checks and prepared branch update withoutPR/issues.; Recorded14-file gameplay scope, eight ordinary-input captures and remaining legal-route limits. Added original-callback order/private-clock/history-age guidance. All19 builds, repository checks,100%coverage and desktop/mobile controls pass; native tools stopped.; Recorded start of human copy review and plain-language preference; existing house style covers this edit, so no kit change needed. |
+| curate | 0 | gpt-6-astra | 1 | Contributor copy review: replace emit with choose in Randomizer paragraph; prefer plain language. Curation begins, remaining sections unreviewed. |
 | total | 198 | gpt-6-astra | | 3.3 h of work, over 3.7 h |
 
 The single change that would have saved the most minutes is identifying independently loaded source images before annotation, so one play snapshot cannot be mistaken for the entire game.

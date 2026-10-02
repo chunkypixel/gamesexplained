@@ -117,6 +117,22 @@
    "end": "2026-10-02T16:34:28Z",
    "minutes": 4.3,
    "note": "Recorded14-file gameplay scope, eight ordinary-input captures and remaining legal-route limits. Added original-callback order/private-clock/history-age guidance. All19 builds, repository checks,100%coverage and desktop/mobile controls pass; native tools stopped."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T16:43:30Z",
+   "end": "2026-10-02T16:43:30Z",
+   "minutes": 0.0,
+   "note": "Contributor copy review: replace emit with choose in Randomizer paragraph; prefer plain language. Curation begins, remaining sections unreviewed."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-02T16:43:31Z",
+   "end": "2026-10-02T16:43:31Z",
+   "minutes": 0.0,
+   "note": "Recorded start of human copy review and plain-language preference; existing house style covers this edit, so no kit change needed."
   }
  ]
 }
