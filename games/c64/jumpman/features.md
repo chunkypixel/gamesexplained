@@ -1,6 +1,6 @@
 # Jumpman: feature checklist
 
-The inventory began from the supplied game's screens and the C64 manual, before code analysis. Status is the evidence now available: **live** means VICE observation, **traced** means original instructions/data, **differs** means the code contradicts the documentation, and **open** names a remaining verification limit. Controlled state tests do not prove player reachability. Addresses refer to the resident image unless a PLF file is named.
+The inventory began from the supplied game's screens and the C64 manual, before code analysis. Status is the evidence now available: **live** means VICE observation, **traced** means original instructions/data, **CPU checked** means controlled original-code execution, **differs** means the code contradicts the documentation, and **open** names a remaining verification limit. Controlled state tests do not prove player reachability. Addresses refer to the resident image unless a PLF file is named.
 
 | Feature | Status | Evidence / limits |
 |---|---|---|
@@ -19,8 +19,11 @@ The inventory began from the supplied game's screens and the C64 manual, before 
 | Completing a level adds remaining bonus to both totals | traced | `$5B00`; 24-bit score and cumulative-bonus fields `$40DA–$40DF`. |
 | Geometry changes after bomb collection | original-code tests | Every decoded initial and post-bomb stream, including level30 stage2, matches all8192 output bytes of `$4D0F`. |
 | Fixed up/down rope routes | traced | Header arrays `$3020–$302D`, movement `$4900`; bitmap contact and column matching determine traversal. |
-| Moving blocks, lifts, robots, bats and level-specific hazards | traced | Each of32 PLF listings identifies private callbacks; initialized screenshots for every file. Individual level completion remains unplayed. |
-| Shooting in Invasion, Dragon Slayer and Gunfighter | traced | PLF06/14/26 private controls and projectile callbacks; Invasion kill25 points, Gunfighter100. No declining initial bonus in these three files. |
+| Moving blocks, lifts, robots, bats and level-specific hazards | live + CPU checked + traced | All32 private programs traced;14 have expanded CPU checks. Ordinary inputs verify Robots I release, Jumping Blocks forced jump and Ride Around carry after native level selection. Full legal completion, platform transfers and natural mixed-mask effects remain open. |
+| Shooting in Invasion, Dragon Slayer and Gunfighter | live + CPU checked | Ordinary inputs launch all three shots. Controlled cases verify eight-way shots, arc/cooldown/bounds, hit awards25/50/100 and all12 Dragon Slayer stairs. Legal hits/stair completion remain open. |
+| Freeze input lock | live + CPU checked | Native input/no-input replay verifies repeated80-count refresh and bullet death while frozen. CPU checks distinguish zero from release and confirm existing jump/fall can continue. |
+| Followers replay player history | CPU checked | All256 creation cursors and1,100 updates verify seven independent creation-dependent lags; state2 clears followers/count/write cursor but retains history. Legal creation/death sequences remain open. |
+| Now You See It hides and restores scenery | live + CPU checked | Ordinary bomb and death verify matrix80 then85 with callback-isolated unchanged bitmap. CPU checks include05 alternation and restore-state transitions. |
 | Grand Puzzle III stage-two death completes the level | controlled live + original-code tests | Native transformation invoked with four bombs/request1; ordinary LEFT-induced death reaches completion with four targets still remaining. Stage-one control respawns. A legal route to the transformation remains open. |
 | Puzzle bombs worth500 | traced | PLF07/15 special callbacks add 400 before ordinary 100; PLF30 second-stage special records use the same sum. |
 | Three Mystery Maze variants selected by remaining lives | controlled live + original-code tests | PLF24 `$3214` tests reserve counts below 3,3–4,at least 5 and selects2A/2B/2C. All256 bucket inputs checked; controlled Jungle completions with reserves2/4/5 load exact2A/2B/2C files. Full legal Jungle exit not replayed. |

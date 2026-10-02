@@ -990,7 +990,7 @@
   {
    "address": 12783,
    "type": "line",
-   "text": "During active play outside mode 2, increment elevator Y at $407A by one, wrapping 226 to 0. If its collision mask $408F contains player bit 0, add support flag 4 to $4098 and increment player Y twice. The two-pixel carry and one-pixel platform motion are explicit instructions."
+   "text": "On a hazard pulse with life!=2, increment elevatorY except entry226 wraps to0. Natural cycle227 updates; entry227 is not clamped. If shadow$408F contains playerbit0, OR support4 and add2 to playerY even on the wrap call. CPU checked full cycle and225/226/227 boundaries; legal rider wrap remains open."
   },
   {
    "address": 12835,

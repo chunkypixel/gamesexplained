@@ -883,12 +883,12 @@
   {
    "address": 12902,
    "type": "line",
-   "text": "On hazard ticks outside setup, alternate both platform shapes, load a new motion triple when a duration is zero, wrap at$FF, add stored deltas to each Xlow/Y and decrement duration."
+   "text": "Move two platforms through rectangular route $3251. From initialized state each returns after264 eligible hazard updates:76 vertical,56 horizontal per half-cycle. CPU compared528 updates. Support $32C7 has already used the previous saved Y delta on a corner. Alternate platform shapes, follow$FF route wrap, update X-low/Y and decrement duration."
   },
   {
    "address": 12999,
    "type": "line",
-   "text": "On hazard ticks outside setup, find playerbit0 in platform6/7 collision snapshots. OR support flag4 into body materials; when that platform is moving down (+1Y), add2 to playerY to keep the player riding it."
+   "text": "Runs before platform movement. Prefer slot6 if its collision shadow contains playerbit0, otherwise slot7. OR support4 into $4098; add2 to playerY only if selected saved Y delta is+1, including old-leg corner timing. No private horizontal carry. CPU corner/tie cases; native contact playerY174 to176 while platform7 remainsY169."
   },
   {
    "address": 13051,

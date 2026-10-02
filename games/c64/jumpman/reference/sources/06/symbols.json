@@ -780,12 +780,12 @@
   {
    "address": 13171,
    "type": "line",
-   "text": "Inspect flying targets 7..4. A nonzero collision shadow with no playerbit 0 but at least one projectilebit 1..3 marks targetstate 2, adds 25 to the 24-bit total $40DA-DC and refreshes HUD via $435B. Return after the first hit; bonus accumulation is not changed."
+   "text": "Search flying targets7 down4. Nonplayer projectile contact marks one falling and adds25 to the24-bit score, leaving bonus unchanged. CPU checked score carry, fall/removal/respawn and combined masks. These are whole VIC masks, not pair identities; injected mixed masks do not establish a natural exploit."
   },
   {
    "address": 13232,
    "type": "line",
-   "text": "First IRQ callback consumes fire for shooting: suppress it during 8-call cooldown, require fire pressed plus a movement direction, find an inactive slot 1..3, copy player position and use resident sprite 38. Direction nibble indexes three velocity tables; queue noise stream $342C with priority 3/release 0/noise 80."
+   "text": "Consume fire even for neutral direction, full slots or cooldown. Launch into first free shot1..3 and set cooldown8: next eight callback calls are blocked, next possible launch is call9. CPU checked all eight joystick directions, slot/boundary cases; native DOWN+FIRE launches slot1 at32,56. Direction selects velocity tables; sprite pointer$38, noise stream$342C at priority3/release0/noise$80."
   },
   {
    "address": 13356,

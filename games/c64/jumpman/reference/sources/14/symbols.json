@@ -793,7 +793,7 @@
   {
    "address": 13210,
    "type": "line",
-   "text": "On hazard ticks, held saved fire plus horizontal intent launches sprite5 at player position with directional pointer$16/$17. Queue noise, then add+6/-6 hardwareX and one vertical-table delta each update. Step23 clears shot step and Y."
+   "text": "Use fire saved at $3399 for a horizontal shot. Copy player position to sprite5, select pointer$16/$17 and apply first +/-6 X,-2 Y arc step in this call. CPU checked all22 steps/removal/relaunch; live LEFT+FIRE gives320,56 to314,54 with no player jump. Movement is gated by hazard pulses. After the22nd displacement pair, the counter reaches23 and clears shot state and Y in that same call."
   },
   {
    "address": 13355,
@@ -818,7 +818,7 @@
   {
    "address": 13499,
    "type": "line",
-   "text": "Until12 stair changes have been issued, increment hit counter and every fourth hit load X,Y,count from parallel12-entry tables into command$3526, then increment stair index. Return through fire-preservation helper."
+   "text": "Every fourth hit schedule the next of12 stair placements; foreground $34EA renders it. CPU executed48 hits and all12 bitmap changes. Hit49 still adds50 but leaves hit counter48 and stair index12 unchanged."
   },
   {
    "address": 13546,

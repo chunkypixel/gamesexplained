@@ -35,6 +35,13 @@ not a per-voice shadow. `70-minisite` now checks that distinction before
 trusting register comparisons, and requires the page to name omitted bus
 decay and within-frame timing.
 
+**A callback's neighbours change its result.** Freeze reaches zero before
+clearing its input override; platform support reads the old direction on a
+corner; follower sample age depends on replay and recording order.
+`60-verify` now exercises the original callback sequence and its boundary
+phases, names private clocks separately from shared pulses, and distinguishes
+history cursor gaps from the age of the sample a follower displays.
+
 ## 0.0.54 · 30 September 2026 · Doctor Who and the Mines of Terror · unorig with Claude
 
 **Look for the loaded data before splitting the work.** The flow trace of

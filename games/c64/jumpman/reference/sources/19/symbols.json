@@ -911,12 +911,12 @@
   {
    "address": 12855,
    "type": "line",
-   "text": "On active hazard updates outside mode 2, add the shared 16-bit X and 8-bit Y velocities to sprites 5-7. Reverse X when sprite 7 X-low equals 124 or 228; reverse Y when sprite 5 Y equals 82 or 142. Publish sprite 7 X-low/2-12 as alignment column $40B7. Reversal compares the complemented old X delta with $FB before the memory increment, correctly selecting high byte $FF when +4 becomes -4."
+   "text": "Move all three ladder pieces by shared16-bit X and byteY deltas. Exact post-move X124/228 and topY82/142 reverse velocities; overshoots do not. CPU verified sign extension, boundaries and1560-update joint cycle (X52,Y120). X endpoint test reads sprite7 X-low; Y endpoint test reads sprite5. Publish sprite7 X-low/2-12 as climb column$40B7."
   },
   {
    "address": 12973,
    "type": "line",
-   "text": "During active play outside mode 2, ladder contact in player collision mask $4088 adds climb flag 8 to $4098 and adds ladder X velocity to player X. Without ladder contact, align player X-low to a four-pixel boundary. Resident climbing logic handles vertical movement."
+   "text": "Runs before $3237; any ladder bit in player collision adds climbable8 and current16-bit horizontal velocity to playerX. Reversal update uses the old velocity for both rider and ladder. No private Y carry. Without contact, align X-low with AND$FC. CPU checked; legal ladder ride remains open."
   },
   {
    "address": 13032,

@@ -1175,7 +1175,7 @@
   {
    "address": 13402,
    "type": "line",
-   "text": "Fire the player shot when sampled fire is pressed ($4053 bit 4 clear), slot 1 is inactive, and movement intent $4050/$4051 is nonzero. Copy player position/direction and select frame $38; replace sampled fire with $10 so the later jump test sees release. Enemy shots 2/3 launch from enemies 6/7 when exactly aligned with player X or Y, choosing the cardinal direction toward the player. Each shooter has at most one active shot."
+   "text": "Launch one player shot when direction/fire and free slot permit; always consume fire into$4053=$10, including blocked/neutral/released cases. Movement callback ran earlier, so first movement is next eligible cycle. Enemy vertical alignment compares half-X:160 and161 align. CPU checked eight directions/bounds; native DOWN+FIRE launch verified. Player shot uses pointer$38 and saved direction. Enemy shots2/3 come from enemies6/7 on equalY or equalhalf-X, each with one active shot."
   },
   {
    "address": 13565,
@@ -1190,7 +1190,7 @@
   {
    "address": 13573,
    "type": "line",
-   "text": "Check enemies 6/7 against active player-shot collisions while the player has no collision. A hit respawns the enemy at X=8,Y=152 with route $3267 and countdown 0, removes the player shot, adds 100 to the 24-bit score, queues melody $356F, checks extra life through $435B, and increments kill counter $3368. Finally tail-call ordinary player collision at $308F."
+   "text": "Require no player collision, player-shot collision and enemy6/7 shadow; prefer6. Add100, clear player shot and reset enemy to8,152 with route$3267/count0. Increment kill counter selecting four pursuit threshold pairs. CPU checked masks, score wrap and every threshold boundary; natural hit/mixed-contact routes remain open. Queue melody$356F, refresh HUD/check extra life via$435B, then tail-call ordinary player collision$308F."
   },
   {
    "address": 13679,

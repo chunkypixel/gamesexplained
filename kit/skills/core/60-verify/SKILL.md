@@ -74,6 +74,24 @@ and every relevant position/mask; then check whether geometry edits can
 introduce new contacts. This can settle the ordinary-contact question
 without pretending a bounded movement search proved all routes.
 
+## Callback order is part of the mechanic
+
+An isolated routine test cannot establish the result of a whole update.
+Run the relevant original dispatcher, or verify its order before scheduling
+the original callbacks yourself. Input polling, a countdown, contact and
+movement can each see a different state within one service. Test the last
+nonzero countdown, the zero-entry call and the next input poll separately.
+For moving supports, test the corner where a stored velocity changes: a
+rider callback before movement uses the old direction.
+
+Name each clock. A private callback divider may ignore the shared player
+or hazard pulse, so an "update" is not automatically a video frame or a
+speed-dependent tick. For history followers, distinguish a cursor gap from
+the age of the displayed sample; replay-before-record and increment-before-
+read can shift that age by one. Test creation on both sides of the cursor
+boundary and after wrapping. Use ordinary-input captures separately to
+establish which controlled cases actually occur in play.
+
 ## Live verification
 
 Any claim that can be tested in the emulator in under a few minutes gets

@@ -942,7 +942,7 @@
   {
    "address": 13086,
    "type": "line",
-   "text": "On hazard ticks outside setup, step two sprite routes. Active duration adds signed X/Y deltas and alternates frame$10/$11. Duration0 follows$FF pointer jumps or installs a new direction/duration, briefly sets color2 and requests noise; later ticks usecolor8."
+   "text": "On eligible hazard updates execute route triples for balls6/7; periods252/232 updates. New segments move immediately, colour2 and request sound; later moves colour8. Frame$10 OR $4024 uses shared player animation. CPU compared1200 updates including X-byte crossings, diagonal moves and loop boundaries."
   },
   {
    "address": 13266,

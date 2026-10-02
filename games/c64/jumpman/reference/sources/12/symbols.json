@@ -706,7 +706,7 @@
   {
    "address": 13314,
    "type": "line",
-   "text": "Outside setup and while live speed<9, run every fourth IRQ. For sprites4-7, decrement current duration and add signed position deltas; animate from base shape+phase. At duration0 decode route triple, install direction/duration, follow$FF jumps, or test quadrant commands$10-$13."
+   "text": "Route update every fourth eligible callback through private $32B2 divider, independently of hazard pulse $402C; speed>=9 or life2 stops it. Ordinary/branch commands move immediately on selection; FF adds no stationary tick. CPU checked all96 triples and both outcomes of12 conditional commands over16384 callbacks."
   },
   {
    "address": 13517,
@@ -726,7 +726,7 @@
   {
    "address": 13576,
    "type": "line",
-   "text": "Set quadrant selector$3524 to$10/$11 for playerY<144 or$12/$13 below, choosing the low bit by half-width X<92 versus>=92. Route interpreter uses it for conditional branches."
+   "text": "Set quadrant $3524 from hardwareX184 andY144 boundaries (half-X92). Below both gives$10; right adds1, below adds2; equality belongs to right/below. CPU checked every512x256 coordinate input."
   },
   {
    "address": 13604,

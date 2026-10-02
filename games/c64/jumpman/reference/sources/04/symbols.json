@@ -578,7 +578,7 @@
   {
    "address": 12716,
    "type": "line",
-   "text": "Fourth callback first clears forced direction/fire overrides on nonzero $402B. If live player collision shadow is nonzero, force fire pressed ($4053=$12) and randomly choose direction 77/EE/EE/BB. Instead of requesting death, colliding blocks launch the player right/up/up/left. Always copy $4047 to sprite colours 1..4."
+   "text": "On each player pulse clear force flags, then for life0 and any player collision request right/up/up/left via $77/$EE/$EE/$BB and fire $12. The next input poll samples forced fire as $02. Renewed contact can overwrite it with released-fire $12 before movement; a fresh jump can start after contact clears. Live heldLEFT contact164,136 subsequently jumps right to168,134 without fire. CPU checked all four choices and persistent contact. Always copy$4047 into sprite colours1..4."
   },
   {
    "address": 12780,

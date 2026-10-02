@@ -748,12 +748,12 @@
   {
    "address": 12706,
    "type": "line",
-   "text": "Per-bomb callback creates at most seven followers. Choose history index 0, or 200 when the recording cursor is below 8; increment count $3241, copy X-low/X-high/Y/frame from history pages $3400-$3700 into that sprite, save its read cursor, and enable it in colour 1."
+   "text": "Create at most seven followers. Select absolute read cursor200 if write cursor<8, else0; do not subtract a fixed common lag. Copy X-low/high,Y,frame from four history pages. CPU exhausts all256 creation cursors; early controlled cursor200 may read retained unfilled history, without proving a legal early pickup. Increment follower count$3241; enable the new sprite in colour1."
   },
   {
    "address": 12767,
    "type": "line",
-   "text": "During normal active play, increment each follower read cursor, then load its X-low/X-high/Y/frame from the four circular 256-entry history pages at $3400, $3500, $3600, $3700. Followers reproduce the same recorded path at different cursor lags."
+   "text": "Replay runs before record: increment each follower cursor, then read its four history components. The modular cursor gap stays constant independently per follower. After replay/record, sample age is gap-1 once populated. CPU compares1100 ticks across wraps with seven followers."
   },
   {
    "address": 12824,
@@ -778,7 +778,7 @@
   {
    "address": 12875,
    "type": "line",
-   "text": "When player mode is 2, disable follower sprites 1..count and reset count $3241 and recording cursor $324A. History bytes and individual follower cursors remain until reused."
+   "text": "At life2 disable active followers and reset count/write cursor. Preserve all1024 history bytes and individual read cursors. Life1 stops replay/record without this cleanup. CPU checked all states."
   },
   {
    "address": 12906,

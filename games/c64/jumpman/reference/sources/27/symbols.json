@@ -1006,12 +1006,12 @@
   {
    "address": 12771,
    "type": "line",
-   "text": "Bomb callback sets route-table entries $3330 and $3366 to 16 updates, opening two opposite vertical directions previously set to zero. The bomb record also requests a separate geometry change."
+   "text": "Write duration16 to up entry$3330 (already16) and down entry$3366 (initially0). Only the downward node12(128,120) to18(128,152) edge is newly opened; reverse up was already available. CPU executes full bomb path and16-step traversal both ways. The bomb also requests its separate geometry change."
   },
   {
    "address": 12780,
    "type": "line",
-   "text": "Bomb callback sets route-table entries $3368 and $3331 to 16 updates, opening another pair of vertical connections."
+   "text": "Write16 to up$3331 (already16) and down$3368 (initially0). Newly opens down node14(224,120) to19(224,152), retaining existing reverse up. Directed edges70 initially,71 after either callback,72 after both. CPU checked full collector/postdraw and both-direction traversals."
   },
   {
    "address": 12789,
@@ -1096,7 +1096,7 @@
   {
    "address": 13282,
    "type": "line",
-   "text": "Choose one random direction 0-3 and look up its edge at the current node. Reject absent edges and directions that do not point toward the player on either axis. Failed choices wait until the next update. Accepted edges load cardinal velocity/duration and move immediately; existing movement continues without reconsidering player position."
+   "text": "At a node try one original-RNG direction per eligible update; missing/disallowed choice waits. Vertical preference up if playerY smaller else down; horizontal right if playerhalfX greater else left. Equality permits down/left. Once accepted, finish entire edge countdown without retargeting. CPU checked4800 choices across all30 nodes/four opening states. Accepted edges load cardinal velocity/duration and move immediately."
   },
   {
    "address": 13442,

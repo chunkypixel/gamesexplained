@@ -730,12 +730,12 @@
   {
    "address": 12895,
    "type": "line",
-   "text": "Global bomb callback increments $3336. Both robot scripts can pass their FE wait command during the next eligible update; the updater clears this event after processing both actors."
+   "text": "Global bomb callback: increment event $3336. Live first pickup awards100, targets12 to11, then releases both robots on the next eligible shared update. CPU checks execute the full original collector."
   },
   {
    "address": 12899,
    "type": "line",
-   "text": "Third IRQ callback skips death state 2 and zero $402C cadence. Process sprites 7 then 6: apply signed 16-bit X and 8-bit Y deltas, decrement segment duration, and set frame base plus animation phase $4024. When both actors processed clear collected-bomb event $3336."
+   "text": "Update robot7 then6 on a hazard pulse unless death mode2; after both, clear shared bomb event at $3275. Both waiting robots see the same event. An event received while both are moving is discarded rather than queued. CPU checked all53 triples over2400 updates; live first release moves7 to236,216 and6 to116,152. Position deltas use signed16-bit X and8-bit Y; decrement segment duration and set frame base plus phase$4024."
   },
   {
    "address": 12971,

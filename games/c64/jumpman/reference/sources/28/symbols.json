@@ -1000,12 +1000,12 @@
   {
    "address": 12847,
    "type": "line",
-   "text": "Global bomb callback through header $303A. In player mode 0, fill 1016 matrix bytes $8000-$83F7 with the current $80 or $05, then toggle it. Bitmap data and sprite pointers $83F8-$83FF remain unchanged; matching a pixel class to background colour hides it."
+   "text": "In life0 alternate matrix fill$80/$05 across$8000-$83F7 (1016 bytes); preserve bitmap, colorRAM and sprite pointers. Live bomb verifies$80 and unchanged bitmap/pointers at exact callback boundaries before common erasure/postdraw. CPU verifies both fills and refusal in death states."
   },
   {
    "address": 12897,
    "type": "line",
-   "text": "When $322E=1, fill matrix $8000-$83F7 with $85 and advance state to 2. Running in the foreground lets the dying player see the complete geometry again."
+   "text": "Foreground sees restore request1, fills1016 matrix bytes with$85 and sets request2. IRQ$328C requests1 during life1 and resets0 during life2; fill leaves next alternation colour unchanged. Native ordinary death after bomb restores$85; CPU checked all transitions."
   },
   {
    "address": 12940,
