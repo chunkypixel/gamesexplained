@@ -25,38 +25,51 @@ Sources:
   graphics by Greg Holland, music by Neil Brennan; published by Melbourne
   House, June 1985. The game carries no credits of its own.
 - The game's own screens in the emulator, 2 October 2026
-  (`reference/`).
+  (`reference/`), and the code (facts.md).
 
 ## Features
 
 | Feature | Status | Where |
 |---|---|---|
-| Attract mode: the computer fights itself under `DEMO`, cycling through the backdrops | live | `reference/demo.png`, `demo-lake.png`, `demo-dojo.png`, `demo-buddha.png` |
-| F1 starts a game; F5 abandons it and returns to the attract mode | live | |
-| F3 switches between `1 PLAYER` and `2 PLAYER` | live | `reference/options-2player.png` |
-| F7 switches between `JOYSTICK` and `KEYBOARD` control | live | `reference/options-keyboard.png` |
-| Fire on joystick port 2 starts a one-player game from the attract mode | live | |
-| 18 movements from the joystick, eight directions with and without fire: a jump, punches high, middle and low, a crouch, two somersaults, a turn-round ("about-face"), walking and blocking, and eight kicks (flying, high, mid or roundhouse, low, back and others). The summaries disagree on which direction gives which move: read it from the input routine | open | |
-| Keyboard controls, the alternative to the joystick: which keys | open | |
-| Two players fight each other, one stick each | open | the option is live; which port is which, open |
-| Scoring with yin-yang symbols: a loosely timed blow earns half a symbol, a clean one a whole; two whole symbols win the bout | open | the symbols are live above each fighter (`reference/play-novice-knockdown.png`) |
-| A bout lasts 30 seconds on a counter at the top; when time runs out the referee decides | open | the counter is live, starting at 30 |
-| Points scored per blow, shown for each player, and a high score | open | the score digits are live |
-| Ranks from novice to tenth dan, each opponent harder than the last | open | `NOVICE` is live |
-| The backdrop changes with progress: Fuji with a pagoda and a torii, a lake under a volcano, a dojo, a Buddha statue | live | the four seen in the attract mode; whether play visits them in that order, open |
-| A bonus round in which a bull charges and must be felled with one blow. The summaries say some early C64 versions lack it | open | |
-| A computer opponent that fights back: left idle, the player is floored within seconds | live | `reference/play-novice-knockdown.png` |
-| A shadow under a fighter in the air | live | `reference/jump-shadow.png` |
-| A shout ("kiai") during loading, from the loader; the disk carries `m.spchtbl` and `m.tsound` | open | |
-| Music by Neil Brennan | open | |
-| Sound effects on and off with DEL (the menu program's text) | open | |
+| Attract mode: the computer fights itself under `DEMO`, cycling through the backdrops | confirmed | `$1CD2`; live, `reference/demo*.png` |
+| F1 starts a game; F5 abandons it and returns to the attract mode | confirmed | `$1E64`; live |
+| F3 switches between `1 PLAYER` and `2 PLAYER` | confirmed | `$1EA8`, `$AE`; live, `reference/options-2player.png` |
+| F7 switches between `JOYSTICK` and `KEYBOARD` control | confirmed | `$1EC5`, `$C6`; live, `reference/options-keyboard.png` |
+| Fire starts a one-player game from the attract mode | confirmed | `$1E64`; live on port 2, and on port 1, which shares `$DC01` with the keyboard columns |
+| 18 movements from the joystick, eight directions with and without fire | confirmed | `stick_to_move` `$286C`; live, all sixteen inputs read back as move numbers (facts.md, Controls). Which named kick or punch each fire move is was judged from screenshots only for some |
+| Keyboard controls, the alternative to the joystick | traced | `$28B2`-`$29B3`: Q W E / A D / Z X C and S or left SHIFT for player 1; P @ * / L ; / , . / and : or right SHIFT for player 2. Not typed live |
+| Two players fight each other, one stick each | confirmed | `$1B09`; fighter 0 on port 2, fighter 1 on port 1 (`$2851`); live |
+| Scoring with yin-yang symbols: half or whole by the quality of the blow; two whole symbols win the bout | confirmed | quality is distance: `$2B70`-`$2C40` against the reach profiles at `$7200`; four halves (`$8A,X`) win (`$1D5F`); live, a whole point at a distance of 12 |
+| A bout lasts 30 seconds on a counter; when time runs out the referee decides | differs | the counter (`$212F`) counts 30 units of 50 passes of the exchange loop, measured at 50 to 66 PAL frames a unit, so 30 to 40 seconds; the decision (`$1C72`, `$1F93`) goes to more halves, then more points; live, the judge's sprites at the end of a two-player game |
+| Points scored per blow, shown for each player, and a high score | confirmed | `$12A5`, `$206C`, `$200A`; a high score per mode and a five-place table with names (`$146A`); live, 200 points for a whole point with move `$0C` |
+| Ranks from novice to tenth dan, each opponent harder than the last | confirmed | `$B4`, `$22C3`, `$1C2D`; the computer's level rises with each bout won and sets its timing masks (`$2593`); two bout wins per rank (`$B5`) |
+| The backdrop changes with progress: Fuji with a pagoda and a torii, a lake under a volcano, a dojo, a Buddha statue | confirmed | `$AF AND 3`; all four packed in memory (`$3F5F`-`$71FF`) and unpacked by `$17BB`/`$1849`; decoded and rendered from the image |
+| A bonus round in which a bull charges and must be felled with one blow | confirmed | `bull_round` `$132C`, after a rank cleared on the Buddha backdrop; only move 7 (down-forward from a crouch) at a distance of `$19`-`$1D` fells it, for 3000 points; live, `reference/bull-charge.png`, `reference/bull-felled.png` |
+| A computer opponent that fights back | confirmed | `ai_think` `$22CF`: blocks, nine scripted plans, attacks by distance; live, `reference/play-novice-knockdown.png` |
+| A shadow under a fighter in the air | confirmed | the line-`$D9` handler draws fixed sprites from `$D480` at Y `$DA`; live, `reference/jump-shadow.png` |
+| A shout ("kiai") during loading; the disk carries `m.spchtbl` and `m.tsound` | open | the game itself has a one-bit speech player (`$311A`) with four samples at `$F540`, started on attacks and hits; its samples are the disk file `m.xsprites` (at `$F540`) and its period table `m.prerun`. The loader's shout is the loader's, not read by policy; `m.spchtbl` and `m.tsound` are not in the game's memory as they stand on disk |
+| Music by Neil Brennan | confirmed | the driver at `$09A5` and four songs; song 2 live in a one-player bout; tuned for NTSC, so two-thirds of a semitone flat on PAL (facts.md, Sound) |
+| Sound effects on and off with DEL (the menu program's text) | confirmed | DEL flips `$CF` (`$1ED8`), which switches the speech samples off (`$3186`); live, `$CF` 0 to 1 |
 
 ## Beyond the documentation
 
 Found in the code, not in the manual.
 
+- Holding fire at the end of a one-player game skips the high-score
+  table and leaves the new entry named `......` (`$1472`).
+- A trap: if CIA 2's timer A is running when a blow scores, the game
+  crashes (`$2CAE`; live).
+- Past tenth dan the opponent's level is chosen at random from 7 to 10
+  while the rank still reads 10TH DAN (`$1C65`).
+- The one-bit speech player toggles the SID's master volume, so every
+  shout is played through the volume register while the music runs.
+
 ## Open questions
 
-- Does the game read the disk again after the hand-over (for a backdrop,
-  or the bull)? The four backdrops all appeared in the attract mode
-  without a visible pause for loading.
+- `m.tsound` (5,632 bytes) and `m.spchtbl` (768) are not in the game's
+  memory as they stand on disk (searched in 16-byte pieces in both
+  snapshots); they may be the loader's shout, not checked.
+- Why `blow_reaction` tests CIA 2's timer A (`$2CAE`) is not known.
+- Gaps of exactly `$15` lines between the fighters' tops ask two row
+  changes of the same raster line (`$32EA`, `$32FD`); whether a row then
+  shows a frame late was not tested.

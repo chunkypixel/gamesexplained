@@ -38,9 +38,20 @@ id `disk!`. The directory, as `c1541` (from the emulator build) lists it:
 | `m.tsound` | 23 | `$2000` | 5,632 bytes |
 | `m.xsprites` | 11 | `$1000` | 2,736 bytes |
 
-The load addresses of `m.prog`, `m.shapes`, `m.picture` and `m.xsprites`
-overlap, so the files are not all simply loaded where their headers say;
-how the loader places them was not followed (by policy, below). The disk
+The load addresses in the files' headers overlap, so the loader places
+them itself. Searching the snapshots for each file's bytes says where
+they end up (16-byte pieces, then a byte-for-byte count at the best
+offset):
+
+| File | In memory | Bytes equal |
+|---|---|---|
+| `m.prog` | `$0400`-`$7FFF` | 31,744 of 31,744 at the hand-over |
+| `m.shapes` | from `$8000` | 16,851 of 21,248; the shape cells `$8000`-`$BFFF` match, the rest was not followed |
+| `m.chset` | `$E000`-`$E5FF` | all |
+| `m.xsprites` | `$F540`-`$FFEF` | all: the speech samples |
+| `m.prerun` | `$C700`-`$C8FF` at the hand-over, copied by the game to `$0200`-`$03FF` | all: the speech period table |
+| `m.picture` | `$E000` on | 3,943 of 10,000; not followed |
+| `m.spchtbl`, `m.tsound`, `game`, `loader` | not found as they stand | | The disk
 is the Melbourne House release: the menu reads `Melbourne House presents`
 and offers one game, with no trainer or crack text anywhere on it.
 

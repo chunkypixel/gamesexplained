@@ -9816,12 +9816,12 @@
   {
    "address": 512,
    "type": "line",
-   "text": "Speech timing, low bytes: 256 entries, indexed by a speech data byte, giving the low byte of the CIA 1 timer B period until the next volume flip (speech_irq $311A reads it at $312B). Copied here from $C700 by machine_setup at $18F8; the bytes are the file m.spchtbl as the loader left it. The 16-bit periods run from $0001 up to $EA60, growing faster towards the top of the table."
+   "text": "Speech timing, low bytes: 256 entries, indexed by a speech data byte, giving the low byte of the CIA 1 timer B period until the next volume flip (speech_irq $311A reads it at $312B). Copied here from $C700 by machine_setup at $18F8; the 512 bytes at $0200-$03FF are the disk file m.prerun byte for byte, which the loader leaves at $C700. The 16-bit periods run from $0001 up to $EA60, growing faster towards the top of the table."
   },
   {
    "address": 768,
    "type": "line",
-   "text": "Speech timing, high bytes: the high byte of each of the 256 timer periods whose low bytes are at $0200 (read at $3131). Copied from $C800 by $18F8."
+   "text": "Speech timing, high bytes: the high byte of each of the 256 timer periods whose low bytes are at $0200 (read at $3131); the second half of m.prerun, copied from $C800 by $18F8."
   },
   {
    "address": 1024,
@@ -11206,7 +11206,7 @@
   {
    "address": 6921,
    "type": "line",
-   "text": "Two-player game, chosen by $AE = 1. Backdrop $AF = 0, $65 and $66 = 0 (neither fighter computer-controlled), panel text cleared ($21A5, $227F), yin-yang cells cleared, $B0 = 1 (a game is running), score fields reset ($1F5D), tune $FF = 3. Four bouts, one per backdrop, each 30 seconds ($B1 = 50 frames, $B2 = 30 s, $217B shows 30) through $1B7A, with a pause of 15 x 6 frames ($21C8) between. Then compares the scores ($1F74): equal, both fighters' end animation ($1E44); else the judge signals the winner ($1F93, $1E32). High-score check ($200A), a pause, A = 0. A minus result from a bout returns minus, and $1EE1 starts the game again."
+   "text": "Two-player game, chosen by $AE = 1. Backdrop $AF = 0, $65 and $66 = 0 (neither fighter computer-controlled), panel text cleared ($21A5, $227F), yin-yang cells cleared, $B0 = 1 (a game is running), score fields reset ($1F5D), tune $FF = 3. Four bouts, one per backdrop, each of 30 clock units ($B1 = 50 passes, $B2 = 30, $217B shows 30) through $1B7A, with a pause of 15 x 6 frames ($21C8) between. Then compares the scores ($1F74): equal, both fighters' end animation ($1E44); else the judge signals the winner ($1F93, $1E32). High-score check ($200A), a pause, A = 0. A minus result from a bout returns minus, and $1EE1 starts the game again."
   },
   {
    "address": 7034,
@@ -11216,7 +11216,7 @@
   {
    "address": 7079,
    "type": "line",
-   "text": "One-player game, chosen by $AE = 0. $CA, backdrop $AF and rank $B4 = 0, $65 = 0 (fighter 0 the player) and $66 = 1 (fighter 1 the computer), $B0 = 1, $B5 = 2, score fields reset, $98 seeded from $99, NOVICE written at $CCA0 ($21FB), tune $FF = 2. Each bout: clear symbols, 30-second clock, backdrop ($1F3A), $1C72. A won bout decrements $B5: two wins clear a rank, after which, when $AF AND 3 is 3 (the Buddha backdrop), $132C runs; then below $AF = 10 the rank $B4 and $AF go up and the new rank is written (1ST DAN ... 10TH DAN). Past that, $1C5B. A draw ($81) plays both end animations and repeats the bout; a lost bout or a minus result ends the game: high-score check ($200A), panel text ($2115), A = 0."
+   "text": "One-player game, chosen by $AE = 0. $CA, backdrop $AF and rank $B4 = 0, $65 = 0 (fighter 0 the player) and $66 = 1 (fighter 1 the computer), $B0 = 1, $B5 = 2, score fields reset, $98 seeded from $99, NOVICE written at $CCA0 ($21FB), tune $FF = 2. Each bout: clear symbols, 30-unit clock, backdrop ($1F3A), $1C72. A won bout decrements $B5: two wins clear a rank, after which, when $AF AND 3 is 3 (the Buddha backdrop), $132C runs; then below $AF = 10 the rank $B4 and $AF go up and the new rank is written (1ST DAN ... 10TH DAN). Past that, $1C5B. A draw ($81) plays both end animations and repeats the bout; a lost bout or a minus result ends the game: high-score check ($200A), panel text ($2115), A = 0."
   },
   {
    "address": 7259,
@@ -11231,7 +11231,7 @@
   {
    "address": 7378,
    "type": "line",
-   "text": "The attract mode: the computer fights itself under DEMO. $AF = 0, $98 from $99, levels $B3 and $B4 random 3 to 11 (rand AND 7, + 3 + carry), panel cleared, DEMO written ($21B3), $65 = $66 = 1 (both fighters computer-controlled), tune $FF = 1, $04F0 = $FF. One 30-second demo bout ($1D33) on each of the four backdrops in turn. Returns plus after the fourth, and $1EE1 starts it over; returns minus when F1 or fire was pressed, and $1EE1 starts a game."
+   "text": "The attract mode: the computer fights itself under DEMO. $AF = 0, $98 from $99, levels $B3 and $B4 random 3 to 11 (rand AND 7, + 3 + carry), panel cleared, DEMO written ($21B3), $65 = $66 = 1 (both fighters computer-controlled), tune $FF = 1, $04F0 = $FF. One 30-unit demo bout ($1D33) on each of the four backdrops in turn. Returns plus after the fourth, and $1EE1 starts it over; returns minus when F1 or fire was pressed, and $1EE1 starts a game."
   },
   {
    "address": 7475,
@@ -11371,7 +11371,7 @@
   {
    "address": 8495,
    "type": "line",
-   "text": "Bout clock. Every 50 calls ($B1 counts down from $32) takes one second off the two-digit clock on screen at $CC3B/$CC3C (tens blanked below 10) and decrements $B2 (30 at $1B37); when $B2 reaches 0 sets $BC=1, time up. Called from $1AC7 and the time bonus loop."
+   "text": "Bout clock. Every 50 calls ($B1 counts down from $32) takes one unit off the two-digit clock on screen at $CC3B/$CC3C (tens blanked below 10) and decrements $B2 (30 at $1B37); when $B2 reaches 0 sets $BC=1, time up. Called from $1AC7 and the time bonus loop. (Measured live: the clock counts passes of the exchange loop, not frames. A unit took 50 PAL frames, one second, with the computer fighting, and 60-66 frames with two idle players, so a 30-unit bout lasts about 30 to 40 seconds.)"
   },
   {
    "address": 8553,
@@ -11411,7 +11411,7 @@
   {
    "address": 8671,
    "type": "line",
-   "text": "End-of-bout time bonus, if the clock has not run out ($BC=0): runs bout_clock_tick until each second ticks over, adds 100 to player 1's score ($CC31, X=9) per second, pauses about 6 frames each, until $BC is set. Called from $1CBE."
+   "text": "End-of-bout time bonus, if the clock has not run out ($BC=0): runs bout_clock_tick until each unit ticks over, adds 100 to player 1's score ($CC31, X=9) per unit left, pauses about 6 frames each, until $BC is set. Called from $1CBE."
   },
   {
    "address": 8699,

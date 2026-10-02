@@ -37,6 +37,15 @@
    "step": "50-coverage",
    "model": "claude-opus-5-5",
    "start": "2026-10-02T04:37:39Z",
+   "end": "2026-10-02T05:04:37Z",
+   "minutes": 27.0,
+   "note": "six annotation agents on disjoint ranges of $0400-$3FFF; the lead did $4000-$FFFF and zero page",
+   "agents": 6
+  },
+  {
+   "step": "60-verify",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-02T05:04:37Z",
    "end": null,
    "minutes": null,
    "note": ""
