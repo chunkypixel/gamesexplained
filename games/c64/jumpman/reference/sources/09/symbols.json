@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,21 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12427,
-   "type": "Code"
-  },
-  {
-   "start": 12428,
    "end": 12443,
    "type": "Code"
   },
   {
    "start": 12444,
-   "end": 12576,
-   "type": "Byte"
-  },
-  {
-   "start": 12577,
    "end": 12675,
    "type": "Byte"
   },
@@ -198,106 +138,16 @@
   },
   {
    "start": 12928,
-   "end": 12934,
-   "type": "Byte"
-  },
-  {
-   "start": 12935,
-   "end": 12935,
-   "type": "Byte"
-  },
-  {
-   "start": 12936,
    "end": 12948,
    "type": "Byte"
   },
   {
    "start": 12949,
-   "end": 12974,
-   "type": "Code"
-  },
-  {
-   "start": 12975,
-   "end": 12983,
-   "type": "Code"
-  },
-  {
-   "start": 12984,
-   "end": 12992,
-   "type": "Code"
-  },
-  {
-   "start": 12993,
-   "end": 13001,
-   "type": "Code"
-  },
-  {
-   "start": 13002,
-   "end": 13010,
-   "type": "Code"
-  },
-  {
-   "start": 13011,
-   "end": 13019,
-   "type": "Code"
-  },
-  {
-   "start": 13020,
-   "end": 13028,
-   "type": "Code"
-  },
-  {
-   "start": 13029,
-   "end": 13037,
-   "type": "Code"
-  },
-  {
-   "start": 13038,
-   "end": 13046,
-   "type": "Code"
-  },
-  {
-   "start": 13047,
-   "end": 13055,
-   "type": "Code"
-  },
-  {
-   "start": 13056,
-   "end": 13064,
-   "type": "Code"
-  },
-  {
-   "start": 13065,
-   "end": 13073,
-   "type": "Code"
-  },
-  {
-   "start": 13074,
-   "end": 13082,
-   "type": "Code"
-  },
-  {
-   "start": 13083,
-   "end": 13091,
-   "type": "Code"
-  },
-  {
-   "start": 13092,
    "end": 13114,
    "type": "Code"
   },
   {
    "start": 13115,
-   "end": 13144,
-   "type": "Byte"
-  },
-  {
-   "start": 13145,
-   "end": 13451,
-   "type": "Byte"
-  },
-  {
-   "start": 13452,
    "end": 14335,
    "type": "Byte"
   },
@@ -490,8 +340,14 @@
   },
   {
    "address": 12795,
-   "name": "plf09_falling_object_tick",
+   "name": "plf09_falling_object_return",
    "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 12796,
+   "name": "plf09_falling_object_tick",
+   "type": "UserDefined",
    "kind": "user"
   },
   {
@@ -775,7 +631,12 @@
   {
    "address": 12795,
    "type": "line",
-   "text": "IRQ callback at$31FC runs while sprite7 is active and hazard pulse is due, except setup state2. Add3 to its Y; on latched background collision clear the latch and play noise. Every third contact after the first rewrites the deferred drawing positions: convert objectX to bitmap coordinates, replace shapes$7E2B/$7E00, move object past the edited band and queue stream$3288 in$4000/01. Disable sprite7 atY>=226. $31FB is a shared return."
+   "text": "Shared RTS for the inactive-sprite branch from the falling-object callback at $31FC."
+  },
+  {
+   "address": 12796,
+   "type": "line",
+   "text": "IRQ callback at$31FC runs while sprite7 is active and hazard pulse is due, except setup state2. Add3 to its Y; on latched background collision clear the latch and play noise. Every third contact after the first rewrites the deferred drawing positions: convert objectX to bitmap coordinates, replace shapes$7E2B/$7E00, move object past the edited band and queue stream$3288 in$4000/01. Disable sprite7 atY>=226. Controlled native checks confirm Y+3, first-contact deferred drawing and foreground consumption; no full floor-contact route is claimed."
   },
   {
    "address": 12928,

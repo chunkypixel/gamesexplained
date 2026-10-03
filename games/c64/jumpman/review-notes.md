@@ -10,6 +10,8 @@ Validation: all 19 game minisites build; binary, documentation and listing check
 
 A self-audit independently re-extracts all35 files, checks every included listing byte and all9,498 instruction decodes, and reproduces all32 native screenshots pixel for pixel. Exhaustive Randomizer inputs exposed three nonzero seeds missed by the earlier sample; the page now explains all four zero-state traps instead of throwing. Native checks, committed extraction/audit/browser scripts and a scoped audit report accompany the fix. Stale image-state comments are clarified and two unused third-party research screenshots are kept private. This is self-audit evidence, not independent certification.
 
+A further 20-fact/10-routine semantic sample executes original instructions in 125 controlled cases, with 85 native comparisons. It confirms the sampled factual behaviors and corrects a PLF09 tick label placed on the preceding RTS. The original sample therefore contains an error under the kit's zero-error rule; its correction is documented without claiming a fresh independent pass. Orientation reads confirm original load bytes and foreground/IRQ banking. The sample, repeatable CPU checks and per-claim evidence are in `semantic-audit.md` and `checks/semantic.js`.
+
 This is Silver, claimed by jankfoundry for curation. Human copy edits have begun in the Randomizer paragraph; full section-by-section review remains open. Natural consequences of several traced edge cases remain explicitly open; the sound model omits SID bus decay and within-frame write timing. No full playable port or Gold curation is claimed.
 
 ## Maintainer asks
