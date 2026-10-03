@@ -23,8 +23,8 @@ decision, what took longest, operating system and tool versions.
   had nothing on the control bits; the figure was derived live.
 - `kit/skills/c64/tool-vice-mcp`: a store watch that stayed silent where
   the code plainly writes (cause not found), and a second G64 boot time.
-- `kit/CHANGELOG.md`: an entry headed `next` for the three lessons that
-  change what the next agent does.
+- `kit/lessons/2026-10-03-way-of-the-exploding-fist.md`: an entry headed
+  `next` for the three lessons that change what the next agent does.
 
 ## Operating system and tools
 
@@ -49,7 +49,7 @@ fork, and upstream `gamesexplained/gamesexplained` could not be attached
 beside it. The asks are in the pull request's description under
 "Maintainer asks", for whoever merges it.
 
-- `clock.py` has no pause. A session that stops overnight (here the
+- **`clock.py` has no pause.** A session that stops overnight (here the
   container restarted during `70-minisite`) leaves the open step running,
   and the timings table then shows 1,592 minutes for a step of perhaps
   an hour. A `clock.py pause` / `resume`, or `start` refusing to run on

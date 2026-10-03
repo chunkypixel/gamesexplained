@@ -100,6 +100,13 @@ same way, so tiers mean the same thing everywhere.
 - **Never bulk-disassemble every labelled address** to "recover"
   coverage. Many labels sit on data; disassembling them misclassifies the
   bytes as code. Undo by setting the data type back to undefined.
+- **A gap can hold a different record type.** A frame directory can point
+  to a short sprite descriptor followed by animation commands before the
+  next frame. Check every other directory and constant pointer load before
+  calling the gap unused. Parse the candidate format through its actual
+  end and establish a consumer or a live execution check. A spare tuple
+  after a counted record can also be a retained extra component: describe
+  the read limit and keep its purpose open rather than guessing padding.
 - **Reading a region may disassemble it as a side effect** in some
   disassemblers. Log an explicit disassemble entry for every new code
   region you explore, or a replay under-restores.
@@ -143,12 +150,14 @@ is: label and describe it, or list it in `game.json` under
 `coverage.extra` (authored data), `coverage.include` (RAM under a default
 exclusion) or `coverage.exclude` (not the game's, with the reason). One
 game reached 100 % with 1.6 KB of its own tables and its picture's
-colours outside the count. The list only finds data that sits at the same address in
-both images: data the start-up copies elsewhere (out of the way of the
-I/O area, under a ROM, into another bank) differs between them and is
-never listed. Search the play snapshot for the start-up's copy loops'
-destinations, and check each against the ledger; one game reached
-100 % with half a kilobyte of moved graphics outside every span.
+colours outside the count.
+
+The list only finds data that sits at the same address in both images:
+data the start-up copies elsewhere (out of the way of the I/O area, under
+a ROM, into another bank) differs between them and is never listed.
+Search the play snapshot for the start-up's copy loops' destinations, and
+check each against the ledger; one game reached 100 % with half a
+kilobyte of moved graphics outside every span. <!-- until #146 -->
 
 ## Inline parameters: the reason a flow disassembler stalls
 
