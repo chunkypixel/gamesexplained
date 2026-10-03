@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,26 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12414,
-   "type": "Code"
-  },
-  {
-   "start": 12415,
-   "end": 12430,
-   "type": "Code"
-  },
-  {
-   "start": 12431,
    "end": 12464,
    "type": "Code"
   },
   {
    "start": 12465,
-   "end": 12513,
-   "type": "Byte"
-  },
-  {
-   "start": 12514,
    "end": 12640,
    "type": "Byte"
   },
@@ -193,46 +128,6 @@
   },
   {
    "start": 12697,
-   "end": 12697,
-   "type": "Byte"
-  },
-  {
-   "start": 12698,
-   "end": 12704,
-   "type": "Byte"
-  },
-  {
-   "start": 12705,
-   "end": 12722,
-   "type": "Byte"
-  },
-  {
-   "start": 12723,
-   "end": 12740,
-   "type": "Byte"
-  },
-  {
-   "start": 12741,
-   "end": 12758,
-   "type": "Byte"
-  },
-  {
-   "start": 12759,
-   "end": 12788,
-   "type": "Byte"
-  },
-  {
-   "start": 12789,
-   "end": 12808,
-   "type": "Byte"
-  },
-  {
-   "start": 12809,
-   "end": 12820,
-   "type": "Byte"
-  },
-  {
-   "start": 12821,
    "end": 12821,
    "type": "Byte"
   },
@@ -248,21 +143,11 @@
   },
   {
    "start": 12861,
-   "end": 13028,
-   "type": "Code"
-  },
-  {
-   "start": 13029,
    "end": 13140,
    "type": "Code"
   },
   {
    "start": 13141,
-   "end": 13143,
-   "type": "Byte"
-  },
-  {
-   "start": 13144,
    "end": 13150,
    "type": "Byte"
   },
@@ -278,16 +163,6 @@
   },
   {
    "start": 13189,
-   "end": 13275,
-   "type": "Code"
-  },
-  {
-   "start": 13276,
-   "end": 13292,
-   "type": "Code"
-  },
-  {
-   "start": 13293,
    "end": 13309,
    "type": "Code"
   },
@@ -298,26 +173,11 @@
   },
   {
    "start": 13342,
-   "end": 13349,
-   "type": "Code"
-  },
-  {
-   "start": 13350,
-   "end": 13369,
-   "type": "Code"
-  },
-  {
-   "start": 13370,
    "end": 13389,
    "type": "Code"
   },
   {
    "start": 13390,
-   "end": 13399,
-   "type": "Byte"
-  },
-  {
-   "start": 13400,
    "end": 13409,
    "type": "Byte"
   },
@@ -338,11 +198,6 @@
   },
   {
    "start": 13530,
-   "end": 13789,
-   "type": "Byte"
-  },
-  {
-   "start": 13790,
    "end": 14335,
    "type": "Byte"
   },
@@ -637,8 +492,14 @@
   },
   {
    "address": 13189,
-   "name": "plf11_collect_flying_bomb",
+   "name": "plf11_no_collection_land_bombs",
    "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 13192,
+   "name": "plf11_collect_flying_bomb",
+   "type": "UserDefined",
    "kind": "user"
   },
   {
@@ -959,7 +820,12 @@
   {
    "address": 13189,
    "type": "line",
-   "text": "IRQ scans sprites7..4 for a collision snapshot containing player bit0. Disable a matching flying bomb, queue collection sound, add100 to24-bit total score, update HUD/extra life, decrement remaining bombs, return after the first collection. When none matches, jump to static-location landing scan$32E5."
+   "text": "No-match branch from the flying-bomb scan jumps to static-location landing scan$32E5. The header callback begins at$3388."
+  },
+  {
+   "address": 13192,
+   "type": "line",
+   "text": "Require hazard pulse, and reject life state2; dying state1 is accepted. Scan sprites7..4 for a collision snapshot containing player bit0. Disable the first matching flying bomb, queue collection sound, add100 to24-bit score, update HUD/extra life, decrement remaining bombs and return. With no match, branch through$3385 to landing scan$32E5. Controlled CPU/native checks cover life0/1/2 and pulse0; a neutral-input native replay also collects during life1."
   },
   {
    "address": 13276,
@@ -1004,22 +870,22 @@
   {
    "address": 13410,
    "type": "line",
-   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+queue offset and advance offset by6. No bounds check is present."
+   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+8-bit offset, then add6 modulo256. No capacity guard. Controlled placements preserve43 pending records; record44 starts at offset2 and overlaps earlier records. Ordinary gameplay reaching that backlog is unverified."
   },
   {
    "address": 13450,
    "type": "line",
-   "text": "Byte count of queued six-byte edits; enqueue adds6, service subtracts6 and processes the most recently appended record."
+   "text": "Eight-bit next-record offset, not an unbounded byte count. Enqueue adds6 modulo256; service subtracts6 modulo256. Zero is treated as empty, including after128 uninterrupted enqueues."
   },
   {
    "address": 13451,
    "type": "line",
-   "text": "Pop one six-byte entry from$34DA, update its occupancy, patch placement or erasure stream coordinates, play corresponding sound, save renderer context, draw, restore context. Tail of collision callback services at most one queued edit per IRQ."
+   "text": "Pop one six-byte entry last-in-first-out, update its occupancy, patch placement or erasure stream coordinates, play corresponding sound, save renderer context, draw, restore context. The collision callback tail invokes this service even without a hazard pulse. Zero offset returns without popping. Controlled native comparisons cover depth43, overlapping depth44 and apparent-empty depth128; no ordinary overload route is established."
   },
   {
    "address": 13530,
    "type": "line",
-   "text": "Runtime six-byte edit stack addressed from$34DA by an8-bit offset. With even offsets reachable by repeated +/-6, the indexed field stores can reach$35DD. Initial bytes match retained PLF06 tail, not initialized bomb records; there is no explicit capacity guard."
+   "text": "Runtime six-byte edit stack addressed from$34DA by an8-bit offset. With even offsets reachable by repeated +/-6, indexed field stores can reach$35DD. Initial bytes match retained PLF06 tail, not initialized bomb records. No capacity guard: the44th uninterrupted enqueue overlaps early records;128 enqueues wrap the offset to apparent empty. Those are forced backlog checks."
   },
   {
    "address": 13790,

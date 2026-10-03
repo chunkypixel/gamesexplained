@@ -72,6 +72,17 @@ source image with its input file; reproduce and name any loader changes
 instead of either hiding the differences or mistaking them for corruption.
 Annotation coverage and byte identity are separate from semantic correctness.
 
+Check stored callback pointers against exact instruction boundaries and labels.
+A useful name on the preceding return can leave every byte annotated while
+misidentifying the callable entry. When one such error appears, check all
+entries in the same header/table format rather than only the sampled name.
+
+For packed drawing records, distinguish lengths, offsets and commands from
+pixel values before describing their material or colour. Execute the original
+renderer on both empty and filled backgrounds: an eraser can look like a
+no-op on an empty bitmap. Compare changed pixels in a native input replay
+separately from the shape's total number of writes.
+
 ## A count is not necessarily the table boundary
 
 Trace the consumer before using a nearby count to split a record table.

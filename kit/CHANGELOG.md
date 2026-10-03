@@ -14,6 +14,12 @@ Versions that taught nothing of the kind do not appear.
 
 ## next · 3 October 2026 · Jumpman · JankFoundry with Codex
 
+**Coverage can hide a misplaced entry or a misread record.** Checking every
+stored level callback found two more names on preceding instructions.
+Parsing shape records separated offsets from pixels: an alleged collectible
+stamp was an eraser. Verification now checks exact callback entries and tests
+drawings on filled as well as empty backgrounds before assigning a meaning.
+
 **A nonzero input can enter a zero-state trap.** Exhausting the chooser's
 16-bit input space found three nonzero seeds missed by a passing sample.
 The original routine retries forever; the page threw an uncaught error.

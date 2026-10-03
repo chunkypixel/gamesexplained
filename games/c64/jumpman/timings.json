@@ -213,6 +213,22 @@
    "end": "2026-10-03T10:27:34Z",
    "minutes": 3.1,
    "note": "Recorded20-fact/10-routine self-audit with one corrected label, exact CPU/native scope and original sample failure. Preserved all source bytes/classifications and100%coverage; updated evidence/remaining routes and prepared review description. Existing kit rules suffice; no additional maintainer ask or PR/issues."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-03T11:02:25Z",
+   "end": "2026-10-03T11:24:24Z",
+   "minutes": 22.0,
+   "note": ""
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-03T11:24:24Z",
+   "end": "2026-10-03T11:29:50Z",
+   "minutes": 5.4,
+   "note": "Closed gaps through full initial-entry audit, Hot Foot eraser correction and native jump/control, Runaway forced-stack boundaries and native collection during death. Added repeatable checks,13 native comparisons, scoped report and verification guidance; no PR/issues."
   }
  ]
 }

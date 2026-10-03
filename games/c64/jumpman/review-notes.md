@@ -12,6 +12,8 @@ A self-audit independently re-extracts all35 files, checks every included listin
 
 A further 20-fact/10-routine semantic sample executes original instructions in 125 controlled cases, with 85 native comparisons. It confirms the sampled factual behaviors and corrects a PLF09 tick label placed on the preceding RTS. The original sample therefore contains an error under the kit's zero-error rule; its correction is documented without claiming a fresh independent pass. Orientation reads confirm original load bytes and foreground/IRQ banking. The sample, repeatable CPU checks and per-claim evidence are in `semantic-audit.md` and `checks/semantic.js`.
 
+A further gap pass checks all179 nonzero overlay header pointers and397 bomb callbacks, correcting two more entry labels. It also corrects Hot Foot's stamp interpretation:20 background pixels erase scenery, with16 occupied pixels removed in the captured normal jump. Runaway's drawing-stack wrap/overlap has bounded controlled tests, while a separate neutral-input native route confirms collection during death. Two repeatable PRG checks,2,116 routine calls,13 native comparisons and exact evidence limits are recorded in `gap-audit.md`. The kit verification notes now distinguish packed-record metadata from payload and check exact callback entries.
+
 This is Silver, claimed by jankfoundry for curation. Human copy edits have begun in the Randomizer paragraph; full section-by-section review remains open. Natural consequences of several traced edge cases remain explicitly open; the sound model omits SID bus decay and within-frame write timing. No full playable port or Gold curation is claimed.
 
 ## Maintainer asks

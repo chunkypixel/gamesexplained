@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,31 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12414,
-   "type": "Code"
-  },
-  {
-   "start": 12415,
-   "end": 12430,
-   "type": "Code"
-  },
-  {
-   "start": 12431,
    "end": 12456,
    "type": "Code"
   },
   {
    "start": 12457,
-   "end": 12577,
-   "type": "Byte"
-  },
-  {
-   "start": 12578,
-   "end": 12676,
-   "type": "Byte"
-  },
-  {
-   "start": 12677,
    "end": 12818,
    "type": "Byte"
   },
@@ -198,51 +128,16 @@
   },
   {
    "start": 12980,
-   "end": 12986,
-   "type": "Byte"
-  },
-  {
-   "start": 12987,
-   "end": 13031,
-   "type": "Byte"
-  },
-  {
-   "start": 13032,
-   "end": 13055,
-   "type": "Byte"
-  },
-  {
-   "start": 13056,
-   "end": 13062,
-   "type": "Byte"
-  },
-  {
-   "start": 13063,
    "end": 13242,
    "type": "Byte"
   },
   {
    "start": 13243,
-   "end": 13255,
-   "type": "Code"
-  },
-  {
-   "start": 13256,
    "end": 13289,
    "type": "Code"
   },
   {
    "start": 13290,
-   "end": 13294,
-   "type": "Byte"
-  },
-  {
-   "start": 13295,
-   "end": 13451,
-   "type": "Byte"
-  },
-  {
-   "start": 13452,
    "end": 14335,
    "type": "Byte"
   },
@@ -435,8 +330,14 @@
   },
   {
    "address": 12819,
-   "name": "plf10_jump_trail_effect",
+   "name": "plf10_jump_trail_return",
    "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 12820,
+   "name": "plf10_jump_trail_effect",
+   "type": "UserDefined",
    "kind": "user"
   },
   {
@@ -654,7 +555,12 @@
   {
    "address": 12819,
    "type": "line",
-   "text": "At hazard pulse and life state0, act only when jump step$40BE==1. Place sprite7 at playerX-12,Y+5, set shape$10/white/enable, patch bitmap stamp position from player coordinates, and play noise$3300. Save drawing workspace$4D00-$4D0F and zero page$3C-$43 to$32E8-$32FF before rendering$32B4, then restore them. $3213 is the shared return."
+   "text": "Shared RTS for the early-exit gates in the jump-trail callback at $3214."
+  },
+  {
+   "address": 12820,
+   "type": "line",
+   "text": "At hazard pulse and life state0, act only when jump step$40BE==1. Place sprite7 at playerX-12,Y+5, set shape$10/white/enable, patch bitmap stamp position from player coordinates, and play noise$3300. Save drawing workspace$4D00-$4D0F and zero page$3C-$43 to$32E8-$32FF before rendering$32B4, then restore them. Its20 zero-valued bitmap pixels erase scenery; the nonzero shape-record fields are lengths and offsets, not collectible pixels."
   },
   {
    "address": 12980,
@@ -664,7 +570,7 @@
   {
    "address": 12987,
    "type": "line",
-   "text": "Private bitmap pixel records for the jump effect, ending$FF. Rows mix transparent/background and material color1; the renderer makes these changes part of subsequent bitmap collision sampling."
+   "text": "Eight shape records [length,x offset,y offset,pixels], ending$FF at$32E7. All20 pixel bytes are zero, erasing background holes within an8-by4 multicolour-pixel area. Row totals are8,4,4,4 across Y0..3; the three runs at Y2 and Y3 are separate records. Lengths/offsets include1 but no pixel byte does. Original renderer and native VICE match on a filled-bitmap control."
   },
   {
    "address": 13032,

@@ -1,0 +1,1660 @@
+{
+  "date": "2026-10-03",
+  "kind": "Self-audit follow-up, not independent certification",
+  "baseline": "8efc3f28da9299b98e0374c5f27ac8380ae9379c",
+  "originalInputManifest": "../checks/inputs.json",
+  "findings": [
+    {
+      "image": "10",
+      "kind": "Wrong pixel interpretation",
+      "source": "$32BB-$32E7",
+      "baselineClaim": "Collectible-colour pixels in jump stamp",
+      "result": "Eight shape records contain20 pixel bytes, all0. Nonzero record fields are lengths/offsets. Native jump erases16 occupied pixels; full bitmap control erases20."
+    },
+    {
+      "image": "10",
+      "kind": "Misplaced label",
+      "name": "plf10_jump_trail_effect",
+      "baselineAddress": "$3213",
+      "actualAddress": "$3214",
+      "oldInstruction": "RTS"
+    },
+    {
+      "image": "11",
+      "kind": "Misplaced label and factual source link",
+      "name": "plf11_collect_flying_bomb",
+      "baselineAddress": "$3385",
+      "actualAddress": "$3388",
+      "oldInstruction": "JMP $32E5"
+    }
+  ],
+  "entryPointAudit": {
+    "method": "Original initial-overlay pointers must land on named code-record boundaries. This does not prove every name or dynamic callback interpretation.",
+    "images": 32,
+    "headerPointers": 179,
+    "bombCallbacks": 397,
+    "perImage": [
+      {
+        "id": "01",
+        "headerPointers": 4,
+        "bombCallbacks": 12
+      },
+      {
+        "id": "02",
+        "headerPointers": 6,
+        "bombCallbacks": 12
+      },
+      {
+        "id": "03",
+        "headerPointers": 5,
+        "bombCallbacks": 12
+      },
+      {
+        "id": "04",
+        "headerPointers": 4,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "05",
+        "headerPointers": 5,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "06",
+        "headerPointers": 7,
+        "bombCallbacks": 1
+      },
+      {
+        "id": "07",
+        "headerPointers": 7,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "08",
+        "headerPointers": 4,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "09",
+        "headerPointers": 5,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "10",
+        "headerPointers": 6,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "11",
+        "headerPointers": 8,
+        "bombCallbacks": 18
+      },
+      {
+        "id": "12",
+        "headerPointers": 6,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "13",
+        "headerPointers": 6,
+        "bombCallbacks": 4
+      },
+      {
+        "id": "14",
+        "headerPointers": 7,
+        "bombCallbacks": 1
+      },
+      {
+        "id": "15",
+        "headerPointers": 7,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "16",
+        "headerPointers": 6,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "17",
+        "headerPointers": 5,
+        "bombCallbacks": 12
+      },
+      {
+        "id": "18",
+        "headerPointers": 5,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "19",
+        "headerPointers": 6,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "20",
+        "headerPointers": 4,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "21",
+        "headerPointers": 4,
+        "bombCallbacks": 13
+      },
+      {
+        "id": "22",
+        "headerPointers": 7,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "23",
+        "headerPointers": 7,
+        "bombCallbacks": 13
+      },
+      {
+        "id": "24",
+        "headerPointers": 4,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "2a",
+        "headerPointers": 5,
+        "bombCallbacks": 11
+      },
+      {
+        "id": "2b",
+        "headerPointers": 5,
+        "bombCallbacks": 10
+      },
+      {
+        "id": "2c",
+        "headerPointers": 5,
+        "bombCallbacks": 11
+      },
+      {
+        "id": "26",
+        "headerPointers": 7,
+        "bombCallbacks": 1
+      },
+      {
+        "id": "27",
+        "headerPointers": 6,
+        "bombCallbacks": 18
+      },
+      {
+        "id": "28",
+        "headerPointers": 6,
+        "bombCallbacks": 16
+      },
+      {
+        "id": "29",
+        "headerPointers": 5,
+        "bombCallbacks": 14
+      },
+      {
+        "id": "30",
+        "headerPointers": 5,
+        "bombCallbacks": 12
+      }
+    ]
+  },
+  "originalCode": {
+    "method": "Controlled original instructions, IRQ masked, decimal clear, register-shadow I/O. Queue overload is forced, not established in ordinary gameplay.",
+    "queue": [
+      {
+        "queued": 1,
+        "offsetAfterPush": 6,
+        "firstMismatch": null
+      },
+      {
+        "queued": 2,
+        "offsetAfterPush": 12,
+        "firstMismatch": null
+      },
+      {
+        "queued": 3,
+        "offsetAfterPush": 18,
+        "firstMismatch": null
+      },
+      {
+        "queued": 4,
+        "offsetAfterPush": 24,
+        "firstMismatch": null
+      },
+      {
+        "queued": 5,
+        "offsetAfterPush": 30,
+        "firstMismatch": null
+      },
+      {
+        "queued": 6,
+        "offsetAfterPush": 36,
+        "firstMismatch": null
+      },
+      {
+        "queued": 7,
+        "offsetAfterPush": 42,
+        "firstMismatch": null
+      },
+      {
+        "queued": 8,
+        "offsetAfterPush": 48,
+        "firstMismatch": null
+      },
+      {
+        "queued": 9,
+        "offsetAfterPush": 54,
+        "firstMismatch": null
+      },
+      {
+        "queued": 10,
+        "offsetAfterPush": 60,
+        "firstMismatch": null
+      },
+      {
+        "queued": 11,
+        "offsetAfterPush": 66,
+        "firstMismatch": null
+      },
+      {
+        "queued": 12,
+        "offsetAfterPush": 72,
+        "firstMismatch": null
+      },
+      {
+        "queued": 13,
+        "offsetAfterPush": 78,
+        "firstMismatch": null
+      },
+      {
+        "queued": 14,
+        "offsetAfterPush": 84,
+        "firstMismatch": null
+      },
+      {
+        "queued": 15,
+        "offsetAfterPush": 90,
+        "firstMismatch": null
+      },
+      {
+        "queued": 16,
+        "offsetAfterPush": 96,
+        "firstMismatch": null
+      },
+      {
+        "queued": 17,
+        "offsetAfterPush": 102,
+        "firstMismatch": null
+      },
+      {
+        "queued": 18,
+        "offsetAfterPush": 108,
+        "firstMismatch": null
+      },
+      {
+        "queued": 19,
+        "offsetAfterPush": 114,
+        "firstMismatch": null
+      },
+      {
+        "queued": 20,
+        "offsetAfterPush": 120,
+        "firstMismatch": null
+      },
+      {
+        "queued": 21,
+        "offsetAfterPush": 126,
+        "firstMismatch": null
+      },
+      {
+        "queued": 22,
+        "offsetAfterPush": 132,
+        "firstMismatch": null
+      },
+      {
+        "queued": 23,
+        "offsetAfterPush": 138,
+        "firstMismatch": null
+      },
+      {
+        "queued": 24,
+        "offsetAfterPush": 144,
+        "firstMismatch": null
+      },
+      {
+        "queued": 25,
+        "offsetAfterPush": 150,
+        "firstMismatch": null
+      },
+      {
+        "queued": 26,
+        "offsetAfterPush": 156,
+        "firstMismatch": null
+      },
+      {
+        "queued": 27,
+        "offsetAfterPush": 162,
+        "firstMismatch": null
+      },
+      {
+        "queued": 28,
+        "offsetAfterPush": 168,
+        "firstMismatch": null
+      },
+      {
+        "queued": 29,
+        "offsetAfterPush": 174,
+        "firstMismatch": null
+      },
+      {
+        "queued": 30,
+        "offsetAfterPush": 180,
+        "firstMismatch": null
+      },
+      {
+        "queued": 31,
+        "offsetAfterPush": 186,
+        "firstMismatch": null
+      },
+      {
+        "queued": 32,
+        "offsetAfterPush": 192,
+        "firstMismatch": null
+      },
+      {
+        "queued": 33,
+        "offsetAfterPush": 198,
+        "firstMismatch": null
+      },
+      {
+        "queued": 34,
+        "offsetAfterPush": 204,
+        "firstMismatch": null
+      },
+      {
+        "queued": 35,
+        "offsetAfterPush": 210,
+        "firstMismatch": null
+      },
+      {
+        "queued": 36,
+        "offsetAfterPush": 216,
+        "firstMismatch": null
+      },
+      {
+        "queued": 37,
+        "offsetAfterPush": 222,
+        "firstMismatch": null
+      },
+      {
+        "queued": 38,
+        "offsetAfterPush": 228,
+        "firstMismatch": null
+      },
+      {
+        "queued": 39,
+        "offsetAfterPush": 234,
+        "firstMismatch": null
+      },
+      {
+        "queued": 40,
+        "offsetAfterPush": 240,
+        "firstMismatch": null
+      },
+      {
+        "queued": 41,
+        "offsetAfterPush": 246,
+        "firstMismatch": null
+      },
+      {
+        "queued": 42,
+        "offsetAfterPush": 252,
+        "firstMismatch": null
+      },
+      {
+        "queued": 43,
+        "offsetAfterPush": 2,
+        "firstMismatch": null
+      },
+      {
+        "queued": 44,
+        "offsetAfterPush": 8,
+        "firstMismatch": {
+          "pop": 43,
+          "wanted": [
+            1,
+            49,
+            154,
+            30,
+            10,
+            1
+          ],
+          "observed": [
+            42,
+            7,
+            154,
+            30,
+            10,
+            1
+          ]
+        }
+      }
+    ],
+    "entries": [
+      {
+        "image": "11",
+        "entry": 13189,
+        "life": 0,
+        "pulse": 1,
+        "score": 0,
+        "targets": 12,
+        "active": 1
+      },
+      {
+        "image": "11",
+        "entry": 13192,
+        "life": 0,
+        "pulse": 1,
+        "score": 100,
+        "targets": 11,
+        "active": 0
+      },
+      {
+        "image": "11",
+        "entry": 13192,
+        "life": 1,
+        "pulse": 1,
+        "score": 100,
+        "targets": 11,
+        "active": 0
+      },
+      {
+        "image": "11",
+        "entry": 13192,
+        "life": 2,
+        "pulse": 1,
+        "score": 0,
+        "targets": 12,
+        "active": 1
+      },
+      {
+        "image": "11",
+        "entry": 13192,
+        "life": 1,
+        "pulse": 0,
+        "score": 0,
+        "targets": 12,
+        "active": 1
+      },
+      {
+        "image": "10",
+        "entry": 12819,
+        "erasedPixels": 0,
+        "active": 0
+      },
+      {
+        "image": "10",
+        "entry": 12820,
+        "erasedPixels": 20,
+        "active": 1
+      }
+    ],
+    "wrap": {
+      "enqueues": 128,
+      "offset": 0,
+      "uniqueWrittenBytes": 260,
+      "firstAddress": "$34DA",
+      "lastAddress": "$35DD"
+    },
+    "hotFootShape": {
+      "entry": "$32BB",
+      "terminator": "$32E7",
+      "rows": [
+        {
+          "length": 8,
+          "x": 0,
+          "y": 0,
+          "pixels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "length": 4,
+          "x": 2,
+          "y": 1,
+          "pixels": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "length": 1,
+          "x": 1,
+          "y": 2,
+          "pixels": [
+            0
+          ]
+        },
+        {
+          "length": 2,
+          "x": 3,
+          "y": 2,
+          "pixels": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 1,
+          "x": 6,
+          "y": 2,
+          "pixels": [
+            0
+          ]
+        },
+        {
+          "length": 1,
+          "x": 0,
+          "y": 3,
+          "pixels": [
+            0
+          ]
+        },
+        {
+          "length": 2,
+          "x": 3,
+          "y": 3,
+          "pixels": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 1,
+          "x": 7,
+          "y": 3,
+          "pixels": [
+            0
+          ]
+        }
+      ],
+      "erasedPixels": 20
+    },
+    "originalRoutineCalls": 2116
+  },
+  "nativeControlled": {
+    "method": "Controlled native VICE 3.13.2 PAL. Original extracted code restored for every case; declared RAM/register inputs, IRQ masked, decimal clear, no gameplay route claimed. Two stable PC reads and paused status precede writes; stopping checkpoint confirms completion. CPU and VICE result regions compared, color RAM masked to four bits.",
+    "cases": [
+      {
+        "name": "queue depth 43 pop 1",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "98722e2ebed8ed3d3652e11e4181f0dccc1ce7d192d8f1db370af8ec4a4e174a"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "bb2445f6b77c4f73df34eefb9c296ea983edd02924810d8ae750f20c151792c0"
+          },
+          {
+            "address": "$31C5",
+            "length": 18,
+            "sha256": "ca50495d71c447f7d6cd722c4d786609e38ea73d5893a941065c4153400bd936"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "d10fcdd9bb80ac0d56b617c3656db1756685f92030aedd9b8590841f0650edbe"
+          }
+        ]
+      },
+      {
+        "name": "queue depth 43 pop 43",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "bb2445f6b77c4f73df34eefb9c296ea983edd02924810d8ae750f20c151792c0"
+          },
+          {
+            "address": "$31C5",
+            "length": 18,
+            "sha256": "48341d92e2c078cb4203d231be6402df6794f7114ff465e51174b293caba2438"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "f6c841edbec0b06e8ad2ba9a9b9d41ffcf0f137b75d5fc9174aedb20bb38d453"
+          }
+        ]
+      },
+      {
+        "name": "queue depth 44 pop 1",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$34B2",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "bb2445f6b77c4f73df34eefb9c296ea983edd02924810d8ae750f20c151792c0"
+          },
+          {
+            "address": "$31C5",
+            "length": 18,
+            "sha256": "60daa3a5f7dbfa200f8c82840ecf5b42640b70f3b7218a4c6bbd67db542e75a4"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+          }
+        ]
+      },
+      {
+        "name": "queue depth 44 pop 43",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$34B2",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "89e6b7dfc27be21e785780dea30ac280bec059d3a927d5e43c023d06364f1f07"
+          },
+          {
+            "address": "$31C5",
+            "length": 18,
+            "sha256": "60daa3a5f7dbfa200f8c82840ecf5b42640b70f3b7218a4c6bbd67db542e75a4"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+          }
+        ]
+      },
+      {
+        "name": "queue depth 44 pop 44",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$34B2",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "f16ba6fa61da3398815be2a6c0f7cb1351982dbcc6c64bbeb9b65f672a8b102a"
+          },
+          {
+            "address": "$31C5",
+            "length": 18,
+            "sha256": "60daa3a5f7dbfa200f8c82840ecf5b42640b70f3b7218a4c6bbd67db542e75a4"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+          }
+        ]
+      },
+      {
+        "name": "128 queued records appear empty",
+        "image": "11",
+        "entry": "$348B",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$348A",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$34DA",
+            "length": 260,
+            "sha256": "fc5d3262e7723e492c3435cea686658678928fe140b91c8ef9993bfe6f830c39"
+          }
+        ]
+      },
+      {
+        "name": "Runaway entry 3385 life 0 pulse 1",
+        "image": "11",
+        "entry": "$3385",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+          },
+          {
+            "address": "$3013",
+            "length": 1,
+            "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977"
+          },
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          }
+        ]
+      },
+      {
+        "name": "Runaway entry 3388 life 0 pulse 1",
+        "image": "11",
+        "entry": "$3388",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "5f8a3348953978bb9b223e112d8087d649ecc2b6379f72348729fe2c0d163f65"
+          },
+          {
+            "address": "$3013",
+            "length": 1,
+            "sha256": "e7cf46a078fed4fafd0b5e3aff144802b853f8ae459a4f0c14add3314b7cc3a6"
+          },
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          }
+        ]
+      },
+      {
+        "name": "Runaway entry 3388 life 1 pulse 1",
+        "image": "11",
+        "entry": "$3388",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "5f8a3348953978bb9b223e112d8087d649ecc2b6379f72348729fe2c0d163f65"
+          },
+          {
+            "address": "$3013",
+            "length": 1,
+            "sha256": "e7cf46a078fed4fafd0b5e3aff144802b853f8ae459a4f0c14add3314b7cc3a6"
+          },
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          }
+        ]
+      },
+      {
+        "name": "Runaway entry 3388 life 2 pulse 1",
+        "image": "11",
+        "entry": "$3388",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+          },
+          {
+            "address": "$3013",
+            "length": 1,
+            "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977"
+          },
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          }
+        ]
+      },
+      {
+        "name": "Runaway entry 3388 life 1 pulse 0",
+        "image": "11",
+        "entry": "$3388",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+          },
+          {
+            "address": "$3013",
+            "length": 1,
+            "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977"
+          },
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          }
+        ]
+      },
+      {
+        "name": "Hot Foot entry 3213",
+        "image": "10",
+        "entry": "$3213",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$407A",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+          }
+        ]
+      },
+      {
+        "name": "Hot Foot entry 3214",
+        "image": "10",
+        "entry": "$3214",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4062",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          },
+          {
+            "address": "$407A",
+            "length": 1,
+            "sha256": "de7d1b721a1e0632b7cf04edf5032c8ecffa9f9a08492152b926f1a5a7e765d7"
+          },
+          {
+            "address": "$4000",
+            "length": 2,
+            "sha256": "f070474baa97d089b1e299e2413f98f10bcd1fccc0ed587f00a48be2b6c77374"
+          },
+          {
+            "address": "$A000",
+            "length": 8192,
+            "sha256": "e722b65d19a56db787e112fa6780b41fbedf71fbd32372c30a8067f8a5bd2976"
+          }
+        ]
+      }
+    ]
+  },
+  "nativeInputRoutes": {
+    "method": "VICE PAL, controlled selected-level ready snapshot;50 Hot Foot or220 Runaway neutral spawn frames. Subsequent input only; no game-state or register edits. Stopping checkpoints identify accepted paths.",
+    "hotFoot": {
+      "start": {
+        "pc": 18617,
+        "x": 176,
+        "y": 64,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 14,
+        "bullet_limit": 3,
+        "name": "PLF11"
+      },
+      "ready_sha256": "651f915640ca64761e32497bf5fd84f63f4680bc1a97777a938118b327596678",
+      "input": "RIGHT+FIRE until first accepted jump stamp at $3225; release input, stop at $32B3.",
+      "accepted": {
+        "pc": 12837,
+        "x": 180,
+        "y": 62,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 1,
+        "bombs": 14,
+        "bullet_limit": 3,
+        "name": "PLF11"
+      },
+      "after": {
+        "pc": 12979,
+        "x": 180,
+        "y": 62,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 1,
+        "bombs": 14,
+        "bullet_limit": 3,
+        "name": "PLF11"
+      },
+      "stamp_xy": [
+        78,
+        22
+      ],
+      "changed_pixels": [
+        {
+          "x": 78,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 79,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 80,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 81,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 82,
+          "y": 22,
+          "before": 3,
+          "after": 0
+        },
+        {
+          "x": 83,
+          "y": 22,
+          "before": 3,
+          "after": 0
+        },
+        {
+          "x": 84,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 85,
+          "y": 22,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 80,
+          "y": 23,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 81,
+          "y": 23,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 82,
+          "y": 23,
+          "before": 3,
+          "after": 0
+        },
+        {
+          "x": 83,
+          "y": 23,
+          "before": 3,
+          "after": 0
+        },
+        {
+          "x": 82,
+          "y": 24,
+          "before": 3,
+          "after": 0
+        },
+        {
+          "x": 84,
+          "y": 24,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 78,
+          "y": 25,
+          "before": 2,
+          "after": 0
+        },
+        {
+          "x": 82,
+          "y": 25,
+          "before": 3,
+          "after": 0
+        }
+      ],
+      "bitmap_sha256": {
+        "before": "e8b04eab082d349e22fecf6d050fd25aafc7de5e82485c35cbc1a3530c22a229",
+        "after": "463e4d7243b486c0efc2e64995211741e587f7ff5072e6cbfbb0a6f97fbac115"
+      }
+    },
+    "runaway": {
+      "start": {
+        "pc": 18642,
+        "x": 176,
+        "y": 56,
+        "life": 0,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 4,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLF12"
+      },
+      "ready_sha256": "62bd6e56863fc3f531c812549d7c042fe439e3f581835229e2f6087078c632ab",
+      "input": "Neutral throughout, stop at first accepted flying-bomb collection $33A5, then $33DB.",
+      "accepted": {
+        "pc": 13221,
+        "x": 136,
+        "y": 74,
+        "life": 1,
+        "reserves": 6,
+        "score": 0,
+        "bonus": 0,
+        "speed": 2,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 12,
+        "bullet_limit": 3,
+        "name": "PLF12"
+      },
+      "registers": {
+        "PC": 13221,
+        "A": 1,
+        "X": 7,
+        "Y": 65,
+        "SP": 245,
+        "N": false,
+        "V": false,
+        "B": false,
+        "D": false,
+        "I": true,
+        "Z": false,
+        "C": true
+      },
+      "actors": [
+        {
+          "id": 0,
+          "enable": 9,
+          "x": 136,
+          "y": 74,
+          "frame": 49,
+          "collision": 129
+        },
+        {
+          "id": 1,
+          "enable": 1,
+          "x": 10,
+          "y": 81,
+          "frame": 56,
+          "collision": 0
+        },
+        {
+          "id": 2,
+          "enable": 1,
+          "x": 176,
+          "y": 21,
+          "frame": 56,
+          "collision": 0
+        },
+        {
+          "id": 3,
+          "enable": 0,
+          "x": 0,
+          "y": 0,
+          "frame": 26,
+          "collision": 0
+        },
+        {
+          "id": 4,
+          "enable": 1,
+          "x": 228,
+          "y": 92,
+          "frame": 16,
+          "collision": 0
+        },
+        {
+          "id": 5,
+          "enable": 1,
+          "x": 276,
+          "y": 144,
+          "frame": 16,
+          "collision": 0
+        },
+        {
+          "id": 6,
+          "enable": 1,
+          "x": 184,
+          "y": 92,
+          "frame": 16,
+          "collision": 0
+        },
+        {
+          "id": 7,
+          "enable": 1,
+          "x": 148,
+          "y": 78,
+          "frame": 16,
+          "collision": 129
+        }
+      ],
+      "after": {
+        "pc": 13275,
+        "x": 136,
+        "y": 74,
+        "life": 1,
+        "reserves": 6,
+        "score": 100,
+        "bonus": 0,
+        "speed": 2,
+        "requested": 4,
+        "jump": 0,
+        "bombs": 11,
+        "bullet_limit": 3,
+        "name": "PLF12"
+      }
+    }
+  },
+  "hotFootNeutralControl": {
+    "input": "ready-10,50 neutral spawn frames,then10 neutral frames",
+    "start": {
+      "pc": 18617,
+      "x": 176,
+      "y": 64,
+      "life": 0,
+      "reserves": 6,
+      "score": 0,
+      "bonus": 0,
+      "speed": 4,
+      "requested": 4,
+      "jump": 0,
+      "bombs": 14,
+      "bullet_limit": 3,
+      "name": "PLF11"
+    },
+    "end": {
+      "pc": 17125,
+      "x": 176,
+      "y": 64,
+      "life": 0,
+      "reserves": 6,
+      "score": 0,
+      "bonus": 0,
+      "speed": 4,
+      "requested": 4,
+      "jump": 0,
+      "bombs": 14,
+      "bullet_limit": 3,
+      "name": "PLF11"
+    },
+    "acceptedStampHits": 0,
+    "gameServiceHits": 10,
+    "bitmapUnchanged": true,
+    "bitmapSha256": "e8b04eab082d349e22fecf6d050fd25aafc7de5e82485c35cbc1a3530c22a229"
+  },
+  "queueObservation": {
+    "method": "Native original level selected through ready-11 snapshot;220 neutral spawn frames, then600 neutral frames. No game-state writes; per-frame observations do not bound values between samples.",
+    "snapshot_sha256": "62bd6e56863fc3f531c812549d7c042fe439e3f581835229e2f6087078c632ab",
+    "start": {
+      "pc": 18642,
+      "x": 176,
+      "y": 56,
+      "life": 0,
+      "reserves": 6,
+      "score": 0,
+      "bonus": 0,
+      "speed": 4,
+      "requested": 4,
+      "jump": 0,
+      "bombs": 12,
+      "bullet_limit": 3,
+      "name": "PLF12"
+    },
+    "end": {
+      "pc": 18275,
+      "x": 156,
+      "y": 184,
+      "life": 1,
+      "reserves": 6,
+      "score": 100,
+      "bonus": 0,
+      "speed": 2,
+      "requested": 4,
+      "jump": 0,
+      "bombs": 11,
+      "bullet_limit": 3,
+      "name": "PLF12"
+    },
+    "frames": 600,
+    "enqueueHits": 17,
+    "popServiceEntryHits": 600,
+    "maximumSampledOffset": 6,
+    "limit": "Frame-boundary observations do not bound transient backlog between samples; no natural overload route is established."
+  },
+  "annotationExport": [
+    {
+      "image": "10",
+      "nativeProjectEdited": true,
+      "oldBlockCount": 43,
+      "newBlockCount": 22,
+      "byteClassificationsUnchanged": true,
+      "listingBytesBoundariesTypesAndInstructionsUnchanged": true,
+      "records": 369
+    },
+    {
+      "image": "11",
+      "nativeProjectEdited": true,
+      "oldBlockCount": 63,
+      "newBlockCount": 34,
+      "byteClassificationsUnchanged": true,
+      "listingBytesBoundariesTypesAndInstructionsUnchanged": true,
+      "records": 525
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "reference/hotfoot-after-stamp.png",
+      "sha256": "340e3e263383a55ffb1984f7561c832013e4eebdf0f0907e4e47a19e45bfafd7",
+      "capture": "Four PAL frames after the corresponding post-event checkpoint; checkpoint memory comparisons are recorded separately."
+    },
+    {
+      "path": "reference/runaway-dying-collection-after.png",
+      "sha256": "c64f46025de6f586cc04990cd40a4e3a690e509a9448187a6fd628a82eddc9a7",
+      "capture": "Four PAL frames after the corresponding post-event checkpoint; checkpoint memory comparisons are recorded separately."
+    }
+  ],
+  "checkedArtifacts": [
+    {
+      "path": "checks/private-gaps.js",
+      "sha256": "6773f681d00bbdbcb0a4988c62a3428dc223b200bdb87c694ad9528f5a2decb6"
+    },
+    {
+      "path": "checks/entrypoints.js",
+      "sha256": "56badd67dbb9eb3968ab07c655adc903130ab7febae056eb01a5552b17ea4d11"
+    },
+    {
+      "path": "facts.md",
+      "sha256": "75aa753263887c55044929a4cc0b02cf3cc984b2661509c8ccb80a05e60d7fc8"
+    },
+    {
+      "path": "index.html",
+      "sha256": "07e16d43ff64d5d4d39f5e18a865474b8957c6e1ea289a2212b65fdecfdd7f8f"
+    },
+    {
+      "path": "levels.html",
+      "sha256": "7b731395f931b43c607e96c116614d4dbe58fdd6efcfec56e19ff7598cbf6ace"
+    },
+    {
+      "path": "reference/sources/10/symbols.json",
+      "sha256": "a6ac658358b6873f145ec79e8d033a1f63aa51ad85268bc133d695aeedefd7d4"
+    },
+    {
+      "path": "reference/sources/10/listing.json",
+      "sha256": "22b4d9be6d8f521e12da0c71b6dad39d5848390f44149716e3265876ddd2df4a"
+    },
+    {
+      "path": "reference/sources/11/symbols.json",
+      "sha256": "bbedbc17671739f84e2081621f250399cd21fdd09e81be9b116c3733586f7259"
+    },
+    {
+      "path": "reference/sources/11/listing.json",
+      "sha256": "f7376b1533a7e0354829b96ac0c6094859e570c25295f371136c03573c5d7936"
+    }
+  ],
+  "regression": {
+    "method": "Self-audit against hash-identified original files, published listings and actual page functions. CPU checks use controlled RAM, without raster, ROM or hardware collision emulation. This is not an independent maintainer verification.",
+    "inputs": [
+      {
+        "file": "jumpman.prg",
+        "sha256": "45a2c01a5367c1421c06c77646f9e2e888fe7301d9934498208fda1e2043ba4c"
+      },
+      {
+        "file": "intro.sys.prg",
+        "sha256": "ce574e34a4e7b1da4c39ab11d8ab0e28c4bc341fef16a06ee520cf83363db524"
+      },
+      {
+        "file": "plf01.prg",
+        "sha256": "03efdf0bf2f34f5297ac73787c992cfe9b864e5b9cfc02d61c14f0c707f40aab"
+      },
+      {
+        "file": "plf02.prg",
+        "sha256": "6d2aa1332a27fe11785b6e8bd3e904d940f3d6f4faa6dc9095165b0d7e6d4744"
+      },
+      {
+        "file": "plf03.prg",
+        "sha256": "9f4f5071f46f2d9aee0c9d60f4945a2b73be5dbf55d93165d3b223b440f317a9"
+      },
+      {
+        "file": "plf04.prg",
+        "sha256": "91e4c79a5f136970f61a556adbab64c2ec1c613ae55d68b7929f20d2a19e5501"
+      },
+      {
+        "file": "plf05.prg",
+        "sha256": "cb79ed56d830242a91e8f57a8cb917c8cf03249c8ef04f7105104db3fdb2530e"
+      },
+      {
+        "file": "plf06.prg",
+        "sha256": "27ea08c3e68a5934c963cde14500473396bc91ee3648ff5e60bc4e035f251488"
+      },
+      {
+        "file": "plf07.prg",
+        "sha256": "e9a17eed4b9f2618ebfe89f39d54cdb35fc0e8d096f1496a5d4d9adf164ed101"
+      },
+      {
+        "file": "plf08.prg",
+        "sha256": "33daf9b05cf2332c972127bba3e093857e8cc61d8f0e30dfe4f1796bf7c82a13"
+      },
+      {
+        "file": "plf09.prg",
+        "sha256": "865c8f4de00449b15944f7425a9412dedbfbfd68c12b03a5d0ef4e58b870dbcc"
+      },
+      {
+        "file": "plf10.prg",
+        "sha256": "a767d7b1c872cc18e4bedbb5bcff9ce57fa57e0ae428d5c663756c7e0b87eed5"
+      },
+      {
+        "file": "plf11.prg",
+        "sha256": "fdb595f1c0ee418aba1d3997cd43e379dd80fa160f12721a2e3642ba9e074406"
+      },
+      {
+        "file": "plf12.prg",
+        "sha256": "d87bf0feeebf4bf604f388da4bdc731c5d94f463c7006e3218f16e2837029593"
+      },
+      {
+        "file": "plf13.prg",
+        "sha256": "75e4c55fdbff4a8b94c521c7d9fc2d9f6ea910e5653470fb764c233dbfd4f7e6"
+      },
+      {
+        "file": "plf14.prg",
+        "sha256": "89f7d6ddabe6f92f9b78317e300c657712c829b2dbc2ddd4987b6d47e09218c4"
+      },
+      {
+        "file": "plf15.prg",
+        "sha256": "2ffba3ee25ad4cb8e59112e2c64a3b76e09512256042c28df994efd7dff572aa"
+      },
+      {
+        "file": "plf16.prg",
+        "sha256": "8f666fcc92ab723016c6fca3f708de269850ad607e9bf2c0b626b82e20112ce2"
+      },
+      {
+        "file": "plf17.prg",
+        "sha256": "b923d13807e195f7eb3784ee3db191ba2e0968584c5b9d752cf2019697aeda9b"
+      },
+      {
+        "file": "plf18.prg",
+        "sha256": "5752bc950f087652fcfd86dd17a7b74222e08af88339bbc7b1892d518854749d"
+      },
+      {
+        "file": "plf19.prg",
+        "sha256": "9943e75fc193e1abd408200546204dd134a45ddaf86cfc3ce7bf30f27076185c"
+      },
+      {
+        "file": "plf20.prg",
+        "sha256": "b335143877ce632a4be96725c764cc8360062b06a9c6d47e7282707b042405d7"
+      },
+      {
+        "file": "plf21.prg",
+        "sha256": "fa75a02528f3d26651c5b59b4aaea0d8de27a11dfe9145d257b307c0c1f81002"
+      },
+      {
+        "file": "plf22.prg",
+        "sha256": "f63b409b740568eb04db157aae8d68c89be0139deb0ff4fb3cc8f6a662f8647e"
+      },
+      {
+        "file": "plf23.prg",
+        "sha256": "5f4a2a9ee57dbb9c054011207a73389c0c8a211d35154f04c6492209e7037098"
+      },
+      {
+        "file": "plf24.prg",
+        "sha256": "27e95f0dd1bab5e0ed2d9590c85b10b60e81aee87b8298f3fd786aa6a9109c87"
+      },
+      {
+        "file": "plf2a.prg",
+        "sha256": "c4af6ab7af1578797b757621a2ad34919884bd8d46ef840af084692bba09e631"
+      },
+      {
+        "file": "plf2b.prg",
+        "sha256": "2e2b13e974c60c7f7426995be6d7b2d2b0c990c03bc8d552315fc4f0871fe321"
+      },
+      {
+        "file": "plf2c.prg",
+        "sha256": "ad00e7e9a2d93205a41b1bb874e0eb25b8c73345a4ebc0eec516c2246ad2f603"
+      },
+      {
+        "file": "plf26.prg",
+        "sha256": "63aaf205971ab515163ee5522b7a1fae23fa51122cb3ab2b15bdbd1a16738999"
+      },
+      {
+        "file": "plf27.prg",
+        "sha256": "6bfc6469a7e64c18519f5f8214796bf08c1081961d6d8f4e70f7a487b1f7921f"
+      },
+      {
+        "file": "plf28.prg",
+        "sha256": "e3d618db89f69f5d2c13ccf49752bc1dbc60bfe7c8c0bf493ae2c8fda4152b4b"
+      },
+      {
+        "file": "plf29.prg",
+        "sha256": "114404f73de99af9397401c0a458fe677bab2f1eca535fb273a08aa8e48285b5"
+      },
+      {
+        "file": "plf30.prg",
+        "sha256": "899e8ab3f32697da70ec7fc25604810ce35c3e52987f8aae7609f33b84f564ee"
+      },
+      {
+        "file": "scores.prg",
+        "sha256": "3fe9c7a6abfb9582ea840e4b57c1c8373fafc0673be5193342b80cf8d60587cc"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Original extracted files",
+        "files": 35,
+        "diskSha256": "de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5"
+      },
+      {
+        "name": "Boot-loader self-modification at hand-over",
+        "changes": [
+          {
+            "address": "$082F",
+            "disk": 255,
+            "handover": 8
+          },
+          {
+            "address": "$0834",
+            "disk": 255,
+            "handover": 220
+          }
+        ]
+      },
+      {
+        "name": "All source bytes, coverage ranges and instruction decodes",
+        "images": 33,
+        "bytes": 90583,
+        "instructions": 9498
+      },
+      {
+        "name": "Atlas headers, titles, bomb records and drawing excerpts",
+        "levels": 32,
+        "bombs": 397,
+        "excerptBytes": 16148
+      },
+      {
+        "name": "Actual page renderer versus original instructions",
+        "initialBitmaps": 32,
+        "bombBitmaps": 1191,
+        "bytesPerBitmap": 8192,
+        "scope": "Erase/draw only; private callbacks and legal collection order are excluded."
+      },
+      {
+        "name": "Actual page Randomizer versus original instructions",
+        "randomStates": 65536,
+        "chooserStates": 65536,
+        "returning": 65532,
+        "stalledInputs": [
+          "$0000",
+          "$4000",
+          "$8000",
+          "$C000"
+        ],
+        "maximumAttemptsForReturningInputs": 3,
+        "suffixes": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29"
+        ],
+        "loadedSeedSequence": {
+          "distinctStates": 5462,
+          "transient": 1,
+          "period": 5461
+        },
+        "naturalSelectionBoundary": "Not established; the uninterrupted loaded-seed sequence excludes the four stalled inputs."
+      },
+      {
+        "name": "IRQ task order",
+        "words": 14,
+        "sentinel": "$EA31"
+      },
+      {
+        "name": "Bitmap material lookup, including FF exception",
+        "inputs": 256
+      },
+      {
+        "name": "Three stored jump trajectories",
+        "bytes": 132,
+        "rise": 12,
+        "finalVerticalOffset": 14,
+        "lateralDistance": 52
+      },
+      {
+        "name": "Four zero-priority tune definitions",
+        "ids": [
+          9,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "name": "Published shooting evidence",
+        "screenshotHashes": 15,
+        "dragonHitRecords": 49,
+        "inputFrames": 41700
+      }
+    ],
+    "snapshots": "Not requested; no native snapshot provenance check in this invocation."
+  },
+  "browser": {
+    "passed": true,
+    "widths": [
+      1440,
+      390
+    ],
+    "pages": [
+      "index.html",
+      "levels.html"
+    ],
+    "sourceEntries": 4,
+    "errors": [],
+    "http": []
+  },
+  "repositoryChecks": {
+    "binaries": "passed",
+    "docs": "passed",
+    "listings": "19 matched",
+    "build": "19 games,88 pages"
+  }
+}
