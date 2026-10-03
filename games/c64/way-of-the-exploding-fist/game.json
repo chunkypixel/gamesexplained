@@ -276,5 +276,35 @@
  "links": {
   "wiki": "https://www.c64-wiki.com/wiki/The_Way_of_the_Exploding_Fist",
   "manual": "https://www.lemon64.com/doc/way-of-the-exploding-fist/665"
- }
+ },
+ "tabs": [
+  [
+   "index.html",
+   "Overview"
+  ],
+  [
+   "mechanics.html",
+   "How it works"
+  ],
+  [
+   "levels.html",
+   "The backdrops"
+  ],
+  [
+   "music.html",
+   "Music and speech"
+  ],
+  [
+   "discoveries.html",
+   "Discoveries"
+  ],
+  [
+   "source.html",
+   "Source code"
+  ],
+  [
+   "about.html",
+   "About"
+  ]
+ ]
 }
