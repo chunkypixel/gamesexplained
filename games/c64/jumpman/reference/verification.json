@@ -16,7 +16,7 @@
   },
   "randomizer": {
     "randomStates": 65536,
-    "chooserStates": 5042,
+    "chooserStates": 65536,
     "examples": [
       {
         "input": 2,
@@ -36,7 +36,15 @@
         "suffix": "25",
         "attempts": 1
       }
-    ]
+    ],
+    "returningInputs": 65532,
+    "stalledInputs": [
+      "0000",
+      "4000",
+      "8000",
+      "C000"
+    ],
+    "audit": "Expanded on 3 October 2026; see audit-verification.json and checks/audit.js. Four trapped inputs have no accepted suffix."
   },
   "controlled_live": [
     {

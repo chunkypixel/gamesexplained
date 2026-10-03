@@ -181,6 +181,22 @@
    "end": "2026-10-02T18:43:13Z",
    "minutes": 4.0,
    "note": "Recorded ordinary-control shooting evidence and remaining routes; updated6 native source comments with unchanged bytes/types/labels/listing boundaries and100%coverage. Added frame-advance error checking,2 regression tests and batching guidance. All28 C64 tests, launcher checks and browser controls pass; native tools stopped. Prepared branch update without opening PR or issues."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-03T07:42:23Z",
+   "end": "2026-10-03T08:18:39Z",
+   "minutes": 36.3,
+   "note": "Self-audit: independent c1541 extraction matches all35 files; all90583 source bytes and9498 instructions checked across33 images; all32 native screenshots replay pixel-exact. Exhaustive65536 chooser inputs reveal four trapped states and page error, now fixed. Corrected snapshot-state comments, clarified boot self-modification, moved unused third-party research images private, committed repeatable checks and explicit evidence limits; existing original-code/browser suites replayed."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-03T08:18:40Z",
+   "end": "2026-10-03T08:23:06Z",
+   "minutes": 4.4,
+   "note": "Recorded bounded self-audit and committed disk extraction, byte/model audit and browser regression checks. Added exhaustive-termination and canonical-image-comment guidance. Seventeen original-code suites, five existing browser suites, new stalled-input regression,32 native screenshot replays, all required checks and19 builds pass. Source bytes/types/labels/boundaries and100%coverage preserved. Prepared review branch without PR/issues."
   }
  ]
 }

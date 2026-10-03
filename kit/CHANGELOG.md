@@ -12,6 +12,20 @@ Changes to the site, the folder layout, the delivery process, the prose
 style or the install mechanics are in the pull requests, not here.
 Versions that taught nothing of the kind do not appear.
 
+## next · 3 October 2026 · Jumpman · JankFoundry with Codex
+
+**A nonzero input can enter a zero-state trap.** Exhausting the chooser's
+16-bit input space found three nonzero seeds missed by a passing sample.
+The original routine retries forever; the page threw an uncaught error.
+Verification now checks termination as well as returned values and exercises
+the published control with failing inputs. The loaded-seed sequence remains
+a separate reachability question.
+
+**Comments have an image state too.** Moving the listing from gameplay to
+the original loaded image left comments describing changed operands. The
+verification notes now require rechecking those descriptions against the new
+bytes and explaining genuine loader self-modification separately.
+
 ## next · 2 October 2026 · Jumpman · JankFoundry with Codex
 
 **A requested frame count is not elapsed time.** A rejected oversized frame

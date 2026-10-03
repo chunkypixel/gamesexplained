@@ -18,3 +18,5 @@ Useful remaining investigations:
 - Compare SID bus decay and within-frame write timing with recorded hardware before claiming audio waveform fidelity.
 
 A full playable JavaScript port and byte-for-byte reassembly are separate work. Neither is required for this Silver result.
+
+Before submission, a separate reviewer should sample facts and source interpretations under `kit/CHECKING.md`; `audit.md` records the self-audit and its limits. Synchronize with upstream before opening the contribution.

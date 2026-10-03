@@ -2388,7 +2388,9 @@
         ],
         "count": 2
       }
-    }
+    },
+    "ready_snapshot": "ready-14.vsf",
+    "start_snapshot": "hits14-start.vsf"
   },
   "invasion": {
     "ready_snapshot": "ready-06.vsf",
@@ -2948,7 +2950,8 @@
       }
     },
     "ready_snapshot_sha256": "1738976ee00cc466868ee0989332b2cc6c7b5f66dd1fd15e41fdbe2902bccbce",
-    "start_snapshot_sha256": "ab27faa752d96d2d7c4c1681c75079d3869bdf47747ca60f2c86f29c873ad042"
+    "start_snapshot_sha256": "ab27faa752d96d2d7c4c1681c75079d3869bdf47747ca60f2c86f29c873ad042",
+    "start_snapshot": "hits-start-06.vsf"
   },
   "page_checks": {
     "passed": true,

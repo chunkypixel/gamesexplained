@@ -29,7 +29,7 @@ The inventory began from the supplied game's screens and the C64 manual, before 
 | Puzzle bombs worth500 | traced | PLF07/15 special callbacks add 400 before ordinary 100; PLF30 second-stage special records use the same sum. |
 | Three Mystery Maze variants selected by remaining lives | controlled live + original-code tests | PLF24 `$3214` tests reserve counts below 3,3–4,at least 5 and selects2A/2B/2C. All256 bucket inputs checked; controlled Jungle completions with reserves2/4/5 load exact2A/2B/2C files. Full legal Jungle exit not replayed. |
 | Mystery Maze hidden scenery reveals around player | original-code tests | Private init colors hide existing bitmap; callback changes nearby matrix cells. Collision reads unchanged bitmap. All393,216 coordinate cases across three layouts verify exact carry-dependent bounds and no display overrun. |
-| Randomizer excludes level1 | differs, live | `$5B8F` rejects only00; controlled seeds0002/1F27 emit01. E9A7 emits25, a missing file. Original title scan for25 cycles over128 pairs and never reaches LOAD; a natural route to that selection boundary remains open. |
+| Randomizer excludes level1 | differs, live | `$5B8F` rejects only00; controlled seeds0002/1F27 choose01. E9A7 chooses25, a missing file. Original title scan for25 cycles over128 pairs and never reaches LOAD; a natural route to that selection boundary remains open. |
 | Final life awards100/250/500/750 | traced + live corner case | `$29FF` rates; controlled 88×750 displays66000 but stores/adds464. A legal88-life route is unverified. |
 | Completed groups light buildings | traced | `$2C00` flashes4/5/6/15 window pairs for modes1–4. |
 | Separate total and bonus top20 score tables | live + traced | Records `$20A6/$20BA`, stride40; native insertion tests zero, positive, tie, greater. Ties rank below existing equal entries. |
@@ -46,7 +46,7 @@ Read on 2 October 2026:
 
 - [Epyx's C64 instruction manual, transcribed by Project 64](https://www.abandonwaredos.com/docawd.php?idg=1121&sf=jumpman_manual.txt&sg=Jumpman&st=manual). Primary documentation; claims remain separate from observations.
 - [C64-Wiki: Jumpman](https://www.c64-wiki.com/wiki/Jumpman). Secondary documentation. Its game-option terminology differs from the supplied game's menu; this checklist uses the game's names.
-- [C64 Boxed Sets: Jumpman](https://c64sets.com/jumpman.html). Independent screenshots saved as `reference/external-c64sets-02.png` and `reference/external-c64sets-03.png` from `https://c64sets.com/jumpman/scr02.png` and `https://c64sets.com/jumpman/scr03.png`. These are reference images from that collection, not captures of this run.
+- [C64 Boxed Sets: Jumpman](https://c64sets.com/jumpman.html). Independent screenshots saved as `work/research/reference/external-c64sets-02.png` and `work/research/reference/external-c64sets-03.png` from `https://c64sets.com/jumpman/scr02.png` and `https://c64sets.com/jumpman/scr03.png`. These private research copies are from that collection, not captures of this run, and are excluded from the published site.
 - The supplied disk's own menus and first level, observed in VICE-MCP v3.13.2. `reference/options.png` and `reference/level01.png` are captures of this run.
 
 The contributor authorized online research and reference screenshots. No game image was downloaded.

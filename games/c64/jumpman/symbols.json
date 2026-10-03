@@ -9000,7 +9000,7 @@
   {
    "address": 17152,
    "type": "line",
-   "text": "Self-modified JSR operand is loaded from the next IRQ task vector by $42DB. Snapshot holds $EA31 from the terminating word, but that sentinel is detected before this JSR executes."
+   "text": "Self-modified JSR operand is loaded from the next IRQ task vector by $42DB. The original entry image holds the placeholder $FFFF. A completed task pass leaves $EA31 here, but the dispatcher detects that sentinel high byte before executing the JSR."
   },
   {
    "address": 17153,
@@ -9165,17 +9165,17 @@
   {
    "address": 17423,
    "type": "line",
-   "text": "Patch destination pages to$04 and$D8, then write spaces to$0400-$07FF and zero colors to$D800-$DBFF. Destination operands in the play snapshot show the pages after all four iterations, not the starting addresses."
+   "text": "Patch destination pages to $04 and $D8, then write spaces to $0400-$07FF and zero colors to $D800-$DBFF. Both destination high bytes are $FF in the original entry image; execution initializes them, then leaves $08/$DC after four pages."
   },
   {
    "address": 17441,
    "type": "line",
-   "text": "High destination byte of STA abs,Y at$441F. Initialized$04 then incremented through four screen pages; play snapshot$08 is the value after clearing ends."
+   "text": "High destination byte of STA abs,Y at $441F. Original placeholder $FF; initialized to $04 and incremented through four screen pages, ending at $08."
   },
   {
    "address": 17446,
    "type": "line",
-   "text": "High destination byte of STA abs,Y at$4424. Initialized$D8 and incremented through four color pages; snapshot$DC is the value after the loop."
+   "text": "High destination byte of STA abs,Y at $4424. Original placeholder $FF; initialized to $D8 and incremented through four color pages, ending at $DC."
   },
   {
    "address": 17460,
@@ -9195,17 +9195,17 @@
   {
    "address": 17530,
    "type": "line",
-   "text": "Self-modifying four-page zero fill clears matrix$8000-$83FF, then32-page fill clears bitmap$A000-$BFFF. Caller must bank BASIC ROM out for subsequent bitmap reads; stores always target RAM. Snapshot operands are final pages$84/$C0."
+   "text": "Self-modifying four-page zero fill clears matrix $8000-$83FF, then a 32-page fill clears bitmap $A000-$BFFF. Caller must bank BASIC ROM out for subsequent bitmap reads; stores target RAM. Original destination high bytes are $FF; the loops initialize them to $80/$A0 and finish at $84/$C0."
   },
   {
    "address": 17542,
    "type": "line",
-   "text": "High destination byte of the matrix zero-fill store. Initialized$80 and incremented four times; snapshot$84 is the final value, not a sprite-bank clear."
+   "text": "High destination byte of the matrix zero-fill store. Original placeholder $FF; initialized to $80 and incremented four times, ending at $84 after clearing $8000-$83FF."
   },
   {
    "address": 17562,
    "type": "line",
-   "text": "High destination byte of bitmap zero-fill store. Initialized$A0 and incremented32 times; snapshot$C0 is the final value after clearing$A000-$BFFF."
+   "text": "High destination byte of the bitmap zero-fill store. Original placeholder $FF; initialized to $A0 and incremented 32 times, ending at $C0 after clearing $A000-$BFFF."
   },
   {
    "address": 17573,
@@ -9515,17 +9515,17 @@
   {
    "address": 20502,
    "type": "line",
-   "text": "Self-modifying loop fills$8000-$83FF with matrix byte$85 and$D800-$DBFF with color6, then zeros color row$DB70-$DB97 above the status panel. Snapshot destination pages are the final incremented values."
+   "text": "Self-modifying loop fills $8000-$83FF with matrix byte $85 and $D800-$DBFF with color 6, then zeros color row $DB70-$DB97 above the status panel. Original destination high bytes are $FF; execution initializes them to $80/$D8 and ends at $84/$DC."
   },
   {
    "address": 20520,
    "type": "line",
-   "text": "High destination byte for color-RAM initialization. Starts$D8, fills four pages with6, and ends$DC in the play snapshot."
+   "text": "High destination byte for color-RAM initialization. Original placeholder $FF; initialized to $D8, fills four pages with 6, and ends at $DC."
   },
   {
    "address": 20525,
    "type": "line",
-   "text": "High destination byte for bitmap matrix initialization. Starts$80, fills four pages with$85, and ends$84 in the play snapshot."
+   "text": "High destination byte for bitmap matrix initialization. Original placeholder $FF; initialized to $80, fills four pages with $85, and ends at $84."
   },
   {
    "address": 20549,
@@ -9800,7 +9800,7 @@
   {
    "address": 22578,
    "type": "line",
-   "text": "Advance the two-byte shift-register state $585B/$585C by eight one-bit steps. Each step shifts the 16-bit state left and inserts the XOR of old bits 13 and 8. Return the resulting low byte in A; destroys X and uses $585A as scratch. Initial loaded seed is $7B7B, while this play snapshot contains a later state."
+   "text": "Advance the two-byte shift-register state $585B/$585C by eight one-bit steps. Each step shifts the 16-bit state left and inserts the XOR of old bits 13 and 8. Return the resulting low byte in A; destroys X and uses $585A as scratch. The original loaded seed shown here is $7B7B; execution advances it. Exhaustive original-code checks cover all 65536 states. Uninterrupted calls from $7B7B have one transient state and a 5461-state cycle; none visits $0000/$4000/$8000/$C000."
   },
   {
    "address": 22618,
@@ -9990,7 +9990,7 @@
   {
    "address": 23439,
    "type": "line",
-   "text": "Randomizer continuation: map one random low nibble through $5BBE to the filename units digit, then another random low three bits through $5BCE to the tens digit. Reject only ASCII 00 (OR of both digits equals $30), store suffix in $40D3/$40D4, reset objects and enter $7400. These loaded tables can generate 01-29, including 25; no normalization or level-1 rejection occurs in this routine. Live controlled VICE checks: seeds $0002/$1F27 emit01; $E9A7 emits25. These tests do not establish a natural play history or the eventual missing-file behavior."
+   "text": "Randomizer continuation: map one random low nibble through $5BBE to filename units, then another random low three bits through $5BCE to tens. Reject only ASCII 00, store $40D3/$40D4, reset objects and enter $7400. Exhaustive original-code tests: 65532 initial states choose 01-29 in at most three attempts; $0000/$4000/$8000/$C000 reach zero and repeat 00 forever. Controlled VICE confirms those four stalls with live IRQ service. They are absent from the uninterrupted loaded-seed sequence; no natural-route claim. Controlled seeds $0002/$1F27 choose 01 and $E9A7 chooses 25. File25 is absent; the controlled title lookup stalls before LOAD, as documented at $759F."
   },
   {
    "address": 23475,
@@ -10585,7 +10585,7 @@
   {
    "address": 29939,
    "type": "line",
-   "text": "Restore the pristine loaded overlay: copy exactly2048 bytes$3800-$3FFF to$3000-$37FF in eight256-byte pages. Initializes both self-modified absolute,Y operands before using them; the play snapshot holds their completed-loop values$4000 and$3800. Used after disk load and again before every turn so mutable overlay state restarts."
+   "text": "Restore the pristine loaded overlay: copy exactly 2048 bytes $3800-$3FFF to $3000-$37FF in eight 256-byte pages. The original source and destination operand high bytes are $FF. Execution initializes them to $38/$30 and leaves $40/$38 after copying. Used after disk load and again before every turn so mutable overlay state restarts."
   },
   {
    "address": 29955,
@@ -10675,7 +10675,7 @@
   {
    "address": 30761,
    "type": "line",
-   "text": "High operand byte of the menu screen clear at$7827. Starts$04 and increments through four pages to$08; this runtime value is why the snapshot load appears to address$0800."
+   "text": "High operand byte of the menu screen clear at $7827. Original placeholder $FF; initialized to $04 and incremented through four pages, ending at $08. The loop clears $0400-$07FF, not the boot loader."
   },
   {
    "address": 30766,
@@ -11050,7 +11050,7 @@
   {
    "address": 36864,
    "type": "line",
-   "text": "Reset the self-modified page operand to$08 and clear $0800-$0FFF, initialize eight text-screen sprite pointers to$20, then call engine initialization at$4340. Snapshot operand at$900B can hold the postloop value$10; setup always rewrites it."
+   "text": "Reset the self-modified page operand to $08 and clear $0800-$0FFF, initialize eight text-screen sprite pointers to $20, then call engine initialization at $4340. Original operand high byte at $900B is $FF; execution initializes it and leaves $10 after the loop."
   },
   {
    "address": 36875,
@@ -11065,7 +11065,7 @@
   {
    "address": 36972,
    "type": "line",
-   "text": "Fill four colour-RAM pages$D800-$DBFF with7. Self-modified high byte$9079 starts$D8 and finishes$DC; the apparent STA$DC00 in the play snapshot is the completed-loop operand."
+   "text": "Fill four colour-RAM pages $D800-$DBFF with 7. Original high byte at $9079 is $FF; execution initializes it to $D8 and finishes at $DC. The completed-loop operand does not mean this routine clears CIA registers."
   },
   {
    "address": 36985,

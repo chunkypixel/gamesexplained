@@ -56,6 +56,22 @@ the reprisal) to a routine that returns early unless the player is still
 in the right place loses the rest whenever the player is not. For each,
 list what the test ignores, or what the deferred part requires, and try it.
 
+For a small input space, enumerate it when execution is cheap. A sample of
+nonzero random seeds can miss nonzero predecessors of a trapped zero state.
+Check whether a chooser returns as well as which value it returns; stop a
+non-returning original routine by detecting repeated state, not by silently
+accepting a step limit. Keep that controlled result separate from reachability
+in the initialized game's random sequence. Exercise the published widget with
+the failing input too: its explanatory control should report the trap rather
+than hang or throw an uncaught error.
+
+When a listing changes from a gameplay snapshot to an original load image,
+audit the comments about self-modified operands and mutable data. A comment
+correct for the old snapshot can contradict the new bytes. Compare each
+source image with its input file; reproduce and name any loader changes
+instead of either hiding the differences or mistaking them for corruption.
+Annotation coverage and byte identity are separate from semantic correctness.
+
 ## A count is not necessarily the table boundary
 
 Trace the consumer before using a nearby count to split a record table.
