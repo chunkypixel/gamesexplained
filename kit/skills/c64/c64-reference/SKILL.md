@@ -189,6 +189,15 @@ timer rather than the raster. Compute the rate from the latch: clock /
 (latch + 1). A latch of `$411B` is about 59 Hz on PAL, not 50. Every
 tempo, lifetime and duration derived from a tick count inherits this.
 
+**Timer B can count timer A.** A control byte for timer B (`$DC0F`) with
+bits 5-6 set to `%10` makes it count timer A's underflows instead of
+cycles, so one unit of B is (timer A latch + 1) cycles. Measured on VICE
+x64sc (vice-mcp 3.13.1, 2 October 2026): timer A latch 8 started with
+`$51` in `$DC0E`, timer B started one-shot with `$59` in `$DC0F`, and the
+time between its interrupts was 9 cycles per unit of B's latch plus the
+handler's own time (108 cycles in that game). Sample players use it to
+stretch a byte-sized delay table.
+
 **Some games have no tick at all.** A game whose only `cli` is in its
 attract loop runs with interrupts masked while you play, times itself with a
 counting loop, and is synchronised to nothing. Count the `cli` and `sei`

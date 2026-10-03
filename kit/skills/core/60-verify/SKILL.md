@@ -77,7 +77,12 @@ tested. Typical tests:
   counter) and poll, or read the state variables that prove it happened.
 - **Time it.** Read the timer latch and compute the tick rate from the
   platform's clock; count in the unit of the loop that decrements the
-  counter before converting anything to seconds.
+  counter before converting anything to seconds. A clock decremented
+  from the main loop is only as regular as the loop: put a non-stopping
+  checkpoint on a routine that certainly runs once a frame (the last
+  raster handler) and one on the counter's routine, advance a few hundred
+  frames, and compare the counts. One game's "30 seconds" ran 195 passes
+  in 250 frames and lasted up to 40 seconds.
 - **Prove reachability with inputs, not pokes.** Poking a state and
   watching the routine accept it proves what the *code* does. It does not
   prove a player can get there: the way the loop orders its tests may make
