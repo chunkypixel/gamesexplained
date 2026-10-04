@@ -24,10 +24,18 @@ REGIONS come from game.json: "video" (screen and character-set bases, which
 give the platform's standard exclude/extra blocks) and "coverage" (extra
 exclusions and authored data), so every game is scored by the same rule.
 
+A GAME OF SEVERAL PARTS (kit/scripts/parts.py) has a ledger per part, read
+from the part's folder, and each part counts only the addresses it owns, so
+the game's figure, the sum, counts every byte once. Given the game's own
+folder, this prints each part's figure and the total; the work queue is a
+part's (give the part's folder).
+
 Usage:
   coverage.py <game dir> --image <id>      inspect one named source image
   coverage.py <game dir>                 from symbols.json
   coverage.py <game dir> --live          from the running disassembler
+  coverage.py <part dir> --live --from <part dir>
+                                         a part's share of the session started on another's snapshot
   coverage.py <game dir> --top 40        longer work queue
   coverage.py <game dir> --code | --data queue only that side
   coverage.py <game dir> --range $2000 $27FF   figures and queue for one address range,
@@ -38,12 +46,15 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-def load(gdir, live):
+def load(gdir, live, session=None):
     from symbols_export import read_live, regions, platform_of
-    game = json.load(open(os.path.join(gdir, "game.json")))
+    from parts import load_game
+    if not live and not os.path.isfile(os.path.join(gdir, "symbols.json")):     # a part that is only named
+        sys.exit(f"{gdir} has no symbols.json: nothing is analysed there (symbols_export.py writes one)")
+    game = load_game(gdir)
     reg = regions(game)
     if live:
-        blocks, syms, comments = read_live(platform_of(game))
+        blocks, syms, comments = read_live(platform_of(game), session or gdir)
     else:
         s = json.loads((Path(gdir) / "symbols.json").read_text())
         blocks, syms, comments = s["blocks"], s["symbols"], s["comments"]
@@ -51,12 +62,20 @@ def load(gdir, live):
 
 
 def tracked_count(gdir):
-    """(tracked bytes, explained bytes) from symbols.json, across all named source images."""
+    """(tracked bytes, explained bytes) from symbols.json, for parts.py and build.py.
+    A game of several parts counts the sum of the parts that have been started."""
+    from parts import parts, started
+    P = parts(gdir)
+    if P:
+        counts = [tracked_count(p["dir"]) for p in P if started(p)]
+        return sum(t for t, _ in counts), sum(e for _, e in counts)
     from source_images import images
     from ledger import compute
+    directories = ([gdir] if os.path.isfile(os.path.join(gdir, "part.json"))
+                   else [image["directory"] for image in images(gdir)])
     tracked = explained = 0
-    for image in images(gdir):
-        blocks, syms, comments, reg = load(image["directory"], False)
+    for directory in directories:
+        blocks, syms, comments, reg = load(directory, False)
         state = compute(blocks, syms, comments, reg)["state"]
         tracked += sum(bool(s) for s in state)
         explained += state.count(2)
@@ -68,22 +87,29 @@ def main():
     if not argv or argv[0] in ("-h", "--help"):
         print(__doc__); return
     gdir = argv[0]
-    from source_images import images
-    if "--image" in argv:
-        ident = argv[argv.index("--image") + 1]
-        choices = {i["id"]: i["directory"] for i in images(gdir)}
-        if ident not in choices:
-            sys.exit(f"unknown source image: {ident}")
-        gdir = choices[ident]
-    elif "--live" not in argv and "--range" not in argv:
+    from parts import parts, table
+    if parts(gdir):
+        if len(argv) > 1:
+            sys.exit(f"{gdir} is a game of several parts: the queue is a part's, "
+                     f"{os.path.join(gdir, 'parts', '<id>')}")
+        print("GAME IMAGE LEDGER  (a game of several parts: each counts the bytes it owns)")
+        print("\n".join(table(gdir)[0])); return
+    if not os.path.isfile(os.path.join(gdir, "part.json")):
+        from source_images import images
         choices = images(gdir)
-        if len(choices) > 1:
+        if "--image" in argv:
+            ident = argv[argv.index("--image") + 1]
+            by_id = {i["id"]: i["directory"] for i in choices}
+            if ident not in by_id:
+                sys.exit(f"unknown source image: {ident}")
+            gdir = by_id[ident]
+        elif "--live" not in argv and "--range" not in argv and len(choices) > 1:
             total, explained = tracked_count(gdir)
             print(f"ALL {len(choices)} SOURCE IMAGES: {explained}/{total} bytes explained "
                   f"({100*explained/max(total,1):.1f}%). Main image follows; use --image <id> for an overlay.\n")
     top = int(argv[argv.index("--top") + 1]) if "--top" in argv else 25
     only = "data" if "--data" in argv else ("code" if "--code" in argv else None)
-    blocks, syms, comments, reg = load(gdir, "--live" in argv)
+    blocks, syms, comments, reg = load(gdir, "--live" in argv, argv[argv.index("--from") + 1] if "--from" in argv else None)
     exclude = reg.get("exclude", [])
     extra = reg.get("extra", [])
 

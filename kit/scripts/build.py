@@ -8,6 +8,12 @@ For every games/<platform>/<slug>/game.json:
   play.html    copied through if authored          (Play)
   about.html   from site/about.html + game.json + features.md + orientation.md + git log
   listing.json, symbols.json, reference/           copied
+A game of several parts (kit/scripts/parts.py) gets a Source page for each part
+that has a listing, source-<id>.html, with source.html the first of them; the
+parts above each listing, and a control beside it, step from one to the next.
+parts/<id>/ carries each part's listing and symbols. About draws one footprint,
+as for any game: the part the others are loaded over, with what they load
+marked as varying with the part.
 Those are the default tabs. A game that wants others lists all of its tabs, in
 order, in game.json's "tabs" as [file, label] pairs; every authored page it
 names is copied through, and a page in the folder that no tab names is left out
@@ -32,6 +38,9 @@ Preview: python3 -m http.server -d _site 8000   (8000, or any free port)
 No dependencies. The markdown converter handles the subset the templates use.
 """
 import glob, html, html.parser, json, os, re, shutil, subprocess, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from parts import parts, load_game, started, under, above   # noqa: E402  a game of several loads
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SITE = os.path.join(ROOT, "site")
@@ -71,20 +80,22 @@ def warn(msg):
 # --- markdown (the subset our files use) ------------------------------------
 def inline(s, addr=True):
     s = html.escape(s, quote=False)
-    s = re.sub(r"`([^`]+)`", lambda m: "<code>" + (addr_link(m.group(1)) if addr else m.group(1)) + "</code>", s)
+    page = addr if isinstance(addr, str) else "source.html"
+    s = re.sub(r"`([^`]+)`", lambda m: "<code>" + (addr_link(m.group(1), page) if addr else m.group(1)) + "</code>", s)
     s = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
     s = re.sub(r"(?<![\w*])\*([^*\n]+)\*(?!\w)", r"<i>\1</i>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', s)
     return s
 
 
-def addr_link(s):
-    return re.sub(r"\$([0-9A-Fa-f]{4})\b", lambda m: f'<a href="source.html#{m.group(1).upper()}">${m.group(1).upper()}</a>', s)
+def addr_link(s, page="source.html"):
+    return re.sub(r"\$([0-9A-Fa-f]{4})\b", lambda m: f'<a href="{page}#{m.group(1).upper()}">${m.group(1).upper()}</a>', s)
 
 
 def markdown(text, drop_h1=True, addr=True, shift=0):
-    """addr=False where the page has no Source tab to link addresses into; shift=1 sets
-    the headings one level down, for a file placed under a heading of the page's own."""
+    """addr=False where the page has no Source tab to link addresses into, or the name of
+    the Source page to link them into (a part's, in a game of several); shift=1 sets the
+    headings one level down, for a file placed under a heading of the page's own."""
     out, lines, i = [], text.splitlines(), 0
     para = []
     inline_ = lambda x: inline(x, addr)
@@ -135,8 +146,10 @@ def markdown(text, drop_h1=True, addr=True, shift=0):
     return "\n".join(out)
 
 
-# --- footprint: every byte of the 64 KB space in one of ten categories --------
-CATS = ["code", "graphics", "levels", "sound", "text", "tables", "variables", "runtime", "rom", "unused"]
+# --- footprint: every byte of the 64 KB space in one category -----------------
+# "other" is a game of several parts' alone: the bytes that belong to another part of it,
+# which the one map of the game shows as varying with the part loaded.
+CATS = ["code", "graphics", "levels", "sound", "text", "tables", "variables", "runtime", "rom", "other", "unused"]
 NAME_HINTS = [  # symbol-name fallbacks for small things nobody declares as a region
     (("str_", "text_", "msg_", "string"), "text"),
     (("tune_", "music_", "sfx_", "sound_", "note_", "melody"), "sound"),
@@ -202,6 +215,10 @@ def footprint(gdir, game):
         for a in range(hexint(lo), hexint(hi) + 1):
             if cat[a] != "unused":
                 cat[a] = k; why[a] = name
+    # but not over what another part of the game owns (kit/scripts/parts.py)
+    for lo, hi, name in cov_regions(game).get("elsewhere", []):
+        for a in range(lo, hi + 1):
+            cat[a] = "other"; why[a] = name
     lo, hi = PLATFORM_MAP_SPAN.get(platform_of(game), (0, 0x10000))
     if lo:   # the ROM is off this map, so RAM that a game.json names after the ROM is working memory
         cat[lo:hi] = ["runtime" if k == "rom" else k for k in cat[lo:hi]]
@@ -228,6 +245,8 @@ def footprint_table(totals, plat="c64", span=(0, 0x10000)):
     rows += [(html.escape(names["runtime"]), totals["runtime"])]
     if totals["rom"]:
         rows += [(html.escape(names.get("rom", "ROM")), totals["rom"])]
+    if totals["other"]:
+        rows += [("Varies with the part loaded", totals["other"])]
     rows += [("Unused", totals["unused"])]
     size = span[1] - span[0]
     out = f"<div class='tablewrap'><table><tr><th>What</th><th>Bytes</th><th>Of {size // 1024} KB</th></tr>"
@@ -310,7 +329,10 @@ def banner(game, cons):
     else:
         cov = game.get("coverage_percent") or 0
         prompt = f"Clone {repo} and follow kit/START.md to continue {where} to Silver."
-        body = (f'This minisite is not complete: {cov:g} % of the program is explained. '
+        n, m = game.get("_parts", (1, 1))
+        how = (f'{cov:g} % of the program is explained' if n == m else
+               f'{n} of its {m} parts {"is" if n == 1 else "are"} analysed, and {cov:g} % of that is explained')
+        body = (f'This minisite is not complete: {how}. '
                 f'<span class="prompt" id="prompt">{html.escape(prompt)}</span>'
                 '<button type="button" data-copy="#prompt">Copy the prompt to work on it</button>')
     return f'<div class="gamebanner {html.escape(tier)}">{body}</div>'
@@ -321,15 +343,16 @@ def banner(game, cons):
 ASSEMBLED = {"source.html": "facts.md", "about.html": "features.md"}
 
 
-def edit_footer(game, tab):
-    """The 'Edit this page' footer: a link to GitHub's editor for the file behind this tab.
+def edit_footer(game, tab, f=None):
+    """The 'Edit this page' footer: a link to GitHub's editor for the file behind this tab,
+    or for f, a path in the game folder, when the page is made from another (a part's facts).
 
     GitHub's /edit/ URL forks the repository for anyone without write access and turns
     the edit into a pull request, so a reader can fix a mistake without cloning anything.
     """
     repo = json.load(open(os.path.join(SITE, "config.json"))).get("repo", "").rstrip("/")
     where = f'games/{game["platform"]}/{game["slug"]}'
-    f = ASSEMBLED.get(tab, tab)
+    f = f or ASSEMBLED.get(tab, tab)
     edit, hist, tree = (f"{repo}/edit/main/{where}/{f}", f"{repo}/commits/main/{where}", f"{repo}/tree/main/{where}")
     return (f'<footer class="editfoot"><div class="in">'
             f'<p><b>Spotted a mistake, or know something we don\u2019t?</b> '
@@ -631,6 +654,152 @@ def authored_page(gdir, game, f, nav, ban, src=None):
     return pagenav(at_end(under_title(inject(page, nav, LIB), ban), edit_footer(game, f)))
 
 
+# --- a game of several parts (kit/scripts/parts.py): a Source page and a footprint for each
+PILLS = 8   # more parts than this are a list to choose from, not a row to read
+
+
+def part_page(p):
+    """A part's Source page. source.html is a copy of the first, so the tab has somewhere to go
+    and a part's own address never depends on the order the parts are listed in."""
+    return f"source-{p['id']}.html"
+
+
+def listed(p):
+    return os.path.isfile(os.path.join(p["dir"], "listing.json"))
+
+
+def part_pills(P, cur):
+    """The parts above a listing, in the order they are played: each a link to its Source
+    page, the one being read marked, a part with no listing named without a link."""
+    if len(P) > PILLS:
+        return ""
+    items = []
+    for p in P:
+        t = html.escape(p["title"])
+        if p is cur:
+            items.append(f'<a class="on" aria-current="page" href="{part_page(p)}">{t}</a>')
+        elif listed(p):
+            items.append(f'<a href="{part_page(p)}">{t}</a>')
+        else:
+            items.append(f'<span class="none" title="Not analysed">{t}</span>')
+    return '<nav class="partpick" aria-label="The parts of the game">' + "".join(items) + "</nav>"
+
+
+def part_step(P, cur):
+    """The control beside a listing: the part before, a list of the parts that have a listing,
+    the part after. Nothing when this is the only one: there is nowhere to step to, and the
+    parts not analysed are named above the listing, or counted there. The same three pieces,
+    in the same markup, are what a levels page steps through rooms with (site.css, .pick)."""
+    shown = [p for p in P if listed(p)]
+    if len(shown) < 2:
+        return ""
+    i = shown.index(cur)
+    def arrow(p, ch, rel, word):
+        if p is None:
+            return f'<span class="step off" aria-hidden="true">{ch}</span>'
+        return (f'<a class="step" rel="{rel}" href="{part_page(p)}" title="{html.escape(p["title"])}" '
+                f'aria-label="{word} part: {html.escape(p["title"])}">{ch}</a>')
+    opts = "".join(f'<option value="{part_page(p)}"{" selected" if p is cur else ""}>{html.escape(p["title"])}</option>'
+                   for p in shown)
+    return ('<div class="pick">' + arrow(shown[i - 1] if i else None, "\u2039", "prev", "Previous")
+            + f'<select data-go aria-label="Part of the game">{opts}</select>'
+            + arrow(shown[i + 1] if i + 1 < len(shown) else None, "\u203a", "next", "Next") + "</div>")
+
+
+def part_sources(gdir, game, P, out, nav, ban, common, cheats):
+    """One Source page per part that has a listing, each with the part's own facts, then the
+    game's. Addresses in a part's facts link into its own page; the game's facts and cheats
+    name addresses in several parts, so they link to none."""
+    shown = [p for p in P if listed(p)]
+    whole = read(os.path.join(gdir, "facts.md"))
+    whole = ('<h2>The whole game</h2><div data-part="">' + markdown(whole, addr=False, shift=1) + "</div>") if whole.strip() else ""
+    if cheats.strip():
+        whole += '<h2>Cheats</h2><div data-part="">' + markdown(cheats, addr=False) + "</div>"
+    tpl = fill(read(os.path.join(SITE, "source.html")), **common).replace("<!-- tabs -->", nav)
+    for p in shown:
+        page, beneath = part_page(p), [q for q in reversed(under(P, p)) if listed(q)]
+        facts = f"<h2>{html.escape(p['title'])}</h2>" + markdown(read(os.path.join(p["dir"], "facts.md")), addr=page, shift=1)
+        note = ""
+        if beneath:
+            note = (f'<p class="mute">{html.escape(p["title"])} is loaded over {html.escape(" and ".join(q["title"] for q in beneath))}. '
+                    "The listing shows them together, as the machine holds them; the rows of this part are marked.</p>")
+        pills = part_pills(P, p)
+        if len(shown) == len(P):
+            each = "Each part has a listing of its own" + ("." if pills else ", chosen from the list beside it.")
+        else:       # say how many, where the row of parts is too long to show which
+            each = (f"{len(shown)} of them {'has' if len(shown) == 1 else 'have'} a listing"
+                    + ("." if pills or len(shown) < 2 else ", chosen from the list beside it."))
+        lead = (f'<p class="mute">This game is in {len(P)} parts, and the same addresses hold something else in each. '
+                + each + "</p>")
+        info = {"id": p["id"], "title": p["title"], "listing": f"parts/{p['id']}/listing.json",
+                "under": [{"id": q["id"], "title": q["title"], "listing": f"parts/{q['id']}/listing.json"} for q in beneath]}
+        src = tpl.replace("<!-- facts -->", facts + whole)
+        src = src.replace("<!-- parts -->", lead + pills + note)
+        src = src.replace("<!-- pick -->", part_step(P, p))
+        src = src.replace("<!-- part -->", '<script type="application/json" id="part">'
+                          + json.dumps(info).replace("</", "<\\/") + "</script>")
+        src = under_title(src, ban)
+        if not links_asset(src, "site.js"):
+            src += f'\n<script src="{LIB}/site.js"></script>\n'
+        src = at_end(src, edit_footer(game, "source.html", f"parts/{p['id']}/facts.md"))
+        for name in ([page, "source.html"] if p is shown[0] else [page]):
+            open(os.path.join(out, name), "w").write(src)
+        dst = os.path.join(out, "parts", p["id"])
+        os.makedirs(dst, exist_ok=True)
+        for f in ("listing.json", "symbols.json"):
+            if os.path.exists(os.path.join(p["dir"], f)):
+                shutil.copy(os.path.join(p["dir"], f), dst)
+
+
+def game_footprint(P, out, plat):
+    """The one map of a game of several parts, for the About tab and the catalogue: the part
+    the others are loaded over (the first that lies over none), with the addresses the other
+    parts own as one band, "varies with the part loaded". Which part holds what is the Source
+    tab's to show, part by part; here a reader wants the shape of the game, once.
+    Returns the game's totals (its program summed over the parts, for the catalogue's size),
+    and the About tab's table with a line saying what the map is of."""
+    shown = [p for p in P if listed(p)]
+    root = next((p for p in shown if not p["over"]), shown[0])
+    runs, t, symbols, span = footprint(root["dir"], load_game(root["dir"]))
+    doc = {"runs": runs, "totals": t, "symbols": symbols, "source": part_page(root)}
+    if span != (0, 0x10000):   # memmap.js draws all 64 KB unless told otherwise
+        doc.update(base=span[0], size=span[1] - span[0])
+    json.dump(doc, open(os.path.join(out, "memmap.json"), "w"), separators=(",", ":"))
+    totals = dict(t)
+    for p in shown:
+        if p is not root:
+            other = footprint(p["dir"], load_game(p["dir"]))[1]
+            for k in PROGRAM:
+                totals[k] += other[k]
+    over = above(P, root)
+    apart = [p for p in P if p is not root and p not in over]
+    name = html.escape(root["title"])
+    # What the map is of, and no more: a part that names none beneath it may replace all of memory
+    # or may only not have been split from what stays, and the folders do not say which.
+    if over:
+        said = (f"This game is in {len(P)} parts. The map is of {name}, which stays in memory; the band marked as "
+                f"varying holds whichever of the {len(over)} part{'s' if len(over) != 1 else ''} loaded over it is there. ")
+        if apart:
+            said += f"The other {len(apart) if len(apart) > 1 else 'part'}{' are' if len(apart) > 1 else ' is'} not on this map. "
+    else:
+        said = f"This game is in {len(P)} parts, and the map is of one of them: {name}. "
+    said += f'The <a href="{part_page(root)}">Source tab</a> has the listing of each part that has one.'
+    return totals, footprint_table(t, plat, span) + f'<p class="mute">{said}</p>', span
+
+
+def data_links(P):
+    """Where the symbol maps and listings are, for the About tab's {{data_links}}."""
+    if not P:
+        return ('The symbol map for this game is <a href="symbols.json">symbols.json</a>; the listing behind the '
+                'Source tab is <a href="listing.json">listing.json</a>.')
+    if len(P) > PILLS:   # too many to name: say where they are
+        return ("Each part of the game has its own symbol map and listing, <code>parts/&lt;id&gt;/symbols.json</code> and "
+                "<code>parts/&lt;id&gt;/listing.json</code>; the ids are the ones in its Source pages\u2019 addresses.")
+    return "Each part of the game has its own symbol map and listing: " + "; ".join(
+        f'{html.escape(p["title"])}, <a href="parts/{p["id"]}/symbols.json">symbols.json</a> and '
+        f'<a href="parts/{p["id"]}/listing.json">listing.json</a>' for p in P if listed(p)) + "."
+
+
 def build_game(gdir, out_root):
     game = json.load(open(os.path.join(gdir, "game.json")))
     plat, slug = game["platform"], game["slug"]
@@ -638,6 +807,12 @@ def build_game(gdir, out_root):
     os.makedirs(out, exist_ok=True)
     lib = LIB
     check_tabs(gdir, game)
+    P = parts(gdir)
+    if P and not any(listed(p) for p in P):
+        sys.exit(f"{os.path.relpath(gdir, ROOT)} is a game of several parts and none has a listing.json. "
+                 "Build one from a part's symbol map and its snapshot first (kit/scripts/listing.py).")
+    if P:
+        game["_parts"] = (sum(1 for p in P if started(p)), len(P))
     present = present_tabs(gdir, game)
     cons = contributors(gdir)
     nav = tabbar(game, present, lib)
@@ -650,19 +825,23 @@ def build_game(gdir, out_root):
                   platform_mem=PLATFORM_MEM.get(plat, "the machine's 64 KB"))
     for f in authored(gdir, game):
         open(os.path.join(out, f), "w").write(authored_page(gdir, game, f, nav, ban))
-    # source
-    facts = markdown(read(os.path.join(gdir, "facts.md")))
+    # source: one page, or one for each part of a game of several
+    source_choices = []
     cheats = read(os.path.join(gdir, "cheats.md"))
-    if cheats.strip():
-        facts += "<h2>Cheats</h2>" + markdown(cheats)
-    src = fill(read(os.path.join(SITE, "source.html")), **common).replace("<!-- tabs -->", nav).replace("<!-- facts -->", facts)
-    from source_images import images
-    source_choices = [{k: image[k] for k in ("id", "title", "listing")} for image in images(gdir, game)]
-    src = src.replace("/* source images */[]", json.dumps(source_choices).replace("<", "\\u003c"))
-    src = under_title(src, ban)
-    if not links_asset(src, "site.js"):
-        src += f'\n<script src="{lib}/site.js"></script>\n'
-    open(os.path.join(out, "source.html"), "w").write(at_end(src, edit_footer(game, "source.html")))
+    if P:
+        part_sources(gdir, game, P, out, nav, ban, common, cheats)
+    else:
+        facts = markdown(read(os.path.join(gdir, "facts.md")))
+        if cheats.strip():
+            facts += "<h2>Cheats</h2>" + markdown(cheats)
+        src = fill(read(os.path.join(SITE, "source.html")), **common).replace("<!-- tabs -->", nav).replace("<!-- facts -->", facts)
+        from source_images import images
+        source_choices = [{k: image[k] for k in ("id", "title", "listing")} for image in images(gdir, game)]
+        src = src.replace("/* source images */[]", json.dumps(source_choices).replace("<", "\\u003c"))
+        src = under_title(src, ban)
+        if not links_asset(src, "site.js"):
+            src += f'\n<script src="{lib}/site.js"></script>\n'
+        open(os.path.join(out, "source.html"), "w").write(at_end(src, edit_footer(game, "source.html")))
     # about
     cred = [c for c in (game.get("credits") or []) if (c.get("by") or c.get("name", "")).strip()]   # the game's makers; agents live in "model"
     site_contributor_items = "".join(
@@ -677,31 +856,38 @@ def build_game(gdir, out_root):
     links = {k: u for k, u in (game.get("links") or {}).items() if u}   # empty slots from the template are not links
     link_html = "<ul>" + "".join(f'<li><a href="{html.escape(u)}">{html.escape(k)}</a></li>' for k, u in links.items()) + "</ul>" if links else "<p class='mute'>None listed yet. Know a write-up, port or forum thread about this game? Add it to game.json.</p>"
     tools = game.get("tools") or {}
-    runs, totals, symbols, span = footprint(gdir, game)
-    memmap = {"runs": runs, "totals": totals, "symbols": symbols}
-    if span != (0, 0x10000):   # memmap.js draws all 64 KB unless told otherwise
-        memmap.update(base=span[0], size=span[1] - span[0])
-    json.dump(memmap, open(os.path.join(out, "memmap.json"), "w"), separators=(",", ":"))
+    if P:
+        totals, foot, span = game_footprint(P, out, plat)
+    else:
+        runs, totals, symbols, span = footprint(gdir, game)
+        memmap = {"runs": runs, "totals": totals, "symbols": symbols}
+        if span != (0, 0x10000):   # memmap.js draws all 64 KB unless told otherwise
+            memmap.update(base=span[0], size=span[1] - span[0])
+        json.dump(memmap, open(os.path.join(out, "memmap.json"), "w"), separators=(",", ":"))
+        foot = footprint_table(totals, plat, span)
     game["_totals"] = totals
     about_template = os.path.join(gdir, "about-layout.html")
     if not os.path.isfile(about_template):
         about_template = os.path.join(SITE, "about.html")
-    footprint_html = footprint_table(totals, plat, span)
     if len(source_choices) > 1:
-        footprint_html = (
-            '<p class="mute">This memory map and table show the main source image only. '
-            f'Coverage also includes {len(source_choices) - 1} additional source '
-            f'image{"s" if len(source_choices) > 2 else ""}, counted separately. '
-            'Choose an image on the <a href="source.html">Source code tab</a> to inspect it.</p>'
-            + footprint_html)
-    about = fill(read(about_template), **common, footprint=footprint_html, map_row=(span[1] - span[0]) // 128,
-                 tier=html.escape(tier_name(game.get("tier", "none"))), coverage=f"{game.get('coverage_percent') or 0:g} %",
+        foot = ('<p class="mute">This memory map and table show the main source image only. '
+                f'Coverage also includes {len(source_choices) - 1} additional source '
+                f'image{"s" if len(source_choices) > 2 else ""}, counted separately. '
+                'Choose an image on the <a href="source.html">Source code tab</a> to inspect it.</p>' + foot)
+    cov = f"{game.get('coverage_percent') or 0:g} %"
+    if P and game["_parts"][0] < game["_parts"][1]:
+        cov = "In the %d of %d parts analysed, %s" % (*game["_parts"], cov)
+    # in a game of several parts an address means nothing without its part, so the files about
+    # the whole game link none (site.js leaves the addresses inside data-part="" alone)
+    whole = (lambda h: f'<div data-part="">{h}</div>') if P else (lambda h: h)
+    about = fill(read(about_template), **common, footprint=foot, data_links=data_links(P), map_row=(span[1] - span[0]) // 128,
+                 tier=html.escape(tier_name(game.get("tier", "none"))), coverage=cov,
                  copy=html.escape(str(game.get("copy", ""))), tools=html.escape(", ".join(f"{k}: {v}" for k, v in tools.items())),
                  model=html.escape(str(game.get("model", ""))), kit_version=html.escape(str(game.get("kit_version", ""))),
                  contributors=con_html, site_contributors=site_contributors, game_credits=game_credits,
                  links=link_html,
-                 features=markdown(read(os.path.join(gdir, "features.md")), shift=1),
-                 orientation=markdown(read(os.path.join(gdir, "orientation.md")), shift=1)).replace("<!-- tabs -->", nav)
+                 features=whole(markdown(read(os.path.join(gdir, "features.md")), addr=not P, shift=1)),
+                 orientation=whole(markdown(read(os.path.join(gdir, "orientation.md")), addr=not P, shift=1))).replace("<!-- tabs -->", nav)
     about = under_title(about, ban)
     open(os.path.join(out, "about.html"), "w").write(pagenav(at_end(about, edit_footer(game, "about.html"))))
     for f in ("listing.json", "symbols.json"):
@@ -903,7 +1089,8 @@ def featured_game(games):
 
 
 # --- the home page's New and updated row: the latest games added or changed, from git history
-PUBLISHED = re.compile(r"(index|levels|play)\.html|(facts|cheats|features|orientation)\.md|(game|listing|symbols)\.json|reference/.+")
+PUBLISHED = re.compile(r"(index|levels|play)\.html|(facts|cheats|features|orientation)\.md|(game|listing|symbols)\.json|reference/.+"
+                       r"|parts/[^/]+/(facts\.md|(part|listing|symbols)\.json)")
 
 
 def recent_changes(games, n=4):
@@ -1221,7 +1408,8 @@ def main():
         print(f"broken link: {page} -> {url}", file=sys.stderr)
     if bad:
         sys.exit(f"{len(bad)} link(s) to nothing the build published. A game folder publishes its authored pages, "
-                 "listing.json, symbols.json and reference/, nothing else; site/lib/ is at ../../lib/")
+                 "listing.json, symbols.json and reference/ (and for each of its parts, parts/<id>/listing.json and "
+                 "symbols.json, and source-<id>.html), nothing else; site/lib/ is at ../../lib/")
     cut = cut_blocks(games)
     for page, tier, n in cut:
         warn(f"{page} has {n} block(s) hidden with the page editor; the cleanup pass in kit/START.md removes them")

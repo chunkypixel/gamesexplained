@@ -86,6 +86,22 @@ class PortTests(unittest.TestCase):
         self.assertEqual(vice.URL, f"http://127.0.0.1:{ports.VICE_PORT}/mcp")
         self.assertEqual(r2000.URL, f"http://127.0.0.1:{ports.R2000_PORT}/mcp")
 
+    def test_invalid_part_port_never_falls_back_to_another_session(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            part = root / "parts" / "level"
+            (part / "work").mkdir(parents=True)
+            (part / "part.json").write_text("{}")
+            saved = part / "work" / "r2000-port"
+            with patch.object(ports, "SETTINGS", root / "tools" / "ports.json"), \
+                 patch.dict(r2000.os.environ, {}, clear=True):
+                for value in ("not a port", "", "0", "65536", "6510"):
+                    saved.write_text(value)
+                    with self.subTest(value=value), self.assertRaises(ValueError):
+                        r2000._port(str(part))
+                saved.write_text("3007")
+                self.assertEqual(r2000._port(str(part)), 3007)
+
 
 class ProcessIsolationTests(unittest.TestCase):
     def test_pty_round_trip_preserves_shell_metacharacters(self):
@@ -142,6 +158,48 @@ class ProcessIsolationTests(unittest.TestCase):
         with patch.object(launcher, "port_owner", return_value=owner), \
              patch.object(launcher.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "")):
             self.assertEqual(launcher.r2000_running(), ("", 0))
+
+    def test_instances_keep_part_sessions_separate_from_wrappers_and_other_clones(self):
+        root = launcher.ROOT
+        one = root + "/games/c64/example/parts/one/work/a snapshot.vsf"
+        two = root + "/games/c64/example/parts/two/work/another snapshot.vsf"
+        first = shlex.join(["regenerator2000", "--mcp-server", one])
+        second = shlex.join(["python3", launcher.BRIDGE, "regenerator2000", two, "3001"])
+        wrapper = shlex.join(["sh", "-c", second])
+        foreign = shlex.join(["regenerator2000", "--mcp-server", root + "-other/a.vsf"])
+        ps = f"41 00:05 {first}\n42 00:02 {second}\n43 00:03 {wrapper}\n44 00:01 {foreign}\n"
+        with patch.object(launcher, "R2000_PORT", 13000), \
+             patch.object(launcher, "port_owner", side_effect=lambda port: {3000:first, 3001:second}.get(port)), \
+             patch.object(launcher.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, ps)), \
+             patch.object(launcher, "process_args", side_effect=lambda pid, command: shlex.split(command)), \
+             patch.object(launcher, "r2000_running", return_value=None), \
+             patch.object(launcher.time, "time", return_value=1000):
+            self.assertEqual(launcher.r2000_instances(), [(3000, one, 994), (3001, two, 997)])
+
+    def test_instances_preserve_unknown_listener_guard(self):
+        with patch.object(launcher.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "")), \
+             patch.object(launcher, "r2000_running", return_value=("", 0)):
+            self.assertEqual(launcher.r2000_instances(), [(launcher.R2000_PORT, "", 0)])
+
+    def test_inactive_default_port_does_not_adopt_another_parts_stdio_child(self):
+        with patch.object(launcher, "port_owner", return_value=None), \
+             patch.object(launcher, "up", return_value=False), \
+             patch.object(launcher.subprocess, "run") as run:
+            self.assertIsNone(launcher.r2000_running())
+            run.assert_not_called()
+
+    def test_unknown_source_protects_unexported_part_annotations(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            game = root / "games" / "c64" / "example"
+            part = game / "parts" / "one"
+            (part / "work").mkdir(parents=True)
+            (game / "game.json").write_text("{}")
+            (part / "part.json").write_text("{}")
+            log = part / "work" / "annotations.jsonl"
+            log.write_text('{}\n')
+            with patch.object(launcher, "ROOT", str(root)):
+                self.assertEqual(launcher.unexported("", 0), [(str(part), str(log), None)])
 
     def test_alternate_port_conflict_never_launches(self):
         with patch.object(launcher, "R2000_PORT", 13000), \

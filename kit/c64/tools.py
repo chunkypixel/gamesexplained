@@ -19,11 +19,18 @@ Usage:
                                    (or $KIT_VICE_PORT, when something else holds 6510)
   tools.py r2000 <file>            start the disassembler's MCP server on :3000 on a .vsf/.prg/project
                                    (or $KIT_R2000_PORT, when something else holds 3000: a .vsf or a
-                                   project then, served through kit/c64/stdio_bridge.py)
+                                   project then, served through kit/c64/stdio_bridge.py).
+                                   A file in the folder of one part of a game (kit/scripts/parts.py)
+                                   gets a port of that part's own, the first free from 3000, kept in
+                                   the part's work/r2000-port: each part can have one running, and
+                                   every script given the part's folder reaches the right one
   tools.py stop [vice|r2000|all] [--force]
                                    the disassembler stays up while an annotation log written since
                                    it started is newer than the game's symbols.json: export first,
                                    or --force
+  tools.py stop r2000 <folder> [--force]
+                                   only the disassembler started on a file in that game's or part's
+                                   folder; the others of this clone keep running
   tools.py get-vice [download|build]   the newest vice-mcp for this machine; plain, it only says what that is (kit/c64/get_vice.py)
   tools.py use-vice <dir>          use a vice-mcp build of your own: link tools/vice-mcp to it
   tools.py use-vice release        go back to the release (kept at tools/vice-mcp-release)
@@ -38,7 +45,7 @@ checked on any operating system: it starts the emulator, makes it write a snapsh
 stops it, and then lists every file outside the repository that changed meanwhile and
 looks like it belongs to one of the tools. An empty list is the pass.
 """
-import os, re, shlex, shutil, subprocess, sys, time
+import glob, os, re, shlex, shutil, subprocess, sys, time
 from pathlib import Path
 
 # What this launcher serves, read by the dispatcher (kit/scripts/tools.py) when several
@@ -132,30 +139,81 @@ def r2000_exe():
     return local if os.path.exists(local) else shutil.which("regenerator2000")
 
 
+def part_dir(path):
+    """The folder of the part of a game that a file lies in (kit/scripts/parts.py: the folder
+    with a part.json), or None."""
+    d = os.path.abspath(path) if path else ""
+    while d and d != os.path.dirname(d):
+        if os.path.isfile(os.path.join(d, "part.json")):
+            return d
+        d = os.path.dirname(d)
+    return None
+
+
+def part_port(part):
+    """The port for a part's own disassembler: the one it had last time (its work/r2000-port)
+    while that is free or still its own, else the first free from 3000 up. So each part of a
+    game can have a disassembler running, and none takes another's."""
+    try:
+        with open(os.path.join(part, "work", "r2000-port")) as f:
+            last = int(f.read())
+    except (OSError, ValueError):
+        last = None
+    if last and (not up(last) or any(port == last and part_dir(f) == part for port, f, _ in r2000_instances())):
+        return last
+    for port in range(3000, 3100):
+        if not up(port):
+            return port
+    sys.exit("no free port from 3000 to 3099 for a disassembler: `tools.py stop r2000` stops this clone's")
+
+
+def forget_port(port):
+    """No part keeps a port its disassembler no longer holds: a script given that part's folder would
+    read, and export, the session of whichever part started on the port next."""
+    for f in glob.glob(os.path.join(ROOT, "games", "*", "*", "parts", "*", "work", "r2000-port")):
+        try:
+            with open(f) as h:
+                if int(h.read()) == port:
+                    os.remove(f)
+        except (OSError, ValueError):
+            pass
+
+
 def r2000(path):
     exe = r2000_exe()
     if not exe:
         sys.exit("no regenerator2000; run: cargo install --root tools/cargo regenerator2000")
-    if up(R2000_PORT):
-        detail = foreign_detail(R2000_PORT)
+    port, part = R2000_PORT, part_dir(path)
+    if part and not os.environ.get("KIT_R2000_PORT"):
+        port = part_port(part)
+    if up(port):
+        detail = foreign_detail(port)
         if detail:
-            sys.exit(f"a disassembler started from another folder already answers on :{R2000_PORT}:\n{detail}\n"
+            sys.exit(f"a disassembler started from another folder already answers on :{port}:\n{detail}\n"
                      "stop it there (its own `tools.py stop r2000`) before starting this clone's, or start this\n"
                      "clone's on another port with KIT_R2000_PORT (kit/c64/INSTALL.md, 'Another program on port 3000')")
-        sys.exit(f"something already answers on :{R2000_PORT}; only one disassembler can run on a port. "
+        sys.exit(f"something already answers on :{port}; only one disassembler can run on a port. "
                  "`tools.py stop r2000` first")
     os.makedirs(TOOLS, exist_ok=True)
-    with open(R2000_PORT_FILE, "w") as f:
-        f.write(str(R2000_PORT))
+    forget_port(port)
+    if part:        # the part's own, read back by every script given the part's folder (kit/c64/r2000.py):
+        # a part's session is reached through its folder, never as the clone's last disassembler
+        os.makedirs(os.path.join(part, "work"), exist_ok=True)
+        with open(os.path.join(part, "work", "r2000-port"), "w") as f:
+            f.write(str(port))
+    else:
+        with open(R2000_PORT_FILE, "w") as f:
+            f.write(str(port))
     env = dict(os.environ)
     for var, sub in (("XDG_CONFIG_HOME", "config"), ("XDG_STATE_HOME", "state"),
                      ("XDG_CACHE_HOME", "cache"), ("XDG_DATA_HOME", "data")):
         env[var] = os.path.join(TOOLS, "r2000-home", sub)
         os.makedirs(env[var], exist_ok=True)
     cmd = [exe, "--mcp-server", os.path.abspath(path)]
-    if R2000_PORT != 3000:
-        cmd = [sys.executable, BRIDGE, exe, os.path.abspath(path), str(R2000_PORT)]
-    start(cmd, os.path.join(LOGS, "r2000.log"), env=env, port=R2000_PORT, name="disassembler")
+    if port != 3000:
+        cmd = [sys.executable, BRIDGE, exe, os.path.abspath(path), str(port)]
+    start(cmd, os.path.join(LOGS, "r2000.log" if port == R2000_PORT else f"r2000-{port}.log"), env=env, port=port,
+          name="disassembler")
 
 
 # only this clone's tools: another clone on the same machine keeps its emulator and disassembler
@@ -168,6 +226,8 @@ def r2000(path):
 # which left one of each behind per start on Linux (2 October 2026). On macOS the release's two
 # shell wrappers match the pattern and are signalled with the emulator; `script` exits after them,
 # and nothing was left (v3.13.2 dmg, 2 October 2026).
+R2000_NATIVE = "regenerator2000 --mcp-server " + re.escape(os.path.join(ROOT, ""))   # on :3000, as it serves HTTP itself
+R2000_BRIDGED = re.escape(BRIDGE)                                                     # on any other port
 STOP_PATTERNS = {"vice": re.escape(VICE_DIR + os.sep) + ".*-mcpserver",
                  "r2000": "regenerator2000 --mcp-server(-stdio)? " + re.escape(os.path.join(ROOT, "")) + "|" + re.escape(os.path.join(ROOT, "kit", "c64", "stdio_bridge.py")) + "( |$)"}
 
@@ -187,14 +247,14 @@ def process_args(pid, command):
         return []
 
 
-def r2000_source(args):
+def r2000_source(args, port=None):
     """Recognize an actual server/bridge argv, never a wrapper containing its text."""
     if len(args) == 3 and os.path.basename(args[0]) == "regenerator2000" and args[1] in (
             "--mcp-server", "--mcp-server-stdio"):
         source = args[2]
     elif (len(args) == 5 and os.path.basename(args[0]).startswith("python")
           and os.path.abspath(args[1]) == os.path.join(ROOT, "kit", "c64", "stdio_bridge.py")
-          and args[4] == str(R2000_PORT)):
+          and args[4] == str(R2000_PORT if port is None else port)):
         source = args[3]
     else:
         return None
@@ -212,6 +272,8 @@ def r2000_running():
     ("", 0) when one answers but ps cannot tell which or since when; None when none runs."""
     owner = port_owner(R2000_PORT)
     if foreign(owner):
+        return None
+    if not owner and not up(R2000_PORT):
         return None
     try:
         result = subprocess.run(["ps", "-A", "-ww", "-o", "pid=,etime=,command="], capture_output=True, text=True)
@@ -242,6 +304,56 @@ def r2000_running():
     return ("", 0) if candidates or up(R2000_PORT) else None
 
 
+def r2000_instances():
+    """This clone's actual native servers and bridges, including each part's session.
+
+    Read argv rather than matching command text inside shell wrappers. Unknown
+    listeners retain an empty source, so unexported annotations remain protected.
+    """
+    try:
+        result = subprocess.run(["ps", "-A", "-ww", "-o", "pid=,etime=,command="], capture_output=True, text=True)
+    except OSError:
+        running = r2000_running()
+        return [(R2000_PORT, *running)] if running else []
+    found = {}
+    for line in result.stdout.splitlines():
+        fields = line.strip().split(None, 2)
+        if len(fields) != 3:
+            continue
+        pid, etime, command = fields
+        args = process_args(pid, command)
+        if len(args) == 3 and args[1] == "--mcp-server":
+            port = 3000
+        elif len(args) == 5:
+            try:
+                port = int(args[4])
+            except ValueError:
+                continue
+            if not 1024 <= port <= 65535:
+                continue
+        else:
+            continue
+        source = r2000_source(args, port)
+        if source is None:
+            continue
+        owner = port_owner(port)
+        if foreign(owner):
+            continue
+        if owner and owner != command:
+            found.setdefault(port, ("", 0))
+            continue
+        try:
+            started = time.time() - elapsed(etime) - 1
+        except ValueError:
+            started = 0
+        found[port] = (source, started)
+    if R2000_PORT not in found:
+        running = r2000_running()
+        if running:
+            found[R2000_PORT] = running
+    return [(port, path, started) for port, (path, started) in found.items()]
+
+
 def unexported(path, started):
     """Games whose annotation logs are newer than their symbols.json, as (game dir, newest log, export time).
 
@@ -252,13 +364,16 @@ def unexported(path, started):
     r2000.py --replay can be rebuilt again. The game is the one the disassembler was started on; a
     file outside games/ leaves every game in the clone."""
     parts = os.path.relpath(path, ROOT).split(os.sep) if path else []
-    if len(parts) > 3 and parts[0] == "games" and os.path.isfile(os.path.join(ROOT, *parts[:3], "game.json")):
+    if part_dir(path):       # one part of a game: its own logs, beside its own symbols.json
+        games = [part_dir(path)]
+    elif len(parts) > 3 and parts[0] == "games" and os.path.isfile(os.path.join(ROOT, *parts[:3], "game.json")):
         games = [os.path.join(ROOT, *parts[:3])]
     else:
         base = os.path.join(ROOT, "games")
         games = [os.path.join(base, p, s) for p in sorted(os.listdir(base)) if os.path.isdir(os.path.join(base, p))
                  for s in sorted(os.listdir(os.path.join(base, p)))
                  if os.path.isfile(os.path.join(base, p, s, "game.json"))] if os.path.isdir(base) else []
+        games += [os.path.dirname(f) for f in glob.glob(os.path.join(base, "*", "*", "parts", "*", "part.json"))]
     found = []
     for g in games:
         work = os.path.join(g, "work")
@@ -273,18 +388,29 @@ def unexported(path, started):
     return found
 
 
-def stop(which="all", force=False):
-    if which not in STOP_PATTERNS and which != "all":
-        sys.exit("usage: tools.py stop [vice|r2000|all] [--force]")
+def stop(which="all", force=False, only=None):
+    if which not in STOP_PATTERNS and which != "all" or (only and which != "r2000"):
+        sys.exit("usage: tools.py stop [vice|r2000|all] [--force] | stop r2000 <game or part folder> [--force]")
     kinds = list(STOP_PATTERNS) if which == "all" else [which]
-    held = []
+    held, mine = [], r2000_instances() if "r2000" in kinds else []
+    if only:      # the one started on a file in that folder; the other parts' keep running
+        base = os.path.join(os.path.abspath(only), "")
+        mine = [i for i in mine if i[1].startswith(base)]
     if "r2000" in kinds and not force:
-        running = r2000_running()
-        held = unexported(*running) if running else []
+        held = [h for _, path, started in mine for h in unexported(path, started)]
         if held:
             kinds.remove("r2000")    # the disassembler stays up; anything else asked for still stops
     for k in kinds:
-        kill_matching(STOP_PATTERNS[k])
+        if k != "r2000":
+            kill_matching(STOP_PATTERNS[k])
+        elif only:
+            for port, path, _ in mine:
+                kill_matching(("regenerator2000 --mcp-server " if port == 3000 else R2000_BRIDGED + " .*") + re.escape(path))
+        else:     # every one this clone started, on :3000 and on any other port
+            kill_matching(STOP_PATTERNS["r2000"])
+        if k == "r2000":
+            for port, _, _ in mine:
+                forget_port(port)
     if kinds:
         time.sleep(1)
     status()
@@ -413,6 +539,9 @@ def status():
     detail = foreign_detail(R2000_PORT)
     if detail:
         print(f"  WARNING: :{R2000_PORT} is answered by a disassembler from another folder:\n{detail}")
+    for port, path, _ in sorted(r2000_instances()):     # one for each part of a game being worked on at once
+        if path:
+            print(f"                :{port}  on {os.path.relpath(path, ROOT)}")
 
 
 # Leftovers we know about and list under "Uninstall" in kit/c64/INSTALL.md. Anything else is a failure.
@@ -470,7 +599,7 @@ def main():
         r2000(a[1])
     elif a[0] == "stop":
         rest = [x for x in a[1:] if x != "--force"]
-        stop(rest[0] if rest else "all", force="--force" in a[1:])
+        stop(rest[0] if rest else "all", force="--force" in a[1:], only=rest[1] if len(rest) > 1 else None)
     elif a[0] == "verify-footprint": verify_footprint()
     elif a[0] == "use-vice":
         if len(a) < 2: sys.exit("usage: tools.py use-vice <dir> | release")

@@ -1,6 +1,6 @@
 # Jumpman: kit feedback
 
-Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.78. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
+Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.80. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
 
 ## Skill text that changed what I did
 
@@ -34,7 +34,7 @@ The original capability suite passed 56 of 57 checks: only its host warp speed c
 
 Original-code, native and browser evidence is summarized in `facts.md`; the detailed reports and scratch scripts are private working records. It includes exact included-byte checks, all initial level renderings, bomb changes, robot decisions, exhaustive score/maze/Randomizer inputs, ordinary Dragon Slayer completion, Gunfighter hit/no-fire control, puzzle transformation/death completion, score save/reboot and bounded anomaly checks. Corrections are recorded rather than hidden. The audio model still approximates bus decay and within-frame write timing; selected-level routes do not establish a full legal campaign.
 
-The kit 0.0.78 update adopts automatic test discovery and the new audit-file rules. The 31 kit test commands pass with tools required and no skips. Detailed reports and unused data copies are retained privately; captions link to the Source tab's technical reference, which opens directly at `#facts`. All 66 canonical listing/symbol files remain unchanged. These are self-checks, not independent certification.
+The submission includes kit 0.0.78’s automatic test discovery and audit-file rules, and kit 0.0.80’s support for separate parts. Named source-image links and coverage remain compatible with the parts format. The 32 kit test commands pass with tools required and no skips; 69 Python modules import, and all 25 games build. Detailed reports and unused data copies are retained privately; captions link to the Source tab's technical reference, which opens directly at `#facts`. All 66 canonical listing/symbol files remain unchanged. These are self-checks, not independent certification.
 
 ## Maintainer asks
 
