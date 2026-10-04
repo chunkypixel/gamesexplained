@@ -230,12 +230,16 @@ exclusion) or `coverage.exclude` (not the game's, with the reason). One
 game reached 100 % with 1.6 KB of its own tables and its picture's
 colours outside the count.
 
-The list only finds data that sits at the same address in both images:
-data the start-up copies elsewhere (out of the way of the I/O area, under
-a ROM, into another bank) differs between them and is never listed.
-Search the play snapshot for the start-up's copy loops' destinations, and
-check each against the ledger; one game reached 100 % with half a
-kilobyte of moved graphics outside every span. <!-- until #146 -->
+Data the start-up copies elsewhere (out of the way of the I/O area, under
+a ROM, into another bank) differs between the images at its own address,
+so the list also looks for it at another: an untracked stretch of 32
+bytes or more in play that the hand-over holds somewhere else is listed
+with both addresses ("copied here after the hand-over"). One game reached
+100 % with half a kilobyte of moved graphics outside every span before
+the list did this. A copy the start-up changes on the way (unpacked,
+shifted, interleaved, or built from pieces) matches nowhere, so follow
+the start-up's copy loops to their destinations as well, and check each
+against the ledger.
 
 ## Interpreted programs and code loaded as level data
 

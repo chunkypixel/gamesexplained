@@ -48,14 +48,15 @@ a{color:var(--link)}
 </style>
 <!-- tabs -->
 <header class="hero"><p class="eyebrow">Commodore 64 · 1983 · Brøderbund</p><h1>Lode Runner</h1><p class="sub">The disk has 150 rooms. The cartridge selects 17 of them and runs its own engine.</p></header>
-<main class="wrap">
+<main class="wrap" data-part="engine">
 <section id="overview"><p class="fig">01 · Disk and cartridge</p><h2 class="t">Two engines, shared rooms</h2>
-<p>The supplied CRT is labelled “Official Cartridge Image” and contains a 16 KB cartridge engine. Its room data, graphics, and sound directory differ from the disk program. The How it works and Source tabs cover the Black Label disk engine; this page collects the checked cartridge comparisons.</p>
+<p>The supplied CRT is labelled “Official Cartridge Image” and contains a 16 KB cartridge engine. Its room data, graphics, and sound directory differ from the disk program. The How it works and Source tabs cover the Black Label resident disk engine and its 150 room loads; this page collects the checked cartridge comparisons.</p>
 <div class="plate"><div class="lr-edition-shots"><figure><img src="reference/black-playing.png" alt="Black Label disk playing room one, with 250 points" width="384" height="272"><figcaption>Black Label disk · room one</figcaption></figure><figure><img src="reference/crt-play.png" alt="Official Cartridge Image playing its first room, with zero points" width="384" height="272"><figcaption>Official Cartridge Image · room one</figcaption></figure></div><p class="cap">Room one is shared by both engines. These native play captures were taken at different moments.</p></div>
 </section>
 <section id="differences"><p class="fig">02 · Differences</p><h2 class="t">What changes between editions</h2>
 <div class="plate"><table class="lr-edition-table"><thead><tr><th scope="col">Property</th><th scope="col">Black Label disk</th><th scope="col">Supplied cartridge</th></tr></thead><tbody>
 <tr><th scope="row">Stored rooms</th><td>150 disk sectors</td><td>17 resident boards</td></tr>
+<tr><th scope="row">Room loading</th><td>A separate sector read for each board; the engine stays resident</td><td>All 17 boards reside with the cartridge engine</td></tr>
 <tr><th scope="row">Room encoding</th><td>Two cells per byte; 224 cell bytes per room</td><td>Runs of 1–16 cells; 2,612 bytes total</td></tr>
 <tr><th scope="row">Source glyphs</th><td>104</td><td>76, expanded into RAM</td></tr>
 <tr><th scope="row">Completion motifs</th><td>10</td><td>7</td></tr>
@@ -101,7 +102,7 @@ a{color:var(--link)}
 <p>The Gray changes include startup selection and disk-probe values. Yellow also changes startup and has additional loader/protection files. Both copies boot natively; their attract screens show the same opening boards. The Source tab follows the Black Label engine, with loader internals and external disk protection outside its scope.</p>
 </section>
 <section id="evidence"><p class="fig">06 · Evidence</p><h2 class="t">Where the comparisons come from</h2>
-<p>The <a href="source.html">Source tab’s technical reference</a> records the original-code checks and live timing captures. Cartridge addresses belong to a separate program and are recorded there; addresses linked into this site’s Source tab refer to the disk engine.</p>
+<p>The <a href="source-engine.html">Source tab’s technical reference</a> records the original-code checks and live timing captures. Cartridge addresses belong to a separate program and are recorded there; addresses linked into this site’s Source tab refer to the disk engine.</p>
 <p>The supplied cartridge payload matches the one in <a href="https://github.com/jankfoundry/loderunner">the separate cartridge disassembly</a>. Reassembling that source reproduced every payload byte. The cartridge comparison here checks selected behavior from that engine; the complete disk listing has its own coverage record.</p>
 </section>
 </main>

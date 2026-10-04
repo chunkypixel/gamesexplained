@@ -7,7 +7,7 @@
   "publisher": "Br\u00f8derbund",
   "developer": "Doug Smith; Commodore 64 version by Dane Bigham",
   "title_image": "reference/black-title.png",
-  "build": "Supplied Black Label original G64 disk engine; Gray, Yellow and Official Cartridge Image CRT compared separately",
+  "build": "Supplied Black Label original G64: resident IT/DB engine and 150 room loads; Gray, Yellow and Official Cartridge Image CRT compared separately",
   "tier": "silver-claimed",
   "coverage_percent": 100,
   "copy": "agent-draft",
@@ -46,7 +46,8 @@
       "gpt-6.1-sol"
     ],
     "60-verify": [
-      "gpt-6.1-sol"
+      "gpt-6.1-sol",
+      "gpt-6-astra"
     ],
     "70-minisite": [
       "gpt-6.1-sol"
@@ -55,71 +56,8 @@
       "gpt-6.1-sol"
     ]
   },
-  "kit_version": "0.0.74",
+  "kit_version": "0.0.88",
   "created": "2026-10-04",
-  "video": {
-    "screen": "$0400",
-    "charset": ""
-  },
-  "coverage": {
-    "exclude": [
-      [
-        "$0000",
-        "$13FF",
-        "Loader, KERNAL workspace and engine-generated sprites, map grids, row addresses, sector buffers and working variables"
-      ],
-      [
-        "$1EFF",
-        "$5FFF",
-        "Unloaded tail and generated title/play/work bitmaps"
-      ],
-      [
-        "$B800",
-        "$FFFF",
-        "Not loaded by IT: runtime sound queues, score scratch, system I/O and RAM beneath KERNAL ROM"
-      ]
-    ],
-    "extra": [
-      [
-        "$1400",
-        "$1EFE",
-        "Loaded DB title bitmap RLE data"
-      ],
-      [
-        "$6000",
-        "$B7FF",
-        "Entire loaded IT engine, tables, sounds, graphics and demonstration rooms"
-      ]
-    ],
-    "include": []
-  },
-  "io": [],
-  "regions": [
-    [
-      "$1400",
-      "$1EFE",
-      "graphics",
-      "Title bitmap RLE and retained tail"
-    ],
-    [
-      "$9500",
-      "$993D",
-      "sound",
-      "Motif selection, frequencies, and event streams"
-    ],
-    [
-      "$A000",
-      "$A7FF",
-      "graphics",
-      "Shape phase lookups"
-    ],
-    [
-      "$A800",
-      "$B0EF",
-      "graphics",
-      "104-glyph atlas"
-    ]
-  ],
   "links": {
     "wiki": "https://www.c64-wiki.com/wiki/Lode_Runner",
     "manual": "https://www.lemon64.com/doc/lode-runner/355"

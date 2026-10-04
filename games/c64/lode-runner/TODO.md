@@ -1,6 +1,6 @@
 # Lode Runner — next work
 
-Silver covers the Black Label disk engine and DB title payload with complete annotation, verified mechanics, source listing, and browser-checked minisite.
+Silver covers the Black Label resident disk engine, DB title payload and all 150 separately loaded room sectors with complete annotation, verified mechanics, source listing, and browser-checked minisite.
 
 ## For Gold
 

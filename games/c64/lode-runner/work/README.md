@@ -12,7 +12,7 @@ snapshot. See ../orientation.md for the boot procedure and file identity.
 Recreate a private disassembler project from the committed symbols:
 
 ```
-python3 kit/scripts/symbols_import.py games/c64/lode-runner games/c64/lode-runner/work/black-entry.vsf
+python3 kit/scripts/symbols_import.py games/c64/lode-runner/parts/engine games/c64/lode-runner/parts/engine/work/entry.vsf
 ```
 
 Run the widget comparisons against the private play snapshot:
@@ -29,3 +29,10 @@ submission-before-cleanup-* files preserve the extended reference/history
 records. These private files are available in this workspace and are not
 part of a clean checkout or the published site. facts.md retains the public
 check and sample summary.
+
+Native room captures and their read/store counts are in multiload-captures/.
+Each parts/room-NNN/work/ folder holds that part's real entry.vsf, play.vsf
+and recreated private disassembler project. The private capture-multiload.py
+and build-multiload-rooms.py helpers record the forced original-loader route.
+The independent sample draw and verdict remain private; facts.md keeps the
+sample result. No validation/ directory or detailed audit reports are committed.

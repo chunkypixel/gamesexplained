@@ -17,7 +17,9 @@ it is. With the hand-over snapshot, so is every stretch of loaded data,
 the same bytes at the hand-over and in play, that the ledger neither
 tracks nor has been told to leave out: the tail of a table longer than
 its symbol's reach, a table no symbol starts, a picture nothing refers to
-by address.
+by address. And so is data copied after the hand-over: a stretch of 32
+bytes or more that nothing tracks in play and that the hand-over holds at
+another address is listed with both addresses.
 
 An address the chips share with RAM (the platform's "hidden" ranges: on
 the C64, $D000-$DFFF) has two meanings, and an instruction's operand there
@@ -153,6 +155,45 @@ def io_meaning(game):
     return chips
 
 
+def copies(ram, entry, look, least=32):
+    """What the play image holds at the addresses look marks that the hand-over image holds at
+    another address: data copied after the hand-over, out of the way of the I/O area, under a
+    ROM or into another bank (#146). Each is (start, end, where the hand-over holds it): a run
+    of `least` bytes found exactly, then as far as the two agree, less the $00 and $FF at its
+    ends; runs a few bytes apart at the same distance from their source are one copy that the
+    game has since changed a byte of."""
+    img, out, a = bytes(entry), [], 0
+    while a < 0x10000:
+        if not look[a]:
+            a += 1; continue
+        b = a
+        while b < 0x10000 and look[b]:
+            b += 1
+        i = a
+        while i + least <= b:
+            w = bytes(ram[i:i + least])
+            src = img.find(w) if len(set(w) - {0, 0xFF}) >= 4 else -1   # a fill, or a near-blank shape, is everywhere
+            while src == i:
+                src = img.find(w, src + 1)
+            if src < 0:
+                i += 1; continue
+            n = least
+            while i + n < b and src + n < 0x10000 and ram[i + n] == entry[src + n]:
+                n += 1
+            s, e = i, i + n - 1                # unwritten RAM ($00, $FF) on either side agrees too
+            while ram[s] in (0, 0xFF):
+                s += 1
+            while ram[e] in (0, 0xFF):
+                e -= 1
+            if out and out[-1][0] >= a and out[-1][2] - out[-1][0] == src - i and s - out[-1][1] <= 16:
+                out[-1] = (out[-1][0], e, out[-1][2])
+            else:
+                out.append((s, e, src + s - i))
+            i += n
+        a = b
+    return out
+
+
 def uncounted(game, reg, L, ram, entry=None, top=12):
     """The data the ledger does not count, as lines to print (none when there is nothing).
 
@@ -207,6 +248,20 @@ def uncounted(game, reg, L, ram, entry=None, top=12):
             where = f"excluded by default as {ex}" if ex else \
                 f"after {before[0]} (${before[1]:04X})" if before else "untracked"
             found.append([s, e, n, f"loaded with the game, {where}"])
+        # data copied after the hand-over differs there at its own address: look for it at another
+        for s, e, src in copies(ram, entry, [free[a] and not loaded[a] for a in range(0x10000)]):
+            found.append([s, e, e - s + 1, f"copied here after the hand-over, which holds it at ${src:04X}-${src + e - s:04X}"])
+        under = [False] * 0x10000
+        for p, e, *_ in hidden:
+            for a in range(p, e + 1):
+                under[a] = not inside(a, said)
+        moved = {}
+        for s, e, src in copies(ram, entry, under):
+            moved.setdefault(next(i for i, h in enumerate(hidden) if h[0] <= s <= h[1]), []).append((s, e, src))
+        for i, seen in moved.items():
+            (s, e, src), more = seen[0], len(seen) - 1
+            hidden[i][3] += (f"; ${s:04X}-${e:04X} is copied there after the hand-over, which holds it at ${src:04X}"
+                             + (f", and {more} more stretch{'es' if more > 1 else ''} the same way" if more else ""))
     if not found:
         return []
     found.sort(key=lambda f: -(f[1] - f[0]))

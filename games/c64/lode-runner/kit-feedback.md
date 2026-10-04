@@ -4,11 +4,12 @@ Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Code
 
 ## Skill text that changed what I did
 
-- `60-verify`: “Measure the listing before calling it done” led from sampled errors to full independent routine/data reviews. Results and intervals are summarized in facts.md; reports remain private.
+- `60-verify`: “Measure the listing before calling it done” led from sampled errors to full independent routine/data reviews. Results and intervals are summarized in facts.md; reports remain private. Its breakpoint guidance also supplied an active IRQ control alongside loop/hole checkpoints.
 - `50-coverage`: “Resolve every pointer table before excluding a region” exposed editor/guard RTS targets stored as addresses minus one.
 - `70-minisite`: “Sweep the whole input space, not a few plausible values” drove complete route-cost and ordinary music-transposition checks.
 - `70-minisite`: “Draw from the memory the game draws from” required live bitmap state, resource-transfer alignment, and actor-mask substitution.
-- `60-verify`: “When you measure with breakpoints” supplied an active IRQ control alongside loop/hole checkpoints.
+
+- `10-orient`: “Give every part a folder” moved the resident engine and all 150 independently loaded room sectors into the standard part layout. “The game's own loader puts the part in memory” required native captures for each board, even though the room parts contain data rather than new code. The migration used kit 0.0.88.
 
 ## Shared changes
 
