@@ -84,6 +84,10 @@
   ],
   "parts": [
     {
+      "id": "title",
+      "title": "Title"
+    },
+    {
       "id": "highjump",
       "title": "High Jump"
     }
