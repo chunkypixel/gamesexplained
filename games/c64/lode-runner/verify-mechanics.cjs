@@ -1,6 +1,6 @@
 /* Original-code verification. Requires the contributor's private play snapshot.
    node games/c64/lode-runner/verify-mechanics.cjs path/to/play-round1.vsf
-   Widget functions/data are read from the self-contained article. */
+   Widget functions/data are read from the article and Music tab. */
 'use strict';
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const path=require('node:path');
@@ -9,8 +9,11 @@ const {CPU}=require(path.join(root,'kit/c64/cpu6502.js'));
 const snap=process.argv[2];if(!snap)throw Error('Supply private play snapshot path');
 let html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
 const code=html.match(/<script id="lr-mechanics">([\s\S]*?)<\/script>/)[1];
-const D=JSON.parse(html.match(/<script id="lr-data" type="application\/json">([\s\S]*?)<\/script>/)[1]);
+const musicHtml=fs.readFileSync(path.join(__dirname,'music.html'),'utf8');
+const musicCode=musicHtml.match(/<script id="lr-mechanics">([\s\S]*?)<\/script>/)[1];
+const D=JSON.parse(musicHtml.match(/<script id="lr-data" type="application\/json">([\s\S]*?)<\/script>/)[1]);
 const box={Uint8Array,Math};vm.createContext(box);vm.runInContext(code,box);
+vm.runInContext(musicCode,box);
 const cpu=CPU.fromSnapshot(snap);let cases=0;
 for(let player=0;player<16;player++)for(let row=0;row<16;row++)for(let guard=0;guard<28;guard++)for(let col=0;col<28;col++){
  cpu.m[4]=player;cpu.m[0x15]=guard;cpu.call(0x81ce,{a:row,x:col});assert.equal(box.routeCost(row,col,player,guard),cpu.a);cases++;

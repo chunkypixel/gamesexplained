@@ -77,3 +77,11 @@ The contributor's presentation review starts curation, so game.json records silv
 Added a full-lifetime original-code picture check: all 180 successive updates agree with the displayed closing stage, and original work-bitmap writes select 55 at 20 remaining, 56 at 10, and 1 at zero. The original 203773 route/score/timer/SID cases also pass, giving 203953 cases including the new sequence. An initial probe watched the display selector rather than the work selector; tracing the refill path moved the observation to $899B and runs the original drawing routine without a stub.
 
 Browser checks verified the initial intact brick, immediate digging picture change, countdown playback, stable pause, four distinct stage pictures, six boundary positions of the scrubber, automatic stop, replay, keyboard arrow stepping, and 390px layout with no page errors. The separate original comparison suite and existing browser regressions remain part of validation.
+
+## Contributor curation: Music tab
+
+On 4 October 2026 the contributor requested a Music tab after Maps / levels. Added music.html through the existing game.json tab configuration, keeping About last. Moved the queue player and all detailed music prose out of How it works, with a link beside gold collection. The Music page puts playback first, followed by SID note/envelope details and the disk/cartridge motif comparison. The main edition table now leaves the motif counts to that page.
+
+The verified queue driver and audio data moved without changes, confirmed by hashes. Non-audio data on How it works is unchanged. Removed unused audio data and queue code from the map page as well. verify-mechanics.cjs reads the queue port directly from music.html and still passes all 203953 cases, including 1264 ordered SID ticks. No listing or original routine changed.
+
+Browser checks exercised all eleven music selections, stop, voice mute switches, seeking, navigation into Music, Source and map controls, and both edition browsers. Desktop and 390px screenshots were inspected; neither page has horizontal overflow or page errors. The separate copy pass checked each Music paragraph's purpose against its section and retained the documented playback limits. The full site builds 25 games and 132 pages.

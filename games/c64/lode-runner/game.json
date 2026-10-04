@@ -137,5 +137,27 @@
     "model_note": "Contributor recalls mostly GPT-6 Astra; complete historical model roster unconfirmed. No prior annotation text/names imported; selected claims independently reverified by this run.",
     "source_commit": "0f15fdedd7d545582f627dcf26a29f13175a3c8f",
     "evidence": "comparison.md"
-  }
+  },
+  "tabs": [
+    [
+      "index.html",
+      "How it works"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "levels.html",
+      "Maps / levels"
+    ],
+    [
+      "music.html",
+      "Music"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ]
 }

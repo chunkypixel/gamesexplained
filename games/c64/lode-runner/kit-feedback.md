@@ -49,3 +49,7 @@ Comparison content has its own evidence/provenance record and a separate copy re
 ## Contributor presentation review
 
 The first hole widget began open, so its start button only reset a counter. Small increments gave little visual feedback during the long open-picture interval. It now begins before the user action and offers timed playback, scrubbing, and explicit closing stages. This visible UI problem is recorded here and in agent-history.md; the existing minisite interactivity rule covers it, so no shared skill or launcher change was needed. The page-specific check follows the full original countdown and records its actual picture changes.
+
+## Music as an authored tab
+
+The contributor's next curation request moved detailed music content into its own tab after Maps / levels. `kit/skills/core/70-minisite/SKILL.md` already says to list all tabs in order as file/label pairs in game.json; that mechanism publishes music.html and gives every page the same navigation. Its paragraph-purpose rule also supports leaving a short link at gold collection while moving the music explanation to the page it serves. No shared build or skill change was needed. Original-code checks now read the queue driver from its authored Music page, so a future edit cannot leave verification pointed at a retired copy.
