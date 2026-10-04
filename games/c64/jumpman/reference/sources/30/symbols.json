@@ -713,12 +713,12 @@
   {
    "address": 12368,
    "type": "line",
-   "text": "Spawn and poll input, servicing transformation request $30CC through $3393. At four remaining bombs, change the moving trigger to colour 7. Zero bombs completes normally. After death, bullet count $3014=5 identifies the second stage and branches directly to completion regardless of remaining bombs; otherwise check reserves and respawn or exhaust. Cleanup JSR is patched at $30A3. Controlled live comparison: after native transformation with bombs4/request1, holdingLEFT produces a normal death then reaches$5B00 with bombs4; same input in stage1 reaches respawn$3050. No position/death-state edits. Full legal route to transformation remains open."
+   "text": "Spawn and poll input, servicing transformation request $30CC through $3393. At four remaining bombs, change the moving trigger to colour 7. Zero bombs completes normally. After death, bullet count $3014=5 identifies the second stage and branches directly to completion regardless of remaining bombs; otherwise check reserves and respawn or exhaust. Cleanup JSR is patched at $30A3. Controlled live comparison: after native transformation with bombs4/request1, holdingLEFT produces a normal death then reaches$5B00 with bombs4; same input in stage1 reaches respawn$3050. No position/death-state edits. Entry through earlier campaign levels remains open. A complete native input replay from the initialized selected level collects nine bombs with one lost life, then reaches trigger contact alive with three remaining. After the transformation, LEFT collects a500-point bomb and dies. At $3078 and completion $5B00, score1400, remaining2, reserves4. No game-state or code edits follow the initialized setup; earlier campaign entry remains unverified."
   },
   {
    "address": 12455,
    "type": "line",
-   "text": "With an active player collision, bomb count below 5 plus any sprite-7 collision increments request $30CC and returns safely. Otherwise start death mode 1 if the current mode is 0. The main loop consumes transformation requests."
+   "text": "With an active player collision, bomb count below 5 plus any sprite-7 collision increments request $30CC and returns safely. Otherwise start death mode 1 if the current mode is 0. The main loop consumes transformation requests. Native ordinary-input contact at $30BD has player260,216 and trigger7 actor state252,216, collision shadows$81 for those two only, remaining3 and life0. The original increment requests transformation; source conditions are not supplied by memory edits."
   },
   {
    "address": 12492,
@@ -788,7 +788,7 @@
   {
    "address": 13203,
    "type": "line",
-   "text": "Install collision callback $34C7, freeze the player movement divider at 9, queue sound $3362, hide the old trigger and load marker sprite $342F through $346E. Temporarily install frame callback $3418, clear the bitmap and draw layout $31AA. Redraw the HUD, copy alignment arrays $3290/$3298, set bullet count 5 and bomb-table pointer $3226, install marker callback $3499, then restore the divider from $402A. Remaining bomb count $3013 is not reset. Controlled live request1/bombs4 executes this full routine, retains4 targets and installs bullet limit5. Subsequent normal input death reaches completion. Controlled original execution checks the pending callback writes, resident $428D installation, frame sequence49/50/51/52, and post-wait replacement layout/ladder fields/table. The CPU check splits before and after the asynchronous wait; native transformation was checked separately."
+   "text": "Install collision callback $34C7, freeze the player movement divider at 9, queue sound $3362, hide the old trigger and load marker sprite $342F through $346E. Temporarily install frame callback $3418, clear the bitmap and draw layout $31AA. Redraw the HUD, copy alignment arrays $3290/$3298, set bullet count 5 and bomb-table pointer $3226, install marker callback $3499, then restore the divider from $402A. Remaining bomb count $3013 is not reset. Controlled live request1/bombs4 executes this full routine, retains4 targets and installs bullet limit5. Subsequent normal input death reaches completion. Controlled original execution checks the pending callback writes, resident $428D installation, frame sequence49/50/51/52, and post-wait replacement layout/ladder fields/table. The CPU check splits before and after the asynchronous wait; native transformation was checked separately. An ordinary-input replay also reaches this entry with remaining3 after nine pickups and one lost life. Returning to $305B keeps remaining3, life0 and score900 while changing bullet limit3 to5. Subsequent death follows the level completion path."
   },
   {
    "address": 13336,

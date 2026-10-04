@@ -14,6 +14,13 @@ Versions that taught nothing of the kind do not appear.
 
 ## next · 4 October 2026 · Jumpman · JankFoundry with Codex
 
+**A finite item count is an assumption to verify.** Fastest-speed backlog
+testing needed the original placement and deferred occupancy rules. The
+collector alone did not enforce the proposed pickup cap. Verification now
+checks such limits across foreground and interrupt work before turning a
+conditional bound into a gameplay claim. It also separates a score update
+from its later visible refresh when capturing completion evidence.
+
 **A suspicious byte needs its surrounding state.** Controlled collision
 setups found a terrain-flag difference while ordinary input routes still
 climbed successfully. Verification now records retained probes and pose

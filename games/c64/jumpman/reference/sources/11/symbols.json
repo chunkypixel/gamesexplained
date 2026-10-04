@@ -825,7 +825,7 @@
   {
    "address": 13192,
    "type": "line",
-   "text": "Require hazard pulse, and reject life state2; dying state1 is accepted. Scan sprites7..4 for a collision snapshot containing player bit0. Disable the first matching flying bomb, queue collection sound, add100 to24-bit score, update HUD/extra life, decrement remaining bombs and return. With no match, branch through$3385 to landing scan$32E5. Controlled CPU/native checks cover life0/1/2 and pulse0; a neutral-input native replay also collects during life1."
+   "text": "Require hazard pulse, and reject life state2; dying state1 is accepted. Scan sprites7..4 for a collision snapshot containing player bit0. Disable the first matching flying bomb, queue collection sound, add100 to24-bit score, update HUD/extra life, decrement remaining bombs and return. With no match, branch through$3385 to landing scan$32E5. Controlled CPU/native checks cover life0/1/2 and pulse0; a neutral-input native replay also collects during life1. With supplied remaining count0 and a flying-bomb collision, unchanged CPU and native code decrement the count to255. This is a controlled input, not a demonstrated gameplay underflow. The collector itself therefore cannot justify an unconditional twelve-collection cap."
   },
   {
    "address": 13276,
@@ -870,7 +870,7 @@
   {
    "address": 13410,
    "type": "line",
-   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+8-bit offset, then add6 modulo256. No capacity guard. Controlled placements preserve43 pending records; record44 starts at offset2 and overlaps earlier records.  A conservative scheduler model bounds pending records at eight for normal speed selections 2 through 8: four actors, at least 13 flight updates before landing, one collection per pulse, and at least two pop-service calls between pulses. Speed 1 is outside that bound; no natural overload is established."
+   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+8-bit offset, then add6 modulo256. No capacity guard. Controlled placements preserve43 pending records; record44 starts at offset2 and overlaps earlier records.  A conservative scheduler model bounds pending records at eight for normal speed selections 2 through 8: four actors, at least 13 flight updates before landing, one collection per pulse, and at least two pop-service calls between pulses. Speed 1 is outside that bound; no natural overload is established. A bounded speed1 stress executes original initialization for128 seeds and four supplied collection policies:512 scenarios, at most1000 pulses each, collector/landing then spawn/move then one pop. Maximum pending count is4. Native execution matches the sampled peak. Player movement, static pickups and interrupt interleavings are omitted, so this does not bound every legal speed1 run."
   },
   {
    "address": 13450,

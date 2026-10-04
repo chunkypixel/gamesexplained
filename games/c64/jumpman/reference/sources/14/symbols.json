@@ -593,7 +593,7 @@
   {
    "address": 12368,
    "type": "line",
-   "text": "Spawn, consume queued stair drawing through$34EA, then collect the single goal bomb. Death and completion follow header vectors. Added stairs are deferred to main code rather than rendered directly by the shooting IRQ."
+   "text": "Spawn, consume queued stair drawing through$34EA, then collect the single goal bomb. Death and completion follow header vectors. Added stairs are deferred to main code rather than rendered directly by the shooting IRQ. Native joystick-only continuation of the recorded 49-hit state reaches the single goal bomb alive after 54 total hits. At original completion $5B00: score2800, remaining0, life0, six reserves. Campaign entry is outside this selected-level check."
   },
   {
    "address": 12418,
@@ -688,7 +688,7 @@
   {
    "address": 13499,
    "type": "line",
-   "text": "Every fourth hit schedules the next of12 stair placements; foreground$34EA renders it. Native joystick replay lands49 hits in one life: hit48 gives2400 points and12 stairs; hit49 gives2450 while keeping hit counter48, stair index12 and the complete bitmap unchanged. All13 distinct native layouts match separate original-code rendering. Full campaign entry and final-bomb collection remain separate checks."
+   "text": "Every fourth hit schedules the next of12 stair placements; foreground$34EA renders it. Native joystick replay lands49 hits in one life: hit48 gives2400 points and12 stairs; hit49 gives2450 while keeping hit counter48, stair index12 and the complete bitmap unchanged. All13 distinct native layouts match separate original-code rendering. Full campaign entry remains a separate check. The recorded 49-hit state has a verified joystick-only continuation: five more hits and the goal bomb reach original completion with score2800, remaining0, life0 and six reserves. No further stairs are drawn."
   },
   {
    "address": 13546,

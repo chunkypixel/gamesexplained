@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,76 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12430,
-   "type": "Code"
-  },
-  {
-   "start": 12431,
    "end": 12455,
    "type": "Code"
   },
   {
    "start": 12456,
-   "end": 12540,
-   "type": "Byte"
-  },
-  {
-   "start": 12541,
-   "end": 12548,
-   "type": "Byte"
-  },
-  {
-   "start": 12549,
-   "end": 12552,
-   "type": "Byte"
-  },
-  {
-   "start": 12553,
-   "end": 12556,
-   "type": "Byte"
-  },
-  {
-   "start": 12557,
-   "end": 12560,
-   "type": "Byte"
-  },
-  {
-   "start": 12561,
-   "end": 12568,
-   "type": "Byte"
-  },
-  {
-   "start": 12569,
-   "end": 12572,
-   "type": "Byte"
-  },
-  {
-   "start": 12573,
-   "end": 12580,
-   "type": "Byte"
-  },
-  {
-   "start": 12581,
-   "end": 12588,
-   "type": "Byte"
-  },
-  {
-   "start": 12589,
-   "end": 12596,
-   "type": "Byte"
-  },
-  {
-   "start": 12597,
-   "end": 12604,
-   "type": "Byte"
-  },
-  {
-   "start": 12605,
-   "end": 12612,
-   "type": "Byte"
-  },
-  {
-   "start": 12613,
    "end": 12620,
    "type": "Byte"
   },
@@ -243,91 +128,26 @@
   },
   {
    "start": 12659,
-   "end": 12662,
-   "type": "Byte"
-  },
-  {
-   "start": 12663,
    "end": 12926,
    "type": "Byte"
   },
   {
    "start": 12927,
-   "end": 13113,
-   "type": "Code"
-  },
-  {
-   "start": 13114,
    "end": 13157,
    "type": "Code"
   },
   {
    "start": 13158,
-   "end": 13160,
-   "type": "Byte"
-  },
-  {
-   "start": 13161,
-   "end": 13168,
-   "type": "Byte"
-  },
-  {
-   "start": 13169,
-   "end": 13176,
-   "type": "Byte"
-  },
-  {
-   "start": 13177,
-   "end": 13184,
-   "type": "Byte"
-  },
-  {
-   "start": 13185,
-   "end": 13192,
-   "type": "Byte"
-  },
-  {
-   "start": 13193,
-   "end": 13200,
-   "type": "Byte"
-  },
-  {
-   "start": 13201,
-   "end": 13208,
-   "type": "Byte"
-  },
-  {
-   "start": 13209,
-   "end": 13224,
-   "type": "Byte"
-  },
-  {
-   "start": 13225,
-   "end": 13240,
-   "type": "Byte"
-  },
-  {
-   "start": 13241,
    "end": 13256,
    "type": "Byte"
   },
   {
    "start": 13257,
-   "end": 13401,
-   "type": "Code"
-  },
-  {
-   "start": 13402,
    "end": 13564,
    "type": "Code"
   },
   {
    "start": 13565,
-   "end": 13565,
-   "type": "Byte"
-  },
-  {
-   "start": 13566,
    "end": 13572,
    "type": "Byte"
   },
@@ -338,91 +158,6 @@
   },
   {
    "start": 13679,
-   "end": 13697,
-   "type": "Byte"
-  },
-  {
-   "start": 13698,
-   "end": 13714,
-   "type": "Byte"
-  },
-  {
-   "start": 13715,
-   "end": 13754,
-   "type": "Byte"
-  },
-  {
-   "start": 13755,
-   "end": 13755,
-   "type": "Byte"
-  },
-  {
-   "start": 13756,
-   "end": 13790,
-   "type": "Byte"
-  },
-  {
-   "start": 13791,
-   "end": 13791,
-   "type": "Byte"
-  },
-  {
-   "start": 13792,
-   "end": 13815,
-   "type": "Byte"
-  },
-  {
-   "start": 13816,
-   "end": 13816,
-   "type": "Byte"
-  },
-  {
-   "start": 13817,
-   "end": 13840,
-   "type": "Byte"
-  },
-  {
-   "start": 13841,
-   "end": 13841,
-   "type": "Byte"
-  },
-  {
-   "start": 13842,
-   "end": 13904,
-   "type": "Byte"
-  },
-  {
-   "start": 13905,
-   "end": 13926,
-   "type": "Byte"
-  },
-  {
-   "start": 13927,
-   "end": 13957,
-   "type": "Byte"
-  },
-  {
-   "start": 13958,
-   "end": 13958,
-   "type": "Byte"
-  },
-  {
-   "start": 13959,
-   "end": 14001,
-   "type": "Byte"
-  },
-  {
-   "start": 14002,
-   "end": 14082,
-   "type": "Byte"
-  },
-  {
-   "start": 14083,
-   "end": 14083,
-   "type": "Byte"
-  },
-  {
-   "start": 14084,
    "end": 14335,
    "type": "Byte"
   },
@@ -1115,7 +850,7 @@
   {
    "address": 13114,
    "type": "line",
-   "text": "Compute player X/2 into $3367. Select route condition $10-$13 by comparing player position with one of four X/Y threshold pairs at $3369/$336D, indexed by kill counter $3368&3. Tail-call $33C9 to advance shots."
+   "text": "Compute player X/2 into $3367. Select route condition $10-$13 by comparing player position with one of four X/Y threshold pairs at $3369/$336D, indexed by kill counter $3368&3. Tail-call $33C9 to advance shots. The native first kill advances the selector from0 to1: X/2,Y thresholds52,78 become92,100. At the captured player position288,56, both pairs select$11. A change in the selected enemy route is not established by that contact alone."
   },
   {
    "address": 13158,
@@ -1190,7 +925,7 @@
   {
    "address": 13573,
    "type": "line",
-   "text": "Require no player collision, player-shot collision and enemy6/7 shadow; prefer6. Add100, clear player shot and reset enemy to8,152 with route$3267/count0. Increment kill counter selecting four pursuit threshold pairs. CPU checked masks, score wrap and every threshold boundary; natural hit/mixed-contact routes remain open. Queue melody$356F, refresh HUD/check extra life via$435B, then tail-call ordinary player collision$308F."
+   "text": "Require no player collision, player-shot collision and enemy6/7 shadow; prefer6. Add100, clear player shot and reset enemy to8,152 with route$3267/count0. Increment kill counter selecting four pursuit threshold pairs. CPU checked masks, score wrap and every threshold boundary; mixed-contact routes remain open. Queue melody$356F, refresh HUD/check extra life via$435B, then tail-call ordinary player collision$308F. A native joystick replay accepts enemy7 at $351E: player shot1 and enemy7 share position240,56, collision shadows$82. Original sprite shapes intersect in eight opaque pixels; no other enabled pair intersects. Resuming to $356C scores100, resets enemy7 and increments kills0 to1 with life0. The same794-frame movement without fire scores0."
   },
   {
    "address": 13679,

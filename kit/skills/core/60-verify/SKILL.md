@@ -133,7 +133,20 @@ increment in the same service changes the period. State the initial queue,
 producer/consumer order and assumptions of any abstract bound; a permissive
 model reaching overflow does not establish that the real game can reach it.
 
+If a bound assumes a finite number of pickups or objects, establish that
+limit across every producer and consumer. Deferred drawing can leave old
+occupancy visible after a spawn, and an interrupt-side collector may run
+before the foreground observes completion. A supplied zero-count input
+can test whether the collector guards underflow; it does not establish a
+reachable underflow. Keep a bound conditional until its count and ordering
+assumptions are verified.
+
 ## Live verification
+
+A screen can lag a RAM update. Record the instruction stop for a numerical
+claim, then let the original display refresh run before taking its matching
+screenshot. Keep those phases separate when completion itself changes the
+life or movement state.
 
 Any claim that can be tested in the emulator in under a few minutes gets
 tested. Typical tests:

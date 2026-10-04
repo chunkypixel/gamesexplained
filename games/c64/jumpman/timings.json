@@ -245,6 +245,22 @@
    "end": "2026-10-04T00:55:40Z",
    "minutes": 3.1,
    "note": "Recorded controlled versus ordinary-input scope, runtime callback/retained-probe/divider lessons, native exports preserving source bytes/classifications, all24 native comparisons and original-byte/model regressions. Both native tools stopped; final page and repository validation before pushed branch, no PR/issues."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T01:06:51Z",
+   "end": "2026-10-04T02:01:15Z",
+   "minutes": 54.4,
+   "note": "Verified Gunfighter ordinary shot/enemy overlap and no-fire control; Dragon Slayer54-hit final-bomb finish without losing a life; Grand Puzzle III nine-pickup transformation and subsequent death completion with two targets. Replayed native routes and checked sprite pixels. Runaway speed1:418202 original-routine calls,512 bounded scenarios and two native cases; no global overflow claim. Updated nine native source comments with original bytes preserved."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T02:01:15Z",
+   "end": "2026-10-04T02:03:46Z",
+   "minutes": 2.5,
+   "note": "Recorded finite-pickup and display-refresh verification lessons. Native route replays, pixel comparisons, two Runaway native controls, source preservation, original-file/model checks, desktop/mobile browser checks and all19 builds pass. Updated plain-language page and exact remaining limits; both native tools stopped. Prepared branch push for review without PR/issues."
   }
  ]
 }
