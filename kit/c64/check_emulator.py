@@ -616,6 +616,9 @@ def p_quirks(rpc):
 
 
 def main():
+    if "-h" in sys.argv or "--help" in sys.argv:   # it resets the machine: never on a request for usage
+        print(__doc__)
+        return
     os.makedirs(OUT, exist_ok=True)
     build = tools("status").splitlines()[0]
     print(build)

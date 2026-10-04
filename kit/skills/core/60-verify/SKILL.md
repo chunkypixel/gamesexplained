@@ -159,6 +159,14 @@ lies, all of which have cost real time:
   choice, so one result from it is one sample. To see the spread, start
   from several snapshots, or wait a different number of frames before the
   input.
+- **A value the code never writes came from somewhere.** A random seed,
+  a counter or a flag with no store anywhere in the listing was not
+  "left over": its first value is the one the file brings from the disk,
+  and the snapshot holds whatever it has moved on to since. Find the
+  byte in the loaded file (or the earlier load that wrote it) before
+  describing it. A seed that comes from the disk makes the first run
+  after every load the same, which a page that replays the snapshot's
+  value would miss.
 
 **A test must contain cases that have to succeed.** A port of a code
 checker (a password, an account number, a checksum) tested on random

@@ -53,7 +53,7 @@ def main():
         try:
             t = json.load(open(gj)).get("title")
             if t and len(t) > 3:
-                titles.append(r"\b" + re.escape(t) + r"\b")
+                titles.append(r"(?<!\w)" + re.escape(t) + r"(?!\w)")
         except Exception:
             pass
     if titles:
