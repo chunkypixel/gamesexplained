@@ -19,7 +19,62 @@
    [
     2,
     255,
-    "High Jump zero page holds mutable input, movement, sound and graphics state, not authored image bytes"
+    "zero page: High Jump's input, movement, sound and graphics state, written at run time"
+   ],
+   [
+    1024,
+    2047,
+    "quarter-square multiply table, computed at start-up by $1310; no bytes of it are loaded"
+   ],
+   [
+    24384,
+    24575,
+    "left by the hub past the end of the bitmap; High Jump's files do not write it and its code does not read it"
+   ],
+   [
+    25576,
+    25599,
+    "left by the hub after the colour data; not written or read by High Jump"
+   ],
+   [
+    26600,
+    26615,
+    "unused gap before the sprite pointers; not written or read by High Jump"
+   ],
+   [
+    27136,
+    27647,
+    "the hub's records-screen text, left in memory; High Jump never loads or reads it"
+   ],
+   [
+    28096,
+    28159,
+    "left by the hub between the sprite buffers; not written or read by High Jump"
+   ],
+   [
+    28480,
+    28671,
+    "left by the hub after the sprite buffers; not written or read by High Jump"
+   ],
+   [
+    49840,
+    53247,
+    "not High Jump's: a stale copy of the resident event manager ($F9E0-$FFF7) left by the hub, then the power-on pattern; file $12 ends at $C2AF and nothing in practice play reads, writes or runs these bytes"
+   ],
+   [
+    57344,
+    61439,
+    "written by an earlier load after the title and identical in shop, town and play; High Jump never reads it (simulator access log, code scan); origin unknown"
+   ],
+   [
+    61440,
+    61999,
+    "the tail of a RAM copy of the KERNAL from an earlier load; unused with the ROM banked out"
+   ],
+   [
+    63060,
+    63279,
+    "stale bytes between the loader and the event manager, unchanged since the title; nothing refers to them"
    ]
   ],
   "extra": []
@@ -217,16 +272,6 @@
   },
   {
    "start": 16384,
-   "end": 16719,
-   "type": "Byte"
-  },
-  {
-   "start": 16720,
-   "end": 16790,
-   "type": "Code"
-  },
-  {
-   "start": 16791,
    "end": 49839,
    "type": "Byte"
   },
@@ -1024,12 +1069,6 @@
    "name": "ldr_sector",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "user"
-  },
-  {
-   "address": 162,
-   "name": "zpf_A2",
-   "type": "ZeroPageField",
-   "kind": "auto"
   },
   {
    "address": 224,
@@ -3169,7 +3208,7 @@
   },
   {
    "address": 6555,
-   "name": "random_pair_animation",
+   "name": "animate_flag_pair",
    "type": "Subroutine",
    "kind": "user"
   },
@@ -3181,7 +3220,7 @@
   },
   {
    "address": 6574,
-   "name": "height_cell_animation",
+   "name": "animate_crowd_cell",
    "type": "Subroutine",
    "kind": "user"
   },
@@ -5548,12 +5587,6 @@
    "name": "hj_bitmap_row00_status",
    "type": "UserDefined",
    "kind": "user"
-  },
-  {
-   "address": 16702,
-   "name": "b_413E",
-   "type": "Branch",
-   "kind": "auto"
   },
   {
    "address": 16704,
@@ -11413,6 +11446,16 @@
    "text": "Header row and sprite set-up, part 2 (after the inline text): print the string the resident code points to at $FE00/$FE01 (in this snapshot $F822, 'PRACTICE') at the start of bitmap row 0; sprite page $22=$B0; sprite multicolours $D025=1 and $D026=6; colour mask $45=$FF; copy the colour byte $FE02 into entry 4 (sprite 4) of both sprite colour schemes, $2D83 and $2D8B; starting pose $4F=$2A35[0]; build the skater sprites ($14DE); copy the two 64-byte ruler shapes $2CFF and $2D3F to $6D40 and $6D80 (sprite pointers $B5 and $B6)."
   },
   {
+   "address": 2542,
+   "type": "line",
+   "text": "Board colour: copy the skater attribute $FE02 (event manager slot A; 7 for every roster skater, $0D for LESTER) into entry 4 of both sprite colour sets, $2D83 and $2D8B, so sprite 4 (the board) takes it whichever set $19D3 picks."
+  },
+  {
+   "address": 2561,
+   "type": "line",
+   "text": "Copy the two 64-byte height-ruler sprites from $2CFF/$2D3F to sprite blocks $B5/$B6 ($6D40/$6D80), shown as sprites 5 and 6."
+  },
+  {
    "address": 2579,
    "type": "line",
    "text": "Install the raster interrupt: SEI, $01=$25, CIA 1 interrupts off ($DC0D=$7F, then read to acknowledge), wait for the frame wrap ($0A45), band $1E=0, clear the raster compare's bit 8, first compare line from $2A05 ($F9), IRQ vector $FFFE/$FFFF = $0AF0, enable the raster interrupt. The NMI vector at $FFFA holds $0A3A, the middle of this routine (LDA #$0A / STA $FFFF / LDA #$01 / STA $D01A / RTS); this load never writes $FFFA, and the vector already held $0A3A in the town snapshot."
@@ -11486,6 +11529,11 @@
    "address": 2909,
    "type": "line",
    "text": "Set the sprites for the frame. Enable sprites 0-4 plus the bits in $66; no priority or X expansion; Y-expand sprites 5 and 6 ($D017=$60); multicolour for sprites 1, 2, 5 and 6 where $45 allows ($D01C = $66 AND $45). Pointers at $67F8: sprites 0-4 take $22..$22+4, sprite 7 takes $22+4 as well, sprites 5 and 6 take $B5 and $B6. Colour of sprite n: $2E63+n when bit n of $45 is set, else 0 (black). Positions: when $25 bit 7 is set (the fall, phase 6) sprites 0-3 come from pose $5F at $59/$5A/$5B, mirrored by the side bit $58, and sprite 4 from the fifth part of the skater pose $4F; otherwise sprites 0-4 are the five parts of pose $4F at $49/$4A/$4B, mirrored by the side bit $48 (place_part_sprite). Sprites 5 and 6 go to fixed places (place_fixed_sprite). Sprite 7 copies sprite 4's X and sits at sprite 4's Y + $69 - $4B + 1; with colour 0 in both schemes it reads as a shadow. $D010 is built from the bits gathered in $1B."
+  },
+  {
+   "address": 2960,
+   "type": "line",
+   "text": "Sprites 5 and 6 always show blocks $B5 and $B6, the height ruler copied there at start-up ($0A01)."
   },
   {
    "address": 3148,
@@ -11801,6 +11849,11 @@
    "address": 5692,
    "type": "line",
    "text": "Phase $06 set-up: clear height $2B and the lock $43; start object 1 (the body) at the skater's x with y $96, its facing, scale and platform path position; $3C = $F8, velocity $5D/$5E = 0, zoom step $60 = $7A, or -$7A when the scale is $E0 or more; $27 = 1 when the speed $4D/$4E is $0348 or more either way, choosing sound $16 or $09 from $2DB7 and the fall tables at $2A6F/$2A71."
+  },
+  {
+   "address": 5792,
+   "type": "line",
+   "text": "Sound for this transition by speed: X ($27, used here as a temporary) is 1 when the speed word $4D/$4E is $0348 or more either way ($1684-$169A), else 0; queue sound highjump_transition_sound_ids[X] ($2DB7): 22 when slower, 9 when faster."
   },
   {
    "address": 5820,
