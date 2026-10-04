@@ -76,12 +76,20 @@ Check stored callback pointers against exact instruction boundaries and labels.
 A useful name on the preceding return can leave every byte annotated while
 misidentifying the callable entry. When one such error appears, check all
 entries in the same header/table format rather than only the sampled name.
+Follow later writes to those pointers too: a transformation can install a
+different callback or record table. Execute the request and the original
+installation step, then check the replacement entries against the listing.
 
 For packed drawing records, distinguish lengths, offsets and commands from
 pixel values before describing their material or colour. Execute the original
 renderer on both empty and filled backgrounds: an eraser can look like a
 no-op on an empty bitmap. Compare changed pixels in a native input replay
 separately from the shape's total number of writes.
+
+A coordinate is not the whole collision state. Animation masks and probes
+retained from the previous movement can change the sampled material. Label
+supplied probe/pose values in exhaustive tests, and replay ordinary inputs
+before turning a table anomaly into a claim about a blocked route or fall.
 
 ## A count is not necessarily the table boundary
 
@@ -118,6 +126,12 @@ the age of the displayed sample; replay-before-record and increment-before-
 read can shift that age by one. Test creation on both sides of the cursor
 boundary and after wrapping. Use ordinary-input captures separately to
 establish which controlled cases actually occur in play.
+
+Before deriving a queue bound from a divider, execute the divider across
+several periods, including its fastest setting. A reset followed by an
+increment in the same service changes the period. State the initial queue,
+producer/consumer order and assumptions of any abstract bound; a permissive
+model reaching overflow does not establish that the real game can reach it.
 
 ## Live verification
 

@@ -14,6 +14,8 @@ A further 20-fact/10-routine semantic sample executes original instructions in 1
 
 A further gap pass checks all179 nonzero overlay header pointers and397 bomb callbacks, correcting two more entry labels. It also corrects Hot Foot's stamp interpretation:20 background pixels erase scenery, with16 occupied pixels removed in the captured normal jump. Runaway's drawing-stack wrap/overlap has bounded controlled tests, while a separate neutral-input native route confirms collection during death. Two repeatable PRG checks,2,116 routine calls,13 native comparisons and exact evidence limits are recorded in `gap-audit.md`. The kit verification notes now distinguish packed-record metadata from payload and check exact callback entries.
 
+A deeper pass adds541,068 routine executions (including marked diagnostic alternatives) and24 native comparisons. It verifies runtime puzzle callbacks and replacement bomb entries, bounds Runaway's drawing backlog at eight for normal speeds2–8, and records ordinary follower creation/death plus a controlled Hot Foot landing-height comparison. Movement anomalies have narrower evidence limits; speed1 overload and Gunfighter hits remain open. `deeper-audit.md` and a hash-linked result file describe the assumptions and replay inputs.
+
 This is Silver, claimed by jankfoundry for curation. Human copy edits have begun in the Randomizer paragraph; full section-by-section review remains open. Natural consequences of several traced edge cases remain explicitly open; the sound model omits SID bus decay and within-frame write timing. No full playable port or Gold curation is claimed.
 
 ## Maintainer asks

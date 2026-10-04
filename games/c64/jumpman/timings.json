@@ -229,6 +229,22 @@
    "end": "2026-10-03T11:29:50Z",
    "minutes": 5.4,
    "note": "Closed gaps through full initial-entry audit, Hot Foot eraser correction and native jump/control, Runaway forced-stack boundaries and native collection during death. Added repeatable checks,13 native comparisons, scoped report and verification guidance; no PR/issues."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T00:25:57Z",
+   "end": "2026-10-04T00:52:36Z",
+   "minutes": 26.6,
+   "note": "Deeper mechanics: 541068 routine executions including declared diagnostics, 24 native comparisons, puzzle runtime entries, speed2..8 Runaway backlog bound, ordinary followers and Hot Foot landing controls, maze climb controls, bounded unsuccessful Gunfighter routes. Native comments and page updated; remaining natural routes scoped."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T00:52:36Z",
+   "end": "2026-10-04T00:55:40Z",
+   "minutes": 3.1,
+   "note": "Recorded controlled versus ordinary-input scope, runtime callback/retained-probe/divider lessons, native exports preserving source bytes/classifications, all24 native comparisons and original-byte/model regressions. Both native tools stopped; final page and repository validation before pushed branch, no PR/issues."
   }
  ]
 }

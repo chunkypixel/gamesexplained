@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,61 +113,11 @@
   },
   {
    "start": 12368,
-   "end": 12454,
-   "type": "Code"
-  },
-  {
-   "start": 12455,
    "end": 12491,
    "type": "Code"
   },
   {
    "start": 12492,
-   "end": 12492,
-   "type": "Byte"
-  },
-  {
-   "start": 12493,
-   "end": 12628,
-   "type": "Byte"
-  },
-  {
-   "start": 12629,
-   "end": 12713,
-   "type": "Byte"
-  },
-  {
-   "start": 12714,
-   "end": 12837,
-   "type": "Byte"
-  },
-  {
-   "start": 12838,
-   "end": 12894,
-   "type": "Byte"
-  },
-  {
-   "start": 12895,
-   "end": 12943,
-   "type": "Byte"
-  },
-  {
-   "start": 12944,
-   "end": 12951,
-   "type": "Byte"
-  },
-  {
-   "start": 12952,
-   "end": 12957,
-   "type": "Byte"
-  },
-  {
-   "start": 12958,
-   "end": 12990,
-   "type": "Byte"
-  },
-  {
-   "start": 12991,
    "end": 13020,
    "type": "Byte"
   },
@@ -228,41 +128,21 @@
   },
   {
    "start": 13151,
-   "end": 13153,
-   "type": "Byte"
-  },
-  {
-   "start": 13154,
    "end": 13202,
    "type": "Byte"
   },
   {
    "start": 13203,
-   "end": 13335,
-   "type": "Code"
-  },
-  {
-   "start": 13336,
    "end": 13357,
    "type": "Code"
   },
   {
    "start": 13358,
-   "end": 13358,
-   "type": "Byte"
-  },
-  {
-   "start": 13359,
    "end": 13421,
    "type": "Byte"
   },
   {
    "start": 13422,
-   "end": 13435,
-   "type": "Code"
-  },
-  {
-   "start": 13436,
    "end": 13463,
    "type": "Code"
   },
@@ -273,121 +153,11 @@
   },
   {
    "start": 13465,
-   "end": 13510,
-   "type": "Code"
-  },
-  {
-   "start": 13511,
    "end": 13531,
    "type": "Code"
   },
   {
    "start": 13532,
-   "end": 13564,
-   "type": "Byte"
-  },
-  {
-   "start": 13565,
-   "end": 13565,
-   "type": "Byte"
-  },
-  {
-   "start": 13566,
-   "end": 13572,
-   "type": "Byte"
-  },
-  {
-   "start": 13573,
-   "end": 13678,
-   "type": "Byte"
-  },
-  {
-   "start": 13679,
-   "end": 13697,
-   "type": "Byte"
-  },
-  {
-   "start": 13698,
-   "end": 13714,
-   "type": "Byte"
-  },
-  {
-   "start": 13715,
-   "end": 13754,
-   "type": "Byte"
-  },
-  {
-   "start": 13755,
-   "end": 13755,
-   "type": "Byte"
-  },
-  {
-   "start": 13756,
-   "end": 13790,
-   "type": "Byte"
-  },
-  {
-   "start": 13791,
-   "end": 13791,
-   "type": "Byte"
-  },
-  {
-   "start": 13792,
-   "end": 13815,
-   "type": "Byte"
-  },
-  {
-   "start": 13816,
-   "end": 13816,
-   "type": "Byte"
-  },
-  {
-   "start": 13817,
-   "end": 13840,
-   "type": "Byte"
-  },
-  {
-   "start": 13841,
-   "end": 13841,
-   "type": "Byte"
-  },
-  {
-   "start": 13842,
-   "end": 13904,
-   "type": "Byte"
-  },
-  {
-   "start": 13905,
-   "end": 13926,
-   "type": "Byte"
-  },
-  {
-   "start": 13927,
-   "end": 13957,
-   "type": "Byte"
-  },
-  {
-   "start": 13958,
-   "end": 13958,
-   "type": "Byte"
-  },
-  {
-   "start": 13959,
-   "end": 14001,
-   "type": "Byte"
-  },
-  {
-   "start": 14002,
-   "end": 14082,
-   "type": "Byte"
-  },
-  {
-   "start": 14083,
-   "end": 14083,
-   "type": "Byte"
-  },
-  {
-   "start": 14084,
    "end": 14335,
    "type": "Byte"
   },
@@ -1018,7 +788,7 @@
   {
    "address": 13203,
    "type": "line",
-   "text": "Install collision callback $34C7, freeze the player movement divider at 9, queue sound $3362, hide the old trigger and load marker sprite $342F through $346E. Temporarily install frame callback $3418, clear the bitmap and draw layout $31AA. Redraw the HUD, copy alignment arrays $3290/$3298, set bullet count 5 and bomb-table pointer $3226, install marker callback $3499, then restore the divider from $402A. Remaining bomb count $3013 is not reset. Controlled live request1/bombs4 executes this full routine, retains4 targets and installs bullet limit5. Subsequent normal input death reaches completion."
+   "text": "Install collision callback $34C7, freeze the player movement divider at 9, queue sound $3362, hide the old trigger and load marker sprite $342F through $346E. Temporarily install frame callback $3418, clear the bitmap and draw layout $31AA. Redraw the HUD, copy alignment arrays $3290/$3298, set bullet count 5 and bomb-table pointer $3226, install marker callback $3499, then restore the divider from $402A. Remaining bomb count $3013 is not reset. Controlled live request1/bombs4 executes this full routine, retains4 targets and installs bullet limit5. Subsequent normal input death reaches completion. Controlled original execution checks the pending callback writes, resident $428D installation, frame sequence49/50/51/52, and post-wait replacement layout/ladder fields/table. The CPU check splits before and after the asynchronous wait; native transformation was checked separately."
   },
   {
    "address": 13336,

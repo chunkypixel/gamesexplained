@@ -560,7 +560,7 @@
   {
    "address": 12820,
    "type": "line",
-   "text": "At hazard pulse and life state0, act only when jump step$40BE==1. Place sprite7 at playerX-12,Y+5, set shape$10/white/enable, patch bitmap stamp position from player coordinates, and play noise$3300. Save drawing workspace$4D00-$4D0F and zero page$3C-$43 to$32E8-$32FF before rendering$32B4, then restore them. Its20 zero-valued bitmap pixels erase scenery; the nonzero shape-record fields are lengths and offsets, not collectible pixels."
+   "text": "At hazard pulse and life state0, act only when jump step$40BE==1. Place sprite7 at playerX-12,Y+5, set shape$10/white/enable, patch bitmap stamp position from player coordinates, and play noise$3300. Save drawing workspace$4D00-$4D0F and zero page$3C-$43 to$32E8-$32FF before rendering$32B4, then restore them. Its20 zero-valued bitmap pixels erase scenery; the nonzero shape-record fields are lengths and offsets, not collectible pixels. A native UP+FIRE jump followed by neutral input lands alive at Y64. Restoring only the pre-stamp bitmap after the stamp makes the same continuation land at Y62. This controlled comparison isolates a two-pixel landing-height effect for that route."
   },
   {
    "address": 12980,

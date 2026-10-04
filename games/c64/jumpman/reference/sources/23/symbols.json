@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,56 +113,21 @@
   },
   {
    "start": 12368,
-   "end": 12430,
-   "type": "Code"
-  },
-  {
-   "start": 12431,
    "end": 12451,
    "type": "Code"
   },
   {
    "start": 12452,
-   "end": 12563,
-   "type": "Byte"
-  },
-  {
-   "start": 12564,
-   "end": 12655,
-   "type": "Byte"
-  },
-  {
-   "start": 12656,
    "end": 12705,
    "type": "Byte"
   },
   {
    "start": 12706,
-   "end": 12766,
-   "type": "Code"
-  },
-  {
-   "start": 12767,
-   "end": 12823,
-   "type": "Code"
-  },
-  {
-   "start": 12824,
    "end": 12864,
    "type": "Code"
   },
   {
    "start": 12865,
-   "end": 12872,
-   "type": "Byte"
-  },
-  {
-   "start": 12873,
-   "end": 12873,
-   "type": "Byte"
-  },
-  {
-   "start": 12874,
    "end": 12874,
    "type": "Byte"
   },
@@ -223,71 +138,6 @@
   },
   {
    "start": 12906,
-   "end": 12908,
-   "type": "Byte"
-  },
-  {
-   "start": 12909,
-   "end": 12916,
-   "type": "Byte"
-  },
-  {
-   "start": 12917,
-   "end": 12924,
-   "type": "Byte"
-  },
-  {
-   "start": 12925,
-   "end": 12932,
-   "type": "Byte"
-  },
-  {
-   "start": 12933,
-   "end": 12935,
-   "type": "Byte"
-  },
-  {
-   "start": 12936,
-   "end": 12938,
-   "type": "Byte"
-  },
-  {
-   "start": 12939,
-   "end": 13249,
-   "type": "Byte"
-  },
-  {
-   "start": 13250,
-   "end": 13250,
-   "type": "Byte"
-  },
-  {
-   "start": 13251,
-   "end": 13275,
-   "type": "Byte"
-  },
-  {
-   "start": 13276,
-   "end": 13311,
-   "type": "Byte"
-  },
-  {
-   "start": 13312,
-   "end": 13567,
-   "type": "Byte"
-  },
-  {
-   "start": 13568,
-   "end": 13823,
-   "type": "Byte"
-  },
-  {
-   "start": 13824,
-   "end": 14079,
-   "type": "Byte"
-  },
-  {
-   "start": 14080,
    "end": 14335,
    "type": "Byte"
   },
@@ -748,7 +598,7 @@
   {
    "address": 12706,
    "type": "line",
-   "text": "Create at most seven followers. Select absolute read cursor200 if write cursor<8, else0; do not subtract a fixed common lag. Copy X-low/high,Y,frame from four history pages. CPU exhausts all256 creation cursors; early controlled cursor200 may read retained unfilled history, without proving a legal early pickup. Increment follower count$3241; enable the new sprite in colour1."
+   "text": "Create at most seven followers. Select absolute read cursor200 if write cursor<8, else0; do not subtract a fixed common lag. Copy X-low/high,Y,frame from four history pages. CPU exhausts all256 creation cursors; early controlled cursor200 may read retained unfilled history, without proving a legal early pickup. Increment follower count$3241; enable the new sprite in colour1. Native joystick input reaches the first collection at X140/Y216, score100, one enabled follower at the historical X320/Y212 pose. A subsequent collection raises the count to two before ordinary death."
   },
   {
    "address": 12767,
@@ -778,7 +628,7 @@
   {
    "address": 12875,
    "type": "line",
-   "text": "At life2 disable active followers and reset count/write cursor. Preserve all1024 history bytes and individual read cursors. Life1 stops replay/record without this cleanup. CPU checked all states."
+   "text": "At life2 disable active followers and reset count/write cursor. Preserve all1024 history bytes and individual read cursors. Life1 stops replay/record without this cleanup. CPU checked all states. A native two-follower death reaches this cleanup: both sprites are disabled, count and write cursor become zero, while read cursors remain33/6. The $3263 to $3269 counter-clear segment leaves all1,024 history bytes unchanged."
   },
   {
    "address": 12906,

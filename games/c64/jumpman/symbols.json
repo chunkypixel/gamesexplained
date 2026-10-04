@@ -9360,7 +9360,7 @@
   {
    "address": 18810,
    "type": "line",
-   "text": "Search eight climb columns for current multicolor X or +/-2, snap to its center and add2*vertical intent to spriteY. Reject destinations>=218. Select one of four ladder poses and alternating footstep sound; the earlier compare at$49BB uses $01, not immediate1."
+   "text": "Search eight climb columns for current multicolor X or +/-2, snap to its center and add2*vertical intent to spriteY. Reject destinations>=218. Select one of four ladder poses and alternating footstep sound; the earlier compare at$49BB uses $01, not immediate1. Controlled comparison of CMP $01 at $49BB against diagnostic CMP #$01: among 3,072 Y/direction/X/material setups, differences occur only for downward intent at Y222 (six cases). The original takes support fallback; the diagnostic aligns X then rejects destination Y224. This does not establish an ordinary-input failure or intended opcode."
   },
   {
    "address": 18962,
@@ -10945,7 +10945,7 @@
   {
    "address": 32000,
    "type": "line",
-   "text": "256-entry lookup converting a bitmap byte into ORed terrain flags for its four2-bit pixels: pixel0 contributes$01(background),pixel1$02(collectible),pixel2$04(support),pixel3$08(climbable). Multiple pixel kinds combine. Entries00-FE equal OR(1<<pixel) for the four pairs; entryFF contains0, so an all-colour3 byte contributes no flags. Read by the resident collision sampler."
+   "text": "256-entry lookup converting a bitmap byte into ORed terrain flags for its four2-bit pixels: pixel0 contributes$01(background),pixel1$02(collectible),pixel2$04(support),pixel3$08(climbable). Multiple pixel kinds combine. Entries00-FE equal OR(1<<pixel) for the four pairs; entryFF contains0, so an all-colour3 byte contributes no flags. Read by the resident collision sampler. On the rendered PLF2C opening, 262,144 paired original-sampler setups (512 X,256 Y,two pose masks, foot probe at current X/Y+11) find 90 combined-flag differences against diagnostic $7DFF=8. Two native input routes at X212 still climb Y216 to196 with either table value; no blocked ladder is established."
   },
   {
    "address": 32256,

@@ -12,7 +12,14 @@ Changes to the site, the folder layout, the delivery process, the prose
 style or the install mechanics are in the pull requests, not here.
 Versions that taught nothing of the kind do not appear.
 
-## next · 3 October 2026 · Jumpman · JankFoundry with Codex
+## next · 4 October 2026 · Jumpman · JankFoundry with Codex
+
+**A suspicious byte needs its surrounding state.** Controlled collision
+setups found a terrain-flag difference while ordinary input routes still
+climbed successfully. Verification now records retained probes and pose
+masks, follows replacement callbacks/tables, and executes divider timing
+before using it to bound deferred work. The fastest setting must have its
+own scope when a bound depends on spare service calls.
 
 **Coverage can hide a misplaced entry or a misread record.** Checking every
 stored level callback found two more names on preceding instructions.

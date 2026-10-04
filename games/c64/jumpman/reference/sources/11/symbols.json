@@ -870,7 +870,7 @@
   {
    "address": 13410,
    "type": "line",
-   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+8-bit offset, then add6 modulo256. No capacity guard. Controlled placements preserve43 pending records; record44 starts at offset2 and overlaps earlier records. Ordinary gameplay reaching that backlog is unverified."
+   "text": "Inputs A=new occupancy, FB/FC=drawing pointer,Y=location index. Append six bytes [occupancy,pointer high,pointer low,x,y,index] at$34DA+8-bit offset, then add6 modulo256. No capacity guard. Controlled placements preserve43 pending records; record44 starts at offset2 and overlaps earlier records.  A conservative scheduler model bounds pending records at eight for normal speed selections 2 through 8: four actors, at least 13 flight updates before landing, one collection per pulse, and at least two pop-service calls between pulses. Speed 1 is outside that bound; no natural overload is established."
   },
   {
    "address": 13450,
@@ -880,7 +880,7 @@
   {
    "address": 13451,
    "type": "line",
-   "text": "Pop one six-byte entry last-in-first-out, update its occupancy, patch placement or erasure stream coordinates, play corresponding sound, save renderer context, draw, restore context. The collision callback tail invokes this service even without a hazard pulse. Zero offset returns without popping. Controlled native comparisons cover depth43, overlapping depth44 and apparent-empty depth128; no ordinary overload route is established."
+   "text": "Pop one six-byte entry last-in-first-out, update its occupancy, patch placement or erasure stream coordinates, play corresponding sound, save renderer context, draw, restore context. The collision callback tail invokes this service even without a hazard pulse. Zero offset returns without popping. Controlled native comparisons cover depth43, overlapping depth44 and apparent-empty depth128; no ordinary overload route is established. The speed divider has steady period equal to the selected speed, including one service per pulse at speed 1. The bounded model covers speeds 2 through 8 only."
   },
   {
    "address": 13530,

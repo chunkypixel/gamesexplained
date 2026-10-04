@@ -58,51 +58,21 @@
   },
   {
    "start": 12294,
-   "end": 12295,
-   "type": "Address"
-  },
-  {
-   "start": 12296,
    "end": 12303,
    "type": "Address"
   },
   {
    "start": 12304,
-   "end": 12306,
-   "type": "Byte"
-  },
-  {
-   "start": 12307,
-   "end": 12307,
-   "type": "Byte"
-  },
-  {
-   "start": 12308,
    "end": 12308,
    "type": "Byte"
   },
   {
    "start": 12309,
-   "end": 12310,
-   "type": "Word"
-  },
-  {
-   "start": 12311,
    "end": 12312,
    "type": "Word"
   },
   {
    "start": 12313,
-   "end": 12314,
-   "type": "Address"
-  },
-  {
-   "start": 12315,
-   "end": 12316,
-   "type": "Address"
-  },
-  {
-   "start": 12317,
    "end": 12318,
    "type": "Address"
   },
@@ -113,21 +83,11 @@
   },
   {
    "start": 12320,
-   "end": 12333,
-   "type": "Byte"
-  },
-  {
-   "start": 12334,
    "end": 12335,
    "type": "Byte"
   },
   {
    "start": 12336,
-   "end": 12337,
-   "type": "Address"
-  },
-  {
-   "start": 12338,
    "end": 12339,
    "type": "Address"
   },
@@ -138,16 +98,6 @@
   },
   {
    "start": 12342,
-   "end": 12342,
-   "type": "Byte"
-  },
-  {
-   "start": 12343,
-   "end": 12343,
-   "type": "Byte"
-  },
-  {
-   "start": 12344,
    "end": 12345,
    "type": "Byte"
   },
@@ -163,101 +113,26 @@
   },
   {
    "start": 12368,
-   "end": 12414,
-   "type": "Code"
-  },
-  {
-   "start": 12415,
-   "end": 12430,
-   "type": "Code"
-  },
-  {
-   "start": 12431,
    "end": 12470,
    "type": "Code"
   },
   {
    "start": 12471,
-   "end": 12585,
-   "type": "Byte"
-  },
-  {
-   "start": 12586,
-   "end": 12684,
-   "type": "Byte"
-  },
-  {
-   "start": 12685,
    "end": 12741,
    "type": "Byte"
   },
   {
    "start": 12742,
-   "end": 12755,
-   "type": "Code"
-  },
-  {
-   "start": 12756,
-   "end": 12769,
-   "type": "Code"
-  },
-  {
-   "start": 12770,
-   "end": 12783,
-   "type": "Code"
-  },
-  {
-   "start": 12784,
-   "end": 12796,
-   "type": "Code"
-  },
-  {
-   "start": 12797,
-   "end": 12813,
-   "type": "Code"
-  },
-  {
-   "start": 12814,
    "end": 12834,
    "type": "Code"
   },
   {
    "start": 12835,
-   "end": 12911,
-   "type": "Byte"
-  },
-  {
-   "start": 12912,
-   "end": 13033,
-   "type": "Byte"
-  },
-  {
-   "start": 13034,
-   "end": 13151,
-   "type": "Byte"
-  },
-  {
-   "start": 13152,
-   "end": 13233,
-   "type": "Byte"
-  },
-  {
-   "start": 13234,
-   "end": 13386,
-   "type": "Byte"
-  },
-  {
-   "start": 13387,
    "end": 13422,
    "type": "Byte"
   },
   {
    "start": 13423,
-   "end": 13563,
-   "type": "Code"
-  },
-  {
-   "start": 13564,
    "end": 13665,
    "type": "Code"
   },
@@ -268,11 +143,6 @@
   },
   {
    "start": 13671,
-   "end": 13714,
-   "type": "Code"
-  },
-  {
-   "start": 13715,
    "end": 13754,
    "type": "Code"
   },
@@ -308,21 +178,11 @@
   },
   {
    "start": 13841,
-   "end": 13841,
-   "type": "Byte"
-  },
-  {
-   "start": 13842,
    "end": 13904,
    "type": "Byte"
   },
   {
    "start": 13905,
-   "end": 13926,
-   "type": "Code"
-  },
-  {
-   "start": 13927,
    "end": 13957,
    "type": "Code"
   },
@@ -333,21 +193,11 @@
   },
   {
    "start": 13959,
-   "end": 14001,
-   "type": "Code"
-  },
-  {
-   "start": 14002,
    "end": 14082,
    "type": "Code"
   },
   {
    "start": 14083,
-   "end": 14083,
-   "type": "Byte"
-  },
-  {
-   "start": 14084,
    "end": 14335,
    "type": "Byte"
   },
@@ -960,12 +810,12 @@
   {
    "address": 13671,
    "type": "line",
-   "text": "Initial queued task clears edge columns of sprites$8400 and$84C0 while stepping upward three bytes per hazard tick. At offset6, replace its task slot with no-op$301F."
+   "text": "Initial queued task clears edge columns of sprites$8400 and$84C0 while stepping upward three bytes per hazard tick. At offset6, replace its task slot with no-op$301F. From the loaded counter, nine eligible calls queue the $301F no-op. No pulse leaves the sprite bytes unchanged."
   },
   {
    "address": 13715,
    "type": "line",
-   "text": "Queued task restores$A0/$0A edges in sprite$8400, stepping down one row per hazard tick. At offset36 queue no-op$301F."
+   "text": "Queued task restores$A0/$0A edges in sprite$8400, stepping down one row per hazard tick. At offset36 queue no-op$301F. From the loaded counter, nine eligible calls queue the $301F no-op. Bomb request $31F0 is copied into the active callback by resident $428D on the next dispatcher service."
   },
   {
    "address": 13755,
@@ -975,7 +825,7 @@
   {
    "address": 13756,
    "type": "line",
-   "text": "Queued task zeros column0 in sprite$8480, descending row offsets by3 to6, then queues no-op$301F."
+   "text": "Queued task zeros column0 in sprite$8480, descending row offsets by3 to6, then queues no-op$301F. From the loaded counter, nine eligible calls queue the $301F no-op. Request $31C6 and resident pending-callback installation are execution-checked."
   },
   {
    "address": 13791,
@@ -985,7 +835,7 @@
   {
    "address": 13792,
    "type": "line",
-   "text": "Queued task zeros column2 in sprite$8480, subtracting3 per hazard tick and sharing the no-op completion tail at$35D4."
+   "text": "Queued task zeros column2 in sprite$8480, subtracting3 per hazard tick and sharing the no-op completion tail at$35D4. From the loaded counter, nine eligible calls queue the $301F no-op. Request $31D4 and resident pending-callback installation are execution-checked."
   },
   {
    "address": 13816,
@@ -995,7 +845,7 @@
   {
    "address": 13817,
    "type": "line",
-   "text": "Queued task writes$0A to column2 in sprite$8480, adding3 each hazard tick until36, then removes itself using$35D4."
+   "text": "Queued task writes$0A to column2 in sprite$8480, adding3 each hazard tick until36, then removes itself using$35D4. From the loaded counter, ten eligible calls queue the $301F no-op. Request $31E2 and resident pending-callback installation are execution-checked. These are fresh-state timings, not a complete legal pickup sequence."
   },
   {
    "address": 13841,
