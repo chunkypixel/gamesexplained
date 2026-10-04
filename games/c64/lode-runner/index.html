@@ -55,6 +55,31 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 .lr-hole-widget #lr-hole-state{font-size:14px;font-family:var(--fb);color:var(--ink-soft);min-height:3.2em;margin:12px 0 0}
 @media(max-width:700px){.lr-hole-widget .lr-hole-scene{grid-template-columns:1fr;gap:16px}.lr-hole-widget #lr-hole-picture{margin:auto}.lr-hole-widget .lr-hole-status{text-align:center}.lr-hole-widget .lr-hole-stages{grid-template-columns:repeat(2,minmax(0,1fr))}.lr-hole-widget .lr-hole-counter{font-size:36px}}
 
+#trapdoors{scroll-margin-top:calc(var(--tabs-h,140px) + 16px)}
+.lr-trap-widget .lr-trap-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.lr-trap-widget .lr-trap-controls p{margin:0;font-weight:700}
+.lr-trap-widget #lr-trap-replay{font:inherit;font-size:14px;white-space:nowrap;padding:8px 12px;border:1px solid var(--accent);border-radius:5px;background:var(--accent);color:white;cursor:pointer}
+.lr-trap-widget .lr-trap-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lr-trap-widget .lr-trap-card{min-width:0;padding:14px 10px;background:var(--surface-2);border-radius:7px;text-align:center}
+.lr-trap-widget h4{font-size:17px;margin:0 0 10px}
+.lr-trap-widget canvas{width:100%;border-radius:4px}
+.lr-trap-widget .lr-trap-result{font-size:14px;font-weight:700;margin:12px 0 0;color:#7e302b}
+.lr-trap-widget .lr-trap-result[data-passes=true]{color:#21634c}
+.lr-trap-widget .lr-trap-table{table-layout:fixed;margin-top:20px;font-size:14px}
+.lr-trap-widget .lr-trap-table caption{text-align:left;font-size:14px;color:var(--ink-soft);margin-bottom:10px}
+.lr-trap-widget .lr-trap-table th:first-child{width:40%}
+.lr-trap-widget .lr-trap-table th,.lr-trap-widget .lr-trap-table td{padding:8px 5px;text-align:center}
+.lr-trap-widget .lr-trap-table tbody th{text-align:left}
+.lr-trap-widget .lr-trap-table button{display:flex;gap:8px;align-items:center;width:100%;padding:8px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.lr-trap-widget .lr-trap-table button:hover{background:#e8f0f9}
+.lr-trap-widget .lr-trap-table button[aria-pressed=true]{background:var(--accent);color:white;border-color:var(--accent)}
+.lr-trap-widget .lr-trap-table button span{font-size:20px;line-height:1}
+.lr-trap-widget .lr-trap-table tr[data-selected=true]{background:#f0f5fb}
+.lr-trap-widget .lr-trap-table td[data-passes=true]{color:#21634c;font-weight:700}
+.lr-trap-widget button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.lr-trap-widget #lr-trap-state{font-size:14px;color:var(--ink-soft);margin:16px 0 0}
+@media(max-width:700px){.lr-trap-widget .lr-trap-controls{align-items:flex-start;gap:8px}.lr-trap-widget .lr-trap-controls p{font-size:15px}.lr-trap-widget #lr-trap-replay{font-size:12px;padding:7px 9px}.lr-trap-widget .lr-trap-cards{grid-template-columns:1fr;gap:8px}.lr-trap-widget .lr-trap-card{display:grid;grid-template-columns:120px 1fr;grid-template-rows:auto auto;column-gap:16px;padding:10px;text-align:left;align-items:center}.lr-trap-widget canvas{grid-column:1;grid-row:1/3}.lr-trap-widget h4{grid-column:2;grid-row:1;margin:0;font-size:15px;align-self:end}.lr-trap-widget .lr-trap-result{grid-column:2;grid-row:2;margin:4px 0 0;font-size:13px;align-self:start}.lr-trap-widget .lr-trap-table{font-size:11px}.lr-trap-widget .lr-trap-table th,.lr-trap-widget .lr-trap-table td{padding:6px 2px}.lr-trap-widget .lr-trap-table button{padding:8px 4px;gap:5px;font-size:12px}.lr-trap-widget .lr-trap-table button span{font-size:17px}}
+
 .lr-atlas-widget{scroll-margin-top:calc(var(--tabs-h,140px) + 16px)}
 .lr-atlas-widget h3{margin:0 0 8px;font-size:20px}
 .lr-atlas-widget .lr-atlas-intro{margin:0;color:var(--ink-soft);font-size:15px}
@@ -86,9 +111,25 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </style>
 <!-- tabs -->
 <header class="hero"><p class="eyebrow">Commodore 64 · 1983 · Brøderbund</p><h1>Lode Runner</h1><p class="sub">Rooms, guards, and temporary holes in the Commodore 64 disk game.</p></header><main class="wrap"><section><p class="fig">01 · Room data</p><h2 class="t">The rooms on disk</h2><div class="plate"><div class="lr-controls"><label>Edition <select id="lr-edition"><option value="disk">Disk · 150 rooms</option><option value="cartridge">Cartridge · 17 rooms</option></select></label><button type="button" id="lr-prev">Previous</button><label>Room <input id="lr-room" type="number" min="1" max="150" value="1"></label><button type="button" id="lr-next">Next</button><label><input id="lr-hidden" type="checkbox" checked> Mark hidden exits and trapdoors</label></div><canvas id="lr-map" class="lr-map" width="560" height="352" aria-label="Decoded room layout"></canvas><p id="lr-room-info" class="lr-stat"></p><p class="cap">The maps show actors in their starting cells. Yellow outlines mark hidden exits; blue outlines mark trapdoors. These editor markers disappear during play. Both board sets are drawn with disk artwork; matching boards contain identical stored cells.</p></div><p>Each disk board packs its 28 × 16 cells into 224 bytes. The disk reader skips raw sector byte zero and loads those cells from raw offsets 1–224. Each byte holds two cells, with the low nibble read first. Values above nine become blank when the game builds the room.</p><p>The 150 boards occupy tracks 3–12. Those room sectors are identical in the three supplied disks. The <a href="editions.html">Editions tab</a> compares the disk variants with the separate cartridge engine.</p><p>Surplus guard and exit markers disappear when a room is built. The disk engine keeps at most five guards and 45 hidden exit cells, even when the stored board contains more. The scan runs from the bottom-right cell toward the top-left, so the first markers encountered get the available slots. <code>$6FA6</code>, <code>$728F</code>, <code>$709C</code>.</p>
-<h3>Trapdoors and direction</h3>
+<h3 id="trapdoors">Trapdoors and direction</h3>
 <p>A trapdoor looks like a brick and lets the runner fall through from above. The cell blocks sideways and upward entry. Its picture uses brick tile 1, while the maps keep trapdoor tile 5. <code>$733E</code>, <code>$73C7</code>, <code>$74DE</code>, <code>$7550</code>, <code>$75C8</code>.</p>
-<div class="plate"><div class="lr-controls"><label>Tile <select id="lr-trap-tile"><option value="5">Trapdoor</option><option value="1">Brick</option><option value="2">Concrete</option></select></label><label>Approach <select id="lr-trap-direction"><option value="fall">Fall from above</option><option value="left">Move left</option><option value="right">Move right</option><option value="up">Climb from below</option><option value="down">Move down</option></select></label></div><p id="lr-trap-state" class="lr-readout" aria-live="polite"></p><p class="cap">The controls show whether a tile supports a centered runner or permits entry from the chosen direction. Climbing also depends on ladder access and movement phase.</p></div>
+<div class="plate lr-trap-widget">
+<div class="lr-trap-controls"><p id="lr-trap-approach">Falling from above</p><button type="button" id="lr-trap-replay">Replay approach</button></div>
+<div class="lr-trap-cards">
+<div class="lr-trap-card" data-trap-tile="5"><h4>Trapdoor</h4><canvas width="240" height="220" aria-label="Trapdoor: the runner falls through."></canvas><p class="lr-trap-result">Falls through</p></div>
+<div class="lr-trap-card" data-trap-tile="1"><h4>Brick</h4><canvas width="240" height="220" aria-label="Brick: the runner stands on top."></canvas><p class="lr-trap-result">Stands on top</p></div>
+<div class="lr-trap-card" data-trap-tile="2"><h4>Concrete</h4><canvas width="240" height="220" aria-label="Concrete: the runner stands on top."></canvas><p class="lr-trap-result">Stands on top</p></div>
+</div>
+<table class="lr-trap-table"><caption>Select an approach to animate the comparison.</caption><thead><tr><th scope="col">Approach</th><th scope="col">Trapdoor</th><th scope="col">Brick</th><th scope="col">Concrete</th></tr></thead><tbody>
+<tr data-trap-approach="fall"><th scope="row"><button type="button" aria-pressed="true"><span aria-hidden="true">↓</span>Fall from above</button></th><td>Falls</td><td>Stops</td><td>Stops</td></tr>
+<tr data-trap-approach="left"><th scope="row"><button type="button" aria-pressed="false"><span aria-hidden="true">←</span>Move left</button></th><td>Blocked</td><td>Blocked</td><td>Blocked</td></tr>
+<tr data-trap-approach="right"><th scope="row"><button type="button" aria-pressed="false"><span aria-hidden="true">→</span>Move right</button></th><td>Blocked</td><td>Blocked</td><td>Blocked</td></tr>
+<tr data-trap-approach="up"><th scope="row"><button type="button" aria-pressed="false"><span aria-hidden="true">↑</span>Climb from below</button></th><td>Blocked</td><td>Blocked</td><td>Blocked</td></tr>
+<tr data-trap-approach="down"><th scope="row"><button type="button" aria-pressed="false"><span aria-hidden="true">↓</span>Move down</button></th><td>Passes</td><td>Blocked</td><td>Blocked</td></tr>
+</tbody></table>
+<p id="lr-trap-state" aria-live="polite">Gravity carries the runner through a trapdoor. Brick and concrete support the runner.</p>
+<p class="cap">The arrows show the tile’s support and entry tests. The animation illustrates the result; climbing also requires ladder access and the right movement phase. All ten tile IDs were checked in five approaches against both original engines. <code>$73C7</code>, <code>$7671</code>.</p>
+</div>
 </section><section id="graphics"><p class="fig">02 · Graphics</p><h2 class="t">Bitmap scenery and sprites</h2><div class="plate"><canvas id="lr-frame" class="lr-screen" width="384" height="272" aria-label="Rebuilt Commodore 64 gameplay frame"></canvas><p id="lr-frame-state" class="cap">Loading the shared C64 renderer.</p><details><summary>VICE reference picture</summary><img src="reference/black-playing.png" alt="Original room-one gameplay in VICE" width="384" height="272"></details></div><p>The runner and guards use up to six hardware sprites, in slots 0, 2, 3, 4, 6, and 7. Those sprites move over multicolour bitmap scenery.</p><p>The work bitmap at <code>$4000</code> preserves the scenery. When a shape is erased from the display bitmap at <code>$2000</code>, that background restores the picture beneath the shape.</p><div class="plate lr-atlas-widget" id="atlas">
 <h3>Browse the game’s pictures</h3><p class="lr-atlas-intro">Choose a group, then select a picture to see it larger.</p>
 <div class="lr-controls"><label>Edition <select id="lr-atlas-edition"><option value="disk">Disk · 104 pictures</option><option value="cartridge">Official Cartridge Image · 76 pictures</option></select></label></div><p id="lr-atlas-edition-note" class="lr-atlas-description" aria-live="polite" hidden></p>
@@ -265,7 +306,47 @@ if(document.getElementById('lr-shape')){
  hole();
 
  const capacity=()=>{const gap=Number(document.getElementById('lr-dig-gap').value),passes=Number(document.getElementById('lr-hole-pass').value),result=holeSchedule(gap,passes),c=document.getElementById('lr-hole-capacity').getContext('2d');document.getElementById('lr-dig-gap-value').textContent=gap;document.getElementById('lr-hole-pass-value').textContent=passes;c.fillStyle='#15191c';c.fillRect(0,0,560,180);result.timers.forEach((t,i)=>{const x=6+(i%6)*92,y=5+Math.floor(i/6)*35;c.fillStyle=t?'#275d5a':'#292e34';c.fillRect(x,y,86,29);c.fillStyle=t?'#e9f5ee':'#b1b5ba';c.font='12px monospace';c.fillText(`${i+1}: ${t||'empty'}`,x+6,y+19);});document.getElementById('lr-capacity-state').textContent=`${passes} passes · ${result.timers.filter(Boolean).length} active / 30 slots · peak ${result.peak}`;};document.getElementById('lr-dig-gap').oninput=capacity;document.getElementById('lr-hole-pass').oninput=capacity;capacity();
- const trap=()=>{const t=Number(document.getElementById('lr-trap-tile').value),direction=document.getElementById('lr-trap-direction').value,blocked=tileBlocks(t,direction);document.getElementById('lr-trap-state').textContent=direction==='fall'?(blocked?'Supports the runner; gravity stops.':'Provides no support; the runner falls.'):(blocked?'Blocks entry from this direction.':'The tile comparison permits entry.');};document.getElementById('lr-trap-tile').onchange=trap;document.getElementById('lr-trap-direction').onchange=trap;trap();
+ const trapCards=Array.from(document.querySelectorAll('[data-trap-tile]'));
+ const trapRows=Array.from(document.querySelectorAll('[data-trap-approach]'));
+ const trapApproaches={
+  fall:{name:'Falling from above',start:[100,0],stop:[100,44],pass:[100,176],note:'Gravity carries the runner through a trapdoor. Brick and concrete support the runner.'},
+  left:{name:'Moving left',start:[180,88],stop:[140,88],pass:[100,88],note:'All three tiles block sideways entry, including the trapdoor.'},
+  right:{name:'Moving right',start:[20,88],stop:[60,88],pass:[100,88],note:'All three tiles block sideways entry, including the trapdoor.'},
+  up:{name:'Climbing from below',start:[100,176],stop:[100,132],pass:[100,88],note:'All three tiles block upward entry. A trapdoor can only be entered vertically from above.'},
+  down:{name:'Moving down',start:[100,0],stop:[100,44],pass:[100,88],note:'The downward tile test permits trapdoor entry. Ladder access and movement phase are separate conditions.'}
+ };
+ let trapDirection='fall',trapFrame=null;
+ function drawTrap(progress){
+  const approach=trapApproaches[trapDirection];
+  trapCards.forEach(card=>{
+   const tile=Number(card.dataset.trapTile),blocked=tileBlocks(tile,trapDirection),end=blocked?approach.stop:approach.pass;
+   const c=card.querySelector('canvas').getContext('2d');c.fillStyle='#15191c';c.fillRect(0,0,240,220);
+   c.strokeStyle='#30373c';c.lineWidth=1;for(let x=20;x<=220;x+=40){c.beginPath();c.moveTo(x,0);c.lineTo(x,220);c.stroke();}for(let y=0;y<=220;y+=44){c.beginPath();c.moveTo(20,y);c.lineTo(220,y);c.stroke();}
+   // Draw the scenery cell without the source mask's trailing padding.
+   c.save();c.beginPath();c.rect(100,88,40,44);c.clip();glyph(c,tile===5?1:tile,100,88,4);c.restore();
+   const sx=approach.start[0]+20,sy=approach.start[1]+22,ex=end[0]+20,ey=end[1]+22;
+   const angle=Math.atan2(ey-sy,ex-sx);c.strokeStyle=blocked?'#e39b8e':'#75cec8';c.fillStyle=c.strokeStyle;c.lineWidth=3;c.setLineDash([5,5]);c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.stroke();c.setLineDash([]);
+   c.beginPath();c.moveTo(ex,ey);c.lineTo(ex-12*Math.cos(angle-.5),ey-12*Math.sin(angle-.5));c.lineTo(ex-12*Math.cos(angle+.5),ey-12*Math.sin(angle+.5));c.closePath();c.fill();
+   function runner(x,y,alpha){c.save();c.globalAlpha=alpha;c.translate(x,y);drawAtlasPicture(c,D,9,104,4,true);c.restore();}
+   runner(...approach.start,.22);runner(approach.start[0]+(end[0]-approach.start[0])*progress,approach.start[1]+(end[1]-approach.start[1])*progress,1);
+   if(blocked){c.strokeStyle='#e39b8e';c.lineWidth=3;const x=ex+Math.cos(angle)*22,y=ey+Math.sin(angle)*22;c.beginPath();c.moveTo(x-5,y-5);c.lineTo(x+5,y+5);c.moveTo(x+5,y-5);c.lineTo(x-5,y+5);c.stroke();}
+  });
+ }
+ function showTrap(direction,animate=true){
+  if(trapFrame!==null)cancelAnimationFrame(trapFrame);trapFrame=null;trapDirection=direction;
+  const approach=trapApproaches[direction];document.getElementById('lr-trap-approach').textContent=approach.name;document.getElementById('lr-trap-state').textContent=approach.note;
+  trapRows.forEach(row=>{const chosen=row.dataset.trapApproach===direction;row.dataset.selected=chosen;row.querySelector('button').setAttribute('aria-pressed',String(chosen));});
+  trapCards.forEach(card=>{const blocked=tileBlocks(Number(card.dataset.trapTile),direction),result=direction==='fall'?(blocked?'Stands on top':'Falls through'):(blocked?'Entry blocked':'Entry allowed');const label=card.querySelector('.lr-trap-result');label.textContent=result;label.dataset.passes=String(!blocked);card.querySelector('canvas').setAttribute('aria-label',`${card.querySelector('h4').textContent}: ${approach.name}. ${result}.`);});
+  if(!animate||matchMedia('(prefers-reduced-motion: reduce)').matches){drawTrap(1);return;}
+  drawTrap(0);let began=null;
+  function step(now){if(began===null)began=now;const progress=Math.min(1,(now-began)/1000);drawTrap(progress);trapFrame=progress<1?requestAnimationFrame(step):null;}
+  trapFrame=requestAnimationFrame(step);
+ }
+ trapRows.forEach(row=>{
+  row.querySelectorAll('td').forEach((cell,index)=>{const tile=[5,1,2][index],blocked=tileBlocks(tile,row.dataset.trapApproach);cell.dataset.passes=String(!blocked);cell.textContent=row.dataset.trapApproach==='fall'?(blocked?'Stops':'Falls'):(blocked?'Blocked':'Passes');});
+  row.querySelector('button').onclick=()=>showTrap(row.dataset.trapApproach);
+ });
+ document.getElementById('lr-trap-replay').onclick=()=>showTrap(trapDirection);showTrap('fall',false);
  const inputs=['player-row','guard-column','candidate-row','candidate-column'];function route(){const [pr,gc,cr,cc]=inputs.map(id=>Number(document.getElementById('lr-'+id).value)),score=routeCost(cr,cc,pr,gc),c=document.getElementById('lr-route-picture').getContext('2d');c.fillStyle='#15191c';c.fillRect(0,0,560,320);c.fillStyle='#283e43';c.fillRect(0,pr*20,560,20);c.strokeStyle='#4a4a4a';for(let i=0;i<=28;i++){c.beginPath();c.moveTo(i*20,0);c.lineTo(i*20,320);c.stroke();}for(let i=0;i<=16;i++){c.beginPath();c.moveTo(0,i*20);c.lineTo(560,i*20);c.stroke();}c.fillStyle='#75cec8';c.fillRect(gc*20+4,8*20+4,12,12);c.fillStyle='#edf171';c.fillRect(cc*20+4,cr*20+4,12,12);document.getElementById('lr-route-state').textContent=`Cost ${score} · runner row ${pr} · guard column ${gc} · candidate (${cc}, ${cr})`;}
  inputs.forEach(id=>document.getElementById('lr-'+id).oninput=route);route();
  let points=9999900;function score(){document.getElementById('lr-score-input').value=points;document.getElementById('lr-score-display').textContent=displayedScore(points);document.getElementById('lr-score-state').textContent='Stored counter: '+String(points).padStart(8,'0');}document.getElementById('lr-score-input').onchange=()=>{points=Math.max(0,Math.min(99999999,Math.floor(Number(document.getElementById('lr-score-input').value)||0)));score();};document.querySelectorAll('[data-points]').forEach(b=>b.onclick=()=>{points=addPoints(points,Number(b.dataset.points));score();});score();

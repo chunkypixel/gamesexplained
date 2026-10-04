@@ -125,6 +125,7 @@ A focused independent sample of 20 numerical/widget facts passed, as did orienta
 |---|---|
 | Disk widget arithmetic and sound | 214,299 original-code cases: 200,704 route costs, 1,624 score/display cases, 181 timer values, 180 closing-picture updates, and 11,610 ordered SID ticks across all 100 motif/offset combinations; aliases 37–42 exercised |
 | Picture gallery | 180 original source expansions, 53 actor selectors, and 47,520 preview pixels match the appropriate bitmap/sprite decoding |
+| Trapdoor comparison | All 15 displayed tile/approach results agree with the original-code tile tests (50 disk and 50 cartridge cases). Five illustrative animations, replay, rapid selection, keyboard activation, reduced motion, and 320px/390px layouts pass browser checks |
 | Disk/cartridge comparison | 450 disk room read/decode fixtures and 17 unique cartridge matches; cartridge route/score helpers, graphics initialization, motif cycle, tile directions, both digs/cancellations, and hole schedules agree |
 | Native VICE checks | Forced-state score, gold, exit preservation, digging/refill, life controls, and room awards; separate disk/cartridge pacing captures |
 | Shared frame renderer | Published reference and fresh capture each match all 104,448 pixels with zero differences |

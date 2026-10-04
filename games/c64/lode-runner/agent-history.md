@@ -20,6 +20,8 @@ A later full audit refined graphics phase units, demo control-poll timing, text/
 
 The contributor requested clearer digging controls, separate Music and Editions tabs, and an intuitive picture gallery. The hole widget begins intact and supports playback, scrubbing, and closing-stage selection. Music follows Maps / levels. Editions separates the disk and cartridge address spaces and links matching rooms. The gallery groups labelled pictures and follows runtime actor-mask substitution. The supplied cartridge label is Official Cartridge Image.
 
+The trapdoor menus became a simultaneous trapdoor/brick/concrete comparison. Five direction buttons animate the native artwork, while the result table stays visible. The motion illustrates the verified support/entry tests; ladder and movement-phase conditions remain explicit. Browser checks cover replay, keyboard, rapid selection, reduced motion, and narrow layouts. The harness and screenshots stay private in work/.
+
 Curation began with these requests, so tier is silver-claimed and the steward is jankfoundry. Copy remains agent-draft; a complete human section-by-section pass is pending. Article copy had separate draft/rewrite passes after analysis.
 
 ## Tool and delivery notes
