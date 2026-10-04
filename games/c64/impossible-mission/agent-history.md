@@ -89,3 +89,14 @@ no line uses. The page's first build decoded silence: it embedded the
 speech data but not the sample base at `$0CFE`/`$0CFF`, which the port
 reads; the browser test now compares whole streams with the checked
 ones, not their lengths.
+
+## 4 October 2026: The release and Reception
+
+The contributor asked for two Overview sections on the game's release and
+reception from the web. The environment's network policy refused every
+source page, before and after the contributor tried to widen it, so the
+sections were drafted, at the contributor's request, from web search
+summaries alone, keeping what several agreed on. The summaries
+contradicted each other on Zzap!64's score and poll placings, which is
+why no review score appears; they also differed on the British price.
+`features.md` lists the sources to check.
