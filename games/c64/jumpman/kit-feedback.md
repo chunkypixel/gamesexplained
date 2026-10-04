@@ -1,6 +1,6 @@
 # Jumpman: kit feedback
 
-Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. The contributor authorized a pushed branch and requested review before any pull request or issues. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.74. `agent-history.md` and the audit reports retain the individual investigations and corrections.
+Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.74. `agent-history.md` and the audit reports retain the individual investigations and corrections.
 
 ## Skill text that changed what I did
 
@@ -38,6 +38,6 @@ The upstream integration is checked separately in `integration-audit.md`; it mus
 
 ## Maintainer asks
 
-The contributor requested review before publication. The full ask below is prepared for the repository's issue-on-merge workflow; no issue or pull request has been opened. Open and closed `kit-ask` issues were searched on 4 October 2026; no existing SID bus-read/timing fixture ask was found.
+The contributor approved publication on 4 October 2026. Open and closed kit asks were searched before filing; the issue carries the `kit-ask` label and marker.
 
-- **Consider shared SID bus-read verification.** The original driver reads a writable SID control register, and native CPU probes see the most recent global SID write. A per-register shadow would make a port and its CPU test agree for the wrong reason, requiring game-local probes to catch it. The game-local model declares its last-write/no-decay approximation. A shared timing/readback contract for `site/lib/sid.js` and a recorded hardware comparison fixture would let later ports verify this more accurately; this is a maintainer decision about the synth API.
+- #194: Consider shared SID bus-read verification: a timing/readback contract for the shared synth and a recorded hardware comparison fixture, building on this run's native probes and explicit last-write/no-decay approximation.
