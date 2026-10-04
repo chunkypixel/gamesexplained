@@ -1,0 +1,277 @@
+{
+  "date": "2026-10-04",
+  "scope": "Upstream integration and regression checks; self-validation, not independent certification.",
+  "auditedGameBase": "78b879f6f496ab442687269d310c7f707525b016",
+  "upstream": "9b15ea69a3895f69c298f1b671ed4c9235c54490",
+  "kitVersion": "0.0.74",
+  "sourcePreservation": {
+    "canonicalFilesUnchanged": 66,
+    "listingRegenerationsIdentical": 33,
+    "canonicalPathHashManifestSha256": "07913f4a7f89485d189e6a98861e9ea3eabad30556991ec825347a8bd0370e2c"
+  },
+  "originalCodeAudit": [
+    {
+      "name": "Original extracted files",
+      "files": 35,
+      "diskSha256": "de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5"
+    },
+    {
+      "name": "Boot-loader self-modification at hand-over",
+      "changes": [
+        {
+          "address": "$082F",
+          "disk": 255,
+          "handover": 8
+        },
+        {
+          "address": "$0834",
+          "disk": 255,
+          "handover": 220
+        }
+      ]
+    },
+    {
+      "name": "All source bytes, coverage ranges and instruction decodes",
+      "images": 33,
+      "bytes": 90583,
+      "instructions": 9498
+    },
+    {
+      "name": "Atlas headers, titles, bomb records and drawing excerpts",
+      "levels": 32,
+      "bombs": 397,
+      "excerptBytes": 16148
+    },
+    {
+      "name": "Actual page renderer versus original instructions",
+      "initialBitmaps": 32,
+      "bombBitmaps": 1191,
+      "bytesPerBitmap": 8192,
+      "scope": "Erase/draw only; private callbacks and legal collection order are excluded."
+    },
+    {
+      "name": "Actual page Randomizer versus original instructions",
+      "randomStates": 65536,
+      "chooserStates": 65536,
+      "returning": 65532,
+      "stalledInputs": [
+        "$0000",
+        "$4000",
+        "$8000",
+        "$C000"
+      ],
+      "maximumAttemptsForReturningInputs": 3,
+      "suffixes": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29"
+      ],
+      "loadedSeedSequence": {
+        "distinctStates": 5462,
+        "transient": 1,
+        "period": 5461
+      },
+      "naturalSelectionBoundary": "Not established; the uninterrupted loaded-seed sequence excludes the four stalled inputs."
+    },
+    {
+      "name": "IRQ task order",
+      "words": 14,
+      "sentinel": "$EA31"
+    },
+    {
+      "name": "Bitmap material lookup, including FF exception",
+      "inputs": 256
+    },
+    {
+      "name": "Three stored jump trajectories",
+      "bytes": 132,
+      "rise": 12,
+      "finalVerticalOffset": 14,
+      "lateralDistance": 52
+    },
+    {
+      "name": "Four zero-priority tune definitions",
+      "ids": [
+        9,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "name": "Published shooting evidence",
+      "screenshotHashes": 15,
+      "dragonHitRecords": 49,
+      "inputFrames": 41700
+    },
+    {
+      "name": "Published evidence identifies the local source snapshots",
+      "distinctSnapshots": 48
+    }
+  ],
+  "kitTests": {
+    "c64UnitTests": 57,
+    "pythonModulesImported": 64,
+    "coverageCommands": 25,
+    "sharedAndPlatformSelfTests": [
+      [
+        "node",
+        "kit/c64/test_cpu6502.js"
+      ],
+      [
+        "node",
+        "kit/c64/test_machine.js"
+      ],
+      [
+        "node",
+        "kit/c64/test_lockstep.js"
+      ],
+      [
+        "python3",
+        "kit/scripts/test_source_images.py"
+      ],
+      [
+        "python3",
+        "kit/spectrum/test_z80.py",
+        "--require-skoolkit"
+      ],
+      [
+        "python3",
+        "kit/spectrum/test_skoolkit.py"
+      ],
+      [
+        "python3",
+        "kit/spectrum/test_zesarux.py"
+      ],
+      [
+        "python3",
+        "kit/spectrum/snapshot.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/spectrum/skoolkit.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/spectrum/codemap.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/spectrum/simulate.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/spectrum/romcopy.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/c64/snapshot.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/c64/project.py",
+        "--roundtrip"
+      ],
+      [
+        "python3",
+        "kit/c64/test_vice.py"
+      ],
+      [
+        "python3",
+        "kit/scripts/edit.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "kit/scripts",
+        "-p",
+        "test_browser.py"
+      ],
+      [
+        "python3",
+        "kit/scripts/test_listing_undocumented.py"
+      ],
+      [
+        "python3",
+        "kit/scripts/skill_usage.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/scripts/models.py",
+        "--test"
+      ],
+      [
+        "python3",
+        "kit/scripts/maintainer_asks.py",
+        "--test"
+      ]
+    ],
+    "dispatcher": "passed",
+    "skoolkit": "10.1; installed with contributor approval under tools/skoolkit"
+  },
+  "nativeTools": {
+    "emulator": "VICE-MCP 3.13.2 Linux x86_64 GUI release under Xvfb",
+    "capabilityChecksPassed": 57,
+    "capabilityChecksFailed": 0,
+    "disassembler": "regenerator2000 0.9.20; alternate-port stdio bridge",
+    "footprint": "clean; no unexpected outside files; both tools stopped"
+  },
+  "browser": {
+    "engine": "existing Chromium 1243 with Playwright",
+    "suites": [
+      "main controls, music, 32 maps and 33 source images",
+      "all four Randomizer stalled inputs and recovery",
+      "794 bomb selections",
+      "robot routes and controls",
+      "Dragon Slayer stairs and Invasion evidence",
+      "151 Freeze observations",
+      "latest native routes and source links",
+      "final audited copy and source-link corrections"
+    ],
+    "desktopAndMobile": true,
+    "javascriptErrors": 0,
+    "localHttpErrors": 0
+  },
+  "limitations": [
+    "Existing game-native routes are retained evidence; this integration did not replay the entire campaign.",
+    "Audio bus decay and within-frame writes remain approximations.",
+    "All checks were performed by the contributing agent; independent review is not claimed."
+  ]
+}

@@ -46,7 +46,7 @@ Read on 2 October 2026:
 
 - [Epyx's C64 instruction manual, transcribed by Project 64](https://www.abandonwaredos.com/docawd.php?idg=1121&sf=jumpman_manual.txt&sg=Jumpman&st=manual). Primary documentation; claims remain separate from observations.
 - [C64-Wiki: Jumpman](https://www.c64-wiki.com/wiki/Jumpman). Secondary documentation. Its game-option terminology differs from the supplied game's menu; this checklist uses the game's names.
-- [C64 Boxed Sets: Jumpman](https://c64sets.com/jumpman.html). Independent screenshots saved as `work/research/reference/external-c64sets-02.png` and `work/research/reference/external-c64sets-03.png` from `https://c64sets.com/jumpman/scr02.png` and `https://c64sets.com/jumpman/scr03.png`. These private research copies are from that collection, not captures of this run, and are excluded from the published site.
+- [C64 Boxed Sets: Jumpman](https://c64sets.com/jumpman.html). Independent screenshots saved under private `work/research/reference/` as `external-c64sets-02.png` and `external-c64sets-03.png`, from `https://c64sets.com/jumpman/scr02.png` and `https://c64sets.com/jumpman/scr03.png`. These private research copies are from that collection, not captures of this run, and are excluded from the published site.
 - The supplied disk's own menus and first level, observed in VICE-MCP v3.13.2. `reference/options.png` and `reference/level01.png` are captures of this run.
 
 The contributor authorized online research and reference screenshots. No game image was downloaded.

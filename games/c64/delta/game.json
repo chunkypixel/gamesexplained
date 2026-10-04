@@ -29,6 +29,7 @@
     "browser": "Chromium via Playwright 1.56.1 (page check)"
   },
   "model": "claude-opus-5-5",
+  "step_models": {"50-coverage": ["claude-opus-5-5"], "60-verify": ["claude-opus-5-5"]},
   "kit_version": "0.0.48",
   "created": "2026-10-01",
   "video": {
@@ -239,5 +240,39 @@
   "links": {
     "wiki": "https://www.c64-wiki.com/wiki/Delta",
     "manual": ""
-  }
+  },
+  "tabs": [
+    [
+      "index.html",
+      "Overview"
+    ],
+    [
+      "mechanics.html",
+      "How it works"
+    ],
+    [
+      "levels.html",
+      "The 32 stages"
+    ],
+    [
+      "waves.html",
+      "The attack waves"
+    ],
+    [
+      "music.html",
+      "Music and sound"
+    ],
+    [
+      "discoveries.html",
+      "Discoveries"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ]
 }

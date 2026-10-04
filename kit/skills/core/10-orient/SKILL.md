@@ -5,7 +5,7 @@ description: First step for any game. Boot it in the emulator, get past the load
 
 # Orient: boot, get past the loader, capture the game
 
-Start the clock: `python3 kit/scripts/clock.py start 10-orient --model <your model id> games/<platform>/<slug>`, the model id as your system prompt names it, and again at every step, because a run may change model. If nothing in the session names the model, ask the contributor; never infer it (`AGENTS.md`, "Know your model; never infer it"). Runs to 19 September 2026: twenty minutes to an hour, nearly all of it reaching play. Past an hour, the retro wants to know what ate it.
+Check your model first: `python3 kit/scripts/models.py is-proven <your model id>`, the model id as your system prompt names it. If nothing in the session names the model, ask the contributor; never infer it (`AGENTS.md`, "Know your model; never infer it"). If it is not proven, tell the contributor before going further, as the script says (`AGENTS.md`, "Model").
 
 The goal is the game engine: mechanics, graphics, sound, input, level
 data. The loader, decompressor, trainer menu or copy-protection in front
@@ -59,17 +59,23 @@ annotate it byte by byte.
    handlers chain, each writing the next one's address into the vector,
    shows only one of them in a vector read. Record a frame
    (`kit/c64/frame.py capture` on the C64): its writes to the vector name
-   every handler in the chain, with the line each runs on, and tracing
-   from all of them can reach code that nothing else calls, such as the
-   music driver.
+   every handler in the chain, and tracing from all of them can reach code
+   that nothing else calls, such as the music driver. The line beside each
+   write is where the handler before it wrote the vector, usually a line
+   or a handler earlier than the one the named handler runs on; read the
+   handler's own write to the raster register for that.
 4. **Save a snapshot** of the machine in play. Name it by state
-   (`work/play-round1.vsf`, not by timestamp). This snapshot is the image
+   (`work/play-round1.vsf`, not by timestamp) with the platform's own
+   snapshot extension (`kit/<platform>/INSTALL.md` and
+   `kit/skills/<platform>/` name it: a `.vsf` on the C64, a `.sna` on the
+   ZX Spectrum). This snapshot is the image
    everything downstream is read from, unless the hand-over (next) holds
    more of the program. Save more at each distinct state you can reach:
    title, first frame of play, each interlude, death, game over.
 
    **Save the hand-over too**: a stopping checkpoint on the game's first
-   instruction (the loader's jump into it), then `work/entry.vsf`. Compare
+   instruction (the loader's jump into it), then `work/entry.<ext>` with
+   the same extension. Compare
    it with the play snapshot byte for byte. Code that exists only at the
    hand-over (an initialisation that runs from what becomes screen
    memory), or authored data the game overwrites once it runs (a title
@@ -94,7 +100,16 @@ annotate it byte by byte.
 6. **Start the disassembler on the snapshot** and confirm it answers. Note
    which processor-port or banking configuration was active when the
    snapshot was taken: what is visible at a given address depends on it.
-7. **Understand the loader well enough to describe it in a paragraph**,
+7. **Map the disk's files onto memory.** Extract every file (on the C64,
+   `c1541` from the emulator's build reads a G64 or D64), then search the
+   hand-over and play snapshots for each file's bytes in 16-byte pieces,
+   take the offset most pieces agree on, and count the bytes equal there.
+   A file that lands whole says what a region is before any code is read
+   (one run found its speech samples and its speech timing table this way,
+   and caught a table it had credited to the wrong file); a file that is
+   found nowhere is the loader's, or is built from. Put the table in
+   `orientation.md`.
+8. **Understand the loader well enough to describe it in a paragraph**,
    then stop. If the game reloads data per level (overlays), say so in
    `orientation.md`: it means one snapshot per state.
 

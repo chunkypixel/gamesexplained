@@ -39,11 +39,11 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def load(gdir, live):
-    from symbols_export import from_live, regions
-    game = json.loads((Path(gdir) / "game.json").read_text())
+    from symbols_export import read_live, regions, platform_of
+    game = json.load(open(os.path.join(gdir, "game.json")))
     reg = regions(game)
     if live:
-        blocks, syms, comments = from_live(game.get("platform", "c64"))
+        blocks, syms, comments = read_live(platform_of(game))
     else:
         s = json.loads((Path(gdir) / "symbols.json").read_text())
         blocks, syms, comments = s["blocks"], s["symbols"], s["comments"]
@@ -51,7 +51,7 @@ def load(gdir, live):
 
 
 def tracked_count(gdir):
-    """(tracked bytes, explained bytes) from symbols.json, for clock.py and build.py."""
+    """(tracked bytes, explained bytes) from symbols.json, across all named source images."""
     from source_images import images
     from ledger import compute
     tracked = explained = 0

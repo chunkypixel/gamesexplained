@@ -12,6 +12,36 @@
   "coverage_percent": 100,
   "copy": "agent-draft",
   "steward": "",
+  "tabs": [
+    [
+      "index.html",
+      "Overview"
+    ],
+    [
+      "levels.html",
+      "The stronghold"
+    ],
+    [
+      "mechanics.html",
+      "How it works"
+    ],
+    [
+      "music.html",
+      "Sound and speech"
+    ],
+    [
+      "discoveries.html",
+      "Discoveries"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ],
   "credits": [
     {
       "by": "Dennis Caswell",
@@ -26,6 +56,7 @@
     "node": "22.22.0"
   },
   "model": "claude-opus-5-5",
+  "step_models": {"50-coverage": ["claude-opus-5-5"], "60-verify": ["claude-opus-5-5"]},
   "kit_version": "0.0.49",
   "created": "2026-10-01",
   "video": {

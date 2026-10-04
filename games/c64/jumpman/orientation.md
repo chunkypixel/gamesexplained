@@ -2,9 +2,15 @@
 
 ## Image and machine
 
-The contributor supplied `jumpman.g64`, a GCR image (`GCR-1541`, format version 0, 84 half-track slots), 282,168 bytes. Its SHA-256 is `de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5`. The disk directory names it `JUMPMAN REV 1.0`. The original remains outside the repository; the run uses a copy in `work/`.
+The contributor supplied `jumpman.g64`, a GCR image (`GCR-1541`, format version 0, 84 half-track slots), 282,168 bytes. The disk directory names it `JUMPMAN REV 1.0`. The original remains outside the repository; the run uses a copy in `work/`.
 
-Machine: PAL C64SC, standard 64 KB, VICE-MCP release v3.13.2 (`v3.13.2-linux-x86_64-gui.zip`), Linux x86_64 without a display. The release's GTK build runs under Xvfb. The emulator capability suite passed 56 of 57 checks on 2 October 2026. Only `warp` failed: the test measured 46 loop passes per second with warp and 45 without. Exact stopping, frame stepping, input and snapshot determinism passed. All timings must use emulated frames or cycles, not host elapsed time.
+Image SHA-256:
+
+```text
+de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5
+```
+
+Machine: PAL C64SC, standard 64 KB, VICE-MCP release v3.13.2 (`v3.13.2-linux-x86_64-gui.zip`), Linux x86_64 without a display. The release's GTK build runs under Xvfb. The emulator capability suite passed 56 of 57 checks on 2 October 2026. Only `warp` failed: the test measured 46 loop passes per second with warp and 45 without. Exact stopping, frame stepping, input and snapshot determinism passed. All timings must use emulated frames or cycles, not host elapsed time. After upstream integration on 4 October, the same build passes all 57 capability checks; host-speed measurements are now informational.
 
 This machine was already running tools for another checkout. This clone uses its own `tools/ports.json`; the emulator and disassembler clients read the same settings. regenerator2000 0.9.20 runs through its stdio interface with a local HTTP bridge. It answers on a full 65,536-byte snapshot image. Tool settings and logs stay in `tools/`.
 

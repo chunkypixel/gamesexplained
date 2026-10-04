@@ -339,5 +339,13 @@
       "title": "30 \u00b7 GRAND PUZZLE III",
       "path": "reference/sources/30"
     }
-  ]
+  ],
+  "step_models": {
+    "50-coverage": [
+      "gpt-6-astra"
+    ],
+    "60-verify": [
+      "gpt-6-astra"
+    ]
+  }
 }

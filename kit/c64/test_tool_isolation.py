@@ -14,10 +14,10 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, mock_open
 
 import ports
-import r2000_bridge as bridge
+import stdio_bridge as bridge
 import r2000
 import vice
 
@@ -37,6 +37,27 @@ def snapshot(ram, extended=True):
 
 
 class PortTests(unittest.TestCase):
+    def test_environment_then_saved_then_legacy_then_defaults(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.assertEqual(ports.resolve_ports(root, {}), {"vice": 6510, "r2000": 3000})
+            (root / "ports.json").write_text('{"vice": 16510, "r2000": 13000}')
+            (root / "vice-port").write_text("16511\n")
+            self.assertEqual(ports.resolve_ports(root, {}), {"vice": 16511, "r2000": 13000})
+            self.assertEqual(ports.resolve_ports(root, {"KIT_VICE_PORT": "16512"}),
+                             {"vice": 16512, "r2000": 13000})
+
+    def test_invalid_override_and_cross_source_collision_fail(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "r2000-port").write_text("13000\n")
+            for raw in ("garbage", "", "1023", "65536", "13000"):
+                with self.subTest(raw=raw), self.assertRaises(ValueError):
+                    ports.resolve_ports(root, {"KIT_VICE_PORT": raw})
+            (root / "r2000-port").write_text("garbage")
+            with self.assertRaises(ValueError):
+                ports.resolve_ports(root, {})
+
     def test_defaults_only_when_file_missing(self):
         with tempfile.TemporaryDirectory() as d:
             self.assertEqual(ports.load_ports(Path(d) / "missing"), {"vice": 6510, "r2000": 3000})
@@ -70,7 +91,7 @@ class ProcessIsolationTests(unittest.TestCase):
     def test_pty_round_trip_preserves_shell_metacharacters(self):
         cmd = ["/clone with spaces/tool", "a'quote", 'a"quote', '$(no-command)', '`no-command`', 'semi;colon', 'line\nbreak']
         with patch.object(launcher.sys, "platform", "linux"), patch.object(launcher.shutil, "which", return_value="/usr/bin/script"):
-            wrapped = launcher.with_pty(cmd, "/clone with spaces/tool.log")
+            wrapped = launcher.launcher.with_pty(cmd, "/clone with spaces/tool.log")
         self.assertEqual(shlex.split(wrapped[3]), cmd)
         self.assertEqual(wrapped[-1], "/clone with spaces/tool.log")
 
@@ -79,7 +100,7 @@ class ProcessIsolationTests(unittest.TestCase):
         source = root + "/games/c64/a/work/a snapshot.vsf"
         with patch.object(launcher, "ROOT", root), patch.object(launcher, "R2000_PORT", 13000):
             direct = ["/usr/bin/regenerator2000", "--mcp-server-stdio", source]
-            wrapped = ["/usr/bin/python3", root + "/kit/c64/r2000_bridge.py", direct[0], source, "13000"]
+            wrapped = ["/usr/bin/python3", root + "/kit/c64/stdio_bridge.py", direct[0], source, "13000"]
             self.assertEqual(launcher.r2000_source(direct), source)
             self.assertEqual(launcher.r2000_source(wrapped), source)
             self.assertIsNone(launcher.r2000_source(["sh", "-c", shlex.join(wrapped)]))
@@ -100,7 +121,7 @@ class ProcessIsolationTests(unittest.TestCase):
 
     def test_running_prefers_listener_over_shell_wrapper(self):
         source = launcher.ROOT + "/games/c64/test/work/a snapshot.vsf"
-        argv = ["python3", launcher.ROOT + "/kit/c64/r2000_bridge.py", "/usr/bin/regenerator2000", source, str(launcher.R2000_PORT)]
+        argv = ["python3", launcher.ROOT + "/kit/c64/stdio_bridge.py", "/usr/bin/regenerator2000", source, str(launcher.R2000_PORT)]
         owner = shlex.join(argv)
         wrapper = shlex.join(["sh", "-c", owner])
         ps = f"41 00:05 {wrapper}\n42 00:02 {owner}\n"
@@ -151,28 +172,29 @@ class ProcessIsolationTests(unittest.TestCase):
              patch.object(launcher.os.path, "exists", return_value=True), \
              patch.object(launcher.os, "makedirs") as mkdir, \
              patch.object(launcher, "up", return_value=False), \
+             patch("builtins.open", mock_open()), \
              patch.object(launcher, "start") as start:
             launcher.r2000(source)
         argv = start.call_args.args[0]
-        self.assertEqual(argv[1], launcher.ROOT + "/kit/c64/r2000_bridge.py")
+        self.assertEqual(argv[1], launcher.ROOT + "/kit/c64/stdio_bridge.py")
         self.assertEqual(argv[-2:], [source, "13000"])
         self.assertEqual(start.call_args.kwargs["port"], 13000)
         env = start.call_args.kwargs["env"]
         for name in ("XDG_CONFIG_HOME", "XDG_CACHE_HOME", "XDG_DATA_HOME"):
             self.assertTrue(env[name].startswith(launcher.TOOLS + "/r2000-home/"))
-        self.assertEqual(mkdir.call_count, 3)
+        self.assertEqual(mkdir.call_count, 5)
 
     def test_stop_patterns_are_clone_scoped_and_ere_compatible(self):
         root = launcher.ROOT
         own_vice = root + "/tools/vice-mcp/bin/x64sc -mcpserver -mcpserverport 16510"
         own_stdio = "/usr/bin/regenerator2000 --mcp-server-stdio " + root + "/tools/input.regen2000proj"
-        own_bridge = "python3 " + root + "/kit/c64/r2000_bridge.py /usr/bin/regenerator2000 " + root + "/input.vsf 13000"
+        own_bridge = "python3 " + root + "/kit/c64/stdio_bridge.py /usr/bin/regenerator2000 " + root + "/input.vsf 13000"
         for kind, command in (("vice", own_vice), ("r2000", own_stdio), ("r2000", own_bridge)):
             pattern = launcher.STOP_PATTERNS[kind]
             self.assertNotIn("(?:", pattern)  # pkill uses ERE, not Python's noncapturing groups
             self.assertIsNotNone(re.search(pattern, command))
             self.assertIsNone(re.search(pattern, command.replace(root, root + "-other")))
-        self.assertIsNone(re.search(launcher.STOP_PATTERNS["r2000"], "python3 " + root + "/kit/c64/r2000_bridge.py.other"))
+        self.assertIsNone(re.search(launcher.STOP_PATTERNS["r2000"], "python3 " + root + "/kit/c64/stdio_bridge.py.other"))
 
 
 class SnapshotTests(unittest.TestCase):
@@ -198,7 +220,7 @@ class SnapshotTests(unittest.TestCase):
             source = root / "saved game.vsf"
             ram = bytes(range(256)) * 256
             source.write_bytes(snapshot(ram))
-            project = bridge.prepare_source(source, root / "tools")
+            project = bridge.project_path(source, root / "tools")
             self.assertEqual(project.parent, root / "tools")
             data = json.loads(project.read_text())
             self.assertEqual(gzip.decompress(base64.b64decode(data["raw_data_base64"])), ram)
@@ -207,77 +229,11 @@ class SnapshotTests(unittest.TestCase):
     def test_port_bind_failure_precedes_conversion_and_child(self):
         with patch.object(sys, "argv", ["bridge", "r2000", "input.vsf", "13000"]), \
              patch.object(bridge.signal, "signal"), \
-             patch.object(bridge, "HTTPServer", side_effect=OSError("occupied")), \
-             patch.object(bridge, "prepare_source") as prepare, \
-             patch.object(bridge.subprocess, "Popen") as popen:
+             patch.object(bridge, "ThreadingHTTPServer", side_effect=OSError("occupied")), \
+             patch.object(bridge, "Stdio") as backend:
             with self.assertRaisesRegex(OSError, "occupied"):
                 bridge.main()
-            prepare.assert_not_called()
-            popen.assert_not_called()
-
-
-class BridgeProtocolTests(unittest.TestCase):
-    def rpc(self):
-        child = Mock()
-        child.stdin = io.BytesIO()
-        child.stdout.fileno.return_value = 42
-        return bridge.ChildRPC(child)
-
-    def test_notification_never_waits_for_reply(self):
-        rpc = self.rpc()
-        with patch.object(bridge.select, "select") as wait:
-            self.assertIsNone(rpc.exchange({"jsonrpc": "2.0", "method": "notifications/initialized"}))
-            wait.assert_not_called()
-
-    def test_partial_lines_notifications_and_legacy_ack(self):
-        rpc = self.rpc()
-        chunks = [b'{"id":null,"result":{}}\n{"method":"notifications/test"}\n{"id":1,', b'"result":{"ok":true}}\n']
-        with patch.object(bridge.select, "select", return_value=([rpc.child.stdout], [], [])), \
-             patch.object(bridge.os, "read", side_effect=chunks):
-            response = rpc.exchange({"id": 1, "method": "tools/list"})
-        self.assertEqual(json.loads(response), {"id": 1, "result": {"ok": True}})
-
-    def test_eof_fails_immediately_and_later_calls_do_not_write(self):
-        rpc = self.rpc()
-        with patch.object(bridge.select, "select", return_value=([rpc.child.stdout], [], [])), \
-             patch.object(bridge.os, "read", return_value=b""):
-            with self.assertRaisesRegex(ConnectionError, "closed"):
-                rpc.exchange({"id": 1, "method": "tools/list"})
-        written = rpc.child.stdin.getvalue()
-        with self.assertRaisesRegex(ConnectionError, "unavailable"):
-            rpc.exchange({"id": 1, "method": "tools/list"})
-        self.assertEqual(rpc.child.stdin.getvalue(), written)
-
-    def test_partial_line_timeout_cannot_desynchronize_next_request(self):
-        rpc = self.rpc()
-        with patch.object(bridge.select, "select", side_effect=[([rpc.child.stdout], [], []), ([], [], [])]), \
-             patch.object(bridge.os, "read", return_value=b'{"id":1'):
-            with self.assertRaises(TimeoutError):
-                rpc.exchange({"id": 1, "method": "tools/list"})
-        self.assertTrue(rpc.broken)
-
-    def test_mismatched_response_id_fails_closed(self):
-        rpc = self.rpc()
-        rpc.buffer = b'{"id":2,"result":{}}\n'
-        with self.assertRaisesRegex(ValueError, "ID mismatch"):
-            rpc.exchange({"id": 1, "method": "tools/list"})
-        self.assertTrue(rpc.broken)
-
-    def test_http_notification_returns_202_and_empty_body(self):
-        handler = object.__new__(bridge.Handler)
-        body = b'{"method":"notifications/initialized"}'
-        handler.path = "/mcp"
-        handler.headers = {"Content-Length": str(len(body))}
-        handler.rfile, handler.wfile = io.BytesIO(body), io.BytesIO()
-        handler.server = Mock()
-        handler.server.rpc.exchange.return_value = None
-        for name in ("send_response", "send_header", "end_headers", "send_error"):
-            setattr(handler, name, Mock())
-        handler.do_POST()
-        handler.send_response.assert_called_once_with(202)
-        handler.send_header.assert_any_call("Content-Length", "0")
-        handler.send_error.assert_not_called()
-        self.assertEqual(handler.wfile.getvalue(), b"")
+            backend.assert_not_called()
 
 
 if __name__ == "__main__":
