@@ -163,17 +163,17 @@ Contributor: jankfoundry. The contributor recalls that the earlier work used **m
 
 ### Findings checked
 
-| Claim and result | Disk evidence | Cartridge evidence |
+| Claim and result | Disk | Cartridge |
 |---|---|---|
 | Room-cell order: Disk raw offset 1, not 0; cartridge expansions match 17 disk boards | $71F5, $71FA read; $6FA6 decode | $97DE, $980B decode |
 | Route cost: Same result for all 200,704 legal row/column combinations in each engine | $81CE | $A5FD |
 | Score arithmetic and visible digits: Same 1,624 cases per engine, including overflow and the undisplayed eighth digit | $87E6, score $130A – $130D | $8FED, score $77 – $7A |
 | Trapdoor direction tests: 50 centered tile/direction cases per engine agree | $73C7, $74DE, $7550, $75C8, $7671 | $99E9, $9AD4, $9B38, $9BA2, $9C28 |
-| Digging cadence: Disk CPU and forced VICE calls: 13 updates per successful dig in either direction | $76E6, $77A5 and continuations | Earlier source invariant supplied the lead |
-| Hole-table bound: At most 14 active timed holes under normal legal loop/reset flow; attaining 14 on a board is unproved | $611C, $6FC5, $7B12, $84F1 | Earlier source invariant supplied the lead |
+| Digging cadence: Disk CPU and forced VICE calls: 13 updates per successful dig in either direction | $76E6, $77A5 | Prior source lead |
+| Hole-table bound: At most 14 active timed holes under normal legal loop/reset flow; attaining 14 on a board is unproved | $611C, $6FC5, $7B12, $84F1 | Prior source lead |
 | Default pace: Over 120 PAL frames: disk 144 IRQs/72 passes; cartridge 144 IRQs/48 passes | Threshold 5, counter reset 3 | Threshold 6, counter reset 3 |
 | Atlas size: Cartridge's 1,672 generated pattern bytes match its recorded native play snapshot | 104 source glyphs | $A8BB expands 76 compact sources |
-| Completion motif cycle: Cartridge countdown/transposition checked for 70 completions; pitch offset cycles 2–11 in both | $641D, ten selections | $9760, seven selections |
+| Completion motif cycle: Cartridge countdown and pitch shift checked for 70 completions; pitch offset cycles 2–11 in both | $641D, ten selections | $9760, seven selections |
 
 The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. The disk mechanics checks pass 214,299 route, score, timer, closing-picture, and ordered SID-tick cases.
 
