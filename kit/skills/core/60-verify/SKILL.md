@@ -75,6 +75,14 @@ and listing callers from the decoded listing rather than from a byte
 search, brought a second, independent sample to 3 %. If the first sample
 is bad, audit the whole listing before the page is published.
 
+If the checking agent cannot run (its provider is out of credit, say:
+`50-coverage`, "Splitting the work across subagents"), run it on another
+proven model, or through another provider. If none can run it, the
+listing is unmeasured, and that is a gap, not a pass: draw the sample
+anyway, write in `facts.md`, where the error rate would go, the seed and
+the size and that the sample is not checked yet, say so in the pull
+request, and leave `tier` where it was before this step.
+
 What the repository keeps is the result: one paragraph in `facts.md`
 naming the seed, the population and the sample's size, how many comments
 were wrong, what was wrong with them and what was changed, and the

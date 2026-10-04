@@ -139,8 +139,10 @@ can open with that instead.
 - The built page also loads the site's stylesheet, `site/lib/site.css`,
   which has class names of its own (`.strip` is one). A page class with
   the same name picks up its rules and the layout breaks only in the
-  built site. Check the stylesheet before naming a class, or prefix the
-  page's own. <!-- until #143 -->
+  built site. `check_docs.py` fails on a class the page's styles (its
+  `<style>` or its own stylesheet) share with `site.css`, unless the rule
+  is the site's copied word for word or one of the template's. Prefix the
+  page's own classes and it never comes up.
 - Start from `kit/template/index.html` for the design tokens and layout.
   Keep its `<!-- tabs -->` marker; the build puts the tab bar there.
   A finished example to borrow patterns from is any Gold game in `games/`:

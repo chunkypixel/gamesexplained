@@ -138,6 +138,13 @@ format, how to check the result against it, and how to read it back
   game's first instruction (the loader's hand-over) with one in play. A
   screen or bitmap that is already there before the game runs is authored
   data, to be described; one the game builds is output, to be excluded.
+  A plane can contain both. Declare its complete authored extent, then
+  exclude only the generated cells or rows. `coverage.include` overrides
+  custom exclusions as well as platform defaults: a broad include of the
+  whole plane gives the output back. Include only its authored gaps when
+  the plane sits under a platform exclusion. Re-run the loaded-data audit
+  after changing the scope or recovering code: new operand references can
+  split an already described allocation into undescribed aliases.
 - **Never bulk-disassemble every labelled address** to "recover"
   coverage. Many labels sit on data; disassembling them misclassifies the
   bytes as code. Undo by setting the data type back to undefined.
@@ -223,12 +230,16 @@ exclusion) or `coverage.exclude` (not the game's, with the reason). One
 game reached 100 % with 1.6 KB of its own tables and its picture's
 colours outside the count.
 
-The list only finds data that sits at the same address in both images:
-data the start-up copies elsewhere (out of the way of the I/O area, under
-a ROM, into another bank) differs between them and is never listed.
-Search the play snapshot for the start-up's copy loops' destinations, and
-check each against the ledger; one game reached 100 % with half a
-kilobyte of moved graphics outside every span. <!-- until #146 -->
+Data the start-up copies elsewhere (out of the way of the I/O area, under
+a ROM, into another bank) differs between the images at its own address,
+so the list also looks for it at another: an untracked stretch of 32
+bytes or more in play that the hand-over holds somewhere else is listed
+with both addresses ("copied here after the hand-over"). One game reached
+100 % with half a kilobyte of moved graphics outside every span before
+the list did this. A copy the start-up changes on the way (unpacked,
+shifted, interleaved, or built from pieces) matches nowhere, so follow
+the start-up's copy loops to their destinations as well, and check each
+against the ledger.
 
 ## Interpreted programs and code loaded as level data
 
@@ -247,26 +258,14 @@ real snapshot and compare its loaded bytes with the supplied file. Record
 when a file was selected through controlled state rather than ordinary
 progression; loading it does not prove its gameplay is reachable.
 
-Keep each source image independent. `game.json` can declare:
-
-```json
-"source_images": [
-  {"id": "area-a", "title": "Area A", "path": "reference/sources/area-a"}
-]
-```
-
-Each directory contains its own `game.json` (platform and coverage ranges),
-`symbols.json` and `listing.json`. Export from that image's annotated
-project, then run `listing.py` on its actual snapshot; `--entry` may name
-the same snapshot when it was stopped before initialization. Snapshots and
-projects remain in `work/`. Do not splice different files into one invented
-memory image or hand-build listing records.
-
-`coverage.py <game>` sums the main and named-image ledgers, counting the
-same address separately for each loaded program. `--image area-a` examines
-one image. `check_listing.py` checks every declared image, and the Source
-tab selects them with `?image=area-a#XXXX`. The main image is `main`.
-All named images need coverage before the aggregate reaches 100 percent.
+Use the parts layout from `10-orient`: each loaded program has a
+`parts/<id>/` folder, and `over` and `ranges` identify the shared resident
+program and the addresses replaced. Export that part's annotations and run
+`listing.py` on its actual snapshot; `--entry` may name that same snapshot
+when it was stopped before initialization. Snapshots and projects remain
+in the part's `work/`. Do not splice different files into one invented
+memory image or hand-build listing records. `coverage.py <game>` sums the
+parts; give it a part's folder to inspect that part's ledger.
 
 Files can retain code or art from a previous file's construction workspace.
 Compare those tails against their possible donors; describe the matching
@@ -403,6 +402,14 @@ Routines are independent, so the burn-down parallelises. What matters:
   agent with a message (the harness's resume, not a new agent), telling
   it what is already in the disassembler. A new agent rereads its range
   from nothing.
+- **An account that pays by credit can fail every agent at its first
+  call**, and on every retry: one run's four agents got
+  `402 payment_required` because the runner asked for 128,000 tokens the
+  balance could not cover, and one also met the account's cap on
+  requests in flight, below five. Before a fan-out on such an account,
+  check the balance, start fewer agents, and lower the runner's
+  `max_tokens` where it has the setting. An agent that failed at its
+  first call left nothing to resume.
 - **Correct the brief the moment a fact in it turns out wrong**, and say
   in it that it was corrected. Agents still running read the old line;
   their reports will contradict it, which is how one run found that its

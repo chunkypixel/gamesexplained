@@ -125,7 +125,9 @@ leaves out; a new test is a `test_*.py` file, not a new flag.
   silent: address arithmetic goes wrong in ways that read as confident,
   which is why the check tests claims against the game rather than
   reading the page. `python3 kit/scripts/models.py is-proven <id>` says
-  whether yours is.
+  whether yours is. Such a run still builds its whole minisite, not the
+  cut-down Bronze page: the site publishes it with a banner saying it
+  awaits a maintainer's check, until the check passes.
 - **An imported analysis is a starting point, not a run.** Work the
   contributor did outside the kit seeds the disassembler; the listing
   still comes from a snapshot through `listing.py`, coverage and verify

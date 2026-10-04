@@ -6,7 +6,9 @@ a game to Silver, or one the maintainers declare good enough in
 games that proved each. When a run's coverage or verify step ran on a
 model that is not on that list, the game cannot be Silver until a
 maintainer has checked it. This file is that check. It is done at review
-time, on the pull request's branch, before the merge.
+time, on the pull request's branch, before the merge. A game merged
+before its check is published whole, with a banner saying it awaits
+this check; the banner goes when its `verification` passes (`build.py`).
 
 The check exists because a weaker model's mistakes are silent. Its
 wrong claims are as confident as its right ones: an address off by a

@@ -221,7 +221,7 @@ html:has(.pagenav) h2[id]{scroll-margin-top:calc(var(--tabs-h,48px) + 16px)}
 
 /* source viewer */
 .facts{padding:12px var(--gx) 24px}
-details.factsbox{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:6px 18px;margin:20px 0}
+details.factsbox{scroll-margin-top:calc(var(--tabs-h,48px) + 12px);border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:6px 18px;margin:20px 0}
 details.factsbox summary{cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ink-soft);padding:8px 0}
 .src{display:grid;grid-template-columns:280px 1fr;min-height:70vh;border-top:1px solid var(--line)}
 .src .side{border-right:1px solid var(--line);padding:16px;position:sticky;top:var(--tabs-h,48px);align-self:start;height:calc(100vh - var(--tabs-h,48px));overflow:auto;font-family:var(--fm);font-size:12.5px}
@@ -236,9 +236,9 @@ details.factsbox summary{cursor:pointer;font-family:var(--fb);font-size:14px;col
 .src .idx a .a{color:var(--ink-mute);width:44px;flex:none}
 .src .idx a .k{margin-left:auto;color:var(--ink-mute);font-size:10.5px}
 .src .idx a.unc{opacity:.55}
-.src .main{padding:16px 24px;font-family:var(--fm);font-size:13px;line-height:1.55;overflow-x:auto}
+.src .main{position:relative;padding:16px 24px;font-family:var(--fm);font-size:13px;line-height:1.55;overflow-x:auto}
 .src .row{display:grid;grid-template-columns:60px 90px 220px 1fr;gap:12px;padding:1px 6px;border-radius:4px;align-items:baseline}
-.src .main.nobytes .row{grid-template-columns:60px 0 220px 1fr}
+.src .main.nobytes .row{grid-template-columns:60px 220px 1fr}   /* .b is gone, so .l and .i move up a column (#147) */
 .src .main.nobytes .row .b{display:none}
 .src .main.explained [data-own="0"],.src .main.explained .gap{display:none}
 /* the listing is rendered in blocks of rows; one off screen is not laid out, and stands at an estimated height */
@@ -266,7 +266,7 @@ details.factsbox summary{cursor:pointer;font-family:var(--fb);font-size:14px;col
 .src .xlist a{display:block;color:var(--link);padding:1px 0}
 .src .hidden{display:none}
 
-@media (max-width:900px){.src{grid-template-columns:1fr}.src .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.src .row{grid-template-columns:56px 1fr}.src .row .b,.src .row .l{grid-column:2}}
+@media (max-width:900px){.src{grid-template-columns:1fr}.src .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.src .row,.src .main.nobytes .row{grid-template-columns:56px 1fr}.src .row .b,.src .row .l,.src .row .i{grid-column:2}}
 @media (max-width:700px){:root{--gx:18px;--h1:34px;--h2:22px;--sy:32px;--pp:16px}}
 
 /* the 'Edit this page' footer, last on every game tab */

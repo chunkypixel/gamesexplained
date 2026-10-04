@@ -11,7 +11,6 @@
   <h1 style="margin-top:0">{{title}}: the source</h1>
   <p class="mute">Every routine, table and variable the game uses, with the names and descriptions given to them. Click an operand to follow it; the counter beside a label lists what refers to it. The reference below the fold is rendered from the game's facts file.</p>
   <!-- parts -->
-  <p id="source-choice" hidden><label>Source image <select id="source-image"></select></label></p>
   <details class="factsbox" id="facts"><summary>Technical reference: memory map, timing, tables, cheats</summary>
   <!-- facts -->
   </details>
@@ -39,21 +38,11 @@
 <!-- part -->
 <script>
 (async function(){
-  const images=/* source images */[];
-  const requested=new URLSearchParams(location.search).get('image')||'main';
-  const chosen=images.find(i=>i.id===requested)||images[0]||{id:'main',listing:'listing.json'};
-  if(images.length>1){
-    document.getElementById('source-choice').hidden=false;
-    const select=document.getElementById('source-image');
-    for(const image of images){const option=document.createElement('option');option.value=image.id;option.textContent=image.title;select.append(option);}
-    select.value=chosen.id;
-    select.addEventListener('change',()=>{const url=new URL(location.href);url.searchParams.set('image',select.value);url.hash='';location.href=url.href;});
-  }
   // A game of several parts names this page's part, and the parts it is loaded over, in #part
   // (kit/scripts/build.py): the listing is then the part's own laid over theirs.
   const PART=JSON.parse((document.getElementById('part')||{}).textContent||'null');
-  const get=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
-  const L = await get(PART?PART.listing:chosen.listing);
+  const get=u=>fetch(u).then(r=>r.json()).catch(()=>null);
+  const L = await get(PART?PART.listing:'listing.json');
   const main=document.getElementById('main'), idx=document.getElementById('idx');
   if(!L){ main.innerHTML='<p class="mute">listing.json could not be loaded. Serve the site over http (python3 -m http.server) rather than opening the file directly.</p>'; return; }
   const hex4=a=>'$'+a.toString(16).toUpperCase().padStart(4,'0');
@@ -100,7 +89,7 @@
   function use(V){
     recs=V.records;
     // what a gap is: in a game of several parts, a part alone leaves out what the others own
-    unused=!PART?'outside this listing':V===L?'that are not this part\u2019s, or not used':'that none of these parts uses';
+    unused=!PART?'not used by the game':V===L?'that are not this part\u2019s, or not used':'that none of these parts uses';
     byAddr=new Map(recs.filter(r=>r.t!=='gap').map(r=>[r.a,r]));
     names=new Map(recs.filter(r=>r.l).map(r=>[r.a,r.l]));
     // the first record at each address, and the addresses in order, for the nearest record at or before one
@@ -181,7 +170,8 @@
     lab.hidden=false; lab.querySelector('span').textContent='only '+PART.title;
     box.addEventListener('change',()=>{ use(box.checked?L:WHOLE); done=0; want=-1; hl=null; main.textContent=''; renderIdx(); slice(); goHash(); });
   }
-  // xref popovers
+  // xref popovers: on the listing itself, under the counter. Inside the label cell they were
+  // clipped by its overflow and by the block's containment (#147).
   let pop=null;
   main.addEventListener('click',e=>{
     const x=e.target.closest('.xr');
@@ -189,7 +179,9 @@
     if(!x) return;
     pop=document.createElement('div'); pop.className='xlist';
     pop.innerHTML='<div class="note">referenced by</div>'+x.dataset.x.split(',').map(a=>{const n=+a; const id=id4(n); return `<a href="#${id}">${id} ${esc(names.get(n)||'')}</a>`;}).join('');
-    x.parentElement.style.position='relative'; x.parentElement.appendChild(pop);
+    const r=x.getBoundingClientRect(), m=main.getBoundingClientRect();
+    pop.style.left=(r.left-m.left+main.scrollLeft)+'px'; pop.style.top=(r.bottom-m.top+main.scrollTop+4)+'px';
+    main.appendChild(pop);
     e.stopPropagation();
   });
   document.addEventListener('click',()=>{if(pop){pop.remove();pop=null;}});

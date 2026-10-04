@@ -1,6 +1,6 @@
 # Jumpman: kit feedback
 
-Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.80. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
+Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.87. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
 
 ## Skill text that changed what I did
 
@@ -10,13 +10,14 @@ Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Si
 
 ## Changes made
 
-- `kit/scripts/source_images.py`, `coverage.py`, `check_listing.py`, `build.py`: named, contained source images count independently and receive separate Source selections; the About tab distinguishes its main-image memory map from aggregate coverage. Jumpman's 32 overlays reuse the same addresses; a single resident ledger would silently omit them. Four tests cover independent counting, stale comments, path containment and URL encoding.
+- `games/c64/jumpman/parts/`: uses upstream's standard multiload format, with one resident/startup part and 32 level parts over it. Each part holds its ledger, listing and facts. The custom source-image module and tests are removed; coverage, listing checks and site building use upstream's implementations. Address links select `source-<id>.html`; `data-part` gives dynamic atlas addresses the selected level's scope.
+- `site/source.html`, `site/lib/site.css`: an explicit `#facts` link opens the technical-reference disclosure below the fixed tabs, so existing evidence captions reach their explanation directly.
 - `kit/scripts/listing.py`: an explicit entry snapshot may be the same file as the listing snapshot, allowing a stopped loader capture without inventing an entry image. Upstream's platform decoding and undocumented-opcode handling are retained.
 - `kit/c64/ports.py`, `tools.py`, `vice.py`, `r2000.py`: launcher and clients share environment, saved-file, legacy JSON and default port resolution; invalid or colliding settings fail explicitly. This permits separate active checkouts without connecting to the wrong session.
 - `kit/c64/stdio_bridge.py`: upstream's alternate-port bridge retains snapshot module-boundary checks, unique converted projects, notification handling, serialized reply matching, and refusal after a timeout or broken stream. The older duplicate bridge is removed. Occupied ports fail before spawning the backend.
 - `kit/c64/tools.py`, `test_tool_isolation.py`: retain actual process-argument/source checks and clone-scoped stop patterns while using upstream's shared launcher and XDG containment. Tests exercise paths with spaces and shell metacharacters, process ownership, ports and snapshot boundaries.
 - `kit/c64/vice.py`, `test_vice_client.py`: a frame request rejects a failed, partial or malformed completion; an RPC reply alone is not evidence that game time advanced.
-- `kit/scripts/test_source_images.py`, `kit/c64/test_tool_isolation.py`, `kit/c64/test_vice_client.py`: upstream's unified test runner discovers these checks automatically. CI uses the upstream workflow without a separate game-specific test step.
+- `kit/c64/test_tool_isolation.py`, `kit/c64/test_vice_client.py`: upstream's unified test runner discovers these checks automatically. CI uses the upstream workflow without a separate game-specific test step.
 - `kit/skills/core/10-orient`, `50-coverage`, `60-verify`, `70-minisite`, and the C64 tool skills: general lessons are collected in `kit/lessons/2026-10-04-jumpman.md`.
 - `kit/c64/INSTALL.md`: records the tested Linux setup and consolidated port precedence. Retired timing records are removed in accordance with upstream; `game.json.step_models` records coverage and verification provenance.
 
@@ -34,7 +35,9 @@ The original capability suite passed 56 of 57 checks: only its host warp speed c
 
 Original-code, native and browser evidence is summarized in `facts.md`; the detailed reports and scratch scripts are private working records. It includes exact included-byte checks, all initial level renderings, bomb changes, robot decisions, exhaustive score/maze/Randomizer inputs, ordinary Dragon Slayer completion, Gunfighter hit/no-fire control, puzzle transformation/death completion, score save/reboot and bounded anomaly checks. Corrections are recorded rather than hidden. The audio model still approximates bus decay and within-frame write timing; selected-level routes do not establish a full legal campaign.
 
-The submission includes kit 0.0.78’s automatic test discovery and audit-file rules, and kit 0.0.80’s support for separate parts. Named source-image links and coverage remain compatible with the parts format. The 32 kit test commands pass with tools required and no skips; 69 Python modules import, and all 25 games build. Detailed reports and unused data copies are retained privately; captions link to the Source tab's technical reference, which opens directly at `#facts`. All 66 canonical listing/symbol files remain unchanged. These are self-checks, not independent certification.
+The migration follows the maintainer's request to use the parts support introduced in #202. Official ownership removes 320 bytes in the startup sprite slots from the resident ledger; their provenance and limits remain documented. The 90,263 retained bytes, 9,498 instruction boundaries, retained labels/comments and widget logic/data match the pre-migration candidate. Listings are regenerated from the saved native snapshots; their references into the resident engine now use its symbols. All 32 level captures have the same 244 expected resident-code differences from the original startup state, explained in the orientation. Detailed working reports stay private. These are self-checks, not independent certification.
+
+The integrated kit passes all 36 discovered/self-test commands with tools required and no skips; all 72 Python modules import. All 25 games reproduce coverage and build, producing 165 pages. Binary, documentation, listing and skill-quotation checks pass. Browser checks cover the interactive controls and the standard part navigation; detailed results remain private.
 
 ## Maintainer asks
 

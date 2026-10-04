@@ -17,7 +17,6 @@ that points at a part beneath reads as that part names it now.
 Usage: check_listing.py [game dir ...]      default: every game, and every part of one
 """
 import glob, hashlib, json, os, sys
-from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from parts import ID, EMPTY, LEDGER_KEYS, parts, under, ranges, started, load_game, owned   # noqa: E402
@@ -25,16 +24,16 @@ from parts import ID, EMPTY, LEDGER_KEYS, parts, under, ranges, started, load_ga
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def check_pair(gdir):
+def check(gdir):
     lp, sp = os.path.join(gdir, "listing.json"), os.path.join(gdir, "symbols.json")
-    S = json.loads(Path(sp).read_text())
+    S = json.load(open(sp))
     if not os.path.exists(lp):
         if not (S["blocks"] or S["symbols"] or S["comments"]):
             return []   # a new game's empty map: nothing to list yet
         return [f"{gdir}: no listing.json (run kit/scripts/listing.py)"]
-    L = json.loads(Path(lp).read_text())
+    L = json.load(open(lp))
     errs = []
-    sha = hashlib.sha256(Path(sp).read_bytes()).hexdigest()
+    sha = hashlib.sha256(open(sp, "rb").read()).hexdigest()
     if L.get("symbols_sha256") != sha:
         errs.append("listing.json was built from a different symbols.json; rebuild it")
     labels = {r["a"]: r.get("l") for r in L["records"] if "l" in r}
@@ -59,16 +58,6 @@ def check_pair(gdir):
                 errs.append(f"{n} operand(s) point at a part beneath this one whose names have changed since the "
                             "listing was built; name them again: listing.py <part> --relabel")
     return [f"{gdir}: {e}" for e in errs[:20]]
-
-
-def check(gdir):
-    if os.path.isfile(os.path.join(gdir, "part.json")):
-        return check_pair(gdir)
-    from source_images import images
-    try:
-        return [error for image in images(gdir) for error in check_pair(image["directory"])]
-    except (ValueError, OSError) as error:
-        return [str(error)]
 
 
 def check_parts(gdir):

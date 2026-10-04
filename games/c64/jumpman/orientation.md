@@ -27,9 +27,68 @@ Saved states also include `work/title-attract.vsf` and `work/options.vsf`. A sna
 
 ## Loader and loaded files
 
-`JUMPMAN` is a 1,024-byte program loaded at `$0800`; its BASIC line enters `$0811`. It draws the loading picture, opens `INTRO.SYS` on device 8, and calls KERNAL LOAD at `$08D7`. `INTRO.SYS` carries 32,768 bytes for `$2000`–`$9FFF`. The loader checks `$9FFF` and, on success, jumps from `$08FB` to `$2F03`. The hand-over snapshot `work/entry.vsf` stops at `$2F03`, before its first instruction. Its complete `$2000`–`$9FFF` region matches the file byte for byte. The resident listing uses that original image; self-modified operands are described in their comments. The already-executed boot loader at `$0800-$0BFF` differs from its disk file in exactly two bytes: destination high bytes `$082F` and `$0834` have changed from `$FF/$FF` to `$08/$DC` after its screen/color clearing loop. Executing the original loop reproduces both changes; the other1,022 loader bytes match.
+`JUMPMAN` is a 1,024-byte program loaded at `$0800`; its BASIC line enters `$0811`. It draws the loading picture, opens `INTRO.SYS` on device 8, and calls KERNAL LOAD at `$08D7`. `INTRO.SYS` carries 32,768 bytes for `$2000`–`$9FFF`. The loader checks `$9FFF` and, on success, jumps from `$08FB` to `$2F03`. The hand-over snapshot `work/entry.vsf` stops at `$2F03`, before its first instruction. Its complete `$2000`–`$9FFF` region matches the file byte for byte. The resident listing uses that original image; self-modified operands are described in their comments. The already-executed boot loader at `$0800-$0BFF` differs from its disk file in exactly two bytes: destination high bytes `$082F` and `$0834` have changed from `$FF/$FF` to `$08/$DC` after its screen/color clearing loop. Executing the original loop reproduces both changes; the other 1,022 loader bytes match.
 
-The disk contains 32 level files, `PLF01`–`PLF24`, `PLF2A`–`PLF2C`, and `PLF26`–`PLF30`. Each is 2,048 bytes loaded at `$3800`. These are overlays: one first-level snapshot cannot contain them all. For every file, a separate emulator snapshot stops at `$7514`, after the real loader has copied all 2,048 bytes into [$3000](source.html?image=01#3000)–[$37FF](source.html?image=01#37FF) and before drawing or initialization. Each active overlay was compared byte for byte with its disk file and matched. `SCORES` is 1,024 bytes loaded at `$2000`. File sizes, load addresses and chains were read from this same disk through the emulator; extracted files remain under `work/disk/`.
+The disk contains 32 level files, `PLF01`–`PLF24`, `PLF2A`–`PLF2C`, and `PLF26`–`PLF30`. Each is 2,048 bytes loaded at `$3800`. These are overlays: one first-level snapshot cannot contain them all. For every file, a separate emulator snapshot stops at `$7514`, after the real loader has copied all 2,048 bytes into [$3000](source-plf01.html#3000)–[$37FF](source-plf01.html#37FF) and before drawing or initialization. Each active overlay was compared byte for byte with its disk file and matched. `SCORES` is 1,024 bytes loaded at `$2000`. File sizes, load addresses and chains were read from this same disk through the emulator; extracted files remain under `work/disk/`.
+
+## Parts and capture route
+
+The standard `parts/` layout records one resident/startup image and 32 level programs. Each level uses `over: resident` and owns $3000–$3FFF: the loader writes its file to $3800–$3FFF, then copies it to the active $3000–$37FF. Coverage counts the active copy once. The resident map owns everything outside that changing workspace. Its original five sprite slots at $3000–$313F are documented in the [resident facts](source-resident.html#facts), but are not counted again. This changes aggregate coverage from the earlier 90,583 bytes to 90,263, still 100% explained.
+
+Reproduce each controlled level capture as follows:
+
+1. Follow the ordinary first-level start above, with an execution breakpoint at $74DD. Save this stop as `work/level-loader-ready.vsf`; the filename is already prepared, before KERNAL LOAD.
+2. Restore that stop and write the five ASCII filename bytes, `PLF` plus the two-character suffix below, to $40D0–$40D4. Remove the $74DD breakpoint. Set an execution breakpoint at $7514 and resume. This changes the requested file; it does not inject level bytes or establish a normal campaign route.
+3. At $7514, compare all 2,048 active bytes at $3000–$37FF against that disk file. Save the native snapshot, without ROMs and with disk state, as the part's ignored `work/entry.vsf`.
+4. Remove the $7514 breakpoint, stop at $759C and save the part's `work/play.vsf` and its screenshot. This permits the real drawing and private initialization to run, but stops before the life-start animation. Release held input and restore the loader-ready stop for the next file.
+
+The resident `work/entry.vsf` is the $2F03 hand-over described above; its `work/play.vsf` is the first-level play capture. Each path in this paragraph is relative to its part folder. The original annotated native project is retained beside each part's captures as `work/entry.regen2000proj`. To regenerate a listing, replace `<id>` with the part folder name:
+
+```sh
+python3 kit/scripts/listing.py games/c64/jumpman/parts/<id> \
+  games/c64/jumpman/parts/<id>/work/entry.vsf \
+  --entry games/c64/jumpman/parts/<id>/work/entry.vsf
+```
+
+The layered Source view combines the original resident/startup listing with the selected pre-initialization level. It does not represent one frozen machine state. In all 32 native level entries, 244 bytes classified as resident code differ from the startup image: 224 are cleared boot-loader bytes, and 20 are operands changed by identifiable original stores/increments. Startup at [$9000](source-resident.html#9000) clears $0800–$0FFF; no level replaces the shared engine's opcodes outside that cleared loader. The listing tool reports these differences. Retaining the startup source preserves its original instructions and documents self-modification rather than treating those runtime changes as another program.
+
+| Disk file | Part | Source |
+| --- | --- | --- |
+| `JUMPMAN`, `INTRO.SYS` | `resident` | [Resident engine and startup](source-resident.html) |
+| `PLF01` | `plf01` | [01 · EASY DOES IT](source-plf01.html) |
+| `PLF02` | `plf02` | [02 · ROBOTS I](source-plf02.html) |
+| `PLF03` | `plf03` | [03 · BOMBS AWAY](source-plf03.html) |
+| `PLF04` | `plf04` | [04 · JUMPING BLOCKS](source-plf04.html) |
+| `PLF05` | `plf05` | [05 · VAMPIRE.](source-plf05.html) |
+| `PLF06` | `plf06` | [06 · INVASION](source-plf06.html) |
+| `PLF07` | `plf07` | [07 · GRAND PUZZLE I](source-plf07.html) |
+| `PLF08` | `plf08` | [08 · BUILDER.](source-plf08.html) |
+| `PLF09` | `plf09` | [09 · LOOK OUT BELOW](source-plf09.html) |
+| `PLF10` | `plf10` | [10 · HOT FOOT](source-plf10.html) |
+| `PLF11` | `plf11` | [11 · RUNAWAY.](source-plf11.html) |
+| `PLF12` | `plf12` | [12 · ROBOTS II.](source-plf12.html) |
+| `PLF13` | `plf13` | [13 · HAILSTONES](source-plf13.html) |
+| `PLF14` | `plf14` | [14 · DRAGON SLAYER.](source-plf14.html) |
+| `PLF15` | `plf15` | [15 · GRAND PUZZLE II.](source-plf15.html) |
+| `PLF16` | `plf16` | [16 · RIDE AROUND.](source-plf16.html) |
+| `PLF17` | `plf17` | [17 · THE ROOST.](source-plf17.html) |
+| `PLF18` | `plf18` | [18 · ROLL ME OVER](source-plf18.html) |
+| `PLF19` | `plf19` | [19 · LADDER CHALLENGE](source-plf19.html) |
+| `PLF20` | `plf20` | [20 · FIGURIT.](source-plf20.html) |
+| `PLF21` | `plf21` | [21 · JUMP-N-RUN](source-plf21.html) |
+| `PLF22` | `plf22` | [22 · FREEZE](source-plf22.html) |
+| `PLF23` | `plf23` | [23 · FOLLOW THE LEADER.](source-plf23.html) |
+| `PLF24` | `plf24` | [24 · JUNGLE](source-plf24.html) |
+| `PLF2A` | `plf2a` | [2A · MYSTERY MAZE](source-plf2a.html) |
+| `PLF2B` | `plf2b` | [2B · MYSTERY MAZE](source-plf2b.html) |
+| `PLF2C` | `plf2c` | [2C · MYSTERY MAZE](source-plf2c.html) |
+| `PLF26` | `plf26` | [26 · GUNFIGHTER](source-plf26.html) |
+| `PLF27` | `plf27` | [27 · ROBOTS III](source-plf27.html) |
+| `PLF28` | `plf28` | [28 · NOW YOU SEE IT....](source-plf28.html) |
+| `PLF29` | `plf29` | [29 · GOING DOWN ?](source-plf29.html) |
+| `PLF30` | `plf30` | [30 · GRAND PUZZLE III](source-plf30.html) |
+
+`SCORES` is a persistent copy of the $2000–$23FF score screen, represented in the resident part rather than counted as another program. All 35 extracted disk files are hash-identified in the private input manifest.
 
 ## First-level observations
 
