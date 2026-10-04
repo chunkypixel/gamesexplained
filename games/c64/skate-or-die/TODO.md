@@ -24,10 +24,18 @@ maintainer check in `kit/CHECKING.md` before the tier can be Silver.
 Run `python3 kit/scripts/coverage.py games/c64/skate-or-die --live` after
 exporting the current disassembler session. Work the largest undescribed
 routines and tables first, then audit all pointer tables and excluded RAM.
-The latest High Jump snapshot figure is 56.3% of 4,798 tracked bytes after
-excluding zero-page runtime state and tracing the SID command tables. It is
-not whole-game coverage; tracing new pointer targets can increase the
-denominator again.
+The latest High Jump snapshot figure is 34.3% of 11,661 tracked bytes after
+excluding zero-page runtime state and tracing the SID and nine phase-handler
+tables. It is not whole-game coverage; tracing new pointer targets can
+increase the denominator again. The largest current runs include high-RAM
+loader code/data, the event movement routine at `$1834`, graphics tables,
+and code reached only through the state dispatch.
+
+The kit has a single 16-bit symbol map and one snapshot-backed listing per
+game. Skate or Die! has distinct event overlays that reuse addresses. A
+maintainer must choose or approve a representation for those overlays
+before one Source tab and a 100% game-wide coverage figure can be honest.
+Keep this as a maintainer ask in the PR description if no issue may be filed.
 
 ## Publication
 

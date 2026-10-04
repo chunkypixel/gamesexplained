@@ -43,3 +43,13 @@ targets exposed a second dispatch table at `$27ED/$27F8`; seeding those 11
 targets expanded the High Jump listing from 996 to 1,628 instructions. This
 is why a low early code count was not evidence that the rest of the overlay
 was data. No bytecode behavior was named until its handler was read.
+
+The phase table at `$2AB9` exposed nine handlers. The first flow trace from
+them decoded inline text after `JSR $1242` as repeated `JSR $2020`, then
+invented an edge to `$4150`. Reading `$1242` showed that it consumes the
+NUL-terminated `PASS:`/`HEIGHT:` string after its call and resumes at
+`$09CA`. The string was retyped as bytes, `$4150` was cleared to undefined,
+and disassembly restarted at `$09CA`. High-RAM `$Fxxx` code was retained:
+there are actual calls and data references to that area while the KERNAL
+is banked out, and its RAM bytes differ from the ROM bank. Its loader and
+play roles remain to be separated.

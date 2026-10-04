@@ -39,6 +39,14 @@ The four captured event snapshots are separate memory images. The current
 listing of Race, Jam, or Joust code. Overlay differences and any common
 resident code remain to be mapped.
 
+The High Jump snapshot holds RAM beneath the KERNAL ROM at `$F000`-`$FFFF`.
+The code at `$0806` calls `$F230`, the event initializer at `$09CF` reads
+`$FE00`, and `$1A93` jumps to `$FE06`; the sampled play-state processor
+port `$E4` banks out the KERNAL. The `$F230` RAM bytes differ from the ROM
+bank at the same address. These are leads to game-owned high RAM, but their
+runtime bank state and which routines actually execute still need a
+call-path and live-checkpoint audit.
+
 Pairwise RAM comparison after the 209-byte VSF header found 58,451 differing
 bytes between `work/highjump-play.vsf` and `work/race-play.vsf`, 57,239
 between High Jump and Jam, and 50,864 between High Jump and Joust selection.
@@ -110,6 +118,26 @@ evidence of text. The compact-alphabet sweep found the four event headings
 listed above; it did not establish an absence of other strings in later
 event overlays.
 
+High Jump prints the header from an inline NUL-terminated byte string
+`$09A1`-`$09C9`, containing `PASS:` and `HEIGHT:`. The call at `$099E`
+enters `$1242`, which pulls the return address, masks each inline byte with
+`$3F`, draws its glyph and returns after the terminator. The bytes that
+looked like repeated `JSR $2020` are spaces in this string, not code.
+
+The graphics builder at `$138D` uses the complete 256-byte table
+`$2E7B`-`$2F7A` to reverse the individual bits in a byte. The builder at
+`$13C5` uses `$2F7B`-`$307A` to reverse four two-bit pixel pairs. A
+byte-for-byte check of every index `0..255` matched those transforms
+exactly. The builders therefore have both bit-level and two-bit-pixel
+reversal available; which poses call each path is traced at `$14DE` but
+has not yet been matched to all visible frames.
+
+The input reader at `$0D3F` uses even state byte `$2E` to index nine
+little-endian handler pointers at `$2AB9`-`$2ACA`, then patches the call
+operand at `$0D4E`. The states are `$00,$02,$04,$06,$08,$0A,$0C,$0E,$10`.
+Their handlers update movement, timing and skater poses; the player-facing
+meaning of each state needs live tracing before stronger labels are used.
+
 ### Twin copy under KERNAL RAM
 
 In `work/highjump-play.vsf`, `$C2B0`-`$C67A` and `$F9E0`-`$FDAA` are
@@ -156,6 +184,10 @@ return from a nested script. A second stream is read through `$08/$09` at
 further SID writes and modulation setup. This is code evidence for the
 driver, not yet a claim about how the soundtrack sounds or what any sound
 ID means in the game.
+
+The sound-ID table at `$307B`-`$30AE` contains 26 split low/high script
+pointers; the first points to `$30CC`. The next 26 bytes at `$30AF`-`$30C8`
+hold their priorities. These are indexed by ID in `$2981` and `$298D`.
 
 ## Live tests
 

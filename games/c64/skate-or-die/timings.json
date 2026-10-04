@@ -37,9 +37,10 @@
    "step": "50-coverage",
    "model": "unknown",
    "start": "2026-10-04T03:12:33Z",
-   "end": null,
-   "minutes": null,
-   "note": ""
+   "end": "2026-10-04T04:53:16Z",
+   "minutes": 100.7,
+   "note": "First coverage session: mapped High Jump dispatch, SID bytecode, graphics transforms and height display; multi-overlay representation still open",
+   "agents": 1
   }
  ]
 }
