@@ -967,7 +967,7 @@
   },
   {
    "address": 111,
-   "name": "snd_reset_req",
+   "name": "sound_reset_request",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "user"
   },
@@ -985,7 +985,7 @@
   },
   {
    "address": 114,
-   "name": "snd_ticks",
+   "name": "sound_ticks_pending",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "user"
   },
@@ -1369,7 +1369,7 @@
   },
   {
    "address": 2465,
-   "name": "highjump_header_text",
+   "name": "header_inline_text",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -10632,6 +10632,12 @@
    "kind": "auto"
   },
   {
+   "address": 65433,
+   "name": "b_FF99",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
    "address": 65441,
    "name": "b_FFA1",
    "type": "Branch",
@@ -10648,6 +10654,12 @@
    "name": "archive_event",
    "type": "Subroutine",
    "kind": "user"
+  },
+  {
+   "address": 65484,
+   "name": "b_FFCC",
+   "type": "Branch",
+   "kind": "auto"
   },
   {
    "address": 65487,
@@ -11393,7 +11405,7 @@
   {
    "address": 2465,
    "type": "line",
-   "text": "Inline NUL-terminated header text printed by the call at $099E through $1242: spaces, PASS:, spaces, HEIGHT:, spaces. These are text bytes, not calls to $2020 or $4150."
+   "text": "Inline text for JSR $1242 at $099E: 40 ASCII bytes and a zero terminator ($09C9), 16 spaces, 'PASS:', 4 spaces, 'HEIGHT:', 8 spaces. $1242 masks each byte with $3F and draws that glyph of the $6800 font, inverted, into bitmap row 0, then returns to $09CA. Data, not code: decoded as instructions it would read JSR $2020 and JSR $4150. Never disassemble a range containing $099E."
   },
   {
    "address": 2506,
