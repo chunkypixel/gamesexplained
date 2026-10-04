@@ -10,7 +10,7 @@ Read-only extraction and native boot established the Black Label IT engine and D
 
 Inline text/music and handler-address-minus-one RTS directories required explicit tracing. Early map/bitmap labels, contiguous row assumptions, sound semantics, and pacing interpretations were corrected against complete bodies and callers. Independent samples triggered full annotation reviews; their rates and the final check summary remain in facts.md. All declared authored bytes are explained.
 
-The contributor's prior cartridge project supplied leads only and was read only. Its payload reassembly matches the supplied cartridge. The contributor recalls mostly GPT-6 Astra, with the complete model history unconfirmed; game.json and comparison.md retain that qualification. No earlier annotation prose or labels were transplanted into the disk listing.
+The contributor's prior cartridge project supplied leads only and was read only. Its payload reassembly matches the supplied cartridge. The contributor recalls mostly GPT-6 Astra, with the complete model history unconfirmed; game.json and facts.md retain that qualification. No earlier annotation prose or labels were transplanted into the disk listing.
 
 The comparison exposed a two-cell shift in the first map browser: the disk reader skips raw sector byte zero. Page data and factual references now use offsets 1–224. Native capture and original reader/decoder checks confirm the alignment.
 
@@ -30,4 +30,6 @@ Firefox was unavailable; an existing Playwright headless-shell worked through th
 
 ## Submission cleanup
 
-Following the contributor's review feedback, detailed audit reports and the three game-specific verification helpers moved into ignored work/ storage. facts.md keeps concise sample results, intervals, check scope, and limitations. The factual comparison reference remains public; extended chronology and procedural reports are preserved privately. Pages, canonical source, and factual corrections are retained. Delivery remains the pushed review branch; no PR, issue, or deployment was requested.
+Following the contributor's review feedback, detailed audit reports and the three game-specific verification helpers moved into ignored work/ storage. facts.md keeps concise sample results, intervals, check scope, and limitations. Edition facts and provenance remain public in facts.md; extended chronology and procedural reports are preserved privately. Pages, canonical source, and factual corrections are retained.
+
+The contributor accepted the finished page for Silver and authorized submission after reviewing the branch. Before submission, upstream kit/site updates were merged, edition facts moved into facts.md under the updated documentation rules, the retrospective heading was corrected to match the skill-usage checker, and the combined repository checks/build were run. Gold and deployment remain outside this submission.

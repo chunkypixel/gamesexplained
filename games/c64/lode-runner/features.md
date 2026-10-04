@@ -39,4 +39,4 @@ C64-Wiki images were saved before annotation; their URLs and attribution are in 
 
 ## Open searches
 
-The cartridge room directory and selected mechanics are independently checked in `comparison.md`; its complete dispatch/editor paths are outside this disk listing. Master/user marker and score-writing callers were fully traced; persistence across a new emulated boot remains an integration test. The normal legal-flow hole bound is traced and CPU-tested; a playable route attaining it and bottom-row guard corner cases remain open in `facts.md`.
+The cartridge room directory and selected mechanics are independently checked in `facts.md`; its complete dispatch/editor paths are outside this disk listing. Master/user marker and score-writing callers were fully traced; persistence across a new emulated boot remains an integration test. The normal legal-flow hole bound is traced and CPU-tested; a playable route attaining it and bottom-row guard corner cases remain open in `facts.md`.

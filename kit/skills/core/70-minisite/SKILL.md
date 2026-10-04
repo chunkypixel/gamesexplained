@@ -139,8 +139,10 @@ can open with that instead.
 - The built page also loads the site's stylesheet, `site/lib/site.css`,
   which has class names of its own (`.strip` is one). A page class with
   the same name picks up its rules and the layout breaks only in the
-  built site. Check the stylesheet before naming a class, or prefix the
-  page's own. <!-- until #143 -->
+  built site. `check_docs.py` fails on a class the page's styles (its
+  `<style>` or its own stylesheet) share with `site.css`, unless the rule
+  is the site's copied word for word or one of the template's. Prefix the
+  page's own classes and it never comes up.
 - Start from `kit/template/index.html` for the design tokens and layout.
   Keep its `<!-- tabs -->` marker; the build puts the tab bar there.
   A finished example to borrow patterns from is any Gold game in `games/`:
@@ -219,6 +221,26 @@ can open with that instead.
   browser.
 - Reference images go in `reference/`; the page refers to them by
   relative path from the game folder (`reference/<name>.png`).
+- **A game of several parts** (`10-orient`) gets a Source page for each
+  part that has a listing, `source-<id>.html`, with the parts named above
+  the listing and a control beside it that steps from one to the next.
+  `source.html` is the first part's. The build makes these; the page's
+  part is to say which part an address belongs to. The site links a bare
+  `<code>$1234</code>` to `source.html`, so put `data-part="<id>"` on the
+  section (or any element) whose addresses are one part's, and
+  `data-part=""` where they are several parts' and should link nowhere.
+  Write a link by the part's own page, `source-<id>.html#1234`, never
+  `source.html#1234`: the first part changes when a part is added before
+  it. A part that lies over another is shown laid over it, its own rows
+  marked. The About tab keeps one map of memory, as for any game:
+  the part the others are loaded over, with what they load marked as
+  varying with the part. An About layout of the game's own writes
+  `{{data_links}}` where the symbol maps and listings are named.
+- **Stepping through things of one kind**, the rooms of a levels page as
+  much as the parts of a game, uses one control: the one before, a list
+  of them all, the one after. Write it as the build writes the parts'
+  (`<div class="pick">`, a `step` either side of a `select`; `site.css`
+  styles it), so the reader meets the same control on every page.
 
 ## Copy
 

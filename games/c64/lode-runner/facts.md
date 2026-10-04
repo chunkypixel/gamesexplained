@@ -134,17 +134,92 @@ A focused independent sample of 20 numerical/widget facts passed, as did orienta
 
 Offline tests use original instructions with explicit I/O/ROM hooks. Forced routine states establish behavior without proving ordinary-input reachability. Drive persistence, complete cartridge behavior, and the open cases below remain unverified.
 
-## Selected cartridge comparison
+## Selected disk and cartridge comparison
 
-The supplied cartridge payload matches the earlier disassembly byte-for-byte after reassembly with 64tass 1.59.3120. This validates its byte representation; full disk reassembly is still outside this pass. `comparison.md` records source-file hashes, originating-model uncertainty, and the limits of the comparison.
+The contributor’s earlier [cartridge disassembly](https://github.com/jankfoundry/loderunner) supplied leads for the comparisons checked on 4 October 2026. Its annotations were not copied into the disk listing. Disk and cartridge addresses name separate engines.
 
-The original cartridge decoder $97DE expands 17 resident boards from $AC24–$B657 into 448-cell layouts. Low descriptor nibble is tile; high nibble plus one is run length. The matching one-based disk sequence is **1, 5, 111, 46, 50, 11, 4, 12, 100, 33, 48, 84, 14, 64, 6, 134, 150**. All 17 expansions match exactly and uniquely against all 150 disk boards; all three disk room stores agree. **CPU-tested:** all 17 original cartridge decodes and 450 original disk read/decode fixtures. The native disk room-one buffer independently matches raw offsets 1–224; runner start is (14,14).
+### Source identity and provenance
 
-Cartridge route helper $A5FD and score helper $8FED agree with the article functions for 200,704 and 1,624 cases, respectively. Cartridge graphics initialization $A8BB reconstructs 76 compact sources at $1800–$1E87; all 1,672 pattern bytes match its native play snapshot. The glyph indices are a different namespace from the disk's 104 sources. Cartridge motif countdown $9760 cycles seven selections and transposes 2–11, checked across 70 completions. Disk uses ten selections. Cartridge threshold $130C is six and its wait resets $6C to three. **Live:** 120 PAL frames produce 144 IRQs, 48 loop passes, and 48 hole services, about 20 undelayed passes/second versus disk's measured 30.
+The supplied CRT is labelled **Official Cartridge Image**. Its single 16,384-byte payload at $8000–$BFFF matches the earlier project's extracted cartridge. Reassembling that project's `disassembly/loderunner.asm` with 64tass 1.59.3120 reproduced all 16,384 payload bytes. This checks the cartridge assembly's byte representation; full semantic checking and disk-engine reassembly are separately scoped.
+
+The source revision and hashes identify the exact inputs read, including working-tree content:
+
+```text
+Official Cartridge Image CRT SHA-256
+  629471f8c1587ffd37c1b52b742e2755cc6e3773e9acd9e2d0c7aab4929cf8a0
+Cartridge payload SHA-256
+  a2ad27c5fc6b2ab29bc0ff4621a6d82ae90fba673b35a7b122a203cfbf3b1724
+Earlier project HEAD
+  0f15fdedd7d545582f627dcf26a29f13175a3c8f
+disassembly/loderunner.asm SHA-256
+  0368a113f51329ee3d9cb20e5b13860a9050748a9f44518e1360fab4238d2ac0
+analysis/original-assembly-notes.json SHA-256
+  8570a70e1b7b770e811af843b915db70d2dfb1ad0d284c5c92f9895bc559dab5
+analysis/canonical-disk-variants.json SHA-256
+  69e81a70eaabdd4c97158961dd57fa3066be2d97a09cef6d4dc426d1156eb1f7
+```
+
+Contributor: jankfoundry. The contributor recalls that the earlier work used **mostly GPT-6 Astra**; the complete historical model roster is unconfirmed. `game.json` preserves that qualification alongside the reported normalized model ID. The additions here were independently verified and written using the model recorded for this Games Explained run. The separate project was read only; no generators, service rebuilds, or edits ran there.
+
+### Findings checked
+
+| Claim and result | Disk evidence | Cartridge evidence |
+|---|---|---|
+| Room-cell order: Disk raw offset 1, not 0; cartridge expansions match 17 disk boards | $71F5, $71FA read; $6FA6 decode | $97DE, $980B decode |
+| Route cost: Same result for all 200,704 legal row/column combinations in each engine | $81CE | $A5FD |
+| Score arithmetic and visible digits: Same 1,624 cases per engine, including overflow and the undisplayed eighth digit | $87E6, score $130A – $130D | $8FED, score $77 – $7A |
+| Trapdoor direction tests: 50 centered tile/direction cases per engine agree | $73C7, $74DE, $7550, $75C8, $7671 | $99E9, $9AD4, $9B38, $9BA2, $9C28 |
+| Digging cadence: Disk CPU and forced VICE calls: 13 updates per successful dig in either direction | $76E6, $77A5 and continuations | Earlier source invariant supplied the lead |
+| Hole-table bound: At most 14 active timed holes under normal legal loop/reset flow; attaining 14 on a board is unproved | $611C, $6FC5, $7B12, $84F1 | Earlier source invariant supplied the lead |
+| Default pace: Over 120 PAL frames: disk 144 IRQs/72 passes; cartridge 144 IRQs/48 passes | Threshold 5, counter reset 3 | Threshold 6, counter reset 3 |
+| Atlas size: Cartridge's 1,672 generated pattern bytes match its recorded native play snapshot | 104 source glyphs | $A8BB expands 76 compact sources |
+| Completion motif cycle: Cartridge countdown/transposition checked for 70 completions; pitch offset cycles 2–11 in both | $641D, ten selections | $9760, seven selections |
+
+The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. The disk mechanics checks pass 214,299 route, score, timer, closing-picture, and ordered SID-tick cases.
+
+Cartridge graphics expand into $1800–$1E87; these shape indexes form a different namespace from the disk atlas. The cartridge wait threshold at $130C is six and its counter $6C resets to three. Its native 120-PAL-frame measurement includes 48 hole services, about 20 undelayed passes/second versus the disk’s measured 30.
+
+### Supplied disk variants
+
+All three supplied IT files load 22,528 engine bytes at $6000. Comparing payload bytes with Black Label gives:
+
+| Supplied image | Different IT engine bytes |
+|---|---:|
+| Black Label | Reference payload |
+| Gray Label | 10 |
+| Yellow Label | 275 |
+
+These counts exclude the two-byte load address. Gray changes startup selection and disk-probe values; Yellow also changes startup and carries additional loader/protection files. Native boot observations and the loader boundary are recorded in `orientation.md`. All 150 room sectors are identical across the three copies. Their score-sector contents at track 12/sector 7 are not all identical; this is a data comparison, not a fresh-boot persistence test.
+
+### Cartridge room order
+
+The 17 low bytes at $AC00 and relative high bytes at $AC12 select compressed streams $AC24–$B657. Each descriptor's low nibble is a tile; its high nibble plus one is a run of 1–16 cells. Each stream expands to 448 cells, packed into 224 bytes. All streams end exactly on a run boundary. The original decoder leaves the destination's 32-byte tail untouched; the full initializer clears the workspace first.
+
+| Cartridge room | Disk room | Compressed bytes |
+|---:|---:|---:|
+| 1 | 1 | 105 |
+| 2 | 5 | 136 |
+| 3 | 111 | 98 |
+| 4 | 46 | 126 |
+| 5 | 50 | 139 |
+| 6 | 11 | 104 |
+| 7 | 4 | 164 |
+| 8 | 12 | 128 |
+| 9 | 100 | 162 |
+| 10 | 33 | 197 |
+| 11 | 48 | 157 |
+| 12 | 84 | 151 |
+| 13 | 14 | 296 |
+| 14 | 64 | 143 |
+| 15 | 6 | 178 |
+| 16 | 134 | 119 |
+| 17 | 150 | 209 |
+
+The native disk room-one buffer independently matches raw offsets 1–224; runner start is (14,14). The streams total 2,612 bytes. Each expansion has exactly one matching board among all 150 disk payloads, and all three supplied disks contain identical room sectors. The room browser displays this cartridge sequence using disk graphics. The picture gallery decodes each edition’s generated sources and shows the gameplay sprite masks for actor selectors.
 
 ## Explicit open questions
 
-- Complete cartridge controls, editor workflow, persistence, and semantic coverage beyond the selected checks in `comparison.md`.
+- Complete cartridge controls, editor workflow, persistence, and semantic coverage beyond the selected checks above.
 - A playable route attaining the conditional 14-hole upper bound; arranged CPU allocations establish timer arithmetic, not that route. The forced full-table behavior remains a routine contract outside the normal legal-flow invariant.
 - Ordinary reachability/effect of the guard search’s right-bar pointer reuse and bottom-row adjacent directory reads, and the retained uncapped difficulty entry.
 - Full end-to-end editor save/reload and high-score persistence across a fresh boot; static disk paths are traced separately from these integration tests.

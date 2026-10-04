@@ -138,6 +138,13 @@ format, how to check the result against it, and how to read it back
   game's first instruction (the loader's hand-over) with one in play. A
   screen or bitmap that is already there before the game runs is authored
   data, to be described; one the game builds is output, to be excluded.
+  A plane can contain both. Declare its complete authored extent, then
+  exclude only the generated cells or rows. `coverage.include` overrides
+  custom exclusions as well as platform defaults: a broad include of the
+  whole plane gives the output back. Include only its authored gaps when
+  the plane sits under a platform exclusion. Re-run the loaded-data audit
+  after changing the scope or recovering code: new operand references can
+  split an already described allocation into undescribed aliases.
 - **Never bulk-disassemble every labelled address** to "recover"
   coverage. Many labels sit on data; disassembling them misclassifies the
   bytes as code. Undo by setting the data type back to undefined.
@@ -168,6 +175,35 @@ format, how to check the result against it, and how to read it back
   description,
   or most of it stays out of the count however well you have explained
   the whole.
+
+## A game of several parts
+
+Each part (`10-orient`, "A game of several parts") has a ledger of its
+own: give `coverage.py`, `symbols_export.py` and `listing.py` the part's
+folder. The game's figure is the sum, `coverage.py <game dir>`, and it
+counts each byte once, because each byte has one owner: a part that lies
+over another counts only its `"ranges"`, and the part beneath does not
+count them. 100 % means every part the game has a folder for. A part
+with a folder and no analysis is not in the figure, and the page says so
+beside it.
+
+A part that lies over another is annotated in one session with it: the
+snapshot holds both. `symbols_import.py <part> <snapshot>` puts the
+names of the part beneath into the session, so the code the part calls
+is readable. Export each part's share from that session:
+
+```
+python3 kit/scripts/symbols_export.py games/<platform>/<slug>/parts/<level>
+python3 kit/scripts/symbols_export.py games/<platform>/<slug>/parts/<engine> --from games/<platform>/<slug>/parts/<level>
+```
+
+The export says when the session holds a label or a comment of yours at
+an address the part does not own and no other part has it: export the
+part that owns it, or it is lost. Build the listing of the part beneath
+from any snapshot that holds it, and of each part over it from that
+part's own. `listing.py` names what the part calls by the names of the
+part beneath, and `check_listing.py` says when one of those has changed
+(`listing.py <part> --relabel`, no snapshot needed).
 
 ## Data the ledger cannot see
 
@@ -323,12 +359,27 @@ Routines are independent, so the burn-down parallelises. What matters:
   (the template's opening comment says why).
 - Force the model explicitly. Spot-check one claim per agent against the
   source before believing the report.
+- **A game of several parts splits by part before it splits by range**:
+  one agent to a part, each with a disassembler of its own on that
+  part's snapshot. The platform's tool notes say how several run at
+  once. Give each agent its part's folder, and have every command name
+  it: a command that names no folder reaches whichever session the clone
+  started last, and an export from the wrong session writes one part's
+  names into another's map.
 - **An agent stopped by the account's usage limit keeps its context.**
   Nine agents at once use up a session's allowance quickly; when they
   stop on the limit, export at once, wait for the reset and resume each
   agent with a message (the harness's resume, not a new agent), telling
   it what is already in the disassembler. A new agent rereads its range
   from nothing.
+- **An account that pays by credit can fail every agent at its first
+  call**, and on every retry: one run's four agents got
+  `402 payment_required` because the runner asked for 128,000 tokens the
+  balance could not cover, and one also met the account's cap on
+  requests in flight, below five. Before a fan-out on such an account,
+  check the balance, start fewer agents, and lower the runner's
+  `max_tokens` where it has the setting. An agent that failed at its
+  first call left nothing to resume.
 - **Correct the brief the moment a fact in it turns out wrong**, and say
   in it that it was corrected. Agents still running read the old line;
   their reports will contradict it, which is how one run found that its

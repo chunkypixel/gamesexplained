@@ -1,8 +1,8 @@
 # Lode Runner — kit feedback
 
-Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Codex. The contributor requested a pushed branch for review before any pull request or issue filing.
+Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Codex. The contributor reviewed the pushed branch and accepted the minisite for Silver submission.
 
-## Skill text that changed the run
+## Skill text that changed what I did
 
 - `60-verify`: “Measure the listing before calling it done” led from sampled errors to full independent routine/data reviews. Results and intervals are summarized in facts.md; reports remain private.
 - `50-coverage`: “Resolve every pointer table before excluding a region” exposed editor/guard RTS targets stored as addresses minus one.
@@ -19,7 +19,7 @@ Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Code
 
 ## Presentation and private evidence
 
-Existing custom-tab, paragraph-purpose, and interactivity rules supported Music, Editions, clearer hole playback, and the grouped picture gallery. The game-specific CPU/browser harnesses and detailed audit material stay in ignored work/ storage. facts.md retains the review summary; comparison.md retains edition facts, paired addresses, and provenance. The contributor requested this smaller submission after feedback on another game's PR.
+Existing custom-tab, paragraph-purpose, and interactivity rules supported Music, Editions, clearer hole playback, and the grouped picture gallery. The game-specific CPU/browser harnesses and detailed audit material stay in ignored work/ storage. facts.md retains the review summary, edition facts, paired addresses, and provenance. The contributor requested this smaller submission after feedback on another game's PR.
 
 ## Tool behavior and open work
 
@@ -27,4 +27,4 @@ VICE pause can leave an instruction in flight, so stable-PC/state checks precede
 
 ## Maintainer asks
 
-None. No issues or pull request were opened, following the contributor's review-first instruction.
+None. The contributor approved submission after reviewing the branch.
