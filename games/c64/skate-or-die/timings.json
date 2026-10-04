@@ -1,0 +1,37 @@
+{
+ "schema": 1,
+ "entries": [
+  {
+   "step": "10-orient",
+   "model": "unknown",
+   "start": "2026-10-03T23:06:04Z",
+   "end": "2026-10-03T23:23:51Z",
+   "minutes": 17.8,
+   "note": ""
+  },
+  {
+   "step": "20-features",
+   "model": "unknown",
+   "start": "2026-10-03T23:23:51Z",
+   "end": "2026-10-03T23:28:36Z",
+   "minutes": 4.8,
+   "note": ""
+  },
+  {
+   "step": "30-text",
+   "model": "unknown",
+   "start": "2026-10-03T23:28:36Z",
+   "end": "2026-10-03T23:31:54Z",
+   "minutes": 3.3,
+   "note": ""
+  },
+  {
+   "step": "40-sweep",
+   "model": "unknown",
+   "start": "2026-10-03T23:31:54Z",
+   "end": null,
+   "minutes": null,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "platform": "c64",
+  "slug": "skate-or-die",
+  "title": "Skate or Die!",
+  "year": 1987,
+  "publisher": "Electronic Arts",
+  "developer": "Electronic Arts",
+  "title_image": "reference/title-screen.png",
+  "build": "PAL two-sided G64 supplied by the contributor; EA loader, no trainer observed",
+  "tier": "none",
+  "coverage_percent": null,
+  "copy": "agent-draft",
+  "steward": "",
+  "credits": [],
+  "tools": {
+    "host": "macOS 27.0, Apple silicon",
+    "emulator": "release v3.13.2, v3.13.2-macos-arm64-gui.dmg",
+    "disassembler": "regenerator2000 0.9.20"
+  },
+  "model": "unknown",
+  "kit_version": "0.0.47",
+  "created": "2026-10-04",
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [],
+    "extra": [],
+    "include": []
+  },
+  "io": [],
+  "regions": [],
+  "links": {
+    "wiki": "https://www.c64-wiki.com/wiki/Skate_or_Die!",
+    "manual": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual"
+  }
+}

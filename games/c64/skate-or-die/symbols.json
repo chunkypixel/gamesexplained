@@ -1,0 +1,1916 @@
+{
+ "schema": 1,
+ "platform": "c64",
+ "game": "skate-or-die",
+ "build": "PAL two-sided G64 supplied by the contributor; EA loader, no trainer observed",
+ "source": "regenerator2000 live",
+ "regions": {
+  "exclude": [
+   [
+    256,
+    511,
+    "stack"
+   ],
+   [
+    53248,
+    57343,
+    "I/O and colour RAM"
+   ]
+  ],
+  "extra": []
+ },
+ "blocks": [
+  {
+   "start": 0,
+   "end": 2254,
+   "type": "Undefined"
+  },
+  {
+   "start": 2255,
+   "end": 2289,
+   "type": "Code"
+  },
+  {
+   "start": 2290,
+   "end": 2396,
+   "type": "Undefined"
+  },
+  {
+   "start": 2397,
+   "end": 2412,
+   "type": "Code"
+  },
+  {
+   "start": 2413,
+   "end": 2617,
+   "type": "Undefined"
+  },
+  {
+   "start": 2618,
+   "end": 2628,
+   "type": "Code"
+  },
+  {
+   "start": 2629,
+   "end": 2768,
+   "type": "Undefined"
+  },
+  {
+   "start": 2769,
+   "end": 2779,
+   "type": "Code"
+  },
+  {
+   "start": 2780,
+   "end": 2799,
+   "type": "Undefined"
+  },
+  {
+   "start": 2800,
+   "end": 2848,
+   "type": "Code"
+  },
+  {
+   "start": 2849,
+   "end": 3234,
+   "type": "Undefined"
+  },
+  {
+   "start": 3235,
+   "end": 3515,
+   "type": "Code"
+  },
+  {
+   "start": 3516,
+   "end": 4399,
+   "type": "Undefined"
+  },
+  {
+   "start": 4400,
+   "end": 4428,
+   "type": "Code"
+  },
+  {
+   "start": 4429,
+   "end": 4474,
+   "type": "Undefined"
+  },
+  {
+   "start": 4475,
+   "end": 4633,
+   "type": "Code"
+  },
+  {
+   "start": 4634,
+   "end": 4640,
+   "type": "Undefined"
+  },
+  {
+   "start": 4641,
+   "end": 4664,
+   "type": "Code"
+  },
+  {
+   "start": 4665,
+   "end": 4716,
+   "type": "Undefined"
+  },
+  {
+   "start": 4717,
+   "end": 4867,
+   "type": "Code"
+  },
+  {
+   "start": 4868,
+   "end": 4969,
+   "type": "Undefined"
+  },
+  {
+   "start": 4970,
+   "end": 5192,
+   "type": "Code"
+  },
+  {
+   "start": 5193,
+   "end": 5341,
+   "type": "Undefined"
+  },
+  {
+   "start": 5342,
+   "end": 5467,
+   "type": "Code"
+  },
+  {
+   "start": 5468,
+   "end": 5568,
+   "type": "Undefined"
+  },
+  {
+   "start": 5569,
+   "end": 5602,
+   "type": "Code"
+  },
+  {
+   "start": 5603,
+   "end": 5609,
+   "type": "Undefined"
+  },
+  {
+   "start": 5610,
+   "end": 5819,
+   "type": "Code"
+  },
+  {
+   "start": 5820,
+   "end": 6067,
+   "type": "Undefined"
+  },
+  {
+   "start": 6068,
+   "end": 6141,
+   "type": "Code"
+  },
+  {
+   "start": 6142,
+   "end": 6195,
+   "type": "Undefined"
+  },
+  {
+   "start": 6196,
+   "end": 6268,
+   "type": "Code"
+  },
+  {
+   "start": 6269,
+   "end": 6423,
+   "type": "Undefined"
+  },
+  {
+   "start": 6424,
+   "end": 6543,
+   "type": "Code"
+  },
+  {
+   "start": 6544,
+   "end": 6573,
+   "type": "Undefined"
+  },
+  {
+   "start": 6574,
+   "end": 6594,
+   "type": "Code"
+  },
+  {
+   "start": 6595,
+   "end": 6647,
+   "type": "Undefined"
+  },
+  {
+   "start": 6648,
+   "end": 6663,
+   "type": "Code"
+  },
+  {
+   "start": 6664,
+   "end": 6805,
+   "type": "Undefined"
+  },
+  {
+   "start": 6806,
+   "end": 6863,
+   "type": "Code"
+  },
+  {
+   "start": 6864,
+   "end": 8886,
+   "type": "Undefined"
+  },
+  {
+   "start": 8887,
+   "end": 8962,
+   "type": "Code"
+  },
+  {
+   "start": 8963,
+   "end": 9003,
+   "type": "Undefined"
+  },
+  {
+   "start": 9004,
+   "end": 9133,
+   "type": "Code"
+  },
+  {
+   "start": 9134,
+   "end": 10624,
+   "type": "Undefined"
+  },
+  {
+   "start": 10625,
+   "end": 10715,
+   "type": "Code"
+  },
+  {
+   "start": 10716,
+   "end": 27144,
+   "type": "Undefined"
+  },
+  {
+   "start": 27145,
+   "end": 27182,
+   "type": "Byte"
+  },
+  {
+   "start": 27183,
+   "end": 65535,
+   "type": "Undefined"
+  }
+ ],
+ "symbols": [
+  {
+   "address": 2,
+   "name": "zpf_02",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 3,
+   "name": "zpf_03",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 16,
+   "name": "zpa_10",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 18,
+   "name": "zpp_12",
+   "type": "ZeroPagePointer",
+   "kind": "auto"
+  },
+  {
+   "address": 19,
+   "name": "zpa_13",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 20,
+   "name": "zpp_14",
+   "type": "ZeroPagePointer",
+   "kind": "auto"
+  },
+  {
+   "address": 21,
+   "name": "zpa_15",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 22,
+   "name": "zpa_16",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 23,
+   "name": "zpa_17",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 24,
+   "name": "zpa_18",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 25,
+   "name": "zpa_19",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 30,
+   "name": "zpa_1E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 31,
+   "name": "zpa_1F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 32,
+   "name": "zpa_20",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 33,
+   "name": "zpa_21",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 34,
+   "name": "zpa_22",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 35,
+   "name": "zpa_23",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 36,
+   "name": "zpa_24",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 37,
+   "name": "zpa_25",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 38,
+   "name": "zpa_26",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 39,
+   "name": "zpa_27",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 40,
+   "name": "zpa_28",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 41,
+   "name": "zpa_29",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 42,
+   "name": "zpa_2A",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43,
+   "name": "zpa_2B",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 44,
+   "name": "zpa_2C",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 46,
+   "name": "zpa_2E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 47,
+   "name": "zpa_2F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 48,
+   "name": "zpa_30",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 49,
+   "name": "zpa_31",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 50,
+   "name": "zpa_32",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 51,
+   "name": "zpa_33",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 54,
+   "name": "zpa_36",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 55,
+   "name": "zpa_37",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 56,
+   "name": "zpa_38",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 57,
+   "name": "zpa_39",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 58,
+   "name": "zpa_3A",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 60,
+   "name": "zpa_3C",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 62,
+   "name": "zpa_3E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 63,
+   "name": "zpa_3F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 64,
+   "name": "zpa_40",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 67,
+   "name": "zpa_43",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 68,
+   "name": "zpa_44",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 69,
+   "name": "zpa_45",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 70,
+   "name": "zpf_46",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 71,
+   "name": "zpf_47",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 72,
+   "name": "zpa_48",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 73,
+   "name": "zpf_49",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 74,
+   "name": "zpf_4A",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 75,
+   "name": "zpf_4B",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 76,
+   "name": "zpa_4C",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 77,
+   "name": "zpa_4D",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 78,
+   "name": "zpa_4E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 79,
+   "name": "zpa_4F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 81,
+   "name": "zpf_51",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 82,
+   "name": "zpf_52",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 83,
+   "name": "zpa_53",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 84,
+   "name": "zpa_54",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 85,
+   "name": "zpa_55",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 86,
+   "name": "zpa_56",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 87,
+   "name": "zpa_57",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 88,
+   "name": "zpa_58",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 93,
+   "name": "zpa_5D",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 94,
+   "name": "zpa_5E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 95,
+   "name": "zpa_5F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 96,
+   "name": "zpa_60",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 97,
+   "name": "zpa_61",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 98,
+   "name": "zpa_62",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 100,
+   "name": "zpa_64",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 101,
+   "name": "zpa_65",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 102,
+   "name": "zpa_66",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 103,
+   "name": "zpa_67",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 104,
+   "name": "zpa_68",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 105,
+   "name": "zpa_69",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 111,
+   "name": "zpa_6F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 112,
+   "name": "zpa_70",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 113,
+   "name": "zpa_71",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 114,
+   "name": "zpa_72",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1024,
+   "name": "f_0400",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 1167,
+   "name": "f_048F",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 1536,
+   "name": "f_0600",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 1679,
+   "name": "f_068F",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 2255,
+   "name": "j_08CF",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 2266,
+   "name": "b_08DA",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 2278,
+   "name": "b_08E6",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 2287,
+   "name": "b_08EF",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 2397,
+   "name": "s_095D",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 2769,
+   "name": "s_0AD1",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 2779,
+   "name": "r_0ADB",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 2828,
+   "name": "a_0B0C",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 2829,
+   "name": "a_0B0D",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 3235,
+   "name": "s_0CA3",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 3242,
+   "name": "b_0CAA",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3299,
+   "name": "b_0CE3",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3302,
+   "name": "b_0CE6",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3312,
+   "name": "b_0CF0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3318,
+   "name": "j_0CF6",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 3321,
+   "name": "b_0CF9",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3337,
+   "name": "b_0D09",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3348,
+   "name": "b_0D14",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3362,
+   "name": "r_0D22",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 3363,
+   "name": "s_0D23",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 3391,
+   "name": "b_0D3F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3406,
+   "name": "a_0D4E",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 3407,
+   "name": "a_0D4F",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 3408,
+   "name": "j_0D50",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 3445,
+   "name": "b_0D75",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3486,
+   "name": "b_0D9E",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 3505,
+   "name": "b_0DB1",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4400,
+   "name": "s_1130",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4405,
+   "name": "s_1135",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4420,
+   "name": "b_1144",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4428,
+   "name": "r_114C",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 4475,
+   "name": "s_117B",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4481,
+   "name": "b_1181",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4505,
+   "name": "b_1199",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4539,
+   "name": "b_11BB",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4559,
+   "name": "b_11CF",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4572,
+   "name": "j_11DC",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4579,
+   "name": "j_11E3",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4615,
+   "name": "b_1207",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4621,
+   "name": "b_120D",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4641,
+   "name": "j_1221",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4655,
+   "name": "b_122F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4662,
+   "name": "j_1236",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4717,
+   "name": "j_126D",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4736,
+   "name": "b_1280",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4755,
+   "name": "r_1293",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 4756,
+   "name": "s_1294",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4768,
+   "name": "s_12A0",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4795,
+   "name": "b_12BB",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4813,
+   "name": "j_12CD",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 4838,
+   "name": "b_12E6",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4853,
+   "name": "b_12F5",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4970,
+   "name": "s_136A",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 4988,
+   "name": "b_137C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 4990,
+   "name": "a_137E",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 4997,
+   "name": "a_1385",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 5005,
+   "name": "s_138D",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5016,
+   "name": "b_1398",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5023,
+   "name": "b_139F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5061,
+   "name": "s_13C5",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5072,
+   "name": "b_13D0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5079,
+   "name": "b_13D7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5117,
+   "name": "s_13FD",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5128,
+   "name": "b_1408",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5135,
+   "name": "b_140F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5145,
+   "name": "s_1419",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5170,
+   "name": "j_1432",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5182,
+   "name": "b_143E",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5192,
+   "name": "r_1448",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 5342,
+   "name": "s_14DE",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5394,
+   "name": "b_1512",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5410,
+   "name": "b_1522",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5434,
+   "name": "b_153A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5446,
+   "name": "j_1546",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5464,
+   "name": "b_1558",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5569,
+   "name": "s_15C1",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5594,
+   "name": "s_15DA",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5610,
+   "name": "s_15EA",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 5641,
+   "name": "b_1609",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5671,
+   "name": "b_1627",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5674,
+   "name": "b_162A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5685,
+   "name": "b_1635",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5692,
+   "name": "b_163C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5713,
+   "name": "b_1651",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5721,
+   "name": "j_1659",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5758,
+   "name": "b_167E",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5788,
+   "name": "b_169C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5803,
+   "name": "j_16AB",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5813,
+   "name": "j_16B5",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 6068,
+   "name": "s_17B4",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6128,
+   "name": "s_17F0",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6196,
+   "name": "s_1834",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6216,
+   "name": "b_1848",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6218,
+   "name": "b_184A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6220,
+   "name": "s_184C",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6229,
+   "name": "r_1855",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 6230,
+   "name": "s_1856",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6251,
+   "name": "b_186B",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6260,
+   "name": "b_1874",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6424,
+   "name": "s_1918",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6433,
+   "name": "s_1921",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6445,
+   "name": "r_192D",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 6446,
+   "name": "s_192E",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6498,
+   "name": "b_1962",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6536,
+   "name": "b_1988",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6574,
+   "name": "s_19AE",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6583,
+   "name": "b_19B7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6594,
+   "name": "r_19C2",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 6648,
+   "name": "s_19F8",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6661,
+   "name": "b_1A05",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6806,
+   "name": "s_1A96",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6815,
+   "name": "b_1A9F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6821,
+   "name": "s_1AA5",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6830,
+   "name": "b_1AAE",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6836,
+   "name": "s_1AB4",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 6850,
+   "name": "b_1AC2",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 6856,
+   "name": "b_1AC8",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 7057,
+   "name": "f_1B91",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 7058,
+   "name": "f_1B92",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 7195,
+   "name": "f_1C1B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 7333,
+   "name": "f_1CA5",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8731,
+   "name": "f_221B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8732,
+   "name": "a_221C",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8733,
+   "name": "a_221D",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8734,
+   "name": "a_221E",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8751,
+   "name": "a_222F",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8752,
+   "name": "a_2230",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8753,
+   "name": "a_2231",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8754,
+   "name": "a_2232",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8755,
+   "name": "a_2233",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8756,
+   "name": "a_2234",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8781,
+   "name": "f_224D",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8782,
+   "name": "f_224E",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8787,
+   "name": "f_2253",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8788,
+   "name": "f_2254",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8794,
+   "name": "f_225A",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8800,
+   "name": "f_2260",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8802,
+   "name": "a_2262",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8804,
+   "name": "a_2264",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8811,
+   "name": "f_226B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8823,
+   "name": "f_2277",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8887,
+   "name": "s_22B7",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 8891,
+   "name": "b_22BB",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 8898,
+   "name": "b_22C2",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 8949,
+   "name": "s_22F5",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 8962,
+   "name": "r_2302",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 9004,
+   "name": "s_232C",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 9010,
+   "name": "b_2332",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9027,
+   "name": "b_2343",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9029,
+   "name": "b_2345",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9053,
+   "name": "b_235D",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9069,
+   "name": "b_236D",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9079,
+   "name": "b_2377",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9092,
+   "name": "b_2384",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9097,
+   "name": "s_2389",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 9106,
+   "name": "b_2392",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9108,
+   "name": "s_2394",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 9134,
+   "name": "f_23AE",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 9150,
+   "name": "f_23BE",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10625,
+   "name": "s_2981",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 10677,
+   "name": "b_29B5",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10699,
+   "name": "b_29CB",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10709,
+   "name": "b_29D5",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10715,
+   "name": "r_29DB",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 10716,
+   "name": "f_29DC",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10753,
+   "name": "f_2A01",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10754,
+   "name": "f_2A02",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10757,
+   "name": "f_2A05",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10759,
+   "name": "f_2A07",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10805,
+   "name": "f_2A35",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10937,
+   "name": "f_2AB9",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10938,
+   "name": "f_2ABA",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10955,
+   "name": "a_2ACB",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 10956,
+   "name": "a_2ACC",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 11503,
+   "name": "f_2CEF",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11703,
+   "name": "f_2DB7",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11719,
+   "name": "f_2DC7",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11720,
+   "name": "f_2DC8",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11761,
+   "name": "f_2DF1",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11762,
+   "name": "f_2DF2",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11871,
+   "name": "a_2E5F",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 11872,
+   "name": "a_2E60",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 11873,
+   "name": "a_2E61",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 11874,
+   "name": "a_2E62",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 11883,
+   "name": "f_2E6B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 11899,
+   "name": "f_2E7B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 12155,
+   "name": "f_2F7B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 12411,
+   "name": "f_307B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 12437,
+   "name": "f_3095",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 12463,
+   "name": "f_30AF",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 27145,
+   "name": "event_name_labels",
+   "type": "UserDefined",
+   "kind": "user"
+  }
+ ],
+ "comments": [
+  {
+   "address": 27145,
+   "type": "line",
+   "text": "Compact event labels: $01-$1A are A-Z, $20 is space; this block reads RAMP HIGHJUMP and DOWNHILL JAM, with $FE/$FF framing bytes."
+  }
+ ]
+}
