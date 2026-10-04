@@ -53,3 +53,38 @@ and disassembly restarted at `$09CA`. High-RAM `$Fxxx` code was retained:
 there are actual calls and data references to that area while the KERNAL
 is banked out, and its RAM bytes differ from the ROM bank. Its loader and
 play roles remain to be separated.
+
+## 4 October 2026, High Jump to Silver
+
+The run restarted on the kit's newer layout: the clock and `timings.json`
+had gone, and the earlier coverage figure (34 %) measured an image that
+mixed High Jump with leftovers from other loads. Under the interim policy
+of one declared load per game, High Jump was chosen: it loads whole from
+side 1 and reaches play without a disk swap.
+
+Seven agents annotated disjoint ranges of `work/highjump-play.vsf` with an
+executed-address map from seven simulated practice runs as a floor. The map
+mattered most for the sound scripts and the music: their machine-code
+helpers are reached only through the bytecode, and one (`$3530`) was typed
+as data until an agent decoded the scripts.
+
+The inline text after `JSR $1242` at `$099E` was turned back into code
+twice, once by a trace that entered from outside the owner's range. Each
+time it produced a `JSR $2020` and a code block inside the bitmap at
+`$4150`; both were set back to bytes and the brief carried a warning.
+
+Several leads in the brief were wrong and the agents' reports corrected
+them: the NMI vector at `$0A3A` is a stale value, not a sample player; the
+"wait near `$FE46`" at the end of a run is the PRACTICE AGAIN screen
+waiting for fire to be released, not the drive; the `$E4` read at `$0001`
+is the RAM under the CPU port, whose real value is `$25`; and the
+earlier name `height_cell_animation` belonged to the crowd. The old
+session's `initial_sound_scripts` at `$2287` were the driver's call
+stacks.
+
+An earlier session's live run showed 14'11" in the air and 0'0" at the
+end. The code explains why the figure can drop: the height belongs to one
+pass and is cleared when the next pass begins, and a fall clears it too.
+Live runs this session showed 47, 75 and 95 eighths on three passes, each
+cleared at the next takeoff, and fire at the top of a pass keeping its
+figure.

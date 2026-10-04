@@ -1,196 +1,391 @@
 # Skate or Die! - verified technical facts
 
 Current truth for this game. The workflow lives in `kit/skills/`; how this
-understanding developed lives in `agent-history.md`. Every fact names
-the routine or table it comes from. Unless marked *live*, a fact comes
-from reading the code in the snapshot named in `orientation.md`.
+understanding developed lives in `agent-history.md`. Every fact names the
+routine or table it comes from. Unless marked *live*, a fact comes from
+reading the code in `work/highjump-play.vsf`, the High Jump snapshot that
+`orientation.md` says how to reach. *Simulated* means the kit's C64 model
+(`kit/c64/machine.js`) running that snapshot with scripted input.
+
+This page covers one load: the High Jump event in practice mode. The title,
+Rodney's shop, the town square and the other four events are separate
+loads that replace most of memory; none of their code is described here.
 
 ## Build
 
-- *Live:* The supplied side-1 G64 boots on PAL VICE v3.13.2. Its directory
-  has a two-block `EA` PRG. The title and Rodney's shop load from it, and
-  High Jump reaches play without a side swap (`orientation.md`).
-- *Live:* Downhill Race and Jam reached their start screens with side 2
-  mounted (`reference/race-play.png`, `reference/jam-play.png`). The High Jump
-  route with side 2 mounted displayed `INSERT SIDE 1 AND PRESS BUTTON`;
-  attaching side 1 and pressing fire resumed into High Jump
-  (`reference/side1-prompt.png`). Pool Joust's opponent selector appeared
-  with side 1 mounted (`reference/joust-select.png`). These observations do
-  not yet map every asset to a disk side.
+- The image is EA's own two-sided disk (side 1 directory: one two-block
+  PRG, `EA`). No crack intro, trainer or added code was found in this load.
+  No build identifier or version string is in memory (string sweep, below).
+
+## Loads
+
+- **One file system, no directory.** The resident loader `load_file`
+  (`$F230`) takes A = a file number and X/Y = the load address, and returns
+  X/Y = the end address plus one, carry set on error. Files are found
+  through `file_table` (`$F2F9`): 49 entries of four bytes (start track,
+  start sector index, length low, length high). A sector index becomes a
+  physical sector as index × 11 mod the track's sector count (`$F2E4`), and
+  `next_sector` (`$F2C6`) steps by 11 on most tracks. Files `$00`-`$1A` are
+  on side 1 and `$1B`-`$30` on side 2. Files `$0B`, `$0C`, `$0E`, `$0F`,
+  `$11` and `$12` read from `side1.g64` with this table equal the snapshot
+  byte for byte.
+- **The drive runs EA's own server.** The 1541's RAM at `$0400`-`$07D0`
+  holds a command server that takes three-byte commands (command, track,
+  sector) over CIA 2 port A (`send_drive_command` `$F4B7`,
+  `receive_bytes` `$F598`). Before every file the loader sends command
+  `$0B` with `$45 $41`, "EA", which the drive stores as the expected disk
+  ID (`load_setup` `$F295`). Nothing in C64 memory in this load uploads the
+  server; it is already in the drive from the title onwards.
+- **Disk sides.** The event manager loads three bytes from track 18
+  sector 18 (file `$0C`) and compares them with the side it wants
+  (`side_check` `$FA69`, `side_table` `$F8D1`): side 1 holds `01 01 01`,
+  side 2 `02 02 02`. A mismatch or a failed read shows INSERT SIDE n AND
+  PRESS BUTTON and waits for fire.
+- **High Jump's files.** The town's code copies a load stub to `$0800`
+  (`run_load_stub` `$FA58`, template `$F925`) that loads file `$0E` to
+  `$0880`-`$3D7E` and jumps to `$0880`. That code then loads file `$0F`
+  (the font, `$6800`-`$69FF`, `load_font` `$1239`), file `$10` (the picture,
+  run-length packed, loaded at `$4000`), file `$11` (`$7000`-`$8283`) and
+  file `$12`, loaded at the end address file `$11` returned (`$8284`-`$C2AF`,
+  `$0951`-`$0959`).
+- **Unpacking the picture.** `$1B6A` expands file `$10` into `$7000`: a
+  control byte `$00`-`$7F` copies n + 1 literal bytes, `$80`-`$FF` repeats
+  the next byte n - `$7F` times. `$08F2`-`$0947` then copies `$1F40` bytes
+  to the bitmap at `$4000`, `$3E8` to the screen at `$6400` and `$3E8` to
+  `$6000`, which `$0A50` copies to colour RAM on every entry. File `$11`
+  then loads over the scratch area.
+- **A self-erasing entry.** `$0880` is `JMP $0886`, which loads the files
+  and then writes `$EA` over `$0880`-`$0882`, so a later jump to `$0880`
+  falls through to `JMP $089E`, the per-attempt set-up. PRACTICE AGAIN
+  re-runs the stub's `JMP $0880` (`$F93E`) and the event restarts without
+  touching the disk.
 
 ## Memory layout
 
-| Thing | Where |
+| Range | What it holds |
 |---|---|
-| Shop dialogue, uppercase ASCII-compatible bytes | `$2180`-`$2280` in `work/skate-shop.vsf`; includes `GO PRACTICE` at `$2229` and `GO AND COMPETE` at `$2247` |
-| Compact event headings | `$68C9`-`$68EE` and `$6A09`-`$6A2E` in `work/skate-shop.vsf`; the latter pair remains in `work/highjump-play.vsf` |
-| Repeated/menu text | `$76FD`-`$7799` in `work/skate-shop.vsf`; much of it is overwritten in High Jump |
+| `$0400`-`$07FF` | quarter-square table floor(n²/4), n = 0-511, built at start-up by `$1310` |
+| `$0800`-`$081C` | the load stub |
+| `$0880`-`$1B90` | High Jump's code |
+| `$1B91`-`$217E` | 69 animated picture cells (offsets, colours, two frames of pixels each) |
+| `$217F`-`$221A` | 156 bytes nothing reads |
+| `$221B`-`$2A00` | the sound driver, its state and its note table |
+| `$2A01`-`$2ACA` | raster band tables, pose sequences, the phase table |
+| `$2ACB`-`$2CEE` | the ramp profile, 273 entries |
+| `$2CEF`-`$2E7A` | digits, the height-ruler sprites, colour sets, pump boosts, sound ring |
+| `$2E7B`-`$307A` | bit-reverse tables for mirroring sprites |
+| `$307B`-`$3CBC` | the sound-effect table, 26 sound scripts and the music |
+| `$3CBD`-`$3D7F` | loaded but never read; `$3D01`-`$3D7E` repeats `$3634`-`$36B1` |
+| `$4000`-`$5F3F` | the half-pipe bitmap |
+| `$6000`-`$63E7` | colour-RAM copy of the picture |
+| `$6400`-`$67E7` | screen matrix: the picture's other two colours |
+| `$6800`-`$69FF` | 64-glyph font in screen-code order |
+| `$6C00`-`$6F3F` | sprite blocks: two skater buffers and the height ruler |
+| `$7000`-`$8283` | 158 poses of 30 bytes |
+| `$8284`-`$C2AF` | 477 sprite shapes |
+| `$F230`-`$F653` | the resident disk loader |
+| `$F730`-`$FFF7` | the resident event manager (side-1 file `$0B`) |
 
-The first flow trace from the sampled PC `$08DC`, IRQ `$0AF0` and vector
-`$0A3A` marked 2,018 bytes as code across 23 blocks in
-`work/highjump-play.vsf`. This is an initial trace, not an inventory of
-the full event. The IRQ at `$0AF0` acknowledges `$D019`, loads a handler
-address from `$2A01/$2A02` indexed by `$1E`, patches the call at
-`$0B0C/$0B0D`, and selects the next raster line from `$2A05` (`$0AF0`-
-`$0B20`).
+What High Jump does not write and does not read is left over from earlier
+loads and is excluded from coverage in `game.json` with the evidence:
+`$5F40`-`$5FFF`, `$63E8`-`$63FF`, `$67E8`-`$67F7`, `$6A00`-`$6BFF` (the
+hub's records-screen text), `$6DC0`-`$6DFF`, `$6F40`-`$6FFF`,
+`$C2B0`-`$CFFF` (a stale copy of the event manager, then the power-on
+pattern), `$E000`-`$EFFF` (origin unknown), `$F000`-`$F22F` (the tail of a
+KERNAL copy) and `$F654`-`$F72F`.
 
-The four captured event snapshots are separate memory images. The current
-`listing.json` is built from High Jump only; it must not be presented as a
-listing of Race, Jam, or Joust code. Overlay differences and any common
-resident code remain to be mapped.
+## The frame
 
-The High Jump snapshot holds RAM beneath the KERNAL ROM at `$F000`-`$FFFF`.
-The code at `$0806` calls `$F230`, the event initializer at `$09CF` reads
-`$FE00`, and `$1A93` jumps to `$FE06`; the sampled play-state processor
-port `$E4` banks out the KERNAL. The `$F230` RAM bytes differ from the ROM
-bank at the same address. These are leads to game-owned high RAM, but their
-runtime bank state and which routines actually execute still need a
-call-path and live-checkpoint audit.
+- **Two raster interrupts.** `raster_irq` (`$0AF0`) takes the handler for
+  the current band from `$2A01`, patches its own `JSR`, and sets the next
+  band's line from `$2A05`/`$2A07`. Band 0 at line `$F9` (`$0B21`) switches
+  multicolour off, so the status line on text row 0 is hires, and polls
+  RUN/STOP and the Commodore key. Band 1 at line `$37` (`$0CA3`) waits for
+  line `$3A`, switches to multicolour bitmap and runs the whole game update.
+- **The main loop only plays sound.** `$08CF`-`$08EF` runs the sound driver
+  once for each frame counted in `$72` (incremented at `$0B31`), and drains
+  the event-sound ring.
+- **Video.** VIC bank 1 (`$DD00`), `$D018` = `$91`: bitmap `$4000`, screen
+  `$6400` (`init_bitmap_video` `$0A50`). The IRQ never changes `$D018`.
+- **The CPU port.** The code sets `$01` = `$25` (`$0886`, `$0A14`): RAM at
+  `$A000`-`$BFFF` and `$E000`-`$FFFF`, I/O visible. The `$E4` that a RAM
+  read of `$0001` shows is the RAM under the port, not the port.
+- **The NMI vector is stale.** `$FFFA` holds `$0A3A`, left by an earlier
+  load; in High Jump that address is the middle of `install_raster_irq`.
+  Nothing in this load writes `$FFFA`.
 
-Pairwise RAM comparison after the 209-byte VSF header found 58,451 differing
-bytes between `work/highjump-play.vsf` and `work/race-play.vsf`, 57,239
-between High Jump and Jam, and 50,864 between High Jump and Joust selection.
-These counts include mutable state and screen memory; they establish large
-image differences, not the exact size of each loaded overlay.
+## The ramp and the skater
 
-## Timing
+- **The half-pipe is a line.** The skater's position s (`$54`/`$55`, with
+  a fraction at `$53`) runs from 0 to `$222` and maps to screen x, y
+  through the profile at `$2ACB`; the right half is mirrored as `$222` - s
+  (`lookup_skater_position` `$12A0`). The profile's first entries are a
+  vertical column at x 42, y 64 to 172: the air above the left wall. y =
+  `$96` is the coping. A jump is motion along the same path.
+- **Gravity from the profile.** The acceleration is the profile's y
+  difference sixteen entries ahead (`$147E`-`$1489`), `$10` off the
+  profile (`$148C`). Every frame the speed loses 1/256 of itself
+  (`$16C3`).
+- **Pumping.** While the skater is low on the ramp (`$23` ≥ `$B0`),
+  `pump_speed` (`$16E3`) watches for any newly pressed joystick direction.
+  Each press restarts a ten-frame boost of 6, 6, 6, 6, 6, 6, 4, 3, 2, 1
+  added to the speed (`$2DBD`, read backwards), cut short by the speed's
+  whole part, so pumps give less as the skater goes faster. While the
+  attempt is over (`$43` set) the boost restarts every frame with no input. Alternating is
+  not required: tapping one direction every second frame reached the same
+  height as alternating at that rate (simulated).
+- **Phases.** `$2E` is the phase, dispatched through `$2AB9`: 0 waiting on
+  the platform (`$0D50`), `$0C` fidgeting there (`$0DBC`), 2 on the ramp
+  (`$0E08`), 4 in the air (`$0F0D`), 6 a fall (`$0E5D`), 8 and `$0A` the
+  trick fire starts (`$1004`, `$1038`), `$0E` back to the platform
+  (`$1096`), `$10` the final pose (`$10BF`).
+- **Sides.** Bit 7 of `$48` is set while the skater is on the right half
+  (s ≥ `$0111`), rotated in by `$12A0`.
+- **Five passes.** A pass is counted when the speed changes sign on the
+  right half (`$1AD0`). At five the controls lock (`$43` = `$FF`, `$1AF4`)
+  and the next return to the left wall goes to phase `$0E`.
+- **Landing.** A landing is clean when the low three bits of the pose are
+  0, 1 or 7 (`$0F21`-`$0F48`); otherwise the skater falls (`$1115`, phase 6).
+- **Sprites.** Sprites 0-4 are the five parts of a pose: a record at
+  `$7000` + pose × 30 holds five six-byte entries (shape offset from
+  `$8284`, size, x and y offsets). Shapes are stored trimmed to the rows
+  they use, copied into a 64-byte block and zero-filled (`$14DE`, `$138D`,
+  `$13C5`, `$13FD`). Facing left is drawn by copying the shapes through
+  the bit-reverse tables at `$2E7B` and `$2F7B` and negating the x
+  offsets. The skater is double-buffered at `$6C00`/`$6E00` (`$22`).
+  Sprite 4 is the board. Sprite 7 is the board's shape in black, held at
+  the coping line while the skater is in the air (`$0C29`-`$0C3B`, `$11E3`);
+  it reads as a shadow (not verified live). Sprites 5 and 6 are the
+  tick-marked height ruler at x 320, Y-expanded (`$0A01`, `$0B90`).
+- **Colours.** At each start one of two sprite colour sets, `$2D7F` or
+  `$2D87`, is picked at random (`$19D3`). Entry 4, the board, is
+  overwritten by the skater's attribute `$FE02` (`$09EE`): 7 for every
+  roster skater, `$0D` for LESTER.
+
+## Height
+
+- **Units.** `$2B` holds the height in eighths of a foot: the maximum over
+  the frames of the pass of `$96` - `$23` + `$44` (`$1AB4`). A value that
+  would be `$96` or more is taken as 0 (`$1ABC`), so the most a pass can
+  record is 149 eighths, 18 ft 7.5 in.
+- **The display rounds up.** `$17B4` prints feet and then two characters
+  from `$2DF1` for the eighths: 0, 2, 3, 5, 6, 8, 9, 11 inches. A half inch
+  always rounds up, so 95 eighths (11 ft 10.5 in) shows as 11'11".
+- **One pass counts, not the best.** `$2B` is cleared when a new pass
+  begins after the centre crossing (`decide_run_end` `$1798`, `$17A8`),
+  by a fall (`$163E`) and at the start (`$15FE`). Once the controls are
+  locked it is no longer cleared, so the height that counts is the one
+  of the pass that locked them. *Live:* pumping without fire, passes 1 to
+  3 recorded 47, 75 and 95 eighths, and `$2B` returned to 0 at each new
+  takeoff.
+- **Fire ends the attempt.** Fire in the air on the right half, in pose 8
+  or `$10`, starts a seven-pose trick (phase 8, then `$0A`, `$0F4B`). Phase
+  `$0A` sets a bonus `$44` = 4, half a foot, and locks the controls
+  (`$104D`, `$108F`). *Live:* fire at the top of pass 2 went through phases
+  8, `$0A`, 4, 2, `$0E` and `$10` with `$43` = `$FF` and kept 95 eighths;
+  holding fire for 25 frames instead of 1 gave the same result.
+- **Holding fire spins.** Holding fire for `$14` frames or more sets `$33`
+  = `$60`, which makes the air phase rotate the pose (`$107D`-`$108B`);
+  reaching the coping during the trick is a fall (`$100D`, `$103E`).
+- **The last pose.** Phase `$10` picks one of three ten-pose sequences by
+  height: under `$50` (10 ft), under `$68` (13 ft), or more
+  (`$10F0`-`$1106`).
+- **The result.** After phase `$10`, fire calls `end_event` (`$1A49`):
+  `$FE05` = `$2B`, `$FE04` = feet in BCD, `$FE03` = inches in BCD, sprites
+  off, sound reset, `JMP $FE06`.
+
+## The scenery
+
+- **The flags and the crowd move.** 69 cells of 8 × 8 pixels each have two
+  frames: offsets at `$1B91`, screen colours at `$1C1B`, colour-RAM bytes
+  at `$1CA5` (bit 7 of the first records which frame is showing), pixels
+  at `$1D2F`. `animate_cell` (`$192E`) swaps one. Cells 0-7 are the four
+  flags on text row 3; `animate_flag_pair` (`$199B`) flips one flag on
+  about one frame in eight. Cells 8-68 are the crowd on rows 7-10;
+  `animate_crowd_cell` (`$19AE`) flips one at random with a chance set by
+  `$3F`, half the height, reloaded at each turn on the right
+  (`$1AD0`). The higher the last pass, the busier the crowd.
+- **The meter.** `draw_side_strip` (`$1AFA`) draws a ten-cell strip at
+  column 36, rows 1-10, from `$2E07`, with colour 7: the yellow pole at
+  the top right, behind the black marks of the ruler sprites 5 and 6 (seen
+  in a rendering of the listing's bitmap and in `reference/highjump-play.png`).
+
+## Text
+
+- The font is file `$0F` at `$6800`, 64 glyphs in screen-code order.
+  `$126D` draws a glyph inverted into the bitmap's first row; text is
+  ASCII masked with `$3F` (`$1242`, `$1258`).
+- `$1242` prints the zero-terminated string that follows its `JSR` and
+  returns past it. Its one call is at `$099E`; the string is `$09A1`-
+  `$09C9`, the `PASS:` and `HEIGHT:` labels.
+- The name at the left of the status line comes from the pointer at
+  `$FE00`/`$FE01`; in practice it is `$F822`, `PRACTICE`.
+
+### String sweep
+
+Runs of six or more printable characters, as ASCII and as screen codes,
+outside the bitmap and sprite data:
+
+| Where | Text |
+|---|---|
+| `$09A1` | `PASS:    HEIGHT:` |
+| `$2CEF`, `$F807` | `0123456789ABCDEF` |
+| `$F818` | `LESTER` |
+| `$F822`-`$F858` | `PRACTICE`, `AGAIN?`, `YES`, `NO`, `NEXT SKATER`, `SKATING TO SCORES` |
+| `$F859`-`$F8A0` | `HIGH JUMP`, `SKATESHOP`, `OVERALL`, `INSERT SIDE` ... `AND PRESS BUTTON.` |
+| `$F8D8` | `RAMP`, `HIGH JUMP`, `DOWNHILL`, `JAM`, `POOL JOUST` |
+| `$F0BE`-`$F127` | the KERNAL's `I/O ERROR #`, `SEARCHING FOR`, `PRESS PLAY ON TAPE`, `LOADING`, `SAVING`, `VERIFYING`, `FOUND` (leftover) |
+
+`$E000`-`$EFFF` decodes as long runs of low screen codes, a screen or map
+from an earlier load; nothing in High Jump reads it.
 
 ## Controls
 
-The traced routine at `$0D23` reads CIA1 `$DC01` and ANDs it with
-`$DC00`; its later interpretation is still to be traced. *Live:* joystick
-port 1 fire advanced the title and shop in this image.
-
-*Live, town overlay:* From `work/town-square.vsf`, sprite 0 was at
-`(173,117)`. After 80 frames forward, 20 frames turning left and 60 frames
-forward, it was at `(260,182)`. In the same two RAM images, `$2F` changed
-`$4B->$76` and `$30` changed `$54->$96`. Writing `$90` to `$2F` in a
-restored town state moved sprite X from 260 to 314 after two frames; writing
-`$60` to `$30` moved sprite Y from 183 to 129. Thus these bytes are town
-position inputs to the sprite placement routine, though their exact scale
-and offset still need tracing. **They are not stable cross-overlay names:**
-the High Jump code at `$0D23` writes combined CIA1 input into `$2F/$30`.
-
-## Graphics
-
-The High Jump VIC state sampled at play reported `video_mode: 3` and
-`memory_pointers: $91`; `$D011=$3B` and `$D016=$D8` select multicolour
-bitmap display in that sampled band. The raster handler changes video
-registers during a frame (`$0CA3`-`$0CB4`), so this one sample is not a
-claim that every band has the same mode.
-
-## Mechanics
-
-### High Jump height display
-
-`$17B4` draws the height from mutable byte `$2B`. It shifts right three
-times to index paired glyphs at `$2DC7` for the feet, and uses the low
-three bits to index paired glyphs at `$2DF1` for the inches. The eight
-inch entries are `00, 02, 03, 05, 06, 08, 09, 11`, rounding eighths of a
-foot to whole inches. *Live test:* In a restored High Jump play snapshot,
-writing `$04` to `$2B` and advancing five frames displayed `HEIGHT: 0' 6"`;
-writing `$08` displayed `HEIGHT: 1' 0"`. The two captures are
-`reference/highjump-height-test-4.png` and
-`reference/highjump-height-test-8.png`. These are controlled RAM tests, not
-scores achieved by playing. The rules that increase or record `$2B` remain
-to be traced.
-
-## Data tables
-
-Two observed text alphabets coexist. In the shop snapshot, Rodney's
-dialogue uses `$41`-`$5A` for `A`-`Z` and `$20` for a space. The compact
-event labels use `$01`-`$1A` for `A`-`Z` and `$20` for a space. This is a
-fixed offset of 64 for letters, established by the consecutive-letter
-differences of `PRACTICE`, `FREESTYLE`, and `HIGHJUMP` in both snapshots.
-For example, `$6A11` begins `08 09 07 08 0A 15 0D 10`, or `HIGHJUMP`;
-`$68D0` begins `06 12 05 05 13 14 19 0C 05`, or `FREESTYLE`. `$FE` and
-`$FF` surround these labels but their rendering roles are not yet traced.
-The shop snapshot also has compact `BOARD COLOR` near `$75E8` and
-`PUSH BUTTON` near `$77E9`; their surrounding control bytes need a later
-pass before attributing either to a particular screen.
-
-The uppercase-byte sweep found Rodney's speech and menu strings in the
-shop image at `$20A9` (`WHO NEEDS A BOARD`), `$20BB` (`MUST REGISTER AT
-SKATESHOP`), `$20D6` (`SKATE AGAIN`) and `$2180`-`$2280` (speech about
-sign-in, board colour, high scores, Practice and Compete). The same sweep
-also produced long runs inside graphics; a printable run alone is not
-evidence of text. The compact-alphabet sweep found the four event headings
-listed above; it did not establish an absence of other strings in later
-event overlays.
-
-High Jump prints the header from an inline NUL-terminated byte string
-`$09A1`-`$09C9`, containing `PASS:` and `HEIGHT:`. The call at `$099E`
-enters `$1242`, which pulls the return address, masks each inline byte with
-`$3F`, draws its glyph and returns after the terminator. The bytes that
-looked like repeated `JSR $2020` are spaces in this string, not code.
-
-The graphics builder at `$138D` uses the complete 256-byte table
-`$2E7B`-`$2F7A` to reverse the individual bits in a byte. The builder at
-`$13C5` uses `$2F7B`-`$307A` to reverse four two-bit pixel pairs. A
-byte-for-byte check of every index `0..255` matched those transforms
-exactly. The builders therefore have both bit-level and two-bit-pixel
-reversal available; which poses call each path is traced at `$14DE` but
-has not yet been matched to all visible frames.
-
-The input reader at `$0D3F` uses even state byte `$2E` to index nine
-little-endian handler pointers at `$2AB9`-`$2ACA`, then patches the call
-operand at `$0D4E`. The states are `$00,$02,$04,$06,$08,$0A,$0C,$0E,$10`.
-Their handlers update movement, timing and skater poses; the player-facing
-meaning of each state needs live tracing before stronger labels are used.
-
-### Twin copy under KERNAL RAM
-
-In `work/highjump-play.vsf`, `$C2B0`-`$C67A` and `$F9E0`-`$FDAA` are
-byte-for-byte identical (971 bytes), an offset of `$3730`. The beginning
-decodes as instructions and contains absolute `$Fxxx` operands. Bytes
-after these ranges differ, while another run of 64-byte windows agrees
-from around `$C690/$FDC0`. This is a candidate copied code/data block;
-the executed copy and exact boundaries remain open until traced live.
-
-### Hardware register census (initial trace only)
-
-| Register | Traced use | Instructions |
-|---|---|---|
-| `$D011`, `$D016` | write display controls during raster work | `$0CA3`-`$0CB4` |
-| `$D012` | read current raster and write next compare line | `$0B18`, `$0CAA`, `$0D14` |
-| `$D019`, `$D01A` | acknowledge raster IRQ; enable VIC interrupt | `$0AF5`-`$0AF8`, `$0A41` |
-| `$D400,Y` | clear seven SID registers for a selected voice | `$29B5`-`$29BA`; indexed range not represented by one fixed register |
-| `$D404`, `$D40B`, `$D412`, `$D418` | clear the three voice controls and set volume `$0F`; later Voice 1 control write | `$22C8`-`$22D3`, `$2362` |
-| `$DC00`, `$DC01` | combine the two CIA1 input ports | `$0D23`-`$0D26` |
-
-This table covers only the 2,018 bytes first marked as code. An untouched
-register here says nothing about the rest of the image or other events.
+- `read_controls_and_run_phase` (`$0D23`) ANDs `$DC01` with `$DC00`, so
+  either joystick works. Keyboard row 7 doubles as joystick 1: SPACE is
+  fire, 1 up, left-arrow down, CTRL left, 2 right (keyboard matrix in
+  `kit/skills/c64/c64-reference`). `$2F` is the state and `$30` marks new
+  presses.
+- Fire on the platform starts the run; the push-off takes 60 frames
+  (`$0D50`).
+- **RUN/STOP** (`check_run_stop` `$1A08`) sets `$FE12` and ends the event
+  through `$1A49`. *Live:* RUN/STOP in play went to SKATING TO SKATESHOP.
+- **The Commodore key** (`check_commodore_key` `$1A24`) flips `$FE10`.
+  *Live:* `$FE10` went `$00` → `$FF` and every sound slot cleared; a
+  second press put it back to `$00` and the music started again.
 
 ## Sound
 
-The High Jump sound updater at `$232C` drains queued sound IDs from `$2277`.
-Its call at `$2337` enters `$2981`, which compares a priority from `$30AF`,
-chooses one of three voice slots, loads a script pointer from `$307B/$3095`,
-clears counters, and zeros seven SID registers at the selected voice base.
-`$29DC` begins the six slot offsets `$0E,$0E,$07,$07,$00,$00` used by this
-routine and the update loop at `$2345`. The game meaning of each sound ID
-remains open.
+- **Three voices with priorities.** `queue_sound_id` (`$22F5`) appends an
+  ID to a 16-entry queue; a seventeenth waiting request is dropped. Each
+  tick, a request takes the slot with the lowest priority if its own
+  priority (`$30AF`) is at least as high (`start_sound_on_weakest_slot`
+  `$2981`). The three slots drive SID voices 3, 2 and 1 (`$29DC`).
+- **One tick per frame,** paced by `$72` from band 0 of the IRQ, so about
+  50 per second on PAL. Volume is set to 15 with no filter at start-up
+  (`$22D1`); no filter register is ever written (register census).
+- **Sounds are bytecode.** Each of the 26 IDs points at a script
+  (`$307B`/`$3095`). A command's low nibble is the opcode and its high
+  bits the variant: set a SID register, add to one, compare, branch on the
+  comparison, loop, call, poke memory, wait until memory holds a value,
+  request another sound, wait n ticks, call machine code, or play the next
+  event of a note stream (dispatch `$2394`, `$23AE`/`$23BE`). A note
+  stream holds notes as one byte each (low nibble the note, bits 4-5 the
+  octave, bits 6-7 one of four durations and gate lengths) and its own
+  commands (`$2752`, `$27ED`/`$27F8`).
+- **Notes** come from a 12-semitone table of the top octave at
+  `$29E1`/`$29F1`, shifted right per octave (`$28CF`-`$28EE`). Entry 1 is
+  A6 at 1760 Hz for an NTSC clock, so on PAL the music is about 0.65 of a
+  semitone flat (computed, not measured).
+- **IDs that play nothing.** 3, 24 and 25 point at `$30C9`, a lone end
+  command.
+- **What High Jump asks for:** 1 the music (`$19CE`, `$1A45`, only while
+  `$FE10` is 0), which requests 2, its second voice; 4 on a change of side
+  (`$0CE0`); 6 at the end of a run (`$10D5`); 9 or 22 at a fall, 9 when the
+  speed is `$0348` or more either way (`$16A0`, table `$2DB7`); 16 (`$173B`);
+  20 when the speed changes direction (`$1ADC`). Simulated runs also
+  requested 15. Eighteen of the 26 scripts are not requested by any code
+  in this load.
 
-The sound-script format is partially traced. `$2389` reads and advances the
-current voice's byte pointer. `$2394` uses the low nibble of each command
-byte to choose one of 16 handler addresses from split high/low tables at
-`$23AE/$23BE`, pushes that address and uses `RTS` to dispatch; the high
-nibble remains in A as a subcommand or argument. The decoded handlers
-write SID frequency (`$D400/$D401`), pulse width (`$D402/$D403`), control
-(`$D404`), attack/decay (`$D405`) and sustain/release (`$D406`), and can
-adjust previous values, branch within scripts, queue another sound, or
-return from a nested script. A second stream is read through `$08/$09` at
-`$26FA`; its 11-entry split address table at `$27ED/$27F8` dispatches
-further SID writes and modulation setup. This is code evidence for the
-driver, not yet a claim about how the soundtrack sounds or what any sound
-ID means in the game.
+### The music is assembled at random
 
-The sound-ID table at `$307B`-`$30AE` contains 26 split low/high script
-pointers; the first points to `$30CC`. The next 26 bytes at `$30AF`-`$30C8`
-hold their priorities. These are indexed by ID in `$2981` and `$298D`.
+- Nine two-voice phrases, their stream addresses at `$346D`, are chained
+  through a successor table at `$3C6C` (a count, then the choices). Phrase
+  0 can go to 1-4; phrases 1-4 to any of 1-8 except themselves; 5-8 to 1-4.
+- Play always starts at phrase 0 (`$34E3`). Whichever voice finishes a
+  phrase first picks the next one for both (`music_choose_phrase`
+  `$3549`, toggle `$35A8`), never the phrase just played (`$35AE`,
+  `$356F`). Each voice's script then rewrites its own stream operand
+  (`music_next_phrase_a`/`_b`, `$3517`/`$3530`).
+- The music's random state `$35AB` is never set by High Jump, so the order
+  depends on what was left there before.
+
+## Register census
+
+Every absolute access to `$D000`-`$DFFF` in this load's code, grouped. The
+indexed sprite and SID writes reach the other registers of each group.
+
+| Register | Use | Routines |
+|---|---|---|
+| `$D000`-`$D00F`, `$D010` | sprite positions, the shadow follows sprite 4 | `place_part_sprite` `$0C4C`, `place_fixed_sprite` `$0C8E`, `$0C1A` |
+| `$D011` | 24 or 25 rows per band, screen on | `hj_init` `$089E`, `install_raster_irq` `$0A13`, `$0B21`, `$0CAA` |
+| `$D012` | raster compare and frame wait | `$0AF0`, `$0A45`, `$0CAA`, `$0D14` |
+| `$D015`, `$D017`, `$D01B`, `$D01C`, `$D01D` | sprite enable, expansion, priority, multicolour | `place_sprites` `$0B5D`, `end_event` `$1A49` |
+| `$D016` | multicolour off for the status line, on below | `$0A50`, `$0B21`, `$0CA3` |
+| `$D018` | bitmap `$4000`, screen `$6400` | `$0A50` |
+| `$D019`, `$D01A` | raster interrupt acknowledge and enable | `$0AF0`, `$0A3A` |
+| `$D020`, `$D021` | border and background | `$089E`, `$0A50` |
+| `$D025`, `$D026` | sprite multicolours 1 and 6 | `$09CA` |
+| `$D027`-`$D02E` | sprite colours, indexed | `$0BA5` |
+| `$D400`-`$D406` (+7, +14) | frequency, pulse, control, envelope, indexed by voice | the sound driver `$22B7`-`$29DB` |
+| `$D418` | volume 15, no filter | `$22C2` |
+| `$DC00`-`$DC03` | joystick 2 and keyboard row 7, port directions | `$0800`, `$0977`, `$0D23`, `$1A08`, `$1A24` |
+| `$DC0D` | CIA 1 interrupts off | `$0A13` |
+| `$DD00` | VIC bank; the drive's serial lines | `$0A50`, the loader `$F4B7`-`$F5BC` |
+
+Never touched by High Jump's own code: the SID filter (`$D415`-`$D417`),
+the light pen, sprite collisions (`$D01E`, `$D01F`), CIA timers. The event
+manager's text screen uses `$D011`, `$D016`, `$D018`, `$D020`, `$D021` and
+colour RAM (`$F941`, `$F975`).
+
+## The event manager
+
+- The resident manager (`$F730`-`$FFF7`, side-1 file `$0B`) runs between
+  events. Its load table (`$F8A0`-`$F8D7`) has seven rows: shop, RAMP,
+  HIGH JUMP, DOWNHILL, JAM, POOL JOUST and the side check, with their
+  files, addresses, entries and sides.
+- **The interface block** `$FE00`-`$FE12`: slot A (name pointer `$FE00`,
+  attribute `$FE02`, result `$FE03`-`$FE05`), `$FE06` `JMP event_done`,
+  slot B (`$FE09`-`$FE0E`), `$FE0F` set when slot B is LESTER, `$FE10` the
+  sound flag, `$FE11` practice, `$FE12` quit. High Jump reads slot A and
+  `$FE10`, writes the result and `$FE12`, and never touches slot B.
+- **`event_done`** (`$FE13`): in practice it shows PRACTICE AGAIN? YES NO;
+  YES re-enters the event at `$F93E` without loading. In a competition it
+  stores the result, shows NEXT SKATER, and at the end sorts the scores
+  (`$F743`, `$F766`) and awards 5, 3 and 1 points (`$F7E0`). High Jump's
+  results column is printed in feet and inches (`$FC1D`).
+- The roster holds eight 16-byte names (`$FCDA`).
+
+## Corner cases
+
+- `$1166` reads `$2A13` + `$37`, and `$37` is `$FF` after a change of side
+  (`$0CC6`), so it reads `$2B12`, inside the ramp profile. It works only
+  because that byte is not zero.
+- `$16E3`: the boost index (10 minus the speed's whole part) wraps if the
+  whole part reaches 11, and would read up to 255 bytes past `$2DBD`.
+  Simulated runs stayed between -5 and 4.
+- `$1A08` leaves the IRQ handler with `JMP $1A49` and then `JMP $FE06`,
+  with no `RTI`.
+- `$107D`-`$1083` loads `$20` and overwrites it with `$60`, so `$33` is
+  only ever `$60` or 0.
+- The sound driver's wait-until-equal command always rewinds four bytes,
+  which is wrong for its five-byte form (`$24F5`); pause (`$2319`)
+  overwrites a voice's flags with `$80`, so resume (`$2321`) leaves it
+  idle. Neither form is used in this load.
+- The event-sound ring `$2E6B` (`$1A96`) has no overflow check.
+
+## How far the listing's comments can be trusted
+
+A sample of 60 line comments (seed 20261004, spread over the seven agents'
+ranges in proportion to their comment counts) was checked against the
+bytes by an agent that wrote none of them: 4 had a wrong detail and none a
+wrong purpose, 6.7 % (95 % Wilson interval 2.6 % to 15.9 %). Leaving out
+the 23 shape and pose comments that a script wrote, 4 of 37 (11 %). The
+four were a branch read backwards (`$16E3`), two cases folded into one
+(`$FF3F`), two exits folded into one (`$F4B7`) and a tick count off by one
+(`$3291`); all four are corrected.
 
 ## Live tests
 
-- *Live:* At High Jump play, `$00/$01` was `$FF/$E4`. The RAM vectors at
-  `$FFFA`-`$FFFF` read NMI `$0A3A`, reset `$0954`, IRQ `$0AF0`. A
-  non-stopping execution checkpoint on `$0AF0` gained hits during play.
+All on 4 October 2026, VICE 3.13.1 on Linux, from `work/highjump-play.vsf`.
+
+| Test | Result |
+|---|---|
+| Commodore key twice | `$FE10` `$00` → `$FF` → `$00`; all sound slots cleared, then sounds 1 and 2 restarted |
+| RUN/STOP in play | SKATING TO SKATESHOP |
+| Pump right and left every two frames, no fire | three passes: 47, 75, 95 eighths; `$2B` cleared at each new takeoff |
+| Same, fire for 1 frame at the top of pass 2 | phases 8, `$0A`, 4, 2, `$0E`, `$10`; `$43` = `$FF`; 95 eighths kept |
+| Same, fire held 25 frames | the same phases and height |
+
+Earlier sessions confirmed the eighths-to-inches display with pokes to
+`$2B` and the port-1 fire start.

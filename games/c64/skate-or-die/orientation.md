@@ -39,27 +39,43 @@ and pressing fire resumed High Jump (`reference/side1-prompt.png`).
 
 ## Steady state
 
-VICE v3.13.2 (`v3.13.2-macos-arm64-gui.dmg`) passed all 57 emulator checks;
-there are no failed-check workarounds. At High Jump play, processor port
-`$00/$01` read `$FF/$E4`, so the BASIC and KERNAL ROMs were out and I/O was
-visible. The RAM hardware vectors at `$FFFA-$FFFF` read NMI `$0A3A`, reset
-`$0954`, IRQ `$0AF0`. A non-stopping execution checkpoint at `$0AF0` gained
-hits while the event ran; the sampled CPU PC was `$08DC`. The KERNAL vector
-table at `$0314` still contained its defaults. Shop and High Jump RAM differ
-in 43,751 byte positions, so the event loads or replaces substantial memory;
-one event snapshot cannot be assumed to hold every event's code and data.
+VICE 3.13.1 (`v3.13.1-linux-x86_64-gui.zip`) passed 56 of the 57 emulator
+checks on 4 October 2026; the failed one is `pause-at-instruction`, and
+stops are made with `pause()` as `kit/skills/c64/tool-vice-mcp/workarounds.md`
+says. A non-stopping execution checkpoint at `$0AF0` gains hits while the
+event runs.
 
-Other captured states are `work/race-play.vsf`, `work/jam-play.vsf`, and
-`work/joust-select.vsf`; they are not interchangeable overlays. The final
-loader hand-over snapshot is still to be captured. Compare it with the play
-snapshots before selecting the listing image.
+The listing comes from `work/highjump-play.vsf`, High Jump in practice
+mode with the skater waiting on the left platform: `PRACTICE`, `PASS: 0`
+and `HEIGHT: 0' 0"` at the top. The CPU port is `$25` (RAM at `$A000` and
+`$E000`, I/O in); a RAM read of `$0001` shows `$E4`, which is the RAM under
+the port. The hardware vectors at `$FFFA`-`$FFFF` read NMI `$0A3A` (stale,
+from an earlier load), reset `$0954`, IRQ `$0AF0`.
+
+The hand-over snapshot `work/entry.vsf` is the same load stopped at
+`$095C`, after the four files are in memory and before the event has run.
+A byte that differs between the two is written at run time.
+
+## What this listing covers
+
+One load: High Jump. The title, the shop and town, and each event are
+separate loads over the same memory, so one snapshot holds one of them.
+Going from the town to High Jump replaces `$0800`-`$3DFF` and then
+`$4000`-`$C2AF`; `$C300`-`$FFFF` keeps what earlier loads left, including
+the resident loader and the event manager (page-by-page comparison of the
+town, `$088D` and play snapshots). The other events are left for another
+run.
 
 ## The loader, in a paragraph
 
-The two-block `EA` program starts a loader that first draws the blue EA
-logo, then the Skate or Die! title and Rodney's shop. Selecting a town
-path displays `SKATING TO HIGH JUMP`, blanks the screen while loading,
-then enters the event. High Jump and Pool Joust selection loaded with side 1;
-Race and Jam loaded with side 2. A wrong-side attempt produced an explicit
-side-1 prompt rather than silently loading another event. The loader's copy
-and jump addresses have not yet been established.
+The two-block `EA` program starts EA's own fast loader. The C64 side
+lives in high RAM (`$F230`) and talks to a command server in the drive's
+RAM over the serial lines, three-byte commands of command, track and
+sector. There is no directory: files are numbered, and a table of 49 start
+tracks, sectors and lengths finds them. Every load first tells the drive
+to expect the disk ID "EA" and reads three bytes from track 18 sector 18
+that say which side is in the drive; the wrong side brings up INSERT SIDE
+n AND PRESS BUTTON. Choosing a town path shows SKATING TO HIGH JUMP while
+the event manager loads a stub to `$0800` that loads the event's code to
+`$0880` and jumps there; the event loads its own font, picture, poses and
+shapes. Details and addresses are in `facts.md`, "Loads".

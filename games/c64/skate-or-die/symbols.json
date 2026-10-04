@@ -11873,7 +11873,7 @@
   {
    "address": 5859,
    "type": "line",
-   "text": "Pumping, called by phase $02 while the skater is low in the ramp ($23 >= $B0): unless the controls are locked ($43), any newly pressed joystick direction ($30 low nibble not $0F) restarts a boost with $36 = 10 minus the whole part of the speed. Each frame $36 counts down and $2DBD[$36] (6, 6, 6, 6, 6, 6, 4, 3, 2, 1) is added to the speed $4D/$4E in the direction of travel."
+   "text": "Pumping, called by phase $02 while the skater is low in the ramp ($23 >= $B0): any newly pressed joystick direction ($30 low nibble not $0F), or every frame while the attempt is over ($43 set, so no input is needed), restarts a boost with $36 = 10 minus the whole part of the speed. Each frame $36 counts down and $2DBD[$36] (6, 6, 6, 6, 6, 6, 4, 3, 2, 1) is added to the speed $4D/$4E in the direction of travel."
   },
   {
    "address": 5922,
@@ -13058,7 +13058,7 @@
   {
    "address": 12945,
    "type": "line",
-   "text": "Sound 13: noise from $0600 falling by $0014 a tick for 18 ticks, AD $69 SR $D8, release after 11. No High Jump call found."
+   "text": "Sound 13: noise from $0600 falling by $0014 a tick for 18 ticks, AD $69 SR $D8, release 12 ticks after the start (gate timer 11). No High Jump call found."
   },
   {
    "address": 12966,
@@ -16438,7 +16438,7 @@
   {
    "address": 62647,
    "type": "line",
-   "text": "Send the 3-byte command in $E5 (command), $E6 (track byte), $E7 (sector byte) to the drive code on the serial bus, keeping X/Y (saved into $F4B3/$F4B5, returned by the exit at $F4B1). It raises CIA 2 port A bit 3 ($DD00), fails with carry set if bit 7 is already high or bit 6 does not go low then high within 255 polls, drops bit 3, then clocks out 24 bits most significant first: each bit on $DD00 bit 4, strobed by pulsing bit 5. For commands below 3 it marks a reply pending in xfer_state ($F54A). Returns carry clear when the command was taken"
+   "text": "Send the 3-byte command in $E5 (command), $E6 (track byte), $E7 (sector byte) to the drive code on the serial bus, keeping X/Y (saved into $F4B3/$F4B5, returned by the exit at $F4B2, entered at $F4B1 with carry set on failure). It raises CIA 2 port A bit 3 ($DD00), fails with carry set if bit 7 is already high or bit 6 does not go low then high within 255 polls, drops bit 3, then clocks out 24 bits most significant first: each bit on $DD00 bit 4, strobed by pulsing bit 5. For commands below 3 it marks a reply pending in xfer_state ($F54A). Returns carry clear when the command was taken"
   },
   {
    "address": 62801,
@@ -17053,7 +17053,7 @@
   {
    "address": 65343,
    "type": "line",
-   "text": "Clear the result slots and move to the next turn; when every skater has played go to show_results. Otherwise fill slot A (and slot B for events 4 and 5, LESTER for an odd one out), print NEXT SKATER, pause and replay the event without loading it (reenter_event)"
+   "text": "Clear the result slots and move to the next turn; when every skater has played go to show_results. Otherwise fill slot A (and slot B for events 4 and 5; an odd one out gets LESTER in event 4 and goes to show_results in event 5), print NEXT SKATER, pause and replay the event without loading it (reenter_event)"
   },
   {
    "address": 65421,

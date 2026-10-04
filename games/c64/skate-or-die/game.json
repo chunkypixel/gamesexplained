@@ -286,5 +286,35 @@
   "links": {
     "wiki": "https://www.c64-wiki.com/wiki/Skate_or_Die!",
     "manual": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual"
-  }
+  },
+  "tabs": [
+    [
+      "index.html",
+      "Overview"
+    ],
+    [
+      "gameplay.html",
+      "High Jump"
+    ],
+    [
+      "graphics.html",
+      "Graphics"
+    ],
+    [
+      "music.html",
+      "Music and sound"
+    ],
+    [
+      "discoveries.html",
+      "Discoveries"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ]
 }
