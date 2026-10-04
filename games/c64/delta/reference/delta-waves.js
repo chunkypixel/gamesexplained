@@ -171,9 +171,13 @@
     requestAnimationFrame(tick);
   }
 
-  const STAGES = 13;                 // stages with a recording in reference/waves
-  for (let s = 1; s <= STAGES; s++) {
-    const b = document.createElement('button'); b.textContent = s; b.title = BANNERS[s - 1]; b.onclick = () => load(s);
+  // the stages with a recording in reference/waves; a stage left out (one that differed from VICE)
+  // still gets its button, disabled, so the numbering stays the game's
+  const STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  for (let s = 1; s <= Math.max(...STAGES); s++) {
+    const b = document.createElement('button'); b.textContent = s;
+    if (STAGES.includes(s)) { b.title = BANNERS[s - 1]; b.onclick = () => load(s); }
+    else { b.disabled = true; b.title = BANNERS[s - 1] + ': left out, its recording differs from VICE (see the caption)'; b.style.opacity = .35; }
     $('wvStages').appendChild(b);
   }
   $('wvPlay').onclick = () => { if (!D) return; if (frame >= D.frames - 1) frame = 0; playing = !playing; $('wvPlay').textContent = playing ? 'Pause' : 'Play'; };
