@@ -1,6 +1,7 @@
 # Never commit game binaries or anything that embeds them.
 games/*/*/work/*
 !games/*/*/work/README.md
+games/*/*/parts/*/work/*
 *.d64
 *.d71
 *.d81
