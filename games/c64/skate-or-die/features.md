@@ -10,7 +10,7 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 - [C64-Wiki](https://www.c64-wiki.com/wiki/Skate_or_Die!), C64-specific modes, controls and screenshots, read 4 October 2026. Its port-2 icon needs comparison with this image: port 1 fire advanced the tested title and port 2 fire did not.
 - C64-Wiki images saved as `reference/wiki-*.png` on 4 October 2026. Source GIFs remain in ignored `work/`.
 - Contributor-supplied research notes, received 4 October 2026; credits and historical claims are leads pending direct source checks.
-- PAL VICE v3.13.2 captures from the contributor's side 1: `reference/title-screen.png`, `skate-shop.png`, `town-square.png`, `highjump-play.png`, 4 October 2026.
+- PAL VICE v3.13.2 captures from the contributor's disks: `reference/title-screen.png`, `skate-shop.png`, `town-square.png`, `highjump-play.png`, `race-play.png`, `jam-play.png`, `joust-select.png`, `side1-prompt.png`, 4 October 2026.
 
 ## Hub and modes
 
@@ -24,10 +24,10 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 | View high scores and save competition results to disk | open | Manual and wiki; test this image's write behaviour |
 | Go Practice leads to event selection without sign-in | live | Shop to `reference/town-square.png` |
 | Go Compete supports named skaters and tournament play | open | Manual and wiki |
-| Town-square skater travels down labelled paths to events | live | Right then forward from entrance reached High Jump |
+| Town-square skater travels down labelled paths to events | live | Forward moves in the facing direction; left/right steer. `orientation.md` gives measured routes to four events |
 | Compete All plays five events in sequence; placings award 5/3/1 points | open | Manual; wiki says path is unavailable in Practice |
 | Commodore key toggles sound; RUN/STOP aborts an event | open | Manual; test live |
-| Event code/data reload between disciplines and may require a disk flip | live | High Jump showed `SKATING TO HIGH JUMP` and a blank load screen; other flips open |
+| Event code/data reload between disciplines and may require a disk flip | live | High Jump showed `SKATING TO HIGH JUMP`; `reference/side1-prompt.png` records an explicit side-1 request after arriving with side 2 mounted |
 
 ## Freestyle
 
@@ -43,7 +43,7 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 
 | Feature | Status | Evidence / next check |
 |---|---|---|
-| Ramp, skater, pass counter and height display | live | `reference/highjump-play.png`, initially pass 0 and zero height |
+| Ramp, skater, pass counter and height display | live | `reference/highjump-play.png`, initially pass 0 and zero height; controlled `$2B` tests confirmed the eighth-foot to inches display (`facts.md`) |
 | Rapid joystick movement builds speed and jump height | open | Manual and wiki; measure input accumulator |
 | Up to five passes on the right; fire near apex records height or can cause a bail | open | Manual; observe an attempt |
 | Last pass counts if fire is never pressed | open | C64-Wiki; test a full run |
@@ -52,9 +52,9 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 
 | Feature | Status | Evidence / next check |
 |---|---|---|
-| Race is a timed obstacle course with jump, duck, slide turns and stunt bonuses | open | Manual, `reference/wiki-race.png`; measure C64 timing |
-| Regular and Goofy foot change movement direction; fire combinations trigger moves | open | Manual and wiki; sources differ on some directional wording |
-| Jam races an opponent through hazards, with kicks and punches against rival and scenery | open | Manual, `reference/wiki-jam.png` |
+| Race is a timed obstacle course with jump, duck, slide turns and stunt bonuses | open | `reference/race-play.png` confirms the course and timer at zero; the moves and scoring remain to be tested |
+| Regular and Goofy foot change movement direction; fire combinations trigger moves | open | `reference/race-play.png` confirms a Regular Foot choice; the alternate choice and control effects remain open |
+| Jam races an opponent through hazards, with kicks and punches against rival and scenery | open | `reference/jam-play.png` confirms the street and Practice prompt; combat and finish rules remain open |
 | Jam placement uses finish time and score; a trailing opponent can be moved forward with a penalty | open | C64-Wiki; verify live or trace |
 | Lester can stand in for a missing human opponent | open | Manual |
 
@@ -64,7 +64,7 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 |---|---|---|
 | Joust alternates hunter and hunted after five passes with the paddle | open | Manual, `reference/wiki-joust.png` |
 | A flashing paddle can strike; first to three slams wins by two | open | Manual; verify score and end conditions |
-| Poseur Pete, Aggro Eddie and Lester are opponents with different difficulty | open | Manual and wiki; test selection and AI |
+| Poseur Pete, Aggro Eddie and Lester are opponents with different difficulty | open | `reference/joust-select.png` confirms all three choices; the difficulty distinction remains open |
 | Multiplayer tournament uses round-robin Joust and displays results/high scores | open | Manual; exercise with signed-in skaters |
 
 ## Beyond the documentation
@@ -73,7 +73,7 @@ No code-only feature has been identified yet.
 
 ## Open questions
 
-- Which assets are on each disk side, and when does the game request a flip?
+- Which other assets are on each disk side, and when does each event request a flip? High Jump and Joust selection were seen on side 1; Race and Jam loaded from side 2.
 - Which states' code and data are overwritten by later overlays? Shop and High Jump RAM differ substantially.
 - Is port-1 title input image-specific or accepted in addition to documented port 2?
 - Can this G64 pair write high scores, and if so to which side?

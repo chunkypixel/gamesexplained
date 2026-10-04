@@ -15,6 +15,11 @@
     53248,
     57343,
     "I/O and colour RAM"
+   ],
+   [
+    2,
+    255,
+    "High Jump zero page holds mutable input, movement, sound and graphics state, not authored image bytes"
    ]
   ],
   "extra": []
@@ -222,8 +227,13 @@
   },
   {
    "start": 6864,
-   "end": 8886,
+   "end": 8730,
    "type": "Undefined"
+  },
+  {
+   "start": 8731,
+   "end": 8886,
+   "type": "Byte"
   },
   {
    "start": 8887,
@@ -242,16 +252,46 @@
   },
   {
    "start": 9134,
-   "end": 10624,
+   "end": 9165,
    "type": "Undefined"
   },
   {
-   "start": 10625,
+   "start": 9166,
+   "end": 9780,
+   "type": "Code"
+  },
+  {
+   "start": 9781,
+   "end": 9792,
+   "type": "Undefined"
+  },
+  {
+   "start": 9793,
+   "end": 10220,
+   "type": "Code"
+  },
+  {
+   "start": 10221,
+   "end": 10242,
+   "type": "Lo/Hi Address"
+  },
+  {
+   "start": 10243,
    "end": 10715,
    "type": "Code"
   },
   {
    "start": 10716,
+   "end": 11718,
+   "type": "Undefined"
+  },
+  {
+   "start": 11719,
+   "end": 11776,
+   "type": "Byte"
+  },
+  {
+   "start": 11777,
    "end": 27144,
    "type": "Undefined"
   },
@@ -280,8 +320,38 @@
    "kind": "auto"
   },
   {
+   "address": 8,
+   "name": "zpf_08",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 9,
+   "name": "zpf_09",
+   "type": "ZeroPageField",
+   "kind": "auto"
+  },
+  {
+   "address": 14,
+   "name": "zpa_0E",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15,
+   "name": "zpa_0F",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
    "address": 16,
    "name": "zpa_10",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 17,
+   "name": "zpa_11",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "auto"
   },
@@ -736,6 +806,12 @@
    "kind": "auto"
   },
   {
+   "address": 425,
+   "name": "a_01A9",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
    "address": 1024,
    "name": "f_0400",
    "type": "Field",
@@ -815,9 +891,9 @@
   },
   {
    "address": 3235,
-   "name": "s_0CA3",
+   "name": "highjump_raster_update",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 3242,
@@ -875,9 +951,9 @@
   },
   {
    "address": 3363,
-   "name": "s_0D23",
+   "name": "read_event_controls",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 3391,
@@ -947,9 +1023,9 @@
   },
   {
    "address": 4475,
-   "name": "s_117B",
+   "name": "compute_skater_display_position",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4481,
@@ -1019,9 +1095,9 @@
   },
   {
    "address": 4717,
-   "name": "j_126D",
+   "name": "copy_inverted_glyph",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4736,
@@ -1043,9 +1119,9 @@
   },
   {
    "address": 4768,
-   "name": "s_12A0",
+   "name": "lookup_skater_position",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4795,
@@ -1073,9 +1149,9 @@
   },
   {
    "address": 4970,
-   "name": "s_136A",
+   "name": "subtract_motion_table_values",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4988,
@@ -1097,9 +1173,9 @@
   },
   {
    "address": 5005,
-   "name": "s_138D",
+   "name": "expand_graphics_with_table_a",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5016,
@@ -1115,9 +1191,9 @@
   },
   {
    "address": 5061,
-   "name": "s_13C5",
+   "name": "expand_graphics_with_table_b",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5072,
@@ -1133,9 +1209,9 @@
   },
   {
    "address": 5117,
-   "name": "s_13FD",
+   "name": "copy_graphics_block",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5128,
@@ -1175,9 +1251,9 @@
   },
   {
    "address": 5342,
-   "name": "s_14DE",
+   "name": "build_skater_graphics",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5394,
@@ -1223,9 +1299,9 @@
   },
   {
    "address": 5610,
-   "name": "s_15EA",
+   "name": "set_highjump_phase",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 5641,
@@ -1295,9 +1371,9 @@
   },
   {
    "address": 6068,
-   "name": "s_17B4",
+   "name": "draw_height_digits",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6128,
@@ -1487,9 +1563,9 @@
   },
   {
    "address": 8731,
-   "name": "f_221B",
+   "name": "sound_scheduler_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 8732,
@@ -1507,6 +1583,54 @@
    "address": 8734,
    "name": "a_221E",
    "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8735,
+   "name": "a_221F",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8736,
+   "name": "a_2220",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8737,
+   "name": "a_2221",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8738,
+   "name": "a_2222",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 8739,
+   "name": "f_2223",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8740,
+   "name": "f_2224",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8745,
+   "name": "f_2229",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8746,
+   "name": "f_222A",
+   "type": "Field",
    "kind": "auto"
   },
   {
@@ -1546,10 +1670,22 @@
    "kind": "auto"
   },
   {
-   "address": 8781,
-   "name": "f_224D",
+   "address": 8757,
+   "name": "f_2235",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 8769,
+   "name": "f_2241",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8781,
+   "name": "sid_voice_slot_state",
+   "type": "Field",
+   "kind": "user"
   },
   {
    "address": 8782,
@@ -1570,8 +1706,20 @@
    "kind": "auto"
   },
   {
+   "address": 8793,
+   "name": "f_2259",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
    "address": 8794,
    "name": "f_225A",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8799,
+   "name": "f_225F",
    "type": "Field",
    "kind": "auto"
   },
@@ -1594,16 +1742,46 @@
    "kind": "auto"
   },
   {
+   "address": 8805,
+   "name": "f_2265",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8806,
+   "name": "f_2266",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
    "address": 8811,
    "name": "f_226B",
    "type": "Field",
    "kind": "auto"
   },
   {
-   "address": 8823,
-   "name": "f_2277",
+   "address": 8812,
+   "name": "f_226C",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 8817,
+   "name": "f_2271",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 8823,
+   "name": "pending_sound_ids",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 8839,
+   "name": "initial_sound_scripts",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 8887,
@@ -1637,9 +1815,9 @@
   },
   {
    "address": 9004,
-   "name": "s_232C",
+   "name": "update_sid_voices",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9010,
@@ -1685,9 +1863,9 @@
   },
   {
    "address": 9097,
-   "name": "s_2389",
+   "name": "fetch_sound_script_byte",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9106,
@@ -1697,25 +1875,619 @@
   },
   {
    "address": 9108,
-   "name": "s_2394",
+   "name": "dispatch_sound_opcode",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 9134,
+   "name": "sound_opcode_handler_hi",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 9150,
+   "name": "sound_opcode_handler_lo",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 9166,
+   "name": "set_sid_parameters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9194,
+   "name": "b_23EA",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9212,
+   "name": "b_23FC",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9231,
+   "name": "b_240F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9241,
+   "name": "b_2419",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9259,
+   "name": "b_242B",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9266,
+   "name": "b_2432",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9290,
+   "name": "b_244A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9308,
+   "name": "b_245C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9327,
+   "name": "b_246F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9337,
+   "name": "b_2479",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9352,
+   "name": "b_2488",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9362,
+   "name": "queue_sound_from_script",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9377,
+   "name": "sound_conditional_memory",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9404,
+   "name": "b_24BC",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9423,
+   "name": "j_24CF",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9431,
+   "name": "b_24D7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9452,
+   "name": "b_24EC",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9455,
+   "name": "j_24EF",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9472,
+   "name": "b_2500",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9480,
+   "name": "b_2508",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9484,
+   "name": "adjust_sid_parameters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9518,
+   "name": "b_252E",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9546,
+   "name": "b_254A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9576,
+   "name": "b_2568",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9616,
+   "name": "b_2590",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9627,
+   "name": "control_sound_script_flow",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9639,
+   "name": "b_25A7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9658,
+   "name": "b_25BA",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9664,
+   "name": "b_25C0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9667,
+   "name": "b_25C3",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9680,
+   "name": "b_25D0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9698,
+   "name": "b_25E2",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9721,
+   "name": "b_25F9",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9728,
+   "name": "b_2600",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9736,
+   "name": "j_2608",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9781,
+   "name": "f_2635",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 9787,
+   "name": "f_263B",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 9793,
+   "name": "compare_sid_state",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9817,
+   "name": "b_2659",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9839,
+   "name": "b_266F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9855,
+   "name": "b_267F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9871,
+   "name": "b_268F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9878,
+   "name": "b_2696",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9887,
+   "name": "j_269F",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9893,
+   "name": "j_26A5",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9901,
+   "name": "j_26AD",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 9920,
+   "name": "b_26C0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9923,
+   "name": "b_26C3",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9929,
+   "name": "s_26C9",
    "type": "Subroutine",
    "kind": "auto"
   },
   {
-   "address": 9134,
-   "name": "f_23AE",
+   "address": 9941,
+   "name": "b_26D5",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9948,
+   "name": "s_26DC",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 9966,
+   "name": "b_26EE",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 9978,
+   "name": "execute_secondary_sound_stream",
+   "type": "Jump",
+   "kind": "user"
+  },
+  {
+   "address": 9986,
+   "name": "b_2702",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10011,
+   "name": "b_271B",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10014,
+   "name": "b_271E",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10015,
+   "name": "b_271F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10016,
+   "name": "b_2720",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10052,
+   "name": "b_2744",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10055,
+   "name": "b_2747",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10085,
+   "name": "b_2765",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10093,
+   "name": "b_276D",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10096,
+   "name": "b_2770",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10107,
+   "name": "j_277B",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 10122,
+   "name": "b_278A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10160,
+   "name": "b_27B0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10198,
+   "name": "b_27D6",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10205,
+   "name": "b_27DD",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10212,
+   "name": "s_27E4",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 10220,
+   "name": "r_27EC",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 10221,
+   "name": "secondary_sound_handler_table",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 10232,
+   "name": "f_27F8",
    "type": "Field",
    "kind": "auto"
   },
   {
-   "address": 9150,
-   "name": "f_23BE",
-   "type": "Field",
+   "address": 10243,
+   "name": "secondary_frequency_scaled",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10250,
+   "name": "j_280A",
+   "type": "Jump",
    "kind": "auto"
+  },
+  {
+   "address": 10256,
+   "name": "j_2810",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 10276,
+   "name": "secondary_frequency_literal",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10286,
+   "name": "secondary_frequency_scaled_with_gate",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10293,
+   "name": "j_2835",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 10316,
+   "name": "secondary_frequency_literal_with_gate",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10326,
+   "name": "secondary_delta_shift",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10332,
+   "name": "secondary_modulation_words_a",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10367,
+   "name": "secondary_modulation_words_b",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10402,
+   "name": "secondary_sid_control",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10411,
+   "name": "secondary_sid_attack_decay",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10420,
+   "name": "secondary_sid_sustain_release",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10429,
+   "name": "secondary_sid_pulse_width",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 10447,
+   "name": "scale_sound_delta",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 10473,
+   "name": "b_28E9",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10480,
+   "name": "r_28F0",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 10481,
+   "name": "set_sound_wait",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 10493,
+   "name": "b_28FD",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10505,
+   "name": "end_or_return_sound_script",
+   "type": "Jump",
+   "kind": "user"
+  },
+  {
+   "address": 10536,
+   "name": "b_2928",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10565,
+   "name": "b_2945",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 10577,
+   "name": "call_address_from_sound_script",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 10599,
+   "name": "s_2967",
+   "type": "Subroutine",
+   "kind": "auto"
+  },
+  {
+   "address": 10602,
+   "name": "fetch_addressed_sound_value",
+   "type": "Subroutine",
+   "kind": "user"
   },
   {
    "address": 10625,
-   "name": "s_2981",
+   "name": "queue_sid_sound",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 10637,
+   "name": "s_298D",
    "type": "Subroutine",
    "kind": "auto"
   },
@@ -1745,15 +2517,27 @@
   },
   {
    "address": 10716,
-   "name": "f_29DC",
+   "name": "sid_voice_register_offsets",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 10721,
+   "name": "f_29E1",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 10737,
+   "name": "f_29F1",
    "type": "Field",
    "kind": "auto"
   },
   {
    "address": 10753,
-   "name": "f_2A01",
+   "name": "raster_handler_addresses",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 10754,
@@ -1811,15 +2595,15 @@
   },
   {
    "address": 11703,
-   "name": "f_2DB7",
+   "name": "highjump_transition_sound_ids",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 11719,
-   "name": "f_2DC7",
+   "name": "feet_digit_pairs",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 11720,
@@ -1829,9 +2613,9 @@
   },
   {
    "address": 11761,
-   "name": "f_2DF1",
+   "name": "eighth_foot_inch_pairs",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 11762,
@@ -1907,6 +2691,261 @@
   }
  ],
  "comments": [
+  {
+   "address": 3235,
+   "type": "line",
+   "text": "High Jump raster-band update: wait for line $3A, set VIC display controls, read joystick/keyboard ports, run event update and drawing calls, then repeat late-frame work until raster $DC or ten iterations."
+  },
+  {
+   "address": 3363,
+   "type": "line",
+   "text": "Read and combine active-low CIA1 ports into $2F/$30, then dispatch through the event input table at $2AB9. The following loop advances counters and calls event state/drawing routines."
+  },
+  {
+   "address": 4475,
+   "type": "line",
+   "text": "Compute skater display coordinates in $49/$4A and $4B from motion indices $51/$52 and position fields $46/$47, using paired lookup differences; the sign of $48 selects the horizontal reflection path."
+  },
+  {
+   "address": 4717,
+   "type": "line",
+   "text": "Treat A as an eight-byte index into $6800, invert each source byte, copy eight bytes to the destination pointer $14/$15, then advance that pointer by eight."
+  },
+  {
+   "address": 4768,
+   "type": "line",
+   "text": "Use signed position $54/$55 and facing bit in $48 to select a two-byte position from the table at $2ACB, or clamp to an endpoint; write the result to $46/$47 and report clamping in carry."
+  },
+  {
+   "address": 4970,
+   "type": "line",
+   "text": "Given indices A and Y, form the absolute index difference, use it to subtract paired lookup values at $0400/$0600 from values at $048F/$068F, and return the two resulting bytes in A and Y."
+  },
+  {
+   "address": 5005,
+   "type": "line",
+   "text": "Build a 64-byte output block through the $2E7B byte lookup table: zero the unused tail, transform source bytes into destination bytes, then advance the six-byte descriptor and output pointer."
+  },
+  {
+   "address": 5061,
+   "type": "line",
+   "text": "Like expand_graphics_with_table_a but map each source byte through the lookup table at $2F7B."
+  },
+  {
+   "address": 5117,
+   "type": "line",
+   "text": "Build a 64-byte output block by zeroing its unused tail and copying the remaining source bytes directly, then advance descriptor and output pointers."
+  },
+  {
+   "address": 5342,
+   "type": "line",
+   "text": "Toggle the output graphics buffer via $22, find a descriptor in the $7000 region from the pose index, then build four or five 64-byte graphics blocks using direct copy or lookup-table transforms according to the state sign bits."
+  },
+  {
+   "address": 5610,
+   "type": "line",
+   "text": "Set High Jump phase from A (observed cases $00,$02,$06,$08,$10), reset phase counters $31/$32, and initialize distinct movement, position and sound fields for each case. The game meaning of each phase still needs a live trace."
+  },
+  {
+   "address": 6068,
+   "type": "line",
+   "text": "Render the High Jump HEIGHT number from $2B: upper five bits index a two-glyph feet table at $2DC7, low three bits index rounded-inch glyphs at $2DF1, with punctuation glyphs inserted between them."
+  },
+  {
+   "address": 8731,
+   "type": "line",
+   "text": "Sound scheduler header: pending-event count, current priority and selected slot, followed by mutable script pointers and per-voice timers; initialized by $22B7 and serviced at $232C."
+  },
+  {
+   "address": 8781,
+   "type": "line",
+   "text": "Per-slot SID script timers, sound IDs, gate/control bytes and priorities, indexed by slot offsets 0, 2 and 4 in the updater at $232C."
+  },
+  {
+   "address": 8823,
+   "type": "line",
+   "text": "Sixteen-byte pending sound ID queue; $22F5 appends an ID while count at $221B is below $10, and $232C drains it into queue_sid_sound."
+  },
+  {
+   "address": 8839,
+   "type": "line",
+   "text": "First resident sound-script bytes. Sound init at $22B7 installs pointers to $2287, $2297 and $22A7; the bytecode format is not yet decoded."
+  },
+  {
+   "address": 9004,
+   "type": "line",
+   "text": "Drain pending sound IDs through queue_sid_sound, then iterate three SID voice slots (offsets 4,2,0): count down gate and script timers, fetch script commands and update voice control."
+  },
+  {
+   "address": 9097,
+   "type": "line",
+   "text": "Fetch the next byte through the current voice script pointer at $02/$03 indexed by X, then increment that pointer with carry."
+  },
+  {
+   "address": 9108,
+   "type": "line",
+   "text": "Use the low nibble of the command byte to select one of 16 split high/low handler addresses at $23AE/$23BE; push the address as an RTS target and pass the high nibble in A."
+  },
+  {
+   "address": 9134,
+   "type": "line",
+   "text": "High bytes of 16 primary SID bytecode handler addresses, paired with low bytes at $23BE; $2394 dispatches by low command nibble."
+  },
+  {
+   "address": 9150,
+   "type": "line",
+   "text": "Low bytes of 16 primary SID bytecode handler addresses, paired with high bytes at $23AE; handlers run at stored address plus one after RTS."
+  },
+  {
+   "address": 9166,
+   "type": "line",
+   "text": "Primary SID bytecode handler: use command argument to set frequency, pulse width, attack/decay, sustain/release, control or a voice timer, reading immediate script bytes or a referenced value."
+  },
+  {
+   "address": 9362,
+   "type": "line",
+   "text": "Fetch a sound ID from the active script and append it through $22F5, preserving the current voice-slot registers."
+  },
+  {
+   "address": 9377,
+   "type": "line",
+   "text": "Sound bytecode handler that reads a two-byte address from the script, then writes a value there or compares against a value; a failed comparison rewinds the script pointer and leaves the current interpreter dispatch."
+  },
+  {
+   "address": 9484,
+   "type": "line",
+   "text": "Sound bytecode handler that adds script-provided deltas to voice frequency, pulse width, sustain or timer fields and writes resulting SID registers when applicable."
+  },
+  {
+   "address": 9627,
+   "type": "line",
+   "text": "Sound bytecode control-flow handler: conditional script branches, loop counters, queued sound IDs and saved return pointers. Some cases read direct bytes and others use address-based operands."
+  },
+  {
+   "address": 9793,
+   "type": "line",
+   "text": "Compare current voice frequency, pulse width, envelope or timer against script operands, and store the resulting comparison class in the voice state at $226C."
+  },
+  {
+   "address": 9978,
+   "type": "line",
+   "text": "Interpret a secondary sound stream through $08/$09: compute frequency and envelope changes, update SID registers, load per-voice modulation data or dispatch through the secondary handler table at $27ED/$27F8."
+  },
+  {
+   "address": 10221,
+   "type": "line",
+   "text": "Eleven split low/high addresses selected by the secondary sound command at $2752; each pair points to a routine in $2803-$28BD."
+  },
+  {
+   "address": 10243,
+   "type": "line",
+   "text": "Secondary sound command: scale a two-byte delta, fetch a gate timer, then write the resulting two-byte frequency to the selected SID voice."
+  },
+  {
+   "address": 10276,
+   "type": "line",
+   "text": "Secondary sound command: take a literal low and next high frequency byte, fetch gate timer, then write frequency to the selected SID voice."
+  },
+  {
+   "address": 10286,
+   "type": "line",
+   "text": "Secondary sound command: scale a frequency delta, fetch gate and envelope timers, set the gate-timing flag, then write SID frequency."
+  },
+  {
+   "address": 10316,
+   "type": "line",
+   "text": "Secondary sound command: use two literal frequency bytes, fetch gate and envelope timers, set gate-timing flag, then write SID frequency."
+  },
+  {
+   "address": 10326,
+   "type": "line",
+   "text": "Store the per-voice shift amount for later scaled sound deltas, then continue interpreting the secondary stream."
+  },
+  {
+   "address": 10332,
+   "type": "line",
+   "text": "Read four secondary-stream bytes into the selected voice table at $2235, then continue the stream."
+  },
+  {
+   "address": 10367,
+   "type": "line",
+   "text": "Read four secondary-stream bytes into the selected voice table at $2241, then continue the stream."
+  },
+  {
+   "address": 10402,
+   "type": "line",
+   "text": "Write the command byte to the selected SID control register and mirror it in voice state."
+  },
+  {
+   "address": 10411,
+   "type": "line",
+   "text": "Write the command byte to the selected SID attack/decay register and mirror it in voice state."
+  },
+  {
+   "address": 10420,
+   "type": "line",
+   "text": "Write the command byte to the selected SID sustain/release register and mirror it in voice state."
+  },
+  {
+   "address": 10429,
+   "type": "line",
+   "text": "Write two secondary-stream bytes to the selected SID pulse-width registers and mirror them in voice state."
+  },
+  {
+   "address": 10447,
+   "type": "line",
+   "text": "Select a two-byte sound delta from tables $29E1/$29F1 and shift it right by the command high-nibble amount plus the per-voice offset at $2271."
+  },
+  {
+   "address": 10481,
+   "type": "line",
+   "text": "Fetch the next script byte as a voice timer; depending on the command sign bit, store it in the primary timer or the gate timer and mark gate timing active."
+  },
+  {
+   "address": 10505,
+   "type": "line",
+   "text": "If no nested script is active, clear SID gate, voice state and current priority; otherwise pop the saved script pointer and resume the caller."
+  },
+  {
+   "address": 10577,
+   "type": "line",
+   "text": "Fetch a two-byte address from the sound script and call it indirectly while preserving voice and SID register indices."
+  },
+  {
+   "address": 10602,
+   "type": "line",
+   "text": "Fetch a two-byte address from the sound script and return the value at that address, with the following byte in $11; restore the SID register offset in Y."
+  },
+  {
+   "address": 10625,
+   "type": "line",
+   "text": "Accept queued sound ID in A if its priority table entry meets the current threshold; choose one of three SID voice slots, load its script pointer from $307B/$3095, clear slot counters and seven registers of that SID voice."
+  },
+  {
+   "address": 10716,
+   "type": "line",
+   "text": "Six slot offsets ($0E,$0E,$07,$07,$00,$00) select the base of a SID voice register group in queue_sid_sound and the per-frame sound updater at $2345."
+  },
+  {
+   "address": 10753,
+   "type": "line",
+   "text": "Two little-endian interrupt callback addresses, $0B21 and $0CA3; the IRQ dispatcher at $0AF0 selects one through $1E and patches its call operand."
+  },
+  {
+   "address": 11703,
+   "type": "line",
+   "text": "First two entries are sound IDs chosen by the High Jump phase-$06 path at $16A2, using the in-range flag as index; the other entries in this run are not yet attributed."
+  },
+  {
+   "address": 11719,
+   "type": "line",
+   "text": "Twenty-one two-glyph entries for feet 0 through 20, rendered by draw_height_digits from height byte $2B divided by eight."
+  },
+  {
+   "address": 11761,
+   "type": "line",
+   "text": "Eight two-glyph rounded-inch entries for remainders 0 through 7: 00,02,03,05,06,08,09,11. Live tests gave $2B=$04 -> 0 feet 6 inches and $2B=$08 -> 1 foot 0 inches."
+  },
   {
    "address": 27145,
    "type": "line",

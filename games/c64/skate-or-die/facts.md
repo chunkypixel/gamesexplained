@@ -10,6 +10,13 @@ from reading the code in the snapshot named in `orientation.md`.
 - *Live:* The supplied side-1 G64 boots on PAL VICE v3.13.2. Its directory
   has a two-block `EA` PRG. The title and Rodney's shop load from it, and
   High Jump reaches play without a side swap (`orientation.md`).
+- *Live:* Downhill Race and Jam reached their start screens with side 2
+  mounted (`reference/race-play.png`, `reference/jam-play.png`). The High Jump
+  route with side 2 mounted displayed `INSERT SIDE 1 AND PRESS BUTTON`;
+  attaching side 1 and pressing fire resumed into High Jump
+  (`reference/side1-prompt.png`). Pool Joust's opponent selector appeared
+  with side 1 mounted (`reference/joust-select.png`). These observations do
+  not yet map every asset to a disk side.
 
 ## Memory layout
 
@@ -27,6 +34,17 @@ address from `$2A01/$2A02` indexed by `$1E`, patches the call at
 `$0B0C/$0B0D`, and selects the next raster line from `$2A05` (`$0AF0`-
 `$0B20`).
 
+The four captured event snapshots are separate memory images. The current
+`listing.json` is built from High Jump only; it must not be presented as a
+listing of Race, Jam, or Joust code. Overlay differences and any common
+resident code remain to be mapped.
+
+Pairwise RAM comparison after the 209-byte VSF header found 58,451 differing
+bytes between `work/highjump-play.vsf` and `work/race-play.vsf`, 57,239
+between High Jump and Jam, and 50,864 between High Jump and Joust selection.
+These counts include mutable state and screen memory; they establish large
+image differences, not the exact size of each loaded overlay.
+
 ## Timing
 
 ## Controls
@@ -34,6 +52,16 @@ address from `$2A01/$2A02` indexed by `$1E`, patches the call at
 The traced routine at `$0D23` reads CIA1 `$DC01` and ANDs it with
 `$DC00`; its later interpretation is still to be traced. *Live:* joystick
 port 1 fire advanced the title and shop in this image.
+
+*Live, town overlay:* From `work/town-square.vsf`, sprite 0 was at
+`(173,117)`. After 80 frames forward, 20 frames turning left and 60 frames
+forward, it was at `(260,182)`. In the same two RAM images, `$2F` changed
+`$4B->$76` and `$30` changed `$54->$96`. Writing `$90` to `$2F` in a
+restored town state moved sprite X from 260 to 314 after two frames; writing
+`$60` to `$30` moved sprite Y from 183 to 129. Thus these bytes are town
+position inputs to the sprite placement routine, though their exact scale
+and offset still need tracing. **They are not stable cross-overlay names:**
+the High Jump code at `$0D23` writes combined CIA1 input into `$2F/$30`.
 
 ## Graphics
 
@@ -44,6 +72,20 @@ registers during a frame (`$0CA3`-`$0CB4`), so this one sample is not a
 claim that every band has the same mode.
 
 ## Mechanics
+
+### High Jump height display
+
+`$17B4` draws the height from mutable byte `$2B`. It shifts right three
+times to index paired glyphs at `$2DC7` for the feet, and uses the low
+three bits to index paired glyphs at `$2DF1` for the inches. The eight
+inch entries are `00, 02, 03, 05, 06, 08, 09, 11`, rounding eighths of a
+foot to whole inches. *Live test:* In a restored High Jump play snapshot,
+writing `$04` to `$2B` and advancing five frames displayed `HEIGHT: 0' 6"`;
+writing `$08` displayed `HEIGHT: 1' 0"`. The two captures are
+`reference/highjump-height-test-4.png` and
+`reference/highjump-height-test-8.png`. These are controlled RAM tests, not
+scores achieved by playing. The rules that increase or record `$2B` remain
+to be traced.
 
 ## Data tables
 
@@ -92,6 +134,28 @@ This table covers only the 2,018 bytes first marked as code. An untouched
 register here says nothing about the rest of the image or other events.
 
 ## Sound
+
+The High Jump sound updater at `$232C` drains queued sound IDs from `$2277`.
+Its call at `$2337` enters `$2981`, which compares a priority from `$30AF`,
+chooses one of three voice slots, loads a script pointer from `$307B/$3095`,
+clears counters, and zeros seven SID registers at the selected voice base.
+`$29DC` begins the six slot offsets `$0E,$0E,$07,$07,$00,$00` used by this
+routine and the update loop at `$2345`. The game meaning of each sound ID
+remains open.
+
+The sound-script format is partially traced. `$2389` reads and advances the
+current voice's byte pointer. `$2394` uses the low nibble of each command
+byte to choose one of 16 handler addresses from split high/low tables at
+`$23AE/$23BE`, pushes that address and uses `RTS` to dispatch; the high
+nibble remains in A as a subcommand or argument. The decoded handlers
+write SID frequency (`$D400/$D401`), pulse width (`$D402/$D403`), control
+(`$D404`), attack/decay (`$D405`) and sustain/release (`$D406`), and can
+adjust previous values, branch within scripts, queue another sound, or
+return from a nested script. A second stream is read through `$08/$09` at
+`$26FA`; its 11-entry split address table at `$27ED/$27F8` dispatches
+further SID writes and modulation setup. This is code evidence for the
+driver, not yet a claim about how the soundtrack sounds or what any sound
+ID means in the game.
 
 ## Live tests
 

@@ -11,8 +11,10 @@ side 2 is `work/side2.g64` (SHA-256
 `7a402586d501b7904fa1c1106ad1432700b467fade4bfbe2c2ca9e5dae51f53e`).
 Both are PAL G64 images. Side 1's directory contains one two-block PRG named
 `EA`. Its label reads `skate or die!` and `ea 2a`. The boot showed the EA logo
-and title, with no crack intro or trainer menu observed. Side 2 has not yet
-been attached.
+and title, with no crack intro or trainer menu observed. Side 2 was used to
+load the Downhill Race and Jam overlays. With side 2 mounted on the High Jump
+route, the loader displayed `INSERT SIDE 1 AND PRESS BUTTON`; attaching side 1
+and pressing fire resumed High Jump (`reference/side1-prompt.png`).
 
 ## From power-on to play
 
@@ -23,7 +25,13 @@ been attached.
    Port 2 fire did not advance this title in the tested run.
 3. Move the shop pointer over `GO PRACTICE` (down, then left from its initial
    position) and press fire. The town square appears. From the initial
-   skater position, steer right, then forward into the `HIGHJUMP` path.
+   skater position, push forward to skate down the screen; left and right
+   rotate the skater rather than moving sideways. From `work/town-square.vsf`,
+   80 frames forward, 30 frames turning left, then about 110 frames forward
+   reaches High Jump. Turning right instead reaches Pool Joust. A 15-frame
+   turn from the initial position followed by about 275 frames forward
+   reaches Downhill Race (right turn) or Jam (left turn). These counts were
+   measured with VICE frame advance, not joystick holds timed by the host.
 4. Wait for the ramp with `PRACTICE`, `PASS: 0` and `HEIGHT: 0' 0"` at
    the top. Save `work/highjump-play.vsf` at this state. The earlier shop
    and town checkpoints are `work/skate-shop.vsf` and
@@ -41,13 +49,17 @@ table at `$0314` still contained its defaults. Shop and High Jump RAM differ
 in 43,751 byte positions, so the event loads or replaces substantial memory;
 one event snapshot cannot be assumed to hold every event's code and data.
 
-The final loader hand-over snapshot is still to be captured. Compare it
-with `highjump-play.vsf` before selecting the listing image.
+Other captured states are `work/race-play.vsf`, `work/jam-play.vsf`, and
+`work/joust-select.vsf`; they are not interchangeable overlays. The final
+loader hand-over snapshot is still to be captured. Compare it with the play
+snapshots before selecting the listing image.
 
 ## The loader, in a paragraph
 
 The two-block `EA` program starts a loader that first draws the blue EA
 logo, then the Skate or Die! title and Rodney's shop. Selecting a town
 path displays `SKATING TO HIGH JUMP`, blanks the screen while loading,
-then enters the event. High Jump loaded from side 1 without a disk swap.
-The loader's copy and jump addresses have not yet been established.
+then enters the event. High Jump and Pool Joust selection loaded with side 1;
+Race and Jam loaded with side 2. A wrong-side attempt produced an explicit
+side-1 prompt rather than silently loading another event. The loader's copy
+and jump addresses have not yet been established.

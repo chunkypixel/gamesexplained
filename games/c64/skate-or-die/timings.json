@@ -29,6 +29,14 @@
    "step": "40-sweep",
    "model": "unknown",
    "start": "2026-10-03T23:31:54Z",
+   "end": "2026-10-04T03:12:33Z",
+   "minutes": 220.7,
+   "note": ""
+  },
+  {
+   "step": "50-coverage",
+   "model": "unknown",
+   "start": "2026-10-04T03:12:33Z",
    "end": null,
    "minutes": null,
    "note": ""

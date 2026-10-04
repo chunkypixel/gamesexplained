@@ -26,7 +26,9 @@
     "charset": ""
   },
   "coverage": {
-    "exclude": [],
+    "exclude": [
+      ["$0002", "$00FF", "High Jump zero page holds mutable input, movement, sound and graphics state, not authored image bytes"]
+    ],
     "extra": [],
     "include": []
   },
