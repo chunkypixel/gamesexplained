@@ -4,7 +4,7 @@ Compared on 4 October 2026 with the contributor's earlier [cartridge disassembly
 
 ## Source identity and provenance
 
-The supplied CRT SHA-256 is `629471f8c1587ffd37c1b52b742e2755cc6e3773e9acd9e2d0c7aab4929cf8a0`. Its single 16,384-byte payload at $8000–$BFFF has SHA-256 `a2ad27c5fc6b2ab29bc0ff4621a6d82ae90fba673b35a7b122a203cfbf3b1724`, matching the earlier project's extracted cartridge. Reassembling that project's `disassembly/loderunner.asm` with the existing 64tass 1.59.3120 reproduced all 16,384 payload bytes. This checks the cartridge assembly's byte representation, not every semantic annotation, and does not establish reassembly of the disk engine.
+The supplied CRT is labelled **Official Cartridge Image**. Its SHA-256 is `629471f8c1587ffd37c1b52b742e2755cc6e3773e9acd9e2d0c7aab4929cf8a0`. Its single 16,384-byte payload at $8000–$BFFF has SHA-256 `a2ad27c5fc6b2ab29bc0ff4621a6d82ae90fba673b35a7b122a203cfbf3b1724`, matching the earlier project's extracted cartridge. Reassembling that project's `disassembly/loderunner.asm` with the existing 64tass 1.59.3120 reproduced all 16,384 payload bytes. This checks the cartridge assembly's byte representation, not every semantic annotation, and does not establish reassembly of the disk engine.
 
 The local source checkout's HEAD was `0f15fdedd7d545582f627dcf26a29f13175a3c8f`. File hashes identify the exact inputs read, including working-tree content:
 

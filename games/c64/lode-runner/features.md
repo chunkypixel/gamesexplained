@@ -6,7 +6,7 @@ Read on 4 October 2026, before game-code inspection:
 
 - [C64-Wiki](https://www.c64-wiki.com/wiki/Lode_Runner): disk and cartridge documentation leads.
 - [C64 disk manual, Project 64 transcription](https://www.lemon64.com/doc/lode-runner/355): search-index excerpts were accessible; direct requests returned HTTP 403. Excerpts supplied credits, the 150-room objective, editor commands, and custom-disk preparation.
-- Supplied Black, Gray, and Yellow Label G64 disks and OneLoad-labelled CRT. External descriptions do not establish byte identity between these builds.
+- Supplied Black, Gray, and Yellow Label G64 disks and a CRT labelled **Official Cartridge Image**. External descriptions do not establish byte identity between these builds.
 
 Statuses below apply to the Black Label engine unless stated otherwise. “Traced” means the implementing code and data were followed; “confirmed” adds a live observation. Forced tests are identified in `facts.md`.
 

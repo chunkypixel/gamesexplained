@@ -97,3 +97,7 @@ Reran the original edition comparison: 450 disk room-reader/decoder cases, all 1
 The HTTP preview had stopped between turns; restarted it before browser validation. Browser checks verified the tab order on all six pages, both native images, every one of the 34 room links, query boundaries, atlas/music anchors, all existing mechanic/music controls, and 390px layout without page errors. Copy was reviewed separately for paragraph purpose, edition scope, and native-capture captions. The full site builds 25 games and 133 pages.
 
 Visual review exposed a stray vertical scrollbar in the shared custom-tab row. Setting overflow-y to hidden in site.css preserves horizontal scrolling for narrow screens and removes the unwanted vertical control. Checked the tab row again at desktop and mobile sizes; the shared site still builds all 25 games.
+
+## Cartridge label clarification
+
+The contributor clarified that the supplied cartridge is labelled Official Cartridge Image. Updated the Editions introduction/capture caption, game metadata, and source/provenance notes to use that label. The earlier OneLoad wording came from how the copy was supplied; it was not the cartridge edition's label. The file hashes and all byte-based comparison findings retain their meaning.
