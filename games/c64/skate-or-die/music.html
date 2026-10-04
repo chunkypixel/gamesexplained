@@ -1,0 +1,72 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skate or Die!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="reference/sod-page.css">
+<!-- tabs -->
+<header class="hero">
+  <p class="eyebrow">Commodore 64 · 1987 · Electronic Arts</p>
+  <h1>Skate or Die!</h1>
+  <p class="sub">High Jump's music never plays the same way twice in a row: nine short phrases, chained at random by a sound driver that runs little programs.</p>
+</header>
+<main class="wrap">
+<section id="music">
+  <p class="fig">Music</p>
+  <h2 class="t">Nine phrases, chosen as it goes</h2>
+  <p class="lede">The High Jump music is not one long tune. It is nine phrases for two voices, and each time one ends, the game picks the next at random from a short list (<code>$3549</code>). Press the music to hear it, played by the game's own code.</p>
+  <div class="plate">
+    <div id="sid"></div>
+    <p class="cap"><b>The game's own driver, run in the page.</b> A small 6502 interpreter runs High Jump's sound code and scripts, <code>$2000</code>-<code>$3CFF</code> as the game loads them: <code>init_sound_driver</code> (<code>$22B7</code>), then <code>queue_sound_id</code> (<code>$22F5</code>) with the sound's number, then <code>update_sid_voices</code> (<code>$232C</code>) once a frame, as the main loop does. Checked against the game itself running in the kit's 6502 simulator from the High Jump snapshot: every one of 16,917 SID writes over five minutes matched, in order. The page starts the music from the random state the event's file brings from the disk (<code>$35AB</code>-<code>$35AD</code> = <code>$8F</code> <code>$D0</code> <code>$FF</code>), so it plays the phrases in the order the game plays them the first time after loading.</p>
+  </div>
+  <p>Phrase 0 always comes first (<code>$34E3</code>). After it, a table at <code>$3C6C</code> lists where each phrase may lead: phrase 0 to any of 1 to 4; phrases 1 to 4 to any of 1 to 8 but themselves; phrases 5 to 8 back to 1 to 4. The chooser also refuses the phrase that was just played (<code>$356F</code>). The two voices run their own copies of the phrase, and whichever voice finishes first makes the choice for both (<code>$35A8</code>); each voice's script then rewrites the address of the notes it will play next inside itself (<code>$3517</code>, <code>$3530</code>).</p>
+  <p>The random numbers come from a byte at <code>$35AB</code> that High Jump never sets (<code>$357E</code>): its value comes from the disk with the event's code, so the music's first run after each load takes the same path, and later runs carry on from where the byte has got to.</p>
+</section>
+<section id="driver">
+  <p class="fig">The driver</p>
+  <h2 class="t">Sounds as little programs</h2>
+  <p>Every sound in the event, the music included, is a script for the sound driver (<code>$22B7</code>-<code>$29DB</code>). There are 26 of them, found through a table of addresses at <code>$307B</code> (<code>$3095</code> for the high bytes) with a priority for each at <code>$30AF</code>. A script command's low four bits pick the operation and its high bits the variant: set or add to a SID register, compare and branch, count a loop, call a subroutine in the script, wait some frames, poke a byte into memory or wait until a byte holds a value, ask for another sound, or call machine code (<code>$2394</code>). Sounds use the memory commands to stop each other: the ticking noise of sounds 7 and 8 runs until a byte at <code>$30CA</code> changes, and sound 0 does nothing but change it.</p>
+  <p>The music's notes are in a denser form, a note stream: one byte per note, its low four bits the note, two bits the octave and two bits one of four lengths set by the script (<code>$2752</code>). The notes come from a table of the top octave, A to G sharp (<code>$29E1</code>), halved for each octave down. That table is tuned for an American C64: on the European machine, whose clock is slower, the music plays about two thirds of a semitone flat (worked out from the clock rates, not measured).</p>
+  <p>The driver plays three sounds at once, one on each SID voice. A sound asked for takes the voice whose current sound has the lowest priority, if its own priority is at least as high (<code>$2981</code>). It runs once a frame, counted by the interrupt at the bottom of the screen (<code>$0B31</code>), so a busy frame never slows the music down: the main loop catches up.</p>
+</section>
+<section id="effects">
+  <p class="fig">Sound effects</p>
+  <h2 class="t">Seven sounds for the ramp</h2>
+  <p>Besides the music, High Jump's code asks for seven sounds. Seventeen of the 26 numbers are never asked for in this event, and three of those (3, 24 and 25) point at a script that ends at once. Each button below starts one through <code>queue_sound_id</code>, as the game does.</p>
+  <table class="t">
+    <tr><th>Sound</th><th>When</th><th>Where</th></tr>
+    <tr><td>4</td><td>three short blips when the skater crosses to the right half</td><td><code>$0CE0</code></td></tr>
+    <tr><td>15</td><td>a falling hiss as the skater drops into the bottom of the ramp</td><td><code>$172E</code></td></tr>
+    <tr><td>16</td><td>a rising hiss as the skater climbs out after the middle</td><td><code>$1739</code></td></tr>
+    <tr><td>20</td><td>a pulse sweep each time the skater changes direction</td><td><code>$1ADC</code></td></tr>
+    <tr><td>22</td><td>a fall at low speed</td><td><code>$16A0</code></td></tr>
+    <tr><td>9</td><td>a fall at high speed, a speed of 840 or more in the game's units</td><td><code>$16A0</code></td></tr>
+    <tr><td>6</td><td>bursts of noise at the end of the run</td><td><code>$10D5</code></td></tr>
+  </table>
+  <p>The title music belongs to another load. Rob Hubbard has said that Skate or Die! was the first thing he did for Electronic Arts, "with the sampled guitars mixed in with the SID chipsounds".<sup class="fn"><a href="about.html#src-3" title="Rob Hubbard, C64.com">3</a></sup><sup class="fn"><a href="about.html#src-4" title="Rob Hubbard and Chris Abbott, Arcade Attack">4</a></sup> High Jump's music uses the SID alone: High Jump's own code never touches the timers that sample playback would need (register census, <a href="source.html">Source code</a>).</p>
+</section>
+</main>
+<script src="../../lib/c64.js"></script>
+<script src="../../lib/sid.js"></script>
+<script src="reference/sod-page.js"></script>
+<script src="reference/sod-music.js"></script>
+<script>
+(async function () {
+  const root = document.getElementById('sid');
+  if (!window.C64Sid) { root.textContent = 'This player needs the site’s shared script, lib/sid.js.'; return; }
+  let G; try { G = await SOD.load(); } catch (e) { root.textContent = e.message; return; }
+  C64Sid.mount(root, {
+    driver: SODMUSIC.createDriver,
+    // The music's random state as file $0E brings it from the disk ($35AB-$35AD = $8F $D0 $FF): the
+    // order the music takes the first time it plays after the event loads. The snapshot had moved it on.
+    data: (() => { const b = Array.from(G.ram.slice(0, 0x3D00)); b[0x35AB] = 0x8F; b[0x35AC] = 0xD0; b[0x35AD] = 0xFF;
+                   return { base: 0, bytes: b, ids: [1, 4, 15, 16, 20, 22, 9, 6] }; })(),
+    tunes: ['The music', 'Sound 4: blips', 'Sound 15: dropping in', 'Sound 16: climbing out', 'Sound 20: turning', 'Sound 22: slow fall', 'Sound 9: fast fall', 'Sound 6: end of the run'],
+    filter: '6581',
+    rows: [
+      { k: 'Sound', f: (v) => v.id || '-' },
+      { k: 'Phrase', f: (v) => v.id === 1 || v.id === 2 ? v.phrase : '-' },
+    ],
+  });
+})();
+</script>

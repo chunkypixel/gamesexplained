@@ -119,9 +119,11 @@ KERNAL copy) and `$F654`-`$F72F`.
 - **The half-pipe is a line.** The skater's position s (`$54`/`$55`, with
   a fraction at `$53`) runs from 0 to `$222` and maps to screen x, y
   through the profile at `$2ACB`; the right half is mirrored as `$222` - s
-  (`lookup_skater_position` `$12A0`). The profile's first entries are a
-  vertical column at x 42, y 64 to 172: the air above the left wall. y =
-  `$96` is the coping. A jump is motion along the same path.
+  (`lookup_skater_position` `$12A0`). The profile's first 109 entries are a
+  vertical column at x 42, y 64 to 172: the vertical part of the wall below
+  y = `$96` (150), the coping, and the air above it. The flat bottom is at y
+  240 and the centre at x 182. A jump is motion along the same path, and a
+  position below 0 carries on up the column (`$12E6`).
 - **Gravity from the profile.** The acceleration is the profile's y
   difference sixteen entries ahead (`$147E`-`$1489`), `$10` off the
   profile (`$148C`). Every frame the speed loses 1/256 of itself
@@ -282,9 +284,10 @@ from an earlier load; nothing in High Jump reads it.
 - **What High Jump asks for:** 1 the music (`$19CE`, `$1A45`, only while
   `$FE10` is 0), which requests 2, its second voice; 4 on a change of side
   (`$0CE0`); 6 at the end of a run (`$10D5`); 9 or 22 at a fall, 9 when the
-  speed is `$0348` or more either way (`$16A0`, table `$2DB7`); 16 (`$173B`);
-  20 when the speed changes direction (`$1ADC`). Simulated runs also
-  requested 15. Eighteen of the 26 scripts are not requested by any code
+  speed is `$0348` or more either way (`$16A0`, table `$2DB7`); 15, a falling
+  hiss, as the skater drops into the lower ramp, and 16, a rising one, as it
+  climbs out after the centre (`ramp_bottom_sounds` `$1722`); 20 when the
+  speed changes direction (`$1ADC`). Seventeen of the 26 scripts are not requested by any code
   in this load.
 
 ### The music is assembled at random
@@ -297,8 +300,11 @@ from an earlier load; nothing in High Jump reads it.
   `$3549`, toggle `$35A8`), never the phrase just played (`$35AE`,
   `$356F`). Each voice's script then rewrites its own stream operand
   (`music_next_phrase_a`/`_b`, `$3517`/`$3530`).
-- The music's random state `$35AB` is never set by High Jump, so the order
-  depends on what was left there before.
+- The music's random state `$35AB` is never set by High Jump's code; its
+  value comes from the disk with file `$0E`, and the random routine shifts
+  it on every use (`$357E`-`$3597`). The first run of the music after a load
+  always takes the same path; later runs (after the Commodore key, or
+  PRACTICE AGAIN without a reload) carry on from where it has got to.
 
 ## Register census
 
@@ -373,7 +379,7 @@ wrong purpose, 6.7 % (95 % Wilson interval 2.6 % to 15.9 %). Leaving out
 the 23 shape and pose comments that a script wrote, 4 of 37 (11 %). The
 four were a branch read backwards (`$16E3`), two cases folded into one
 (`$FF3F`), two exits folded into one (`$F4B7`) and a tick count off by one
-(`$3291`); all four are corrected.
+(`$3291`).
 
 ## Live tests
 

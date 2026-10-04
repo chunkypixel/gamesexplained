@@ -13068,12 +13068,12 @@
   {
    "address": 12987,
    "type": "line",
-   "text": "Sound 15: noise from $0600 falling by $001A a tick for 12 ticks, AD $69 SR $08, release after 5. No High Jump call found."
+   "text": "Sound 15, queued by ramp_bottom_sounds ($172E) when the skater drops into the lower ramp ($23 >= $E0) after entering phase 2: noise from $0600 falling by $001A a tick for 12 ticks, AD $69 SR $08, release after 5."
   },
   {
    "address": 13008,
    "type": "line",
-   "text": "Sound 16, queued at $173B in ramp_bottom_sounds: noise from $0400 rising by $001A a tick for 12 ticks, AD $75 SR $05, release after 7."
+   "text": "Sound 16, queued by ramp_bottom_sounds ($1739) when the skater rises above $23 = $F0 after crossing the centre: noise from $0400 rising by $001A a tick for 12 ticks, AD $75 SR $05, release after 7."
   },
   {
    "address": 13029,
@@ -13268,7 +13268,7 @@
   {
    "address": 13739,
    "type": "line",
-   "text": "Random state byte of music_random ($357E); never initialised by High Jump, so its value carries over (here $F1); sound 1 copies it into $35AC."
+   "text": "Random state byte of music_random ($357E), shifted right on every use ($358D). High Jump never sets it: file $0E brings $8F from the disk (side1.g64, read with the loader table), so the first music after a load always takes the same phrases; later runs carry on from its current value ($F1 in the play snapshot). Sound 1 copies it into $35AC."
   },
   {
    "address": 13740,

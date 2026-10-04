@@ -8,11 +8,28 @@
   "developer": "Electronic Arts",
   "title_image": "reference/title-screen.png",
   "build": "PAL, two-sided G64 pair supplied by the contributor (side 1 SHA-256 45e07b32..., side 2 7a402586...); EA loader, no crack or trainer",
-  "tier": "none",
+  "tier": "silver",
   "coverage_percent": 100,
   "copy": "agent-draft",
   "steward": "",
-  "credits": [],
+  "credits": [
+    {
+      "name": "Michael Kosaka",
+      "role": "named on the title screen"
+    },
+    {
+      "name": "Stephen Landrum",
+      "role": "lead programmer, C64 (his 1993 interview); named on the title screen"
+    },
+    {
+      "name": "David Bunch",
+      "role": "named on the title screen"
+    },
+    {
+      "name": "Rob Hubbard",
+      "role": "music, with sampled guitars (his interviews)"
+    }
+  ],
   "tools": {
     "host": "Linux x86_64 (cloud container)",
     "emulator": "release v3.13.1, v3.13.1-linux-x86_64-gui.zip",
@@ -285,7 +302,8 @@
   ],
   "links": {
     "wiki": "https://www.c64-wiki.com/wiki/Skate_or_Die!",
-    "manual": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual"
+    "manual": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual",
+    "Stephen Landrum interview": "https://www.ataricompendium.com/archives/interviews/stephen_landrum/interview_stephen_landrum.html"
   },
   "tabs": [
     [

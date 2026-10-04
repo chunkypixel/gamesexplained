@@ -88,3 +88,5 @@ pass and is cleared when the next pass begins, and a fall clears it too.
 Live runs this session showed 47, 75 and 95 eighths on three passes, each
 cleared at the next takeoff, and fire at the top of a pass keeping its
 figure.
+
+The comment audit found four comments with a wrong detail (`$16E3`, `$3291`, `$F4B7`, `$FF3F`); the auditing agent rewrote each in the disassembler. Two more came from checks while writing the pages: sound 15 had been described as never queued, but `ramp_bottom_sounds` (`$172E`) queues it, and the music's seed, described as left over from earlier loads, turned out to come from the disk with the event's file and to move on with every use (`$358D`).
