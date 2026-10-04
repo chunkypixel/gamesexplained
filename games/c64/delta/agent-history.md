@@ -106,3 +106,10 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   the top edge on the same frames in both runs, but VICE frees them in
   the other order, a frame apart, so later enemies take other slots. Left
   off the page; recorded in `TODO.md`.
+- Stages 15-20 from `delta_stage15`: 16, 17 and 18 matched. Stage 15
+  differs only where the stand-in shots, timed in samples, left a
+  different enemy alive between two runs of the same group. Stage 19's
+  boss group repeats stage 14's symptom at the top edge, and stage 20 has
+  an enemy entering on the right a frame apart; the VICE run's state had
+  also drifted from the machine's since stage 14. 16-18 went on the page;
+  14, 15, 19 and 20 stay off.
