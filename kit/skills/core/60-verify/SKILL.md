@@ -76,6 +76,12 @@ data: a tile code a player can stand on, an object a player can carry.
 One that is reachable is a secret for the article; one that is not is a
 corner case for `facts.md`.
 
+For an indexed table, enumerate the indexes its callers can supply and
+compare them with the table's actual length. Include sums, transpositions,
+and ordinary progression limits. A lookup without a bounds check can read
+adjacent code or another table during normal play; test those bytes too,
+rather than replacing them with a clamped index in a widget.
+
 Two more shapes of the same thing. A lookup keyed on fewer coordinates
 than the place it stands for: a lift table matched on the map square and
 the spot within it, but not the height, answers at ground level for a lift

@@ -341,6 +341,13 @@ limits in `kit/INSTALL.md`.
 nothing and does not use the contributor's personal browser session. See
 `kit/INSTALL.md`, "Browser checks", for the tested host and containment.
 
+If an existing Chromium executable is available instead, select it with
+`KIT_BROWSER_CHROMIUM` through the same launcher and use its CDP endpoint.
+`KIT_BROWSER_PORT` chooses a free port when another session owns 9222.
+The install notes describe the isolated profile and tested client; record
+the executable's origin and client version, and ask before installing
+anything missing.
+
 Check, at least: every canvas has drawn something; the console has no
 errors; every control does something when clicked; and the rebuilt screen
 matches a reference screenshot from `reference/`. The reconstruction is

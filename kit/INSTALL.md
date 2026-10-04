@@ -127,6 +127,23 @@ paths. Use a native Firefox executable and check its footprint before
 claiming containment; `verify-footprint` does not scan Firefox state.
 Deleting `tools/firefox/` removes its local state.
 
+An existing Chromium executable can be selected explicitly with
+`KIT_BROWSER_CHROMIUM=/absolute/path/to/chrome-headless-shell python3
+kit/scripts/tools.py browser`. Nothing is installed or downloaded. The
+launcher supplies an independent profile, XDG state, and temporary
+directory under `tools/chromium/`, disables crash reporting, and exposes
+CDP on port 9222. `KIT_BROWSER_PORT` selects another free port; retain that
+setting for `status` and `stop browser`. Full Chromium can fail when a deep
+clone path exceeds its Unix profile-singleton socket limit; an existing
+`chrome-headless-shell` avoids that socket. Deleting `tools/chromium/`
+removes the local state. Chromium runs with `--no-sandbox` in this launcher;
+use it for the local page checks, with an executable whose origin you know.
+On 4 October 2026, Ubuntu x86_64 page checks used Chromium
+153.0.8010.12 from an existing Playwright cache (headless-shell build 1243),
+controlled by an existing Playwright Core 1.59.1 client. No browser package
+was downloaded in that run. This establishes the tested configuration;
+`verify-footprint` still does not scan browser state.
+
 The launcher uses `pkill` to stop the process whose command names this
 clone's exact profile. The recorded host test is Linux; verify containment
 before using this launcher on another host OS.

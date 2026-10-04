@@ -30,6 +30,27 @@ class BrowserTests(unittest.TestCase):
                 self.assertIn('--no-remote', command)
                 self.assertEqual(kw['env']['MOZ_CRASHREPORTER_DISABLE'], '1')
 
+    def test_explicit_chromium_uses_contained_profile(self):
+        with tempfile.TemporaryDirectory() as folder:
+            exe = Path(folder) / 'chrome'
+            exe.touch()
+            state = Path(folder) / 'state'
+            with patch.dict(browser.os.environ, {'KIT_BROWSER_CHROMIUM': str(exe)}), patch.object(browser, 'CHROMIUM_STATE', state), patch.object(browser, 'LOG', Path(folder)/'browser.log'), patch.object(browser, 'up', side_effect=[False, True]), patch.object(browser.subprocess, 'Popen') as start:
+                browser.start()
+                command = start.call_args.args[0]
+                self.assertIn('--user-data-dir=' + str(state/'profile'), command)
+                self.assertIn('--no-first-run', command)
+                self.assertEqual(start.call_args.kwargs['cwd'], state)
+                for name in ['XDG_CONFIG_HOME', 'XDG_STATE_HOME', 'XDG_CACHE_HOME', 'XDG_DATA_HOME', 'TMPDIR']:
+                    self.assertTrue(Path(start.call_args.kwargs['env'][name]).is_relative_to(state))
+
+    def test_chromium_stop_does_not_match_another_profile(self):
+        with patch.object(browser, 'CHROMIUM_STATE', Path('/tmp/kit/tools/chromium')):
+            owned = '/usr/bin/chrome --headless --user-data-dir=/tmp/kit/tools/chromium/profile --remote-debugging-port=9222 --no-first-run'
+            self.assertRegex(owned, browser.stop_pattern())
+            for foreign in (owned.replace('/tmp/kit/', '/tmp/other/'), owned.replace('/profile ', '/profile-other '), '/bin/sh -c ' + owned):
+                self.assertIsNone(re.search(browser.stop_pattern(), foreign))
+
     def test_occupied_port_does_not_start_another_browser(self):
         with patch.object(browser.shutil, 'which', return_value='/usr/bin/firefox'), patch.object(browser, 'up', return_value=True), patch.object(browser.subprocess, 'Popen') as start:
             with self.assertRaises(SystemExit): browser.start()
