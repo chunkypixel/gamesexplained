@@ -208,3 +208,44 @@ An independent reviewer who authored none of the four changed/new comments check
 The reviewer also audited every decoded caller/writer used by the conditional hole bound. The continuing main loop calls runner update at $611C and hole service at $6142 exactly once. Allocation has only the two dig-completion tail callers $779F/$7862, seeds one180 timer at $7B57, and service decrements active timers at $850F. Normal room initialization clears31 timer cells at $6FC5. Other potential indexed aliases are excluded by traced legal guard/exit/hole index bounds; normal indirect stores target grids or bitmaps. These legal-memory and ordinary-reset/control-flow assumptions are explicit in `facts.md`. At least13 continuing passes separate allocations, giving an upper bound of14 active timed holes, not a proof of attaining 14 on a board.
 
 Independent trapdoor/render and edition-timing spot-checks also pass: $733E draws tile5 as1 without changing the maps; side/up tests block5 while support/down tests permit passage under their movement preconditions. Cartridge $825D/$8118 counters and threshold differ from disk $648A/$611C; the recorded 144/48/48 and 144/72/72 IRQ/loop/hole counts are qualified to the tested 120 PAL-frame windows.
+
+## Second full annotation audit — 4 October 2026
+
+Three cold independent reviewers read every complete routine/data body, relevant callers, and indexed ranges for all **371 authored symbols and 371 comments**. Their disjoint ranges cover the complete declared **25,343 bytes**: title/lower engine $1400–$1EFE and $6000–$78EE (139 entries, 9,198 bytes); middle $78EF–$94FF (191 entries, 7,185 bytes); upper $9500–$B7FF (41 entries, 8,960 bytes). All stored listing bytes match the canonical hand-over snapshot. The 20 differences in a later play snapshot are traced runtime operand/data changes, not unexplained source differences. This full-list review supplies no fresh random-sample error estimate.
+
+The reviewers supplied **17 replacements**: 14 comments with wrong details and three precision/evidence expansions. Root checked substantive findings against the bytes, applied corrections through the disassembler, exported symbols, and regenerated the listing. No symbol name, original opcode, stored byte, or coverage block changed. Private full reports and independently rerun fixtures are work/audit2-lower.md, work/audit2-middle.md, work/audit2-upper.md, and their matching scripts/correction files.
+
+| Address | Corrected detail | Original-code evidence |
+|---|---|---|
+| $65A2 | Screen clear includes visible cells and padding, preserving sprite pointers | Four stores per 256-iteration loop; 1,000 visible cells, 16 padding cells, and eight overlapping stores |
+| $7251 | DOS success tests the OR of two status bytes | All 65,536 prefixes: nine byte pairs satisfy OR=$30; ordinary ASCII decimal replies accept only 00 |
+| $73C7 | Falling erases the picture each update but changes occupancy only at phase wrap | Five vertical-phase fixtures through the original runner routine |
+| $789B | Demo durations count scripted-control polls | Supported, falling, and pending-dig fixtures; zero duration lasts 256 polls |
+| $78E9 | Six authored actions do not bound every possible decoded nibble | Nibble 6 aliases following opcode $AD; larger indexes read subsequent code |
+| $8297 | Right bar test can reuse the below-row pointer | Original $82FC indirect read and controlled current-right/below-right/left-bar fixtures; ordinary reachability open |
+| $8863 | Rank digits bypass the binary converter | Three converter callers; rank calls $8885 directly; all 256 binary inputs checked |
+| $889A | Punctuation ends at glyph 101 | All 256 input bytes; seven accepted punctuation bytes produce 95–101 |
+| $A000–$A700 | Four phases advance by 0, 2, 4, and 6 physical pixels | All eight 256-byte lookup pages and all four original expansion phases; equivalent to 0–3 multicolour pixels |
+| $B100 | Loaded 768-byte command area includes retained tail and has no encoded stop test | All 384 loaded pairs, supported control polling, zero-duration underflow, and directory aliases; ordinary tail consumption open |
+
+Independent CPU checks also cover all route costs, decimal/text inputs, disk and cartridge source expansion, actor routing, timer/sentinel/refill paths, exit limits, guard respawn/joystick routing, banner/iris geometry, resident demos, all 450 disk room sectors, and all 17 compressed cartridge rooms. Main published-widget regression: **214,299 cases**, including **11,610 ordered SID ticks** across all 100 motif/offset combinations and every frequency-table alias 37–42. Picture gallery: **180 original source expansions**, **53 actor selectors**, and **47,520 pixel comparisons**. Selected cartridge comparison checks remain separately scoped in comparison.md.
+
+Root repeated native forced-state score, gold, exits, digging, refill, life-control, completion, and pacing checks in VICE. Both the published reference and a fresh live capture match all 104,448 pixels through the shared renderer. These checks establish routine behavior and the recorded setup's timing. They do not prove playable reachability of arranged guard/hole states, editor save/reload, fresh-boot high-score persistence, loader/protection reconstruction, or complete cartridge semantic coverage.
+
+## Fresh post-correction sample — 4 October 2026
+
+A further cold reviewer who authored none of the annotations sampled the stable exported listing after the 17 replacements. Seed **6401042602**, Python random.Random, selects without replacement from address-sorted comments in the following stratum order. The complete sampled texts, byte differences, input hashes, evidence, and 25 original-code test suites are retained privately in work/audit2-sample.json, work/audit2-sample.md, and work/audit2-sample-tests.cjs. Root independently checked the substantive mask finding and reran the fixtures.
+
+| Stratum | Population | Sample | Retained addresses |
+|---|---:|---:|---|
+| Below $7400 | 125 | 20 | $628A, $6681, $66D7, $66FB, $679A, $67B2, $67CC, $6905, $6A6C, $6AEE, $6B40, $6B93, $6BA2, $6C7E, $6C80, $6DCA, $6E9A, $7219, $723E, $723F |
+| $7400–$88FF | 101 | 20 | $7934, $7955, $7970, $79A5, $7A1C, $7A4A, $7ACB, $7D7B, $7FD2, $8106, $8338, $8439, $84A3, $84F1, $86D5, $870F, $8710, $87A0, $87DF, $87E6 |
+| $8900 and above | 145 | 20 | $8A1F, $8B1D, $8B58, $8BBA, $8C7F, $8D07, $8EBE, $8F79, $8F8D, $8FAF, $8FD1, $93B7, $9500, $9502, $956B, $95F5, $993E, $A300, $A800, $B600 |
+
+**59 pass, 0 wrong, 1 ambiguous.** The unweighted wrong-detail fraction is 0/60, with descriptive Wilson 95% interval **0–6.02%**. Counting ambiguity as adverse gives 1/60 (**1.67%**), interval **0.29–8.86%**. These intervals do not adjust for unequal stratum populations and do not certify zero remaining errors. None of the dedicated title-data comments was drawn; sampled $628A and a separate fact claim executed the complete title decoder.
+
+The ambiguity at **$86D5** was “Complementary six mask bytes.” Disable bytes are `00 FB F7 EF BF 7F`, versus enable bytes `00 04 08 10 40 80`: active guard entries 1–5 are inverse masks; unused entry zero is a zero sentinel. Original reader $859E scans legal guard indexes 5–1. Root clarified the sentinel and active entries after the sample. That dependent correction preserves the original ambiguous verdict; it is not a new zero-error sample.
+
+Original-code fixtures cover all 1,000 three-digit board inputs, 256 initials bytes, 256 modifier flags, four graphics phases, six sprite buffers, the complete title decoder, surplus marker retention, score boundaries, both digs and final obstruction, gold collection, every hole countdown, motif cycling, control/guard dispatch, four inline banner streams, and resident demo copying. All listing bytes and symbols hash agree with the canonical input; 20 runtime byte changes are explicitly retained. No complete indirect non-use or ordinary reachability is inferred from these tests.
+
+A separate seed **6401042622** selected **20 factual/page units: all pass**. Predeclared focused pools were facts.md 10/20, index.html 4/12, music.html 3/6, and levels.html 3/5. Selected units cover hole timing/pictures, completion awards, marker limits, room decoding, title extent, sprite buffers/slots, glyph dimensions, modifier handling, master-disk protection, trapdoor direction, score display, motif/transposition selection, and raw sector tail size. This is a numerical/widget claim sample, not a random sample from an exhaustive factual census. Orientation banking, declared engine scope, and entry/play identity also pass. Boot recipes, live pacing, drive persistence, and complete cartridge/Yellow behavior were not replayed by this reviewer; root's separately scoped checks supply the native/comparison evidence above. This contributor audit is not kit/CHECKING maintainer verification and changes no tier.

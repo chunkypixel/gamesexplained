@@ -22,8 +22,8 @@ Unless marked **live** or **CPU-tested**, facts below were traced through the or
 | Display/work bitmap | $2000/$4000 | Visible picture and preserved background |
 | Shift lookup | $A000–$A7FF | Four paired 256-byte phase lookup pages |
 | Glyphs | $A800–$B0EF | 104 shapes, 22 transposed pattern bytes each |
-| Demo commands | $B100–$B3FF | 768 bytes of packed duration/action pairs |
-| Demo boards | $B500/$B600/$B700 | Three embedded boards, distinct from the 150 disk sectors |
+| Demo commands | $B100–$B3FF | 768 loaded bytes of command/duration pairs, including retained tail |
+| Demo boards | $B500/$B600/$B700 | Three resident demonstration sectors; the third shares disk room 11’s cells |
 | Sound queues | $C000/$C100/$C200/$C300 | Duration, melody, harmony, fourth event byte |
 
 Map rows have a four-byte gap after row 8. Rows 0–8 start at base + 28×row; row 9 starts at the next page. Use $8D66 with high-byte directories $8D76/$8D86, rather than assuming 448 contiguous bytes. Gold pickup clears the backing cell while retaining the dynamic actor marker. An open hole clears the dynamic brick while preserving backing brick. Sources: $728F, $7A4A, $83F1, $7B12.
@@ -38,7 +38,7 @@ Map rows have a four-byte gap after row 8. Rows 0–8 start at base + 28×row; r
 
 ## Movement, digging, and guards
 
-The runner moves through five phases per cell. Gravity is checked before requested movement; ladders, centered bars, and support cells determine whether falling continues. Joystick input gives drilling priority, then vertical movement before horizontal fallback. Sources: $73BD–$78EE, $79B0.
+The runner moves through five phases per cell. Gravity is checked before requested movement; ladders, centered bars, and support cells determine whether falling continues. Joystick input gives drilling priority, then vertical movement before horizontal fallback. Sources: $73C7–$78EE, $79B0.
 
 Drilling requires a brick diagonally below and a suitable adjacent cell. A completed hole receives 180 main-loop passes; pictures 55 and 56 appear at 20 and 10. At zero the dynamic brick returns, killing a runner there or burying a guard. There are 30 allocatable holes; the update loop also visits sentinel slot 30. $76E6, $77A5, $7B12, $84F1. **Live:** forced finish opens a hole with timer 180; a timer-one update restores its brick. **CPU-tested:** all 181 timer values agree with the widget. A full 180-update closure sequence also agrees with the widget’s picture selection: original work-bitmap calls draw 55 at 20 remaining, 56 at 10, and 1 at zero.
 
@@ -53,6 +53,8 @@ Guard route selection first tries a same-row chase with backing support. Otherwi
 | Below | 200 + candidate row − runner row |
 
 **CPU-tested:** all 200,704 legal input combinations agree with the page's route-cost helper. The widget does not simulate the full search.
+
+The downward exit scan has an asymmetric pointer reuse: after the left bar test falls through to below-row support, the right bar read at $82FC still uses that below-row pointer. Original-code fixtures show that a current-row right bar can be ignored while a below-right bar supplies an exit at the current candidate row. This qualifies an idealized symmetric description of the search; ordinary reachability of the arranged states remains unproved. $8297–$8335.
 
 A successful drill takes **13 runner updates** including its start: twelve phase increments, then completion at phase 12 (left) or 24 (right). Both continuations recheck the adjacent cell; any nonzero cell cancels even a final-phase dig without opening the brick or allocating a timer. **CPU-tested:** both full animations plus 18 final-phase obstruction cases. **Forced live:** each direction completes only on the thirteenth call and its immediately following hole service ages 180 to 179.
 
@@ -83,13 +85,15 @@ Default pacing threshold $131B is five. After a pass, the wait resets the counte
 
 The scenery is a multicolour bitmap. Actors are hires sprites in slots 0,2,3,4,6,7. Shape expansion $8AF8 combines two patterns per row through phase lookup pages; $8BF3 copies 33 bytes to actor buffers. The visible bitmap selector is $8995; work selector is $899B. Digits occupy glyphs 59–68 and letters 69–94. Status row 16 maps to scanline 181; gameplay rows map to 11×row. $8C3F.
 
+**Picture-gallery verification:** `verify-atlas.cjs` executes disk expansion $8AF8 for all 104 source masks at horizontal phase zero. It initializes the supplied cartridge with $A8BB and executes cartridge expansion $936E for all 76 sources. Every decoded row agrees with the original 33-byte scratch output. Each nonblank cartridge source matches exactly one disk source; cartridge blank zero matches disk sources 0, 102, and 103. Runner, guard, digging-spray, and brick-erasure categories are checked against disk tables $7865–$789A and $7BC2–$7BD1. All 53 actor selectors are checked through the original sprite-routing paths. Disk guard selectors 8 and 40–54 select shared masks 11, 9, 16, 17, 12, 13, 21, 22, 23, 24, 25, 26, 14, 18, 20, and 19 through $8BBA; cartridge selector 8 selects mask 11 through its own $9442 directory. Gallery previews use these gameplay masks for actors and multicolour bitmap decoding for other pictures. All 47,520 preview pixels agree with the original expanded masks in the appropriate mode. The displayed index identifies the source; a substituted guard preview also identifies its sprite mask.
+
 **Frame verification:** a captured live PAL frame, rendered with the shared C64 renderer, matches all **104,448** reference pixels with zero differences. The embedded capture retains only the 9,257 RAM bytes the renderer reads. Atlas bytes compare identically between hand-over and play. Title decoding consumes 1,330 count/value pairs through $1E63, expanding into $2000–$3F56. The remaining 155 DB bytes have no identified consumer in this decoder; other use remains open. $62E5.
 
 ## Sound and controls
 
 $6319 consumes duration/melody/harmony/fourth-byte queue events. The fourth byte is read, then replaced with $F0 before masking by sound enable. Negative harmony detunes voice three to voice two's frequency minus $0080. The positive pitch table has 37 entries, but ordinary high transpositions can reach indexes 37–42; the widget includes the adjacent bytes actually read.
 
-$643A selects a motif using countdown $1332 and transposes positive melody and strictly positive nonnegative harmony using $1333. Countdown 9 produces ten room completions before offset advances; offset starts at 2 and wraps after 11 back to 2. Of fifteen directory words, ordinary countdown uses the first ten; five point to an empty stream. $6410, $641D, $9500–$956A. **CPU-tested:** 1,264 queue ticks agree register-for-register, in order, including high-pitch aliases. The browser groups CIA ticks into PAL frames and omits voice-one effects and timing within a frame. A three-second 48kHz shared-SID render gives nonzero finite output for motif zero and the high-transposition selection (peaks 0.3951/0.3929; RMS 0.1570/0.1002). Gold's four raster waits all occur in its pickup sound, rather than drill pacing. $63E2/$7A94.
+$643A selects a motif using countdown $1332 and transposes positive melody and strictly positive nonnegative harmony using $1333. Countdown 9 produces ten room completions before offset advances; offset starts at 2 and wraps after 11 back to 2. Of fifteen directory words, ordinary countdown uses the first ten; five point to an empty stream. $6410, $641D, $9500–$956A. **CPU-tested:** 11,610 queue ticks agree register-for-register, in order, across all 100 combinations of ten motifs and offsets 2–11. Tests execute the original motif enqueue routine before the queue driver and exercise every aliased pitch index 37–42. The High transpose example plays motif 2 at offset 11, which reaches index 39. The browser groups CIA ticks into PAL frames and omits voice-one effects and timing within a frame. A three-second 48kHz shared-SID render gives nonzero finite output for motif zero and the high-transposition selection (peaks 0.3951/0.5254; RMS 0.1570/0.0976). Gold's four raster waits all occur in its pickup sound, rather than drill pacing. $63E2/$7A94.
 
 The live key directory $7A10 implements I/K/J/L movement; U/O drill left/right; Ctrl-J/K input selection; Ctrl-D drill polarity; Ctrl-Z reveal toggle; Ctrl-A abandon; Ctrl-R attract; Ctrl-F extra life; Ctrl-U skip; +/− pace; Run/Stop pause. Attract checks Ctrl-E for the editor and Return for scores. The IRQ adds bit seven for **any active modifier**, not exclusively Ctrl. $61D8, $648A, $6F66, $79B0.
 
@@ -109,6 +113,10 @@ The first fixed-seed stratified sample (seed 6401983) found **17/60** comments w
 
 A new independent sample (seed 64202642, 60 explicitly retained addresses) found **2/60** wrong details: **3.33%**, Wilson interval **0.92–11.36%**; separately one ambiguous wording, 57 passes. The wrong details were demo-mode qualification at $70DB and reveal-mask ordering at $93B7. The final listing qualifies demo-mode I/O and states the contiguous mask runs; $8BF3 names the selector explicitly. Rechecking these three entries is a dependent test, not a fresh zero-error estimate. The intervals are descriptive and do not adjust unequal stratum sampling. Source entry order changed during the final audit; the report preserves the original selected addresses instead of resampling. The explicit sampled-address evidence is retained in `comment-audit.md`; private working images are required for byte-level repetition.
 
+A second complete independent audit reviewed all **371 authored symbols/comments** against all **25,343 declared bytes**, full routine/data bodies, callers, and indexed ranges. Its 17 replacements comprise 14 comments with wrong details and three precision/evidence expansions. Corrections and original-code evidence are in `comment-audit.md`. The main widget regression passes **214,299 cases**, including every motif/offset combination and all frequency-table aliases; gallery verification adds the original expansions and actor routing described above. Fresh native checks repeat the forced-state mechanics and the recorded disk/cartridge pacing. All three original disks were independently re-extracted, and their engine/title, room, and score inputs match the private comparison data. This full review does not replace the historical sample rates or establish the explicitly open integration/reachability claims.
+
+A fresh independent sample (seed **6401042602**) found **59 passes, 0 wrong details, and 1 ambiguity** in 60 comments. The descriptive wrong-detail Wilson 95% interval is **0–6.02%**; treating ambiguity as adverse gives 1/60, interval **0.29–8.86%**. The ambiguity at $86D5 concerned the unused zero sentinel in a six-entry disable-mask table; active entries 1–5 are inverse masks. The final comment names that distinction. This dependent clarification does not erase the sampled ambiguity. Populations 125/101/145 contributed 20 comments each; intervals are unweighted and do not adjust unequal sampling. A focused independent 20-unit facts/page sample passed, with its candidate-pool and integration limits retained in `comment-audit.md`. No sample certifies zero remaining errors or substitutes for maintainer verification.
+
 ## Selected cartridge comparison
 
 The supplied cartridge payload matches the earlier disassembly byte-for-byte after reassembly with 64tass 1.59.3120. This validates its byte representation; full disk reassembly is still outside this pass. `comparison.md` records source-file hashes, originating-model uncertainty, and the limits of the comparison.
@@ -121,6 +129,8 @@ Cartridge route helper $A5FD and score helper $8FED agree with the article funct
 
 - Complete cartridge controls, editor workflow, persistence, and semantic coverage beyond the selected checks in `comparison.md`.
 - A playable route attaining the conditional 14-hole upper bound; arranged CPU allocations establish timer arithmetic, not that route. The forced full-table behavior remains a routine contract outside the normal legal-flow invariant.
-- Ordinary reachability/effect of the bottom-row guard search's adjacent directory reads, and the retained uncapped difficulty entry.
+- Ordinary reachability/effect of the guard search’s right-bar pointer reuse and bottom-row adjacent directory reads, and the retained uncapped difficulty entry.
 - Full end-to-end editor save/reload and high-score persistence across a fresh boot; static disk paths are traced separately from these integration tests.
 - Complete loader/protection reconstruction and byte-identical reassembly; these are future scope, not claims of this Silver engine listing.
+- Complete editor write/read buffer alignment: original pack/write and reader loops are traced, but drive-buffer protocol and a full round trip remain integration checks.
+- Ordinary consumption of retained demo-input tail bytes; forced zero-duration tests establish 256 control polls without proving that the demo reaches those records.

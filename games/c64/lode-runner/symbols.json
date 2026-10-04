@@ -2,7 +2,7 @@
  "schema": 1,
  "platform": "c64",
  "game": "lode-runner",
- "build": "Supplied Black Label original G64 disk engine; Gray, Yellow and CRT compared separately",
+ "build": "Supplied Black Label original G64 disk engine; Gray, Yellow and Official Cartridge Image CRT compared separately",
  "source": "regenerator2000 live",
  "regions": {
   "exclude": [
@@ -7455,7 +7455,7 @@
   {
    "address": 26018,
    "type": "line",
-   "text": "Save A in the immediate colour operand at $65B0 and enable multicolour mode. Four 256-store loops fill $0400-$07F7: 1000 visible cells plus sixteen padding bytes, with eight overlapping stores. Fill all 1024 bytes $D800-$DBFF with colour one. Sprite pointers $07F8-$07FF are preserved."
+   "text": "Save A in the immediate colour operand at $65B0 and enable multicolour mode. One 256-iteration loop performs four screen stores per iteration, filling $0400-$07F7: 1000 visible cells plus sixteen padding bytes, with eight overlapping stores. The same loop fills all 1024 bytes $D800-$DBFF with colour one. Sprite pointers $07F8-$07FF are preserved."
   },
   {
    "address": 26032,
@@ -7930,7 +7930,7 @@
   {
    "address": 29265,
    "type": "line",
-   "text": "Read the two DOS status digits, consume through carriage return and accept only ASCII 00. Any other status jumps to the reset/title path."
+   "text": "Read two DOS status bytes, OR them, consume through carriage return and accept when their OR is $30. For ordinary ASCII decimal status digits this accepts only 00; across all byte pairs, nine satisfy this test. Otherwise jump to the reset/title path."
   },
   {
    "address": 29302,
@@ -7950,7 +7950,7 @@
   {
    "address": 29639,
    "type": "line",
-   "text": "Set contact vulnerability for this pass. Continue a pending drill; otherwise test ladder/bar/floor support and apply gravity before reading movement. A falling runner advances one fine-Y phase, removes its old occupancy marker and redraws its sprite; supported input tries vertical/drill first, then horizontal."
+   "text": "Set contact vulnerability for this pass. Continue a pending drill; otherwise test ladder/bar/floor support and apply gravity before reading movement. A falling runner erases its old picture, advances one fine-Y phase and redraws its sprite; only a phase wrap restores the vacated dynamic cell and marks the next row. Supported input tries vertical/drill first, then horizontal."
   },
   {
    "address": 29918,
@@ -8015,12 +8015,12 @@
   {
    "address": 30875,
    "type": "line",
-   "text": "Any new key or port-2 fire terminates demonstration control, clears alive and leaves one life. Otherwise read a command/duration pair through $55/$56 when the previous duration ends. Low command nibble selects the primary action, high nibble the secondary; decrement duration once per runner pass."
+   "text": "When scripted controls are polled, any new key or port-2 fire terminates demonstration control, clears alive and leaves one life. Otherwise read a command/duration pair through $55/$56 when the previous duration is zero. Low command nibble selects the primary action, high nibble the secondary; decrement duration once per poll. Gravity and pending-drill updates bypass this poll, freezing duration and deferring its abort check. A stored zero duration underflows to $FF and lasts 256 polls; it is not a stream terminator."
   },
   {
    "address": 30953,
    "type": "line",
-   "text": "Six nibble action codes: up, left, down, right, drill-right, drill-left. Demonstration commands use low/high nibbles as primary/secondary indexes; later nibble values alias following instruction bytes."
+   "text": "Six authored nibble actions: up, left, down, right, drill-right, drill-left. Both demo-command nibbles index this base unchecked. Index six, present in the embedded command stream, reads opcode $AD at $78EF and supplies an unrecognized action. Indexes seven through fifteen read the following instruction bytes."
   },
   {
    "address": 30959,
@@ -8290,7 +8290,7 @@
   {
    "address": 33431,
    "type": "line",
-   "text": "Walk downward through passable cells to floor/bottom, looking for horizontal exits with bar or support at/below the runner row. Return the candidate landing/exit row for the route cost routine."
+   "text": "Scan downward until backing brick/concrete below or the bottom limit, returning the candidate row for route cost. Nonblank current cells permit side-exit tests: the left side tests a current-row bar or backing support below. The right-side bar read reuses the pointer left by that test, so it can inspect the row below before testing below-row support. At row fifteen the next-row directory read precedes final bottom handling and aliases $8D76/$8D96."
   },
   {
    "address": 33592,
@@ -8355,7 +8355,7 @@
   {
    "address": 34517,
    "type": "line",
-   "text": "Complementary six mask bytes for the same sprite slots. A guard buried by a closing hole is hidden until its respawn cell clears."
+   "text": "Six disable-mask entries: unused index-zero sentinel $00, followed by $FB, $F7, $EF, $BF, and $7F, the inverse masks for guards 1..5 in sprite slots 2, 3, 4, 6, and 7. A guard buried by a closing hole is hidden until its respawn cell clears."
   },
   {
    "address": 34523,
@@ -8430,7 +8430,7 @@
   {
    "address": 34915,
    "type": "line",
-   "text": "Repeatedly subtract 100 and 10 from A to produce the three decimal digits at $1307-$1309. Used for displayed level and rank numbers."
+   "text": "Repeatedly subtract 100 and 10 from A to produce the three decimal digits at $1307-$1309. Called for editor board-number entry, high-score record level, and the shared lives/displayed-level drawing path. Rank rows print digits directly."
   },
   {
    "address": 34949,
@@ -8440,7 +8440,7 @@
   {
    "address": 34970,
    "type": "line",
-   "text": "Map $C1-$DA to alphabet glyphs 69..94 and selected high-bit punctuation to glyphs 95..102; $A0 is blank. Unsupported bytes map to glyph 16. The game font is a bitmap-glyph atlas, not a VIC character set."
+   "text": "Map $C1-$DA to alphabet glyphs 69..94 and the seven accepted high-bit punctuation bytes to glyphs 95..101; $A0 maps to blank glyph zero. Unsupported bytes map to glyph 16. The game font is a bitmap-glyph atlas, not a VIC character set."
   },
   {
    "address": 35028,
@@ -9100,42 +9100,42 @@
   {
    "address": 40960,
    "type": "line",
-   "text": "256-byte first lookup page for horizontal phase 0. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte first lookup page for horizontal phase 0. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 0 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 41216,
    "type": "line",
-   "text": "256-byte overflow lookup page for horizontal phase 0. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte overflow lookup page for horizontal phase 0. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 0 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 41472,
    "type": "line",
-   "text": "256-byte first lookup page for horizontal phase 1. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte first lookup page for horizontal phase 1. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 2 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 41728,
    "type": "line",
-   "text": "256-byte overflow lookup page for horizontal phase 1. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte overflow lookup page for horizontal phase 1. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 2 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 41984,
    "type": "line",
-   "text": "256-byte first lookup page for horizontal phase 2. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte first lookup page for horizontal phase 2. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 4 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 42240,
    "type": "line",
-   "text": "256-byte overflow lookup page for horizontal phase 2. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte overflow lookup page for horizontal phase 2. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 4 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 42496,
    "type": "line",
-   "text": "256-byte first lookup page for horizontal phase 3. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte first lookup page for horizontal phase 3. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 6 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 42752,
    "type": "line",
-   "text": "256-byte overflow lookup page for horizontal phase 3. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte, so the same 104 shapes can be drawn at all four half-pixel phases."
+   "text": "256-byte overflow lookup page for horizontal phase 3. An encoded glyph-row pattern indexes this page; its paired page supplies the neighboring byte. Together the pages shift the expanded row right by 6 bits. Phases 0..3 therefore shift by 0, 2, 4 and 6 physical pixels, or 0..3 multicolour pixels."
   },
   {
    "address": 43008,
@@ -9160,7 +9160,7 @@
   {
    "address": 45312,
    "type": "line",
-   "text": "Loaded command/duration pairs for the attract demonstration, starting with $16,$4C. read_demonstration_input indexes nibbles through demo_action_codes and repeats them for duration passes. The 768-byte area includes zero-filled and board-like retained tail bytes; its intended script boundary is not encoded by a terminator."
+   "text": "Loaded command/duration pairs for the attract demonstration, starting with $16,$4C. Low/high command nibbles index primary/secondary actions at $78E9; authored commands also use nibble six, which aliases the following $AD opcode. Positive durations count scripted-control polls; zero underflows and lasts 256 polls. Gravity and pending drill updates bypass these polls and freeze the duration. The 768-byte area includes zero-filled and board-like retained tail bytes, and the reader has no encoded terminator or boundary check."
   },
   {
    "address": 46080,

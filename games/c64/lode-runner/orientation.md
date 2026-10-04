@@ -20,7 +20,7 @@ Tool ports in this run were VICE 6512 and disassembler 3003; other local instanc
 
 ## Steady state
 
-$01 has low banking bits $36: BASIC is out, KERNAL and I/O remain visible. The IRQ vector at $0314 is $648A, which chains to KERNAL $EA31. The NMI vector at $0318 is $65CF, a single RTI. Engine code and authored tables remain at $6000–$B7FF; room sectors are loaded into $1000. High scores use $1100. The display bitmap is $2000; the preserved work bitmap is $4000. Startup generates their row lookup tables and the actor sprite buffers.
+In the captured play state, $01 is $36. Its low three banking bits are %110: BASIC is out, KERNAL and I/O remain visible. The IRQ vector at $0314 is $648A, which chains to KERNAL $EA31. The NMI vector at $0318 is $65CF, a single RTI. Engine code and authored tables remain at $6000–$B7FF; room sectors are loaded into $1000. High scores use $1100. The display bitmap is $2000; the preserved work bitmap is $4000. Startup generates their row lookup tables and the actor sprite buffers.
 
 The Source listing contains hand-over bytes. Separate entry/play comparisons identify live self-modification and generated state; the private play snapshot supplies runtime tests and the captured frame. The title RLE is present at hand-over; the expanded bitmap is generated output. Retained copies, assembler records, lookup pages, music streams, and embedded demonstration sectors remain in the coverage denominator.
 

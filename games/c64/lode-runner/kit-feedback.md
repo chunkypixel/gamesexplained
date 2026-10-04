@@ -61,3 +61,16 @@ The contributor requested a dedicated disk/cartridge comparison page. The same m
 The browser's visual review found a stray vertical scrollbar on the shared custom-tab row. site.css now explicitly hides vertical overflow while preserving its horizontal scrolling. This visible layout fix changes no kit workflow or skill; desktop/mobile tab navigation and the complete site build check it.
 
 The contributor supplied the exact cartridge label, Official Cartridge Image. Applied the existing correct-in-place rule to article and reference text, with the correction's history in agent-history.md. No tooling or workflow change was needed.
+
+## Picture-gallery presentation
+
+The contributor's atlas feedback applied the existing minisite rules to show recognizable pictures before storage details. Categories and thumbnail selection replace the raw index slider. The rule to draw from game memory also required the runtime actor-routing tables: guard selectors reuse runner masks, and hires sprite bits need different rendering from multicolour scenery. verify-atlas.cjs checks all original expansions, edition matches, actor routing, and preview pixels. The gallery retains neutral names where only table membership or artwork equality is established. No skill change was needed.
+
+## Second full audit and emulator status regression
+
+The existing 60-verify full-body/caller and fresh-auditor rules drove another complete review of all 371 annotations, followed by an independent new sample. The full review produced 17 annotation replacements and exposed a Music example/test that had not exercised its claimed adjacent-frequency aliases. Expanded original-code verification covers all 100 motif/offset combinations and explicitly requires indexes 37–42. These are game-specific checks, so no additional workflow rule was needed.
+
+The full emulator qualification exposed a shared checker regression: browser status now precedes the emulator line, while check_emulator.py read the first line for server availability and build identity. It falsely failed a successful 1,600-call transport test and recorded the wrong tool's build. The checker now selects exactly one emulator line and tests its state field. test_tools.py covers browser up/down before a running or stopped emulator, old output without a browser, and missing/ambiguous emulator lines. The dispatcher tests and real 57-check emulator qualification pass. This script fix changes no workflow or skill and adds no lesson entry.
+
+
+The fresh 60-comment sample returned 59 passes, zero wrong details, and one ambiguity concerning an unused disable-mask sentinel. The final text clarifies it while the audit retains the original verdict. A focused 20-unit numerical/widget claim sample also passed. The reports explicitly separate that pool from an exhaustive article census and preserve the descriptive interval limits; no new skill instruction was needed.

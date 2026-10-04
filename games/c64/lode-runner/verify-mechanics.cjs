@@ -40,11 +40,28 @@ for(let elapsed=1;elapsed<=180;elapsed++){
  assert.equal(box.holeStage(closure.m[0x12e0]).glyph,picture);cases++;
 }
 assert.deepEqual(closingPictures,[[20,55],[10,56],[0,1]]);
-let musicTicks=0;
-for(let selection=0;selection<D.audio.selections.length;selection++){
+// Execute the game's own queue initializer for every ordinary motif/pitch combination.
+// A high-transposition UI example must actually read beyond frequency index 36.
+const uiSelections=D.audio.selections;
+assert.deepEqual(uiSelections,[...Array.from({length:10},(_,i)=>[i,2]),[2,11]]);
+const frequencyCPU=CPU.fromSnapshot(snap);
+assert.deepEqual(D.audio.low,Array.from(frequencyCPU.m.slice(0x9521,0x9521+43)));
+assert.deepEqual(D.audio.high,Array.from(frequencyCPU.m.slice(0x9546,0x9546+43)));
+let musicTicks=0,musicCombinations=0;const reachedPitchIndexes=new Set();
+for(let tune=0;tune<10;tune++)for(let offset=2;offset<=11;offset++){
  let writes=[];const c=CPU.fromSnapshot(snap,{io:{write:(a,v)=>writes.push(a-0xd400,v)}});
- const drv=box.createQueueDriver(D.audio);drv.init(selection);const [t,offset]=D.audio.selections[selection];c.m[0x132e]=0;c.m[0x132f]=D.audio.tunes[t].length;c.m[0x1313]=255;
- D.audio.tunes[t].forEach((e,i)=>{c.m[0xc000+i]=e[0];c.m[0xc100+i]=e[1]?(e[1]+offset)&255:0;c.m[0xc200+i]=e[2]&&e[2]<128?(e[2]+offset)&255:e[2];c.m[0xc300+i]=e[3];});
+ const audio={...D.audio,selections:[[tune,offset]]},drv=box.createQueueDriver(audio);drv.init(0);
+ c.m[0x132e]=c.m[0x132f]=0;c.m[0x1313]=255;c.m[0x1332]=tune;c.m[0x1333]=offset;c.call(0x643a);
+ assert.equal(c.m[0x132f],audio.tunes[tune].length);
+ audio.tunes[tune].forEach((e,i)=>{
+  const transformed=[e[0],e[1]?(e[1]+offset)&255:0,e[2]>0&&e[2]<128?(e[2]+offset)&255:e[2],e[3]];
+  for(let lane=0;lane<4;lane++)assert.equal(c.m[0xc000+lane*0x100+i],transformed[lane]);
+  reachedPitchIndexes.add(transformed[1]);if(transformed[2]<128)reachedPitchIndexes.add(transformed[2]);
+ });
  while(drv.playing()){writes=[];c.call(0x6319);drv.tick();assert.deepEqual(Array.from(drv.writes),writes);musicTicks++;}
+ musicCombinations++;
 }
-console.log(JSON.stringify({routeCases:200704,scoreCases:scores.length*4,holeCases:181,closingPictureCases:180,closingPictures,musicTicks,totalCases:cases+musicTicks}));
+assert.deepEqual([...reachedPitchIndexes].filter(i=>i>=37).sort((a,b)=>a-b),[37,38,39,40,41,42]);
+const [highTune,highOffset]=uiSelections.at(-1);
+assert(D.audio.tunes[highTune].some(e=>[e[1],e[2]].some(v=>v>0&&v<128&&v+highOffset>=37)));
+console.log(JSON.stringify({routeCases:200704,scoreCases:scores.length*4,holeCases:181,closingPictureCases:180,closingPictures,musicCombinations,musicTicks,aliasedPitchIndexes:[37,38,39,40,41,42],totalCases:cases+musicTicks}));

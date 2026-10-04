@@ -12,7 +12,7 @@ Statuses below apply to the Black Label engine unless stated otherwise. “Trace
 
 | Feature | Status | Evidence |
 |---|---|---|
-| Run, ladders, bars, gravity | confirmed/traced | Native room-one play; $73BD–$78EE movement bodies |
+| Run, ladders, bars, gravity | confirmed/traced | Native room-one play; $73C7–$78EE movement bodies |
 | Gold, hidden exits, top-row completion | confirmed/traced | Native 250-point pickup; isolated $7A4A/$8D96 tests; $611C/$6162 |
 | Temporary brick holes; concrete resists drilling | confirmed/traced | Live finish/refill; $76E6/$77A5/$7B12/$84F1 |
 | Guards escape holes or are buried and respawn | traced | $7BD2/$84F1/$862F |
@@ -29,7 +29,7 @@ Statuses below apply to the Black Label engine unless stated otherwise. “Trace
 | Editor menu, number input, disk initialization | partly confirmed/traced | Editor entered through its Ctrl-E latch path; $65D6–$6CA1; initialization warning observed on a private blank disk; completion remains open |
 | Ten editor cell types and cursor/save/navigation | traced | $6905/$6B89/$6B92/$6C98; save/reload integration remains open |
 | Master-disk protection and high-score persistence | traced/open | $6A88/$6CAD marker/write paths; fresh-boot persistence not tested |
-| Collection, drilling, falling, completion, death sound | traced/partly confirmed | IRQ voice-one paths and queue callers; native pickup; motif port checked for 1264 original-code ticks |
+| Collection, drilling, falling, completion, death sound | traced/partly confirmed | IRQ voice-one paths and queue callers; native pickup; motif port checked for 11,610 original-code ticks across all 100 motif/offset combinations |
 | Cartridge rooms and selected engine differences | confirmed/traced | Original decoder: 17 exact disk matches; 76 reconstructed glyphs; seven motifs; live PAL pace; route/score/tile CPU comparison |
 | Complete cartridge controls and editor workflow | open | Separate source listing and integration checks beyond selected comparison remain open |
 

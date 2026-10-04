@@ -30,7 +30,7 @@ Contributor: jankfoundry. The contributor recalls that the earlier work used **m
 | Atlas size | 104 source glyphs | $A8BB expands 76 compact sources | Cartridge's 1,672 generated pattern bytes match its recorded native play snapshot |
 | Completion motif cycle | $641D, ten selections | $9760, seven selections | Cartridge countdown/transposition checked for 70 completions; pitch offset cycles 2–11 in both |
 
-The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. The disk mechanics checks pass 203,953 route, score, timer, closing-picture, and ordered SID-tick cases.
+The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. The disk mechanics checks pass 214,299 route, score, timer, closing-picture, and ordered SID-tick cases.
 
 ## Supplied disk variants
 
@@ -68,7 +68,7 @@ The 17 low bytes at $AC00 and relative high bytes at $AC12 select compressed str
 | 16 | 134 | 119 |
 | 17 | 150 | 209 |
 
-The streams total 2,612 bytes. Each expansion has exactly one matching board among all 150 disk payloads, and all three supplied disks contain identical room sectors. The room browser displays this cartridge sequence using disk graphics; the atlas control separately displays the actual generated cartridge sources.
+The streams total 2,612 bytes. Each expansion has exactly one matching board among all 150 disk payloads, and all three supplied disks contain identical room sectors. The room browser displays this cartridge sequence using disk graphics. The picture gallery decodes each edition’s generated sources and shows the gameplay sprite masks for actor selectors.
 
 ## Repeating the checks
 

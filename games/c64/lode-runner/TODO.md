@@ -6,7 +6,7 @@ Silver covers the Black Label disk engine and DB title payload with complete ann
 
 A human steward must read and curate every article section, decide what deserves expansion or removal, and record copy provenance honestly. Set `silver-claimed` and the steward login when that pass begins. Review the maps, frame, sound player, source comments, and explicit open questions together.
 
-Useful follow-up work includes an ordinary-input replay of guard trapping/burial, a full editor save/reload and fresh-boot high-score test, and a complete cartridge controls/editor analysis beyond the selected comparison. A playable route attaining the conditional 14-hole bound and ordinary reachability of the bottom-row guard corner cases remain open.
+Useful follow-up work includes an ordinary-input replay of guard trapping/burial, a full editor save/reload and fresh-boot high-score test, and a complete cartridge controls/editor analysis beyond the selected comparison. A playable route attaining the conditional 14-hole bound and ordinary reachability of the bottom-row guard corner cases remain open. The editor round trip must resolve the original drive-buffer write/read alignment. Ordinary effects of the right-bar pointer reuse and consumption of retained demo-input tail records also remain unproved.
 
 ## For Platinum
 
