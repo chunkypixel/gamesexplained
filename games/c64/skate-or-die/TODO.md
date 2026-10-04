@@ -1,8 +1,8 @@
 # Skate or Die! - TODO
 
-The branch is an in-progress analysis, not a publishable Silver. The model
-identifier is `unknown`, so even a complete agent run requires the
-maintainer check in `kit/CHECKING.md` before the tier can be Silver.
+The branch is an in-progress analysis, not a publishable Silver. The
+contributor identified the model as `gpt-6-sol`, which is on the kit's
+proven-model list. Coverage and verification still need to be completed.
 
 ## Evidence and image coverage
 

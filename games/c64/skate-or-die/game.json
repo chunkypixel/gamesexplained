@@ -18,7 +18,7 @@
     "emulator": "release v3.13.2, v3.13.2-macos-arm64-gui.dmg",
     "disassembler": "regenerator2000 0.9.20"
   },
-  "model": "unknown",
+  "model": "gpt-6-sol",
   "kit_version": "0.0.47",
   "created": "2026-10-04",
   "video": {
