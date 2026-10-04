@@ -29,6 +29,14 @@ for(let timer=0;timer<=180;timer++){
  const c=CPU.fromSnapshot(snap);c.m[0x131c]=0;c.m.fill(0,0x1298,0x129e);c.m.fill(0,0x12e0,0x12ff);c.m[0x12e0]=timer;c.m[0x12a0]=2;c.m[0x12c0]=2;c.m[0x083a]=0;
  c.call(0x84f1);assert.equal(box.holeTick(timer),c.m[0x12e0]);cases++;
 }
+// Follow one original hole through its lifetime, retaining the last drawn closing picture.
+const closure=CPU.fromSnapshot(snap);closure.m[0x131c]=0;closure.m.fill(0,0x1298,0x129e);closure.m.fill(0,0x12e0,0x12ff);closure.m[0x12e0]=180;closure.m[0x12a0]=2;closure.m[0x12c0]=2;closure.m[0x083a]=0;
+let picture=0,closingPictures=[];assert.equal(box.holeStage(180).glyph,picture);
+for(let elapsed=1;elapsed<=180;elapsed++){
+ closure.call(0x84f1,{}, {hooks:{[0x899b]:c=>{picture=c.a;closingPictures.push([c.m[0x12e0],picture]);}}});
+ assert.equal(box.holeStage(closure.m[0x12e0]).glyph,picture);cases++;
+}
+assert.deepEqual(closingPictures,[[20,55],[10,56],[0,1]]);
 let musicTicks=0;
 for(let selection=0;selection<D.audio.selections.length;selection++){
  let writes=[];const c=CPU.fromSnapshot(snap,{io:{write:(a,v)=>writes.push(a-0xd400,v)}});
@@ -36,4 +44,4 @@ for(let selection=0;selection<D.audio.selections.length;selection++){
  D.audio.tunes[t].forEach((e,i)=>{c.m[0xc000+i]=e[0];c.m[0xc100+i]=e[1]?(e[1]+offset)&255:0;c.m[0xc200+i]=e[2]&&e[2]<128?(e[2]+offset)&255:e[2];c.m[0xc300+i]=e[3];});
  while(drv.playing()){writes=[];c.call(0x6319);drv.tick();assert.deepEqual(Array.from(drv.writes),writes);musicTicks++;}
 }
-console.log(JSON.stringify({routeCases:200704,scoreCases:scores.length*4,holeCases:181,musicTicks,totalCases:cases+musicTicks}));
+console.log(JSON.stringify({routeCases:200704,scoreCases:scores.length*4,holeCases:181,closingPictureCases:180,closingPictures,musicTicks,totalCases:cases+musicTicks}));

@@ -45,3 +45,7 @@ The earlier cartridge disassembly supplied a second data path that exposed a sil
 - `kit/skills/core/70-minisite/SKILL.md`: the existing runtime-memory rule now includes resource-transfer alignment; see `kit/lessons/2026-10-04-lode-runner.md`.
 
 Comparison content has its own evidence/provenance record and a separate copy rewrite. The source project was read only. No download, pull request, issue, or deployment was needed for this follow-up.
+
+## Contributor presentation review
+
+The first hole widget began open, so its start button only reset a counter. Small increments gave little visual feedback during the long open-picture interval. It now begins before the user action and offers timed playback, scrubbing, and explicit closing stages. This visible UI problem is recorded here and in agent-history.md; the existing minisite interactivity rule covers it, so no shared skill or launcher change was needed. The page-specific check follows the full original countdown and records its actual picture changes.

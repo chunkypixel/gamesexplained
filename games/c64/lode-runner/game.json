@@ -8,10 +8,10 @@
   "developer": "Doug Smith; Commodore 64 version by Dane Bigham",
   "title_image": "reference/black-title.png",
   "build": "Supplied Black Label original G64 disk engine; Gray, Yellow and CRT compared separately",
-  "tier": "silver",
+  "tier": "silver-claimed",
   "coverage_percent": 100,
   "copy": "agent-draft",
-  "steward": "",
+  "steward": "jankfoundry",
   "credits": [
     {
       "by": "Doug Smith",
