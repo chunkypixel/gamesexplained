@@ -115,7 +115,8 @@ var FIST = (function () {
 
 // createDriver for site/lib/sid.js: runs the game's own music driver ($09A5, called once a frame
 // by the line-255 interrupt) in a small 6502 interpreter over the bytes $0400-$1159 and the zero
-// page it uses, as the game loads them. $FF is the song request: 1-4, or 0 for silence.
+// page it uses, as the game loads them. $FF is the song request: 1-4, or 0 for silence. site/lib/sid.js
+// calls init with the tune's position in its list, 0-3, so init(t) asks for song t + 1.
 // The interpreter is Delta's page's, with reads of $D41B/$D41C answered from readback().
 function createDriver(M) {
   const mem = new Uint8Array(0x10000);
@@ -205,7 +206,7 @@ function createDriver(M) {
   const active = () => (mem[0x0CA1] | mem[0x0CA2] | mem[0x0CA3]) & 0x80;
   let on = false;
   return {
-    init(t) { for (let r = 0; r < 25; r++) sid[r] = 0; writes = []; mem[0x0D3A] = 0; mem[0xFF] = t; call(0x09A5); on = true; },
+    init(t) { for (let r = 0; r < 25; r++) sid[r] = 0; writes = []; mem[0x0D3A] = 0; mem[0xFF] = t + 1; call(0x09A5); on = true; },
     stop() { writes = []; mem[0xFF] = 0; call(0x09A5); on = false; },
     play() { writes = []; if (!on) return; call(0x09A5); if (!active()) on = false; },
     readback(e, o) { env3 = e; osc3 = o; },
