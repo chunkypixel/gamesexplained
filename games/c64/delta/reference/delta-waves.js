@@ -171,7 +171,7 @@
     requestAnimationFrame(tick);
   }
 
-  const STAGES = 3;                 // stages with a recording in reference/waves
+  const STAGES = 13;                 // stages with a recording in reference/waves
   for (let s = 1; s <= STAGES; s++) {
     const b = document.createElement('button'); b.textContent = s; b.title = BANNERS[s - 1]; b.onclick = () => load(s);
     $('wvStages').appendChild(b);
