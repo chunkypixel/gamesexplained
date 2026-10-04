@@ -80,7 +80,7 @@ def stop_pattern():
     chromium = (r"^([^ ]*/)?(chrome|chromium|chromium-browser|chrome-headless-shell) --headless --user-data-dir="
                 + re.escape(str(CHROMIUM_STATE / "profile"))
                 + rf" --remote-debugging-port={PORT}( |$)")
-    return "(?:" + firefox + "|" + chromium + ")"
+    return "(" + firefox + "|" + chromium + ")"
 
 
 def stop():

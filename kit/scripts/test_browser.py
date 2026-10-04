@@ -2,6 +2,8 @@
 import importlib.util
 from pathlib import Path
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 from types import SimpleNamespace
@@ -16,6 +18,16 @@ spec.loader.exec_module(launcher)
 
 
 class BrowserTests(unittest.TestCase):
+    def test_stop_pattern_uses_posix_extended_regex(self):
+        if not shutil.which('grep'):
+            self.skipTest('grep is needed to check the pkill regex dialect')
+        with patch.object(browser, 'CHROMIUM_STATE', Path('/tmp/kit/tools/chromium')):
+            owned = '/usr/bin/chrome --headless --user-data-dir=/tmp/kit/tools/chromium/profile --remote-debugging-port=9222 about:blank'
+            pattern = browser.stop_pattern()
+            for command, expected in [(owned, 0), (owned.replace('/tmp/kit/', '/tmp/other/'), 1)]:
+                result = subprocess.run(['grep', '-E', '--', pattern], input=command + '\n', text=True, capture_output=True)
+                self.assertEqual(result.returncode, expected, result.stderr)
+
     def test_profile_and_environment_are_local(self):
         with tempfile.TemporaryDirectory() as folder:
             state = Path(folder) / 'firefox'

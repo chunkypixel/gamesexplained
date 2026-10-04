@@ -14,7 +14,7 @@ Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Code
 
 - `kit/skills/core/60-verify/SKILL.md`: see `kit/lessons/2026-10-04-lode-runner.md`.
 - `kit/scripts/browser.py`: an explicitly selected existing Chromium/headless-shell executable offers CDP when Firefox is absent; its profile, XDG state, and temporary directory stay under tools. A selectable port avoids other sessions' browsers.
-- `kit/scripts/test_browser.py`: tests check Chromium profile/environment containment and that stopping this clone does not match another profile or shell text.
+- `kit/scripts/test_browser.py`: tests check Chromium profile/environment containment, POSIX extended-regex compatibility, and that stopping this clone does not match another profile or shell text.
 - `kit/scripts/tools.py`: browser help names the installed-browser option.
 - `kit/INSTALL.md` and `kit/skills/core/70-minisite/SKILL.md`: document the explicit option, port setting, tested origin/client, and containment limits.
 
@@ -35,3 +35,5 @@ Enumerating each indexed table's reachable caller range before writing comments 
 ## Tool behavior encountered
 
 VICE pause can briefly leave an instruction in flight; the kit's pause helper plus repeated stable-PC reads was used before pokes. Failed early screenshots were loading states and were replaced with completed title/play states. The editor's physical key chord entered play during automation; the editor integration experiment therefore injected the documented command latch and records that distinction. All disk writes use a private newly formatted user disk. The original images remain unchanged.
+
+Cleanup exposed a regex dialect mismatch: Python accepts noncapturing groups, while pkill uses POSIX extended regex. The launcher uses a capturing alternation, and a grep -E test now checks the actual dialect before process ownership tests. The real stop command passed after this change.

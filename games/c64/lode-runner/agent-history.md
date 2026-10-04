@@ -47,3 +47,5 @@ Firefox was unavailable. The host already had Playwright Chromium and a client, 
 Browser checks exercised every mechanic control, all motif buttons, first/last room bounds, marker visibility, Source and Maps pages, and desktop/390px layouts. Every canvas drew, no script errors appeared, and the mobile page had no horizontal overflow. Browser review found a SID-row callback contract mismatch; changing `text` to `f` restored the voice panel before the passing check. The shared browser tests include ownership-pattern and directory-containment checks.
 
 The retrospective sharpens indexed-table verification in the existing rule, records one lesson, and documents the browser fallback. Delivery is the contributor's review branch; a maintainer PR and any deployment wait for their instruction.
+
+Final cleanup found that the new browser alternation used Python’s noncapturing-group syntax, which pkill rejects. A POSIX-compatible group and an actual-dialect grep -E regression test fixed it; stopping the owned browser was then exercised directly. Ten browser-launcher tests pass.
