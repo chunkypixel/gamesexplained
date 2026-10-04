@@ -361,9 +361,9 @@
   },
   {
    "address": 2,
-   "name": "zpf_02",
+   "name": "snd_script_ptr",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 3,
@@ -373,9 +373,9 @@
   },
   {
    "address": 8,
-   "name": "zpf_08",
+   "name": "snd_stream_ptr",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9,
@@ -385,9 +385,9 @@
   },
   {
    "address": 14,
-   "name": "zpa_0E",
+   "name": "snd_value",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 15,
@@ -397,21 +397,21 @@
   },
   {
    "address": 16,
-   "name": "zpa_10",
+   "name": "snd_saved_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 17,
-   "name": "zpa_11",
+   "name": "snd_value_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 18,
-   "name": "zpa_12",
+   "name": "ptr_read",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 19,
@@ -421,9 +421,9 @@
   },
   {
    "address": 20,
-   "name": "zpa_14",
+   "name": "ptr_write",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 21,
@@ -433,9 +433,9 @@
   },
   {
    "address": 22,
-   "name": "zpa_16",
+   "name": "ptr_aux",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 23,
@@ -445,33 +445,33 @@
   },
   {
    "address": 24,
-   "name": "zpa_18",
+   "name": "tmp_a",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 25,
-   "name": "zpa_19",
+   "name": "tmp_b",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 26,
-   "name": "zpa_1A",
+   "name": "spr_side",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 27,
-   "name": "zpa_1B",
+   "name": "spr_xmsb",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 28,
-   "name": "zpa_1C",
+   "name": "seq_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 29,
@@ -481,75 +481,75 @@
   },
   {
    "address": 30,
-   "name": "zpa_1E",
+   "name": "irq_band",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 31,
-   "name": "zpa_1F",
+   "name": "prev_pose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32,
-   "name": "zpa_20",
+   "name": "prev_side",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33,
-   "name": "zpa_21",
+   "name": "prev_fall_pose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 34,
-   "name": "zpa_22",
+   "name": "spr_page",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35,
-   "name": "zpa_23",
+   "name": "ramp_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36,
-   "name": "zpa_24",
+   "name": "backwards",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37,
-   "name": "zpa_25",
+   "name": "falling",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38,
-   "name": "zpa_26",
+   "name": "ramp_snd_latch",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39,
-   "name": "zpa_27",
+   "name": "spin_frac",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40,
-   "name": "zpa_28",
+   "name": "spin_count",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41,
-   "name": "zpa_29",
+   "name": "pose_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42,
@@ -559,15 +559,15 @@
   },
   {
    "address": 43,
-   "name": "zpa_2B",
+   "name": "height",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44,
-   "name": "zpa_2C",
+   "name": "frame_count",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45,
@@ -577,159 +577,171 @@
   },
   {
    "address": 46,
-   "name": "zpa_2E",
+   "name": "phase",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 47,
-   "name": "zpa_2F",
+   "name": "joy_now",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 48,
-   "name": "zpa_30",
+   "name": "joy_edge",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49,
-   "name": "zpa_31",
+   "name": "anim_tick",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50,
-   "name": "zpa_32",
+   "name": "anim_step",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51,
-   "name": "zpa_33",
+   "name": "mode_flags",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 52,
+   "name": "zp_34_unused",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53,
-   "name": "zpa_35",
+   "name": "saved_pose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 54,
-   "name": "zpa_36",
+   "name": "pump_boost",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 55,
-   "name": "zpa_37",
+   "name": "exit_mode",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 56,
-   "name": "zpa_38",
+   "name": "digit_lead",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57,
-   "name": "zpa_39",
+   "name": "anim_step_copy",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58,
-   "name": "zpa_3A",
+   "name": "pass_count",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59,
-   "name": "zpa_3B",
+   "name": "fig_y_frac",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 60,
-   "name": "zpa_3C",
+   "name": "slide_speed",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 61,
-   "name": "zpa_3D",
+   "name": "slide_frac",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62,
-   "name": "zpa_3E",
+   "name": "irq_loop_count",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63,
-   "name": "zpa_3F",
+   "name": "cheer_level",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64,
-   "name": "zpa_40",
+   "name": "cheer_delay",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 65,
+   "name": "zp_41_unused",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 66,
-   "name": "zpa_42",
+   "name": "speed_sign",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 67,
-   "name": "zpa_43",
+   "name": "attempt_over",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 68,
-   "name": "zpa_44",
+   "name": "height_bonus",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 69,
-   "name": "zpa_45",
+   "name": "spr_colour_mask",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 70,
-   "name": "zpf_46",
+   "name": "ramp_x",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 71,
-   "name": "zpa_47",
+   "name": "ramp_y_raw",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 72,
-   "name": "zpa_48",
+   "name": "side",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 73,
-   "name": "zpa_49",
+   "name": "disp_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 74,
@@ -745,15 +757,15 @@
   },
   {
    "address": 76,
-   "name": "zpa_4C",
+   "name": "speed_frac",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 77,
-   "name": "zpa_4D",
+   "name": "speed",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 78,
@@ -763,21 +775,21 @@
   },
   {
    "address": 79,
-   "name": "zpa_4F",
+   "name": "pose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 80,
-   "name": "zpa_50",
+   "name": "scale_frac",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 81,
-   "name": "zpa_51",
+   "name": "scale",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 82,
@@ -787,15 +799,15 @@
   },
   {
    "address": 83,
-   "name": "zpf_53",
+   "name": "pos_frac",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 84,
-   "name": "zpa_54",
+   "name": "ramp_pos",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 85,
@@ -805,27 +817,27 @@
   },
   {
    "address": 86,
-   "name": "zpa_56",
+   "name": "fig_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 87,
-   "name": "zpa_57",
+   "name": "fig_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 88,
-   "name": "zpa_58",
+   "name": "fig_side",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 89,
-   "name": "zpa_59",
+   "name": "fig_disp_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 90,
@@ -840,10 +852,16 @@
    "kind": "auto"
   },
   {
+   "address": 92,
+   "name": "fig_speed_frac",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 93,
-   "name": "zpa_5D",
+   "name": "fig_vspeed",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 94,
@@ -853,21 +871,21 @@
   },
   {
    "address": 95,
-   "name": "zpa_5F",
+   "name": "fig_pose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 96,
-   "name": "zpa_60",
+   "name": "scale_rate",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 97,
-   "name": "zpa_61",
+   "name": "fig_scale",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 98,
@@ -876,10 +894,16 @@
    "kind": "auto"
   },
   {
+   "address": 99,
+   "name": "fig_pos_frac",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 100,
-   "name": "zpa_64",
+   "name": "fig_ramp_pos",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 101,
@@ -889,15 +913,15 @@
   },
   {
    "address": 102,
-   "name": "zpa_66",
+   "name": "spr_enable_extra",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 103,
-   "name": "zpa_67",
+   "name": "shadow_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 104,
@@ -913,9 +937,9 @@
   },
   {
    "address": 106,
-   "name": "zpa_6A",
+   "name": "spr_base_x",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 107,
@@ -931,45 +955,45 @@
   },
   {
    "address": 109,
-   "name": "zpa_6D",
+   "name": "key_prev_stop",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 110,
-   "name": "zpa_6E",
+   "name": "key_prev_cbm",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 111,
-   "name": "zpa_6F",
+   "name": "snd_reset_req",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 112,
-   "name": "zpa_70",
+   "name": "snd_ring_head",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 113,
-   "name": "zpa_71",
+   "name": "snd_ring_tail",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 114,
-   "name": "zpa_72",
+   "name": "snd_ticks",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 144,
-   "name": "zpa_90",
+   "name": "ldr_addr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 145,
@@ -979,9 +1003,9 @@
   },
   {
    "address": 146,
-   "name": "zpa_92",
+   "name": "ldr_end",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 147,
@@ -991,15 +1015,15 @@
   },
   {
    "address": 148,
-   "name": "zpa_94",
+   "name": "ldr_track",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 149,
-   "name": "zpa_95",
+   "name": "ldr_sector",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 162,
@@ -1009,117 +1033,117 @@
   },
   {
    "address": 224,
-   "name": "a_00E0",
+   "name": "ldr_work_E0",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 225,
-   "name": "a_00E1",
+   "name": "ldr_work_E1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 226,
-   "name": "a_00E2",
+   "name": "ldr_work_E2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 227,
-   "name": "a_00E3",
+   "name": "ldr_work_E3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 228,
-   "name": "a_00E4",
+   "name": "ldr_work_E4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 229,
-   "name": "a_00E5",
+   "name": "ldr_work_E5",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 230,
-   "name": "a_00E6",
+   "name": "ldr_work_E6",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 231,
-   "name": "a_00E7",
+   "name": "ldr_work_E7",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 232,
-   "name": "a_00E8",
+   "name": "ldr_work_E8",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 233,
-   "name": "a_00E9",
+   "name": "ldr_work_E9",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 234,
-   "name": "a_00EA",
+   "name": "ldr_work_EA",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 239,
-   "name": "a_00EF",
+   "name": "ldr_work_EF",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 240,
-   "name": "a_00F0",
+   "name": "ldr_work_F0",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 241,
-   "name": "a_00F1",
+   "name": "ldr_work_F1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 242,
-   "name": "a_00F2",
+   "name": "ldr_work_F2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 247,
-   "name": "a_00F7",
+   "name": "ldr_work_F7",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 248,
-   "name": "a_00F8",
+   "name": "ldr_work_F8",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 249,
-   "name": "a_00F9",
+   "name": "ldr_work_F9",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 250,
-   "name": "a_00FA",
+   "name": "ldr_work_FA",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 251,
@@ -9235,15 +9259,15 @@
   },
   {
    "address": 62583,
-   "name": "a_F477",
+   "name": "wsec_sector",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62588,
-   "name": "a_F47C",
+   "name": "wsec_track",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62600,
@@ -9283,15 +9307,15 @@
   },
   {
    "address": 62643,
-   "name": "a_F4B3",
+   "name": "cmd_saved_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62645,
-   "name": "a_F4B5",
+   "name": "cmd_saved_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 62647,
@@ -9583,9 +9607,9 @@
   },
   {
    "address": 63512,
-   "name": "a_F818",
+   "name": "random_state_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63513,
@@ -9799,21 +9823,21 @@
   },
   {
    "address": 63782,
-   "name": "a_F926",
+   "name": "stub_file",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63784,
-   "name": "a_F928",
+   "name": "stub_load_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63786,
-   "name": "a_F92A",
+   "name": "stub_load_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63806,
@@ -9823,15 +9847,15 @@
   },
   {
    "address": 63807,
-   "name": "a_F93F",
+   "name": "stub_entry_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63808,
-   "name": "a_F940",
+   "name": "stub_entry_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63809,
@@ -10213,9 +10237,9 @@
   },
   {
    "address": 64723,
-   "name": "f_FCD3",
+   "name": "skater_attr_next",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64730,
@@ -10315,15 +10339,15 @@
   },
   {
    "address": 64947,
-   "name": "a_FDB3",
+   "name": "side_id_buf_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64948,
-   "name": "a_FDB4",
+   "name": "side_id_buf_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64949,
@@ -10608,12 +10632,6 @@
    "kind": "auto"
   },
   {
-   "address": 65433,
-   "name": "KERNAL_MEMTOP",
-   "type": "Predefined",
-   "kind": "system"
-  },
-  {
    "address": 65441,
    "name": "b_FFA1",
    "type": "Branch",
@@ -10630,12 +10648,6 @@
    "name": "archive_event",
    "type": "Subroutine",
    "kind": "user"
-  },
-  {
-   "address": 65484,
-   "name": "KERNAL_CLRCHN",
-   "type": "Predefined",
-   "kind": "system"
   },
   {
    "address": 65487,
@@ -10702,6 +10714,531 @@
    "address": 1,
    "type": "line",
    "text": "6510 processor port. High Jump writes $25 at $08A1 (hj_init) and $0A16 (install_raster_irq): bits 0-2 = %101, RAM at $A000-$BFFF and $E000-$FFFF, I/O at $D000-$DFFF. The play snapshot's RAM byte here reads $E4, which is not the value this code writes; the banking in effect is the one written, since the I/O writes in the interrupt work."
+  },
+  {
+   "address": 2,
+   "type": "line",
+   "text": "Sound driver: script pointers, one 16-bit pointer per SID voice slot at $02+X for slot offsets X = 0, 2, 4 ($02-$07). Read through LDA ($02,X) at $2389 and advanced there; set when a sound starts ($2981) and by the control-flow handlers ($24F5-$262A, $2938)."
+  },
+  {
+   "address": 8,
+   "type": "line",
+   "text": "Sound driver: pointers of the secondary sound streams at $08+X ($08-$0D, one per voice slot), read through LDA ($08,X) at $27E4 and advanced at $27E6/$27EA; set at $2782/$2787."
+  },
+  {
+   "address": 14,
+   "type": "line",
+   "text": "Sound driver: 16-bit working value ($0E low, $0F high) for frequency, pulse-width and timer arithmetic; written by the bytecode handlers ($24AA-$296D) and compared or stored at $24BC-$297B."
+  },
+  {
+   "address": 16,
+   "type": "line",
+   "text": "Sound driver: the voice-slot index saved during a command (STX at $2335 and $2394, read back at $233A and $23A4); also a work byte at $24C5/$24CD."
+  },
+  {
+   "address": 17,
+   "type": "line",
+   "text": "Sound driver: high byte or argument fetched with a command (written at $2578, $2705, $2803, $282E, $2978; read at $23F3-$28DA)."
+  },
+  {
+   "address": 18,
+   "type": "line",
+   "text": "Read pointer, low byte (high byte $13): read_ptr12_byte reads through it and advances it. Set by load_ramp_picture, init_bitmap_video, the inline-text printer $1242 (the return address), $12A0 (ramp profile entry in $2ACB), $1421/$1429 (sprite build source), $192E (picture-cell target) and the resident loader."
+  },
+  {
+   "address": 20,
+   "type": "line",
+   "text": "Write pointer, low byte (high byte $15): write_ptr14_byte stores through it and advances it. Set to bitmap or screen addresses by load_ramp_picture, init_bitmap_video, $1294 (glyph position in bitmap row 0: $4000 + 8*A), the sprite builder $14DE and $192E; the resident loader uses it too."
+  },
+  {
+   "address": 22,
+   "type": "line",
+   "text": "Third pointer, low byte (high byte $17): the end address of the packed picture for the unpacker $1B6A (set at $08FB/$08FD), the glyph source ($6800 + 8*code) in $126D, and a colour-RAM target in $192E."
+  },
+  {
+   "address": 24,
+   "type": "line",
+   "text": "Scratch byte shared by many routines: copy_block's low count, the sprite index in place_sprites ($0BDE-$0BF1), the multiplier operand in $117B/$11E3, the index in $0E2D, the digit position in $17C0-$17E3, and resident loader use."
+  },
+  {
+   "address": 25,
+   "type": "line",
+   "text": "Scratch byte: copy_block's high count, the sprite register offset (2 x sprite number) in place_sprites and place_part_sprite, the object index saved in $117B; resident loader use at $F754-$F7E9."
+  },
+  {
+   "address": 26,
+   "type": "line",
+   "text": "Side byte for the figure being placed: bit 7 set (right half of the ramp) adds the part X offsets, clear subtracts them (place_part_sprite at $0C4C). Copied from $48 or $58 in place_sprites; also used by the resident loader ($FC45-$FCB1)."
+  },
+  {
+   "address": 27,
+   "type": "line",
+   "text": "Sprite X high bits gathered by ROR as each sprite is placed (place_part_sprite, place_fixed_sprite), then written to $D010 at $0C48 with sprite 7 given sprite 4's bit. Resident loader use at $FABB-$FCA5."
+  },
+  {
+   "address": 28,
+   "type": "line",
+   "text": "Pointer (high byte $1D) to the seven-pose sequence played in phases 8 and $0A: $2A3F for pose 8 or $2A46 for pose $10 (set at $0F6A/$0F6C, read through LDA ($1C),Y at $102E and $1074). Resident loader use at $FAC4-$FCA7 for $1C."
+  },
+  {
+   "address": 30,
+   "type": "line",
+   "text": "Raster band number, 0 or 1: selects the handler from $2A01 and the next band from $2A07 in raster_irq; set to 0 by install_raster_irq."
+  },
+  {
+   "address": 31,
+   "type": "line",
+   "text": "The pose $4F at the last sprite rebuild, compared at $0CF2 to decide whether $14DE must rebuild the sprite graphics; written at $0CFB."
+  },
+  {
+   "address": 32,
+   "type": "line",
+   "text": "The side byte $48 as of the previous frame (written at $0CFF); $0CC2 compares bit 7 to detect the skater crossing the middle of the ramp."
+  },
+  {
+   "address": 33,
+   "type": "line",
+   "text": "The fallen figure's pose $5F at the last rebuild (written at $0D07 while falling), compared at $0CEC."
+  },
+  {
+   "address": 34,
+   "type": "line",
+   "text": "Sprite pointer of the skater's first sprite: $B0 at start, flipped between $B0 and $B8 by $14DE (EOR #$08) so the graphics are built into one buffer ($6C00 or $6E00) while the other is shown. place_sprites uses $22..$22+4 for sprites 0-4 and $22+4 for sprite 7."
+  },
+  {
+   "address": 35,
+   "type": "line",
+   "text": "Copy of the skater's vertical ramp coordinate $47, made at $1160 in $114D. $96 is the rim: below it ($23 >= $96) the skater is on the ramp, above it in the air; $1AB4 takes the height as $96 - $23 (+$44). Phases 2, 4, 6, 8 and $0A test it."
+  },
+  {
+   "address": 36,
+   "type": "line",
+   "text": "$FF when the skater landed with a pose between $0C and $13 (written at $0F35), else 0 (cleared at $0D99); selects the alternate pose columns at $0E2F, $0E45 and $10B0."
+  },
+  {
+   "address": 37,
+   "type": "line",
+   "text": "Fall flag: $FF from phase 6's first frame ($0E5F), 0 in phase 0 ($0D52) and at $10C1. While bit 7 is set place_sprites draws the fallen figure from $5F and $59-$5B, and $0CE6/$1162/$14FA take the fall paths."
+  },
+  {
+   "address": 38,
+   "type": "line",
+   "text": "Latch for two one-shot ramp sounds in $1722: with $26=0 sound $0F plays once $23 reaches $E0, with $26=1 sound $10 plays once $23 is below $F0, and either sets $26=$FF. Cleared at phase 2 start ($1611), set to 1 when the skater crosses the middle ($0CCC)."
+  },
+  {
+   "address": 39,
+   "type": "line",
+   "text": "Several uses by phase: the spin accumulator in the air (air_spin_step_a/b add or subtract $5A; incremented at $1051 in phase $0A and read at $107F to choose $33), and in phase 6 the fall variant, 0 or 1 by speed ($1682/$169A), indexing $2A6F, $2A71 and $2DB7. Cleared at $1615 and $1630."
+  },
+  {
+   "address": 40,
+   "type": "line",
+   "text": "Counts carries and borrows of $27 in the air spin (incremented at $0FC9 and $0FED); cleared at phase 2 start ($1617). No reader found."
+  },
+  {
+   "address": 41,
+   "type": "line",
+   "text": "Pointer (high byte $2A) to the current 30-byte pose record, $7000 + 30 x pose (set_pose_pointer); place_sprites steps it by six per sprite part ($184C), and $141C-$143B reads it while building sprites."
+  },
+  {
+   "address": 43,
+   "type": "line",
+   "text": "Best height of the current attempt in eighths of a foot: $1AB4 raises it to $96 - $23 + $44 whenever that is larger; cleared at phase 0 ($15FE), on a fall ($163E) and at $17A8; drawn as feet and inches by $17B4 and handed to the resident code at $1A49 ($FE05, and as digits in $FE03/$FE04). It also sets the timers $40 and $3F at each counted pass ($1ADF)."
+  },
+  {
+   "address": 44,
+   "type": "line",
+   "text": "16-bit frame counter ($2C low, $2D high), incremented once a frame by $15E3 from irq_band0_bottom. The low byte paces the timers $3F/$40 (every fourth frame) and is mixed into the random numbers ($15D7)."
+  },
+  {
+   "address": 46,
+   "type": "line",
+   "text": "High Jump phase, an even number 0-$10, the index into the handler table $2AB9 (read at $0D3F); set by $15EA and directly to 0 at $0DE3/$0DFD. 0 platform, 2 riding, 4 in the air, 6 fall, 8 and $0A the fire sequence, $0C fidget, $0E and $10 the closing sequence."
+  },
+  {
+   "address": 47,
+   "type": "line",
+   "text": "This frame's controls, $DC01 AND $DC00, active low (bit 0 up, 1 down, 2 left, 3 right, 4 fire); written at $0D33, read for held fire at $0F4B and $1053 and for held directions at $1743."
+  },
+  {
+   "address": 48,
+   "type": "line",
+   "text": "Controls just pressed: new OR NOT old, so a bit is 0 only on the frame its input went down (written at $0D30); bits 0-1 are forced to 0 while $43 is set ($0D3D). Read by the phases for fire ($0D6F, $0DC4, $0EF0, $110E), for left/right in air_spin_control and for the pump at $16E7."
+  },
+  {
+   "address": 49,
+   "type": "line",
+   "text": "Frame counter within an animation step: counts to 6 (platform, fidget), 8 (fall), 2 (fire sequence) and similar limits before stepping $32; cleared by $15EA ($16B9) on each phase change."
+  },
+  {
+   "address": 50,
+   "type": "line",
+   "text": "Step number within the current animation (push-off 0-9, fidget 0-11, fall up to $2A6F[$27], fire sequence 0-6); indexes the pose tables. Cleared on each phase change ($16B7); copied to $39 every frame."
+  },
+  {
+   "address": 51,
+   "type": "line",
+   "text": "Multi-use byte: fidget variant 0 or 1 (phase $0C, $0DAA); spin control in the air ($00, $40 or $60: bit 6 spin on, bit 5 direction, air_spin_control); set by phase $0A's end at $108B; in phase 6, 0 while the figure is still moving and $F0 once it has come down ($0EB0). Cleared at $1613 and $1663."
+  },
+  {
+   "address": 52,
+   "type": "line",
+   "text": "No instruction names $34; only the start-up clear of $12-$72 at $1308 writes it."
+  },
+  {
+   "address": 53,
+   "type": "line",
+   "text": "The pose $4F at the moment the fire sequence began (written at $0F70), restored at the end of phase $0A ($1079)."
+  },
+  {
+   "address": 54,
+   "type": "line",
+   "text": "Pump boost countdown: set to about 10 minus the speed's high byte when a direction is pressed low on the ramp ($16F8), decremented each frame, indexing the speed increments at $2DBD ($16FA-$1718). Cleared at phase 2 start."
+  },
+  {
+   "address": 55,
+   "type": "line",
+   "text": "Takeoff selector: 2 during the push-off ($0D95), $FF after the skater crosses the middle ($0CC8), then resolved by $1798 to 0 (normal: next takeoff is phase 4) or 1 (the attempt is over: next takeoff is phase $0E). Indexes $2A09, $2A0D, $2A11 and $2A13."
+  },
+  {
+   "address": 56,
+   "type": "line",
+   "text": "Leading-zero flag for the number printer at $1221: $FF set at $17F7 before the pass count is drawn, then the last nonzero digit; while zero a zero digit prints as a space."
+  },
+  {
+   "address": 57,
+   "type": "line",
+   "text": "Copy of $32 written every frame at $0D0B; no reader found."
+  },
+  {
+   "address": 58,
+   "type": "line",
+   "text": "Number of passes counted: 0 at the start ($19C5), incremented by $1AD0 at each turnaround on the right half and drawn after PASS: by $17F0. At 5, $43 is set (the attempt ends); $0EF4, $161D, $17A0 and $0CD4 test it."
+  },
+  {
+   "address": 59,
+   "type": "line",
+   "text": "Fraction of the fallen figure's height $57; $14C3 adds $5D to it, carrying into $57."
+  },
+  {
+   "address": 60,
+   "type": "line",
+   "text": "Sliding speed after a fall: set to $F8 at the fall's start ($169E), reduced by 4 a frame in $18B1, and added to $3D; each carry moves $46 on by one and $51 down by one."
+  },
+  {
+   "address": 61,
+   "type": "line",
+   "text": "Fraction accumulator for the slide in $18B1 (adds $3C each frame)."
+  },
+  {
+   "address": 62,
+   "type": "line",
+   "text": "Loop limit for the extra picture-cell redraws at the end of irq_band1_play: set to 10 at $0D12, decremented at $0D1E."
+  },
+  {
+   "address": 63,
+   "type": "line",
+   "text": "Set to half the height at each counted pass ($1AE4), cleared at phase 0; decremented every fourth frame once $40 is zero. $19AE redraws a random picture cell when a random byte is not above it, so higher jumps give more animation for longer."
+  },
+  {
+   "address": 64,
+   "type": "line",
+   "text": "Set to the height at each counted pass ($1AE1), cleared at phase 0; counted down every fourth frame before $3F starts to fall."
+  },
+  {
+   "address": 65,
+   "type": "line",
+   "text": "No instruction names $41; only the start-up clear at $1308 writes it."
+  },
+  {
+   "address": 66,
+   "type": "line",
+   "text": "Bit 7 of the speed high byte $4E as last seen: set at takeoff ($0E53) and by $1AD0, which counts a pass when the sign changes."
+  },
+  {
+   "address": 67,
+   "type": "line",
+   "text": "$FF once the attempt is finished: after the fire sequence ($108F), at the fifth pass ($1AF4), or at phase 2 start with $3A >= 6 ($1625); cleared when a fall begins ($1640). While set, up/down presses are forced in $30, the pump runs without input ($16E3), the spin control works in the air, and $1798 sends the next takeoff to the closing phase $0E."
+  },
+  {
+   "address": 68,
+   "type": "line",
+   "text": "Height bonus: 4 (half a foot) set at the start of phase $0A ($104F), added once to the height candidate by $1AB4, which then clears it."
+  },
+  {
+   "address": 69,
+   "type": "line",
+   "text": "Sprite mask: bit n set shows sprite n in its colour $2E63+n, clear makes it black; ANDed with $66 for $D01C. $FF normally ($09EC, $0D62, $10C5); the fall sets it from $2A5D ($0EDB)."
+  },
+  {
+   "address": 70,
+   "type": "line",
+   "text": "Skater's horizontal ramp coordinate, read with $47 from the profile table at $2ACB for the position $54/$55 ($12A0); $117B turns it into display X. Bytes $46-$55 are the skater's record; $56-$65 the fallen figure's (X=$10)."
+  },
+  {
+   "address": 71,
+   "type": "line",
+   "text": "Skater's vertical ramp coordinate from $12A0. $114D first copies the raw value to $23, then raises $47 to at least $16, and to at least $96 (the rim) while $2A13[$37] is nonzero (during the push-off, after crossing the middle until $1798 resolves $37, and once the attempt is over), so the sprites stay on the ramp while $23 may still go above the rim."
+  },
+  {
+   "address": 72,
+   "type": "line",
+   "text": "Side history: $12A0 rotates in a new bit 7 on each call, set when the ramp position $54/$55 is $0111 or more (the right half). Bit 7 mirrors the sprites, picks the start platform and speed sign, and gates pass counting and the fire sequence."
+  },
+  {
+   "address": 73,
+   "type": "line",
+   "text": "Skater's display X, low byte ($4A high, $4B display Y), computed by $117B from $46/$47 and the scale $51/$52, mirrored about X=$163 on the right half; copied to $6A-$6C by place_sprites."
+  },
+  {
+   "address": 76,
+   "type": "line",
+   "text": "Speed, fraction byte: $4C/$4D/$4E is a 24-bit signed speed along the ramp. $16BC subtracts speed/256 each frame (friction); $146F adds the slope term; the pump adds $2DBD entries ($16E3)."
+  },
+  {
+   "address": 77,
+   "type": "line",
+   "text": "Speed along the ramp, 16-bit signed ($4D low, $4E high, positive towards the right); $0080 or $FF80 at the push-off ($1921), added to the position $53-$55 by $146F."
+  },
+  {
+   "address": 79,
+   "type": "line",
+   "text": "Skater pose number, the index of a 30-byte record at $7000 (set_pose_pointer). The low three bits act as the rotation in the landing test at $0F37 (0, 1 or 7 lands). Set by every phase from its pose tables."
+  },
+  {
+   "address": 80,
+   "type": "line",
+   "text": "Fraction byte for the scale $51/$52 while it changes at rate $60 during a fall ($187D)."
+  },
+  {
+   "address": 81,
+   "type": "line",
+   "text": "Display scale, 8.8 fixed ($51 low, $52 high): $117B multiplies the distances $B7-$46 and $47-7 by it, and $11F1 uses it for the shadow. $00F8 at phase 0 and before phase $10, clamped to $00A8-$0108 every frame ($1856), changed by $60 and $3C during a fall."
+  },
+  {
+   "address": 83,
+   "type": "line",
+   "text": "Ramp position, fraction byte: $53/$54/$55 is the 24-bit position the speed is added to in $146F."
+  },
+  {
+   "address": 84,
+   "type": "line",
+   "text": "Ramp position along the profile, 16-bit ($54 low, $55 high), 0 to about $0222: $0056 on the left platform, $01CC on the right; $12A0 maps it to $46/$47 through the table at $2ACB."
+  },
+  {
+   "address": 86,
+   "type": "line",
+   "text": "Fallen figure: horizontal coordinate (copied from $46 when the fall starts, $165B; moved by $14C3 and phase 6)."
+  },
+  {
+   "address": 87,
+   "type": "line",
+   "text": "Fallen figure: vertical coordinate, $96 at the fall's start, falling under the gravity in $5D/$5E until $F0 (phase 6); selects its pose through $2A4D."
+  },
+  {
+   "address": 88,
+   "type": "line",
+   "text": "Fallen figure: side byte, copied from $48 at the fall's start ($166B); mirrors its sprites."
+  },
+  {
+   "address": 89,
+   "type": "line",
+   "text": "Fallen figure: display X low ($5A high, $5B Y), written by $117F (X=$10) and read by place_sprites while falling."
+  },
+  {
+   "address": 92,
+   "type": "line",
+   "text": "Fallen figure: speed fraction byte by the record layout ($4C+$10); no instruction names it, and the only routine that would reach it with X=$10, $16C1, has no caller."
+  },
+  {
+   "address": 93,
+   "type": "line",
+   "text": "Fallen figure: vertical speed, 16-bit ($5D low, $5E high), cleared at the fall's start and increased by $10 a frame in $14C3 (gravity), which adds it to $3B/$57."
+  },
+  {
+   "address": 95,
+   "type": "line",
+   "text": "Fallen figure's pose number (sprites 0-3 while $25 is set): from $2A4E by height ($0EA9) or from the fall tables $2A57/$2A63 ($0EE0)."
+  },
+  {
+   "address": 96,
+   "type": "line",
+   "text": "Rate of change of the scale $51/$52 during a fall: $7A or $86 at its start ($167E), added to $50 and moved two steps towards zero each frame ($187D)."
+  },
+  {
+   "address": 97,
+   "type": "line",
+   "text": "Fallen figure's copy of the scale $51/$52 ($61 low, $62 high), made at the fall's start ($166F/$1673) and read by $117F through $51,X with X=$10."
+  },
+  {
+   "address": 99,
+   "type": "line",
+   "text": "Fallen figure's position fraction by the record layout ($53+$10); no instruction names it and $146F is not called with X=$10."
+  },
+  {
+   "address": 100,
+   "type": "line",
+   "text": "Fallen figure's ramp position ($64 low, $65 high), $0056 or $01CC by side at the fall's start ($1648-$1657). No reader found: $12A0 and $146F, which read $54,X, are only reached with X=0 ($1152, the X=$10 entry, has no caller)."
+  },
+  {
+   "address": 102,
+   "type": "line",
+   "text": "Extra sprite-enable bits ORed into $D015 at $0B5F: $80 (sprite 7, the shadow) when $1834 returns carry clear, else 0 ($19F8-$1A03)."
+  },
+  {
+   "address": 103,
+   "type": "line",
+   "text": "Shadow X low byte ($68 high) and $69 its Y, computed by $11E3 (from the skater display position and the scale); $69 sets sprite 7's Y offset at $0C33."
+  },
+  {
+   "address": 106,
+   "type": "line",
+   "text": "Working origin for place_part_sprite: X low ($6B high, $6C Y), copied from $49-$4B or $59-$5B by place_sprites."
+  },
+  {
+   "address": 109,
+   "type": "line",
+   "text": "Previous $DC01 reading for the RUN/STOP test in $1A08 (a new press of bit 7 sets $FE12=$FF and ends the event through $1A49)."
+  },
+  {
+   "address": 110,
+   "type": "line",
+   "text": "Previous $DC01 reading for the Commodore-key test in $1A24 (a new press of bit 5 flips the resident sound flag $FE10)."
+  },
+  {
+   "address": 111,
+   "type": "line",
+   "text": "Set to the new $FE10 value when the Commodore key toggles sound ($1A3F); a nonzero value (sound off) makes the main loop re-run the sound initialiser $22B7, then the loop clears it."
+  },
+  {
+   "address": 112,
+   "type": "line",
+   "text": "Write index (0-15) of the 16-entry sound-request ring at $2E6B; $1A96 stores a request and advances it."
+  },
+  {
+   "address": 113,
+   "type": "line",
+   "text": "Read index of the sound-request ring; the main loop compares it with $70 and $1AA5 takes the next request and advances it."
+  },
+  {
+   "address": 114,
+   "type": "line",
+   "text": "Sound ticks owed to the main loop: incremented once a frame at $0B31, decremented at $08ED after each call of the sound driver step $232C."
+  },
+  {
+   "address": 144,
+   "type": "line",
+   "text": "Resident loader: current load address ($90 low, $91 page), from X/Y at $F295 and advanced a page per block ($F258)."
+  },
+  {
+   "address": 146,
+   "type": "line",
+   "text": "Resident loader: end address ($92 low, $93 high) = load address + file length from the table at $F2F9; returned in X/Y."
+  },
+  {
+   "address": 148,
+   "type": "line",
+   "text": "Resident loader: first byte of the file's table entry ($F2F9+4*A), passed with $95 to the drive routines; probably track and sector (not checked)."
+  },
+  {
+   "address": 149,
+   "type": "line",
+   "text": "Resident loader: second byte of the file's table entry ($F2FA+4*A), adjusted at $F2E4; read with $94."
+  },
+  {
+   "address": 224,
+   "type": "line",
+   "text": "Resident loader work byte at $E0, used only by the loader's code in $F4xx-$F6xx (writes: $F42E; reads: $F604; read-modify-write: $F625). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 225,
+   "type": "line",
+   "text": "Resident loader work byte at $E1, used only by the loader's code in $F4xx-$F6xx (writes: $F4BF; reads: $F5E8; read-modify-write: $F628). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 226,
+   "type": "line",
+   "text": "Resident loader work byte at $E2, used only by the loader's code in $F4xx-$F6xx (writes: $F4F1; reads: none; read-modify-write: $F50B). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 227,
+   "type": "line",
+   "text": "Resident loader work byte at $E3, used only by the loader's code in $F4xx-$F6xx (writes: $F4FD; reads: none; read-modify-write: $F505). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 228,
+   "type": "line",
+   "text": "Resident loader work byte at $E4, used only by the loader's code in $F4xx-$F6xx (writes: $F4F7; reads: none; read-modify-write: $F508). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 229,
+   "type": "line",
+   "text": "Resident loader work byte at $E5, used only by the loader's code in $F4xx-$F6xx (writes: $F423, $F491, $F641; reads: $F4EE, $F536, $F5D0; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 230,
+   "type": "line",
+   "text": "Resident loader work byte at $E6, used only by the loader's code in $F4xx-$F6xx (writes: $F434, $F489, $F5ED; reads: $F4F4, $F63A; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 231,
+   "type": "line",
+   "text": "Resident loader work byte at $E7, used only by the loader's code in $F4xx-$F6xx (writes: $F431, $F48C, $F5F6; reads: $F4FA; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 232,
+   "type": "line",
+   "text": "Resident loader work byte at $E8, used only by the loader's code in $F4xx-$F6xx (writes: $F426; reads: $F5E3, $F635; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 233,
+   "type": "line",
+   "text": "Resident loader work byte at $E9, used only by the loader's code in $F4xx-$F6xx (writes: $F5B0; reads: none; read-modify-write: $F5C4, $F5C7). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 234,
+   "type": "line",
+   "text": "Resident loader work byte at $EA, used only by the loader's code in $F4xx-$F6xx (writes: none; reads: $F5E0; read-modify-write: $F5CA). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 239,
+   "type": "line",
+   "text": "Resident loader work byte at $EF, used only by the loader's code in $F4xx-$F6xx (writes: $F40B, $F60B; reads: $F615; read-modify-write: $F60D). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 240,
+   "type": "line",
+   "text": "Resident loader work byte at $F0, used only by the loader's code in $F4xx-$F6xx (writes: $F40E, $F60B; reads: $F53F, $F61D; read-modify-write: $F612). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 241,
+   "type": "line",
+   "text": "Resident loader work byte at $F1, used only by the loader's code in $F4xx-$F6xx (writes: $F412; reads: $F618; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 242,
+   "type": "line",
+   "text": "Resident loader work byte at $F2, used only by the loader's code in $F4xx-$F6xx (writes: $F415; reads: $F620; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 247,
+   "type": "line",
+   "text": "Resident loader work byte at $F7, used only by the loader's code in $F4xx-$F6xx (writes: $F42B; reads: $F5FF; read-modify-write: $F62D). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 248,
+   "type": "line",
+   "text": "Resident loader work byte at $F8, used only by the loader's code in $F4xx-$F6xx (writes: $F573; reads: none; read-modify-write: $F561). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 249,
+   "type": "line",
+   "text": "Resident loader work byte at $F9, used only by the loader's code in $F4xx-$F6xx (writes: none; reads: none; read-modify-write: $F598). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
+  },
+  {
+   "address": 250,
+   "type": "line",
+   "text": "Resident loader work byte at $FA, used only by the loader's code in $F4xx-$F6xx (writes: $F632; reads: none; read-modify-write: none). High Jump's own code does not touch it; its meaning belongs to the loader's annotation."
   },
   {
    "address": 1024,
@@ -15711,7 +16248,7 @@
   {
    "address": 62201,
    "type": "line",
-   "text": "Resident loader file table, 4 bytes per file, files $00-$30 (49 entries): +0 start track, +1 start sector as an index into that track's interleave sequence (converted to a physical sector at $F2E4), +2/+3 length in bytes (lo/hi). Files $00-$1A are on side 1, $1B-$30 on side 2 (both start again at track 3). Read by load_setup ($F295). Checked: files $0B, $0C, $0E, $0F, $11, $12 read from side1.g64 with this table match the snapshot byte for byte"
+   "text": "Resident loader file table, 4 bytes per file, files $00-$30 (49 entries): +0 start track, +1 start sector as an index into that track's interleave sequence (converted to a physical sector at $F2E4), +2/+3 length in bytes (lo/hi). Files $00-$1A are on side 1, $1B-$30 on side 2 (both start again at track 3). Read by load_setup ($F295). Checked: files $0B, $0C, $0E, $0F, $11 and $12 read from side1.g64 with this table equal the snapshot, apart from the bytes of $0B the game writes at run time"
   },
   {
    "address": 62202,
@@ -15796,7 +16333,17 @@
   {
    "address": 62522,
    "type": "line",
-   "text": "Write one sector from the page at X/Y (patched into $F477/$F47C): command 5 (start), 128 commands 3 each carrying two bytes, then command 4 (write it), then wait for the drive's status byte. No caller in this snapshot"
+   "text": "Write one sector: command 5 (on the drive, resets its buffer index), 128 commands 3 each carrying two bytes read from ($EF/$F0), then command 4 with track Y and sector X (patched into $F47C/$F477), which writes the drive's buffer to disk, then wait for the drive's one-byte reply. No caller in this snapshot"
+  },
+  {
+   "address": 62583,
+   "type": "line",
+   "text": "Operand of an LDA # in write_sector: the sector for the final command 4, patched from X at $F43A"
+  },
+  {
+   "address": 62588,
+   "type": "line",
+   "text": "Operand of the second LDA #: the track for command 4, patched from Y at $F43D"
   },
   {
    "address": 62601,
@@ -15814,9 +16361,19 @@
    "text": "Mark a reply pending (xfer_state = $10) and fall into wait_transfer"
   },
   {
+   "address": 62643,
+   "type": "line",
+   "text": "Operand of the LDX # at $F4B2: send_drive_command's caller X, patched at $F4B7 and handed back on both exits ($0B here: the sector of the last read)"
+  },
+  {
+   "address": 62645,
+   "type": "line",
+   "text": "Operand of the LDY # at $F4B4: the caller's Y, patched at $F4BA ($18 here: track 24, the last read's track)"
+  },
+  {
    "address": 62647,
    "type": "line",
-   "text": "Send the 3-byte command in $E5 (command), $E6 (track byte), $E7 (sector byte) to the drive code on the serial bus, keeping X/Y (saved into $F4B3/$F4B5, returned by the exit at $F4B1). It raises CIA 2 port A bit 3 ($DD00), fails with carry set if bit 7 is already high or bit 6 does not go low then high within 255 polls, drops bit 3, then clocks out 24 bits most significant first: each bit on $DD00 bit 4, strobed by pulsing bit 5. For commands 1 and 2 it marks a reply pending in xfer_state ($F54A). Returns carry clear when the command was taken"
+   "text": "Send the 3-byte command in $E5 (command), $E6 (track byte), $E7 (sector byte) to the drive code on the serial bus, keeping X/Y (saved into $F4B3/$F4B5, returned by the exit at $F4B1). It raises CIA 2 port A bit 3 ($DD00), fails with carry set if bit 7 is already high or bit 6 does not go low then high within 255 polls, drops bit 3, then clocks out 24 bits most significant first: each bit on $DD00 bit 4, strobed by pulsing bit 5. For commands below 3 it marks a reply pending in xfer_state ($F54A). Returns carry clear when the command was taken"
   },
   {
    "address": 62801,
@@ -15882,6 +16439,11 @@
    "address": 63511,
    "type": "line",
    "text": "16-bit shift-register state of random_step ($F90F): low byte $F817, high byte $F818. File $0B sets $01,$08. Nothing in this snapshot calls random_step; the town, entry and play snapshots each hold a different value (entry $0843 is two steps of the generator after play's $1021), so earlier loads step it"
+  },
+  {
+   "address": 63512,
+   "type": "line",
+   "text": "High byte of random_state ($08 in file $0B; ROL'd at $F918 and XORed into the result at $F921)"
   },
   {
    "address": 63513,
@@ -16059,9 +16621,34 @@
    "text": "Template of the 29-byte load stub that run_load_stub ($FA58) copies to $0800 and jumps to: LDA #file ($F926), LDX #lo ($F928), LDY #hi ($F92A), JSR $F230, SEI, $DC02=$FF, $DC03=0, $DC00=$7F, JMP entry ($F93F/$F940). Patched per destination at $F9B5-$F9CD and $FC84-$FC94. Only its last instruction ($F93E) runs here, to re-enter the loaded event; the rest runs as the copy at $0800"
   },
   {
+   "address": 63782,
+   "type": "line",
+   "text": "Load stub operand: file number for LDA # (patched at $F9CD from file_no_table, $FC94 with 3 for the shop; $0E for High Jump here)"
+  },
+  {
+   "address": 63784,
+   "type": "line",
+   "text": "Load stub operand: load address low byte for LDX # (patched $F9B5, $FC84)"
+  },
+  {
+   "address": 63786,
+   "type": "line",
+   "text": "Load stub operand: load address high byte for LDY #, followed by JSR $F230 and the CIA 1 set-up: port A all outputs, port B all inputs, $DC00 = $7F (patched $F9BB, $FC8C)"
+  },
+  {
    "address": 63806,
    "type": "line",
    "text": "Last instruction of the load stub, JMP to the loaded event's entry ($F93F/$F940 = $0880 for High Jump). Jumped to in place by event_done to play the same event again without loading it: after YES in practice ($FE99) and between skaters ($FFA7). High Jump's $0880 has been turned into NOPs by then, so this lands on its re-entry at $0883"
+  },
+  {
+   "address": 63807,
+   "type": "line",
+   "text": "Low byte of reenter_event's JMP target, the loaded file's entry (patched $F9C1, $FC87; $80 here)"
+  },
+  {
+   "address": 63808,
+   "type": "line",
+   "text": "High byte of the JMP target (patched $F9C7, $FC8F; $08 here, so the stub enters High Jump at $0880)"
   },
   {
    "address": 63809,
@@ -16071,7 +16658,7 @@
   {
    "address": 63850,
    "type": "line",
-   "text": "Wait until $D012 changes to a value below $80 (a short pacing delay, at most a few dozen lines); used to slow the fire and joystick polls"
+   "text": "Wait until $D012 changes to a value below $80: about one line when called in the top half of the frame, up to the end of the frame from the bottom half. A short pacing delay for the fire and joystick polls"
   },
   {
    "address": 63861,
@@ -16111,7 +16698,7 @@
   {
    "address": 64235,
    "type": "line",
-   "text": "Clear the screen and print SKATING TO followed by dest_name on the middle line ($0599 and $05A4)"
+   "text": "Clear the screen and print SKATING TO followed by dest_name on row 10 ($0599 and $05A4)"
   },
   {
    "address": 64261,
@@ -16126,7 +16713,7 @@
   {
    "address": 64307,
    "type": "line",
-   "text": "Results screen after every skater has had a turn: text screen, rank_and_award, archive_event, then (not in practice) SCORES FOR <event> with each skater's name and score, two lines apart: feet'inches\" for High Jump ($FC1D), WIN/LOSS for POOL JOUST ($FC40), six BCD digits otherwise, and OVERALL points in a competition. Waits for fire to be pressed and released, then goes to the next event (competition) or the shop"
+   "text": "Results screen after every skater has had a turn: text screen, rank_and_award, archive_event, then (not in practice) SCORES FOR <event> with each skater's name and score, two lines apart: feet'inches\" for High Jump ($FC1D), WIN/LOSS for POOL JOUST ($FC40), six BCD digits otherwise, and OVERALL points in a competition. Waits for fire to be released and then pressed, then goes to the next event (competition) or the shop"
   },
   {
    "address": 64541,
@@ -16169,9 +16756,14 @@
    "text": "Per-skater byte, 8 entries (7 in each here), copied to slot byte $FE02/$FE0B ($FB15) and kept with the skater by the sort. Its meaning is not established; High Jump copies $FE02 to $2D83 and $2D8B"
   },
   {
+   "address": 64723,
+   "type": "line",
+   "text": "skater_attr from skater 1 ($FCD3-$FCD9), the neighbour order_pair swaps with ($F7BB)"
+  },
+  {
    "address": 64730,
    "type": "line",
-   "text": "Skater names, 16 bytes each, 8 skaters ($FCDA-$FD59): skater 0 here. Characters are stored as screen codes minus $40 for letters (show_results adds $40, $FB8E); zero ends a name. The slot pointer $FE00 = $FCDA + 16*skater ($FB21). Empty in this snapshot"
+   "text": "Skater names, 16 bytes each, 8 skaters ($FCDA-$FD59): skater 0 here. Zero ends a name. show_results adds $40 to each character and takes $40 back off results above $5A ($FB8E), so letters are kept as $01-$1A; High Jump's printer ANDs each byte with $3F ($125E). The slot pointer $FE00 = $FCDA + 16*skater ($FB21). Empty in this snapshot"
   },
   {
    "address": 64746,
@@ -16247,6 +16839,16 @@
    "address": 64946,
    "type": "line",
    "text": "Buffer for file $0C, the disk-side ID: goto_event fills it with $FF ($F9A9), the stub loads 3 bytes here, and side_check compares each with wanted_side ($FA6B). Side 1's track 18 sector 18 begins 01 01 01, side 2's 02 02 02 (read from the .g64 images); 01 01 01 here"
+  },
+  {
+   "address": 64947,
+   "type": "line",
+   "text": "Second byte of the side ID (compared at $FA6B with X = 1)"
+  },
+  {
+   "address": 64948,
+   "type": "line",
+   "text": "Third byte of the side ID (X = 2)"
   },
   {
    "address": 64949,
@@ -16402,6 +17004,21 @@
    "address": 65471,
    "type": "line",
    "text": "For events 0-4 (finished_event): copy the first 9 bytes of event_scores (the top three after sorting) to archive_scores and the top three skater_ids to archive_ids"
+  },
+  {
+   "address": 65487,
+   "type": "line",
+   "text": "Inside archive_event (STA $FD7A,x). The auto symbol comes from JSR $FFCF at $0AAB, a High Jump routine with no caller found that was written for the KERNAL's CHRIN; with the ROMs banked out it would run this RAM instead. Likewise $0AE7/$0AEA call $FFE7 and $FFE4, which fall inside the instructions at $FFE5 and $FFE2"
+  },
+  {
+   "address": 65508,
+   "type": "line",
+   "text": "Operand byte ($FD) of LDA $FDAA,y at $FFE2 in archive_event; the auto symbol is from High Jump JSR $FFE4 at $0AEA (the KERNAL GETIN address), code with no caller found"
+  },
+  {
+   "address": 65511,
+   "type": "line",
+   "text": "Operand byte ($FD) of STA $FD9E,x at $FFE5 in archive_event; the auto symbol is from High Jump JSR $FFE7 at $0AE7 (the KERNAL CLALL address), no caller found for that routine either"
   },
   {
    "address": 65519,
