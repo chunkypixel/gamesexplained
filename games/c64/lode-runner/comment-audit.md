@@ -193,3 +193,18 @@ The $70DB counterexample executed original bytes in a fresh process-local snapsh
 ## Correction recheck
 
 Offline tests of $70DB with requests A=1 and A=2 in both modes0 and1 copy256 bytes to $1000, write none to $1100, and advance difficulty to1. In both modes2 and5, with the prior KERNAL close-all-channels call $FFE7 stubbed to RTS, execution halted at $715C after preparing track12/sector07 and patching both disk-transfer pages to $11; no KERNAL body or drive operation ran. Assertions require all four preparation results to match. This confirms the replacement comment's conditional wording. Offline $8BF3 tests with glyph selector byte $23=59,phase2,current guard1 and A=0/1/$80 returned X=0/4/4, selected sprite buffers $0C00/$0C40/$0C40 and wrote33 bytes each. The clarification therefore correctly covers every nonzero A, including negative values.
+
+## Targeted comparison follow-up — 4 October 2026
+
+An independent reviewer who authored none of the four changed/new comments checked their final text against the canonical disk bytes. This selected check is not a random sample and supplies no population error-rate estimate. The preceding sampled counts and intervals remain unchanged.
+
+| Address | Check | Final result |
+|---|---|---|
+| $6FA6 | Reset clears timer indexes30..0; decoder consumes224bytes at $1000–$10DF through row directories | Pass |
+| $76E6 | Start phase0; twelve increments; phase12 completion on thirteenth successful update | Pass |
+| $77A5 | Start phase12; twelve increments; phase24 completion on thirteenth update | Pass after correcting retained wording: spray phases12–23 animate;24 branches to allocation before reading the spray tables |
+| $71F5 | First CHRIN result discarded before256 storing reads | Pass; native room-one buffer independently matches raw offsets1–224, while offset0 fails |
+
+The reviewer also audited every decoded caller/writer used by the conditional hole bound. The continuing main loop calls runner update at $611C and hole service at $6142 exactly once. Allocation has only the two dig-completion tail callers $779F/$7862, seeds one180 timer at $7B57, and service decrements active timers at $850F. Normal room initialization clears31 timer cells at $6FC5. Other potential indexed aliases are excluded by traced legal guard/exit/hole index bounds; normal indirect stores target grids or bitmaps. These legal-memory and ordinary-reset/control-flow assumptions are explicit in `facts.md`. At least13 continuing passes separate allocations, giving an upper bound of14 active timed holes, not a proof of attaining 14 on a board.
+
+Independent trapdoor/render and edition-timing spot-checks also pass: $733E draws tile5 as1 without changing the maps; side/up tests block5 while support/down tests permit passage under their movement preconditions. Cartridge $825D/$8118 counters and threshold differ from disk $648A/$611C; the recorded 144/48/48 and 144/72/72 IRQ/loop/hole counts are qualified to the tested 120 PAL-frame windows.

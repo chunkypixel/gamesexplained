@@ -211,7 +211,12 @@ can open with that instead.
   one map drawn that way showed letters where the stalactites belong.
   Compare the character set and the colour table of the hand-over with a
   play snapshot, and embed the bytes that differ for the state the
-  picture claims to show.
+  picture claims to show. For decoded rooms or other loaded resources,
+  follow the transfer into its runtime buffer before choosing an offset
+  in the extracted file: the reader may discard a prefix or header.
+  Compare at least one decoded payload with a live buffer, then run the
+  original decoder across the stored resource set before publishing the
+  browser.
 - Reference images go in `reference/`; the page refers to them by
   relative path from the game folder (`reference/<name>.png`).
 

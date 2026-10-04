@@ -3678,6 +3678,12 @@
    "kind": "auto"
   },
   {
+   "address": 29173,
+   "name": "discard_sector_leading_byte",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 29178,
    "name": "b_71FA",
    "type": "Branch",
@@ -7844,7 +7850,7 @@
   {
    "address": 28582,
    "type": "line",
-   "text": "Reset per-room actor, gold, exit and hole state. Read the selected sector unless its index matches the cache, and unpack 448 cells low nibble first through row directories into dynamic and backing grids; values ten through fifteen become blank. Render/extract according to input X. If a play room lacks a runner, a nonzero index retries board zero and raises the automatic difficulty cycle up to ten; board zero without a runner resets to the title."
+   "text": "Reset per-room actor, gold, exit and hole state, clearing all 31 timer cells $12E0-$12FE. Read the selected sector unless its index matches the cache, and unpack exactly $1000-$10DF as 448 cells low nibble first through row directories into dynamic and backing grids; values ten through fifteen become blank. Render/extract according to input X. If a play room lacks a runner, a nonzero index retries board zero and raises the automatic difficulty cycle up to ten; board zero without a runner resets to the title."
   },
   {
    "address": 28757,
@@ -7865,6 +7871,11 @@
    "address": 28891,
    "type": "line",
    "text": "Save the room index and increment the disk-transfer page operands $71FF/$7219 to select $1100. With ordinary read/write requests in modes two or higher, temporary index $97 selects track12, sector7. Modes zero/one instead take the embedded-demo path, which copies to $1000 and can advance the difficulty cycle; it does not fill $1100. Restore the saved index and page operands, then compare all eleven existing marker bytes $11F0-$11FA with $6CA2. Return A=0 for an invalid marker, A=1 for a valid marker with nonzero $11FB, or A=$FF when $11FB is zero."
+  },
+  {
+   "address": 29173,
+   "type": "line",
+   "text": "Discard one CHRIN result before the storing loop at $71FA. In the supplied room sectors, raw byte zero is skipped: the 224-byte grid payload is raw offsets 1 through 224, loaded at $1000-$10DF. The storing loop still performs 256 reads; the skipped byte's protocol purpose is not established."
   },
   {
    "address": 29183,
@@ -7964,12 +7975,12 @@
   {
    "address": 30438,
    "type": "line",
-   "text": "Set a negative drill flag and phase zero. Require a brick diagonally below-left, room bounds and a blank neighboring cell beside the runner. Each continuation aligns the runner, updates spray/brick glyphs and advances the phase; phase 12 completes the hole, while an obstruction cancels it."
+   "text": "Set a negative drill flag and phase zero. Require a brick diagonally below-left, room bounds and a blank neighboring cell beside the runner. Each continuation aligns the runner, updates spray/brick glyphs and advances the phase; phase 12 completes the hole, while an obstruction cancels it. Completion takes 13 successful runner updates including the start; the phase-12 call allocates after twelve increments."
   },
   {
    "address": 30629,
    "type": "line",
-   "text": "Set a positive drill flag and phase 12. Apply the mirrored below-right brick and blank-neighbor checks; phases 12..24 use the right half of the spray table and the corresponding brick-erasure animation. Completion calls finish_dug_hole with the right column."
+   "text": "Set a positive drill flag and phase 12. Apply the mirrored below-right brick and blank-neighbor checks; animated phases 12..23 use the right half of the spray table and the corresponding brick-erasure animation. Phase 24 completes the hole and calls finish_dug_hole with the right column. Completion takes 13 successful runner updates including the start; the phase-24 call allocates after twelve increments."
   },
   {
    "address": 30821,

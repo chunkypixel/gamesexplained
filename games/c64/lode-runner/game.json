@@ -124,5 +124,18 @@
     "wiki": "https://www.c64-wiki.com/wiki/Lode_Runner",
     "manual": "https://www.lemon64.com/doc/lode-runner/355"
   },
-  "model_label": "GPT-6.1 Sol Extra High (contributor-confirmed)"
+  "model_label": "GPT-6.1 Sol Extra High (contributor-confirmed)",
+  "imported": {
+    "source": "jankfoundry/loderunner: disassembly/loderunner.asm (comparison leads only)",
+    "sha256": "0368a113f51329ee3d9cb20e5b13860a9050748a9f44518e1360fab4238d2ac0",
+    "tool": "python tools.original_assembly; 64tass 1.59.3120",
+    "by": "jankfoundry",
+    "model": [
+      "gpt-6-astra"
+    ],
+    "date": "2026-10-04",
+    "model_note": "Contributor recalls mostly GPT-6 Astra; complete historical model roster unconfirmed. No prior annotation text/names imported; selected claims independently reverified by this run.",
+    "source_commit": "0f15fdedd7d545582f627dcf26a29f13175a3c8f",
+    "evidence": "comparison.md"
+  }
 }

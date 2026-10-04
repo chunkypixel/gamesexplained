@@ -37,3 +37,11 @@ Enumerating each indexed table's reachable caller range before writing comments 
 VICE pause can briefly leave an instruction in flight; the kit's pause helper plus repeated stable-PC reads was used before pokes. Failed early screenshots were loading states and were replaced with completed title/play states. The editor's physical key chord entered play during automation; the editor integration experiment therefore injected the documented command latch and records that distinction. All disk writes use a private newly formatted user disk. The original images remain unchanged.
 
 Cleanup exposed a regex dialect mismatch: Python accepts noncapturing groups, while pkill uses POSIX extended regex. The launcher uses a capturing alternation, and a grep -E test now checks the actual dialect before process ownership tests. The real stop command passed after this change.
+
+## Prior-analysis validation follow-up
+
+The earlier cartridge disassembly supplied a second data path that exposed a silent room-browser alignment error. The page-specific `verify-comparison.cjs` now rejects the offset-zero decode, compares a native room buffer, executes the original disk read/decode sequence across all three room stores, and checks the cartridge decoder independently. Its hole/tile helpers also run against original routines rather than matching a duplicate formula.
+
+- `kit/skills/core/70-minisite/SKILL.md`: the existing runtime-memory rule now includes resource-transfer alignment; see `kit/lessons/2026-10-04-lode-runner.md`.
+
+Comparison content has its own evidence/provenance record and a separate copy rewrite. The source project was read only. No download, pull request, issue, or deployment was needed for this follow-up.

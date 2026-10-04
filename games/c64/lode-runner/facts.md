@@ -30,7 +30,7 @@ Map rows have a four-byte gap after row 8. Rows 0–8 start at base + 28×row; r
 
 ## Board data and progression
 
-- Each sector's first 224 bytes encode 448 cells, low nibble first, arranged 28×16. Values above 9 become blank. IDs are blank, brick, concrete, ladder, bar, trapdoor, hidden exit, gold, guard, runner. $6FA6, $709C, $728F.
+- The reader at $71F5 discards the first CHRIN value. Raw sector offsets 1–224 load into $1000–$10DF and encode 448 cells, low nibble first, arranged 28×16. Values above 9 become blank. IDs are blank, brick, concrete, ladder, bar, trapdoor, hidden exit, gold, guard, runner. $71F5, $6FA6, $709C, $728F.
 - All 150 room sectors are byte-identical across the supplied Black, Gray, and Yellow images. Board index `i` maps to track `3+(i>>4)`, sector `i&15`. The next sector, track 12/sector 6, is empty. $709C.
 - The reverse scan retains at most five guards and 45 hidden exits. Stored maxima in these boards are six guards and 48 exits. Extra guard/exit markers are erased during construction. $728F.
 - A board lacking a runner returns normal disk play to physical index zero and increases difficulty, capped at ten. The displayed level is an independent eight-bit counter. $70AF, $728F. The retained uncapped increment entry $7955 has no identified direct caller or control-directory target; ordinary access remains unproved.
@@ -53,6 +53,12 @@ Guard route selection first tries a same-row chase with backing support. Otherwi
 | Below | 200 + candidate row − runner row |
 
 **CPU-tested:** all 200,704 legal input combinations agree with the page's route-cost helper. The widget does not simulate the full search.
+
+A successful drill takes **13 runner updates** including its start: twelve phase increments, then completion at phase 12 (left) or 24 (right). Both continuations recheck the adjacent cell; any nonzero cell cancels even a final-phase dig without opening the brick or allocating a timer. **CPU-tested:** both full animations plus 18 final-phase obstruction cases. **Forced live:** each direction completes only on the thirteenth call and its immediately following hole service ages 180 to 179.
+
+Under normal legal control flow, successive allocations are separated by at least 13 continuing passes. Every continuing pass has one runner update and one hole service; death/completion leave this lifecycle and the next normal room setup clears all 31 timer cells. Lifetime 180 therefore bounds the active timed holes at **ceil(180/13) = 14**, below the 30 allocatable slots. Positive timers remain distinct, so at most one expiry occurs per service under the same assumptions. Legal actor/array bounds, valid map/bitmap pointers, and unmodified loop/reset flow are required. This is a source invariant, not a claim that a playable route attains 14. **CPU-tested:** 720 services / 56 arranged allocations, every widget timer matches; peak 14; all 16,110 distinct positive timer pairs age correctly. An artificial equal pair expires twice, confirming the update routine itself permits that forced state. Independent caller/writer audit is recorded in `comment-audit.md`.
+
+Tile 5 draws as ordinary brick 1 while remaining 5 in the maps ($733E). It blocks left/right/up entry, but supplies no support from above and passes the downward tile comparison. Brick 1 and concrete 2 block entry in all four directions and support the runner; ladder access and actor phases remain separate preconditions. **CPU-tested:** all ten tile IDs in five approaches, 50 cases each in disk and cartridge. **Forced live:** below-cell brick/concrete/ladder select the supported path $7494; trapdoor selects falling $7431.
 
 ## Score, exits, and lives
 
@@ -103,10 +109,18 @@ The first fixed-seed stratified sample (seed 6401983) found **17/60** comments w
 
 A new independent sample (seed 64202642, 60 explicitly retained addresses) found **2/60** wrong details: **3.33%**, Wilson interval **0.92–11.36%**; separately one ambiguous wording, 57 passes. The wrong details were demo-mode qualification at $70DB and reveal-mask ordering at $93B7. The final listing qualifies demo-mode I/O and states the contiguous mask runs; $8BF3 names the selector explicitly. Rechecking these three entries is a dependent test, not a fresh zero-error estimate. The intervals are descriptive and do not adjust unequal stratum sampling. Source entry order changed during the final audit; the report preserves the original selected addresses instead of resampling. The explicit sampled-address evidence is retained in `comment-audit.md`; private working images are required for byte-level repetition.
 
+## Selected cartridge comparison
+
+The supplied cartridge payload matches the earlier disassembly byte-for-byte after reassembly with 64tass 1.59.3120. This validates its byte representation; full disk reassembly is still outside this pass. `comparison.md` records source-file hashes, originating-model uncertainty, and the limits of the comparison.
+
+The original cartridge decoder $97DE expands 17 resident boards from $AC24–$B657 into 448-cell layouts. Low descriptor nibble is tile; high nibble plus one is run length. The matching one-based disk sequence is **1, 5, 111, 46, 50, 11, 4, 12, 100, 33, 48, 84, 14, 64, 6, 134, 150**. All 17 expansions match exactly and uniquely against all 150 disk boards; all three disk room stores agree. **CPU-tested:** all 17 original cartridge decodes and 450 original disk read/decode fixtures. The native disk room-one buffer independently matches raw offsets 1–224; runner start is (14,14).
+
+Cartridge route helper $A5FD and score helper $8FED agree with the article functions for 200,704 and 1,624 cases, respectively. Cartridge graphics initialization $A8BB reconstructs 76 compact sources at $1800–$1E87; all 1,672 pattern bytes match its native play snapshot. The glyph indices are a different namespace from the disk's 104 sources. Cartridge motif countdown $9760 cycles seven selections and transposes 2–11, checked across 70 completions. Disk uses ten selections. Cartridge threshold $130C is six and its wait resets $6C to three. **Live:** 120 PAL frames produce 144 IRQs, 48 loop passes, and 48 hole services, about 20 undelayed passes/second versus disk's measured 30.
+
 ## Explicit open questions
 
-- Full cartridge room count, controls, and editor comparison; only native boot and early play were checked.
-- Player reachability of a completely occupied 30-hole table: a forced call leaves a hole without a timer, but no ordinary-input replay proves that state.
+- Complete cartridge controls, editor workflow, persistence, and semantic coverage beyond the selected checks in `comparison.md`.
+- A playable route attaining the conditional 14-hole upper bound; arranged CPU allocations establish timer arithmetic, not that route. The forced full-table behavior remains a routine contract outside the normal legal-flow invariant.
 - Ordinary reachability/effect of the bottom-row guard search's adjacent directory reads, and the retained uncapped difficulty entry.
 - Full end-to-end editor save/reload and high-score persistence across a fresh boot; static disk paths are traced separately from these integration tests.
 - Complete loader/protection reconstruction and byte-identical reassembly; these are future scope, not claims of this Silver engine listing.

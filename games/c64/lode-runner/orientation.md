@@ -28,7 +28,7 @@ The Source listing contains hand-over bytes. Separate entry/play comparisons ide
 
 The Gray Label image boots natively. Its DB payload is identical, and its IT differs in ten bytes: the entry selects $8E32 rather than $8E11, earlier probe result bytes are supplied in advance, and one probe comparison byte changes. The Yellow Label image also boots natively and reaches the same room-one/room-two attract screens; its IT differs from Black in 275 bytes, including startup. The 150 room sectors compare identically across the three disks; their score sector differs.
 
-The supplied CRT is a generic 16 KB cartridge with a CBM80 header and entry $8009. It boots natively and shows a separate cartridge engine, with routines at different addresses from the disk engine. The disk listing must not be used as its disassembly. Its exact room count and complete feature differences are open. The filename/provenance supplied as OneLoad does not establish byte identity with a disk release.
+The supplied CRT is a generic 16 KB cartridge with a CBM80 header and entry $8009. It boots natively and shows a separate cartridge engine, with routines at different addresses from the disk engine. The disk listing must not be used as its disassembly. Its 17-board directory and selected engine differences are independently verified in `comparison.md`; complete cartridge controls/editor comparison remains open. The filename/provenance supplied as OneLoad does not establish byte identity with a disk release.
 
 ## Loader boundary
 

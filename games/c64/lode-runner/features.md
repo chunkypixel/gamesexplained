@@ -30,7 +30,8 @@ Statuses below apply to the Black Label engine unless stated otherwise. “Trace
 | Ten editor cell types and cursor/save/navigation | traced | $6905/$6B89/$6B92/$6C98; save/reload integration remains open |
 | Master-disk protection and high-score persistence | traced/open | $6A88/$6CAD marker/write paths; fresh-boot persistence not tested |
 | Collection, drilling, falling, completion, death sound | traced/partly confirmed | IRQ voice-one paths and queue callers; native pickup; motif port checked for 1264 original-code ticks |
-| Cartridge room count/editor differences | open | Native CRT boot/play confirmed separate engine; full feature comparison not completed |
+| Cartridge rooms and selected engine differences | confirmed/traced | Original decoder: 17 exact disk matches; 76 reconstructed glyphs; seven motifs; live PAL pace; route/score/tile CPU comparison |
+| Complete cartridge controls and editor workflow | open | Separate source listing and integration checks beyond selected comparison remain open |
 
 ## Reference images
 
@@ -38,4 +39,4 @@ C64-Wiki images were saved before annotation; their URLs and attribution are in 
 
 ## Open searches
 
-Cartridge engine routines were identified at different addresses, but its full room directory and dispatch tables were not decoded. The disk engine listing does not answer cartridge-specific questions. Master/user marker and score-writing callers were fully traced; persistence across a new emulated boot remains an integration test. Full-hole and bottom-row guard corner cases are recorded in `facts.md` with player reachability unproved.
+The cartridge room directory and selected mechanics are independently checked in `comparison.md`; its complete dispatch/editor paths are outside this disk listing. Master/user marker and score-writing callers were fully traced; persistence across a new emulated boot remains an integration test. The normal legal-flow hole bound is traced and CPU-tested; a playable route attaining it and bottom-row guard corner cases remain open in `facts.md`.
