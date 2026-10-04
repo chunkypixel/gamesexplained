@@ -1,4 +1,4 @@
-# Disk and cartridge cross-validation
+# Disk and cartridge reference
 
 Compared on 4 October 2026 with the contributor's earlier [cartridge disassembly](https://github.com/jankfoundry/loderunner). That analysis supplied leads; the checks below execute the supplied game's own instructions. Its annotations were not copied into the disk listing. Disk addresses and cartridge addresses name different engines.
 
@@ -70,23 +70,8 @@ The 17 low bytes at $AC00 and relative high bytes at $AC12 select compressed str
 
 The streams total 2,612 bytes. Each expansion has exactly one matching board among all 150 disk payloads, and all three supplied disks contain identical room sectors. The room browser displays this cartridge sequence using disk graphics. The picture gallery decodes each edition’s generated sources and shows the gameplay sprite masks for actor selectors.
 
-## Repeating the checks
+## Evidence and scope
 
-With the private play snapshot described in `orientation.md`, the supplied CRT, and extracted raw sectors in `work/sectors-{black,gray,yellow}-label/tNN-sNN.bin`:
+`facts.md` summarizes the original-code comparisons, native timing captures, independent review samples, and remaining open questions. Detailed harnesses, execution records, and audit reports are private working material.
 
-```sh
-node games/c64/lode-runner/verify-comparison.cjs \
-  games/c64/lode-runner/work/play-round1.vsf \
-  'games/c64/lode-runner/work/Lode Runner.crt' \
-  games/c64/lode-runner/work
-node games/c64/lode-runner/verify-mechanics.cjs \
-  games/c64/lode-runner/work/play-round1.vsf
-```
-
-The comparison executes the disk read loop with CHRIN supplying extracted sector bytes, then the original room decoder before actor extraction: 450 cases. The recorded native room-one buffer independently matches raw offsets 1–224. The I/O fixture supplies zero after the sector and does not claim to reproduce the unused transfer tail or disk timing.
-
-Other checks execute all 17 cartridge expansions, both route/score helpers, the cartridge graphics initializer and motif progression, all ten persistent tiles in five runner approaches per engine, and 18 obstructed final dig updates. Drawing routines execute; disk I/O register writes use a register shadow. The cartridge fixture uses mirrored writable code in flat memory. Neither fixture simulates raster or IRQ timing.
-
-The hole schedule executes 720 original services with 56 arranged allocations at 13-pass intervals. Every timer and the peak count match the widget at every service. The peak is 14, with 42 expiries. Additional 720-service schedules at intervals 26 and 60 match every widget timer and peak, with peaks 7 and 3, respectively. All 16,110 unordered distinct positive timer pairs from 1–180 preserve their differences after an original service. A deliberately equal-timer negative control expires both holes, demonstrating why the claim depends on normal allocation history rather than the update routine alone. These arranged CPU states are not ordinary-input routes.
-
-Fresh VICE checks independently observed both 13-call digs, trapdoor-versus-brick support decisions, and cartridge pacing. Complete cartridge controls/editor/persistence, physical input routes attaining the hole bound, and full cartridge semantic coverage remain outside these selected comparisons.
+The offline comparisons execute original routines with explicit I/O hooks and a writable cartridge-memory fixture; they do not simulate drive protocol or raster/IRQ timing. Native observations supply the recorded frame and pacing evidence. Complete cartridge controls/editor/persistence, ordinary input routes attaining the conditional hole bound, and full cartridge semantic coverage remain outside these selected comparisons.
