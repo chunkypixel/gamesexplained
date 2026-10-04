@@ -30,7 +30,19 @@ Contributor: jankfoundry. The contributor recalls that the earlier work used **m
 | Atlas size | 104 source glyphs | $A8BB expands 76 compact sources | Cartridge's 1,672 generated pattern bytes match its recorded native play snapshot |
 | Completion motif cycle | $641D, ten selections | $9760, seven selections | Cartridge countdown/transposition checked for 70 completions; pitch offset cycles 2–11 in both |
 
-The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. All original disk mechanics regressions still pass: 203,773 route, score, timer, and ordered SID-tick checks.
+The timing measurements concern the tested PAL setup and undelayed main loops. They do not promise a fixed wall-clock lifetime during scoring, disk access, or pauses. The disk mechanics checks pass 203,953 route, score, timer, closing-picture, and ordered SID-tick cases.
+
+## Supplied disk variants
+
+All three supplied IT files load 22,528 engine bytes at $6000. Comparing payload bytes with Black Label gives:
+
+| Supplied image | Different IT engine bytes |
+|---|---:|
+| Black Label | Reference payload |
+| Gray Label | 10 |
+| Yellow Label | 275 |
+
+These counts exclude the two-byte load address. Gray changes startup selection and disk-probe values; Yellow also changes startup and carries additional loader/protection files. Native boot observations and the loader boundary are recorded in `orientation.md`. All 150 room sectors are identical across the three copies. Their score-sector contents at track 12/sector 7 are not all identical; this is a data comparison, not a fresh-boot persistence test.
 
 ## Cartridge room order
 

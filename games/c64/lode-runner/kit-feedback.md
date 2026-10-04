@@ -53,3 +53,9 @@ The first hole widget began open, so its start button only reset a counter. Smal
 ## Music as an authored tab
 
 The contributor's next curation request moved detailed music content into its own tab after Maps / levels. `kit/skills/core/70-minisite/SKILL.md` already says to list all tabs in order as file/label pairs in game.json; that mechanism publishes music.html and gives every page the same navigation. Its paragraph-purpose rule also supports leaving a short link at gold collection while moving the music explanation to the page it serves. No shared build or skill change was needed. Original-code checks now read the queue driver from its authored Music page, so a future edit cannot leave verification pointed at a retired copy.
+
+## Editions as an authored tab
+
+The contributor requested a dedicated disk/cartridge comparison page. The same minisite custom-tab and paragraph-purpose rules put the full comparison in editions.html, with links from room data and music. Existing native captures, verified findings, and the comparison reference supplied the content. Per-room links required a small page-specific query-parameter initializer in Maps / levels; all 34 destinations and invalid/out-of-range parameters were checked in the browser. No shared kit change was needed. The existing warning to keep each engine's address space distinct applies here: cartridge addresses stay in the external comparison reference, while Source links point to disk routines.
+
+The browser's visual review found a stray vertical scrollbar on the shared custom-tab row. site.css now explicitly hides vertical overflow while preserving its horizontal scrolling. This visible layout fix changes no kit workflow or skill; desktop/mobile tab navigation and the complete site build check it.

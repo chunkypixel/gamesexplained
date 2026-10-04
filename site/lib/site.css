@@ -67,7 +67,7 @@ h2.t{font-size:var(--h2);margin:0 0 12px}
 .gametabs .tier b{color:var(--ink-soft);font-weight:400}
 .gametabs .many-tabs .crumb{margin-right:0}
 .gametabs .many-tabs .tier{margin-left:auto}
-.gametabs .many-tabs .tab-list{display:flex;align-items:baseline;gap:20px;order:3;width:100%;overflow-x:auto;white-space:nowrap;scrollbar-width:thin}
+.gametabs .many-tabs .tab-list{display:flex;align-items:baseline;gap:20px;order:3;width:100%;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin}
 .gametabs .many-tabs .tab-list a.tab{margin-left:0;flex:none}
 
 /* Every tab but Source: the page's sections, listed in the left margin by heading (build.py writes
