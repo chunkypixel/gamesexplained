@@ -92,6 +92,10 @@
       "title": "Title"
     },
     {
+      "id": "shop",
+      "title": "Shop and town"
+    },
+    {
       "id": "highjump",
       "title": "High Jump"
     }
