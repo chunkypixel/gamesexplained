@@ -330,6 +330,11 @@ Routines are independent, so the burn-down parallelises. What matters:
   (the template's opening comment says why).
 - Force the model explicitly. Spot-check one claim per agent against the
   source before believing the report.
+- **A game of several programs** (`10-orient`, "A game of several
+  programs") splits by part: one agent per part, each with its own
+  disassembler on that part's snapshot. The disassembler has a fixed port,
+  so several instances need somewhere apart to listen; the tool's notes
+  say how.
 - **An agent stopped by the account's usage limit keeps its context.**
   Nine agents at once use up a session's allowance quickly; when they
   stop on the limit, export at once, wait for the reset and resume each

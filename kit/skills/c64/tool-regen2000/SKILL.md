@@ -47,6 +47,16 @@ and a loopback bridge (`kit/c64/INSTALL.md`, "Another program on port
 3000"); the client, the exporter and the launcher find it through
 `tools/r2000-port`. Addresses in arguments are decimal integers.
 
+Several instances at once, one per part of a game of several programs,
+were run on Linux as root by giving each its own network namespace, so
+each has its own loopback and its own port 3000: `unshare --net=<file>`
+over a bind-mounted empty file, the loopback brought up inside it, the
+disassembler started with `nsenter --net=<file>`, and every client call
+(`r2000.py`, `coverage.py --live`) run through the same `nsenter`.
+`tools.py` does not manage these instances, and nothing outside the
+repository is changed except the namespace files, which go when they are
+unmounted. On other systems, annotate the parts one at a time.
+
 The client script logs every mutating call to
 `games/<platform>/<slug>/work/annotations.jsonl`. That log is crash
 insurance: `r2000.py --replay <log>` rebuilds a fresh session. Run it from
