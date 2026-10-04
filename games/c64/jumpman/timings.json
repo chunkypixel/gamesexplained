@@ -261,6 +261,22 @@
    "end": "2026-10-04T02:03:46Z",
    "minutes": 2.5,
    "note": "Recorded finite-pickup and display-refresh verification lessons. Native route replays, pixel comparisons, two Runaway native controls, source preservation, original-file/model checks, desktop/mobile browser checks and all19 builds pass. Updated plain-language page and exact remaining limits; both native tools stopped. Prepared branch push for review without PR/issues."
+  },
+  {
+   "step": "curate",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T02:42:15Z",
+   "end": "2026-10-04T03:02:43Z",
+   "minutes": 20.5,
+   "note": "Reviewed article,35 feature rows and32 level notes against source and recorded scope. Corrected fixed respawn versus starting position, last-life qualification and game-service timing; repaired private-source links. Fresh35-file extraction,90583 bytes,9498 instructions,20 facts/10 routines,17 broader suites,114 new original-code boundary cases,22 native comparisons and512-frame timing replay pass."
+  },
+  {
+   "step": "80-retro",
+   "model": "gpt-6-astra",
+   "start": "2026-10-04T03:02:43Z",
+   "end": "2026-10-04T03:08:19Z",
+   "minutes": 5.6,
+   "note": "Recorded final-wording verification lesson, three prose corrections and private-source links. Added reproducible boundary checks and claim/evidence inventory; all source maps/listings unchanged. Browser regressions pass after updating two stale private-harness assertions. No new installation, maintainer ask, PR or issue."
   }
  ]
 }

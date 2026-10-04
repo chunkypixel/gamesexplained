@@ -1,0 +1,2383 @@
+{
+  "date": "2026-10-04",
+  "baseline": "97a228d22444a7b3956706de5ce70619d2037846",
+  "kind": "Self-audit of published claims, source/evidence consistency and controlled boundaries; not independent verification.",
+  "inputManifest": "../checks/inputs.json",
+  "diskSha256": "de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5",
+  "freshExtraction": {
+    "files": 35,
+    "method": "VICE c1541 reads the hash-identified original G64; every output matches checks/inputs.json."
+  },
+  "originalByteAndModelChecks": [
+    {
+      "name": "Original extracted files",
+      "files": 35,
+      "diskSha256": "de3ae72cb2ce3c7a34924ad03db3640c8b70e3663fa0d9d705cc971e8ac4c9b5"
+    },
+    {
+      "name": "Boot-loader self-modification at hand-over",
+      "changes": [
+        {
+          "address": "$082F",
+          "disk": 255,
+          "handover": 8
+        },
+        {
+          "address": "$0834",
+          "disk": 255,
+          "handover": 220
+        }
+      ]
+    },
+    {
+      "name": "All source bytes, coverage ranges and instruction decodes",
+      "images": 33,
+      "bytes": 90583,
+      "instructions": 9498
+    },
+    {
+      "name": "Atlas headers, titles, bomb records and drawing excerpts",
+      "levels": 32,
+      "bombs": 397,
+      "excerptBytes": 16148
+    },
+    {
+      "name": "Actual page renderer versus original instructions",
+      "initialBitmaps": 32,
+      "bombBitmaps": 1191,
+      "bytesPerBitmap": 8192,
+      "scope": "Erase/draw only; private callbacks and legal collection order are excluded."
+    },
+    {
+      "name": "Actual page Randomizer versus original instructions",
+      "randomStates": 65536,
+      "chooserStates": 65536,
+      "returning": 65532,
+      "stalledInputs": [
+        "$0000",
+        "$4000",
+        "$8000",
+        "$C000"
+      ],
+      "maximumAttemptsForReturningInputs": 3,
+      "suffixes": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29"
+      ],
+      "loadedSeedSequence": {
+        "distinctStates": 5462,
+        "transient": 1,
+        "period": 5461
+      },
+      "naturalSelectionBoundary": "Not established; the uninterrupted loaded-seed sequence excludes the four stalled inputs."
+    },
+    {
+      "name": "IRQ task order",
+      "words": 14,
+      "sentinel": "$EA31"
+    },
+    {
+      "name": "Bitmap material lookup, including FF exception",
+      "inputs": 256
+    },
+    {
+      "name": "Three stored jump trajectories",
+      "bytes": 132,
+      "rise": 12,
+      "finalVerticalOffset": 14,
+      "lateralDistance": 52
+    },
+    {
+      "name": "Four zero-priority tune definitions",
+      "ids": [
+        9,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "name": "Published shooting evidence",
+      "screenshotHashes": 15,
+      "dragonHitRecords": 49,
+      "inputFrames": 41700
+    },
+    {
+      "name": "Published evidence identifies the local source snapshots",
+      "distinctSnapshots": 48
+    }
+  ],
+  "semanticSample": {
+    "facts": 20,
+    "routines": 10,
+    "cases": 125,
+    "assertions": 352,
+    "note": "Repeated original20-fact/10-routine sample; this is not an independent sample."
+  },
+  "entrypoints": {
+    "images": 32,
+    "headerPointers": 179,
+    "bombCallbacks": 397
+  },
+  "additionalRegression": {
+    "privateGapRoutineCalls": 2116,
+    "deeperRoutineExecutions": 541068,
+    "speed1RoutineCalls": 418202,
+    "speed1Scenarios": 512,
+    "speed1MaximumPending": 4,
+    "limits": "Controlled tests and declared diagnostics retain the scopes in gap-audit.md, deeper-audit.md and routes-audit.md. Speed1 is sampled, not exhaustive."
+  },
+  "newOriginalCodeBoundaries": {
+    "method": "Self-audit of unchanged original routines with declared RAM inputs and I/O shadows. No natural-play or exhaustive semantic certification.",
+    "gunfighter": [
+      {
+        "kind": "initialization",
+        "enemy6": [
+          8,
+          152
+        ],
+        "enemy7": [
+          8,
+          216
+        ]
+      },
+      {
+        "kind": "controlled collision",
+        "slot": 6,
+        "respawn": [
+          8,
+          152
+        ],
+        "score": 100,
+        "route": "$3267",
+        "kills": 1
+      },
+      {
+        "kind": "controlled collision",
+        "slot": 7,
+        "respawn": [
+          8,
+          152
+        ],
+        "score": 100,
+        "route": "$3267",
+        "kills": 1
+      }
+    ],
+    "puzzle": [
+      {
+        "stage": 1,
+        "postDeathReserves": 0,
+        "destination": "$3050",
+        "outcome": "respawn branch"
+      },
+      {
+        "stage": 1,
+        "postDeathReserves": 5,
+        "destination": "$3050",
+        "outcome": "respawn branch"
+      },
+      {
+        "stage": 1,
+        "postDeathReserves": 255,
+        "destination": "$3086",
+        "outcome": "exhaustion branch"
+      },
+      {
+        "stage": 2,
+        "postDeathReserves": 0,
+        "destination": "$308C",
+        "outcome": "completion branch"
+      },
+      {
+        "stage": 2,
+        "postDeathReserves": 5,
+        "destination": "$308C",
+        "outcome": "completion branch"
+      },
+      {
+        "stage": 2,
+        "postDeathReserves": 255,
+        "destination": "$308C",
+        "outcome": "completion branch"
+      }
+    ],
+    "hud": [
+      {
+        "reserves": 0,
+        "displayed": 1
+      },
+      {
+        "reserves": 1,
+        "displayed": 2
+      },
+      {
+        "reserves": 2,
+        "displayed": 3
+      },
+      {
+        "reserves": 3,
+        "displayed": 4
+      },
+      {
+        "reserves": 4,
+        "displayed": 5
+      },
+      {
+        "reserves": 5,
+        "displayed": 6
+      },
+      {
+        "reserves": 6,
+        "displayed": 7
+      },
+      {
+        "reserves": 7,
+        "displayed": 8
+      },
+      {
+        "reserves": 8,
+        "displayed": 9
+      },
+      {
+        "reserves": 9,
+        "displayed": 10
+      },
+      {
+        "reserves": 10,
+        "displayed": 11
+      },
+      {
+        "reserves": 11,
+        "displayed": 12
+      },
+      {
+        "reserves": 12,
+        "displayed": 13
+      },
+      {
+        "reserves": 13,
+        "displayed": 14
+      },
+      {
+        "reserves": 14,
+        "displayed": 15
+      },
+      {
+        "reserves": 15,
+        "displayed": 16
+      },
+      {
+        "reserves": 16,
+        "displayed": 17
+      },
+      {
+        "reserves": 17,
+        "displayed": 18
+      },
+      {
+        "reserves": 18,
+        "displayed": 19
+      },
+      {
+        "reserves": 19,
+        "displayed": 20
+      },
+      {
+        "reserves": 20,
+        "displayed": 21
+      },
+      {
+        "reserves": 21,
+        "displayed": 22
+      },
+      {
+        "reserves": 22,
+        "displayed": 23
+      },
+      {
+        "reserves": 23,
+        "displayed": 24
+      },
+      {
+        "reserves": 24,
+        "displayed": 25
+      },
+      {
+        "reserves": 25,
+        "displayed": 26
+      },
+      {
+        "reserves": 26,
+        "displayed": 27
+      },
+      {
+        "reserves": 27,
+        "displayed": 28
+      },
+      {
+        "reserves": 28,
+        "displayed": 29
+      },
+      {
+        "reserves": 29,
+        "displayed": 30
+      },
+      {
+        "reserves": 30,
+        "displayed": 31
+      },
+      {
+        "reserves": 31,
+        "displayed": 32
+      },
+      {
+        "reserves": 32,
+        "displayed": 33
+      },
+      {
+        "reserves": 33,
+        "displayed": 34
+      },
+      {
+        "reserves": 34,
+        "displayed": 35
+      },
+      {
+        "reserves": 35,
+        "displayed": 36
+      },
+      {
+        "reserves": 36,
+        "displayed": 37
+      },
+      {
+        "reserves": 37,
+        "displayed": 38
+      },
+      {
+        "reserves": 38,
+        "displayed": 39
+      },
+      {
+        "reserves": 39,
+        "displayed": 40
+      },
+      {
+        "reserves": 40,
+        "displayed": 41
+      },
+      {
+        "reserves": 41,
+        "displayed": 42
+      },
+      {
+        "reserves": 42,
+        "displayed": 43
+      },
+      {
+        "reserves": 43,
+        "displayed": 44
+      },
+      {
+        "reserves": 44,
+        "displayed": 45
+      },
+      {
+        "reserves": 45,
+        "displayed": 46
+      },
+      {
+        "reserves": 46,
+        "displayed": 47
+      },
+      {
+        "reserves": 47,
+        "displayed": 48
+      },
+      {
+        "reserves": 48,
+        "displayed": 49
+      },
+      {
+        "reserves": 49,
+        "displayed": 50
+      },
+      {
+        "reserves": 50,
+        "displayed": 51
+      },
+      {
+        "reserves": 51,
+        "displayed": 52
+      },
+      {
+        "reserves": 52,
+        "displayed": 53
+      },
+      {
+        "reserves": 53,
+        "displayed": 54
+      },
+      {
+        "reserves": 54,
+        "displayed": 55
+      },
+      {
+        "reserves": 55,
+        "displayed": 56
+      },
+      {
+        "reserves": 56,
+        "displayed": 57
+      },
+      {
+        "reserves": 57,
+        "displayed": 58
+      },
+      {
+        "reserves": 58,
+        "displayed": 59
+      },
+      {
+        "reserves": 59,
+        "displayed": 60
+      },
+      {
+        "reserves": 60,
+        "displayed": 61
+      },
+      {
+        "reserves": 61,
+        "displayed": 62
+      },
+      {
+        "reserves": 62,
+        "displayed": 63
+      },
+      {
+        "reserves": 63,
+        "displayed": 64
+      },
+      {
+        "reserves": 64,
+        "displayed": 65
+      },
+      {
+        "reserves": 65,
+        "displayed": 66
+      },
+      {
+        "reserves": 66,
+        "displayed": 67
+      },
+      {
+        "reserves": 67,
+        "displayed": 68
+      },
+      {
+        "reserves": 68,
+        "displayed": 69
+      },
+      {
+        "reserves": 69,
+        "displayed": 70
+      },
+      {
+        "reserves": 70,
+        "displayed": 71
+      },
+      {
+        "reserves": 71,
+        "displayed": 72
+      },
+      {
+        "reserves": 72,
+        "displayed": 73
+      },
+      {
+        "reserves": 73,
+        "displayed": 74
+      },
+      {
+        "reserves": 74,
+        "displayed": 75
+      },
+      {
+        "reserves": 75,
+        "displayed": 76
+      },
+      {
+        "reserves": 76,
+        "displayed": 77
+      },
+      {
+        "reserves": 77,
+        "displayed": 78
+      },
+      {
+        "reserves": 78,
+        "displayed": 79
+      },
+      {
+        "reserves": 79,
+        "displayed": 80
+      },
+      {
+        "reserves": 80,
+        "displayed": 81
+      },
+      {
+        "reserves": 81,
+        "displayed": 82
+      },
+      {
+        "reserves": 82,
+        "displayed": 83
+      },
+      {
+        "reserves": 83,
+        "displayed": 84
+      },
+      {
+        "reserves": 84,
+        "displayed": 85
+      },
+      {
+        "reserves": 85,
+        "displayed": 86
+      },
+      {
+        "reserves": 86,
+        "displayed": 87
+      },
+      {
+        "reserves": 87,
+        "displayed": 88
+      },
+      {
+        "reserves": 88,
+        "displayed": 89
+      },
+      {
+        "reserves": 89,
+        "displayed": 90
+      },
+      {
+        "reserves": 90,
+        "displayed": 91
+      },
+      {
+        "reserves": 91,
+        "displayed": 92
+      },
+      {
+        "reserves": 92,
+        "displayed": 93
+      },
+      {
+        "reserves": 93,
+        "displayed": 94
+      },
+      {
+        "reserves": 94,
+        "displayed": 95
+      },
+      {
+        "reserves": 95,
+        "displayed": 96
+      },
+      {
+        "reserves": 96,
+        "displayed": 97
+      },
+      {
+        "reserves": 97,
+        "displayed": 98
+      },
+      {
+        "reserves": 98,
+        "displayed": 99
+      }
+    ],
+    "bonus": [
+      {
+        "enabled": 0,
+        "initial": 0,
+        "counter": 0,
+        "bonus": 1500
+      },
+      {
+        "enabled": 0,
+        "initial": 254,
+        "counter": 254,
+        "bonus": 1500
+      },
+      {
+        "enabled": 0,
+        "initial": 255,
+        "counter": 255,
+        "bonus": 1500
+      },
+      {
+        "enabled": 1,
+        "initial": 0,
+        "counter": 1,
+        "bonus": 1500
+      },
+      {
+        "enabled": 1,
+        "initial": 254,
+        "counter": 255,
+        "bonus": 1500
+      },
+      {
+        "enabled": 1,
+        "initial": 255,
+        "counter": 0,
+        "bonus": 1400
+      }
+    ],
+    "calls": 114
+  },
+  "newNativeControlled": {
+    "method": "Controlled native VICE 3.13.2 PAL. Original extracted code restored for every case before declared patches; all cases use unchanged code. Declared RAM/register inputs, IRQ masked, decimal clear, no gameplay route claimed. Two stable PC reads and paused status precede writes; stopping checkpoint confirms completion. CPU and VICE result regions compared, color RAM masked to four bits.",
+    "cases": [
+      {
+        "name": "Gunfighter original initialization",
+        "image": "26",
+        "entry": "$314D",
+        "stop": "$C003",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4068",
+            "length": 19,
+            "sha256": "fb13e40c49cce5afca7ccbaa98f81fd08ad5d7ae635c4750f21c3070c6ef2c31"
+          }
+        ]
+      },
+      {
+        "name": "Gunfighter hit enemy 6",
+        "image": "26",
+        "entry": "$3505",
+        "stop": "$356C",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4069",
+            "length": 1,
+            "sha256": "beead77994cf573341ec17b58bbf7eb34d2711c993c1d976b128b3188dc1829a"
+          },
+          {
+            "address": "$4071",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$4079",
+            "length": 1,
+            "sha256": "79bec7ff3e69d1b470eb8684f2005a867a7980222474cbc1afd26a9a4f206d4a"
+          },
+          {
+            "address": "$3117",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$3143",
+            "length": 1,
+            "sha256": "cd0aa9856147b6c5b4ff2b7dfee5da20aa38253099ef1b4a64aced233c9afe29"
+          },
+          {
+            "address": "$314B",
+            "length": 1,
+            "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+          },
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "5f8a3348953978bb9b223e112d8087d649ecc2b6379f72348729fe2c0d163f65"
+          },
+          {
+            "address": "$3368",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          }
+        ]
+      },
+      {
+        "name": "Gunfighter hit enemy 7",
+        "image": "26",
+        "entry": "$3505",
+        "stop": "$356C",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$406A",
+            "length": 1,
+            "sha256": "beead77994cf573341ec17b58bbf7eb34d2711c993c1d976b128b3188dc1829a"
+          },
+          {
+            "address": "$4072",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$407A",
+            "length": 1,
+            "sha256": "79bec7ff3e69d1b470eb8684f2005a867a7980222474cbc1afd26a9a4f206d4a"
+          },
+          {
+            "address": "$3118",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          },
+          {
+            "address": "$3144",
+            "length": 1,
+            "sha256": "cd0aa9856147b6c5b4ff2b7dfee5da20aa38253099ef1b4a64aced233c9afe29"
+          },
+          {
+            "address": "$314C",
+            "length": 1,
+            "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+          },
+          {
+            "address": "$40DA",
+            "length": 3,
+            "sha256": "5f8a3348953978bb9b223e112d8087d649ecc2b6379f72348729fe2c0d163f65"
+          },
+          {
+            "address": "$3368",
+            "length": 1,
+            "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 3, post-death reserves 0",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$3050",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "3ff9292ba5f21031dff50cc27295e71f7a647fe704b2f8afe678b77174b85e47"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 3, post-death reserves 5",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$3050",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "3ff9292ba5f21031dff50cc27295e71f7a647fe704b2f8afe678b77174b85e47"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "e77b9a9ae9e30b0dbdb6f510a264ef9de781501d7b6b92ae89eb059c5ab743db"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 3, post-death reserves 255",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$3086",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "3ff9292ba5f21031dff50cc27295e71f7a647fe704b2f8afe678b77174b85e47"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 5, post-death reserves 0",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$308C",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "6c166939bbd94a6b63f83d1100e3d73b5f31c5225f740fae546428b84fb3b8a6"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 5, post-death reserves 5",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$308C",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "6c166939bbd94a6b63f83d1100e3d73b5f31c5225f740fae546428b84fb3b8a6"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "e77b9a9ae9e30b0dbdb6f510a264ef9de781501d7b6b92ae89eb059c5ab743db"
+          }
+        ]
+      },
+      {
+        "name": "Puzzle limit 5, post-death reserves 255",
+        "image": "30",
+        "entry": "$3078",
+        "stop": "$308C",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$3013",
+            "length": 2,
+            "sha256": "6c166939bbd94a6b63f83d1100e3d73b5f31c5225f740fae546428b84fb3b8a6"
+          },
+          {
+            "address": "$40E4",
+            "length": 1,
+            "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 0",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "a676d910c8639f3f297a0b491841ac2342ff8bce7b26305963124365b0e8bd52"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 2",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "61f2713834e26fd27f98bfab636a3d8499cd3b29d74aee47d539650f80bfc447"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 4",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "3cccf8b9b9b6f99cab2e68dbdc71e6116af04398dcce9a2e8a8724b99f7ec376"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 5",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "5389fa8d479e6f7c9b238e4eecce3bd222f4db0ad61c2452d685a85c6e7d420a"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 6",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "f5225ed7823c448bd88cfe2b068bc9abc5e2b178b3072691d2c9e5596f5a05cd"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 9",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "04d6490b6495b51650c6413fe9afce669ede3fc027fff8b280e4f583e9fb4a15"
+          }
+        ]
+      },
+      {
+        "name": "HUD reserves 98",
+        "image": "resident",
+        "entry": "$540C",
+        "stop": "$5457",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$07A4",
+            "length": 2,
+            "sha256": "20332d25b4b43d1565e474c39400bdc897ef1beb1cd61c190f762d060a867deb"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 0, counter 0",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "a70ecea02658b5a077069f918e8a5eb01f7cc7d8ab3689a3aa09b1830998adb0"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 0, counter 254",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "59316c1a765f0c95af8be7f3f75371aa38612e5ceffc4785ef22f5541635413a"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "a70ecea02658b5a077069f918e8a5eb01f7cc7d8ab3689a3aa09b1830998adb0"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 0, counter 255",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "ea5dbf9596d187e9500f23e9a680109475341cf4e81f7e043f7d97152c10772f"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "a70ecea02658b5a077069f918e8a5eb01f7cc7d8ab3689a3aa09b1830998adb0"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 1, counter 0",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "9dcf97a184f32623d11a73124ceb99a5709b083721e878a16d78f596718ba7b2"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "a70ecea02658b5a077069f918e8a5eb01f7cc7d8ab3689a3aa09b1830998adb0"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 1, counter 254",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "437cb43a30226e639b33d84533cfc3ddd970a40055b9c8c0bf7e3795cf184eb6"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "a70ecea02658b5a077069f918e8a5eb01f7cc7d8ab3689a3aa09b1830998adb0"
+          }
+        ]
+      },
+      {
+        "name": "Bonus enabled 1, counter 255",
+        "image": "01",
+        "entry": "$417E",
+        "stop": "$41A9",
+        "stopHits": 1,
+        "matched": [
+          {
+            "address": "$4026",
+            "length": 2,
+            "sha256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2"
+          },
+          {
+            "address": "$3017",
+            "length": 2,
+            "sha256": "d90eaf2f84f97cdfdbbedf22a3c25ec728edbedbf3cf3e772625516fd67d1435"
+          }
+        ]
+      }
+    ]
+  },
+  "freshNativeClock": {
+    "frames": 512,
+    "rawIrqEntries": 966,
+    "gameServices": 512,
+    "bonusDecrements": 1,
+    "first256FramesBonus": [
+      1300,
+      1200
+    ],
+    "snapshotSha256": "42e3a653c0dd7a568d5f58aa97290f2801658b86772208cda9d3aee673636644",
+    "method": "Restore stable-01; neutral joystick; no RAM/register edits. Non-stopping checkpoints distinguish all IRQ entries from actual game-state services. Checked frame advances.",
+    "note": "Later death disables bonus timing; the enabled counter does not advance on every raw interrupt entry."
+  },
+  "broaderSuiteReplays": {
+    "scripts": [
+      {
+        "script": "work/agent1/verify.js",
+        "exit": 0,
+        "logSha256": "3fb0e6e2f086b86dfd5688b1537d35c0614e04ed657bf6e50c1151ddcb068a24"
+      },
+      {
+        "script": "work/agent1/jump/verify.js",
+        "exit": 0,
+        "logSha256": "5c93675bbbcb811f5e6720134b0bfd1f05d2f54a8af5cfe328c9abeb2ff6108d"
+      },
+      {
+        "script": "work/agent3/audio/verify.js",
+        "exit": 0,
+        "logSha256": "57bc2bb77b39142eab12201537811b7e267a0a2bf30805699fb81744fd35ee11"
+      },
+      {
+        "script": "work/test_geometry.js",
+        "exit": 0,
+        "logSha256": "d8742877aea6286c8d40843224f7d51ec93b35f2128f7f402559c86d4bc12831"
+      },
+      {
+        "script": "work/test_scenery.js",
+        "exit": 0,
+        "logSha256": "1de1df2fbc4b416d203d7b1a28755f5d3b2c95083561f6b8f97cc1eeec1b3966"
+      },
+      {
+        "script": "work/check_robot_model.js",
+        "exit": 0,
+        "logSha256": "48a410c437a3d5ff5ee4b40ca061264ca7fa192c5b21b264ae37ec728839c487"
+      },
+      {
+        "script": "work/gameplay-engine/verify.js",
+        "exit": 0,
+        "logSha256": "af062a8f1169ee62578a6d4802f25c3c0938c8b4f055b4df422344d372b0aaa7"
+      },
+      {
+        "script": "work/gameplay-shooting/check.js",
+        "exit": 0,
+        "logSha256": "f6e6ccc18eed0574c613581e123543a0c03c71a58b4d93975e50602e9c80d15d"
+      },
+      {
+        "script": "work/gameplay-progression/verify.js",
+        "exit": 0,
+        "logSha256": "665f9e662c094e7c5131d57fe7ab29318b788705e709d5c1bab4205ff8983414"
+      },
+      {
+        "script": "work/followup-progression/verify.js",
+        "exit": 0,
+        "logSha256": "d52ae4b8caea459c217a1c04a5c713593499900aea63111c52e21f0ddebe773f"
+      },
+      {
+        "script": "work/followup-progression/title_lookup.js",
+        "exit": 0,
+        "logSha256": "42d0fa22ad530fd2a5461e0862b7be61e0736eb1770551296f0514b0470b7c1d"
+      },
+      {
+        "script": "work/followup-engine/verify_geometry13.js",
+        "exit": 0,
+        "logSha256": "a1b6629c56c0bb4c8dfad18cc8040c91799534f99dc348a1d8aa894963508bd2"
+      },
+      {
+        "script": "work/agent3/scores/check-score-sentinels.js",
+        "exit": 0,
+        "logSha256": "fab888442dfd5fb2543a3e4cfd953c95a573fc3699c9561878232b05f294733c"
+      },
+      {
+        "script": "work/test_randomizer.js",
+        "exit": 0,
+        "logSha256": "854bba0db73525684fd4e6a8d1637da316976577a9c1a961340859a000afc67b"
+      },
+      {
+        "script": "work/check_dragon_bitmaps.js",
+        "exit": 0,
+        "logSha256": "3be49e6075e9851ae15aa5c61050179ecb47b02756cd3c24a1974c5716640d07"
+      },
+      {
+        "script": "work/check_invasion_pairs.js",
+        "exit": 0,
+        "logSha256": "046212e69e717542c09d27b494fab8172d9542ef9d6180e8505d1e5dd87151e0"
+      },
+      {
+        "script": "work/followup-engine/scan13.js",
+        "exit": 0,
+        "logSha256": "d8b9c2273f51dc2d13ed944a0fba0893f8d27f1b62ad3ef3704fdf8a294f247a"
+      }
+    ],
+    "republishedReportsIdentical": [
+      "reference/scenery-verification.json",
+      "reference/robot-route-verification.json"
+    ]
+  },
+  "retainedArtifactChecks": {
+    "snapshots": [
+      {
+        "field": "routes-verification.json.gunfighter.readySnapshotSha256",
+        "sha256": "b391420e284cd4200a89c593c56a5f5da6bc3374d25906bd798928815c74ccae",
+        "path": "work/ready-26.vsf"
+      },
+      {
+        "field": "routes-verification.json.gunfighter.pixelComparison.snapshotSha256",
+        "sha256": "584e13da071c7e80990b6b6fdbd647d78d3eb71a723065f115930987e52bbc4a",
+        "path": "work/routes-gunfighter-hit-before.vsf"
+      },
+      {
+        "field": "routes-verification.json.dragonSlayer.startSnapshotSha256",
+        "sha256": "9176e7a74d53eba713e73e62de6b17701780beb5c552244f0e9967db39cfd416",
+        "path": "work/dragon-live-final.vsf"
+      },
+      {
+        "field": "routes-verification.json.grandPuzzleIII.startSnapshotSha256",
+        "sha256": "95647cb03485805ec5d89bab788fbc96731bd45cdbd7622a65d060f348176464",
+        "path": "work/ready-30.vsf"
+      },
+      {
+        "field": "routes-verification.json.grandPuzzleIII.pixelComparison.snapshotSha256",
+        "sha256": "215a57922fe022e0bf1b6b29538fb2307522a4b86cd63baa5bef37ef16c2c319",
+        "path": "work/routes-puzzle-contact-proof.vsf"
+      },
+      {
+        "field": "audit-verification.json.native_clock.snapshot_sha256",
+        "sha256": "42e3a653c0dd7a568d5f58aa97290f2801658b86772208cda9d3aee673636644",
+        "path": "work/stable-01.vsf"
+      },
+      {
+        "field": "robot-route-verification.json.snapshotSha256",
+        "sha256": "b6fd2c70894a09dff62e02a493be2f51f890ab92e86f28732df002cb762fbb69",
+        "path": "work/ready-27.vsf"
+      },
+      {
+        "field": "gap-verification.json.queueObservation.snapshot_sha256",
+        "sha256": "62bd6e56863fc3f531c812549d7c042fe439e3f581835229e2f6087078c632ab",
+        "path": "work/ready-11.vsf"
+      },
+      {
+        "field": "semantic-audit-verification.json.orientation.entry.snapshot_sha256",
+        "sha256": "02ddf00a68757396487361daf517f814e1a3f922cf510f1e306fb4e83e4a9edf",
+        "path": "work/entry.vsf"
+      },
+      {
+        "field": "semantic-audit-verification.json.orientation.level-09.snapshot_sha256",
+        "sha256": "e53953a1439408435342c52bdfc77e77855c4668304ae9050913e5f04b4049df",
+        "path": "work/level-09.vsf"
+      },
+      {
+        "field": "shooting-live-verification.json.dragon_slayer.ready_snapshot_sha256",
+        "sha256": "0a4ada075e6152d46c987ae4401efda65078e2e80634ccd0becf97a56e05d69c",
+        "path": "work/ready-14.vsf"
+      },
+      {
+        "field": "shooting-live-verification.json.dragon_slayer.start_snapshot_sha256",
+        "sha256": "84ea3a2718924a1cf03c76baeef712dfe249b0e5929e46b8ce1c53a9bccf3068",
+        "path": "work/hits14-start.vsf"
+      },
+      {
+        "field": "shooting-live-verification.json.invasion.wrong_target_hit.snapshot_sha256",
+        "sha256": "54eeda2c7a520703bc7a303043a7d862f8ea25b99848d942051c05cc7ec97e8f",
+        "path": "work/invasion-hit-entry.vsf"
+      },
+      {
+        "field": "shooting-live-verification.json.invasion.ready_snapshot_sha256",
+        "sha256": "1738976ee00cc466868ee0989332b2cc6c7b5f66dd1fd15e41fdbe2902bccbce",
+        "path": "work/ready-06.vsf"
+      },
+      {
+        "field": "shooting-live-verification.json.invasion.start_snapshot_sha256",
+        "sha256": "ab27faa752d96d2d7c4c1681c75079d3869bdf47747ca60f2c86f29c873ad042",
+        "path": "work/hits-start-06.vsf"
+      }
+    ],
+    "unmatched": [],
+    "routeImages": [
+      {
+        "path": "reference/gunfighter-first-hit.png",
+        "sha256": "6d49939a4d933de917888a4c30142be637f8902af029c643601ae14eba3e14e5"
+      },
+      {
+        "path": "reference/dragon-slayer-complete.png",
+        "sha256": "e55ca7f6519122326febbf6f2c9840fa15f8b3a8f2d9fa6d58caabbc10998947"
+      },
+      {
+        "path": "reference/grand-puzzle-trigger.png",
+        "sha256": "74886201df047f169782d7aeaa506440a7a8456143eb6c8616fdf5b045cd0961"
+      },
+      {
+        "path": "reference/grand-puzzle-transformed.png",
+        "sha256": "71e238c09c49efd91590f98b6310e7689b32595689bdb7292342e45dc1acfb70"
+      },
+      {
+        "path": "reference/grand-puzzle-completed.png",
+        "sha256": "3c52a52730bf8c3d5f27a01c50230275faba15349ca62c92f72402fdf710673c"
+      }
+    ],
+    "routePixelReportsIdentical": true
+  },
+  "publishedContentConsistency": {
+    "method": "Mechanical consistency checks supplement manual reading; resolving a source address does not validate its interpretation. Explicit links checked against the chosen image, including interior bytes and named runtime fields.",
+    "explicitSourceLinks": 180,
+    "links": [
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3017"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3006"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3010"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3015"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3019"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$301F"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3020"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3030"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3034"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$303A"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3038"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3015"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3013"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$30ED"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$3109"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$3192"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$30ED"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$31EC"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3014"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$3225"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$32B3"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$32BB"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$32E7"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$3213"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$33A5"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$3388"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$3385"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$348A"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$319A"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$34DA"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$35DD"
+      },
+      {
+        "file": "facts.md",
+        "image": "resident",
+        "address": "$428D"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$3593"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$35BC"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$35E0"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$35F9"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$3567"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$35F9"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$35F9"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$301F"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3393"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$34C7"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3418"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$33CE"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$31AA"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3226"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3499"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$3263"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$3269"
+      },
+      {
+        "file": "facts.md",
+        "image": "24",
+        "address": "$3214"
+      },
+      {
+        "file": "facts.md",
+        "image": "28",
+        "address": "$322F"
+      },
+      {
+        "file": "facts.md",
+        "image": "28",
+        "address": "$3260"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$3396"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$3175"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$317C"
+      },
+      {
+        "file": "facts.md",
+        "image": "resident",
+        "address": "$5B00"
+      },
+      {
+        "file": "facts.md",
+        "image": "06",
+        "address": "$3394"
+      },
+      {
+        "file": "facts.md",
+        "image": "06",
+        "address": "$33AF"
+      },
+      {
+        "file": "facts.md",
+        "image": "26",
+        "address": "$351E"
+      },
+      {
+        "file": "facts.md",
+        "image": "26",
+        "address": "$356C"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3050"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$31C7"
+      },
+      {
+        "file": "facts.md",
+        "image": "01",
+        "address": "$3199"
+      },
+      {
+        "file": "facts.md",
+        "image": "02",
+        "address": "$32AB"
+      },
+      {
+        "file": "facts.md",
+        "image": "02",
+        "address": "$3336"
+      },
+      {
+        "file": "facts.md",
+        "image": "02",
+        "address": "$3263"
+      },
+      {
+        "file": "facts.md",
+        "image": "03",
+        "address": "$32EC"
+      },
+      {
+        "file": "facts.md",
+        "image": "03",
+        "address": "$3336"
+      },
+      {
+        "file": "facts.md",
+        "image": "03",
+        "address": "$3385"
+      },
+      {
+        "file": "facts.md",
+        "image": "03",
+        "address": "$3153"
+      },
+      {
+        "file": "facts.md",
+        "image": "04",
+        "address": "$31AC"
+      },
+      {
+        "file": "facts.md",
+        "image": "04",
+        "address": "$31F1"
+      },
+      {
+        "file": "facts.md",
+        "image": "05",
+        "address": "$3317"
+      },
+      {
+        "file": "facts.md",
+        "image": "05",
+        "address": "$3454"
+      },
+      {
+        "file": "facts.md",
+        "image": "05",
+        "address": "$3368"
+      },
+      {
+        "file": "facts.md",
+        "image": "05",
+        "address": "$33E0"
+      },
+      {
+        "file": "facts.md",
+        "image": "06",
+        "address": "$33B0"
+      },
+      {
+        "file": "facts.md",
+        "image": "06",
+        "address": "$3373"
+      },
+      {
+        "file": "facts.md",
+        "image": "07",
+        "address": "$3245"
+      },
+      {
+        "file": "facts.md",
+        "image": "07",
+        "address": "$31D9"
+      },
+      {
+        "file": "facts.md",
+        "image": "07",
+        "address": "$31EC"
+      },
+      {
+        "file": "facts.md",
+        "image": "07",
+        "address": "$3282"
+      },
+      {
+        "file": "facts.md",
+        "image": "07",
+        "address": "$31A2"
+      },
+      {
+        "file": "facts.md",
+        "image": "08",
+        "address": "$308F"
+      },
+      {
+        "file": "facts.md",
+        "image": "08",
+        "address": "$31B8"
+      },
+      {
+        "file": "facts.md",
+        "image": "09",
+        "address": "$3295"
+      },
+      {
+        "file": "facts.md",
+        "image": "09",
+        "address": "$31FC"
+      },
+      {
+        "file": "facts.md",
+        "image": "09",
+        "address": "$3288"
+      },
+      {
+        "file": "facts.md",
+        "image": "09",
+        "address": "$3050"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$3214"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$32BB"
+      },
+      {
+        "file": "facts.md",
+        "image": "10",
+        "address": "$33C8"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$3161"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$323D"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$32E5"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$3388"
+      },
+      {
+        "file": "facts.md",
+        "image": "11",
+        "address": "$3462"
+      },
+      {
+        "file": "facts.md",
+        "image": "12",
+        "address": "$32B3"
+      },
+      {
+        "file": "facts.md",
+        "image": "12",
+        "address": "$3508"
+      },
+      {
+        "file": "facts.md",
+        "image": "12",
+        "address": "$3402"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$3149"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$3178"
+      },
+      {
+        "file": "facts.md",
+        "image": "13",
+        "address": "$322C"
+      },
+      {
+        "file": "facts.md",
+        "image": "14",
+        "address": "$339A"
+      },
+      {
+        "file": "facts.md",
+        "image": "14",
+        "address": "$34EA"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$31C6"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$34FC"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$36B2"
+      },
+      {
+        "file": "facts.md",
+        "image": "15",
+        "address": "$3667"
+      },
+      {
+        "file": "facts.md",
+        "image": "16",
+        "address": "$3266"
+      },
+      {
+        "file": "facts.md",
+        "image": "16",
+        "address": "$32C7"
+      },
+      {
+        "file": "facts.md",
+        "image": "17",
+        "address": "$32EB"
+      },
+      {
+        "file": "facts.md",
+        "image": "18",
+        "address": "$331E"
+      },
+      {
+        "file": "facts.md",
+        "image": "18",
+        "address": "$326D"
+      },
+      {
+        "file": "facts.md",
+        "image": "19",
+        "address": "$3237"
+      },
+      {
+        "file": "facts.md",
+        "image": "19",
+        "address": "$32AD"
+      },
+      {
+        "file": "facts.md",
+        "image": "20",
+        "address": "$3183"
+      },
+      {
+        "file": "facts.md",
+        "image": "21",
+        "address": "$31A6"
+      },
+      {
+        "file": "facts.md",
+        "image": "22",
+        "address": "$328B"
+      },
+      {
+        "file": "facts.md",
+        "image": "22",
+        "address": "$33DC"
+      },
+      {
+        "file": "facts.md",
+        "image": "22",
+        "address": "$340C"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$31A2"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$31DF"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$3218"
+      },
+      {
+        "file": "facts.md",
+        "image": "23",
+        "address": "$324B"
+      },
+      {
+        "file": "facts.md",
+        "image": "24",
+        "address": "$3214"
+      },
+      {
+        "file": "facts.md",
+        "image": "24",
+        "address": "$322A"
+      },
+      {
+        "file": "facts.md",
+        "image": "2a",
+        "address": "$317A"
+      },
+      {
+        "file": "facts.md",
+        "image": "2a",
+        "address": "$319C"
+      },
+      {
+        "file": "facts.md",
+        "image": "2b",
+        "address": "$3179"
+      },
+      {
+        "file": "facts.md",
+        "image": "2c",
+        "address": "$3192"
+      },
+      {
+        "file": "facts.md",
+        "image": "26",
+        "address": "$345A"
+      },
+      {
+        "file": "facts.md",
+        "image": "26",
+        "address": "$3505"
+      },
+      {
+        "file": "facts.md",
+        "image": "26",
+        "address": "$314D"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$331E"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$33E2"
+      },
+      {
+        "file": "facts.md",
+        "image": "27",
+        "address": "$31E3"
+      },
+      {
+        "file": "facts.md",
+        "image": "28",
+        "address": "$322F"
+      },
+      {
+        "file": "facts.md",
+        "image": "28",
+        "address": "$328C"
+      },
+      {
+        "file": "facts.md",
+        "image": "28",
+        "address": "$3261"
+      },
+      {
+        "file": "facts.md",
+        "image": "29",
+        "address": "$31EF"
+      },
+      {
+        "file": "facts.md",
+        "image": "29",
+        "address": "$308F"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3393"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$31AA"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3226"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$347C"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3078"
+      },
+      {
+        "file": "facts.md",
+        "image": "30",
+        "address": "$3014"
+      },
+      {
+        "file": "features.md",
+        "image": "01",
+        "address": "$3020"
+      },
+      {
+        "file": "features.md",
+        "image": "01",
+        "address": "$3015"
+      },
+      {
+        "file": "features.md",
+        "image": "01",
+        "address": "$3020"
+      },
+      {
+        "file": "features.md",
+        "image": "01",
+        "address": "$302D"
+      },
+      {
+        "file": "features.md",
+        "image": "24",
+        "address": "$3214"
+      },
+      {
+        "file": "orientation.md",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "orientation.md",
+        "image": "01",
+        "address": "$37FF"
+      },
+      {
+        "file": "index.html",
+        "image": "01",
+        "address": "$3000"
+      },
+      {
+        "file": "index.html",
+        "image": "27",
+        "address": "$3396"
+      },
+      {
+        "file": "index.html",
+        "image": "27",
+        "address": "$32C4"
+      },
+      {
+        "file": "index.html",
+        "image": "27",
+        "address": "$31E3"
+      },
+      {
+        "file": "index.html",
+        "image": "27",
+        "address": "$31EC"
+      },
+      {
+        "file": "index.html",
+        "image": "14",
+        "address": "$343C"
+      },
+      {
+        "file": "index.html",
+        "image": "14",
+        "address": "$34BB"
+      },
+      {
+        "file": "index.html",
+        "image": "14",
+        "address": "$34EA"
+      },
+      {
+        "file": "index.html",
+        "image": "26",
+        "address": "$3505"
+      },
+      {
+        "file": "index.html",
+        "image": "26",
+        "address": "$333A"
+      },
+      {
+        "file": "index.html",
+        "image": "06",
+        "address": "$3373"
+      },
+      {
+        "file": "index.html",
+        "image": "22",
+        "address": "$340C"
+      },
+      {
+        "file": "index.html",
+        "image": "22",
+        "address": "$33DC"
+      },
+      {
+        "file": "index.html",
+        "image": "30",
+        "address": "$3393"
+      },
+      {
+        "file": "index.html",
+        "image": "30",
+        "address": "$3078"
+      },
+      {
+        "file": "index.html",
+        "image": "10",
+        "address": "$3214"
+      },
+      {
+        "file": "index.html",
+        "image": "11",
+        "address": "$3388"
+      },
+      {
+        "file": "index.html",
+        "image": "23",
+        "address": "$31A2"
+      },
+      {
+        "file": "index.html",
+        "image": "13",
+        "address": "$30ED"
+      },
+      {
+        "file": "levels.html",
+        "image": "24",
+        "address": "$3214"
+      },
+      {
+        "file": "levels.html",
+        "image": "30",
+        "address": "$3393"
+      }
+    ],
+    "atlasCopiesIdentical": true,
+    "levelNotes": 32,
+    "featureRows": 35,
+    "factSections": [
+      "Evidence and image",
+      "Display, interrupts and clocks",
+      "Controls, speed and player movement",
+      "Bitmap geometry and collision",
+      "Level contract and collection",
+      "Sprites, hazards and death",
+      "Players, modes, bonuses and progression",
+      "Randomizer",
+      "High scores, text and persistence",
+      "Sound",
+      "Title and attract scripts",
+      "Hot Foot and Runaway follow-up",
+      "Runtime callback and backlog checks",
+      "Followers through ordinary input",
+      "Remaining source anomalies and limits",
+      "Mystery Maze selection and reveal boundaries",
+      "Gameplay verification across fourteen files",
+      "Interactive bomb scenery comparisons",
+      "Interactive Robots III routes",
+      "Native shooting hits and Dragon Slayer stairs",
+      "Private behavior in all 32 level files"
+    ],
+    "bareOverlayCodeSpans": [],
+    "reviewedContentSha256": {
+      "index.html": "9d8f1c05dc9325a72df18c5c9175a61260b81c69f28a877a513ca2c947059071",
+      "levels.html": "d356a173a267fdc04731f3e8b8bfcafadaff16a4de02220ae0565aebeee17a25",
+      "facts.md": "51d726e428de3dd105de237c3d881f7b4a198b38ec3c91797b1746167c4bcba3",
+      "features.md": "0ecf5806e4bd33ea3a3b29ed88f787edf00e93e4f08b16851b9edb0b0953d2c2",
+      "orientation.md": "d0ec02a1ac125433af292dfe4b8e3986e879e834ddde269f47f0099a1589b5e6",
+      "cheats.md": "0ebc6068a25d6c07f488b2a14a78b7c38fae19de0326984b2bdceceffb9c1e06",
+      "TODO.md": "f9a2cfe724ba7fe5371aeb684cccf133213dc811651065718038751d7b96d4ea"
+    }
+  },
+  "sourceMapsAndListings": {
+    "files": 66,
+    "unchangedFromBaseline": true
+  },
+  "browserRegressions": [
+    {
+      "script": "work/browser_check.js",
+      "exit": 0,
+      "logSha256": "c11cb4acedc005847b6616a855e999b16b1d8e34040a6cd9db9cd6489ff69c38"
+    },
+    {
+      "script": "work/check_scenery_browser.js",
+      "exit": 0,
+      "logSha256": "b03903152a62a2d5413da7b88fb1d4e09e4a15eca18ca15977ed87b18b826c0e"
+    },
+    {
+      "script": "work/check_robot_browser.js",
+      "exit": 0,
+      "logSha256": "21c4bd3bcc98d50a26c2b3da4add690f3b97f3ef04e448c4d2323302dd3f9641"
+    },
+    {
+      "script": "work/check_shooting_browser.js",
+      "exit": 0,
+      "logSha256": "1281ff965a8bfb2ccd48aae52911ae86eb717b411b122c691c521afb1af26d24",
+      "initialExit": 1,
+      "correction": "The original selector matched two disclosure summaries after Gunfighter was added. A second stale assertion expected Hit49 in the atlas; the verified route now describes54 hits and2800 points. Both private harness assertions were updated and rerun.",
+      "finalLogSha256": "6dae9ff99a0aaa890d9d166d1b03af533969c1197b774ff4370411d91e770edd"
+    },
+    {
+      "script": "work/check_freeze_final.js",
+      "exit": 0,
+      "logSha256": "40672f8e14f2532ed212536726fd1ec73703637730eca9915d3ce7ed1d8b943c"
+    },
+    {
+      "script": "work/routes-2026-10-04/browser.js",
+      "exit": 0,
+      "logSha256": "67378b358b8b1b5950c2990707edc33092a904b60ee95df33a55830e70de3500"
+    }
+  ],
+  "chooserBrowser": {
+    "passed": true,
+    "cases": [
+      {
+        "width": 1440,
+        "seed": "0000",
+        "result": "0000 stays zero: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 1440,
+        "seed": "4000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 1440,
+        "seed": "8000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 1440,
+        "seed": "C000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 390,
+        "seed": "0000",
+        "result": "0000 stays zero: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 390,
+        "seed": "4000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 390,
+        "seed": "8000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      },
+      {
+        "width": 390,
+        "seed": "C000",
+        "result": "This state reaches 0000: the original chooser retries 00 forever. No file is chosen. These states are outside the sequence checked from the loaded seed."
+      }
+    ],
+    "successfulInputsPerWidth": 3,
+    "invalidInputsPerWidth": 2,
+    "errors": [],
+    "http": []
+  },
+  "limits": [
+    "No new full campaign run or independent maintainer sample.",
+    "Original source comments were reviewed where relevant to the claims; every comment was not independently re-derived.",
+    "Most historical native routes were retained, with source/model/artifact checks; they were not all replayed from their beginning.",
+    "Byte identity, named entries and annotation coverage do not certify semantics.",
+    "Natural reachability limits in TODO.md remain open."
+  ],
+  "focusedBrowserCorrections": {
+    "passed": true,
+    "widths": [
+      1440,
+      390
+    ],
+    "articleCorrections": 3,
+    "atlasRespawnCorrection": true,
+    "privateLinks": 7,
+    "privateTargetsRendered": 3,
+    "newEvidenceLoads": true,
+    "errors": [],
+    "http": []
+  },
+  "repositoryChecks": {
+    "check_binaries.py": "pass",
+    "check_docs.py": "pass",
+    "check_listing.py": "pass:19 listings",
+    "build.py": "pass:19 minisites"
+  },
+  "auditFilesSha256": {
+    "checks/claim-boundaries.js": "eb2bd7ddcb3fb177b778be2437b45f2d2b97e2e648e9e44bba1180805a64894e",
+    "claim-audit.md": "a3da06469fc3e4aa374caa39c26621c2b8e0e0ef9eeab5903ba35fe8436a9eb1"
+  }
+}

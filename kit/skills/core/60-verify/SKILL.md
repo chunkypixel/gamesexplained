@@ -10,6 +10,17 @@ Start the clock: `python3 kit/scripts/clock.py start 60-verify --model <your mod
 Most serious errors come from trusting an absence, or from a claim that
 sounded right and was never tested.
 
+## Verify the final wording
+
+Read the published explanation against the evidence after simplifying its
+language. A correct reset coordinate does not establish "back to its starting
+position": compare initialization and reset for each actor. A tested respawn
+does not establish an unconditional return: check the last-life branch too.
+Keep the measured unit in every copy of a timing claim; an interrupt entry
+and a serviced game update need not be the same event. Check the article,
+feature list and level notes together, and make private-code links select
+the source image that contains the cited routine.
+
 ## Negative results
 
 | Claimed absence | What was actually true |

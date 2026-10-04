@@ -14,6 +14,13 @@ Versions that taught nothing of the kind do not appear.
 
 ## next · 4 October 2026 · Jumpman · JankFoundry with Codex
 
+**Plain-language copy can change a verified fact.** A fixed respawn point
+became "starting position" even though one enemy starts elsewhere. Verification
+now compares initialization with reset for each actor, tests last-life
+conditions, and carries the same timing unit through the article, feature
+list and level notes. Correct technical evidence does not validate every
+paraphrase of it.
+
 **A finite item count is an assumption to verify.** Fastest-speed backlog
 testing needed the original placement and deferred occupancy rules. The
 collector alone did not enforce the proposed pickup cap. Verification now
