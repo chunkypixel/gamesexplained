@@ -113,3 +113,16 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   an enemy entering on the right a frame apart; the VICE run's state had
   also drifted from the machine's since stage 14. 16-18 went on the page;
   14, 15, 19 and 20 stay off.
+
+## 4-5 October 2026, stages 20-32
+
+- Stages 20-32 ran in VICE from `delta_stage20`; the two-hour limit
+  stopped the run in stage 31, and stages 30-32 ran again from
+  `delta_stage30`. (The script also gained a stop for the wrap round after
+  stage 32, and no longer re-saves the snapshot it starts from.)
+- 21-24, 26-28 and 30-32 matched. Stage 20 failed exactly as in the run
+  carried over from stage 14, so its difference is the stage's own, not
+  drift. Stages 20, 25 and 29 each have an enemy entering on the right a
+  frame apart; letting a group's start line up a sample either way did not
+  make them match (the other slots then disagree), so the tolerance was
+  taken out again.

@@ -18,11 +18,12 @@ A human curates the page section by section (`kit/START.md`, the
 
 ## Ideas for the page
 
-- The attack-wave player on `waves.html` carries stages 1 to 18, less 14 and 15. The
-  recording run (`work/waves/record.js`, `pack.js`) covers all 32 stages;
-  stages 14, 15, 19 and 20 differ from VICE (below) and stages 21-32 each need their VICE comparison (`work/waves/vice_stage.py`,
-  `compare.js`) before they go in, by copying the stage's file into
-  `reference/waves/` and raising `STAGES` in `reference/delta-waves.js`.
+- The attack-wave player on `waves.html` carries every stage but 14, 15, 19,
+  20, 25 and 29, which differ from VICE in places (below). The recording
+  run (`work/waves/record.js`, `pack.js`) covers all 32 stages and
+  `work/waves/compare2.js` compares them with VICE; a stage that is made to
+  match goes in by copying its file into `reference/waves/` and adding it
+  to `STAGES` in `reference/delta-waves.js`.
   Later stages start from the VICE snapshots `delta_stageNN` that
   `vice_stage.py` saves at each stage's first frame (in the gitignored
   `tools/vice-home/`); without them, one pass from `wave1_start` remakes
@@ -33,7 +34,8 @@ A human curates the page section by section (`kit/START.md`, the
   the rest of the stage differs. Probably the cycles the video chip takes,
   which the machine does not model; not settled. Stage 19 shows the same
   at the top edge (boss group `$6E`, list 207, frame 272), and stage 20 an
-  enemy entering on the right one frame apart (group `$6F`, list 211);
+  enemy entering on the right one frame apart (group `$6F`, list 211; the
+  same group in stage 29, list 91, and group `$2B` in stage 25, list 35);
   both are probably one timing difference the machine does not reproduce.
   Stage 15 differs only where the stand-in shots leave a different enemy
   alive between two runs of groups `$14` and `$8E`: a fault of the test,
