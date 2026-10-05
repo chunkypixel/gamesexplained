@@ -24,16 +24,59 @@
   "kit_version": "0.0.60",
   "created": "2026-10-05",
   "video": {
-    "screen": "",
-    "charset": ""
+    "screen": "$C000",
+    "charset": "$C800"
   },
   "coverage": {
-    "exclude": [],
-    "extra": [],
-    "include": []
+    "exclude": [
+      [
+        "$CA00",
+        "$CBFF",
+        "runtime: working copy of characters 64-127 (the background tiles), rewritten each round from $EA00, $EC00 or $EE00 by $F552 and $9C59"
+      ]
+    ],
+    "extra": [
+      [
+        "$C400",
+        "$C7FF",
+        "an unused variant of characters 128-255, outside the character window; no instruction reads it"
+      ]
+    ],
+    "include": [
+      [
+        "$D000",
+        "$DFFF",
+        "sprite shapes $40-$7F under the I/O area, read by the video chip in bank 3"
+      ]
+    ]
   },
   "io": [],
-  "regions": [],
+  "regions": [
+    [
+      "$C400",
+      "$C7FF",
+      "graphics",
+      "unused variant of characters 128-255"
+    ],
+    [
+      "$C800",
+      "$CFFF",
+      "graphics",
+      "character set: font, background tiles (runtime), bricks, panel and walls"
+    ],
+    [
+      "$D000",
+      "$E9FF",
+      "graphics",
+      "sprite shapes $40-$A7"
+    ],
+    [
+      "$EA00",
+      "$EFFF",
+      "graphics",
+      "three background tile sets (characters 64-127)"
+    ]
+  ],
   "links": {
     "wiki": "",
     "manual": ""

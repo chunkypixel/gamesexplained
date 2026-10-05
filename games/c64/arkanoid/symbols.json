@@ -12,26 +12,62 @@
     "stack"
    ],
    [
-    53248,
-    57343,
-    "I/O and colour RAM"
+    49152,
+    50175,
+    "screen RAM"
+   ],
+   [
+    51712,
+    52223,
+    "runtime: working copy of characters 64-127 (the background tiles), rewritten each round from $EA00, $EC00 or $EE00 by $F552 and $9C59"
    ]
   ],
-  "extra": []
+  "extra": [
+   [
+    51200,
+    53247,
+    "character set"
+   ],
+   [
+    50176,
+    51199,
+    "an unused variant of characters 128-255, outside the character window; no instruction reads it"
+   ]
+  ]
  },
  "blocks": [
   {
    "start": 0,
-   "end": 262,
+   "end": 255,
    "type": "Undefined"
   },
   {
-   "start": 263,
-   "end": 281,
-   "type": "Code"
+   "start": 256,
+   "end": 511,
+   "type": "Byte"
   },
   {
-   "start": 282,
+   "start": 512,
+   "end": 767,
+   "type": "Undefined"
+  },
+  {
+   "start": 768,
+   "end": 1107,
+   "type": "Byte"
+  },
+  {
+   "start": 1108,
+   "end": 1108,
+   "type": "Undefined"
+  },
+  {
+   "start": 1109,
+   "end": 1432,
+   "type": "Byte"
+  },
+  {
+   "start": 1433,
    "end": 1535,
    "type": "Undefined"
   },
@@ -73,20 +109,15 @@
   {
    "start": 2343,
    "end": 2396,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 2397,
-   "end": 2405,
+   "end": 2399,
    "type": "Code"
   },
   {
-   "start": 2406,
-   "end": 9727,
-   "type": "Undefined"
-  },
-  {
-   "start": 9728,
+   "start": 2400,
    "end": 9748,
    "type": "Byte"
   },
@@ -453,7 +484,7 @@
   {
    "start": 45310,
    "end": 45316,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 45317,
@@ -463,7 +494,7 @@
   {
    "start": 45756,
    "end": 45771,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 45772,
@@ -473,7 +504,7 @@
   {
    "start": 46203,
    "end": 46207,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 46208,
@@ -483,7 +514,7 @@
   {
    "start": 46525,
    "end": 46531,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 46532,
@@ -493,7 +524,7 @@
   {
    "start": 46578,
    "end": 46585,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 46586,
@@ -503,7 +534,7 @@
   {
    "start": 46866,
    "end": 47490,
-   "type": "Undefined"
+   "type": "PETSCII Text"
   },
   {
    "start": 47491,
@@ -513,7 +544,7 @@
   {
    "start": 47513,
    "end": 47521,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 47522,
@@ -522,6 +553,11 @@
   },
   {
    "start": 47608,
+   "end": 49151,
+   "type": "Byte"
+  },
+  {
+   "start": 49152,
    "end": 50175,
    "type": "Undefined"
   },
@@ -538,7 +574,7 @@
   {
    "start": 61669,
    "end": 61878,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 61879,
@@ -548,7 +584,7 @@
   {
    "start": 62762,
    "end": 62801,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 62802,
@@ -558,7 +594,7 @@
   {
    "start": 63193,
    "end": 63225,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63226,
@@ -568,7 +604,7 @@
   {
    "start": 63250,
    "end": 63263,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63264,
@@ -588,7 +624,7 @@
   {
    "start": 63421,
    "end": 63436,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63437,
@@ -598,7 +634,7 @@
   {
    "start": 63461,
    "end": 63466,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63467,
@@ -618,7 +654,7 @@
   {
    "start": 63513,
    "end": 63536,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63537,
@@ -628,7 +664,7 @@
   {
    "start": 63656,
    "end": 63660,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63661,
@@ -638,7 +674,7 @@
   {
    "start": 63832,
    "end": 63838,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63839,
@@ -648,7 +684,7 @@
   {
    "start": 63932,
    "end": 64005,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64006,
@@ -658,7 +694,7 @@
   {
    "start": 64565,
    "end": 64571,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64572,
@@ -668,7 +704,7 @@
   {
    "start": 64635,
    "end": 64664,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64665,
@@ -678,7 +714,7 @@
   {
    "start": 64683,
    "end": 64690,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64691,
@@ -688,7 +724,7 @@
   {
    "start": 64744,
    "end": 64749,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64750,
@@ -698,7 +734,7 @@
   {
    "start": 64885,
    "end": 64890,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 64891,
@@ -708,7 +744,7 @@
   {
    "start": 65073,
    "end": 65090,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 65091,
@@ -718,7 +754,7 @@
   {
    "start": 65230,
    "end": 65247,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 65248,
@@ -727,8 +763,13 @@
   },
   {
    "start": 65338,
+   "end": 65529,
+   "type": "Byte"
+  },
+  {
+   "start": 65530,
    "end": 65535,
-   "type": "Undefined"
+   "type": "Word"
   }
  ],
  "symbols": [
@@ -741,12 +782,6 @@
   {
    "address": 1,
    "name": "zpa_01",
-   "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 2,
-   "name": "zpa_02",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "auto"
   },
@@ -925,12 +960,6 @@
    "kind": "auto"
   },
   {
-   "address": 133,
-   "name": "zpp_85",
-   "type": "ZeroPagePointer",
-   "kind": "auto"
-  },
-  {
    "address": 136,
    "name": "zpf_88",
    "type": "ZeroPageField",
@@ -955,18 +984,6 @@
    "kind": "auto"
   },
   {
-   "address": 174,
-   "name": "zpa_AE",
-   "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 175,
-   "name": "zpa_AF",
-   "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
-  },
-  {
    "address": 176,
    "name": "zpf_B0",
    "type": "ZeroPageField",
@@ -988,18 +1005,6 @@
    "address": 185,
    "name": "zpf_B9",
    "type": "ZeroPageField",
-   "kind": "auto"
-  },
-  {
-   "address": 195,
-   "name": "zpa_C3",
-   "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
-  },
-  {
-   "address": 196,
-   "name": "zpa_C4",
-   "type": "ZeroPageAbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -1234,12 +1239,6 @@
    "address": 263,
    "name": "j_0107",
    "type": "Jump",
-   "kind": "auto"
-  },
-  {
-   "address": 281,
-   "name": "r_0119",
-   "type": "Return",
    "kind": "auto"
   },
   {
@@ -2229,12 +2228,6 @@
   {
    "address": 2275,
    "name": "b_08E3",
-   "type": "Branch",
-   "kind": "auto"
-  },
-  {
-   "address": 2290,
-   "name": "b_08F2",
    "type": "Branch",
    "kind": "auto"
   },
@@ -5479,12 +5472,6 @@
    "kind": "auto"
   },
   {
-   "address": 35616,
-   "name": "a_8B20",
-   "type": "AbsoluteAddress",
-   "kind": "auto"
-  },
-  {
    "address": 37897,
    "name": "f_9409",
    "type": "Field",
@@ -8450,9 +8437,9 @@
   },
   {
    "address": 49152,
-   "name": "f_C000",
+   "name": "screen",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49192,
@@ -8462,9 +8449,9 @@
   },
   {
    "address": 49343,
-   "name": "f_C0BF",
+   "name": "hiscore_digits",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49363,
@@ -8504,9 +8491,9 @@
   },
   {
    "address": 49543,
-   "name": "f_C187",
+   "name": "p1_score_digits",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49563,
@@ -8528,9 +8515,9 @@
   },
   {
    "address": 49589,
-   "name": "a_C1B5",
+   "name": "p1_lives_digits",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49590,
@@ -8558,9 +8545,9 @@
   },
   {
    "address": 49629,
-   "name": "a_C1DD",
+   "name": "p1_round_digits",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49630,
@@ -8606,9 +8593,9 @@
   },
   {
    "address": 49903,
-   "name": "f_C2EF",
+   "name": "p2_score_digits",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49912,
@@ -8618,9 +8605,9 @@
   },
   {
    "address": 49949,
-   "name": "a_C31D",
+   "name": "p2_lives_digits",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49950,
@@ -8630,9 +8617,9 @@
   },
   {
    "address": 49989,
-   "name": "a_C345",
+   "name": "p2_round_digits",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49990,
@@ -8642,9 +8629,9 @@
   },
   {
    "address": 50059,
-   "name": "a_C38B",
+   "name": "exit_cells",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50099,
@@ -8660,9 +8647,9 @@
   },
   {
    "address": 50168,
-   "name": "a_C3F8",
+   "name": "sprite_pointers",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50169,
@@ -8677,46 +8664,64 @@
    "kind": "auto"
   },
   {
+   "address": 50176,
+   "name": "chars_unused",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 51200,
+   "name": "charset",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 51456,
+   "name": "charset_digits",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 51712,
-   "name": "f_CA00",
+   "name": "charset_tiles",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51968,
-   "name": "f_CB00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "charset_tiles_96",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 52224,
-   "name": "f_CC00",
+   "name": "charset_upper",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 52480,
-   "name": "f_CD00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "charset_160",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 52736,
-   "name": "f_CE00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "charset_192",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 52992,
-   "name": "f_CF00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "charset_224",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53056,
-   "name": "f_CF40",
-   "type": "Field",
-   "kind": "auto"
+   "name": "chars_exit",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53057,
@@ -8732,9 +8737,9 @@
   },
   {
    "address": 53080,
-   "name": "f_CF58",
-   "type": "Field",
-   "kind": "auto"
+   "name": "chars_gate_left",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53088,
@@ -8744,21 +8749,117 @@
   },
   {
    "address": 53096,
-   "name": "f_CF68",
-   "type": "Field",
-   "kind": "auto"
+   "name": "chars_exit_open",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53168,
-   "name": "f_CFB0",
-   "type": "Field",
-   "kind": "auto"
+   "name": "chars_wall_right",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 53224,
-   "name": "f_CFE8",
-   "type": "Field",
-   "kind": "auto"
+   "name": "chars_gate_right",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53248,
+   "name": "spr_vaus",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53312,
+   "name": "spr_vaus_1r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53376,
+   "name": "spr_ball",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53440,
+   "name": "spr_vaus_alt",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53504,
+   "name": "spr_vaus_alt_1r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53568,
+   "name": "spr_lines",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53632,
+   "name": "spr_scatter",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53696,
+   "name": "spr_scatter_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53760,
+   "name": "spr_scatter_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53824,
+   "name": "spr_scatter_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53888,
+   "name": "spr_cone",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53952,
+   "name": "spr_cone_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54016,
+   "name": "spr_cone_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54080,
+   "name": "spr_cone_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54144,
+   "name": "spr_cone_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54208,
+   "name": "spr_cone_6",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 54270,
@@ -8771,6 +8872,102 @@
    "name": "f_D3FF",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 54272,
+   "name": "spr_cone_7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54336,
+   "name": "spr_cone_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54400,
+   "name": "spr_pyramid",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54464,
+   "name": "spr_pyramid_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54528,
+   "name": "spr_pyramid_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54592,
+   "name": "spr_pyramid_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54656,
+   "name": "spr_pyramid_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54720,
+   "name": "spr_pyramid_6",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54784,
+   "name": "spr_pyramid_7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54848,
+   "name": "spr_pyramid_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54912,
+   "name": "spr_pyramid_9",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54976,
+   "name": "spr_pyramid_10",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 55040,
+   "name": "spr_pyramid_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 55104,
+   "name": "spr_pyramid_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 55168,
+   "name": "spr_pyramid_13",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 55232,
+   "name": "spr_orb",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 55295,
@@ -8791,10 +8988,22 @@
    "kind": "auto"
   },
   {
+   "address": 55360,
+   "name": "spr_orb_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 55364,
    "name": "f_D844",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 55424,
+   "name": "spr_orb_4",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 55444,
@@ -8813,6 +9022,12 @@
    "name": "f_D8BE",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 55488,
+   "name": "spr_orb_5",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 55507,
@@ -8851,6 +9066,12 @@
    "kind": "auto"
   },
   {
+   "address": 55616,
+   "name": "spr_orb_7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 55627,
    "name": "f_D94B",
    "type": "Field",
@@ -8869,6 +9090,12 @@
    "kind": "auto"
   },
   {
+   "address": 55680,
+   "name": "spr_orb_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 55686,
    "name": "f_D986",
    "type": "Field",
@@ -8885,6 +9112,12 @@
    "name": "f_D9AE",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 55744,
+   "name": "spr_orb_9",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 55747,
@@ -8929,10 +9162,28 @@
    "kind": "auto"
   },
   {
+   "address": 55872,
+   "name": "spr_orb_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 55895,
    "name": "a_DA57",
    "type": "AbsoluteAddress",
    "kind": "auto"
+  },
+  {
+   "address": 55936,
+   "name": "spr_orb_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56000,
+   "name": "spr_orb_13",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 56006,
@@ -8989,6 +9240,18 @@
    "kind": "auto"
   },
   {
+   "address": 56128,
+   "name": "spr_cluster",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56192,
+   "name": "spr_cluster_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 56203,
    "name": "a_DB8B",
    "type": "AbsoluteAddress",
@@ -9001,10 +9264,46 @@
    "kind": "auto"
   },
   {
+   "address": 56256,
+   "name": "spr_cluster_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 56283,
    "name": "a_DBDB",
    "type": "AbsoluteAddress",
    "kind": "auto"
+  },
+  {
+   "address": 56320,
+   "name": "spr_cluster_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56384,
+   "name": "spr_cluster_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56448,
+   "name": "spr_cluster_6",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56512,
+   "name": "spr_vaus_fade",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56576,
+   "name": "spr_vaus_fade_1r",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 56600,
@@ -9013,16 +9312,214 @@
    "kind": "auto"
   },
   {
+   "address": 56640,
+   "name": "spr_vaus_fade_2l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56704,
+   "name": "spr_vaus_fade_2r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56768,
+   "name": "spr_vaus_fade_3l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 56797,
    "name": "s_DDDD",
    "type": "Subroutine",
    "kind": "auto"
   },
   {
+   "address": 56832,
+   "name": "spr_vaus_fade_3r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56896,
+   "name": "spr_vaus_fade_4l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56960,
+   "name": "spr_vaus_fade_4r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57024,
+   "name": "spr_burst",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57088,
+   "name": "spr_burst_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57152,
+   "name": "spr_burst_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57216,
+   "name": "spr_burst_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57280,
+   "name": "spr_burst_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57344,
+   "name": "spr_burst_end",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57408,
+   "name": "spr_burst_7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57472,
+   "name": "spr_burst_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57536,
+   "name": "spr_burst_9",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57600,
+   "name": "spr_vaus_breakup",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57664,
+   "name": "spr_vaus_breakup_1r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57728,
+   "name": "spr_vaus_breakup_2l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57792,
+   "name": "spr_vaus_breakup_2r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57856,
+   "name": "spr_vaus_breakup_3l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57920,
+   "name": "spr_vaus_breakup_3r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57984,
+   "name": "spr_vaus_breakup_4l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58048,
+   "name": "spr_vaus_breakup_4r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58112,
+   "name": "spr_vaus_breakup_5l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58176,
+   "name": "spr_vaus_breakup_5r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58240,
+   "name": "spr_vaus_breakup_6l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58304,
+   "name": "spr_vaus_breakup_6r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58368,
+   "name": "spr_vaus_breakup_7l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58432,
+   "name": "spr_vaus_breakup_7r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58496,
+   "name": "spr_vaus_breakup_8l",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58560,
+   "name": "spr_vaus_breakup_8r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58624,
+   "name": "spr_capsule",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 58625,
    "name": "f_E501",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 58688,
+   "name": "spr_capsule_letter",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 58689,
@@ -9032,15 +9529,15 @@
   },
   {
    "address": 58752,
-   "name": "f_E580",
+   "name": "spr_frame_work",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58816,
-   "name": "f_E5C0",
-   "type": "Field",
-   "kind": "auto"
+   "name": "spr_frame_work_r",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 58819,
@@ -9050,15 +9547,105 @@
   },
   {
    "address": 58880,
-   "name": "f_E600",
+   "name": "spr_frame_master",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 58944,
+   "name": "spr_frame_master_r",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59008,
+   "name": "spr_cube",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59072,
+   "name": "spr_cube_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59136,
+   "name": "spr_cube_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59200,
+   "name": "spr_cube_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59264,
+   "name": "spr_cube_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59328,
+   "name": "spr_cube_6",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59392,
+   "name": "spr_cube_7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59456,
+   "name": "spr_cube_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59520,
+   "name": "spr_cube_9",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59584,
+   "name": "spr_cube_10",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59648,
+   "name": "spr_cube_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59712,
+   "name": "spr_cube_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59776,
+   "name": "spr_cube_13",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59840,
+   "name": "spr_cube_14",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 59904,
-   "name": "f_EA00",
+   "name": "tiles_round33",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59928,
@@ -9067,34 +9654,40 @@
    "kind": "auto"
   },
   {
+   "address": 59992,
+   "name": "tiles_round33_4b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 60160,
-   "name": "f_EB00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "tiles_round33_96",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 60416,
-   "name": "f_EC00",
+   "name": "tiles_set_a",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 60672,
-   "name": "f_ED00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "tiles_set_a_96",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 60928,
-   "name": "f_EE00",
+   "name": "tiles_set_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 61184,
-   "name": "f_EF00",
-   "type": "Field",
-   "kind": "auto"
+   "name": "tiles_set_b_96",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 61440,
@@ -10605,14 +11198,449 @@
    "text": "Title colour-RAM source, cells 768-999 (row 19 column 8 to the end) to $DB00-$DBE7, then 24 bytes $67E8-$67FF that the same loop copies to the unused colour RAM $DBE8-$DBFF"
   },
   {
+   "address": 49152,
+   "type": "line",
+   "text": "Screen memory, 1000 cells ($C000-$C3E7), bank 3. Runtime state: $B6F0 fills it with $1C (and colour RAM with 3) and the menu, story and play screens are drawn over that; the loaded bytes, a copy of the menu, are overwritten before they are shown. Row 0 is the top wall: $F64F copies 28 chars from $F6DE into $C000-$C01B."
+  },
+  {
+   "address": 49192,
+   "type": "line",
+   "text": "Screen row 1: $F655-$F65A OR $10 into its first 28 cells, turning the background tiles $40-$4F into their shaded twins $50-$5F under the top wall."
+  },
+  {
+   "address": 49343,
+   "type": "line",
+   "text": "Screen row 4, columns 31-36: the high score's six digits, written by $FB2F-$FB4D from BCD $0941-$0943 (digit + $30)."
+  },
+  {
+   "address": 49363,
+   "type": "line",
+   "text": "Screen row 5, columns 11-16: the first of ten rows (5-14) that $970B saves to $02B0-$02EB, six cells each."
+  },
+  {
+   "address": 49401,
+   "type": "line",
+   "text": "Screen row 6, column 9: the base address of the second of $B6F0's four 250-cell fills, which covers $C0FA-$C1F3."
+  },
+  {
+   "address": 49403,
+   "type": "line",
+   "text": "Screen row 6, columns 11-16, saved by $9713 to $02B6."
+  },
+  {
+   "address": 49443,
+   "type": "line",
+   "text": "Screen row 7, columns 11-16, saved by $9719 to $02BC."
+  },
+  {
+   "address": 49483,
+   "type": "line",
+   "text": "Screen row 8, columns 11-16, saved by $971F to $02C2."
+  },
+  {
+   "address": 49523,
+   "type": "line",
+   "text": "Screen row 9, columns 11-16, saved by $9725 to $02C8."
+  },
+  {
+   "address": 49543,
+   "type": "line",
+   "text": "Screen row 9, columns 31-36: player 1's score, six digits written by $FB4F-$FB6D from BCD $0927-$0929."
+  },
+  {
+   "address": 49563,
+   "type": "line",
+   "text": "Screen row 10, columns 11-16, saved by $972B to $02CE."
+  },
+  {
+   "address": 49565,
+   "type": "line",
+   "text": "Screen row 10, column 13: top-left cell of the 2x2-char picture $9824 draws from the table at $987E (char n, n+1 above n+2, n+3)."
+  },
+  {
+   "address": 49566,
+   "type": "line",
+   "text": "Screen row 10, column 14: top-right cell of $9824's 2x2 picture; on the menu, $B631 writes the number of devices here ($0940 + $31)."
+  },
+  {
+   "address": 49589,
+   "type": "line",
+   "text": "Screen row 10, columns 37-38: player 1's lives, from BCD $0936 (written at $FA62 and $FA76); the tens digit and a $99 value print as blanks."
+  },
+  {
+   "address": 49590,
+   "type": "line",
+   "text": "Screen row 10, column 38: player 1 lives, units digit ($FA76; blank when $0936 = $99)."
+  },
+  {
+   "address": 49603,
+   "type": "line",
+   "text": "Screen row 11, columns 11-16, saved by $9731 to $02D4."
+  },
+  {
+   "address": 49605,
+   "type": "line",
+   "text": "Screen row 11, column 13: bottom-left cell of $9824's 2x2 picture."
+  },
+  {
+   "address": 49606,
+   "type": "line",
+   "text": "Screen row 11, column 14: bottom-right cell of $9824's 2x2 picture."
+  },
+  {
+   "address": 49629,
+   "type": "line",
+   "text": "Screen row 11, columns 37-38: player 1's round, $093D + 1 in decimal, written by $F39B."
+  },
+  {
+   "address": 49630,
+   "type": "line",
+   "text": "Screen row 11, column 38: player 1 round, units digit ($F3A4)."
+  },
+  {
+   "address": 49643,
+   "type": "line",
+   "text": "Screen row 12, columns 11-16, saved by $9737 to $02DA."
+  },
+  {
+   "address": 49646,
+   "type": "line",
+   "text": "Screen row 12, column 14: on the menu, the number of players ($0939 + $31), written by $B628."
+  },
+  {
+   "address": 49651,
+   "type": "line",
+   "text": "Screen row 12, column 19: the base of the third of $B6F0's four 250-cell fills ($C1F4-$C2ED)."
+  },
+  {
+   "address": 49683,
+   "type": "line",
+   "text": "Screen row 13, columns 11-16, saved by $973D to $02E0."
+  },
+  {
+   "address": 49723,
+   "type": "line",
+   "text": "Screen row 14, columns 11-16, saved by $9743 to $02E6, the last row of $970B's save."
+  },
+  {
+   "address": 49901,
+   "type": "line",
+   "text": "Screen row 18, column 29: the base of the last of $B6F0's four 250-cell fills ($C2EE-$C3E7)."
+  },
+  {
+   "address": 49903,
+   "type": "line",
+   "text": "Screen row 18, columns 31-36: player 2's score, six digits written by $FB6F onward from BCD $092A-$092C."
+  },
+  {
+   "address": 49912,
+   "type": "line",
+   "text": "Screen row 19: $9BAE prints a message from the table at $9DD6 here (the GAME OVER messages, PETSCII AND $3F, spaces as $1C), with colours at $DAD0, $DAF8 and $DB20."
+  },
+  {
+   "address": 49949,
+   "type": "line",
+   "text": "Screen row 19, columns 37-38: player 2's lives, from BCD $0937 (written at $FA8D and $FAA1)."
+  },
+  {
+   "address": 49950,
+   "type": "line",
+   "text": "Screen row 19, column 38: player 2 lives, units digit ($FAA1; blank when $0937 = $99)."
+  },
+  {
+   "address": 49989,
+   "type": "line",
+   "text": "Screen row 20, columns 37-38: player 2's round, $093E + 1 in decimal, written by $F3AE-$F3BE."
+  },
+  {
+   "address": 49990,
+   "type": "line",
+   "text": "Screen row 20, column 38: player 2 round, units digit ($F3B7)."
+  },
+  {
+   "address": 50059,
+   "type": "line",
+   "text": "Screen rows 22-24, column 27 ($C38B, $C3B3, $C3DB): the right wall's exit, given chars $E8, $E9, $EA by $F6B4-$F6BE."
+  },
+  {
+   "address": 50099,
+   "type": "line",
+   "text": "Screen row 23, column 27: the exit's middle cell, char $E9 ($F6BA)."
+  },
+  {
+   "address": 50139,
+   "type": "line",
+   "text": "Screen row 24, column 27: the exit's bottom cell, char $EA ($F6BE)."
+  },
+  {
+   "address": 50168,
+   "type": "line",
+   "text": "Sprite pointers ($C3F8-$C3FF, screen + $3F8): shape = $C000 + value x 64. Sprite 0 is set to $96 here by $F25D."
+  },
+  {
+   "address": 50169,
+   "type": "line",
+   "text": "Sprite 1's pointer, set to $97 by $F262."
+  },
+  {
+   "address": 50170,
+   "type": "line",
+   "text": "Sprite pointers 2-7, rewritten many times a frame by the multiplexer at $F974 and $FC15 from the table at $F825 (with colours from $F819 into $D029,Y)."
+  },
+  {
+   "address": 50176,
+   "type": "line",
+   "text": "1 KB of character data laid out like chars 128-255 ($CC00-$CFFF) but not the same: chars 128-145 here are flat blocks where $CC00 has shaded bricks, and about a dozen others differ. Outside the character window ($D018 puts chars at $C800) and not referenced by any instruction found; only the first $29 bytes are read, by the collision code at $A28B-$A2C3 when it looks below the screen's last row (sim). Probably an earlier version left in the image; not checked further."
+  },
+  {
+   "address": 51200,
+   "type": "line",
+   "text": "The play, menu and story character set, chars 0-31 ($C800-$C8FF), hi-res: $00 is the copyright sign, $01-$1A the letters A-Z, $1B a symbol, $1C the blank the game prints for a space ($B65E, $9BAC), $1D-$1F the first ARKANOID logo pieces. Bank 3 with $D018 = $02 ($B543) or $03: chars at $C800. Never written: authored data."
+  },
+  {
+   "address": 51456,
+   "type": "line",
+   "text": "charset chars 32-63 ($C900-$C9FF): $20-$28 more ARKANOID logo pieces, $29-$2F other graphics (the logo at the top right of the play screen also uses $A8-$AB, $B4, $B7, $BA, $C8, $C9), $30-$39 the digits 0-9 (the score code adds $30 to a digit), $3A a quote mark, $3B-$3D panel-box edges, $3E/$3F the 1 and 2 after PLAYER."
+  },
+  {
+   "address": 51712,
+   "type": "line",
+   "text": "Chars 64-95 of the live character set: the background tiles, rewritten from tiles_set_a ($EC00) or tiles_set_b ($EE00) by $F552 at each round, or from tiles_round33 ($EA00) by $9C59. Runtime state; at the hand-over it holds a copy of $EC00."
+  },
+  {
+   "address": 51968,
+   "type": "line",
+   "text": "Chars 96-127 of the live character set, the second half of the background tile set, written by $F552 or $9C59 like $CA00."
+  },
+  {
+   "address": 52224,
+   "type": "line",
+   "text": "Chars 128-255 of the live character set, multicolour, in place as loaded: bricks and play-screen furniture. On round 1's screen bricks are pairs such as $80/$81 and $85/$89. $9C59 reloads chars 128-255 from $1C00-$1FFF (nearly identical) for the round with index $20."
+  },
+  {
+   "address": 52480,
+   "type": "line",
+   "text": "charset_upper chars 160-191 ($CD00-$CDFF): the ARKANOID logo pieces $A8-$AB, $B4, $B7, $BA; panel-box edges $B2, $B3, $B8, $B9; and the big PLAYER lettering $BD-$C6 ($BD-$BF here)."
+  },
+  {
+   "address": 52736,
+   "type": "line",
+   "text": "charset_upper chars 192-223 ($CE00-$CEFF): the rest of the PLAYER lettering ($C0-$C6), $C7 the menu's selection mark ($B61E), $C8/$C9 logo pieces, and $CA-$D9, four frames of a 2x2-char picture that $9824 draws at screen rows 10-11, columns 13-14 from the table at $987E."
+  },
+  {
+   "address": 52992,
+   "type": "line",
+   "text": "charset_upper chars 224-255 ($CF00-$CFFF): the playfield walls. Left wall $F1-$F5, right wall $F6-$FA, top wall $FC with corners $FB and $FF, the two enemy gates in the top wall ($EB $EC $EB at columns 6-8, $FD $FE $FD at columns 19-21), and the exit cells $E8-$EA in the right wall."
+  },
+  {
+   "address": 53056,
+   "type": "line",
+   "text": "Chars $E8-$EA ($CF40-$CF57): the three cells of the exit in the right wall (screen rows 22-24, column 27, placed by $F6B1). $F6C2 makes them look like wall by copying chars $F6-$F8 over them; $A428 copies the open-exit chars $ED-$EF over them and colours the cells 9; $A45A then moves the 24 bytes on by one address per call (one pixel row down the three stacked cells, the last byte wrapping to the first), the open exit's animation."
+  },
+  {
+   "address": 53057,
+   "type": "line",
+   "text": "Byte 1 of char $E8: the target of $A463 (STA $CF41,Y), the one-byte rotation of the exit chars that $A45A runs."
+  },
+  {
+   "address": 53079,
+   "type": "line",
+   "text": "Last byte of char $EA: $A45A saves it before the rotation and puts it back in $CF40, closing the loop."
+  },
+  {
+   "address": 53080,
+   "type": "line",
+   "text": "Chars $EB-$EC ($CF58-$CF67): the left enemy gate in the top wall. $F0B4 sets them and the right gate's chars to the closed pattern from $9950-$995F; $98D8-$993D blank or restore them row by row from the middle out, the gate opening and closing."
+  },
+  {
+   "address": 53088,
+   "type": "line",
+   "text": "Char $EC ($CF60-$CF67), the middle of the left gate, written with $CF58 by $98EB/$98F1 and $9931/$993D."
+  },
+  {
+   "address": 53096,
+   "type": "line",
+   "text": "Chars $ED-$EF ($CF68-$CF7F): the open exit's pattern, copied over chars $E8-$EA by $A428."
+  },
+  {
+   "address": 53168,
+   "type": "line",
+   "text": "Chars $F6-$F8 ($CFB0-$CFC7): right-wall chars, the source $F6C2 copies over the exit chars. It also colours the three cells $0E. Its loop runs Y from $18 down to 0, 25 bytes, so it also copies $CFC8 (row 0 of char $F9) over $CF58 (row 0 of the left gate's char $EB)."
+  },
+  {
+   "address": 53224,
+   "type": "line",
+   "text": "Chars $FD-$FE ($CFE8-$CFF7): the right enemy gate in the top wall, set to the closed pattern from $9950 by $F0B4 with the left gate."
+  },
+  {
+   "address": 53248,
+   "type": "line",
+   "text": "Sprites $40-$41 ($D000-$D07F), multicolour: the Vaus, left half (rounded end and body) and right half (body and rounded end), drawn in rows 12-20 of each slot. $40 and $41 appear in the multiplexer's pointer table at $F825 and in sprite pointers 2-7 (sim, round 1 and attract). Bank 3: the video chip reads this RAM while the CPU sees the VIC-II and SID here, so no instruction reads it by address. The 64th byte of every slot in $D000-$E9FF is padding the video chip never shows."
+  },
+  {
+   "address": 53312,
+   "type": "line",
+   "text": "Sprite $41 ($D040): the Vaus, right half; spr_vaus ($40) is the left."
+  },
+  {
+   "address": 53376,
+   "type": "line",
+   "text": "Sprite $42 ($D080-$D0BF): the ball, a few pixels in the top rows of the slot. $F267 stores $42 into three multiplexer entries ($F829-$F82B), one per ball; play-ram shows $42 in three of the sprite pointers."
+  },
+  {
+   "address": 53440,
+   "type": "line",
+   "text": "Sprites $43-$44 ($D0C0-$D13F): a second, shorter pair of Vaus halves with a different top edge. Not seen in the simulator's pointer writes (round 1, attract); which state uses it is not established."
+  },
+  {
+   "address": 53504,
+   "type": "line",
+   "text": "Sprite $44 ($D100): the right half of the second, shorter Vaus pair; spr_vaus_alt ($43) is the left."
+  },
+  {
+   "address": 53568,
+   "type": "line",
+   "text": "Sprite $45 ($D140-$D17F), hi-res reading: two pairs of one-pixel vertical lines, 8 rows tall, 10 pixels apart. Not seen in the simulator's pointer writes; that these are laser shots is a guess, not checked."
+  },
+  {
+   "address": 53632,
+   "type": "line",
+   "text": "Sprites $46-$49 ($D180-$D27F): four frames of a few scattered pixels spreading out from a small cluster. Not seen in the simulator's pointer writes; use not established."
+  },
+  {
+   "address": 53696,
+   "type": "line",
+   "text": "Sprite $47 ($D1C0): the scattered-pixel frames, frame 2 of 4."
+  },
+  {
+   "address": 53760,
+   "type": "line",
+   "text": "Sprite $48 ($D200): the scattered-pixel frames, frame 3 of 4."
+  },
+  {
+   "address": 53824,
+   "type": "line",
+   "text": "Sprite $49 ($D240): the scattered-pixel frames, frame 4 of 4."
+  },
+  {
+   "address": 53888,
+   "type": "line",
+   "text": "Sprites $4A-$51 ($D280-$D47F), multicolour: an enemy shaped like a cone, eight frames of it turning. The simulator wrote $4A-$51 into sprite pointers 2-7 in round 1 and attract mode."
+  },
+  {
+   "address": 53952,
+   "type": "line",
+   "text": "Sprite $4B ($D2C0): the cone enemy, frame 2 of 8."
+  },
+  {
+   "address": 54016,
+   "type": "line",
+   "text": "Sprite $4C ($D300): the cone enemy, frame 3 of 8."
+  },
+  {
+   "address": 54080,
+   "type": "line",
+   "text": "Sprite $4D ($D340): the cone enemy, frame 4 of 8."
+  },
+  {
+   "address": 54144,
+   "type": "line",
+   "text": "Sprite $4E ($D380): the cone enemy, frame 5 of 8."
+  },
+  {
+   "address": 54208,
+   "type": "line",
+   "text": "Sprite $4F ($D3C0): the cone enemy, frame 6 of 8."
+  },
+  {
    "address": 54270,
    "type": "line",
-   "text": "Sprite $4F (the cone enemy frame 6 of 8), byte 62. This symbol exists only because the sound driver's sta $D3FE,x at $2762 reaches the SID registers above $D400 through X (a voice offset read from $2755); the RAM here is sprite data the video chip reads in bank 3."
+   "text": "Sprite $4F (the cone enemy frame 6 of 8), byte 62. This symbol exists only because the sound driver's sta $D3FE,x at $2762 reaches the SID registers above $D400 through X (loaded from $2755); the RAM here is sprite data the video chip reads in bank 3."
   },
   {
    "address": 54271,
    "type": "line",
    "text": "Sprite $4F (the cone enemy frame 6 of 8), byte 63, the unused 64th byte of the slot. This symbol exists only because the sound driver's sta $D3FF,x at $2768 reaches the SID registers through X."
+  },
+  {
+   "address": 54272,
+   "type": "line",
+   "text": "Sprite $50 ($D400): the cone enemy, frame 7 of 8."
+  },
+  {
+   "address": 54336,
+   "type": "line",
+   "text": "Sprite $51 ($D440): the cone enemy, frame 8 of 8."
+  },
+  {
+   "address": 54400,
+   "type": "line",
+   "text": "Sprites $52-$5E ($D480-$D7BF), multicolour: an enemy shaped like a triangular pyramid with an eye, thirteen frames of it tumbling. Not used in round 1."
+  },
+  {
+   "address": 54464,
+   "type": "line",
+   "text": "Sprite $53 ($D4C0): the pyramid enemy, frame 2 of 13."
+  },
+  {
+   "address": 54528,
+   "type": "line",
+   "text": "Sprite $54 ($D500): the pyramid enemy, frame 3 of 13."
+  },
+  {
+   "address": 54592,
+   "type": "line",
+   "text": "Sprite $55 ($D540): the pyramid enemy, frame 4 of 13."
+  },
+  {
+   "address": 54656,
+   "type": "line",
+   "text": "Sprite $56 ($D580): the pyramid enemy, frame 5 of 13."
+  },
+  {
+   "address": 54720,
+   "type": "line",
+   "text": "Sprite $57 ($D5C0): the pyramid enemy, frame 6 of 13."
+  },
+  {
+   "address": 54784,
+   "type": "line",
+   "text": "Sprite $58 ($D600): the pyramid enemy, frame 7 of 13."
+  },
+  {
+   "address": 54848,
+   "type": "line",
+   "text": "Sprite $59 ($D640): the pyramid enemy, frame 8 of 13."
+  },
+  {
+   "address": 54912,
+   "type": "line",
+   "text": "Sprite $5A ($D680): the pyramid enemy, frame 9 of 13."
+  },
+  {
+   "address": 54976,
+   "type": "line",
+   "text": "Sprite $5B ($D6C0): the pyramid enemy, frame 10 of 13."
+  },
+  {
+   "address": 55040,
+   "type": "line",
+   "text": "Sprite $5C ($D700): the pyramid enemy, frame 11 of 13."
+  },
+  {
+   "address": 55104,
+   "type": "line",
+   "text": "Sprite $5D ($D740): the pyramid enemy, frame 12 of 13."
+  },
+  {
+   "address": 55168,
+   "type": "line",
+   "text": "Sprite $5E ($D780): the pyramid enemy, frame 13 of 13."
+  },
+  {
+   "address": 55232,
+   "type": "line",
+   "text": "Sprites $5F-$6C ($D7C0-$DB3F), multicolour: an enemy shaped like a sphere that flattens to a disc and back, fourteen frames ($5F is the full sphere). Not used in round 1."
   },
   {
    "address": 55295,
@@ -10630,9 +11658,19 @@
    "text": "Sprite $60 (the spinning orb enemy frame 2 of 14), byte 28. This symbol exists only because sta $D81C,y at $F306 with its index addresses the colour RAM at $D81C, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 55360,
+   "type": "line",
+   "text": "Sprite $61 ($D840): the spinning orb enemy, frame 3 of 14."
+  },
+  {
    "address": 55364,
    "type": "line",
    "text": "Sprite $61 (the spinning orb enemy frame 3 of 14), byte 4. This symbol exists only because sta $D844,y at $F30B with its index addresses the colour RAM at $D844, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55424,
+   "type": "line",
+   "text": "Sprite $62 ($D880): the spinning orb enemy, frame 4 of 14."
   },
   {
    "address": 55444,
@@ -10648,6 +11686,11 @@
    "address": 55486,
    "type": "line",
    "text": "Sprite $62 (the spinning orb enemy frame 4 of 14), byte 62. This symbol exists only because sta $D8BE,y at $F318 with its index addresses the colour RAM at $D8BE, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55488,
+   "type": "line",
+   "text": "Sprite $63 ($D8C0): the spinning orb enemy, frame 5 of 14."
   },
   {
    "address": 55507,
@@ -10680,6 +11723,11 @@
    "text": "Sprite $64 (the spinning orb enemy frame 6 of 14), byte 35. This symbol exists only because sta $D923,y at $97D1 with its index addresses the colour RAM at $D923, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 55616,
+   "type": "line",
+   "text": "Sprite $65 ($D940): the spinning orb enemy, frame 7 of 14."
+  },
+  {
    "address": 55627,
    "type": "line",
    "text": "Sprite $65 (the spinning orb enemy frame 7 of 14), byte 11. This symbol exists only because sta $D94B,y at $97D4 with its index addresses the colour RAM at $D94B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
@@ -10695,6 +11743,11 @@
    "text": "Sprite $65 (the spinning orb enemy frame 7 of 14), byte 51. This symbol exists only because sta $D973,y at $97D7 with its index addresses the colour RAM at $D973, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 55680,
+   "type": "line",
+   "text": "Sprite $66 ($D980): the spinning orb enemy, frame 8 of 14."
+  },
+  {
    "address": 55686,
    "type": "line",
    "text": "Sprite $66 (the spinning orb enemy frame 8 of 14), byte 6. This symbol exists only because sta $D986,y at $F31E with its index addresses the colour RAM at $D986, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
@@ -10708,6 +11761,11 @@
    "address": 55726,
    "type": "line",
    "text": "Sprite $66 (the spinning orb enemy frame 8 of 14), byte 46. This symbol exists only because sta $D9AE,y at $F321 with its index addresses the colour RAM at $D9AE, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55744,
+   "type": "line",
+   "text": "Sprite $67 ($D9C0): the spinning orb enemy, frame 9 of 14."
   },
   {
    "address": 55747,
@@ -10745,9 +11803,24 @@
    "text": "Sprite $68 (the spinning orb enemy frame 10 of 14), byte 59. This symbol exists only because sta $DA3B,y at $97E6 with its index addresses the colour RAM at $DA3B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 55872,
+   "type": "line",
+   "text": "Sprite $69 ($DA40): the spinning orb enemy, frame 11 of 14."
+  },
+  {
    "address": 55895,
    "type": "line",
    "text": "Sprite $69 (the spinning orb enemy frame 11 of 14), byte 23. This symbol exists only because sta $DA57 at $FBAB, lda $DA57 at $FBAF, sta $DA57 at $FBB4 addresses the colour RAM at $DA57, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55936,
+   "type": "line",
+   "text": "Sprite $6A ($DA80): the spinning orb enemy, frame 12 of 14."
+  },
+  {
+   "address": 56000,
+   "type": "line",
+   "text": "Sprite $6B ($DAC0): the spinning orb enemy, frame 13 of 14."
   },
   {
    "address": 56006,
@@ -10795,6 +11868,16 @@
    "text": "Sprite $6C (the spinning orb enemy frame 14 of 14), byte 62. This symbol exists only because sta $DB3E,y at $F330 with its index addresses the colour RAM at $DB3E, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 56128,
+   "type": "line",
+   "text": "Sprites $6D-$72 ($DB40-$DCBF), multicolour: an enemy made of three balls, six frames of it rotating. Not used in round 1."
+  },
+  {
+   "address": 56192,
+   "type": "line",
+   "text": "Sprite $6E ($DB80): the three-ball cluster enemy, frame 2 of 6."
+  },
+  {
    "address": 56203,
    "type": "line",
    "text": "Sprite $6E (the three-ball cluster enemy frame 2 of 6), byte 11. This symbol exists only because sta $DB8B at $A43C, sta $DB8B at $F6CF addresses the colour RAM at $DB8B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
@@ -10805,9 +11888,39 @@
    "text": "Sprite $6E (the three-ball cluster enemy frame 2 of 6), byte 51. This symbol exists only because sta $DBB3 at $A43F, sta $DBB3 at $F6D2 addresses the colour RAM at $DBB3, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 56256,
+   "type": "line",
+   "text": "Sprite $6F ($DBC0): the three-ball cluster enemy, frame 3 of 6."
+  },
+  {
    "address": 56283,
    "type": "line",
    "text": "Sprite $6F (the three-ball cluster enemy frame 3 of 6), byte 27. This symbol exists only because sta $DBDB at $A442, sta $DBDB at $F6D5 addresses the colour RAM at $DBDB, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56320,
+   "type": "line",
+   "text": "Sprite $70 ($DC00): the three-ball cluster enemy, frame 4 of 6."
+  },
+  {
+   "address": 56384,
+   "type": "line",
+   "text": "Sprite $71 ($DC40): the three-ball cluster enemy, frame 5 of 6."
+  },
+  {
+   "address": 56448,
+   "type": "line",
+   "text": "Sprite $72 ($DC80): the three-ball cluster enemy, frame 6 of 6."
+  },
+  {
+   "address": 56512,
+   "type": "line",
+   "text": "Sprites $73-$7A ($DCC0-$DEBF): four pairs of Vaus halves in dithered form, each thinner than the last. The simulator wrote $73/$75/$77/$79 to sprite pointer 6 and $74/$76/$78/$7A to pointer 7 in attract mode, so a pair is the whole Vaus dissolving or appearing; which of the two is not established."
+  },
+  {
+   "address": 56576,
+   "type": "line",
+   "text": "Sprite $74 ($DD00): the dithered Vaus, frame pair 1 of 4, right half."
   },
   {
    "address": 56600,
@@ -10815,9 +11928,319 @@
    "text": "Sprite $74 (the dithered, thinning Vaus halves frame 2 of 8), byte 24. This symbol exists only because sta $DD18 at $F621 addresses CIA 2 at $DD18 (a mirror of its $DD08), not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
   },
   {
+   "address": 56640,
+   "type": "line",
+   "text": "Sprite $75 ($DD40): the dithered Vaus, frame pair 2 of 4, left half."
+  },
+  {
+   "address": 56704,
+   "type": "line",
+   "text": "Sprite $76 ($DD80): the dithered Vaus, frame pair 2 of 4, right half."
+  },
+  {
+   "address": 56768,
+   "type": "line",
+   "text": "Sprite $77 ($DDC0): the dithered Vaus, frame pair 3 of 4, left half."
+  },
+  {
    "address": 56797,
    "type": "line",
    "text": "Sprite $77 (the dithered, thinning Vaus halves frame 5 of 8), byte 29. Nothing runs here: JSR $DDDD at $FEE8 and $FF12 is a placeholder whose operand the game writes at run time, and the tracer followed it. The bytes are sprite data."
+  },
+  {
+   "address": 56832,
+   "type": "line",
+   "text": "Sprite $78 ($DE00): the dithered Vaus, frame pair 3 of 4, right half."
+  },
+  {
+   "address": 56896,
+   "type": "line",
+   "text": "Sprite $79 ($DE40): the dithered Vaus, frame pair 4 of 4, left half."
+  },
+  {
+   "address": 56960,
+   "type": "line",
+   "text": "Sprite $7A ($DE80): the dithered Vaus, frame pair 4 of 4, right half."
+  },
+  {
+   "address": 57024,
+   "type": "line",
+   "text": "Sprites $7B-$83 ($DEC0-$E0FF), multicolour: a starburst explosion, nine frames from a small flash to a fading ring of dots. The simulator wrote $7B-$83 to sprite pointers 2-7, the enemy sprites, in round 1."
+  },
+  {
+   "address": 57088,
+   "type": "line",
+   "text": "Sprite $7C ($DF00): the starburst explosion, frame 2 of 9."
+  },
+  {
+   "address": 57152,
+   "type": "line",
+   "text": "Sprite $7D ($DF40): the starburst explosion, frame 3 of 9."
+  },
+  {
+   "address": 57216,
+   "type": "line",
+   "text": "Sprite $7E ($DF80): the starburst explosion, frame 4 of 9."
+  },
+  {
+   "address": 57280,
+   "type": "line",
+   "text": "Sprite $7F ($DFC0): the starburst explosion, frame 5 of 9."
+  },
+  {
+   "address": 57344,
+   "type": "line",
+   "text": "Sprites $80-$83 ($E000-$E0FF): the last four frames of the starburst that starts at spr_burst ($7B), the ring of dots thinning out. Read only by the video chip (pointer values from the $F825 table)."
+  },
+  {
+   "address": 57408,
+   "type": "line",
+   "text": "Sprite $81 ($E040): the starburst explosion, frame 7 of 9."
+  },
+  {
+   "address": 57472,
+   "type": "line",
+   "text": "Sprite $82 ($E080): the starburst explosion, frame 8 of 9."
+  },
+  {
+   "address": 57536,
+   "type": "line",
+   "text": "Sprite $83 ($E0C0): the starburst explosion, frame 9 of 9."
+  },
+  {
+   "address": 57600,
+   "type": "line",
+   "text": "Sprites $84-$93 ($E100-$E4FF): eight pairs of Vaus halves, the bat flashing and then breaking into pieces that scatter and fade. In the simulator's game run (agent 8's pointer log) $84-$93 went to sprite pointers 4 and 5, so this reads as the Vaus being destroyed when a life is lost; that timing was not checked."
+  },
+  {
+   "address": 57664,
+   "type": "line",
+   "text": "Sprite $85 ($E140): the Vaus breaking up, frame pair 1 of 8, right half."
+  },
+  {
+   "address": 57728,
+   "type": "line",
+   "text": "Sprite $86 ($E180): the Vaus breaking up, frame pair 2 of 8, left half."
+  },
+  {
+   "address": 57792,
+   "type": "line",
+   "text": "Sprite $87 ($E1C0): the Vaus breaking up, frame pair 2 of 8, right half."
+  },
+  {
+   "address": 57856,
+   "type": "line",
+   "text": "Sprite $88 ($E200): the Vaus breaking up, frame pair 3 of 8, left half."
+  },
+  {
+   "address": 57920,
+   "type": "line",
+   "text": "Sprite $89 ($E240): the Vaus breaking up, frame pair 3 of 8, right half."
+  },
+  {
+   "address": 57984,
+   "type": "line",
+   "text": "Sprite $8A ($E280): the Vaus breaking up, frame pair 4 of 8, left half."
+  },
+  {
+   "address": 58048,
+   "type": "line",
+   "text": "Sprite $8B ($E2C0): the Vaus breaking up, frame pair 4 of 8, right half."
+  },
+  {
+   "address": 58112,
+   "type": "line",
+   "text": "Sprite $8C ($E300): the Vaus breaking up, frame pair 5 of 8, left half."
+  },
+  {
+   "address": 58176,
+   "type": "line",
+   "text": "Sprite $8D ($E340): the Vaus breaking up, frame pair 5 of 8, right half."
+  },
+  {
+   "address": 58240,
+   "type": "line",
+   "text": "Sprite $8E ($E380): the Vaus breaking up, frame pair 6 of 8, left half."
+  },
+  {
+   "address": 58304,
+   "type": "line",
+   "text": "Sprite $8F ($E3C0): the Vaus breaking up, frame pair 6 of 8, right half."
+  },
+  {
+   "address": 58368,
+   "type": "line",
+   "text": "Sprite $90 ($E400): the Vaus breaking up, frame pair 7 of 8, left half."
+  },
+  {
+   "address": 58432,
+   "type": "line",
+   "text": "Sprite $91 ($E440): the Vaus breaking up, frame pair 7 of 8, right half."
+  },
+  {
+   "address": 58496,
+   "type": "line",
+   "text": "Sprite $92 ($E480): the Vaus breaking up, frame pair 8 of 8, left half."
+  },
+  {
+   "address": 58560,
+   "type": "line",
+   "text": "Sprite $93 ($E4C0): the Vaus breaking up, frame pair 8 of 8, right half."
+  },
+  {
+   "address": 58624,
+   "type": "line",
+   "text": "Sprite $94 ($E500-$E53F): the blank capsule, a rounded bar 10 rows tall. $A7E9 builds the lettered capsule (sprite $95) from it each frame, reading its middle byte column ($E501,x)."
+  },
+  {
+   "address": 58625,
+   "type": "line",
+   "text": "Middle byte of row 0 of spr_capsule: the base of $A7F6's read, LDA $E501,X with X = 0, 3 .. 27."
+  },
+  {
+   "address": 58688,
+   "type": "line",
+   "text": "Sprite $95 ($E540-$E57F): the capsule with its letter, rebuilt by $A7E9: for ten rows, $E541,x = ($E501,x AND $A850,y) OR $A80F,y, with Y stepping through eight rows from $0238 so that the letter scrolls round. Runtime state: play-ram differs from the hand-over here. The simulator wrote $95 to sprite pointers 2-7."
+  },
+  {
+   "address": 58689,
+   "type": "line",
+   "text": "Middle byte of row 0 of spr_capsule_letter: the base of $A7FF's write, STA $E541,X."
+  },
+  {
+   "address": 58752,
+   "type": "line",
+   "text": "Sprites $96-$97 ($E580-$E5FF): the working copy of sprite 0 and 1's shape. $F25D sets pointers 0/1 to $96/$97 and $F24A makes both sprites black; they are hi-res ($D01C bits 0-1 clear in the play frame). Restored from spr_frame_master by $F09E, cleared to zero by $F0AA (called through $96D7), and $A4C4 ORs one-pixel masks from $FC91 ($80, $40 .. $01) into it, ten rows per call once the X position at $9446 passes $E0. Together the two halves draw a box outline on a striped base; what it depicts is not established."
+  },
+  {
+   "address": 58816,
+   "type": "line",
+   "text": "Sprite $97, the right half of spr_frame_work. $A4DD-$A4E3 OR a mask from $FC91 into it, every third byte from a row given by $0247/8."
+  },
+  {
+   "address": 58819,
+   "type": "line",
+   "text": "Sprite $97 row 1, byte 0. $A4D6 tests it for $FF: once it is full, $A4FB goes on to OR the mask into the left half ($E580) instead."
+  },
+  {
+   "address": 58880,
+   "type": "line",
+   "text": "Sprites $98-$99 ($E600-$E67F): the master of sprites 0 and 1's shape, copied whole into spr_frame_work ($E580) by $F09E. The pointer values $98/$99 themselves were never seen in a sprite pointer."
+  },
+  {
+   "address": 58944,
+   "type": "line",
+   "text": "Sprite $99 ($E640-$E67F): the right half of spr_frame_master, copied to $E5C0 by $F09E."
+  },
+  {
+   "address": 59008,
+   "type": "line",
+   "text": "Sprites $9A-$A7 ($E680-$E9FF), multicolour: an enemy shaped like a cube, fourteen frames of it turning. The simulator wrote $A0 and $A1 to sprite pointers 2-7 in round 1, so the cube is round 1's enemy."
+  },
+  {
+   "address": 59072,
+   "type": "line",
+   "text": "Sprite $9B ($E6C0): the cube enemy, frame 2 of 14."
+  },
+  {
+   "address": 59136,
+   "type": "line",
+   "text": "Sprite $9C ($E700): the cube enemy, frame 3 of 14."
+  },
+  {
+   "address": 59200,
+   "type": "line",
+   "text": "Sprite $9D ($E740): the cube enemy, frame 4 of 14."
+  },
+  {
+   "address": 59264,
+   "type": "line",
+   "text": "Sprite $9E ($E780): the cube enemy, frame 5 of 14."
+  },
+  {
+   "address": 59328,
+   "type": "line",
+   "text": "Sprite $9F ($E7C0): the cube enemy, frame 6 of 14."
+  },
+  {
+   "address": 59392,
+   "type": "line",
+   "text": "Sprite $A0 ($E800): the cube enemy, frame 7 of 14."
+  },
+  {
+   "address": 59456,
+   "type": "line",
+   "text": "Sprite $A1 ($E840): the cube enemy, frame 8 of 14."
+  },
+  {
+   "address": 59520,
+   "type": "line",
+   "text": "Sprite $A2 ($E880): the cube enemy, frame 9 of 14."
+  },
+  {
+   "address": 59584,
+   "type": "line",
+   "text": "Sprite $A3 ($E8C0): the cube enemy, frame 10 of 14."
+  },
+  {
+   "address": 59648,
+   "type": "line",
+   "text": "Sprite $A4 ($E900): the cube enemy, frame 11 of 14."
+  },
+  {
+   "address": 59712,
+   "type": "line",
+   "text": "Sprite $A5 ($E940): the cube enemy, frame 12 of 14."
+  },
+  {
+   "address": 59776,
+   "type": "line",
+   "text": "Sprite $A6 ($E980): the cube enemy, frame 13 of 14."
+  },
+  {
+   "address": 59840,
+   "type": "line",
+   "text": "Sprite $A7 ($E9C0): the cube enemy, frame 14 of 14."
+  },
+  {
+   "address": 59904,
+   "type": "line",
+   "text": "Character set chars 64-127 for round index $20 (the 33rd round, Doh's in features.md), 512 bytes, multicolour: irregular pieces, not a repeating background. $9C59 copies it to $CA00-$CBFF when the round index $093D,x reaches $20 (called from $95E8 and $9C41). $EA00-$EA7F and $EB40-$EB7F also appear at $7E00-$7E7F and $7F40-$7F7F."
+  },
+  {
+   "address": 59928,
+   "type": "line",
+   "text": "Inside tiles_round33, char $43 row 0. Not a read: BIT $EA18 at $063E is the skip trick, its operand bytes $18 $EA being the CLC and NOP that the BPL at $063B jumps to."
+  },
+  {
+   "address": 59992,
+   "type": "line",
+   "text": "tiles_round33, chars $4B-$5F ($EA58-$EAFF), the part of the round-33 tile set after the BIT-skip symbol at $EA18."
+  },
+  {
+   "address": 60160,
+   "type": "line",
+   "text": "tiles_round33, chars 96-127 ($EB00-$EBFF), copied to $CB00 by $9C59."
+  },
+  {
+   "address": 60416,
+   "type": "line",
+   "text": "Background tile set A, chars 64-127, multicolour: $40-$4F form a 4x4-char tile repeated over round 1's playfield, and $50-$5F the same tile shaded, used under the top wall, beside the left wall and in gaps between bricks; $60-$7F do not appear on round 1's screen. $F552 copies it to $CA00-$CBFF when bit 1 of the round index $093D,x is clear (rounds 1, 2, 5, 6, ...). The hand-over charset holds this copy."
+  },
+  {
+   "address": 60672,
+   "type": "line",
+   "text": "tiles_set_a, chars 96-127 ($ED00-$EDFF), copied to $CB00 by $F552."
+  },
+  {
+   "address": 60928,
+   "type": "line",
+   "text": "Background tile set B, chars 64-127, multicolour, laid out like tiles_set_a but a different pattern. $F552 copies it to $CA00-$CBFF when bit 1 of the round index $093D,x is set (rounds 3, 4, 7, 8, ...)."
+  },
+  {
+   "address": 61184,
+   "type": "line",
+   "text": "tiles_set_b, chars 96-127 ($EF00-$EFFF), copied to $CB00 by $F552."
   }
  ]
 }
