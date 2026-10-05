@@ -1,10 +1,6 @@
 {
-  "schema": 1,
-  "platform": "c64",
-  "slug": "skate-or-die/title",
-  "title": "Skate or Die!: Title",
-  "part_of": "skate-or-die",
-  "file": "$00, $02",
+  "title": "Title",
+  "order": 2,
   "video": {
     "screen": "$8000",
     "charset": ""

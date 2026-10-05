@@ -10,12 +10,12 @@
   <h1>Skate or Die!</h1>
   <p class="sub">High Jump, from the code: a half-pipe that is really a line, speed that comes from waggling the stick, and a height that belongs to one pass.</p>
 </header>
-<main class="wrap">
+<main class="wrap" data-part="highjump">
 <section id="event">
   <p class="fig">01 · The event</p>
   <h2 class="t">Go fast to get high</h2>
   <p>The manual calls High Jump a "sheer guts event". The skater drops into a half-pipe and builds speed, and "you get a maximum of five passes on the <i>right</i> side where the height marker is. ... To actually go for it and record the attempt, click the button <i>at the highest point</i> of your jump."<sup class="fn"><a href="about.html#src-1" title="The manual">1</a></sup> The marker is the yellow pole at the top right with its black scale, and the status line at the top keeps count of the passes and the height.</p>
-  <figure class="shot"><img src="reference/highjump-play.png" width="384" height="272" alt="The half-pipe seen from the side, with the crowd in the stands behind it, the skater waiting on the left platform, and PRACTICE, PASS: 0 and HEIGHT: 0' 0&quot; along the top"><figcaption>High Jump in practice, the skater waiting on the left platform. Captured in an emulator from the copy studied here.</figcaption></figure>
+  <figure class="sod-shot"><img src="reference/highjump-play.png" width="384" height="272" alt="The half-pipe seen from the side, with the crowd in the stands behind it, the skater waiting on the left platform, and PRACTICE, PASS: 0 and HEIGHT: 0' 0&quot; along the top"><figcaption>High Jump in practice, the skater waiting on the left platform. Captured in an emulator from the copy studied here.</figcaption></figure>
   <p>On the platform the skater fidgets until fire is pressed (<code>$0D50</code>), then pushes off and drops in. The game runs the event as a chain of phases, one routine for each, chosen through a table of nine (<code>$2AB9</code>): waiting, on the ramp, in the air, falling, the two halves of the trick, the return to the platform and the final pose.</p>
 </section>
 <section id="ramp">

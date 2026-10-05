@@ -1,10 +1,13 @@
 {
-  "schema": 1,
-  "platform": "c64",
-  "slug": "skate-or-die/jam",
-  "title": "Skate or Die!: Downhill Jam",
-  "part_of": "skate-or-die",
-  "file": "$28",
+  "title": "Downhill Jam",
+  "order": 8,
+  "over": "resident",
+  "ranges": [
+    [
+      "$0000",
+      "$F22F"
+    ]
+  ],
   "video": {
     "screen": "$5000",
     "charset": "$4800"
@@ -174,7 +177,7 @@
     [
       "$4400",
       "$47FF",
-      "screen",
+      "runtime",
       "screen buffer A"
     ],
     [
@@ -186,7 +189,7 @@
     [
       "$5000",
       "$53FF",
-      "screen",
+      "runtime",
       "screen buffer B and the status lines"
     ],
     [
@@ -204,13 +207,13 @@
     [
       "$5A00",
       "$81D7",
-      "map",
+      "levels",
       "course attribute map, 40 x 255 (file $2A)"
     ],
     [
       "$8200",
       "$A9D7",
-      "map",
+      "levels",
       "course character map, 40 x 255 (file $29)"
     ],
     [

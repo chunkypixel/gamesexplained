@@ -1,10 +1,6 @@
 {
-  "schema": 1,
-  "platform": "c64",
-  "slug": "skate-or-die/boot",
-  "title": "Skate or Die!: Boot",
-  "part_of": "skate-or-die",
-  "file": "EA (KERNAL file)",
+  "title": "Boot",
+  "order": 1,
   "video": {
     "screen": "",
     "charset": "$C800"

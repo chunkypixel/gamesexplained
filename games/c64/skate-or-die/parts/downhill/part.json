@@ -1,10 +1,13 @@
 {
-  "schema": 1,
-  "platform": "c64",
-  "slug": "skate-or-die/downhill",
-  "title": "Skate or Die!: Downhill Race",
-  "part_of": "skate-or-die",
-  "file": "$1B",
+  "title": "Downhill Race",
+  "order": 7,
+  "over": "resident",
+  "ranges": [
+    [
+      "$0000",
+      "$F22F"
+    ]
+  ],
   "video": {
     "screen": "$5000",
     "charset": "$4800"

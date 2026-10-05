@@ -1,8 +1,9 @@
 {
  "schema": 1,
  "platform": "c64",
- "game": "skate-or-die/title",
- "build": null,
+ "game": "skate-or-die",
+ "part": "title",
+ "build": "PAL, two-sided G64 pair supplied by the contributor (side 1 SHA-256 45e07b32..., side 2 7a402586...); EA loader, no crack or trainer",
  "source": "regenerator2000 live",
  "regions": {
   "exclude": [

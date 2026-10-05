@@ -1,10 +1,13 @@
 {
-  "schema": 1,
-  "platform": "c64",
-  "slug": "skate-or-die/ramp",
-  "title": "Skate or Die!: Freestyle ramp",
-  "part_of": "skate-or-die",
-  "file": "$0D",
+  "title": "Freestyle ramp",
+  "order": 5,
+  "over": "resident",
+  "ranges": [
+    [
+      "$0000",
+      "$F22F"
+    ]
+  ],
   "video": {
     "screen": "",
     "charset": ""
@@ -75,6 +78,11 @@
         "$F654",
         "$F72F",
         "stale bytes between the loader and the event manager, unchanged since the title; nothing refers to them"
+      ],
+      [
+        "$3363",
+        "$3562",
+        "two 256-byte mirror tables that build_mirror_tables computes at start-up ($3463 described): run-time output, not loaded data"
       ]
     ],
     "extra": [],
