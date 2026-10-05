@@ -134,3 +134,13 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   comparison now leaves those leftovers out, as it already leaves out
   everything after the shots begin; stage 15 then matched in both VICE
   runs, and no other stage's result changed.
+- Stage 19 was not a timing difference. At the stage's first frame VICE's
+  memory and the machine's differed in about 900 bytes, the random
+  pointer `$8F` among them ($40 against $50): every VICE snapshot from
+  stage 15 on descends from VICE's own play of stage 14. Writing the
+  machine's memory into VICE at the stage's first sample crashed it, the
+  stage banner's interrupt chain being half in RAM and half in the video
+  chip; at `irq_band_first` (`$1888`) on the boss group's first frame it
+  ran, once `$01` was put back to `$35` (the machine's image holds `$17`
+  there, not the port). From that state VICE played the boss group
+  exactly as recorded.
