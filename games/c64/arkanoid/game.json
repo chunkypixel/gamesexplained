@@ -75,6 +75,60 @@
       "$EFFF",
       "graphics",
       "three background tile sets (characters 64-127)"
+    ],
+    [
+      "$2615",
+      "$3429",
+      "code",
+      "the sound driver: tune start, reset, sound effects, three sequencers, effect ticks, filter"
+    ],
+    [
+      "$342A",
+      "$3B8A",
+      "sound",
+      "tune table (9 records of 7 bytes), sequences, instruments, envelopes, pitch and filter programs, arpeggio tables"
+    ],
+    [
+      "$3B8B",
+      "$3EFF",
+      "code",
+      "unused: an older build of the sound driver, assembled $1000 higher"
+    ],
+    [
+      "$4000",
+      "$5F3F",
+      "graphics",
+      "the title picture's multicolour bitmap"
+    ],
+    [
+      "$6000",
+      "$63E7",
+      "graphics",
+      "the title picture's colour matrix"
+    ],
+    [
+      "$6800",
+      "$757F",
+      "graphics",
+      "intro sprite frames $A0-$D5 (bank 1)"
+    ],
+    [
+      "$7800",
+      "$7944",
+      "text",
+      "the play screen's panel template, screen codes"
+    ],
+    [
+      "$7B90",
+      "$7DFF",
+      "graphics",
+      "the Doh screen, 26 x 24 screen codes"
+    ],
+    [
+      "$7E00",
+      "$7FFE",
+      "graphics",
+      "unreferenced multicolour character shapes, a near-copy of $EA00"
     ]
   ],
   "links": {
