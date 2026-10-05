@@ -522,18 +522,13 @@
   },
   {
    "start": 47608,
-   "end": 56796,
+   "end": 50175,
    "type": "Undefined"
   },
   {
-   "start": 56797,
-   "end": 56806,
-   "type": "Code"
-  },
-  {
-   "start": 56807,
+   "start": 50176,
    "end": 61439,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 61440,
@@ -10608,6 +10603,221 @@
    "address": 26368,
    "type": "line",
    "text": "Title colour-RAM source, cells 768-999 (row 19 column 8 to the end) to $DB00-$DBE7, then 24 bytes $67E8-$67FF that the same loop copies to the unused colour RAM $DBE8-$DBFF"
+  },
+  {
+   "address": 54270,
+   "type": "line",
+   "text": "Sprite $4F (the cone enemy frame 6 of 8), byte 62. This symbol exists only because the sound driver's sta $D3FE,x at $2762 reaches the SID registers above $D400 through X (a voice offset read from $2755); the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 54271,
+   "type": "line",
+   "text": "Sprite $4F (the cone enemy frame 6 of 8), byte 63, the unused 64th byte of the slot. This symbol exists only because the sound driver's sta $D3FF,x at $2768 reaches the SID registers through X."
+  },
+  {
+   "address": 55295,
+   "type": "line",
+   "text": "Sprite $5F (the spinning orb enemy frame 1 of 14), byte 63, the unused 64th byte of the slot. This symbol exists only because sta $D7FF,y at $B702 (the screen-clear loop, Y from 1) addresses colour RAM from $D800, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55296,
+   "type": "line",
+   "text": "Sprite $60 (the spinning orb enemy frame 2 of 14), byte 0. This symbol exists only because sta $D800,y at $B49E, sta $D800,y at $F65F with their index address the colour RAM at $D800, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55324,
+   "type": "line",
+   "text": "Sprite $60 (the spinning orb enemy frame 2 of 14), byte 28. This symbol exists only because sta $D81C,y at $F306 with its index addresses the colour RAM at $D81C, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55364,
+   "type": "line",
+   "text": "Sprite $61 (the spinning orb enemy frame 3 of 14), byte 4. This symbol exists only because sta $D844,y at $F30B with its index addresses the colour RAM at $D844, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55444,
+   "type": "line",
+   "text": "Sprite $62 (the spinning orb enemy frame 4 of 14), byte 20. This symbol exists only because sta $D894,y at $F30E with its index addresses the colour RAM at $D894, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55455,
+   "type": "line",
+   "text": "Sprite $62 (the spinning orb enemy frame 4 of 14), byte 31. This symbol exists only because sta $D89F at $F338 addresses the colour RAM at $D89F, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55486,
+   "type": "line",
+   "text": "Sprite $62 (the spinning orb enemy frame 4 of 14), byte 62. This symbol exists only because sta $D8BE,y at $F318 with its index addresses the colour RAM at $D8BE, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55507,
+   "type": "line",
+   "text": "Sprite $63 (the spinning orb enemy frame 5 of 14), byte 19. This symbol exists only because sta $D8D3,y at $97CB with its index addresses the colour RAM at $D8D3, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55535,
+   "type": "line",
+   "text": "Sprite $63 (the spinning orb enemy frame 5 of 14), byte 47. This symbol exists only because lda $D8EF at $FBA1, sta $D8EF at $FBA6, sta $D8EF at $FBB9 addresses the colour RAM at $D8EF, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55545,
+   "type": "line",
+   "text": "Sprite $63 (the spinning orb enemy frame 5 of 14), byte 57. This symbol exists only because sta $D8F9,y at $B705 with its index addresses the colour RAM at $D8F9, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55547,
+   "type": "line",
+   "text": "Sprite $63 (the spinning orb enemy frame 5 of 14), byte 59. This symbol exists only because sta $D8FB,y at $97CE with its index addresses the colour RAM at $D8FB, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55552,
+   "type": "line",
+   "text": "Sprite $64 (the spinning orb enemy frame 6 of 14), byte 0. This symbol exists only because sta $D900,y at $B4A4 with its index addresses the colour RAM at $D900, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55587,
+   "type": "line",
+   "text": "Sprite $64 (the spinning orb enemy frame 6 of 14), byte 35. This symbol exists only because sta $D923,y at $97D1 with its index addresses the colour RAM at $D923, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55627,
+   "type": "line",
+   "text": "Sprite $65 (the spinning orb enemy frame 7 of 14), byte 11. This symbol exists only because sta $D94B,y at $97D4 with its index addresses the colour RAM at $D94B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55646,
+   "type": "line",
+   "text": "Sprite $65 (the spinning orb enemy frame 7 of 14), byte 30. This symbol exists only because sta $D95E,y at $F31B with its index addresses the colour RAM at $D95E, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55667,
+   "type": "line",
+   "text": "Sprite $65 (the spinning orb enemy frame 7 of 14), byte 51. This symbol exists only because sta $D973,y at $97D7 with its index addresses the colour RAM at $D973, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55686,
+   "type": "line",
+   "text": "Sprite $66 (the spinning orb enemy frame 8 of 14), byte 6. This symbol exists only because sta $D986,y at $F31E with its index addresses the colour RAM at $D986, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55707,
+   "type": "line",
+   "text": "Sprite $66 (the spinning orb enemy frame 8 of 14), byte 27. This symbol exists only because sta $D99B,y at $97DA with its index addresses the colour RAM at $D99B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55726,
+   "type": "line",
+   "text": "Sprite $66 (the spinning orb enemy frame 8 of 14), byte 46. This symbol exists only because sta $D9AE,y at $F321 with its index addresses the colour RAM at $D9AE, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55747,
+   "type": "line",
+   "text": "Sprite $67 (the spinning orb enemy frame 9 of 14), byte 3. This symbol exists only because sta $D9C3,y at $97DD with its index addresses the colour RAM at $D9C3, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55766,
+   "type": "line",
+   "text": "Sprite $67 (the spinning orb enemy frame 9 of 14), byte 22. This symbol exists only because sta $D9D6,y at $F324 with its index addresses the colour RAM at $D9D6, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55787,
+   "type": "line",
+   "text": "Sprite $67 (the spinning orb enemy frame 9 of 14), byte 43. This symbol exists only because sta $D9EB,y at $97E0 with its index addresses the colour RAM at $D9EB, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55795,
+   "type": "line",
+   "text": "Sprite $67 (the spinning orb enemy frame 9 of 14), byte 51. This symbol exists only because sta $D9F3,y at $B708 with its index addresses the colour RAM at $D9F3, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55808,
+   "type": "line",
+   "text": "Sprite $68 (the spinning orb enemy frame 10 of 14), byte 0. This symbol exists only because sta $DA00,y at $B4AA with its index addresses the colour RAM at $DA00, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55827,
+   "type": "line",
+   "text": "Sprite $68 (the spinning orb enemy frame 10 of 14), byte 19. This symbol exists only because sta $DA13,y at $97E3 with its index addresses the colour RAM at $DA13, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55867,
+   "type": "line",
+   "text": "Sprite $68 (the spinning orb enemy frame 10 of 14), byte 59. This symbol exists only because sta $DA3B,y at $97E6 with its index addresses the colour RAM at $DA3B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 55895,
+   "type": "line",
+   "text": "Sprite $69 (the spinning orb enemy frame 11 of 14), byte 23. This symbol exists only because sta $DA57 at $FBAB, lda $DA57 at $FBAF, sta $DA57 at $FBB4 addresses the colour RAM at $DA57, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56006,
+   "type": "line",
+   "text": "Sprite $6B (the spinning orb enemy frame 13 of 14), byte 6. This symbol exists only because sta $DAC6,y at $F327 with its index addresses the colour RAM at $DAC6, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56016,
+   "type": "line",
+   "text": "Sprite $6B (the spinning orb enemy frame 13 of 14), byte 16. This symbol exists only because sta $DAD0,y at $9BB3 with its index addresses the colour RAM at $DAD0, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56045,
+   "type": "line",
+   "text": "Sprite $6B (the spinning orb enemy frame 13 of 14), byte 45. This symbol exists only because sta $DAED,y at $B70B with its index addresses the colour RAM at $DAED, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56046,
+   "type": "line",
+   "text": "Sprite $6B (the spinning orb enemy frame 13 of 14), byte 46. This symbol exists only because sta $DAEE,y at $F32A with its index addresses the colour RAM at $DAEE, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56056,
+   "type": "line",
+   "text": "Sprite $6B (the spinning orb enemy frame 13 of 14), byte 56. This symbol exists only because sta $DAF8,y at $9BBB with its index addresses the colour RAM at $DAF8, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56064,
+   "type": "line",
+   "text": "Sprite $6C (the spinning orb enemy frame 14 of 14), byte 0. This symbol exists only because sta $DB00,y at $B4B0 with its index addresses the colour RAM at $DB00, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56086,
+   "type": "line",
+   "text": "Sprite $6C (the spinning orb enemy frame 14 of 14), byte 22. This symbol exists only because sta $DB16,y at $F32D with its index addresses the colour RAM at $DB16, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56096,
+   "type": "line",
+   "text": "Sprite $6C (the spinning orb enemy frame 14 of 14), byte 32. This symbol exists only because sta $DB20,y at $9BB6 with its index addresses the colour RAM at $DB20, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56126,
+   "type": "line",
+   "text": "Sprite $6C (the spinning orb enemy frame 14 of 14), byte 62. This symbol exists only because sta $DB3E,y at $F330 with its index addresses the colour RAM at $DB3E, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56203,
+   "type": "line",
+   "text": "Sprite $6E (the three-ball cluster enemy frame 2 of 6), byte 11. This symbol exists only because sta $DB8B at $A43C, sta $DB8B at $F6CF addresses the colour RAM at $DB8B, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56243,
+   "type": "line",
+   "text": "Sprite $6E (the three-ball cluster enemy frame 2 of 6), byte 51. This symbol exists only because sta $DBB3 at $A43F, sta $DBB3 at $F6D2 addresses the colour RAM at $DBB3, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56283,
+   "type": "line",
+   "text": "Sprite $6F (the three-ball cluster enemy frame 3 of 6), byte 27. This symbol exists only because sta $DBDB at $A442, sta $DBDB at $F6D5 addresses the colour RAM at $DBDB, not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56600,
+   "type": "line",
+   "text": "Sprite $74 (the dithered, thinning Vaus halves frame 2 of 8), byte 24. This symbol exists only because sta $DD18 at $F621 addresses CIA 2 at $DD18 (a mirror of its $DD08), not the RAM beneath; the RAM here is sprite data the video chip reads in bank 3."
+  },
+  {
+   "address": 56797,
+   "type": "line",
+   "text": "Sprite $77 (the dithered, thinning Vaus halves frame 5 of 8), byte 29. Nothing runs here: JSR $DDDD at $FEE8 and $FF12 is a placeholder whose operand the game writes at run time, and the tracer followed it. The bytes are sprite data."
   }
  ]
 }
