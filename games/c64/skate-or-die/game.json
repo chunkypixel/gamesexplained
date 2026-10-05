@@ -96,6 +96,10 @@
       "title": "Shop and town"
     },
     {
+      "id": "ramp",
+      "title": "Freestyle ramp"
+    },
+    {
       "id": "highjump",
       "title": "High Jump"
     }
