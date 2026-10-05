@@ -144,3 +144,10 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   ran, once `$01` was put back to `$35` (the machine's image holds `$17`
   there, not the port). From that state VICE played the boss group
   exactly as recorded.
+- Stages 14, 20 and 25 the same way: each matched from the machine's state
+  (14 and 25 from their first group, 20 from list 210). Two of the
+  injections first stopped at a `$1888` reached outside the raster
+  interrupt (stack pointer 19 against 13), so `inject.py` now also waits
+  for the machine's stack pointer. Stage 29 still differs from the
+  machine's state: VICE drifts within list 90 and an enemy then enters a
+  frame apart in another slot, so that one is a real timing difference.
