@@ -22,11 +22,6 @@
  "blocks": [
   {
    "start": 0,
-   "end": 7,
-   "type": "Code"
-  },
-  {
-   "start": 8,
    "end": 262,
    "type": "Undefined"
   },
@@ -48,7 +43,7 @@
   {
    "start": 1741,
    "end": 1744,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 1745,
@@ -58,7 +53,7 @@
   {
    "start": 2012,
    "end": 2097,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 2098,
@@ -68,7 +63,7 @@
   {
    "start": 2156,
    "end": 2171,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 2172,
@@ -87,48 +82,23 @@
   },
   {
    "start": 2406,
-   "end": 9770,
+   "end": 9727,
    "type": "Undefined"
   },
   {
-   "start": 9771,
-   "end": 10421,
-   "type": "Code"
+   "start": 9728,
+   "end": 9748,
+   "type": "Byte"
   },
   {
-   "start": 10422,
-   "end": 10434,
-   "type": "Undefined"
-  },
-  {
-   "start": 10435,
-   "end": 10527,
-   "type": "Code"
-  },
-  {
-   "start": 10528,
-   "end": 10557,
-   "type": "Undefined"
-  },
-  {
-   "start": 10558,
-   "end": 10749,
-   "type": "Code"
-  },
-  {
-   "start": 10750,
-   "end": 10761,
-   "type": "Undefined"
-  },
-  {
-   "start": 10762,
+   "start": 9749,
    "end": 10783,
    "type": "Code"
   },
   {
    "start": 10784,
    "end": 10791,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 10792,
@@ -137,8 +107,83 @@
   },
   {
    "start": 13354,
+   "end": 13359,
+   "type": "Address"
+  },
+  {
+   "start": 13360,
+   "end": 13360,
+   "type": "Byte"
+  },
+  {
+   "start": 13361,
+   "end": 13366,
+   "type": "Address"
+  },
+  {
+   "start": 13367,
+   "end": 13367,
+   "type": "Byte"
+  },
+  {
+   "start": 13368,
+   "end": 13373,
+   "type": "Address"
+  },
+  {
+   "start": 13374,
+   "end": 13381,
+   "type": "Byte"
+  },
+  {
+   "start": 13382,
+   "end": 13387,
+   "type": "Address"
+  },
+  {
+   "start": 13388,
+   "end": 13388,
+   "type": "Byte"
+  },
+  {
+   "start": 13389,
+   "end": 13394,
+   "type": "Address"
+  },
+  {
+   "start": 13395,
+   "end": 13395,
+   "type": "Byte"
+  },
+  {
+   "start": 13396,
+   "end": 13401,
+   "type": "Address"
+  },
+  {
+   "start": 13402,
+   "end": 13402,
+   "type": "Byte"
+  },
+  {
+   "start": 13403,
+   "end": 13408,
+   "type": "Address"
+  },
+  {
+   "start": 13409,
+   "end": 13409,
+   "type": "Byte"
+  },
+  {
+   "start": 13410,
+   "end": 13415,
+   "type": "Address"
+  },
+  {
+   "start": 13416,
    "end": 14154,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 14155,
@@ -147,8 +192,18 @@
   },
   {
    "start": 14173,
+   "end": 16127,
+   "type": "Byte"
+  },
+  {
+   "start": 16128,
+   "end": 16277,
+   "type": "Word"
+  },
+  {
+   "start": 16278,
    "end": 24385,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 24386,
@@ -158,7 +213,7 @@
   {
    "start": 24388,
    "end": 24389,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 24390,
@@ -168,7 +223,7 @@
   {
    "start": 24398,
    "end": 24400,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 24401,
@@ -177,6 +232,11 @@
   },
   {
    "start": 24463,
+   "end": 26623,
+   "type": "Byte"
+  },
+  {
+   "start": 26624,
    "end": 37887,
    "type": "Undefined"
   },
@@ -317,11 +377,16 @@
   },
   {
    "start": 43023,
-   "end": 43179,
-   "type": "Undefined"
+   "end": 43095,
+   "type": "Byte"
   },
   {
-   "start": 43180,
+   "start": 43096,
+   "end": 43111,
+   "type": "Address"
+  },
+  {
+   "start": 43112,
    "end": 43187,
    "type": "Code"
   },
@@ -332,13 +397,13 @@
   },
   {
    "start": 43194,
-   "end": 43212,
+   "end": 43307,
    "type": "Code"
   },
   {
-   "start": 43213,
+   "start": 43308,
    "end": 43313,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 43314,
@@ -517,6 +582,16 @@
   },
   {
    "start": 63370,
+   "end": 63370,
+   "type": "Undefined"
+  },
+  {
+   "start": 63371,
+   "end": 63420,
+   "type": "Word"
+  },
+  {
+   "start": 63421,
    "end": 63436,
    "type": "Undefined"
   },
@@ -664,7 +739,7 @@
  "symbols": [
   {
    "address": 0,
-   "name": "start",
+   "name": "cpu_port_dir",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -982,8 +1057,8 @@
   },
   {
    "address": 226,
-   "name": "zpp_E2",
-   "type": "ZeroPagePointer",
+   "name": "zpa_E2",
+   "type": "ZeroPageAbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -1924,15 +1999,15 @@
   },
   {
    "address": 1536,
-   "name": "s_0600",
+   "name": "save_wall_of_player",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1554,
-   "name": "j_0612",
+   "name": "save_wall_row",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1593,
@@ -1948,9 +2023,9 @@
   },
   {
    "address": 1648,
-   "name": "b_0670",
+   "name": "save_wall_colours",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1661,
@@ -1990,27 +2065,27 @@
   },
   {
    "address": 1741,
-   "name": "f_06CD",
+   "name": "wall_buffer_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1743,
-   "name": "f_06CF",
+   "name": "wall_buffer_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1745,
-   "name": "s_06D1",
+   "name": "intro_escape_animation",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1751,
-   "name": "j_06D7",
+   "name": "intro_frame_loop",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1769,
@@ -2020,9 +2095,9 @@
   },
   {
    "address": 1770,
-   "name": "s_06EA",
+   "name": "intro_shot",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1833,
@@ -2038,15 +2113,15 @@
   },
   {
    "address": 1897,
-   "name": "b_0769",
+   "name": "intro_path_done",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1915,
-   "name": "s_077B",
+   "name": "intro_attacker_path",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1933,
@@ -2056,33 +2131,33 @@
   },
   {
    "address": 1970,
-   "name": "b_07B2",
+   "name": "intro_path_start",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2012,
-   "name": "f_07DC",
+   "name": "intro_path_y",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2041,
-   "name": "f_07F9",
+   "name": "intro_path_x",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2070,
-   "name": "f_0816",
+   "name": "intro_path_speed",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2098,
-   "name": "s_0832",
+   "name": "key_held",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2141,
@@ -2098,21 +2173,21 @@
   },
   {
    "address": 2156,
-   "name": "f_086C",
+   "name": "key_row_select",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2164,
-   "name": "f_0874",
+   "name": "key_col_mask",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2172,
-   "name": "s_087C",
+   "name": "intro_move_slots",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2174,
@@ -2134,9 +2209,9 @@
   },
   {
    "address": 2209,
-   "name": "s_08A1",
+   "name": "intro_vaus_frames",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2240,
@@ -2152,9 +2227,9 @@
   },
   {
    "address": 2252,
-   "name": "s_08CC",
+   "name": "intro_sprite_setup",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2275,
@@ -2170,9 +2245,9 @@
   },
   {
    "address": 2315,
-   "name": "s_090B",
+   "name": "intro_show_patch",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2343,
@@ -5049,9 +5124,21 @@
    "kind": "auto"
   },
   {
+   "address": 13475,
+   "name": "a_34A3",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
    "address": 13546,
    "name": "f_34EA",
    "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 13620,
+   "name": "a_3534",
+   "type": "AbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -5067,9 +5154,141 @@
    "kind": "auto"
   },
   {
+   "address": 14173,
+   "name": "a_375D",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14425,
+   "name": "a_3859",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14474,
+   "name": "a_388A",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14557,
+   "name": "a_38DD",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14596,
+   "name": "a_3904",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14614,
+   "name": "a_3916",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14639,
+   "name": "a_392F",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
    "address": 14663,
    "name": "f_3947",
    "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 14682,
+   "name": "a_395A",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14714,
+   "name": "a_397A",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14727,
+   "name": "a_3987",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14768,
+   "name": "a_39B0",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14803,
+   "name": "a_39D3",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14883,
+   "name": "a_3A23",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14918,
+   "name": "a_3A46",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14950,
+   "name": "a_3A66",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 14952,
+   "name": "a_3A68",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15004,
+   "name": "a_3A9C",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15041,
+   "name": "a_3AC1",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15070,
+   "name": "a_3ADE",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15111,
+   "name": "a_3B07",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15153,
+   "name": "a_3B31",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 15213,
+   "name": "a_3B6D",
+   "type": "AbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -5097,22 +5316,76 @@
    "kind": "auto"
   },
   {
+   "address": 16384,
+   "name": "title_bitmap_rows_0_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 17344,
+   "name": "title_bitmap_rows_3_5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 18304,
+   "name": "title_bitmap_rows_6_8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 18345,
-   "name": "a_47A9",
+   "name": "title_bitmap_47a9",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 19264,
+   "name": "title_bitmap_rows_9_11",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 20224,
+   "name": "title_bitmap_rows_12_14",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 21184,
+   "name": "title_bitmap_rows_15_17",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 22144,
+   "name": "title_bitmap_rows_18_20",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 23104,
+   "name": "title_bitmap_rows_21_23",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 24064,
+   "name": "title_bitmap_row_24",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 24384,
-   "name": "f_5F40",
+   "name": "protection_area",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 24386,
-   "name": "s_5F42",
+   "name": "protection_serial_check",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 24407,
@@ -5145,28 +5418,52 @@
    "kind": "auto"
   },
   {
+   "address": 24463,
+   "name": "stale_matrix_copy_5f8f",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 24576,
+   "name": "title_colour_matrix",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 25576,
+   "name": "title_matrix_spare",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 25592,
+   "name": "title_sprite_pointers",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 25600,
-   "name": "f_6400",
+   "name": "title_colour_ram_rows_0_6",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 25856,
-   "name": "f_6500",
+   "name": "title_colour_ram_rows_6_12",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 26112,
-   "name": "f_6600",
+   "name": "title_colour_ram_rows_12_19",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 26368,
-   "name": "f_6700",
+   "name": "title_colour_ram_rows_19_24",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32767,
@@ -6765,9 +7062,81 @@
    "kind": "auto"
   },
   {
+   "address": 43112,
+   "name": "a_A868",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43120,
+   "name": "a_A870",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43138,
+   "name": "a_A882",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43177,
+   "name": "b_A8A9",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 43180,
+   "name": "a_A8AC",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43194,
+   "name": "a_A8BA",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
    "address": 43205,
    "name": "b_A8C5",
    "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 43213,
+   "name": "a_A8CD",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 43215,
+   "name": "b_A8CF",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 43223,
+   "name": "b_A8D7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 43243,
+   "name": "b_A8EB",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 43308,
+   "name": "f_A92C",
+   "type": "Field",
+   "kind": "auto"
+  },
+  {
+   "address": 43311,
+   "name": "f_A92F",
+   "type": "Field",
    "kind": "auto"
   },
   {
@@ -6858,6 +7227,12 @@
    "address": 43587,
    "name": "r_AA43",
    "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 43588,
+   "name": "a_AA44",
+   "type": "AbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -9993,5 +10368,246 @@
    "kind": "auto"
   }
  ],
- "comments": []
+ "comments": [
+  {
+   "address": 1536,
+   "type": "line",
+   "text": "Save the current player's wall from the screen into that player's 160-byte wall buffer (pointer from wall_buffer_lo/hi indexed by current_player), so it can be rebuilt when that player's turn comes back. Called from $9B67 when a life is lost. For each of the 16 brick rows (row_counter 1..16, screen row address from the table at $F78B, colour RAM at the same offset in $D800): bytes 0-1 of the row record get one bit per brick (13 bricks, every second screen column from column 1, bit set when the character is $80 or above, i.e. a brick, shifted to bits 15..3); bytes 2-9 get one colour nibble per brick (colour RAM & 7, or for colour 9 cells 1 / 9 / $0A by character: below $82, $82-$85 silver, $86 and above gold), built in row_nibbles ($0264). Same record layout as the round layouts at $8000 that rebuild_wall ($F371/$F3C2) reads. Uses $0D/$0E (screen), $0F/$10 (colour RAM), $11/$12 (buffer), $0211/$0212 (bit accumulator)."
+  },
+  {
+   "address": 1554,
+   "type": "line",
+   "text": "One brick row: clear the 16-bit presence accumulator $0211/$0212, then take the screen row's address from $F78B + 2*row_counter, plus 1 (column 1 holds the left half of brick 0)."
+  },
+  {
+   "address": 1598,
+   "type": "side",
+   "text": "BIT $EA18 skips the CLC: carry = 1 when the character is a brick ($80+), 0 otherwise"
+  },
+  {
+   "address": 1648,
+   "type": "line",
+   "text": "Colour nibbles of the row's 13 bricks into row_nibbles, then packed two to a byte into record bytes 2..9; after the row the record pointer $11/$12 moves on 10 bytes and row_counter counts to 16."
+  },
+  {
+   "address": 1678,
+   "type": "side",
+   "text": "BIT $0AA9 is a skip: the bytes $A9 $0A are LDA #$0A, reached by the BCS at $068A for gold bricks (character $86 or above); $0AA9 itself is never meant to be read"
+  },
+  {
+   "address": 1741,
+   "type": "line",
+   "text": "Split pointer table, two entries: low bytes $59 $F9, high bytes (at $06CF) $04 $04. Entry n is player n's saved-wall buffer: player 1 at $0459, player 2 at $04F9. Read by save_wall_of_player ($0608, $060D) and the wall rebuild at $F374/$F379."
+  },
+  {
+   "address": 1743,
+   "type": "line",
+   "text": "High bytes of the two saved-wall buffer pointers ($04, $04); low bytes at wall_buffer_lo."
+  },
+  {
+   "address": 1745,
+   "type": "line",
+   "text": "The sprite animation played over the title picture before round 1 (called once per game from $F03F, after the menu and the story; the screen is the bank-1 bitmap, so intro_sprite_setup first points the sprite multiplexer at $63F8). It drives three of the ball slots with the ball-movement code: slot 2 an attacking craft that flies a 25-point path (intro_attacker_path), shape $B4+step; at step 12 slot 1, a shot (shape $CD), leaves it and falls on the ship at X $A0, Y $87; when the shot reaches Y $A0, intro_show_patch shows two black sprites there and slot 0, the Vaus (shapes $A2-$B3, tumbling and shrinking), flies off toward X $50, Y $60. Ends when the path is done and the Vaus has run through its frames: intro_attacker_path then pulls this routine's return address and returns to $F042. Story reading of the shapes: the shapes are the bank-1 sprites at $6880-$7540, rendered and judged by eye, not watched live."
+  },
+  {
+   "address": 1751,
+   "type": "line",
+   "text": "Once a frame (wait_frame at $B472): step the attacker's path, launch or land the shot, move the three ball slots, animate the escaping Vaus. Leaves only through the PLA/PLA/RTS at $0778."
+  },
+  {
+   "address": 1770,
+   "type": "line",
+   "text": "The shot. Nothing before path step 12. At step 12, if ball slot 1 is idle: put the steering target (object 0) on the ship at X $A0, Y $87, start slot 1 (speed 2, sprite pointer $CD) 6 pixels left of and 6 above the attacker ($9437 + 6, $944F - 6), aim it with $B3FA. After step 12: once the shot is at Y $A0 or below, stop it, show the patch (intro_show_patch) and launch the Vaus in slot 0 from X $A0, Y $87 toward X $50, Y $60, speed 0, first shape $A2."
+  },
+  {
+   "address": 1897,
+   "type": "line",
+   "text": "Path finished: clear $0276 (slot 2's active flag), give slot 2 the empty shape $D5; return while the Vaus (slot 0) is still flying, otherwise drop the caller's return address so that the RTS leaves intro_escape_animation."
+  },
+  {
+   "address": 1915,
+   "type": "line",
+   "text": "The attacker's path, one waypoint per call when reached. intro_step ($0233) 0: start ball slot 2 at X $40, Y $F0 (below the picture), shape $B4, aimed at X $A0, Y $87 (object 0, shape $D5, the steering target), and step 1. Later steps: when the attacker's X equals intro_path_x[step], move to the next step: the target becomes (intro_path_x, intro_path_y) of the new step, the attacker's speed intro_path_speed and its shape $B4 + step, and re-aim it ($B3FA). At step 25 (intro_path_done) it hides the attacker and, once the Vaus has finished, leaves intro_escape_animation."
+  },
+  {
+   "address": 1970,
+   "type": "line",
+   "text": "Step 0 of the path: attacker at X $40, Y $F0; steering target at X $A0, Y $87 with the empty shape $D5; slot 0 given shape $B4 (overwritten when the Vaus launches); aim and step to 1."
+  },
+  {
+   "address": 2012,
+   "type": "line",
+   "text": "Intro path, Y of each waypoint, indexed by intro_step 1-24 (29 bytes; entry 0 and entries 25-28 are not read): from $FA rising to $6F. The steering target is put here when the attacker reaches the previous waypoint."
+  },
+  {
+   "address": 2041,
+   "type": "line",
+   "text": "Intro path, X of each waypoint, indexed by intro_step 0-24 (29 bytes, entries 25-28 not read): $40 $42 ... $7E, then back down to $6B. The step advances when the attacker's X equals this value exactly, so a waypoint passed without an exact hit would stall the path (the Bresenham steps move one pixel at a time on the major axis, so it is hit)."
+  },
+  {
+   "address": 2070,
+   "type": "line",
+   "text": "Intro path, attacker speed per waypoint (extra Bresenham steps per frame, into the ball speed $0261+2), indexed by intro_step 1-24: 0 for steps 1-12, 2 for 13-15, 1 for 16-17, 0 after (28 bytes to $0831)."
+  },
+  {
+   "address": 2098,
+   "type": "line",
+   "text": "Test one key of the keyboard matrix. In: A = key number, 8 x row + column (the KERNAL's numbering: row selects the $DC00 bit through key_row_select, column the $DC01 bit through key_col_mask). Out: carry set when that key is down. A column bit that also reads low with no row selected is a joystick in port 1 (or another key line held), not the key, and returns carry clear. Leaves $DC00 = $7F and $DC01 = $FF; Y preserved through key_y_save ($0213). Callers: the menu ($B5A1, keys N J K P 1 2 D), the keyboard control ($FD82 left SHIFT $0F, $FD8E right SHIFT $34)."
+  },
+  {
+   "address": 2156,
+   "type": "line",
+   "text": "Eight $DC00 values, one keyboard row driven low each: $FE $FD $FB $F7 $EF $DF $BF $7F, indexed by key number / 8."
+  },
+  {
+   "address": 2164,
+   "type": "line",
+   "text": "Eight $DC01 bit masks, $01 to $80, indexed by key number AND 7."
+  },
+  {
+   "address": 2172,
+   "type": "line",
+   "text": "Move the intro's three ball slots, 2 down to 0: each active slot ($0274,x) takes 1 + speed ($0261,x) Bresenham steps through $A2DB. Slot 0, the Vaus, moves only on frames where bit 1 of frame_counter has changed since last time (intro_slot0_tick), i.e. every second frame."
+  },
+  {
+   "address": 2209,
+   "type": "line",
+   "text": "Animate the escaping Vaus: every fourth frame (bit 2 of frame_counter changed, kept in intro_frame_tick $021F) advance slot 0's sprite pointer ($F82D); after shape $B3 give it the empty shape $D5 and stop the slot."
+  },
+  {
+   "address": 2252,
+   "type": "line",
+   "text": "Sprites for the intro over the title bitmap: patch the multiplexer's pointer stores ($FC17 and $F976, high bytes of STA $C3FA,Y-style operands) to $63 so that sprite pointers go to $63F8, the bank-1 screen of the title; enable sprites 2-7 in multicolour, clear the X high bits, clear X positions of objects 0-11 ($942D-$9438), sprite multicolours $D025 = 3 (cyan) and $D026 = $0A (light red), colour 1 (white) for objects 8-10 ($F821-$F823), colour 0 (black) for objects 2-3 ($F81B/$F81C)."
+  },
+  {
+   "address": 2315,
+   "type": "line",
+   "text": "Put objects 2 and 3 at X $A0, Y $87 and Y $9F with shapes $A0 and $A1 (black, set by intro_sprite_setup): two stacked sprites at the spot where the Vaus leaves the ship. Assumed to cover the Vaus drawn in the bitmap; not checked live."
+  },
+  {
+   "address": 9862,
+   "type": "line",
+   "text": "Self-modified operand: $262B writes the tune tempo (low nibble of the tune record byte 6) here, so ADC #tempo builds the note-length table $254A-$2569 as tempo, 2*tempo, 3*tempo ..."
+  },
+  {
+   "address": 16384,
+   "type": "line",
+   "text": "Title picture, multicolour bitmap (video bank 1, shown with $D018 bits 4-7 = 8 and bit 3 = 0 from $B48C, $DD00 = $C2 from $B487): 8000 bytes, 8 per character cell, cells in screen order; pixel pair 00 = $D021, 01 = colour matrix high nibble ($6000), 10 = its low nibble, 11 = colour RAM (copied from $6400 by $B499). Rows 0-2: top of the ARKANOID logo, and IMAGINE / TAITO in yellow at the right. No instruction reads it; only the video chip does"
+  },
+  {
+   "address": 17344,
+   "type": "line",
+   "text": "Title bitmap rows 3-5 ($43C0-$477F): the middle of the ARKANOID logo, its O drawn as a gridded sphere, on the starfield"
+  },
+  {
+   "address": 18304,
+   "type": "line",
+   "text": "Title bitmap rows 6-8 ($4780-$4B3F): the lower edge of the ARKANOID logo and open starfield"
+  },
+  {
+   "address": 18345,
+   "type": "line",
+   "text": "A byte of the title bitmap (row 6, column 5, pixel line 1). It carries a name only because of the skip trick at $9F9E: BEQ $9FA6 lands inside BIT $47A9 ($2C $A9 $47) and runs LDA #$47; the other path runs LDA #$AF, then the BIT, which only sets flags. No instruction reads this byte as data"
+  },
+  {
+   "address": 19264,
+   "type": "line",
+   "text": "Title bitmap rows 9-11 ($4B40-$4EFF): starfield, then the top of the grey mothership rising into row 11"
+  },
+  {
+   "address": 20224,
+   "type": "line",
+   "text": "Title bitmap rows 12-14 ($4F00-$52BF): the mothership's grey upper hull and its central dome, on the starfield"
+  },
+  {
+   "address": 21184,
+   "type": "line",
+   "text": "Title bitmap rows 15-17 ($52C0-$567F): the mothership's hull and its left cannon banks; the upper tip of the Vaus (blue and purple, at the right edge) begins"
+  },
+  {
+   "address": 22144,
+   "type": "line",
+   "text": "Title bitmap rows 18-20 ($5680-$5A3F): the mothership's lower hull and cannons with their yellow muzzles; the body of the Vaus at the right"
+  },
+  {
+   "address": 23104,
+   "type": "line",
+   "text": "Title bitmap rows 21-23 ($5A40-$5DFF): the mothership's lowest cannon pair and stern; the lower end of the Vaus at the right"
+  },
+  {
+   "address": 24064,
+   "type": "line",
+   "text": "Title bitmap row 24, the last ($5E00-$5F3F): starfield and the artist's signature \"Jones\" in white at the bottom right"
+  },
+  {
+   "address": 24384,
+   "type": "line",
+   "text": "Start of the self-erasing protection area $5F40-$5F86, which the loop at $5F86 fills with $01 when the check passes, so after start-up every byte here reads $01. These two bytes ($44 $45, an undocumented NOP $45) never run: the routine is entered at $5F42 from $B9DE"
+  },
+  {
+   "address": 24386,
+   "type": "line",
+   "text": "Copy protection, called once from the start-up at $B9DE. Writes 1 to CIA 1 timer A low ($DC04), control $D9 to $DC0E, calls $A949 (decrypts $BA0A-$BA6A by XOR with $A71A-$A77A), then writes A to the serial data register $DC0C and loops: restart the timer ($DC0E = $D9), wait for the timer A bit (bit 0) in $DC0D, keep the whole interrupt register in $BA65, and start again unless the serial-port bit (bit 3) is also set. On a machine whose serial port never completes, this hangs. Then it waits three more timer underflows ($5F72), writes $DC0C again, and overwrites $5F40-$5F86 (itself, up to the STA $DC0C) with $01 (A = 1 from the AND #$01). Returns with X = $FF. Undocumented NOPs at $5F44 and $5F4E pad it to mislead a disassembler"
+  },
+  {
+   "address": 24388,
+   "type": "line",
+   "text": "$44 $6D: undocumented NOP $6D (zero-page read, 2 bytes), does nothing; executed (simulator) between LDA #$01 and STA $DC04"
+  },
+  {
+   "address": 24398,
+   "type": "line",
+   "text": "$1C $AD $08: undocumented NOP $08AD,X (absolute,X read, 3 bytes), does nothing; executed between STA $DC0E and JSR $A949. A documented-only disassembler shows the $AD as LDA $2008 and misreads the JSR"
+  },
+  {
+   "address": 24407,
+   "type": "line",
+   "text": "serial-port wait loop: restart timer A, poll $DC0D, store it in $BA65 (read back by $5F66 and later code)"
+  },
+  {
+   "address": 24454,
+   "type": "line",
+   "text": "self-erase: X = $46 down to 0 stores A ($01) at $5F40-$5F86; the loop itself ($5F88-$5F8E) survives"
+  },
+  {
+   "address": 24463,
+   "type": "line",
+   "text": "113 bytes equal, byte for byte, to the title colour matrix at $604F-$60BF: $5F40-$5FFF lies $C0 below $6000-$60BF and once held the same bytes; the protection routine at $5F40-$5F8E was written over the first 79. No code found that reads $5F8F-$5FFF (simulator read map, opcodes.py --refs); a leftover of how the image was built"
+  },
+  {
+   "address": 24576,
+   "type": "line",
+   "text": "Title picture colour matrix (the video matrix of bank 1 at $6000, $D018 = $80 from $B48C): 1000 bytes, one per cell, 40 x 25; high nibble = colour of pixel pair 01, low nibble = colour of pair 10 in the bitmap at $4000. High nibbles mostly $0 (black) and $F (light grey), low nibbles mostly $0, $6 (blue) and $F. Read only by the video chip"
+  },
+  {
+   "address": 25576,
+   "type": "line",
+   "text": "16 bytes after the colour matrix, before the sprite pointers: not displayed and not read by any code found. Together with $63F8-$63FA they equal $6400-$6412, the start of the colour-RAM source, as loaded"
+  },
+  {
+   "address": 25592,
+   "type": "line",
+   "text": "Sprite pointers of video bank 1 (matrix $6000 + $3F8), one per sprite 0-7; value v shows the 64 bytes at $4000 + 64v. Used while the title is the background of the intro animation: $08CC writes $63 into the operand high bytes $FC17 and $F976 of the multiplexer stores STA $C3FA,Y at $FC15 and $F974, which then fill $63FB-$63FF (sprites 3-7) from the table $F825 (simulator: values $A0-$D5, the frames at $6800-$757F, and $40 four times). $F07D puts $C3 back for play (pointers at $C3F8). As loaded they hold $56 $D6 $06 $A0 $A1 $D5 $D5 $D5: the file was saved with sprites 3 and 4 on frames $A0/$A1 and 5-7 on the blank frame $D5"
+  },
+  {
+   "address": 25600,
+   "type": "line",
+   "text": "Title colour-RAM source, 1024 bytes, copied page by page to $D800-$DBFF by $B499-$B4B4 when the title is shown; only the low nibble reaches colour RAM, the colour of pixel pair 11 in each cell. This page: cells 0-255 (rows 0 to 6, column 15): the logo's orange-red outline ($A) on blue ($6)"
+  },
+  {
+   "address": 25856,
+   "type": "line",
+   "text": "Title colour-RAM source, cells 256-511 (row 6 column 16 to row 12 column 31), to $D900: the logo's lower edge and the top of the mothership"
+  },
+  {
+   "address": 26112,
+   "type": "line",
+   "text": "Title colour-RAM source, cells 512-767 (row 12 column 32 to row 19 column 7), to $DA00: the mothership's hull ($C, $B, $F greys) and the top of the Vaus"
+  },
+  {
+   "address": 26368,
+   "type": "line",
+   "text": "Title colour-RAM source, cells 768-999 (row 19 column 8 to the end) to $DB00-$DBE7, then 24 bytes $67E8-$67FF that the same loop copies to the unused colour RAM $DBE8-$DBFF"
+  }
+ ]
 }
