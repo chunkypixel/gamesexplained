@@ -102,6 +102,10 @@
     {
       "id": "highjump",
       "title": "High Jump"
+    },
+    {
+      "id": "downhill",
+      "title": "Downhill Race"
     }
   ]
 }
