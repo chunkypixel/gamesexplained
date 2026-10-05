@@ -18,8 +18,8 @@ A human curates the page section by section (`kit/START.md`, the
 
 ## Ideas for the page
 
-- The attack-wave player on `waves.html` carries every stage but 14, 15, 19,
-  20, 25 and 29, which differ from VICE in places (below). The recording
+- The attack-wave player on `waves.html` carries every stage but 14, 19, 20,
+  25 and 29, which differ from VICE in places (below). The recording
   run (`work/waves/record.js`, `pack.js`) covers all 32 stages and
   `work/waves/compare2.js` compares them with VICE; a stage that is made to
   match goes in by copying its file into `reference/waves/` and adding it
@@ -37,9 +37,6 @@ A human curates the page section by section (`kit/START.md`, the
   enemy entering on the right one frame apart (group `$6F`, list 211; the
   same group in stage 29, list 91, and group `$2B` in stage 25, list 35);
   both are probably one timing difference the machine does not reproduce.
-  Stage 15 differs only where the stand-in shots leave a different enemy
-  alive between two runs of groups `$14` and `$8E`: a fault of the test,
-  which counts its 15 seconds in samples rather than frames.
 - A sound-effect player for the 21 effects at `$0406`.
 - The hazard rows (rocks, bubbles, machinery) drawn from the spawn lists
   under the I/O area, stage by stage.

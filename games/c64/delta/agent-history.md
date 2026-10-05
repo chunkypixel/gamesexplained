@@ -126,3 +126,11 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   frame apart; letting a group's start line up a sample either way did not
   make them match (the other slots then disagree), so the tolerance was
   taken out again.
+- Stage 15, again: the blame on sample-timed stand-in shots was wrong
+  (stage 15 has no skipped samples). The VICE script now times the shots
+  in game frames from VICE's cycle stopwatch anyway, which is the right
+  clock. The real difference was the shot group's last enemies, still
+  exploding as the next group began, freed in a different order. The
+  comparison now leaves those leftovers out, as it already leaves out
+  everything after the shots begin; stage 15 then matched in both VICE
+  runs, and no other stage's result changed.
