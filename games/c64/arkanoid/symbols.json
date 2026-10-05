@@ -13809,7 +13809,7 @@
   {
    "address": 38144,
    "type": "line",
-   "text": "Attract mode, entered by JMP from $B4F7 when the title times out: start-up calls ($F7FE, $F0C3, $F831), screen off ($B9A2), round index = attract_rounds[attract_count $0945 AND 3] for both players, $F1B7, ball speed $023A = 4. Each frame (from $9527): Vaus centre $0206 = ball 0 X - 8 (the autopilot), $FCEE places the Vaus, then the same frame calls as game_loop without the input ($FC99) and with fire forced on ($0236 = 1, so a held ball leaves at once). A key or fire on either port ($DC00 AND $DC01 <> $7F), or the round's last brick ($0455 = 0), drops the return address and JMPs to $F000 (title)."
+   "text": "Attract mode, entered by JMP from $B4F7 when the title tune ($3D, started at $B4D4) ends with no key or fire. Start-up calls ($F7FE, $F0C3, $F831), screen off ($B9A2), round index = attract_rounds[attract_count $0945 AND 3] for both players, $F1B7, ball speed $023A = 4. Each frame (from $9527): Vaus centre $0206 = ball 0 X - 8 (the autopilot), $FCEE places the Vaus, then the same frame calls as game_loop without the input ($FC99) and with fire forced on ($0236 = 1, so a held ball leaves at once). When $DC00 AND $DC01 is not $7F (a key or fire) or the round's last brick has gone ($0455 = 0), it drops the return address and JMPs to $F000 (title)."
   },
   {
    "address": 38271,
@@ -13834,7 +13834,7 @@
   {
    "address": 38470,
    "type": "line",
-   "text": "The ending, when Doh's counter $0455 has gone below zero: round index of player 1 set to 0, let the flash finish, wait for the tune, three sound-effect voices ($272F x 3), dissolve Doh (doh_dissolve $970B), $0209 = $FF, tune $28 ($262B), sprites off, drum track $AB10 (start_drums), the text screen ($B480, $B4E0, $2690, $B53C, $B6F0, $B6B1), 250 frames, $B6F0 again; then lives of the current player = $99 and game_over ($9B81), which returns to the title or the other player."
+   "text": "The ending, when Doh's counter $0455 has gone below zero: player 1's round index = 0, let the flash finish, wait for the tune, three effect voices ($272F), dissolve Doh (doh_dissolve $970B), $0209 = $FF, tune $28 ($262B), sprites off, drum track drums_ending ($AB10) via start_drums, the title picture ($B480), then $B4E0, the title's wait loop: it plays the samples and returns on a key or fire, but JMPs to attract_mode if the tune ends first. Then the text screen ($2690, $B53C, $B6F0, $B6B1), 250 frames, $B6F0; then lives of the current player = $99 and game_over ($9B81), which returns to the title or to the other player."
   },
   {
    "address": 38597,
@@ -13844,7 +13844,7 @@
   {
    "address": 38615,
    "type": "line",
-   "text": "Start of a round or a life: $F0AA (clear the capsule sprite, reset the gate characters from gate_rows), screen on ($B9B0), tune $0C ($13 for round 33) via $262B, vaus_appear ($A3F4), copy the Vaus shape back ($F09E), all sprites on ($D015 = $FF), wait for the tune ($F70C), frame counter $0200/$0201 = 0. Called from round_cleared, next_round, $9C2E/$9C4C (after a life) and $F2A7."
+   "text": "Start of a round or a life: $F0AA (clear the sprite data $E580-$E5FF, reset the gate characters from gate_rows), screen on ($B9B0), tune $0C ($13 for round 33) via $262B, vaus_appear ($A3F4), $F09E (copy $E600-$E67F back to $E580-$E5FF, the data break_exit fills), all sprites on ($D015 = $FF), wait for the tune ($F70C), frame counter $0200/$0201 = 0. Called from round_cleared, next_round, $9C2E/$9C4C (after a life) and $F2A7."
   },
   {
    "address": 38667,
@@ -13899,7 +13899,7 @@
   {
    "address": 39161,
    "type": "line",
-   "text": "Drum bytecode (see start_drums): a 22-step bar called 5 times by the ending track: samples $84 / $86 / $86 / $82 / $86 / $86 / $84 $84 $86 $86 ..., waits of 12 and 6 frames. Ends with the $60 (return) at $9927, which is also the RTS of update_gate."
+   "text": "Drum bytecode (see start_drums): a 22-step bar called 5 times by the ending track: samples $84 / $86 / $86 / $82 / $86 / $86 / $84 $84 $86 $86 ..., waits of 12 and 6 ticks. Ends with the $60 (return) at $9927, which is also the RTS of update_gate."
   },
   {
    "address": 39207,
@@ -13914,7 +13914,7 @@
   {
    "address": 39237,
    "type": "line",
-   "text": "Start a drum track for the sample sequencer at $FEF4: A = frames before the first command ($DC), X/Y = address of the bytecode ($DA/$DB), return stack pointer $DD = 7 (stack at $78-$7F low, $80-$87 high, repeat counts at $88-$8F). Used with $AB10 by the ending ($968C) and with $9960 at $B4DD. Bytecode: $80-$87 n = play sample $8x (handler from $B07D,x / drum_handler_hi) and wait n frames; $20 lo hi = call; $60 = return; $4C lo hi = jump; $49 n ... $40 = repeat n times."
+   "text": "Start a drum track for the sample sequencer at $FEF4: A = ticks before the first command ($DC; one tick per call of $FEF4 from the music update at $F88F, made only while $0209 is negative, as the title and the ending set it), X/Y = address of the bytecode ($DA/$DB), return stack pointer $DD = 7 (stack at $78-$7F low, $80-$87 high, repeat counts at $88-$8F). Used with $AB10 by the ending ($968C) and with $9960 at $B4DD. Bytecode: $80-$87 n = trigger sample $8x (handler from $B07D,x / drum_handler_hi; $FEE0 plays it) and wait n ticks; $20 lo hi = call; $60 = return; $4C lo hi = jump; $49 n ... $40 = repeat n times."
   },
   {
    "address": 39248,
@@ -13929,12 +13929,12 @@
   {
    "address": 39264,
    "type": "line",
-   "text": "Drum track started at $B4DD (with A = 2): about 270 bytes of sequencer bytecode that call the short figures at $A555-$A5C6 and $AAA0-$AAE9, with long rests on sample $87, and end in drums_idle. Decoded: work/agent12/drums.txt."
+   "text": "Drum track of the title tune ($3D), started at $B4DD with A = 2: about 270 bytes of sequencer bytecode that call the short figures at $A555-$A5C6 and $AAA0-$AAE9, with long rests on sample $87, ending in drums_idle. The samples are played by $FEE0 from the title's wait loop at $B4E0. Decoded: work/agent12/drums.txt."
   },
   {
    "address": 39537,
    "type": "line",
-   "text": "Drum idle loop: sample $87, wait 100 frames, jump to itself ($87 $64 $4C $71 $9A); also set directly by $B533 (with $DC = $FF and $DF = 0) to silence the drums."
+   "text": "Drum idle loop: sample $87, wait 100 ticks, jump to itself ($87 $64 $4C $71 $9A); also set directly by $B533 (with $DC = $FF and $DF = 0) to silence the drums."
   },
   {
    "address": 39542,
@@ -14119,7 +14119,7 @@
   {
    "address": 42015,
    "type": "line",
-   "text": "The B (break) capsule's exit. $023C = 0: clear $023E and return. $023C = 1 (just caught): $023C = $FF, open the exit in the right wall (characters at $CF40-$CF57 from $CF68, colour 9 at screen rows 22-24 column 27). $023C = $FF: scroll the exit's 24 bitmap bytes by one each frame; when the Vaus touches it ($023E, set at $FD1F) start leaving ($023D = 1, $0247 = $17, width 4, sound), slide both halves right 1 pixel a frame to X $E0, then fill the Vaus sprite ($E5C0, then $E580) bit by bit; when done and the tune is over, JMP round_cleared. No score is added on this path."
+   "text": "The B (break) capsule's exit. $023C = 0: clear $023E and return. $023C = 1 (just caught): $023C = $FF, open the exit in the right wall (characters at $CF40-$CF57 from $CF68, colour 9 at screen rows 22-24 column 27). $023C = $FF: scroll the exit's 24 bitmap bytes by one each frame; when the Vaus touches it ($023E, set at $FD1F) start leaving ($023D = 1, $0247 = $17, width 4, sound), slide both halves right 1 pixel a frame to X $E0, then set the bits of the sprite data at $E5C0, then $E580, one pixel column per frame (round_start restores it from $E600); when done and the tune is over, JMP round_cleared. No score is added on this path."
   },
   {
    "address": 42057,
@@ -14149,7 +14149,7 @@
   {
    "address": 42325,
    "type": "line",
-   "text": "Drum bytecode figures called by drums_title: $A555 (8 x $83 1+3, 8 x $85 1+3, then $86 2+14 x 4), $A56F ($86 2+14), $A574 (a 12-call bar), $A598 ($82 1, 1, 6), $A59F, $A5A5 ($86 2+6), $A5AA, $A5B0 ($81 2+6), $A5B5 and $A5BB (with $84). Waits are in frames. Decoded: work/agent12/drums.txt."
+   "text": "Drum bytecode figures called by drums_title: $A555 (8 x $83 1+3, 8 x $85 1+3, then $86 2+14 x 4), $A56F ($86 2+14), $A574 (a 12-call bar), $A598 ($82 1, 1, 6), $A59F, $A5A5 ($86 2+6), $A5AA, $A5B0 ($81 2+6), $A5B5 and $A5BB (with $84). Waits are in sequencer ticks. Decoded: work/agent12/drums.txt."
   },
   {
    "address": 42439,
