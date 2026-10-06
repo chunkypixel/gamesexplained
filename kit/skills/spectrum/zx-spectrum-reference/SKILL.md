@@ -240,7 +240,7 @@ may use them, and many print with code of their own.
   on the bus: on the 48K, 128K and +2, the screen or attribute byte the ULA
   is fetching at that moment, or `$FF` in the border and retrace; on the
   +2A/+3, always `$FF`. Some games sync to the raster this way (the FAQ
-  names Arkanoid), so an emulator that does not model it changes their
+  names one), so an emulator that does not model it changes their
   timing.
 - **Keyboard ghosting.** Three simultaneous keys can be decoded as a
   fourth; "not pressed" is a 1, and reading a single half-row needs its
