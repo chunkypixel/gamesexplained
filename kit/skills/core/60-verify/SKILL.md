@@ -70,6 +70,20 @@ and listing callers from the decoded listing rather than from a byte
 search, brought a second, independent sample to 3 %. If the first sample
 is bad, audit the whole listing before the page is published.
 
+Comments a program wrote, a decoder describing every record of a format
+from templates, are a few claims each made hundreds of times. Give them
+a stratum of their own, draw about 20 from it, and beside the plain rate
+give the rate weighted by each stratum's size: three drawn from a
+stratum of thousands would stand for all of it. When they are bad, audit
+them by template, not one by one: test every sentence a template writes
+against the code on every path (a reader cited for a field it reads only
+for some values of a flag, a condition such as "when empty" or "nothing
+reads this"), then the records whose values change what the sentence
+means, and make the corrections with a script from the records' bytes,
+in the decoder too, or its next run puts the errors back. One run's
+decoder wrote 7,973 of its 11,532 comments, and the sample drew three of
+them and found two wrong; the audit that followed corrected 2,017.
+
 If the checking agent cannot run (its provider is out of credit, say:
 `50-coverage`, "Splitting the work across subagents"), run it on another
 proven model, or through another provider. If none can run it, the
@@ -104,6 +118,11 @@ event that sets a countdown and leaves the rest (the score, the message,
 the reprisal) to a routine that returns early unless the player is still
 in the right place loses the rest whenever the player is not. For each,
 list what the test ignores, or what the deferred part requires, and try it.
+
+A value the player sets at the start, a password or a difficulty, is
+the same kind of test at a distance: find every reader of it
+(`opcodes.py --refs`), not only the routine that sets it. The one reader
+may be at the end of the level, and decide whether it can be won at all.
 
 ## Live verification
 

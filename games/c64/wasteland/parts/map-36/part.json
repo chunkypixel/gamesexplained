@@ -1,0 +1,92 @@
+{
+  "title": "Guardian Citadel, the Outer Sanctum",
+  "order": 43,
+  "over": "tiles-4",
+  "ranges": [
+    [
+      "$3400",
+      "$53FF"
+    ],
+    [
+      "$DE00",
+      "$E30A"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E30A",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$53FF",
+        "map 36, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 36: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 36, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3F2B",
+      "levels",
+      "map 36: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3F2C",
+      "$3F2E",
+      "code",
+      "map 36: its own code"
+    ],
+    [
+      "$3F2F",
+      "$4097",
+      "levels",
+      "map 36: record lists, square records and characters who can join"
+    ],
+    [
+      "$4098",
+      "$4259",
+      "text",
+      "map 36: monster names"
+    ],
+    [
+      "$425B",
+      "$436A",
+      "levels",
+      "map 36: monster records"
+    ],
+    [
+      "$436B",
+      "$53C6",
+      "text",
+      "map 36: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 36: square tiles"
+    ]
+  ]
+}

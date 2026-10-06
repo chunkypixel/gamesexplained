@@ -1,0 +1,92 @@
+{
+  "title": "Agricultural Center",
+  "order": 18,
+  "over": "tiles-1",
+  "ranges": [
+    [
+      "$3400",
+      "$4DFF"
+    ],
+    [
+      "$DE00",
+      "$E263"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E263",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$4DFF",
+        "map 9, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 9: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 9, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3D28",
+      "levels",
+      "map 9: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3D29",
+      "$3D2B",
+      "code",
+      "map 9: its own code"
+    ],
+    [
+      "$3D2C",
+      "$3EDC",
+      "levels",
+      "map 9: record lists and square records"
+    ],
+    [
+      "$3EDD",
+      "$3F39",
+      "text",
+      "map 9: monster names"
+    ],
+    [
+      "$3F3B",
+      "$3F7A",
+      "levels",
+      "map 9: monster records"
+    ],
+    [
+      "$3F7B",
+      "$4D99",
+      "text",
+      "map 9: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 9: square tiles"
+    ]
+  ]
+}
