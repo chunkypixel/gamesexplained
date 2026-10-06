@@ -33,15 +33,17 @@ credits in seconds. If the game has a custom character set, follow with
 ## Twin-copy check
 
 Relocating loaders can leave a second copy of code or tables in memory.
-Before describing a region, check whether the code reads it or reads a
-twin elsewhere: compare the two byte for byte. A byte that differs is
-usually a variable written at run time. When no instruction can write the bytes
-that differ (`opcodes.py --refs`, and no pointer built to them), they
-were changed from outside the game, often before a freezer saved it.
-Then the copy made earlier is the right one, and the next time the game
+Before describing a region, compare the two byte for byte and trace their
+producers and consumers separately. Equality establishes a twin, not an
+unread copy: runtime dictionaries, buffers and saved frames can still match
+an initialization seed. A byte that differs is usually a variable written at
+run time, but an unchanged byte is not proof of non-use. When no instruction
+can write the bytes that differ (`opcodes.py --refs`, and no pointer built to
+them), they were changed from outside the game, often before a freezer saved
+it. Then the copy made earlier is the right one, and the next time the game
 copies again the damage reaches the screen: a bug the player sees, worth
-running live. Describe the copy the code reads
-and mark the other as an unread duplicate.
+running live. Describe the copy the code reads, and name an unproved
+consumer as open.
 
 ## A documented version on another machine
 
@@ -111,6 +113,9 @@ maker is unknown is in the position of a run on an unproven model.
 4. **Verify as usual** (`60-verify`). A claim the analysis makes is
    unverified until it is traced or observed here. The analysis's own
    notes of what it tested are a lead to a check, not the check.
+   Rerunning a decoder the analysis came with shows that it reproduces,
+   not what it means: test a decoded format with a decoder of your own,
+   against whole records.
 5. **Record the import** in `game.json`, beside the run's own model:
 
    ```
