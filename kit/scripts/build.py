@@ -82,10 +82,19 @@ def warn(msg):
 
 
 # --- markdown (the subset our files use) ------------------------------------
-def inline(s, addr=True):
+def inline(s, addr=True, parts=None):
+    """parts, in a game of several: {part id: its Source page}. An address written with its
+    part's name before it, as the facts of such a game write them ("engine `$25BD`"), links
+    into that part's page, whatever page the rest link into."""
     s = html.escape(s, quote=False)
     page = addr if isinstance(addr, str) else "source.html"
-    s = re.sub(r"`([^`]+)`", lambda m: "<code>" + (addr_link(m.group(1), page) if addr else m.group(1)) + "</code>", s)
+
+    def code(m):
+        word, body = m.group(1), m.group(2)
+        if parts and word in parts:
+            return f"{word} <code>{addr_link(body, parts[word])}</code>"
+        return (f"{word} " if word else "") + "<code>" + (addr_link(body, page) if addr else body) + "</code>"
+    s = re.sub(r"(?:(?<![\w-])([A-Za-z][\w-]*) )?`([^`]+)`", code, s)
     s = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
     s = re.sub(r"(?<![\w*])\*([^*\n]+)\*(?!\w)", r"<i>\1</i>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', s)
@@ -96,13 +105,14 @@ def addr_link(s, page="source.html"):
     return re.sub(r"\$([0-9A-Fa-f]{4})\b", lambda m: f'<a href="{page}#{m.group(1).upper()}">${m.group(1).upper()}</a>', s)
 
 
-def markdown(text, drop_h1=True, addr=True, shift=0):
+def markdown(text, drop_h1=True, addr=True, shift=0, parts=None):
     """addr=False where the page has no Source tab to link addresses into, or the name of
     the Source page to link them into (a part's, in a game of several); shift=1 sets the
-    headings one level down, for a file placed under a heading of the page's own."""
+    headings one level down, for a file placed under a heading of the page's own; parts as
+    for inline()."""
     out, lines, i = [], text.splitlines(), 0
     para = []
-    inline_ = lambda x: inline(x, addr)
+    inline_ = lambda x: inline(x, addr, parts)
 
     def flush():
         if para:
@@ -770,6 +780,12 @@ def part_page(p):
     return f"source-{p['id']}.html"
 
 
+def part_pages(P):
+    """{part id: its Source page} for the parts that have one, the names the facts of a game of
+    several parts write before an address. {} for a game of one."""
+    return {p["id"]: part_page(p) for p in (P or []) if listed(p)}
+
+
 def listed(p):
     return os.path.isfile(os.path.join(p["dir"], "listing.json"))
 
@@ -815,16 +831,20 @@ def part_step(P, cur):
 def part_sources(gdir, game, P, out, nav, ban, common, cheats):
     """One Source page per part that has a listing, each with the part's own facts, then the
     game's. Addresses in a part's facts link into its own page; the game's facts and cheats
-    name addresses in several parts, so they link to none."""
+    name addresses in several parts, so they link to none. In either, an address written with
+    a part's name before it ("engine `$25BD`") links into that part's page."""
     shown = [p for p in P if listed(p)]
+    pages = part_pages(P)
     whole = read(os.path.join(gdir, "facts.md"))
-    whole = ('<h2>The whole game</h2><div data-part="">' + markdown(whole, addr=False, shift=1) + "</div>") if whole.strip() else ""
+    whole = ('<h2>The whole game</h2><div data-part="">' + markdown(whole, addr=False, shift=1, parts=pages)
+             + "</div>") if whole.strip() else ""
     if cheats.strip():
-        whole += '<h2>Cheats</h2><div data-part="">' + markdown(cheats, addr=False) + "</div>"
+        whole += '<h2>Cheats</h2><div data-part="">' + markdown(cheats, addr=False, parts=pages) + "</div>"
     tpl = fill(read(os.path.join(SITE, "source.html")), **common).replace("<!-- tabs -->", nav)
     for p in shown:
         page, beneath = part_page(p), [q for q in reversed(under(P, p)) if listed(q)]
-        facts = f"<h2>{html.escape(p['title'])}</h2>" + markdown(read(os.path.join(p["dir"], "facts.md")), addr=page, shift=1)
+        facts = f"<h2>{html.escape(p['title'])}</h2>" + markdown(read(os.path.join(p["dir"], "facts.md")), addr=page, shift=1,
+                                                                   parts=pages)
         note = ""
         if beneath:
             note = (f'<p class="mute">{html.escape(p["title"])} is loaded over {html.escape(" and ".join(q["title"] for q in beneath))}. '
@@ -893,6 +913,18 @@ def game_footprint(P, out, plat):
     return totals, footprint_table(t, plat, span) + f'<p class="mute">{said}</p>', span
 
 
+def link_list(game):
+    """(title, url) for each of game.json's links, in order. A link is {"title", "url"}, the
+    title being the linked page's own; an empty url is a slot the template left, not a link.
+    A bare url string, the older form, shows its key."""
+    out = []
+    for k, v in (game.get("links") or {}).items():
+        t, u = (v.get("title") or k, v.get("url")) if isinstance(v, dict) else (k, v)
+        if u:
+            out.append((t, u))
+    return out
+
+
 def data_links(P):
     """Where the symbol maps and listings are, for the About tab's {{data_links}}."""
     if not P:
@@ -955,8 +987,8 @@ def build_game(gdir, out_root):
     site_contributors = f"<ul>{site_contributor_items}</ul>"
     game_credits = f"<ul>{game_credit_items}</ul>"
     con_html = f"<ul>{site_contributor_items}{game_credit_items}</ul>"
-    links = {k: u for k, u in (game.get("links") or {}).items() if u}   # empty slots from the template are not links
-    link_html = "<ul>" + "".join(f'<li><a href="{html.escape(u)}">{html.escape(k)}</a></li>' for k, u in links.items()) + "</ul>" if links else "<p class='mute'>None listed yet. Know a write-up, port or forum thread about this game? Add it to game.json.</p>"
+    links = link_list(game)
+    link_html = "<ul>" + "".join(f'<li><a href="{html.escape(u)}">{html.escape(t)}</a></li>' for t, u in links) + "</ul>" if links else "<p class='mute'>None listed yet. Know a write-up, port or forum thread about this game? Add it to game.json.</p>"
     tools = game.get("tools") or {}
     if P:
         totals, foot, span = game_footprint(P, out, plat)
@@ -983,8 +1015,9 @@ def build_game(gdir, out_root):
                  model=html.escape(str(game.get("model", ""))), kit_version=html.escape(str(game.get("kit_version", ""))),
                  contributors=con_html, site_contributors=site_contributors, game_credits=game_credits,
                  links=link_html,
-                 features=whole(markdown(read(os.path.join(gdir, "features.md")), addr=not P, shift=1)),
-                 orientation=whole(markdown(read(os.path.join(gdir, "orientation.md")), addr=not P, shift=1))).replace("<!-- tabs -->", nav)
+                 features=whole(markdown(read(os.path.join(gdir, "features.md")), addr=not P, shift=1, parts=part_pages(P))),
+                 orientation=whole(markdown(read(os.path.join(gdir, "orientation.md")), addr=not P, shift=1,
+                                            parts=part_pages(P)))).replace("<!-- tabs -->", nav)
     about = under_title(about, ban)
     open(os.path.join(out, "about.html"), "w").write(pagenav(at_end(about, edit_footer(game, "about.html"))))
     for f in ("listing.json", "symbols.json"):
@@ -1439,10 +1472,13 @@ def broken_links(out_root):
     reader's browser, because a game folder publishes only what build_game copies."""
     bad = []
     for page in sorted(glob.glob(os.path.join(out_root, "**", "*.html"), recursive=True)):
-        for m in re.finditer(r'\b(?:src|href)\s*=\s*(["\'])(.*?)\1', open(page, encoding="utf-8").read()):
+        text = open(page, encoding="utf-8").read()
+        for m in re.finditer(r'\b(?:src|href)\s*=\s*(["\'])(.*?)\1', text):
             url = m.group(2)
             if re.search(r"\$\{|\{\{|\s\+|\+\s", url) or re.match(r"[a-z][a-z0-9+.-]*:|//|#", url, re.I):
                 continue   # built by a script at run time, or not a file of ours
+            if re.compile(r"\s*\+").match(text, m.end()):
+                continue   # the first piece of a string a script puts together: href = 'source-' + part
             path = url.split("#")[0].split("?")[0]
             if not path:
                 continue

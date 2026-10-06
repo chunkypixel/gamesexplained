@@ -8,7 +8,10 @@ back; anything else may read them too.
 How they were made, and the two stand-ins for a player, is in the caption of
 the player on `waves.html`. Each stage published here was compared with the
 same stage played in VICE, enemy by enemy and frame by frame from the start of
-each group, up to the frame the stand-in shots begin. VICE sometimes takes one
+each group, up to the frame the stand-in shots begin; enemies of a shot group still
+exploding when the next group begins are left out of that group's comparison. Stages 14, 19, 20 and 25 were checked in VICE started from the recording
+machine's own memory at a group's first frame, since VICE's own play reached
+them with different game state. VICE sometimes takes one
 sample fewer, where the game's interrupts run past the main loop's call at
 `$17D0`; those are counted and allowed for. A stage that could not be shown to
 match has no file here (`TODO.md` says which and why).

@@ -173,7 +173,7 @@
 
   // the stages with a recording in reference/waves; a stage left out (one that differed from VICE)
   // still gets its button, disabled, so the numbering stays the game's
-  const STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18];
+  const STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32];
   for (let s = 1; s <= Math.max(...STAGES); s++) {
     const b = document.createElement('button'); b.textContent = s;
     if (STAGES.includes(s)) { b.title = BANNERS[s - 1]; b.onclick = () => load(s); }

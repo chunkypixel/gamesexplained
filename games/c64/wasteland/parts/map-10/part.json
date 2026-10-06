@@ -1,0 +1,92 @@
+{
+  "title": "Highpool",
+  "order": 19,
+  "over": "tiles-1",
+  "ranges": [
+    [
+      "$3400",
+      "$57FF"
+    ],
+    [
+      "$DE00",
+      "$E277"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E277",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$57FF",
+        "map 10, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 10: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 10, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3F86",
+      "levels",
+      "map 10: square classes, square numbers, map record, record lists, square records and characters who can join"
+    ],
+    [
+      "$3F87",
+      "$3F88",
+      "code",
+      "map 10: its own code"
+    ],
+    [
+      "$3F89",
+      "$4360",
+      "levels",
+      "map 10: record lists and square records"
+    ],
+    [
+      "$4361",
+      "$43BF",
+      "text",
+      "map 10: monster names"
+    ],
+    [
+      "$43C1",
+      "$4400",
+      "levels",
+      "map 10: monster records"
+    ],
+    [
+      "$4401",
+      "$57F7",
+      "text",
+      "map 10: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 10: square tiles"
+    ]
+  ]
+}
