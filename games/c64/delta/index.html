@@ -28,15 +28,8 @@
   <p class="cap">Sources: <a href="https://en.wikipedia.org/wiki/Delta_(video_game)">Wikipedia, "Delta (video game)"</a>, <a href="https://en.wikipedia.org/wiki/Thalamus_Ltd">Wikipedia, "Thalamus Ltd"</a> and <a href="https://www.mobygames.com/game/14439/delta-patrol/">MobyGames, "Delta Patrol"</a>, as quoted in web search results on 1 and 2 October 2026. The pages themselves could not be opened, so these are second-hand.</p>
 </section>
 
-<section id="copy">
-  <p class="fig">03 · The copy studied</p>
-  <h2 class="t">A cracked single file, with the loader gone</h2>
-  <p>These pages describe one program file, a crack by the Reflex Cracking Squad. Its own depacker and intro run first, then two unpacking layers, and the game starts at <code>$1770</code> (<a href="about.html">About</a> has the steps). The crack replaced the original loader, so Mix-E-Load is not in it, and nothing in it says <i>Delta Patrol</i>.</p>
-  <p>The game itself fills the whole of the C64's memory, from the sound effects at <code>$0400</code> to the vectors at <code>$FFFA</code>, including the RAM under the I/O chips. Every byte is described on the <a href="source.html">Source code</a> tab.</p>
-</section>
-
 <section id="frame">
-  <p class="fig">04 · The play screen</p>
+  <p class="fig">03 · The play screen</p>
   <h2 class="t">One frame, rebuilt from memory</h2>
   <p class="lede">The picture below is drawn by this page from the game's memory and the video chip's registers, recorded over one frame of stage 2.</p>
   <div class="plate">
@@ -50,7 +43,7 @@
 </section>
 
 <section id="findings">
-  <p class="fig">05 · What the code keeps</p>
+  <p class="fig">04 · What the code keeps</p>
   <h2 class="t">A trainer nobody can reach, and random numbers made of code</h2>
   <p>The code holds a cheat routine that nothing calls, a timer cleared at the wrong address, enemy fire whose randomness is read out of the game's own instructions, and a copyright year that the title picture contradicts. The <a href="discoveries.html">Discoveries</a> tab has each one, with the questions still open.</p>
   <p class="cap">No game image is hosted here.</p>
