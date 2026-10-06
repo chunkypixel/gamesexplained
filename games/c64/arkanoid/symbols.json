@@ -13739,7 +13739,7 @@
   {
    "address": 37957,
    "type": "line",
-   "text": "Object X positions, 12 objects $9445-$9450, same numbering as obj_y; written to the sprite X registers with no ninth bit (the play-time multiplexer never writes $D010). $9445, the left half of the Vaus, is $80 at the start of a life ($9A91) and follows the Vaus centre $0206 ($F22B)."
+   "text": "Object X positions, 12 objects $9445-$9450, same numbering as obj_y; written to the sprite X registers with no ninth bit (the play-time multiplexer never writes $D010). $9445, the left half of the Vaus, is $80 at the start of a life ($9A91) and is written from the Vaus position at $F22B and by the Vaus control ($FD39-$FD62)."
   },
   {
    "address": 37958,
@@ -13749,7 +13749,7 @@
   {
    "address": 37959,
    "type": "line",
-   "text": "obj_x[2-3] ($9447, $9448): laser shots, set to Vaus X - 4 by fire_laser ($A78C); the brick test looks at X - $1A and X - $0B, the shot's two beams ($A6B0)."
+   "text": "obj_x[2-3] ($9447, $9448): laser shots, set to the Vaus centre $0206 - 4 by fire_laser ($A78C); the brick test looks at X - $1A and X - $0B, the shot's two beams ($A6B0)."
   },
   {
    "address": 37960,
