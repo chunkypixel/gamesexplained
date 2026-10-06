@@ -1,4 +1,4 @@
-## next · 30 September 2026 · A View to a Kill · unorig with Claude
+## 0.0.92 · 30 September 2026 · A View to a Kill · unorig with Claude
 
 **A game can be several programs.** *A View to a Kill* is five: an
 intro, three sections and an ending, each loaded from a menu over the
