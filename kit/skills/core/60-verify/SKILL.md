@@ -48,6 +48,12 @@ the 6502 simulator (on the C64, `kit/c64/machine.js`) and watch for the
 item's pickup, or try it in a port that has been checked in lockstep.
 Only then write that something cannot be reached.
 
+## Retained bytes from earlier phases
+
+A non-fill page in a play snapshot need not be play data. Trace its producer before assigning ownership: a boot decompressor may copy a whole page but consume only a short repair table within it. A play-only search misses that producer. Arm the watch before the relevant boot phase and stop at the write; separate startup RAM testing from the program’s own writes. Compare the whole copied extent with its source, then trace the consumer’s actual bound.
+
+On a banked machine, distinguish physical RAM from the I/O or ROM that occupies the same CPU address. Condition RAM watches on the bank selector. Include both a read and a store that must trigger as positive controls before trusting an empty watch log, and report the observed trajectory rather than inferring absence in every phase.
+
 ## Claims about the whole game
 
 "Every room", "the only routine", "never", "the test" in the singular:
@@ -74,6 +80,20 @@ routine does); a full pass by fresh agents, each correcting its own range
 and listing callers from the decoded listing rather than from a byte
 search, brought a second, independent sample to 3 %. If the first sample
 is bad, audit the whole listing before the page is published.
+
+Comments a program wrote, a decoder describing every record of a format
+from templates, are a few claims each made hundreds of times. Give them
+a stratum of their own, draw about 20 from it, and beside the plain rate
+give the rate weighted by each stratum's size: three drawn from a
+stratum of thousands would stand for all of it. When they are bad, audit
+them by template, not one by one: test every sentence a template writes
+against the code on every path (a reader cited for a field it reads only
+for some values of a flag, a condition such as "when empty" or "nothing
+reads this"), then the records whose values change what the sentence
+means, and make the corrections with a script from the records' bytes,
+in the decoder too, or its next run puts the errors back. One run's
+decoder wrote 7,973 of its 11,532 comments, and the sample drew three of
+them and found two wrong; the audit that followed corrected 2,017.
 
 If the checking agent cannot run (its provider is out of credit, say:
 `50-coverage`, "Splitting the work across subagents"), run it on another
@@ -109,6 +129,11 @@ event that sets a countdown and leaves the rest (the score, the message,
 the reprisal) to a routine that returns early unless the player is still
 in the right place loses the rest whenever the player is not. For each,
 list what the test ignores, or what the deferred part requires, and try it.
+
+A value the player sets at the start, a password or a difficulty, is
+the same kind of test at a distance: find every reader of it
+(`opcodes.py --refs`), not only the routine that sets it. The one reader
+may be at the end of the level, and decide whether it can be won at all.
 
 For a small input space, enumerate it when execution is cheap. A sample of
 nonzero random seeds can miss nonzero predecessors of a trapped zero state.

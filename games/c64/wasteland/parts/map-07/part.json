@@ -1,0 +1,80 @@
+{
+  "title": "Sleeper Base, level 1",
+  "order": 53,
+  "over": "tiles-7",
+  "ranges": [
+    [
+      "$3400",
+      "$43FF"
+    ],
+    [
+      "$DE00",
+      "$E226"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E226",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$43FF",
+        "map 7, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 7: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 7, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3C0D",
+      "levels",
+      "map 7: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3C0E",
+      "$3C52",
+      "text",
+      "map 7: monster names"
+    ],
+    [
+      "$3C54",
+      "$3C7B",
+      "levels",
+      "map 7: monster records"
+    ],
+    [
+      "$3C7C",
+      "$4372",
+      "text",
+      "map 7: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 7: square tiles"
+    ]
+  ]
+}

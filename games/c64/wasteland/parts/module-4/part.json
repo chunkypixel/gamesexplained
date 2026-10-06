@@ -1,0 +1,28 @@
+{
+  "title": "Location module 4",
+  "order": 11,
+  "over": "game",
+  "ranges": [
+    [
+      "$CA00",
+      "$CFFF"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$CFFB",
+        "$CFFF",
+        "not module 4: the stream's zero padding and the sector filler after its last packed byte (input byte 1424 of its stream, from T33/L3 byte 155 on side 4), decoded as $00 until the unpacker's $D000 limit; nothing reads them"
+      ]
+    ],
+    "extra": [],
+    "include": []
+  },
+  "io": [],
+  "regions": []
+}

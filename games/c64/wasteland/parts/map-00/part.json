@@ -1,0 +1,80 @@
+{
+  "title": "The world map",
+  "order": 15,
+  "over": "tiles-0",
+  "ranges": [
+    [
+      "$3400",
+      "$56FF"
+    ],
+    [
+      "$DE00",
+      "$EDFF"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [],
+    "extra": [
+      [
+        "$3400",
+        "$56FF",
+        "map 0, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$EDFF",
+        "map 0: its tile layer, one byte a square, 64 rows of 64, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 0, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$4FCC",
+      "levels",
+      "map 0: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$4FCD",
+      "$508F",
+      "code",
+      "map 0: its own code"
+    ],
+    [
+      "$5090",
+      "$50F2",
+      "text",
+      "map 0: monster names"
+    ],
+    [
+      "$50F3",
+      "$5122",
+      "levels",
+      "map 0: monster records"
+    ],
+    [
+      "$5123",
+      "$5641",
+      "text",
+      "map 0: messages"
+    ],
+    [
+      "$DE00",
+      "$EDFF",
+      "levels",
+      "map 0: square tiles"
+    ]
+  ]
+}

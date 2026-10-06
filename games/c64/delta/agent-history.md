@@ -113,3 +113,41 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   an enemy entering on the right a frame apart; the VICE run's state had
   also drifted from the machine's since stage 14. 16-18 went on the page;
   14, 15, 19 and 20 stay off.
+
+## 4-5 October 2026, stages 20-32
+
+- Stages 20-32 ran in VICE from `delta_stage20`; the two-hour limit
+  stopped the run in stage 31, and stages 30-32 ran again from
+  `delta_stage30`. (The script also gained a stop for the wrap round after
+  stage 32, and no longer re-saves the snapshot it starts from.)
+- 21-24, 26-28 and 30-32 matched. Stage 20 failed exactly as in the run
+  carried over from stage 14, so its difference is the stage's own, not
+  drift. Stages 20, 25 and 29 each have an enemy entering on the right a
+  frame apart; letting a group's start line up a sample either way did not
+  make them match (the other slots then disagree), so the tolerance was
+  taken out again.
+- Stage 15, again: the blame on sample-timed stand-in shots was wrong
+  (stage 15 has no skipped samples). The VICE script now times the shots
+  in game frames from VICE's cycle stopwatch anyway, which is the right
+  clock. The real difference was the shot group's last enemies, still
+  exploding as the next group began, freed in a different order. The
+  comparison now leaves those leftovers out, as it already leaves out
+  everything after the shots begin; stage 15 then matched in both VICE
+  runs, and no other stage's result changed.
+- Stage 19 was not a timing difference. At the stage's first frame VICE's
+  memory and the machine's differed in about 900 bytes, the random
+  pointer `$8F` among them ($40 against $50): every VICE snapshot from
+  stage 15 on descends from VICE's own play of stage 14. Writing the
+  machine's memory into VICE at the stage's first sample crashed it, the
+  stage banner's interrupt chain being half in RAM and half in the video
+  chip; at `irq_band_first` (`$1888`) on the boss group's first frame it
+  ran, once `$01` was put back to `$35` (the machine's image holds `$17`
+  there, not the port). From that state VICE played the boss group
+  exactly as recorded.
+- Stages 14, 20 and 25 the same way: each matched from the machine's state
+  (14 and 25 from their first group, 20 from list 210). Two of the
+  injections first stopped at a `$1888` reached outside the raster
+  interrupt (stack pointer 19 against 13), so `inject.py` now also waits
+  for the machine's stack pointer. Stage 29 still differs from the
+  machine's state: VICE drifts within list 90 and an enemy then enters a
+  frame apart in another slot, so that one is a real timing difference.

@@ -1,6 +1,6 @@
 # Jumpman: kit feedback
 
-Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.87. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
+Run: 2–4 October 2026, JankFoundry, GPT-6 Astra Extra High (`gpt-6-astra`). Silver, claimed by jankfoundry for curation; human copy editing has begun. After reviewing the pushed candidate, the contributor approved submission on 4 October 2026. Original analysis used kit 0.0.54; the submission integrates upstream kit 0.0.93. `agent-history.md` retains the investigations and corrections; detailed working reports are private under `work/reports/`.
 
 ## Skill text that changed what I did
 
@@ -37,7 +37,7 @@ Original-code, native and browser evidence is summarized in `facts.md`; the deta
 
 The migration follows the maintainer's request to use the parts support introduced in #202. Official ownership removes 320 bytes in the startup sprite slots from the resident ledger; their provenance and limits remain documented. The 90,263 retained bytes, 9,498 instruction boundaries, retained labels/comments and widget logic/data match the pre-migration candidate. Listings are regenerated from the saved native snapshots; their references into the resident engine now use its symbols. All 32 level captures have the same 244 expected resident-code differences from the original startup state, explained in the orientation. Detailed working reports stay private. These are self-checks, not independent certification.
 
-The integrated kit passes all 36 discovered/self-test commands with tools required and no skips; all 72 Python modules import. All 25 games reproduce coverage and build, producing 165 pages. Binary, documentation, listing and skill-quotation checks pass. Browser checks cover the interactive controls and the standard part navigation; detailed results remain private.
+The integrated kit passes all 39 discovered/self-test commands with tools required and no skips; all 74 Python modules import. All 28 games reproduce coverage and build, producing 250 pages. Binary, documentation, listing and skill-quotation checks pass. The 6 October integration regenerates all 33 listings identically from the saved snapshots. Browser checks cover the interactive controls and the standard part navigation; detailed results remain private.
 
 ## Maintainer asks
 

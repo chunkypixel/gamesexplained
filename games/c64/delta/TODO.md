@@ -18,26 +18,27 @@ A human curates the page section by section (`kit/START.md`, the
 
 ## Ideas for the page
 
-- The attack-wave player on `waves.html` carries stages 1 to 18, less 14 and 15. The
-  recording run (`work/waves/record.js`, `pack.js`) covers all 32 stages;
-  stages 14, 15, 19 and 20 differ from VICE (below) and stages 21-32 each need their VICE comparison (`work/waves/vice_stage.py`,
-  `compare.js`) before they go in, by copying the stage's file into
-  `reference/waves/` and raising `STAGES` in `reference/delta-waves.js`.
+- The attack-wave player on `waves.html` carries every stage but 29, which
+  differs from VICE (below). The recording
+  run (`work/waves/record.js`, `pack.js`) covers all 32 stages and
+  `work/waves/compare2.js` compares them with VICE; a stage that is made to
+  match goes in by copying its file into `reference/waves/` and adding it
+  to `STAGES` in `reference/delta-waves.js`.
   Later stages start from the VICE snapshots `delta_stageNN` that
   `vice_stage.py` saves at each stage's first frame (in the gitignored
   `tools/vice-home/`); without them, one pass from `wave1_start` remakes
   them, or VICE can be started from the machine's own state at the stage.
-  Stage 14: in group `$32` (list 157) two enemies leave the top edge on the
-  same frames in both, but VICE frees slot 3 a frame earlier and slot 4 a
-  frame later than the machine, so the next enemies take other slots and
-  the rest of the stage differs. Probably the cycles the video chip takes,
-  which the machine does not model; not settled. Stage 19 shows the same
-  at the top edge (boss group `$6E`, list 207, frame 272), and stage 20 an
-  enemy entering on the right one frame apart (group `$6F`, list 211);
-  both are probably one timing difference the machine does not reproduce.
-  Stage 15 differs only where the stand-in shots leave a different enemy
-  alive between two runs of groups `$14` and `$8E`: a fault of the test,
-  which counts its 15 seconds in samples rather than frames.
+  Stages 14, 19, 20 and 25 first differed because VICE's own play had
+  reached them with different game state (the random pointer `$8F` among
+  about 900 bytes; every VICE snapshot from stage 15 on descends from
+  VICE's own play of stage 14). Started from the machine's memory at a
+  group's first frame (`work/waves/state_at.js`, `inject.py`, at
+  `irq_band_first` `$1888` with the machine's stack pointer), they match.
+  Stage 29 does not: from the machine's state at list 90, VICE drifts
+  within the group (two samples ahead by its end, the last enemy in slot 6
+  instead of 7), and the enemy entering at list 91 comes alive a frame
+  apart. Probably the cycles the video chip takes, which the machine does
+  not model; not settled.
 - A sound-effect player for the 21 effects at `$0406`.
 - The hazard rows (rocks, bubbles, machinery) drawn from the spawn lists
   under the I/O area, stage by stage.

@@ -1,0 +1,110 @@
+{
+  "title": "Savage Village",
+  "order": 22,
+  "over": "tiles-1",
+  "ranges": [
+    [
+      "$3400",
+      "$4CFF"
+    ],
+    [
+      "$DE00",
+      "$E298"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E298",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$4CFF",
+        "map 49, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 49: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 49, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3E26",
+      "levels",
+      "map 49: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3E27",
+      "$3E54",
+      "code",
+      "map 49: its own code"
+    ],
+    [
+      "$3E55",
+      "$3E56",
+      "tables",
+      "map 49: its code's tables"
+    ],
+    [
+      "$3E57",
+      "$3E6B",
+      "code",
+      "map 49: its own code"
+    ],
+    [
+      "$3E6C",
+      "$3E73",
+      "tables",
+      "map 49: its code's tables"
+    ],
+    [
+      "$3E74",
+      "$4002",
+      "levels",
+      "map 49: record lists and square records"
+    ],
+    [
+      "$4003",
+      "$4064",
+      "text",
+      "map 49: monster names"
+    ],
+    [
+      "$4065",
+      "$40AC",
+      "levels",
+      "map 49: monster records"
+    ],
+    [
+      "$40AD",
+      "$4CED",
+      "text",
+      "map 49: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 49: square tiles"
+    ]
+  ]
+}

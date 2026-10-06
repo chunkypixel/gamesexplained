@@ -1,0 +1,98 @@
+{
+  "title": "Las Vegas sewers, the lab",
+  "order": 41,
+  "over": "tiles-4",
+  "ranges": [
+    [
+      "$3400",
+      "$50FF"
+    ],
+    [
+      "$DE00",
+      "$E20D"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E20D",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$50FF",
+        "map 25, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 25: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 25, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3FAF",
+      "levels",
+      "map 25: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3FB0",
+      "$400C",
+      "code",
+      "map 25: its own code"
+    ],
+    [
+      "$400D",
+      "$4014",
+      "tables",
+      "map 25: its code's tables"
+    ],
+    [
+      "$4015",
+      "$4068",
+      "levels",
+      "map 25: record lists and square records"
+    ],
+    [
+      "$4069",
+      "$412F",
+      "text",
+      "map 25: monster names"
+    ],
+    [
+      "$4131",
+      "$41A0",
+      "levels",
+      "map 25: monster records"
+    ],
+    [
+      "$41A1",
+      "$50FD",
+      "text",
+      "map 25: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 25: square tiles"
+    ]
+  ]
+}
