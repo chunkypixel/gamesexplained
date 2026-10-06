@@ -20,6 +20,31 @@
     51712,
     52223,
     "runtime: working copy of characters 64-127 (the background tiles), rewritten each round from $EA00, $EC00 or $EE00 by $F552 and $9C59"
+   ],
+   [
+    49152,
+    50151,
+    "runtime: screen memory; the image holds a stale copy of the menu, which $B6F0 clears before anything is drawn"
+   ],
+   [
+    1433,
+    1534,
+    "unused: stale code bytes after player 2's wall buffer, left from an earlier build; nothing runs or reads them"
+   ],
+   [
+    2793,
+    3071,
+    "unused: part of an earlier assembly of $A971-$B5FF, left in the file; nothing runs or reads it"
+   ],
+   [
+    5452,
+    5631,
+    "unused: part of the same earlier assembly; nothing runs or reads it (only $150C is written, by $FCF6)"
+   ],
+   [
+    50152,
+    50175,
+    "runtime: the unused bytes after the screen and the sprite pointers, written by $F25D and the multiplexer"
    ]
   ],
   "extra": [
@@ -766,465 +791,471 @@
   },
   {
    "address": 1,
-   "name": "zpa_01",
+   "name": "cpu_port",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 4,
-   "name": "zpa_04",
+   "name": "mux_next",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 6,
-   "name": "zpa_06",
+   "name": "sort_obj",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 7,
-   "name": "zpa_07",
+   "name": "sort_from",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 8,
-   "name": "zpa_08",
+   "name": "mux_sprite",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9,
-   "name": "zpa_09",
+   "name": "mux_obj_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 11,
-   "name": "zpa_0B",
+   "name": "sort_moves",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 12,
-   "name": "zpa_0C",
+   "name": "sort_to",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 13,
-   "name": "zpa_0D",
+   "name": "scr_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 14,
-   "name": "zpa_0E",
+   "name": "scr_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 15,
-   "name": "zpa_0F",
+   "name": "col_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 16,
-   "name": "zpa_10",
+   "name": "col_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 17,
-   "name": "zpa_11",
+   "name": "src_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 18,
-   "name": "zpa_12",
+   "name": "src_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 19,
-   "name": "zpa_13",
+   "name": "save_y",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 48,
-   "name": "zpf_30",
+   "name": "v1_stack_lo",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49,
-   "name": "zpf_31",
+   "name": "v1_stack_lo_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 56,
-   "name": "zpf_38",
+   "name": "v1_stack_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57,
-   "name": "zpf_39",
+   "name": "v1_stack_hi_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 64,
-   "name": "zpf_40",
+   "name": "v1_repeat",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 65,
-   "name": "zpf_41",
+   "name": "v1_repeat_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 96,
-   "name": "zpf_60",
+   "name": "v3_stack_lo",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 97,
-   "name": "zpf_61",
+   "name": "v3_stack_lo_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 104,
-   "name": "zpf_68",
+   "name": "v3_stack_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 105,
-   "name": "zpf_69",
+   "name": "v3_stack_hi_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 112,
-   "name": "zpf_70",
+   "name": "v3_repeat",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 113,
-   "name": "zpf_71",
+   "name": "v3_repeat_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 120,
-   "name": "zpf_78",
+   "name": "drum_stack_lo",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 121,
-   "name": "zpf_79",
+   "name": "drum_stack_lo_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 128,
-   "name": "zpf_80",
+   "name": "drum_stack_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 136,
-   "name": "zpf_88",
+   "name": "drum_loops",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 137,
-   "name": "zpf_89",
+   "name": "drum_loops_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 168,
-   "name": "zpf_A8",
+   "name": "v2_stack_lo",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 169,
-   "name": "zpf_A9",
+   "name": "v2_stack_lo_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 176,
-   "name": "zpf_B0",
+   "name": "v2_stack_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 177,
-   "name": "zpf_B1",
+   "name": "v2_stack_hi_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 184,
-   "name": "zpf_B8",
+   "name": "v2_repeat",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 185,
-   "name": "zpf_B9",
+   "name": "v2_repeat_top",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 218,
-   "name": "zpa_DA",
+   "name": "drum_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 219,
-   "name": "zpa_DB",
+   "name": "drum_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 220,
-   "name": "zpa_DC",
+   "name": "drum_wait",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 221,
-   "name": "zpa_DD",
+   "name": "drum_stack_index",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 222,
-   "name": "zpa_DE",
+   "name": "noise_acc",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 223,
-   "name": "zpa_DF",
+   "name": "drum_pending",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 224,
-   "name": "zpf_E0",
+   "name": "v1_seq_ptr",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 225,
-   "name": "zpf_E1",
+   "name": "v1_seq_ptr_hi",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 226,
-   "name": "zpa_E2",
+   "name": "v2_seq_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 227,
-   "name": "zpa_E3",
+   "name": "v2_seq_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 228,
-   "name": "zpp_E4",
+   "name": "v3_seq_ptr",
    "type": "ZeroPagePointer",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 229,
-   "name": "zpa_E5",
+   "name": "v3_seq_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 230,
-   "name": "zpf_E6",
+   "name": "v1_note_wait",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 231,
-   "name": "zpa_E7",
+   "name": "v2_note_wait",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 232,
-   "name": "zpa_E8",
+   "name": "v3_note_wait",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 233,
-   "name": "zpf_E9",
+   "name": "v1_stack_index",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 234,
-   "name": "zpa_EA",
+   "name": "v2_stack_index",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 235,
-   "name": "zpa_EB",
+   "name": "v3_stack_index",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 236,
-   "name": "zpf_EC",
+   "name": "v1_transpose",
    "type": "ZeroPageField",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 237,
-   "name": "zpa_ED",
+   "name": "v2_transpose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 238,
-   "name": "zpa_EE",
+   "name": "v3_transpose",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 239,
-   "name": "zpa_EF",
+   "name": "cmd_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 240,
-   "name": "zpa_F0",
+   "name": "cmd_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 241,
-   "name": "zpa_F1",
+   "name": "v1_pw",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 242,
-   "name": "zpa_F2",
+   "name": "v1_pw_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 243,
-   "name": "zpa_F3",
+   "name": "v2_pw",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 244,
-   "name": "zpa_F4",
+   "name": "v2_pw_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 245,
-   "name": "zpa_F5",
+   "name": "v3_pw",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 246,
-   "name": "zpa_F6",
+   "name": "v3_pw_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 247,
-   "name": "zpa_F7",
+   "name": "v1_freq",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 248,
-   "name": "zpa_F8",
+   "name": "v1_freq_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 249,
-   "name": "zpa_F9",
+   "name": "v2_freq",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 250,
-   "name": "zpa_FA",
+   "name": "v2_freq_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 251,
-   "name": "zpa_FB",
+   "name": "v3_freq",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 252,
-   "name": "zpa_FC",
+   "name": "v3_freq_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 253,
-   "name": "zpa_FD",
+   "name": "sfx_ptr",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 254,
-   "name": "zpa_FE",
+   "name": "sfx_ptr_hi",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 255,
-   "name": "zpa_FF",
+   "name": "note_byte",
    "type": "ZeroPageAbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 256,
+   "name": "loader_stack_code",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 263,
-   "name": "j_0107",
+   "name": "nmi_serial_target",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 418,
@@ -1240,627 +1271,627 @@
   },
   {
    "address": 512,
-   "name": "a_0200",
+   "name": "frame_ticks",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 513,
-   "name": "a_0201",
+   "name": "frame_counter",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 514,
-   "name": "a_0202",
+   "name": "death_divider",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 515,
-   "name": "a_0203",
+   "name": "ctrl_bits",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 516,
-   "name": "a_0204",
+   "name": "aim_dx",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 517,
-   "name": "a_0205",
+   "name": "aim_dy",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 518,
-   "name": "a_0206",
+   "name": "vaus_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 519,
-   "name": "a_0207",
+   "name": "vaus_resize_state",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 520,
-   "name": "a_0208",
+   "name": "last_capsule",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 521,
-   "name": "a_0209",
+   "name": "drum_mode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 522,
-   "name": "a_020A",
+   "name": "vaus_stretch",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 523,
-   "name": "a_020B",
+   "name": "vaus_overhang",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 524,
-   "name": "a_020C",
+   "name": "width_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 525,
-   "name": "a_020D",
+   "name": "x_save",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 526,
-   "name": "a_020E",
+   "name": "brick_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 527,
-   "name": "a_020F",
+   "name": "blink_phase",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 528,
-   "name": "a_0210",
+   "name": "index_save",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 529,
-   "name": "a_0211",
+   "name": "bits_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 530,
-   "name": "a_0212",
+   "name": "bits_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 531,
-   "name": "a_0213",
+   "name": "key_y_save",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 532,
-   "name": "a_0214",
+   "name": "menu_key",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 533,
-   "name": "a_0215",
+   "name": "doh_flash_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 534,
-   "name": "a_0216",
+   "name": "tune_hold",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 535,
-   "name": "a_0217",
+   "name": "tune_hold_kind",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 536,
-   "name": "a_0218",
+   "name": "hit_row",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 537,
-   "name": "a_0219",
+   "name": "hit_col",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 539,
-   "name": "a_021B",
+   "name": "shadow_offset",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 540,
-   "name": "a_021C",
+   "name": "pattern_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 541,
-   "name": "a_021D",
+   "name": "pattern_phase",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 542,
-   "name": "a_021E",
+   "name": "row_counter",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 543,
-   "name": "a_021F",
+   "name": "doh_shot_acc",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 544,
-   "name": "a_0220",
+   "name": "anim_tick",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 545,
-   "name": "a_0221",
+   "name": "catch_offset",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 546,
-   "name": "a_0222",
+   "name": "wipe_rows",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 547,
-   "name": "a_0223",
+   "name": "laser_morph",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 549,
-   "name": "a_0225",
+   "name": "shine_divider",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 550,
-   "name": "a_0226",
+   "name": "row_bits_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 551,
-   "name": "a_0227",
+   "name": "row_bits_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 552,
-   "name": "a_0228",
+   "name": "ball_held",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 553,
-   "name": "a_0229",
+   "name": "enemy_spawn_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 554,
-   "name": "a_022A",
+   "name": "catch_power",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 555,
-   "name": "a_022B",
+   "name": "laser_power",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 556,
-   "name": "f_022C",
+   "name": "laser_active",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 558,
-   "name": "f_022E",
+   "name": "laser_tick",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 560,
-   "name": "f_0230",
+   "name": "laser_hit",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 562,
-   "name": "a_0232",
+   "name": "enemy_col_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 563,
-   "name": "a_0233",
+   "name": "intro_step",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 564,
-   "name": "a_0234",
+   "name": "enemy_y_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 565,
-   "name": "a_0235",
+   "name": "fire_prev",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 566,
-   "name": "a_0236",
+   "name": "fire_now",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 567,
-   "name": "a_0237",
+   "name": "capsule_type",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 568,
-   "name": "a_0238",
+   "name": "capsule_roll",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 569,
-   "name": "a_0239",
+   "name": "capsule_roll_tick",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 570,
-   "name": "a_023A",
+   "name": "ball_speed",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 571,
-   "name": "a_023B",
+   "name": "ball_speed_frac",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 572,
-   "name": "a_023C",
+   "name": "break_state",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 573,
-   "name": "a_023D",
+   "name": "exiting",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 574,
-   "name": "a_023E",
+   "name": "vaus_at_wall",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 575,
-   "name": "a_023F",
+   "name": "doh_mouth_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 576,
-   "name": "a_0240",
+   "name": "doh_mouth_frame",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 577,
-   "name": "a_0241",
+   "name": "frame_counter_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 578,
-   "name": "a_0242",
+   "name": "gate_open",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 579,
-   "name": "a_0243",
+   "name": "gate_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 580,
-   "name": "a_0244",
+   "name": "gate_moving",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 581,
-   "name": "a_0245",
+   "name": "gate_stage",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 582,
-   "name": "a_0246",
+   "name": "gate_side",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 583,
-   "name": "a_0247",
+   "name": "exit_step",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 584,
-   "name": "a_0248",
+   "name": "speed_acc",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 585,
-   "name": "a_0249",
+   "name": "death_frame",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 587,
-   "name": "a_024B",
+   "name": "ball_steps",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 588,
-   "name": "f_024C",
+   "name": "enemy_block_up",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 591,
-   "name": "f_024F",
+   "name": "enemy_block_down",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 594,
-   "name": "f_0252",
+   "name": "enemy_block_right",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 597,
-   "name": "f_0255",
+   "name": "enemy_block_left",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 600,
-   "name": "f_0258",
+   "name": "enemy_homed",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 603,
-   "name": "f_025B",
+   "name": "enemy_anim_timer",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 606,
-   "name": "f_025E",
+   "name": "enemy_entry",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 609,
-   "name": "f_0261",
+   "name": "intro_speed",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 612,
-   "name": "f_0264",
+   "name": "row_nibbles",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 628,
-   "name": "f_0274",
+   "name": "enemy_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 629,
-   "name": "a_0275",
+   "name": "intro_shot_state",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 630,
-   "name": "a_0276",
+   "name": "intro_attacker_state",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 631,
-   "name": "f_0277",
+   "name": "enemy_anim",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 632,
-   "name": "a_0278",
+   "name": "enemy_anim_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 633,
-   "name": "a_0279",
+   "name": "enemy_anim_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 634,
-   "name": "f_027A",
+   "name": "enemy_dy",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 637,
-   "name": "f_027D",
+   "name": "enemy_dx",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 640,
-   "name": "f_0280",
+   "name": "enemy_rate_y",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 643,
-   "name": "f_0283",
+   "name": "enemy_rate_x",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 646,
-   "name": "f_0286",
+   "name": "enemy_acc",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 649,
-   "name": "f_0289",
+   "name": "enemy_acc_add",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 652,
-   "name": "f_028C",
+   "name": "enemy_last_dy",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 655,
-   "name": "f_028F",
+   "name": "enemy_last_dx",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 658,
-   "name": "f_0292",
+   "name": "enemy_anim_delay",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 661,
-   "name": "a_0295",
+   "name": "ball_dy",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 664,
-   "name": "a_0298",
+   "name": "ball_dx",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 667,
-   "name": "a_029B",
+   "name": "ball_rate_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 670,
-   "name": "a_029E",
+   "name": "ball_rate_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 673,
-   "name": "f_02A1",
+   "name": "ball_acc",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 676,
-   "name": "f_02A4",
+   "name": "ball_acc_add",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 679,
-   "name": "a_02A7",
+   "name": "ball_active",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 682,
-   "name": "f_02AA",
+   "name": "ball_cooldown",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 685,
-   "name": "f_02AD",
+   "name": "ball_loop_count",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 688,
-   "name": "f_02B0",
+   "name": "ending_chars",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 694,
@@ -1918,57 +1949,69 @@
   },
   {
    "address": 768,
-   "name": "f_0300",
+   "name": "metal_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 853,
-   "name": "f_0355",
+   "name": "metal_hits",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 938,
-   "name": "f_03AA",
+   "name": "metal_pos",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 939,
-   "name": "f_03AB",
+   "name": "metal_pos_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1109,
-   "name": "a_0455",
+   "name": "bricks_left",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1110,
-   "name": "a_0456",
+   "name": "metal_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1111,
-   "name": "a_0457",
+   "name": "bg_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 1112,
-   "name": "a_0458",
+   "name": "bg_char_base",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 1113,
+   "name": "wall_buffer_p1",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 1272,
    "name": "f_04F8",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 1273,
+   "name": "wall_buffer_p2",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 1536,
@@ -2110,14 +2153,20 @@
   },
   {
    "address": 2012,
-   "name": "intro_path_y",
+   "name": "intro_path_x",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 2041,
-   "name": "intro_path_x",
+   "name": "intro_path_y",
    "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 2048,
+   "name": "intro_path_y_tail",
+   "type": "UserDefined",
    "kind": "user"
   },
   {
@@ -2218,9 +2267,9 @@
   },
   {
    "address": 2343,
-   "name": "f_0927",
+   "name": "score_p1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2344,
@@ -2236,15 +2285,15 @@
   },
   {
    "address": 2346,
-   "name": "f_092A",
+   "name": "score_p2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2349,
-   "name": "f_092D",
+   "name": "extra_life_p1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2350,
@@ -2272,9 +2321,9 @@
   },
   {
    "address": 2355,
-   "name": "a_0933",
+   "name": "points_pending",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2356,
@@ -2290,87 +2339,87 @@
   },
   {
    "address": 2358,
-   "name": "f_0936",
+   "name": "lives_p1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2359,
-   "name": "a_0937",
+   "name": "lives_p2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2360,
-   "name": "a_0938",
+   "name": "current_player",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2361,
-   "name": "a_0939",
+   "name": "players_left",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2362,
-   "name": "a_093A",
+   "name": "two_players",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2363,
-   "name": "f_093B",
+   "name": "bricks_saved",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2365,
-   "name": "a_093D",
+   "name": "round_p1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2366,
-   "name": "a_093E",
+   "name": "round_p2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2367,
-   "name": "a_093F",
+   "name": "input_device",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2368,
-   "name": "a_0940",
+   "name": "two_devices",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2369,
-   "name": "f_0941",
+   "name": "high_score",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2372,
-   "name": "a_0944",
+   "name": "tamper_flag",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2373,
-   "name": "a_0945",
+   "name": "attract_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2374,
-   "name": "f_0946",
+   "name": "dissolve_masks",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2375,
@@ -2386,9 +2435,9 @@
   },
   {
    "address": 2385,
-   "name": "f_0951",
+   "name": "dissolve_rows",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2386,
@@ -2404,9 +2453,27 @@
   },
   {
    "address": 2394,
-   "name": "j_095A",
+   "name": "start_hop",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 2397,
+   "name": "start_call",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 2400,
+   "name": "start_dead_tail",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 2411,
+   "name": "stale_code_a971",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 2729,
@@ -2415,1414 +2482,1528 @@
    "kind": "auto"
   },
   {
+   "address": 3072,
+   "name": "stale_code_ac06",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 4096,
+   "name": "stale_code_b006",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 5120,
+   "name": "stale_code_b406",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 5388,
    "name": "a_150C",
    "type": "AbsoluteAddress",
    "kind": "auto"
   },
   {
+   "address": 5632,
+   "name": "stale_start_hop",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 5649,
+   "name": "ram_fill_1611",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 6144,
+   "name": "stale_code_0600",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 7002,
+   "name": "ram_fill_1b5a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 7168,
-   "name": "f_1C00",
+   "name": "glyphs_80_9f",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 7424,
-   "name": "f_1D00",
+   "name": "glyphs_a0_bf",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 7680,
-   "name": "f_1E00",
+   "name": "glyphs_c0_df",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 7936,
-   "name": "f_1F00",
+   "name": "glyphs_e0_ff",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 8192,
+   "name": "sfx_bat",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8285,
+   "name": "sfx_brick",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8378,
+   "name": "sfx_enlarge",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8471,
+   "name": "sfx_laser",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8564,
+   "name": "sfx_metal",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8657,
+   "name": "sfx_enemy",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8750,
+   "name": "sfx_exit",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8843,
+   "name": "sfx_catch",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 8936,
+   "name": "sfx_start",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9029,
+   "name": "sfx_vaus_lost",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9122,
+   "name": "sfx_doh_hit",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 9215,
+   "name": "sfx_doh_end",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 9308,
-   "name": "f_245C",
+   "name": "v1_instr",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9309,
-   "name": "a_245D",
+   "name": "v1_ins_pstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9310,
-   "name": "a_245E",
+   "name": "v1_ins_pstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9311,
-   "name": "a_245F",
+   "name": "v1_ins_pstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9312,
-   "name": "a_2460",
+   "name": "v1_ins_pstep3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9313,
-   "name": "a_2461",
+   "name": "v1_ins_pstep3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9314,
-   "name": "a_2462",
+   "name": "v1_ins_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9315,
-   "name": "a_2463",
+   "name": "v1_ins_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9316,
-   "name": "a_2464",
+   "name": "v1_ins_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9317,
-   "name": "a_2465",
+   "name": "v1_ins_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9318,
-   "name": "a_2466",
+   "name": "v1_ins_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9319,
-   "name": "a_2467",
+   "name": "v1_ins_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9320,
-   "name": "a_2468",
+   "name": "v1_ins_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9321,
-   "name": "f_2469",
+   "name": "v1_ins_pmode",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9322,
-   "name": "a_246A",
+   "name": "v1_ins_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9323,
-   "name": "a_246B",
+   "name": "v1_ins_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9324,
-   "name": "a_246C",
+   "name": "v1_ins_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9325,
-   "name": "f_246D",
+   "name": "v1_ins_wmode",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9326,
-   "name": "a_246E",
+   "name": "v1_ins_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9327,
-   "name": "a_246F",
+   "name": "v1_ins_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9328,
-   "name": "a_2470",
+   "name": "v1_ins_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9329,
-   "name": "a_2471",
+   "name": "v1_ins_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9330,
-   "name": "a_2472",
+   "name": "v1_ins_pw_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9331,
-   "name": "a_2473",
+   "name": "v1_ins_pw_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9332,
-   "name": "f_2474",
+   "name": "v1_ins_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9333,
-   "name": "a_2475",
+   "name": "v1_ins_ad",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9334,
-   "name": "a_2476",
+   "name": "v1_ins_sr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9335,
-   "name": "a_2477",
+   "name": "v1_ins_gate_time",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9336,
-   "name": "a_2478",
+   "name": "v1_ins_life",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9337,
-   "name": "f_2479",
+   "name": "v2_instr",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9338,
-   "name": "f_247A",
+   "name": "v2_ins_pstep1_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9339,
-   "name": "a_247B",
+   "name": "v2_ins_pstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9340,
-   "name": "a_247C",
+   "name": "v2_ins_pstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9341,
-   "name": "a_247D",
+   "name": "v2_ins_pstep3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9342,
-   "name": "a_247E",
+   "name": "v2_ins_pstep3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9343,
-   "name": "a_247F",
+   "name": "v2_ins_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9344,
-   "name": "a_2480",
+   "name": "v2_ins_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9345,
-   "name": "a_2481",
+   "name": "v2_ins_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9346,
-   "name": "a_2482",
+   "name": "v2_ins_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9347,
-   "name": "a_2483",
+   "name": "v2_ins_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9348,
-   "name": "a_2484",
+   "name": "v2_ins_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9349,
-   "name": "a_2485",
+   "name": "v2_ins_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9350,
-   "name": "a_2486",
+   "name": "v2_ins_pmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9351,
-   "name": "a_2487",
+   "name": "v2_ins_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9352,
-   "name": "a_2488",
+   "name": "v2_ins_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9353,
-   "name": "a_2489",
+   "name": "v2_ins_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9354,
-   "name": "a_248A",
+   "name": "v2_ins_wmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9355,
-   "name": "a_248B",
+   "name": "v2_ins_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9356,
-   "name": "a_248C",
+   "name": "v2_ins_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9357,
-   "name": "a_248D",
+   "name": "v2_ins_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9358,
-   "name": "a_248E",
+   "name": "v2_ins_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9359,
-   "name": "a_248F",
+   "name": "v2_ins_pw_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9360,
-   "name": "a_2490",
+   "name": "v2_ins_pw_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9361,
-   "name": "f_2491",
+   "name": "v2_ins_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9362,
-   "name": "a_2492",
+   "name": "v2_ins_ad",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9363,
-   "name": "a_2493",
+   "name": "v2_ins_sr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9364,
-   "name": "a_2494",
+   "name": "v2_ins_gate_time",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9365,
-   "name": "a_2495",
+   "name": "v2_ins_life",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9366,
-   "name": "f_2496",
+   "name": "v3_instr",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9367,
-   "name": "f_2497",
+   "name": "v3_ins_pstep1_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9368,
-   "name": "a_2498",
+   "name": "v3_ins_pstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9369,
-   "name": "a_2499",
+   "name": "v3_ins_pstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9370,
-   "name": "a_249A",
+   "name": "v3_ins_pstep3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9371,
-   "name": "a_249B",
+   "name": "v3_ins_pstep3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9372,
-   "name": "a_249C",
+   "name": "v3_ins_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9373,
-   "name": "a_249D",
+   "name": "v3_ins_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9374,
-   "name": "a_249E",
+   "name": "v3_ins_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9375,
-   "name": "a_249F",
+   "name": "v3_ins_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9376,
-   "name": "a_24A0",
+   "name": "v3_ins_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9377,
-   "name": "a_24A1",
+   "name": "v3_ins_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9378,
-   "name": "a_24A2",
+   "name": "v3_ins_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9379,
-   "name": "a_24A3",
+   "name": "v3_ins_pmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9380,
-   "name": "a_24A4",
+   "name": "v3_ins_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9381,
-   "name": "a_24A5",
+   "name": "v3_ins_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9382,
-   "name": "a_24A6",
+   "name": "v3_ins_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9383,
-   "name": "a_24A7",
+   "name": "v3_ins_wmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9384,
-   "name": "a_24A8",
+   "name": "v3_ins_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9385,
-   "name": "a_24A9",
+   "name": "v3_ins_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9386,
-   "name": "a_24AA",
+   "name": "v3_ins_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9387,
-   "name": "a_24AB",
+   "name": "v3_ins_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9388,
-   "name": "a_24AC",
+   "name": "v3_ins_pw_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9389,
-   "name": "a_24AD",
+   "name": "v3_ins_pw_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9390,
-   "name": "f_24AE",
+   "name": "v3_ins_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9391,
-   "name": "a_24AF",
+   "name": "v3_ins_ad",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9392,
-   "name": "a_24B0",
+   "name": "v3_ins_sr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9393,
-   "name": "a_24B1",
+   "name": "v3_ins_gate_time",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9394,
-   "name": "a_24B2",
+   "name": "v3_ins_life",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9395,
-   "name": "f_24B3",
+   "name": "filter_preset",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9403,
-   "name": "f_24BB",
+   "name": "filter_preset_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9411,
-   "name": "a_24C3",
+   "name": "filter_steps",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9412,
-   "name": "a_24C4",
+   "name": "filter_step1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9413,
-   "name": "a_24C5",
+   "name": "filter_step2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9414,
-   "name": "a_24C6",
+   "name": "filter_step2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9415,
-   "name": "a_24C7",
+   "name": "filter_step3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9416,
-   "name": "a_24C8",
+   "name": "filter_step3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9417,
-   "name": "a_24C9",
+   "name": "filter_step4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9418,
-   "name": "a_24CA",
+   "name": "filter_step4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9419,
-   "name": "a_24CB",
+   "name": "filter_len1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9420,
-   "name": "a_24CC",
+   "name": "filter_len2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9421,
-   "name": "a_24CD",
+   "name": "filter_len3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9422,
-   "name": "a_24CE",
+   "name": "filter_len4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9423,
-   "name": "a_24CF",
+   "name": "filter_delay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9424,
-   "name": "a_24D0",
+   "name": "filter_mode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9425,
-   "name": "a_24D1",
+   "name": "filter_start_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9426,
-   "name": "a_24D2",
+   "name": "filter_start_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9427,
-   "name": "a_24D3",
+   "name": "filter_cutoff",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9428,
-   "name": "a_24D4",
+   "name": "filter_cutoff_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9429,
-   "name": "a_24D5",
+   "name": "filter_count1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9430,
-   "name": "a_24D6",
+   "name": "filter_count2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9431,
-   "name": "a_24D7",
+   "name": "filter_count3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9432,
-   "name": "a_24D8",
+   "name": "filter_count4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9433,
-   "name": "f_24D9",
+   "name": "v1_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9434,
-   "name": "f_24DA",
+   "name": "v1_pstep1_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9435,
-   "name": "f_24DB",
+   "name": "v1_pstep2_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9436,
-   "name": "f_24DC",
+   "name": "v1_pstep2_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9437,
-   "name": "f_24DD",
+   "name": "v1_pstep3_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9438,
-   "name": "f_24DE",
+   "name": "v1_pstep3_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9439,
-   "name": "a_24DF",
+   "name": "v1_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9440,
-   "name": "a_24E0",
+   "name": "v1_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9441,
-   "name": "a_24E1",
+   "name": "v1_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9442,
-   "name": "a_24E2",
+   "name": "v1_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9443,
-   "name": "a_24E3",
+   "name": "v1_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9444,
-   "name": "a_24E4",
+   "name": "v1_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9445,
-   "name": "a_24E5",
+   "name": "v1_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9446,
-   "name": "a_24E6",
+   "name": "v1_pmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9447,
-   "name": "a_24E7",
+   "name": "v1_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9448,
-   "name": "a_24E8",
+   "name": "v1_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9449,
-   "name": "a_24E9",
+   "name": "v1_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9450,
-   "name": "a_24EA",
+   "name": "v1_wmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9451,
-   "name": "a_24EB",
+   "name": "v1_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9452,
-   "name": "a_24EC",
+   "name": "v1_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9453,
-   "name": "a_24ED",
+   "name": "v1_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9454,
-   "name": "a_24EE",
+   "name": "v1_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9455,
-   "name": "a_24EF",
+   "name": "v1_pw_start_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9456,
-   "name": "a_24F0",
+   "name": "v1_pw_start_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9457,
-   "name": "a_24F1",
+   "name": "v1_note_freq_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9458,
-   "name": "a_24F2",
+   "name": "v1_note_freq_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9459,
-   "name": "a_24F3",
+   "name": "v1_ctrl",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9460,
-   "name": "a_24F4",
+   "name": "v1_gate_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9461,
-   "name": "a_24F5",
+   "name": "v1_life_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9462,
-   "name": "a_24F6",
+   "name": "v1_pcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9463,
-   "name": "a_24F7",
+   "name": "v1_pcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9464,
-   "name": "a_24F8",
+   "name": "v1_pcount3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9465,
-   "name": "a_24F9",
+   "name": "v1_pcount4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9466,
-   "name": "a_24FA",
+   "name": "v1_wcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9467,
-   "name": "a_24FB",
+   "name": "v1_wcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9468,
-   "name": "f_24FC",
+   "name": "v2_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9469,
-   "name": "f_24FD",
+   "name": "v2_pstep1_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9470,
-   "name": "a_24FE",
+   "name": "v2_pstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9471,
-   "name": "a_24FF",
+   "name": "v2_pstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9472,
-   "name": "a_2500",
+   "name": "v2_pstep3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9473,
-   "name": "a_2501",
+   "name": "v2_pstep3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9474,
-   "name": "a_2502",
+   "name": "v2_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9475,
-   "name": "a_2503",
+   "name": "v2_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9476,
-   "name": "a_2504",
+   "name": "v2_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9477,
-   "name": "a_2505",
+   "name": "v2_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9478,
-   "name": "a_2506",
+   "name": "v2_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9479,
-   "name": "a_2507",
+   "name": "v2_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9480,
-   "name": "a_2508",
+   "name": "v2_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9481,
-   "name": "a_2509",
+   "name": "v2_pmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9482,
-   "name": "a_250A",
+   "name": "v2_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9483,
-   "name": "a_250B",
+   "name": "v2_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9484,
-   "name": "a_250C",
+   "name": "v2_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9485,
-   "name": "a_250D",
+   "name": "v2_wmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9486,
-   "name": "a_250E",
+   "name": "v2_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9487,
-   "name": "a_250F",
+   "name": "v2_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9488,
-   "name": "a_2510",
+   "name": "v2_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9489,
-   "name": "a_2511",
+   "name": "v2_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9490,
-   "name": "a_2512",
+   "name": "v2_pw_start_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9491,
-   "name": "a_2513",
+   "name": "v2_pw_start_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9492,
-   "name": "a_2514",
+   "name": "v2_note_freq_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9493,
-   "name": "a_2515",
+   "name": "v2_note_freq_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9494,
-   "name": "a_2516",
+   "name": "v2_ctrl",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9495,
-   "name": "a_2517",
+   "name": "v2_gate_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9496,
-   "name": "a_2518",
+   "name": "v2_life_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9497,
-   "name": "a_2519",
+   "name": "v2_pcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9498,
-   "name": "a_251A",
+   "name": "v2_pcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9499,
-   "name": "a_251B",
+   "name": "v2_pcount3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9500,
-   "name": "a_251C",
+   "name": "v2_pcount4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9501,
-   "name": "a_251D",
+   "name": "v2_wcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9502,
-   "name": "a_251E",
+   "name": "v2_wcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9503,
-   "name": "f_251F",
+   "name": "v3_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9504,
-   "name": "f_2520",
+   "name": "v3_pstep1_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9505,
-   "name": "a_2521",
+   "name": "v3_pstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9506,
-   "name": "a_2522",
+   "name": "v3_pstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9507,
-   "name": "a_2523",
+   "name": "v3_pstep3_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9508,
-   "name": "a_2524",
+   "name": "v3_pstep3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9509,
-   "name": "a_2525",
+   "name": "v3_pstep4_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9510,
-   "name": "a_2526",
+   "name": "v3_pstep4_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9511,
-   "name": "a_2527",
+   "name": "v3_plen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9512,
-   "name": "a_2528",
+   "name": "v3_plen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9513,
-   "name": "a_2529",
+   "name": "v3_plen3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9514,
-   "name": "a_252A",
+   "name": "v3_plen4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9515,
-   "name": "a_252B",
+   "name": "v3_pdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9516,
-   "name": "a_252C",
+   "name": "v3_pmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9517,
-   "name": "a_252D",
+   "name": "v3_wlen1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9518,
-   "name": "a_252E",
+   "name": "v3_wlen2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9519,
-   "name": "a_252F",
+   "name": "v3_wdelay",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9520,
-   "name": "a_2530",
+   "name": "v3_wmode",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9521,
-   "name": "a_2531",
+   "name": "v3_wstep1_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9522,
-   "name": "a_2532",
+   "name": "v3_wstep1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9523,
-   "name": "a_2533",
+   "name": "v3_wstep2_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9524,
-   "name": "a_2534",
+   "name": "v3_wstep2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9525,
-   "name": "a_2535",
+   "name": "v3_pw_start_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9526,
-   "name": "a_2536",
+   "name": "v3_pw_start_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9527,
-   "name": "a_2537",
+   "name": "v3_note_freq_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9528,
-   "name": "a_2538",
+   "name": "v3_note_freq_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9529,
-   "name": "a_2539",
+   "name": "v3_ctrl",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9530,
-   "name": "a_253A",
+   "name": "v3_gate_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9531,
-   "name": "a_253B",
+   "name": "v3_life_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9532,
-   "name": "a_253C",
+   "name": "v3_pcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9533,
-   "name": "a_253D",
+   "name": "v3_pcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9534,
-   "name": "a_253E",
+   "name": "v3_pcount3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9535,
-   "name": "a_253F",
+   "name": "v3_pcount4",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9536,
-   "name": "a_2540",
+   "name": "v3_wcount1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9537,
-   "name": "a_2541",
+   "name": "v3_wcount2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9538,
-   "name": "a_2542",
+   "name": "filter_voice",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9539,
-   "name": "a_2543",
+   "name": "cutoff_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9540,
-   "name": "a_2544",
+   "name": "tune_header",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9541,
-   "name": "f_2545",
+   "name": "v1_playing",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9542,
-   "name": "a_2546",
+   "name": "v2_playing",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9543,
-   "name": "a_2547",
+   "name": "v3_playing",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9544,
-   "name": "a_2548",
+   "name": "voice_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9545,
-   "name": "a_2549",
+   "name": "pair_tmp",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9546,
-   "name": "f_254A",
+   "name": "note_lengths",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9578,
-   "name": "f_256A",
+   "name": "sfx_sid_offset",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9581,
-   "name": "f_256D",
+   "name": "instr_offset",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9584,
-   "name": "f_2570",
+   "name": "state_offset",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9587,
-   "name": "f_2573",
+   "name": "freq_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9668,
-   "name": "f_25C4",
+   "name": "freq_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 9728,
@@ -12227,6 +12408,1036 @@
  ],
  "comments": [
   {
+   "address": 0,
+   "type": "line",
+   "text": "6510 data-direction register. No instruction in the game writes it; the port's directions stay as the loader left them. The RAM byte under it is not used."
+  },
+  {
+   "address": 1,
+   "type": "line",
+   "text": "6510 processor port: $35 (BASIC and KERNAL ROMs out, I/O in) from the first instruction ($9402) and again in irq_setup ($F849); never changed in play, so $A000-$BFFF and $E000-$FFFF are RAM."
+  },
+  {
+   "address": 4,
+   "type": "line",
+   "text": "Sprite multiplexer: position in the Y-sorted object list ($9409) of the next object to get a hardware sprite. Set to the last visible object by $F7EB, counted down by the raster handlers at $F95F/$FBF9 as each object is placed, reset to 11 at the end of the frame ($F9A8, $FC40)."
+  },
+  {
+   "address": 6,
+   "type": "line",
+   "text": "Sprite sort scratch ($FA06): the object number being moved up the Y-sorted list $9415 by the insertion sort."
+  },
+  {
+   "address": 7,
+   "type": "line",
+   "text": "Sprite sort scratch ($FA06): list position the object in sort_obj is taken from."
+  },
+  {
+   "address": 8,
+   "type": "line",
+   "text": "Sprite multiplexer: hardware sprite slot (5 down to 0, i.e. sprites 7 to 2; $FC7B maps it to the $D000 register offset) the next object goes to; wraps to 5 ($F98D, $FC2E). Set to 5 by irq_setup ($F84B)."
+  },
+  {
+   "address": 9,
+   "type": "line",
+   "text": "Sprite multiplexer: Y position of the object being placed, from the frame's copy $9421 ($F967, $FC01), written to the sprite's Y register."
+  },
+  {
+   "address": 11,
+   "type": "line",
+   "text": "Sprite sort: count of objects moved this frame ($FA08 clears, $FA30 increments); nothing reads it."
+  },
+  {
+   "address": 12,
+   "type": "line",
+   "text": "Sprite sort scratch ($FA32): list position the moved object is inserted at."
+  },
+  {
+   "address": 13,
+   "type": "line",
+   "text": "General pointer, low byte (with scr_ptr_hi), 93 accesses: mostly a screen row in $C000-$C3FF, for the wall builder ($F40E), the brick-hit code ($B163, rows from the table $F78B), save_wall_of_player, the metal-brick shimmer ($AB7A) and the menu text ($B644); in the panel copy ($F2B9) and the Doh set-up ($9C86) the source data ($7800, $7B90)."
+  },
+  {
+   "address": 14,
+   "type": "line",
+   "text": "General screen pointer, high byte ($C0-$C3)."
+  },
+  {
+   "address": 15,
+   "type": "line",
+   "text": "Colour RAM pointer, low byte (with col_ptr_hi): the $D800 cell of the same screen position as scr_ptr, set alongside it ($F40E, $A244, $AE1C); in the panel copy ($F2C1) and the Doh set-up ($9C8E) the destination screen row instead."
+  },
+  {
+   "address": 16,
+   "type": "line",
+   "text": "Colour RAM pointer, high byte ($D8-$DB, made from the screen pointer's high byte AND 3 + $D8)."
+  },
+  {
+   "address": 17,
+   "type": "line",
+   "text": "Source pointer, low byte (with src_ptr_hi): the round layout being drawn (round x 160 + $8000, $F3C2) or a player's saved wall ($F371), the wall buffer written by save_wall_of_player, the glyph being dissolved in the ending ($9758); in the panel copy ($F2C3) and the Doh set-up ($9C90) the colour RAM destination."
+  },
+  {
+   "address": 18,
+   "type": "line",
+   "text": "Source pointer, high byte."
+  },
+  {
+   "address": 19,
+   "type": "line",
+   "text": "Saved Y index: the offset into the round record while a row is drawn ($F446/$F493), the metal-brick slot during the gold-brick search ($B024), the column of the brick hit ($B155-$B1AD)."
+  },
+  {
+   "address": 48,
+   "type": "line",
+   "text": "Music driver, voice 1 sequence call stack, return address low bytes ($30-$37), indexed by v1_stack_index ($E9, 7 counting down); pushed by the call ($2836) and repeat ($2883) commands."
+  },
+  {
+   "address": 49,
+   "type": "line",
+   "text": "Same array as v1_stack_lo, addressed one entry up: the return ($28EE) and repeat-loop ($28D5) commands read the entry last pushed after the index has moved on."
+  },
+  {
+   "address": 56,
+   "type": "line",
+   "text": "Music driver, voice 1 sequence call stack, return address high bytes ($38-$3F)."
+  },
+  {
+   "address": 57,
+   "type": "line",
+   "text": "Same array as v1_stack_hi, one entry up, read by the return and repeat-loop commands ($28D7, $28F0)."
+  },
+  {
+   "address": 64,
+   "type": "line",
+   "text": "Music driver, voice 1 repeat counts ($40-$47), one per stack level, set by the repeat command ($2894)."
+  },
+  {
+   "address": 65,
+   "type": "line",
+   "text": "Same array as v1_repeat, one entry up: counted down by the end-of-repeat command ($28D1), which jumps back until it reaches 0."
+  },
+  {
+   "address": 96,
+   "type": "line",
+   "text": "Music driver, voice 3 sequence call stack, return address low bytes ($60-$67), indexed by v3_stack_index ($EB)."
+  },
+  {
+   "address": 97,
+   "type": "line",
+   "text": "Voice 3 call stack low bytes one entry up, read by its return and repeat-loop commands ($2B1E, $2B37)."
+  },
+  {
+   "address": 104,
+   "type": "line",
+   "text": "Music driver, voice 3 sequence call stack, return address high bytes ($68-$6F)."
+  },
+  {
+   "address": 105,
+   "type": "line",
+   "text": "Voice 3 call stack high bytes one entry up ($2B20, $2B39)."
+  },
+  {
+   "address": 112,
+   "type": "line",
+   "text": "Music driver, voice 3 repeat counts ($70-$77), set by its repeat command ($2AC7)."
+  },
+  {
+   "address": 113,
+   "type": "line",
+   "text": "Voice 3 repeat counts one entry up, counted down by its end-of-repeat command ($2B1A)."
+  },
+  {
+   "address": 120,
+   "type": "line",
+   "text": "Drum sequencer call stack, return address low bytes ($78-$7F), indexed by drum_stack_index ($DD, 7 counting down): pushed by drum_push ($A032) for the sequence's call and loop commands, popped by $A1E6."
+  },
+  {
+   "address": 121,
+   "type": "line",
+   "text": "Drum sequencer stack low bytes one entry up, read by the loop command at $A7D7."
+  },
+  {
+   "address": 128,
+   "type": "line",
+   "text": "Drum sequencer call stack, return address high bytes ($80-$87)."
+  },
+  {
+   "address": 136,
+   "type": "line",
+   "text": "Drum sequencer loop counts ($88-$8F), one per stack level, alongside drum_stack_lo/hi: counted down by the end-of-loop command ($A936), which jumps back until the count reaches 0."
+  },
+  {
+   "address": 137,
+   "type": "line",
+   "text": "Same array as drum_loops, addressed one entry up: the loop command ($A7D2) stores the count here after its push has moved the index on."
+  },
+  {
+   "address": 168,
+   "type": "line",
+   "text": "Music driver, voice 2 sequence call stack, return address low bytes ($A8-$AF), indexed by v2_stack_index ($EA)."
+  },
+  {
+   "address": 169,
+   "type": "line",
+   "text": "Voice 2 call stack low bytes one entry up ($29D5, $29EE). Also the operand of BIT $00A9 at $B180, a skip over LDA #$00 that reads it to no purpose."
+  },
+  {
+   "address": 176,
+   "type": "line",
+   "text": "Music driver, voice 2 sequence call stack, return address high bytes ($B0-$B7)."
+  },
+  {
+   "address": 177,
+   "type": "line",
+   "text": "Voice 2 call stack high bytes one entry up ($29D7, $29F0)."
+  },
+  {
+   "address": 184,
+   "type": "line",
+   "text": "Music driver, voice 2 repeat counts ($B8-$BF), set by its repeat command ($2994)."
+  },
+  {
+   "address": 185,
+   "type": "line",
+   "text": "Voice 2 repeat counts one entry up, counted down by its end-of-repeat command ($29D1)."
+  },
+  {
+   "address": 218,
+   "type": "line",
+   "text": "Drum sequencer: pointer to the next entry of the drum sequence (low byte; drum_ptr_hi high), set by drum_start ($9945) for the title ($9960) and the ending ($AB10), and by $B52C; advanced two bytes per drum by drum_step ($FEF4)."
+  },
+  {
+   "address": 219,
+   "type": "line",
+   "text": "Drum sequencer pointer, high byte."
+  },
+  {
+   "address": 220,
+   "type": "line",
+   "text": "Drum sequencer: frames until the next sequence entry is read; counted down by drum_step ($FEF4) and reloaded from each drum entry's second byte."
+  },
+  {
+   "address": 221,
+   "type": "line",
+   "text": "Drum sequencer: stack index for drum_stack_lo/hi and drum_loops, 7 at start (drum_start $994B), decremented by a push ($A040), incremented by a pop ($A1E6) or a finished loop."
+  },
+  {
+   "address": 222,
+   "type": "line",
+   "text": "Running sum the digital drum routines ($F345, $F604, $ACD6, $AEEF, $B290, $B500) step by a constant each sample and write AND 15 to the SID volume register, making the drum sound."
+  },
+  {
+   "address": 223,
+   "type": "line",
+   "text": "Drum sequencer: the drum entry ($80 or more) waiting to be played; set by drum_step ($FF18), played and cleared by drum_play ($FEE0, through the JSR it patches at $FEE8) from the title and ending loops."
+  },
+  {
+   "address": 224,
+   "type": "line",
+   "text": "Music driver: voice 1 sequence pointer, low byte (with v1_seq_ptr_hi), set from the tune table by play_tune ($264F), advanced by voice 1's step ($2C15)."
+  },
+  {
+   "address": 225,
+   "type": "line",
+   "text": "Music driver: voice 1 sequence pointer, high byte."
+  },
+  {
+   "address": 226,
+   "type": "line",
+   "text": "Music driver: voice 2 sequence pointer, low byte (step at $2D6C)."
+  },
+  {
+   "address": 227,
+   "type": "line",
+   "text": "Music driver: voice 2 sequence pointer, high byte."
+  },
+  {
+   "address": 228,
+   "type": "line",
+   "text": "Music driver: voice 3 sequence pointer, low byte (step at $2EC5)."
+  },
+  {
+   "address": 229,
+   "type": "line",
+   "text": "Music driver: voice 3 sequence pointer, high byte."
+  },
+  {
+   "address": 230,
+   "type": "line",
+   "text": "Music driver: frames left of voice 1's note; at 0 its step reads the next sequence entry. Set from note_lengths ($2D5D), 1 at tune start."
+  },
+  {
+   "address": 231,
+   "type": "line",
+   "text": "Music driver: frames left of voice 2's note ($2D71, $2EB6)."
+  },
+  {
+   "address": 232,
+   "type": "line",
+   "text": "Music driver: frames left of voice 3's note ($2ECA, $3013)."
+  },
+  {
+   "address": 233,
+   "type": "line",
+   "text": "Music driver: voice 1 call-stack index (7 at tune start, $266A), into v1_stack_lo/hi and v1_repeat."
+  },
+  {
+   "address": 234,
+   "type": "line",
+   "text": "Music driver: voice 2 call-stack index."
+  },
+  {
+   "address": 235,
+   "type": "line",
+   "text": "Music driver: voice 3 call-stack index."
+  },
+  {
+   "address": 236,
+   "type": "line",
+   "text": "Music driver: voice 1 transpose in semitones, added to each note before the frequency lookup ($2C4C); 0 at tune start, set by a sequence command ($282E)."
+  },
+  {
+   "address": 237,
+   "type": "line",
+   "text": "Music driver: voice 2 transpose ($2DA3, $2E92)."
+  },
+  {
+   "address": 238,
+   "type": "line",
+   "text": "Music driver: voice 3 transpose ($2F00)."
+  },
+  {
+   "address": 239,
+   "type": "line",
+   "text": "Music driver scratch pointer, low byte: the address of a five-byte instrument tail ($290A, $2A0A, $2B47) or the target of the jump command at $2A55; also a saved X at $2C59."
+  },
+  {
+   "address": 240,
+   "type": "line",
+   "text": "Music driver scratch pointer, high byte."
+  },
+  {
+   "address": 241,
+   "type": "line",
+   "text": "Music driver: voice 1 pulse width as swept, low byte (v1_pw_hi high), written to $D402/$D403 ($30CD)."
+  },
+  {
+   "address": 242,
+   "type": "line",
+   "text": "Music driver: voice 1 pulse width as swept, high byte."
+  },
+  {
+   "address": 243,
+   "type": "line",
+   "text": "Music driver: voice 2 pulse width as swept, low byte ($D409, $3206)."
+  },
+  {
+   "address": 244,
+   "type": "line",
+   "text": "Music driver: voice 2 pulse width as swept, high byte."
+  },
+  {
+   "address": 245,
+   "type": "line",
+   "text": "Music driver: voice 3 pulse width as swept, low byte ($D410)."
+  },
+  {
+   "address": 246,
+   "type": "line",
+   "text": "Music driver: voice 3 pulse width as swept, high byte."
+  },
+  {
+   "address": 247,
+   "type": "line",
+   "text": "Music driver: voice 1 frequency as bent by the pitch envelope, low byte (v1_freq_hi high), written to $D400/$D401 ($3140)."
+  },
+  {
+   "address": 248,
+   "type": "line",
+   "text": "Music driver: voice 1 frequency as bent, high byte."
+  },
+  {
+   "address": 249,
+   "type": "line",
+   "text": "Music driver: voice 2 frequency as bent, low byte ($D407, $32B2)."
+  },
+  {
+   "address": 250,
+   "type": "line",
+   "text": "Music driver: voice 2 frequency as bent, high byte."
+  },
+  {
+   "address": 251,
+   "type": "line",
+   "text": "Music driver: voice 3 frequency as bent, low byte ($D40E, $33F7); 0 in both bytes stops voice 3's envelope ($338D)."
+  },
+  {
+   "address": 252,
+   "type": "line",
+   "text": "Music driver: voice 3 frequency as bent, high byte."
+  },
+  {
+   "address": 253,
+   "type": "line",
+   "text": "Music driver: address of the sound-effect patch play_sfx ($272F) loads (low byte; A on entry), also Y's save in play_tune ($2656)."
+  },
+  {
+   "address": 254,
+   "type": "line",
+   "text": "Music driver: sound-effect patch address, high byte (Y on entry to play_sfx)."
+  },
+  {
+   "address": 255,
+   "type": "line",
+   "text": "Music driver: the sequence byte being played as a note: $00-$5E a note followed by a length code (note_lengths), $60-$BE a note followed by a length in frames, $5F and $BF a rest; kept for the length step ($2D53) and voice 2's arpeggio base ($2E8A)."
+  },
+  {
+   "address": 256,
+   "type": "line",
+   "text": "Stack page as the fast loader left it: its two-bit serial receiver and helpers ($0103-$01E6: JSR $018B byte reads, the load-address pointers $AE/$AF and $C3/$C4, the KERNAL serial calls at $015B-$0168, the final JMP $9400 at $0186), see orientation.md. The game's own stack grows down from $01FF over the top of it. Typed as bytes: not annotated further, by policy."
+  },
+  {
+   "address": 263,
+   "type": "line",
+   "text": "Target of the JMP $0107 at $F932, the end of the NMI handler's CIA 2 serial-port branch ($F90B-$F932), which needs a serial-port interrupt from CIA 2 (a signal on the user port's CNT2) and never ran in the simulator. $0107 is the middle of the loader's STA $AE ($0106), so the bytes decode as LDX $8B20 / ORA ($85,X) / LAX $02A5 / BNE $0119 ...: not a routine. Purpose not known."
+  },
+  {
+   "address": 418,
+   "type": "line",
+   "text": "Not a variable: operand of BIT $01A2 at $FE4F, a skip over LDX #$01 (entered at $FE50); the stray read lands in the loader's leftovers."
+  },
+  {
+   "address": 425,
+   "type": "line",
+   "text": "Not a variable: operand of BIT $01A9 at $FEC5 (and $A024), a skip over LDA #$01; the stray read lands in the loader's leftovers."
+  },
+  {
+   "address": 512,
+   "type": "line",
+   "text": "Frames waiting: the NMI handler adds 1 once a frame ($F8AD); wait_frame ($B472) waits until it is non-zero and takes 1. Cleared before a wait for a fresh frame ($9704, $9BC8, $B9A4, $B9B2, $F06C). The whole page $0200-$02FF is cleared at power-on ($F6FA) and at every life ($9A76)."
+  },
+  {
+   "address": 513,
+   "type": "line",
+   "text": "Frame counter, low byte, +1 per frame from the raster interrupt ($F73A; carries into frame_counter_hi). Reset to 0 at each life's start ($9707) and to 1 when the ball is caught ($AC9E): the held ball launches by itself when it reaches $80 ($AA79). Its bits pace animations ($0889, $A3F9, $A7DC, $AD8A), the enemy's turns ($A05A) and the capsule draw ($B2E6, $B321)."
+  },
+  {
+   "address": 514,
+   "type": "line",
+   "text": "Vaus explosion pace: counts 0-2 ($9B36-$9B42) so the explosion frame advances every third call."
+  },
+  {
+   "address": 515,
+   "type": "line",
+   "text": "Control directions, joystick format (bit 2 left, bit 3 right, bit 4 fire): the joystick port read and inverted ($FDB5-$FDBC), or the keyboard's two SHIFT keys (left SHIFT sets bit 2, right SHIFT bit 3, $FD7B-$FD98). Read by the joystick/keyboard mover ($FDBF)."
+  },
+  {
+   "address": 516,
+   "type": "line",
+   "text": "Enemy steering scratch ($B3FA): horizontal distance from the enemy to object 0 (the Vaus, or the intro's target), compared with aim_dy to choose which axis moves every step."
+  },
+  {
+   "address": 517,
+   "type": "line",
+   "text": "Enemy steering scratch ($B3FA): vertical distance from the enemy to object 0."
+  },
+  {
+   "address": 518,
+   "type": "line",
+   "text": "The Vaus's centre X (sprite coordinates): $80 at each life ($9A8E), moved by the input routine (paddle $FCBB, mouse/joystick/keyboard $FCD4/$FCE2), kept inside the walls by vaus_place ($FCEE), which puts the two Vaus sprites at vaus_x - vaus_stretch and that + 2 x vaus_stretch ($9445, $9446)."
+  },
+  {
+   "address": 519,
+   "type": "line",
+   "text": "Vaus size change in progress ($AD4B): 1 and up growing (the E capsule, $AA46), vaus_stretch +1 per frame up to $0C; $80 and up shrinking back to 4 after another capsule ($AA40); 0 none."
+  },
+  {
+   "address": 520,
+   "type": "line",
+   "text": "Type (1-7) of the last capsule caught ($A9E9); the capsule draw re-rolls a type equal to it ($B210), so the same power does not fall twice running."
+  },
+  {
+   "address": 521,
+   "type": "line",
+   "text": "$FF while the title or the ending plays its digital drums ($B4CF, $9679): the NMI handler then also steps the drum sequence (drum_step $FEF4, $F88A) and skips its second call of the music driver ($F8F8). 0 otherwise ($B4F4, $96AF)."
+  },
+  {
+   "address": 522,
+   "type": "line",
+   "text": "Half the gap between the Vaus's two sprites: 4 normally ($9AA8, the hit test's narrow case at $AC0D), up to $0C enlarged (vaus_resize_state, $AD4B-$AD7B); $0C is also set for the explosion ($9AFF). Collision tests with the ball, capsules and enemies use vaus_x +/- multiples of it."
+  },
+  {
+   "address": 523,
+   "type": "line",
+   "text": "How far the Vaus would pass a side wall (vaus_place $FCEE-$FD2B: left edge below $20, right edge above $DB); vaus_x is pulled back by it."
+  },
+  {
+   "address": 524,
+   "type": "line",
+   "text": "Scratch: a Vaus half-width for a collision test ($A73B, $A9B2, $ABD6); in the disruption the first ball's Y ($A8E0)."
+  },
+  {
+   "address": 525,
+   "type": "line",
+   "text": "Scratch: X saved over a call ($B1EA-$B236 brick hit, $F4CA wall builder); in the disruption the first ball's X ($A8DA); read by the capsule draw as the ball's index ($B314)."
+  },
+  {
+   "address": 526,
+   "type": "line",
+   "text": "Colour (colour RAM AND 7) of the brick just broken ($B160); picks its points from the table $B2C4 ($B259)."
+  },
+  {
+   "address": 527,
+   "type": "line",
+   "text": "Last value of frame_counter bit 3, so the current player's panel marker ($D8EF or $DA57) flashes every 8 frames ($FB8F-$FBB9)."
+  },
+  {
+   "address": 528,
+   "type": "line",
+   "text": "Scratch: an index kept over a call: the enemy being tested ($9CDE, $9F25), the metal-brick slot ($B087-$B0E1), the score offset for the high-score check ($FB0F), the first ball's direction in the disruption ($A8E6)."
+  },
+  {
+   "address": 529,
+   "type": "line",
+   "text": "16-bit scratch, low byte: the brick-presence bits of a row in save_wall_of_player; round x 128 for the layout address ($F3D1-$F3F2); the laser's X offset ($A6B2, $A6BA)."
+  },
+  {
+   "address": 530,
+   "type": "line",
+   "text": "16-bit scratch, high byte (with bits_lo)."
+  },
+  {
+   "address": 531,
+   "type": "line",
+   "text": "Y saved over key_held ($0832/$085E)."
+  },
+  {
+   "address": 532,
+   "type": "line",
+   "text": "Menu: the menu key (0-6) last seen held, so a held key acts once ($B5A9-$B5C9); $FF when none."
+  },
+  {
+   "address": 533,
+   "type": "line",
+   "text": "Round 33: Doh's hit flash. Set to 1 by a hit ($B123); the flash routine ($97B3) makes it $80 and steps it to $86, colouring Doh's face from $97F9, then clears it. Set to $80 again while Doh has no hits left ($9620)."
+  },
+  {
+   "address": 534,
+   "type": "line",
+   "text": "Frames during which a jingle has the SID: while non-zero the bat, brick and catch effects are not started ($AC75, $B049, $B26A). Counted down by the NMI handler ($F8C8); with tune_hold_kind 2 it waits for the music to end instead ($F8B5)."
+  },
+  {
+   "address": 535,
+   "type": "line",
+   "text": "What set tune_hold: 1 a short effect (enemy hit $9F1D, laser $A7A2), 2 a jingle that must finish (death $9B0C, enlarge $AA50, extra life $A8A1, exit $A489, bonus life $FAF1)."
+  },
+  {
+   "address": 536,
+   "type": "line",
+   "text": "Brick hit: the brick row of the hit, from the ball's or the laser's Y ($AFAD-$B00C, $A6FF); +1 for the lower half ($B1C0); places the capsule ($B239) and picks the background pattern ($B2CD)."
+  },
+  {
+   "address": 537,
+   "type": "line",
+   "text": "Brick hit: the screen column of the hit (even), from the ball's or the laser's X ($AFBB-$B00C, $A70E), stepped across the brick's cells ($B1A7, $B1D8)."
+  },
+  {
+   "address": 539,
+   "type": "line",
+   "text": "Brick removal: $10 when a brick still stands on the shadow side of the cell (the cell above it, or above and to the left), so the background character put back is the shadowed one, else 0 ($B175-$B1A4)."
+  },
+  {
+   "address": 540,
+   "type": "line",
+   "text": "Brick removal scratch: (row x 4) AND $0C, the row part of the background pattern ($B2D4)."
+  },
+  {
+   "address": 541,
+   "type": "line",
+   "text": "Background fill ($F552): the pattern row offset, (row AND 3) x 4, added to bg_char_base for each screen row."
+  },
+  {
+   "address": 542,
+   "type": "line",
+   "text": "Row counter for screen builders: the background rows ($F582-$F5D8, to 25), the side walls ($F632-$F68A, to 24), the menu and story text lines ($B639-$B6E9), and save_wall_of_player's brick rows (1-16)."
+  },
+  {
+   "address": 543,
+   "type": "line",
+   "text": "Round 33: Doh's shots move only on frames when adding $A1 to this carries ($97FD), about 5 frames in 8. In the intro the last bit 2 of frame_counter (intro_vaus_frames, $08AB)."
+  },
+  {
+   "address": 544,
+   "type": "line",
+   "text": "Last frame_counter bit seen (bit 2 or bit 1), so an animation steps when it changes: the Vaus appearing ($A3FE), the laser change ($A5CF, $AD8F). The side-wall builder ($F637-$F69D) uses it as the wall's phase 0-4."
+  },
+  {
+   "address": 545,
+   "type": "line",
+   "text": "Held ball: vaus_x minus the ball's X, kept while the ball sits on the Vaus ($AA8C); $F8 (ball 8 to the right) at each life ($9AE5), the contact point after a catch ($AC63)."
+  },
+  {
+   "address": 546,
+   "type": "line",
+   "text": "Exit: rows left to mask in the Vaus sprite during its exit ($A4C6, counting from 10)."
+  },
+  {
+   "address": 547,
+   "type": "line",
+   "text": "Laser change animation: steps left (8 down to 0) of the Vaus turning into the laser Vaus ($A877; $A5C7 with shapes from $A5EA) or back ($AA1E; $AD85 with shapes from $ADAA)."
+  },
+  {
+   "address": 549,
+   "type": "line",
+   "text": "Metal-brick shine pace: counts 0-3, the shine steps every fourth frame ($AB55)."
+  },
+  {
+   "address": 550,
+   "type": "line",
+   "text": "Wall builder: first byte of a round row's brick-presence bits (bricks 0-7, bit 7 first), shifted out one per brick ($F424, $F44F)."
+  },
+  {
+   "address": 551,
+   "type": "line",
+   "text": "Wall builder: second byte of the row's brick-presence bits (bricks 8-12)."
+  },
+  {
+   "address": 552,
+   "type": "line",
+   "text": "1 while the ball sits on the Vaus: at each life ($9AD6), after a catch ($AC9B); released by fire or when frame_counter reaches $80 ($AA71-$AAF1). While set no ball moves ($ADB3) and the Vaus-hit test is skipped ($ABB5). The disruption's loop clears it with the two bytes after it ($A91A)."
+  },
+  {
+   "address": 553,
+   "type": "line",
+   "text": "Frames (to $C0) before the next enemy is let in through a gate ($9F8A-$9F96)."
+  },
+  {
+   "address": 554,
+   "type": "line",
+   "text": "1 while the catch power (C capsule) is on ($A8AE); a Vaus hit then holds the ball ($AC70). Cleared by the next capsule ($AA23) and by the disruption ($A91A)."
+  },
+  {
+   "address": 555,
+   "type": "line",
+   "text": "1 while the laser power (L capsule) is on ($A872); fire then shoots ($A5F3). Cleared by the next capsule ($AA26)."
+  },
+  {
+   "address": 556,
+   "type": "line",
+   "text": "Laser shots, two slots ($022C-$022D): 1 while a shot is in flight or showing its hit ($A779); cleared when the hit animation ends ($A668)."
+  },
+  {
+   "address": 558,
+   "type": "line",
+   "text": "Laser shots, two slots ($022E-$022F): frame divider for the shot's hit animation ($A626)."
+  },
+  {
+   "address": 560,
+   "type": "line",
+   "text": "Laser shots, two slots ($0230-$0231): 1 once the shot has hit a brick, an enemy or the top ($A660, $A6A9, $A716); it then animates and stops."
+  },
+  {
+   "address": 562,
+   "type": "line",
+   "text": "Enemy collision scratch ($A25C): the screen column under the enemy."
+  },
+  {
+   "address": 563,
+   "type": "line",
+   "text": "Intro animation: the attacker's waypoint, 0-25 ($077B, $07D8)."
+  },
+  {
+   "address": 564,
+   "type": "line",
+   "text": "Enemy collision scratch ($A232): the enemy's Y."
+  },
+  {
+   "address": 565,
+   "type": "line",
+   "text": "Fire button as last seen, so a press acts once (the menu $B5B2, the laser $A60B); copied from fire_now at each life ($9AD1), cleared by the menu ($B55F) and when the laser power starts ($A87C)."
+  },
+  {
+   "address": 566,
+   "type": "line",
+   "text": "Fire button now (1 pressed), written by every input routine ($FCB8 paddles, $FCC4 others, $FE1D) and set to 1 in attract mode ($9568)."
+  },
+  {
+   "address": 567,
+   "type": "line",
+   "text": "The falling capsule, 0 none, else its type 1-7: 1 S slow, 2 C catch, 3 E enlarge, 4 D disruption, 5 L laser, 6 B break, 7 P extra Vaus (handlers from $A858). Chosen when a brick breaks ($B223), cleared when it is caught or lost ($AA12)."
+  },
+  {
+   "address": 568,
+   "type": "line",
+   "text": "Capsule letter roll: phase 7-0 of the letter scrolling across the capsule sprite ($A7EB-$A7F3)."
+  },
+  {
+   "address": 569,
+   "type": "line",
+   "text": "Last frame_counter bit 2 seen by the capsule roll ($A7E1)."
+  },
+  {
+   "address": 570,
+   "type": "line",
+   "text": "Ball speed, whole steps per frame less one: 2 at each life ($9ADB, 4 in attract mode), -1 by the S capsule (not below 1, $A8BA), +1 by the disruption ($A926), raised to frame_counter_hi / 4 as the round goes on, up to 11 ($ADE7). The joystick and keyboard move the Vaus 2 x (ball_speed + 1) pixels a frame ($FDCC)."
+  },
+  {
+   "address": 571,
+   "type": "line",
+   "text": "Ball speed, fraction: +4 for every brick the ball strikes ($AF5F, held below $100), added into speed_acc each frame; reset when the speed is raised by time ($ADFA)."
+  },
+  {
+   "address": 572,
+   "type": "line",
+   "text": "Break power: 1 when the B capsule is caught ($A86A); the next frame opens the exit in the right wall and makes it $FF ($A42C); the exit glyphs then animate. Cleared by the next capsule ($AA29)."
+  },
+  {
+   "address": 573,
+   "type": "line",
+   "text": "Non-zero while the Vaus leaves through the open exit ($A477); stops the input ($FC99), the ball and most of the main loop ($9582)."
+  },
+  {
+   "address": 574,
+   "type": "line",
+   "text": "1 when the Vaus is pushed against the right wall ($FD1F); with the exit open this starts the exit ($A46D). Cleared every frame the exit is closed ($A424)."
+  },
+  {
+   "address": 575,
+   "type": "line",
+   "text": "Round 33: frames (0-4) between steps of Doh's mouth ($9819)."
+  },
+  {
+   "address": 576,
+   "type": "line",
+   "text": "Round 33: position in Doh's mouth sequence $987E; a 0 entry fires shots from the free enemy slots ($984A)."
+  },
+  {
+   "address": 577,
+   "type": "line",
+   "text": "Frame counter, high byte (+1 every 256 frames, $F73F); reset with the page each life. Raises the ball speed ($ADE7: ball_speed becomes this / 4) and steers the capsule choice ($B300)."
+  },
+  {
+   "address": 578,
+   "type": "line",
+   "text": "Top-wall gate: 1 when open (stage 0 reached, $988F), 0 when shut ($9898); an enemy waits for it ($9FDA)."
+  },
+  {
+   "address": 579,
+   "type": "line",
+   "text": "Top-wall gate animation: frames (0-5) between steps ($98B9). Also, before play, the intro's slot-0 tick ($088F) and the position in the title's sprite sequence $B999 ($B98A, $F04C)."
+  },
+  {
+   "address": 580,
+   "type": "line",
+   "text": "Top-wall gate: 1 while it opens or closes ($9FE1 for an enemy, $9FFB after it); cleared at the end ($988A, $9895)."
+  },
+  {
+   "address": 581,
+   "type": "line",
+   "text": "Top-wall gate: stage 3 shut to 0 open, the glyphs at $CF58/$CF60 drawn from $9950/$9958 ($9928)."
+  },
+  {
+   "address": 582,
+   "type": "line",
+   "text": "Read when an enemy enters ($9F9E: X $AF if non-zero, else $47; $9FCD: skip the gate wait). No instruction writes it; it is cleared with the page, so enemies always enter at X $47 through the gate."
+  },
+  {
+   "address": 583,
+   "type": "line",
+   "text": "Exit: step of the Vaus's disappearance, from $17 ($A47C) down ($A4F0, $A513), masking its sprite shapes at $E5C0 and $E580 with $FC91."
+  },
+  {
+   "address": 584,
+   "type": "line",
+   "text": "Ball speed accumulator: + ball_speed_frac each frame; the carry adds an extra ball step that frame ($ADB8). Cleared by the S capsule ($A8C7)."
+  },
+  {
+   "address": 585,
+   "type": "line",
+   "text": "Vaus explosion: 0 alive, else position+1 in the shape list $9C50 ($9B56); set when no ball is left ($9AF0). Pauses most of the main loop ($957F)."
+  },
+  {
+   "address": 587,
+   "type": "line",
+   "text": "Ball steps left this frame (ball_speed + carry, at most 11, $ADCC)."
+  },
+  {
+   "address": 588,
+   "type": "line",
+   "text": "Enemies, three slots ($024C-$024E): the characters above the enemy ORed ($A264); bit 7 set means a brick blocks the way up."
+  },
+  {
+   "address": 591,
+   "type": "line",
+   "text": "Enemies, three slots ($024F-$0251): bit 7 set when a brick is below ($A290)."
+  },
+  {
+   "address": 594,
+   "type": "line",
+   "text": "Enemies, three slots ($0252-$0254): bit 7 set when a brick is to the right ($A2BB-$A2C8)."
+  },
+  {
+   "address": 597,
+   "type": "line",
+   "text": "Enemies, three slots ($0255-$0257): bit 7 set when a brick is to the left ($A29F-$A2AC)."
+  },
+  {
+   "address": 600,
+   "type": "line",
+   "text": "Enemies, three slots: 1 once the enemy, on reaching Y $B8, has been turned toward the Vaus ($A043-$A04D); cleared when it is lower still ($A072)."
+  },
+  {
+   "address": 603,
+   "type": "line",
+   "text": "Enemies, three slots: frames since the last animation frame ($A361), against enemy_anim_delay."
+  },
+  {
+   "address": 606,
+   "type": "line",
+   "text": "Enemies, three slots: entry phase: 0 waiting for enemy_spawn_timer, 1 at the gate waiting for it to open ($9FC8), $80 coming down through it ($9FE9) until Y $38, then 0 with the enemy active ($A02C)."
+  },
+  {
+   "address": 609,
+   "type": "line",
+   "text": "Intro animation, three slots ($0261-$0263): extra steps per frame of each moving object ($070B, $07A4, read $0883)."
+  },
+  {
+   "address": 612,
+   "type": "line",
+   "text": "16 bytes ($0264-$0273), one colour code per brick of a row: unpacked from the round layout by the wall builder ($F437/$F43E), packed into the wall buffer by save_wall_of_player ($0691)."
+  },
+  {
+   "address": 628,
+   "type": "line",
+   "text": "Enemies, three slots (objects 8-10, Y at $9435, X at $944D): 0 none, 1 moving ($9FFE), $FF exploding ($9F07). The intro uses the same slots for its attacker, shot and escaping Vaus."
+  },
+  {
+   "address": 629,
+   "type": "line",
+   "text": "enemy_state of slot 1, named for the intro's shot ($0729, $0737)."
+  },
+  {
+   "address": 630,
+   "type": "line",
+   "text": "enemy_state of slot 2, named for the intro's attacker ($076B)."
+  },
+  {
+   "address": 631,
+   "type": "line",
+   "text": "Enemies, three slots: position in the frame list $A376 (a 0 ends a list, the byte after it says where to restart); set from $A3E8 by the round (AND 3, $9FB7, $F5F5), from $A3D8 for Doh's shots ($9865), 0 for the explosion ($9EFD)."
+  },
+  {
+   "address": 632,
+   "type": "line",
+   "text": "enemy_anim of slot 1, set directly at the round's start ($F5F8)."
+  },
+  {
+   "address": 633,
+   "type": "line",
+   "text": "enemy_anim of slot 2, set directly at the round's start ($F5FB)."
+  },
+  {
+   "address": 634,
+   "type": "line",
+   "text": "Enemies, three slots: Y step, +1 down, $FF up, 0 still."
+  },
+  {
+   "address": 637,
+   "type": "line",
+   "text": "Enemies, three slots: X step, +1 right, $FF left, 0 still."
+  },
+  {
+   "address": 640,
+   "type": "line",
+   "text": "Enemies, three slots: $FF when Y is the axis that moves every step; otherwise the amount taken from enemy_acc per step, Y moving on a borrow ($A2DB-$A30C, set by $B3FA)."
+  },
+  {
+   "address": 643,
+   "type": "line",
+   "text": "Enemies, three slots: the amount taken from enemy_acc per step when Y is the major axis, X moving on a borrow."
+  },
+  {
+   "address": 646,
+   "type": "line",
+   "text": "Enemies, three slots: line-drawing accumulator for the minor axis."
+  },
+  {
+   "address": 649,
+   "type": "line",
+   "text": "Enemies, three slots: added back to enemy_acc on a borrow (the larger distance, $B453)."
+  },
+  {
+   "address": 652,
+   "type": "line",
+   "text": "Enemies, three slots: Y direction to resume after an obstacle ($A105, $A1B6)."
+  },
+  {
+   "address": 655,
+   "type": "line",
+   "text": "Enemies, three slots: X direction to resume after an obstacle ($A027, $A0B1)."
+  },
+  {
+   "address": 658,
+   "type": "line",
+   "text": "Enemies, three slots: frames per animation frame ($A3F0 by round AND 3 at $9FC3, 1 for the explosion $9F02, 2 for Doh's shots $986F)."
+  },
+  {
+   "address": 661,
+   "type": "line",
+   "text": "Balls, three slots (objects 4-6, Y at $9431, X at $9449): Y step, $FF up, +1 down."
+  },
+  {
+   "address": 664,
+   "type": "line",
+   "text": "Balls, three slots: X step, $FF left, +1 right."
+  },
+  {
+   "address": 667,
+   "type": "line",
+   "text": "Balls, three slots: $FF when Y moves every step; otherwise taken from ball_acc each step, Y moving on a borrow. With ball_rate_x it is the angle: ($FF,$40) steep, ($FF,$F0) about 45 degrees, ($80,$FF) shallow, chosen by where the ball meets the Vaus ($AC1A-$AC41)."
+  },
+  {
+   "address": 670,
+   "type": "line",
+   "text": "Balls, three slots: $FF when X moves every step; otherwise taken from ball_acc each step, X moving on a borrow."
+  },
+  {
+   "address": 673,
+   "type": "line",
+   "text": "Balls, three slots: line-drawing accumulator; cleared at each Vaus or brick hit ($AC68, $B159)."
+  },
+  {
+   "address": 676,
+   "type": "line",
+   "text": "Balls, three slots: added to ball_acc on a borrow ($B359, $B387); no instruction writes it, so it stays 0 and the accumulator simply wraps."
+  },
+  {
+   "address": 679,
+   "type": "line",
+   "text": "Balls, three slots: 1 in play, 0 lost ($B3B0); one at each life ($9AB5), three after the disruption ($A8FE). No ball left ends the life ($9AF0)."
+  },
+  {
+   "address": 682,
+   "type": "line",
+   "text": "Balls, three slots: frames (5 after the Vaus, 2 after the top wall) before the ball may bounce off the Vaus again ($AC6D, $B3D0, $ACCC)."
+  },
+  {
+   "address": 685,
+   "type": "line",
+   "text": "Balls, three slots: bounces off walls and unbreakable bricks since a brick last broke ($AEB6, $B3EC; cleared $B265); at 50 the angle is changed ($AF6B) to break a loop."
+  },
+  {
+   "address": 688,
+   "type": "line",
+   "text": "Ending: the 60 character codes of a 6-by-10 block of the screen (rows from $C0D3, $C0FB ... $C23B), saved by $970B; their glyphs are then eaten away pixel by pixel with dissolve_masks ($9754). This label: row 1."
+  },
+  {
+   "address": 694,
+   "type": "line",
+   "text": "ending_chars row 2, from $C0FB."
+  },
+  {
+   "address": 700,
+   "type": "line",
+   "text": "ending_chars row 3, from $C123."
+  },
+  {
+   "address": 706,
+   "type": "line",
+   "text": "ending_chars row 4, from $C14B."
+  },
+  {
+   "address": 712,
+   "type": "line",
+   "text": "ending_chars row 5, from $C173."
+  },
+  {
+   "address": 718,
+   "type": "line",
+   "text": "ending_chars row 6, from $C19B."
+  },
+  {
+   "address": 724,
+   "type": "line",
+   "text": "ending_chars row 7, from $C1C3."
+  },
+  {
+   "address": 730,
+   "type": "line",
+   "text": "ending_chars row 8, from $C1EB."
+  },
+  {
+   "address": 736,
+   "type": "line",
+   "text": "ending_chars row 9, from $C213."
+  },
+  {
+   "address": 742,
+   "type": "line",
+   "text": "ending_chars row 10, from $C23B."
+  },
+  {
+   "address": 768,
+   "type": "line",
+   "text": "Silver and gold bricks of the round, slots 1-84 ($0301-$0354, slot n at $0300+n; counted by metal_count): $80 while the brick shines after a hit (or at the round's start), 1 at rest, 0 destroyed. The shine ($AB55) steps its two characters every fourth frame. Cleared with $0200 at each life ($9A7C)."
+  },
+  {
+   "address": 853,
+   "type": "line",
+   "text": "Silver and gold bricks, slots 1-84: hits left before a silver brick breaks ($F52A by round + 1: 2 for rounds 1-8 up to 5 for rounds 25-32), $80 for gold, which never breaks ($F4EC)."
+  },
+  {
+   "address": 937,
+   "type": "line",
+   "text": "Not a variable: operand of BIT $03A9 at $2833, a skip over LDA #$03."
+  },
+  {
+   "address": 938,
+   "type": "line",
+   "text": "Silver and gold bricks, slots 1-84: screen address of the brick's left cell, two bytes per slot (slot n at $03AA + 2n, low byte first), matched against the brick hit ($B08D-$B099)."
+  },
+  {
+   "address": 939,
+   "type": "line",
+   "text": "High bytes of metal_pos, addressed one up ($AB7C, $B08F, $F508)."
+  },
+  {
+   "address": 1109,
+   "type": "line",
+   "text": "Bricks still to break in the round (gold not counted), counted while the wall is drawn ($F45D, $F4D5), -1 per brick ($B16D); 0 ends the round ($95BD). In round 33 Doh's hits left: 22 at the start ($95F6), the round ends when it passes 0 ($9634). Saved per player in bricks_saved."
+  },
+  {
+   "address": 1110,
+   "type": "line",
+   "text": "Number of silver and gold bricks in the round (slots in metal_state), counted by the wall builder ($F4F4)."
+  },
+  {
+   "address": 1111,
+   "type": "line",
+   "text": "Colour RAM value of the round's background pattern ($F54A by round AND 3, $F59B), put back where a brick is removed ($B191)."
+  },
+  {
+   "address": 1112,
+   "type": "line",
+   "text": "First character of the round's background pattern ($F54E by round AND 3, $F5A1); a cell's character is this + (row AND 3) x 4 + (column AND 3), +$10 under a brick's shadow ($B2DF). Also the base the wall buffers are copied from at the game's start ($F210, Y 1-160)."
+  },
+  {
+   "address": 1113,
+   "type": "line",
+   "text": "Player 1's saved wall, 160 bytes ($0459-$04F8) in the layout of a round record (16 rows x 10 bytes: two bytes of brick bits, eight of colour codes): written by save_wall_of_player when the turn passes, read back by the wall builder ($F371). Filled from $8000 (round 1) at the game's start ($F20D)."
+  },
+  {
+   "address": 1272,
+   "type": "line",
+   "text": "Last byte of wall_buffer_p1, addressed as the base of the copy into wall_buffer_p2 ($F213, Y 1-160)."
+  },
+  {
+   "address": 1273,
+   "type": "line",
+   "text": "Player 2's saved wall, 160 bytes ($04F9-$0598), as wall_buffer_p1."
+  },
+  {
    "address": 1536,
    "type": "line",
    "text": "Save the current player's wall from the screen into that player's 160-byte wall buffer (pointer from wall_buffer_lo/hi indexed by current_player), so it can be rebuilt when that player's turn comes back. Called from $9B67 when a life is lost. For each of the 16 brick rows (row_counter 1..16, screen row address from the table at $F78B, colour RAM at the same offset in $D800): bytes 0-1 of the row record get one bit per brick (13 bricks, every second screen column from column 1, bit set when the character is $80 or above, i.e. a brick, shifted to bits 15..3); bytes 2-9 get one colour nibble per brick (colour RAM & 7, or for colour 9 cells 1 / 9 / $0A by character: below $82, $82-$85 silver, $86 and above gold), built in row_nibbles ($0264). Same record layout as the round layouts at $8000 that rebuild_wall ($F371/$F3C2) reads. Uses $0D/$0E (screen), $0F/$10 (colour RAM), $11/$12 (buffer), $0211/$0212 (bit accumulator)."
@@ -12264,47 +13475,52 @@
   {
    "address": 1745,
    "type": "line",
-   "text": "The sprite animation played over the title picture before round 1 (called once per game from $F03F, after the menu and the story; the screen is the bank-1 bitmap, so intro_sprite_setup first points the sprite multiplexer at $63F8). It drives three of the ball slots with the ball-movement code: slot 2 an attacking craft that flies a 25-point path (intro_attacker_path), shape $B4+step; at step 12 slot 1, a shot (shape $CD), leaves it and falls on the ship at X $A0, Y $87; when the shot reaches Y $A0, intro_show_patch shows two black sprites there and slot 0, the Vaus (shapes $A2-$B3, tumbling and shrinking), flies off toward X $50, Y $60. Ends when the path is done and the Vaus has run through its frames: intro_attacker_path then pulls this routine's return address and returns to $F042. Story reading of the shapes: the shapes are the bank-1 sprites at $6880-$7540, rendered and judged by eye, not watched live."
+   "text": "The sprite animation played over the title picture before round 1 (called once per game from $F03F, after the menu and the story; the screen is the bank-1 bitmap, so intro_sprite_setup first points the sprite multiplexer at $63F8). It drives the three enemy slots (objects 8-10: Y at $9435, X at $944D, enemy_state $0274) with the enemy mover ($A2DB), each steered by $B3FA toward object 0 (Y $942D, X $9445), used as an invisible target: object 10, an attacking craft, flies a 25-point path (intro_attacker_path), shape $B4 + step; at step 12 object 9, a shot (shape $CD), leaves it toward the ship at X $87, Y $A0; when the shot's X falls below $A0, intro_show_patch puts two black sprites there and object 8, the Vaus (shapes $A2-$B3), flies off from X $87, Y $A0 toward X $60, Y $50. Ends when the path is done and the Vaus has run through its frames: intro_path_done then drops this routine's return address and returns to $F042. The story reading of the shapes (bank-1 sprites at $6880-$7540) was judged by eye from renders, not watched live."
   },
   {
    "address": 1751,
    "type": "line",
-   "text": "Once a frame (wait_frame at $B472): step the attacker's path, launch or land the shot, move the three ball slots, animate the escaping Vaus. Leaves only through the PLA/PLA/RTS at $0778."
+   "text": "Once a frame (wait_frame at $B472): step the attacker's path, launch or land the shot, move the three objects, animate the escaping Vaus. Leaves only through the PLA/PLA/RTS at $0778."
   },
   {
    "address": 1770,
    "type": "line",
-   "text": "The shot. Nothing before path step 12. At step 12, if ball slot 1 is idle: put the steering target (object 0) on the ship at X $A0, Y $87, start slot 1 (speed 2, sprite pointer $CD) 6 pixels left of and 6 above the attacker ($9437 + 6, $944F - 6), aim it with $B3FA. After step 12: once the shot is at Y $A0 or below, stop it, show the patch (intro_show_patch) and launch the Vaus in slot 0 from X $A0, Y $87 toward X $50, Y $60, speed 0, first shape $A2."
+   "text": "The shot. Nothing before path step 12. At step 12, if slot 1 is idle: put the steering target (object 0) on the ship at Y $A0, X $87; start slot 1 (object 9: 2 extra steps a frame, shape $CD) 6 pixels left of and 6 below the attacker (X $944F - 6, Y $9437 + 6) and aim it ($B3FA). After step 12, once the shot's X is below $A0: stop it, show the patch (intro_show_patch) and launch the Vaus, slot 0 (object 8), from X $87, Y $A0 toward X $60, Y $50, no extra steps, first shape $A2."
   },
   {
    "address": 1897,
    "type": "line",
-   "text": "Path finished: clear $0276 (slot 2's active flag), give slot 2 the empty shape $D5; return while the Vaus (slot 0) is still flying, otherwise drop the caller's return address so that the RTS leaves intro_escape_animation."
+   "text": "Path finished: clear intro_attacker_state ($0276), give object 10 the empty shape $D5; return while the Vaus (slot 0) is still flying, otherwise drop the caller's return address so that the RTS leaves intro_escape_animation."
   },
   {
    "address": 1915,
    "type": "line",
-   "text": "The attacker's path, one waypoint per call when reached. intro_step ($0233) 0: start ball slot 2 at X $40, Y $F0 (below the picture), shape $B4, aimed at X $A0, Y $87 (object 0, shape $D5, the steering target), and step 1. Later steps: when the attacker's X equals intro_path_x[step], move to the next step: the target becomes (intro_path_x, intro_path_y) of the new step, the attacker's speed intro_path_speed and its shape $B4 + step, and re-aim it ($B3FA). At step 25 (intro_path_done) it hides the attacker and, once the Vaus has finished, leaves intro_escape_animation."
+   "text": "The attacker's path, one waypoint per call when reached. intro_step 0: intro_path_start. Later steps: when the attacker's Y ($9437) equals intro_path_y[step], move to the next step: the target (object 0) goes to X intro_path_x[step], Y intro_path_y[step], the attacker's extra steps per frame to intro_path_speed[step], its shape to $B4 + step, and it is re-aimed ($B3FA). At step 25 (intro_path_done) it hides the attacker and, once the Vaus has finished, leaves intro_escape_animation."
   },
   {
    "address": 1970,
    "type": "line",
-   "text": "Step 0 of the path: attacker at X $40, Y $F0; steering target at X $A0, Y $87 with the empty shape $D5; slot 0 given shape $B4 (overwritten when the Vaus launches); aim and step to 1."
+   "text": "Step 0 of the path: attacker (object 10) at X $F0, Y $40, active; object 8's shape set to $B4 (overwritten when the Vaus launches); the target, object 0, given the empty shape $D5 and put at X $87, Y $A0; aim the attacker and step to 1."
   },
   {
    "address": 2012,
    "type": "line",
-   "text": "Intro path, Y of each waypoint, indexed by intro_step 1-24 (29 bytes; entry 0 and entries 25-28 are not read): from $FA rising to $6F. The steering target is put here when the attacker reaches the previous waypoint."
+   "text": "Intro path, X of each waypoint (stored into the target's X, $9445), indexed by intro_step 1-24 (29 bytes; entries 0 and 25-28 are not read): $FA at step 1, falling to $6F, right to left across the picture."
   },
   {
    "address": 2041,
    "type": "line",
-   "text": "Intro path, X of each waypoint, indexed by intro_step 0-24 (29 bytes, entries 25-28 not read): $40 $42 ... $7E, then back down to $6B. The step advances when the attacker's X equals this value exactly, so a waypoint passed without an exact hit would stall the path (the Bresenham steps move one pixel at a time on the major axis, so it is hit)."
+   "text": "Intro path, Y of each waypoint (the target's Y, $942D), indexed by intro_step 0-24 (29 bytes, entries 25-28 not read): $42 at step 1 down the screen to $7E at steps 13-14, then back up to $6B. The step advances when the attacker's Y equals this value exactly; the movement steps one pixel at a time on its major axis, which makes an exact hit likely but is not proved for every waypoint."
+  },
+  {
+   "address": 2048,
+   "type": "line",
+   "text": "The last 22 Y positions of the intro animation path intro_path_y ($07F9), split here only because a data span stops at $0800; read through intro_path_y,X by the intro at $06D1."
   },
   {
    "address": 2070,
    "type": "line",
-   "text": "Intro path, attacker speed per waypoint (extra Bresenham steps per frame, into the ball speed $0261+2), indexed by intro_step 1-24: 0 for steps 1-12, 2 for 13-15, 1 for 16-17, 0 after (28 bytes to $0831)."
+   "text": "Intro path, the attacker's extra steps per frame for each waypoint (into intro_speed+2, $0263), indexed by intro_step 1-24: 0 for steps 1-12, 2 for 13-15, 1 for 16-17, 0 after (28 bytes to $0831)."
   },
   {
    "address": 2098,
@@ -12324,22 +13540,1472 @@
   {
    "address": 2172,
    "type": "line",
-   "text": "Move the intro's three ball slots, 2 down to 0: each active slot ($0274,x) takes 1 + speed ($0261,x) Bresenham steps through $A2DB. Slot 0, the Vaus, moves only on frames where bit 1 of frame_counter has changed since last time (intro_slot0_tick), i.e. every second frame."
+   "text": "Move the intro's three objects, slot 2 down to 0: each active slot (enemy_state) takes 1 + intro_speed Bresenham steps through the enemy mover $A2DB. Slot 0, the Vaus, moves only on frames where bit 1 of frame_counter has changed since last time (kept in gate_timer, $0243, here a tick), i.e. every second frame."
   },
   {
    "address": 2209,
    "type": "line",
-   "text": "Animate the escaping Vaus: every fourth frame (bit 2 of frame_counter changed, kept in intro_frame_tick $021F) advance slot 0's sprite pointer ($F82D); after shape $B3 give it the empty shape $D5 and stop the slot."
+   "text": "Animate the escaping Vaus: every fourth frame (bit 2 of frame_counter changed, kept in doh_shot_acc $021F, here a tick) advance object 8's sprite pointer ($F82D); after shape $B3 give it the empty shape $D5 and stop the slot."
   },
   {
    "address": 2252,
    "type": "line",
-   "text": "Sprites for the intro over the title bitmap: patch the multiplexer's pointer stores ($FC17 and $F976, high bytes of STA $C3FA,Y-style operands) to $63 so that sprite pointers go to $63F8, the bank-1 screen of the title; enable sprites 2-7 in multicolour, clear the X high bits, clear X positions of objects 0-11 ($942D-$9438), sprite multicolours $D025 = 3 (cyan) and $D026 = $0A (light red), colour 1 (white) for objects 8-10 ($F821-$F823), colour 0 (black) for objects 2-3 ($F81B/$F81C)."
+   "text": "Sprites for the intro over the title bitmap: patch the multiplexer's pointer stores ($FC17 and $F976, the high bytes of their STA $C3FA,Y operands) to $63 so that sprite pointers go to $63F8, the bank-1 screen of the title; enable sprites 2-7 in multicolour, clear the X high bits, clear the Y positions of objects 0-11 ($942D-$9438; Y 0 hides an object), sprite multicolours $D025 = 3 (cyan) and $D026 = $0A (light red), colour 1 (white) for objects 8-10 ($F821-$F823), colour 0 (black) for objects 2-3 ($F81B/$F81C)."
   },
   {
    "address": 2315,
    "type": "line",
-   "text": "Put objects 2 and 3 at X $A0, Y $87 and Y $9F with shapes $A0 and $A1 (black, set by intro_sprite_setup): two stacked sprites at the spot where the Vaus leaves the ship. Assumed to cover the Vaus drawn in the bitmap; not checked live."
+   "text": "Put objects 2 and 3 at Y $A0, X $87 and X $9F, shapes $A0 and $A1 (black, set by intro_sprite_setup): two sprites side by side at the spot the Vaus leaves from. Assumed to cover the Vaus drawn in the bitmap; not checked live."
+  },
+  {
+   "address": 2343,
+   "type": "line",
+   "text": "Player 1's score, three BCD bytes, least significant first ($0927-$0929), in units of 10 points: the panel ($FB4F) prints six digits before a fixed 0, so $33 $01 $00 reads 1330. Points are added from points_pending by add_points ($FBBD); cleared at the game's start ($F1BE)."
+  },
+  {
+   "address": 2344,
+   "type": "line",
+   "text": "score_p1, middle BCD byte (tens and hundreds of the stored units)."
+  },
+  {
+   "address": 2345,
+   "type": "line",
+   "text": "score_p1, most significant BCD byte."
+  },
+  {
+   "address": 2346,
+   "type": "line",
+   "text": "Player 2's score, three BCD bytes ($092A-$092C), as score_p1, printed at $C2EF ($FB73)."
+  },
+  {
+   "address": 2349,
+   "type": "line",
+   "text": "Player 1's next extra-life score, three BCD bytes ($092D-$092F) in score units: 00 20 00 at the game's start (20,000 points, $F1C4-$F1CC); when the score reaches it ($FAA5) a life is added (up to 87) and $20 is added to the middle byte, so every 20,000 points. The low byte is never written."
+  },
+  {
+   "address": 2350,
+   "type": "line",
+   "text": "extra_life_p1, middle BCD byte ($20 at the start, +$20 per extra life, $FACB)."
+  },
+  {
+   "address": 2351,
+   "type": "line",
+   "text": "extra_life_p1, most significant BCD byte (carry from the middle byte, $FAD6)."
+  },
+  {
+   "address": 2353,
+   "type": "line",
+   "text": "extra_life_p2, middle BCD byte ($20 at the start); player 2's threshold is $0930-$0932, reached through extra_life_p1 indexed with X = 3."
+  },
+  {
+   "address": 2354,
+   "type": "line",
+   "text": "extra_life_p2, most significant BCD byte."
+  },
+  {
+   "address": 2355,
+   "type": "line",
+   "text": "Points to add, three BCD bytes ($0933-$0935, in units of 10 points), added to the current player's score and cleared by add_points ($FBBD): the brick's value from $B2C4 ($B260), $10 (100 points) for an enemy ($9F47, $9F58)."
+  },
+  {
+   "address": 2356,
+   "type": "line",
+   "text": "points_pending, middle BCD byte: 1 (1,000 points) for a capsule caught ($A9DD)."
+  },
+  {
+   "address": 2357,
+   "type": "line",
+   "text": "points_pending, most significant BCD byte (always 0 when written)."
+  },
+  {
+   "address": 2358,
+   "type": "line",
+   "text": "Player 1's lives, BCD: 4 at the start ($F1D4), -1 per Vaus lost ($9B76), +1 per extra life (capsule P $A891, score $FAE6); $99 after the last one is lost, ending that player's game ($9B7D). The panel shows it at $C1B5."
+  },
+  {
+   "address": 2359,
+   "type": "line",
+   "text": "Player 2's lives, BCD: 4 in a two-player game, $99 (none) in a one-player game ($F1DC); shown at $C31D."
+  },
+  {
+   "address": 2360,
+   "type": "line",
+   "text": "Player whose turn it is, 0 or 1: picks the score, lives, round and wall buffer of that player, and the input port in two-device games; flipped when a life is lost and the other player is still in ($9BF3, $9C01). 0 at the start ($F015)."
+  },
+  {
+   "address": 2361,
+   "type": "line",
+   "text": "1 while the other player is still in the game: copied from two_players by the menu ($B56B, $B5DE) and shown there as the player count ($B622); when a player is out, decremented and the turn passes, or at 0 the game ends ($9BD3-$9BF9)."
+  },
+  {
+   "address": 2362,
+   "type": "line",
+   "text": "0 one player, 1 two (menu keys 1 and 2, $B5E1); picks the GAME OVER message ($9B90)."
+  },
+  {
+   "address": 2363,
+   "type": "line",
+   "text": "bricks_left saved per player when a life is lost ($9BE6; $093B player 1, $093C player 2); restored only in round 33, where it is Doh's hits ($9C35); other rounds recount while the wall is rebuilt."
+  },
+  {
+   "address": 2365,
+   "type": "line",
+   "text": "Player 1's round, 0-32 ($20 is round 33, Doh): set at the start ($F092; the attract mode picks 4, 13, 20 or 23 from $945B), +1 per round cleared ($95D8), 0 after Doh's defeat ($9648). Picks the layout ($8000 + round x 160), the background, the enemy kind and the silver hits; shown at $C1DD."
+  },
+  {
+   "address": 2366,
+   "type": "line",
+   "text": "Player 2's round, as round_p1 (indexed by current_player); shown at $C345."
+  },
+  {
+   "address": 2367,
+   "type": "line",
+   "text": "Control chosen on the menu ($B5D0): 0 N Neos mouse, 1 J joystick, 2 K keyboard, 3 P paddles (3 as loaded); picks the input routine through the RTS table at $FCAB/$FCAF ($FC9F)."
+  },
+  {
+   "address": 2368,
+   "type": "line",
+   "text": "Menu key D toggles it ($B5E7): 0 one control shared by both players (port 1), 1 one each (player 2 on port 2, $FDA4, $FE48); shown as 1 or 2 ($B62B)."
+  },
+  {
+   "address": 2369,
+   "type": "line",
+   "text": "High score, three BCD bytes ($0941-$0943) in units of 10 points, most significant last; replaced by the current player's score when that is higher ($FB01-$FB2D) and printed at $C0BF. When player 2's score equals it exactly, the compare runs on with X = $FF and reads $0A40 (harmless)."
+  },
+  {
+   "address": 2372,
+   "type": "line",
+   "text": "Read by the enemy collision test ($A2CB): non-zero would run $A523, which copies a routine to $01C0 and jumps to it with interrupts off. Writers found: STA $0944 at $F9F9, the failure exit of a checksum of $9500-$A5FF at $F9BC, and at $BA5A, the failure exit of a serial-port check in the block $BA0A-$BA6A; nothing calls either in this build, so the flag stays 0. Named for what the code suggests, not proved."
+  },
+  {
+   "address": 2373,
+   "type": "line",
+   "text": "Attract mode: counts the demonstrations; its low two bits pick the demo round from $945B ($950D-$9516)."
+  },
+  {
+   "address": 2374,
+   "type": "line",
+   "text": "Ending: 11 AND masks ($0946-$0950: $7F $FD $F7 $BF $FE $FB $FD $F7 $BF $DF $EF), one per glyph row, each clearing one pixel; applied to the glyphs of ending_chars ($9779) and rotated by one place after every pass ($9784-$9794)."
+  },
+  {
+   "address": 2375,
+   "type": "line",
+   "text": "dissolve_masks from the second entry on, the destination of the rotation ($978D)."
+  },
+  {
+   "address": 2384,
+   "type": "line",
+   "text": "dissolve_masks, last entry, moved to the front by each rotation ($9786)."
+  },
+  {
+   "address": 2385,
+   "type": "line",
+   "text": "Ending: 9 flags ($0951-$0959: 1 1 0 1 1 0 1 1 0) saying which glyph rows the dissolve touches this pass ($9772); rotated like dissolve_masks ($9797-$97A7)."
+  },
+  {
+   "address": 2386,
+   "type": "line",
+   "text": "dissolve_rows from the second entry on, the destination of the rotation ($97A0)."
+  },
+  {
+   "address": 2393,
+   "type": "line",
+   "text": "dissolve_rows, last entry, moved to the front by each rotation ($9799)."
+  },
+  {
+   "address": 2394,
+   "type": "line",
+   "text": "Reached by JMP $095A from the first instruction ($9406). $FC $AD $03 is an undocumented NOP $03AD,X: a three-byte no-op (it reads $03AD+X, to no effect), then JSR start_up ($B9C3) at $095D, which never returns."
+  },
+  {
+   "address": 2397,
+   "type": "line",
+   "text": "JSR $B9C3: the start-up (timers, protection, interrupts); it ends in JMP $F000 and does not come back here."
+  },
+  {
+   "address": 2400,
+   "type": "line",
+   "text": "Never executed (the JSR before it does not return; the simulator ran none of $0960-$096A): AF 04 F0 LAX $F004 (undocumented: A and X from $F004), 8E F7 FC STX $FCF7 (would patch the operand of STX $150C at $FCF6), 44 AD NOP $AD (undocumented two-byte no-op), 4C 00 F0 JMP $F000."
+  },
+  {
+   "address": 2411,
+   "type": "line",
+   "text": "Leftover bytes, part 1 of 4 ($096B-$0BFF): an earlier assembly of the game code now at $A971-$AC05, 6 bytes lower (where this build's code is unchanged the bytes match at offset +$A006, e.g. $0B60-$0B6F = $AB66-$AB75); the differences are where the code changed since. Nothing runs or uses them: the simulator never executed, read or wrote $096B-$15FF except the stray accesses noted at $0A40, $0AA9 and $150C. Loaded only because the game was saved as one memory image."
+  },
+  {
+   "address": 2729,
+   "type": "line",
+   "text": "Not a variable: operand of BIT $0AA9 at $068E, a skip over LDA #$0A in save_wall_of_player; the read of this leftover byte has no effect."
+  },
+  {
+   "address": 3072,
+   "type": "line",
+   "text": "Leftover bytes, part 2 of 4 ($0C00-$0FFF): the earlier assembly of the code now at $AC06-$B005 (offset +$A006, e.g. $0C60 = $AC66, $0F60 = $AF66). Not used."
+  },
+  {
+   "address": 4096,
+   "type": "line",
+   "text": "Leftover bytes, part 3 of 4 ($1000-$13FF): the earlier assembly of the code now at $B006-$B405 (offset +$A006, e.g. $1060 = $B066, $12E0 = $B2E6). Not used."
+  },
+  {
+   "address": 5120,
+   "type": "line",
+   "text": "Leftover bytes, part 4 of 4 ($1400-$15FF): the earlier assembly of the code now at about $B406-$B5FF; the offset drifts from +$A006 to +$9FFF near $1500 (e.g. $1460 = $B466, $1560 = $B55F). Not used."
+  },
+  {
+   "address": 5388,
+   "type": "line",
+   "text": "Written with 0 by STX $150C at $FCF6 in the Vaus placement, whose operand low byte $FD50/$FD6F then patch to $15 (so later calls write $1515). Both land in the leftover code and have no effect; why the store is there is not known."
+  },
+  {
+   "address": 5632,
+   "type": "line",
+   "text": "Leftover: an older version of start_hop ($095A), $1600-$1610: NOP $03AD,X / JSR $B9CA / LAX $F004 / STX $FD18 / NOP $AD / JMP $F000, with targets of an earlier build. Never run."
+  },
+  {
+   "address": 5649,
+   "type": "line",
+   "text": "$1611-$17FF: alternating $00/$FF bytes in 64-byte groups (one stray $40 at $161C), the pattern C64 RAM holds at power-on: memory the build never wrote, saved with the image. Not used."
+  },
+  {
+   "address": 6144,
+   "type": "line",
+   "text": "Leftover bytes, $1800-$1B59: an earlier assembly of the code and data now at $0600-$0959 (save_wall_of_player, the intro, key_held, the variables), $1200 bytes higher (e.g. $1866 = $0666, $19E6 = $07E6), with differences where it changed. Not used."
+  },
+  {
+   "address": 7002,
+   "type": "line",
+   "text": "$1B5A-$1BFF: the power-on $00/$FF RAM pattern again, never written by the build. Not used."
+  },
+  {
+   "address": 7168,
+   "type": "line",
+   "text": "Clean copy of the play character set's glyphs $80-$FF ($1C00-$1FFF, 8 bytes each), copied over $CC00-$CFFF by the round-33 set-up ($9C59: at Doh's round, $95E8, and after a life lost in it, $9C41). It differs from the loaded $CC00 only in glyphs $AF, $E8-$EC and $FE, those the game redraws (the exit $E8-$EA, the gates $EB-$EC). This part: glyphs $80-$9F (bricks and the start of Doh's face)."
+  },
+  {
+   "address": 7424,
+   "type": "line",
+   "text": "Clean glyph copy, glyphs $A0-$BF ($1D00-$1DFF), to $CD00 by $9C6D."
+  },
+  {
+   "address": 7680,
+   "type": "line",
+   "text": "Clean glyph copy, glyphs $C0-$DF ($1E00-$1EFF), to $CE00 by $9C73."
+  },
+  {
+   "address": 7936,
+   "type": "line",
+   "text": "Clean glyph copy, glyphs $E0-$FF ($1F00-$1FFF), to $CF00 by $9C79; glyphs $E8-$EC here are the unaltered exit and gate pieces."
+  },
+  {
+   "address": 8192,
+   "type": "line",
+   "text": "Sound-effect patches: the ball bounces off the Vaus ($ACAA, when no jingle holds the sound) or the held ball is released ($AAF4). Three 31-byte patches, one per voice ($2000, $201F, $203E), loaded by play_sfx ($272F, X voice, A/Y address). Patch layout: $00-$17 the pitch and pulse envelopes (to the voice state), $16-$1A pulse width, control, attack/decay, sustain/release (also straight to the SID), $1B gate time, $1C life, $1D-$1E start frequency."
+  },
+  {
+   "address": 8285,
+   "type": "line",
+   "text": "Sound-effect patches ($205D, $207C, $209B): a brick breaks ($B26F), unless a jingle holds the sound."
+  },
+  {
+   "address": 8378,
+   "type": "line",
+   "text": "Sound-effect patches ($20BA, $20D9, $20F8): the E capsule enlarges the Vaus ($AA53)."
+  },
+  {
+   "address": 8471,
+   "type": "line",
+   "text": "Sound-effect patches ($2117, $2136, $2155): a laser shot is fired ($A7AA). The simulated games never fired, so the simulator did not read these."
+  },
+  {
+   "address": 8564,
+   "type": "line",
+   "text": "Sound-effect patches ($2174, $2193, $21B2): a silver brick is hit without breaking ($B0BD) or a gold brick is hit ($B050)."
+  },
+  {
+   "address": 8657,
+   "type": "line",
+   "text": "Sound-effect patches ($21D1, $21F0, $220F): an enemy is destroyed ($9F2A)."
+  },
+  {
+   "address": 8750,
+   "type": "line",
+   "text": "Sound-effect patches ($222E, $224D, $226C): the Vaus starts to leave through the open exit ($A48C)."
+  },
+  {
+   "address": 8843,
+   "type": "line",
+   "text": "Sound-effect patches ($228B, $22AA, $22C9): the ball is caught with the C power ($AC7C)."
+  },
+  {
+   "address": 8936,
+   "type": "line",
+   "text": "Sound-effect patches ($22E8, $2307, $2326): played after the intro animation, before the first round ($F04F); the game waits for it to end ($F06F-$F078)."
+  },
+  {
+   "address": 9029,
+   "type": "line",
+   "text": "Sound-effect patches ($2345, $2364, $2383): the last ball is lost and the Vaus explodes ($9B15)."
+  },
+  {
+   "address": 9122,
+   "type": "line",
+   "text": "Sound-effect patches ($23A2, $23C1, $23E0): the ball hits Doh ($B12A)."
+  },
+  {
+   "address": 9215,
+   "type": "line",
+   "text": "Sound-effect patches ($23FF, $241E, $243D, to $245B): Doh is destroyed, before the ending ($9659)."
+  },
+  {
+   "address": 9308,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument, 29 bytes ($245C-$2478), the sound the next notes take; +$00: pitch-envelope segment 1 step, low byte (copied to the voice state at note start when the pitch mode is non-zero). Filled by the sequence commands that copy an instrument from an address given in the sequence (self-modified LDA operands at $2875, $28AA for voice 1, $2975, $29AA voice 2, $2AA8, $2ADD voice 3) or poke single bytes ($28C3, $29C3, $2B0C) or the last five ($290A, $2A0A, $2B47); read at each note ($2C95-$2D46 for voice 1, $2DCB-$2E9F voice 2, $2F28-$2FFC voice 3)."
+  },
+  {
+   "address": 9309,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$01: pitch-envelope segment 1 step, high byte."
+  },
+  {
+   "address": 9310,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$02: pitch-envelope segment 2 step, low byte."
+  },
+  {
+   "address": 9311,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$03: pitch-envelope segment 2 step, high byte."
+  },
+  {
+   "address": 9312,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$04: pitch-envelope segment 3 step, low byte."
+  },
+  {
+   "address": 9313,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$05: pitch-envelope segment 3 step, high byte."
+  },
+  {
+   "address": 9314,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$06: pitch-envelope segment 4 step, low byte."
+  },
+  {
+   "address": 9315,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$07: pitch-envelope segment 4 step, high byte."
+  },
+  {
+   "address": 9316,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$08: pitch-envelope segment 1 length in frames."
+  },
+  {
+   "address": 9317,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$09: pitch-envelope segment 2 length in frames."
+  },
+  {
+   "address": 9318,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0A: pitch-envelope segment 3 length in frames."
+  },
+  {
+   "address": 9319,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0B: pitch-envelope segment 4 length in frames."
+  },
+  {
+   "address": 9320,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0C: frames before the pitch envelope starts."
+  },
+  {
+   "address": 9321,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0D: pitch-envelope mode: 0 off; bit 1 apply segment 4's step during the start delay; bit 7 restart from the note, bit 0 repeat from where it is, when the four segments run out; bit 3 (voice 2 only acts on it) arpeggio instead of slides."
+  },
+  {
+   "address": 9322,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0E: pulse-width sweep segment 1 length in frames."
+  },
+  {
+   "address": 9323,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$0F: pulse-width sweep segment 2 length in frames."
+  },
+  {
+   "address": 9324,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$10: frames before the pulse-width sweep starts."
+  },
+  {
+   "address": 9325,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$11: pulse-width sweep mode: 0 off; bit 7 restart from the start width, bit 0 repeat, when both segments run out."
+  },
+  {
+   "address": 9326,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$12: pulse-width sweep segment 1 step, low byte."
+  },
+  {
+   "address": 9327,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$13: pulse-width sweep segment 1 step, high byte."
+  },
+  {
+   "address": 9328,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$14: pulse-width sweep segment 2 step, low byte."
+  },
+  {
+   "address": 9329,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$15: pulse-width sweep segment 2 step, high byte."
+  },
+  {
+   "address": 9330,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$16: pulse width, low byte, written to the SID at each note."
+  },
+  {
+   "address": 9331,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$17: pulse width, high nibble, written to the SID at each note."
+  },
+  {
+   "address": 9332,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$18: SID control byte (waveform and gate), written without bit 3 at each note; bit 3 here means: release the gate a set time before the note ends."
+  },
+  {
+   "address": 9333,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$19: attack/decay byte written to the SID at each note."
+  },
+  {
+   "address": 9334,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$1A: sustain/release byte written to the SID at each note."
+  },
+  {
+   "address": 9335,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$1B: gate-off time: frames into the note (or, with control bit 3, frames before its end) at which the gate is cleared; $FF never."
+  },
+  {
+   "address": 9336,
+   "type": "line",
+   "text": "Music driver, voice 1 instrument +$1C: voice life: frames after the gate goes off before the voice's SID registers are cleared; $FF never; 0 stops all of the voice's timers and envelopes."
+  },
+  {
+   "address": 9337,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument, 29 bytes ($2479-$2495), the sound the next notes take; +$00: pitch-envelope segment 1 step, low byte (copied to the voice state at note start when the pitch mode is non-zero). Filled by the sequence commands that copy an instrument from an address given in the sequence (self-modified LDA operands at $2875, $28AA for voice 1, $2975, $29AA voice 2, $2AA8, $2ADD voice 3) or poke single bytes ($28C3, $29C3, $2B0C) or the last five ($290A, $2A0A, $2B47); read at each note ($2C95-$2D46 for voice 1, $2DCB-$2E9F voice 2, $2F28-$2FFC voice 3)."
+  },
+  {
+   "address": 9338,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$01: pitch-envelope segment 1 step, high byte."
+  },
+  {
+   "address": 9339,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$02: pitch-envelope segment 2 step, low byte."
+  },
+  {
+   "address": 9340,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$03: pitch-envelope segment 2 step, high byte."
+  },
+  {
+   "address": 9341,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$04: pitch-envelope segment 3 step, low byte."
+  },
+  {
+   "address": 9342,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$05: pitch-envelope segment 3 step, high byte."
+  },
+  {
+   "address": 9343,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$06: pitch-envelope segment 4 step, low byte."
+  },
+  {
+   "address": 9344,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$07: pitch-envelope segment 4 step, high byte."
+  },
+  {
+   "address": 9345,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$08: pitch-envelope segment 1 length in frames."
+  },
+  {
+   "address": 9346,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$09: pitch-envelope segment 2 length in frames."
+  },
+  {
+   "address": 9347,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0A: pitch-envelope segment 3 length in frames."
+  },
+  {
+   "address": 9348,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0B: pitch-envelope segment 4 length in frames."
+  },
+  {
+   "address": 9349,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0C: frames before the pitch envelope starts."
+  },
+  {
+   "address": 9350,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0D: pitch-envelope mode: 0 off; bit 1 apply segment 4's step during the start delay; bit 7 restart from the note, bit 0 repeat from where it is, when the four segments run out; bit 3 (voice 2 only acts on it) arpeggio instead of slides."
+  },
+  {
+   "address": 9351,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0E: pulse-width sweep segment 1 length in frames."
+  },
+  {
+   "address": 9352,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$0F: pulse-width sweep segment 2 length in frames."
+  },
+  {
+   "address": 9353,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$10: frames before the pulse-width sweep starts."
+  },
+  {
+   "address": 9354,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$11: pulse-width sweep mode: 0 off; bit 7 restart from the start width, bit 0 repeat, when both segments run out."
+  },
+  {
+   "address": 9355,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$12: pulse-width sweep segment 1 step, low byte."
+  },
+  {
+   "address": 9356,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$13: pulse-width sweep segment 1 step, high byte."
+  },
+  {
+   "address": 9357,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$14: pulse-width sweep segment 2 step, low byte."
+  },
+  {
+   "address": 9358,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$15: pulse-width sweep segment 2 step, high byte."
+  },
+  {
+   "address": 9359,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$16: pulse width, low byte, written to the SID at each note."
+  },
+  {
+   "address": 9360,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$17: pulse width, high nibble, written to the SID at each note."
+  },
+  {
+   "address": 9361,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$18: SID control byte (waveform and gate), written without bit 3 at each note; bit 3 here means: release the gate a set time before the note ends."
+  },
+  {
+   "address": 9362,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$19: attack/decay byte written to the SID at each note."
+  },
+  {
+   "address": 9363,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$1A: sustain/release byte written to the SID at each note."
+  },
+  {
+   "address": 9364,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$1B: gate-off time: frames into the note (or, with control bit 3, frames before its end) at which the gate is cleared; $FF never."
+  },
+  {
+   "address": 9365,
+   "type": "line",
+   "text": "Music driver, voice 2 instrument +$1C: voice life: frames after the gate goes off before the voice's SID registers are cleared; $FF never; 0 stops all of the voice's timers and envelopes."
+  },
+  {
+   "address": 9366,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument, 29 bytes ($2496-$24B2), the sound the next notes take; +$00: pitch-envelope segment 1 step, low byte (copied to the voice state at note start when the pitch mode is non-zero). Filled by the sequence commands that copy an instrument from an address given in the sequence (self-modified LDA operands at $2875, $28AA for voice 1, $2975, $29AA voice 2, $2AA8, $2ADD voice 3) or poke single bytes ($28C3, $29C3, $2B0C) or the last five ($290A, $2A0A, $2B47); read at each note ($2C95-$2D46 for voice 1, $2DCB-$2E9F voice 2, $2F28-$2FFC voice 3)."
+  },
+  {
+   "address": 9367,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$01: pitch-envelope segment 1 step, high byte."
+  },
+  {
+   "address": 9368,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$02: pitch-envelope segment 2 step, low byte."
+  },
+  {
+   "address": 9369,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$03: pitch-envelope segment 2 step, high byte."
+  },
+  {
+   "address": 9370,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$04: pitch-envelope segment 3 step, low byte."
+  },
+  {
+   "address": 9371,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$05: pitch-envelope segment 3 step, high byte."
+  },
+  {
+   "address": 9372,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$06: pitch-envelope segment 4 step, low byte."
+  },
+  {
+   "address": 9373,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$07: pitch-envelope segment 4 step, high byte."
+  },
+  {
+   "address": 9374,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$08: pitch-envelope segment 1 length in frames."
+  },
+  {
+   "address": 9375,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$09: pitch-envelope segment 2 length in frames."
+  },
+  {
+   "address": 9376,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0A: pitch-envelope segment 3 length in frames."
+  },
+  {
+   "address": 9377,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0B: pitch-envelope segment 4 length in frames."
+  },
+  {
+   "address": 9378,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0C: frames before the pitch envelope starts."
+  },
+  {
+   "address": 9379,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0D: pitch-envelope mode: 0 off; bit 1 apply segment 4's step during the start delay; bit 7 restart from the note, bit 0 repeat from where it is, when the four segments run out; bit 3 (voice 2 only acts on it) arpeggio instead of slides."
+  },
+  {
+   "address": 9380,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0E: pulse-width sweep segment 1 length in frames."
+  },
+  {
+   "address": 9381,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$0F: pulse-width sweep segment 2 length in frames."
+  },
+  {
+   "address": 9382,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$10: frames before the pulse-width sweep starts."
+  },
+  {
+   "address": 9383,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$11: pulse-width sweep mode: 0 off; bit 7 restart from the start width, bit 0 repeat, when both segments run out."
+  },
+  {
+   "address": 9384,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$12: pulse-width sweep segment 1 step, low byte."
+  },
+  {
+   "address": 9385,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$13: pulse-width sweep segment 1 step, high byte."
+  },
+  {
+   "address": 9386,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$14: pulse-width sweep segment 2 step, low byte."
+  },
+  {
+   "address": 9387,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$15: pulse-width sweep segment 2 step, high byte."
+  },
+  {
+   "address": 9388,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$16: pulse width, low byte, written to the SID at each note."
+  },
+  {
+   "address": 9389,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$17: pulse width, high nibble, written to the SID at each note."
+  },
+  {
+   "address": 9390,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$18: SID control byte (waveform and gate), written without bit 3 at each note; bit 3 here means: release the gate a set time before the note ends."
+  },
+  {
+   "address": 9391,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$19: attack/decay byte written to the SID at each note."
+  },
+  {
+   "address": 9392,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$1A: sustain/release byte written to the SID at each note."
+  },
+  {
+   "address": 9393,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$1B: gate-off time: frames into the note (or, with control bit 3, frames before its end) at which the gate is cleared; $FF never."
+  },
+  {
+   "address": 9394,
+   "type": "line",
+   "text": "Music driver, voice 3 instrument +$1C: voice life: frames after the gate goes off before the voice's SID registers are cleared; $FF never; 0 stops all of the voice's timers and envelopes."
+  },
+  {
+   "address": 9395,
+   "type": "line",
+   "text": "Music driver, filter sweep as loaded by the voice 3 sequence command at $2A80 from the table at $368C: 16 bytes, copied to filter_steps..filter_start ($24C3-$24D2) by filter_restart ($2BFE) whenever a sweep starts."
+  },
+  {
+   "address": 9403,
+   "type": "line",
+   "text": "Second half of filter_preset: the four segment lengths, the delay, the mode and the start cutoff ($24BB-$24C2), copied to $24CB-$24D2."
+  },
+  {
+   "address": 9411,
+   "type": "line",
+   "text": "Music driver, filter sweep segment 1 step, low byte (four 16-bit cutoff steps at $24C3-$24CA, added to the cutoff each frame while that segment's counter runs, $2B7A-$2BC4)."
+  },
+  {
+   "address": 9412,
+   "type": "line",
+   "text": "Filter sweep segment 1 cutoff step, high byte."
+  },
+  {
+   "address": 9413,
+   "type": "line",
+   "text": "Filter sweep segment 2 cutoff step, low byte."
+  },
+  {
+   "address": 9414,
+   "type": "line",
+   "text": "Filter sweep segment 2 cutoff step, high byte."
+  },
+  {
+   "address": 9415,
+   "type": "line",
+   "text": "Filter sweep segment 3 cutoff step, low byte."
+  },
+  {
+   "address": 9416,
+   "type": "line",
+   "text": "Filter sweep segment 3 cutoff step, high byte."
+  },
+  {
+   "address": 9417,
+   "type": "line",
+   "text": "Filter sweep segment 4 cutoff step, low byte."
+  },
+  {
+   "address": 9418,
+   "type": "line",
+   "text": "Filter sweep segment 4 cutoff step, high byte."
+  },
+  {
+   "address": 9419,
+   "type": "line",
+   "text": "Filter sweep segment 1 length in frames, reloaded into filter_count1 ($24D5) by $2716."
+  },
+  {
+   "address": 9420,
+   "type": "line",
+   "text": "Filter sweep segment 2 length, reloaded into filter_count2."
+  },
+  {
+   "address": 9421,
+   "type": "line",
+   "text": "Filter sweep segment 3 length, reloaded into filter_count3."
+  },
+  {
+   "address": 9422,
+   "type": "line",
+   "text": "Filter sweep segment 4 length, reloaded into filter_count4."
+  },
+  {
+   "address": 9423,
+   "type": "line",
+   "text": "Frames before the filter sweep starts; counted down at $2B6E."
+  },
+  {
+   "address": 9424,
+   "type": "line",
+   "text": "Filter sweep mode: 0 off (cleared by sound_reset $2690 and when the filtered voice falls silent, $3062); bit 1 apply segment 4's step during the delay; bit 7 restart from the start cutoff, bit 0 repeat, when the segments run out ($2BE9)."
+  },
+  {
+   "address": 9425,
+   "type": "line",
+   "text": "Filter sweep start cutoff, low byte (copied to filter_cutoff by $270A)."
+  },
+  {
+   "address": 9426,
+   "type": "line",
+   "text": "Filter sweep start cutoff, high byte."
+  },
+  {
+   "address": 9427,
+   "type": "line",
+   "text": "Filter cutoff as swept, low byte of a 16-bit value whose bits 0-2 go to $D415 and bits 3-10 to $D416 ($2BCE-$2BE5)."
+  },
+  {
+   "address": 9428,
+   "type": "line",
+   "text": "Filter cutoff as swept, high byte."
+  },
+  {
+   "address": 9429,
+   "type": "line",
+   "text": "Frames left in filter sweep segment 1."
+  },
+  {
+   "address": 9430,
+   "type": "line",
+   "text": "Frames left in filter sweep segment 2."
+  },
+  {
+   "address": 9431,
+   "type": "line",
+   "text": "Frames left in filter sweep segment 3."
+  },
+  {
+   "address": 9432,
+   "type": "line",
+   "text": "Frames left in filter sweep segment 4."
+  },
+  {
+   "address": 9433,
+   "type": "line",
+   "text": "Music driver, voice 1 state, 35 bytes ($24D9-$24FB): the envelopes of the sounding note, loaded from the instrument at each note or from a sound-effect patch by play_sfx ($272F, patch bytes $00-$17 to +$00-$17, $18 to +$1A, $1B-$1C to +$1B-$1C, $1D-$1E to +$18-$19); +$00: pitch step of segment 1, low byte, added to the frequency every frame while the segment 1 counter runs."
+  },
+  {
+   "address": 9434,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$01: pitch step of segment 1, high byte."
+  },
+  {
+   "address": 9435,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$02: pitch step of segment 2, low byte."
+  },
+  {
+   "address": 9436,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$03: pitch step of segment 2, high byte."
+  },
+  {
+   "address": 9437,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$04: pitch step of segment 3, low byte."
+  },
+  {
+   "address": 9438,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$05: pitch step of segment 3, high byte."
+  },
+  {
+   "address": 9439,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$06: pitch step of segment 4, low byte."
+  },
+  {
+   "address": 9440,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$07: pitch step of segment 4, high byte."
+  },
+  {
+   "address": 9441,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$08: segment 1 length, reloaded into its counter (+$1D) when the envelope restarts."
+  },
+  {
+   "address": 9442,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$09: segment 2 length, reloaded into the counter at +$1E."
+  },
+  {
+   "address": 9443,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0A: segment 3 length, reloaded into the counter at +$1F."
+  },
+  {
+   "address": 9444,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0B: segment 4 length, reloaded into the counter at +$20."
+  },
+  {
+   "address": 9445,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0C: frames left before the pitch envelope starts."
+  },
+  {
+   "address": 9446,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0D: pitch-envelope mode for the sounding note (0 off; bits as in the instrument)."
+  },
+  {
+   "address": 9447,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0E: pulse sweep segment 1 length, reloaded into the counter at +$21."
+  },
+  {
+   "address": 9448,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$0F: pulse sweep segment 2 length, reloaded into the counter at +$22."
+  },
+  {
+   "address": 9449,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$10: frames left before the pulse-width sweep starts."
+  },
+  {
+   "address": 9450,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$11: pulse-width sweep mode for the sounding note (0 off)."
+  },
+  {
+   "address": 9451,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$12: pulse-width step of segment 1, low byte."
+  },
+  {
+   "address": 9452,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$13: pulse-width step of segment 1, high byte."
+  },
+  {
+   "address": 9453,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$14: pulse-width step of segment 2, low byte."
+  },
+  {
+   "address": 9454,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$15: pulse-width step of segment 2, high byte."
+  },
+  {
+   "address": 9455,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$16: pulse width the sweep restarts from, low byte."
+  },
+  {
+   "address": 9456,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$17: pulse width the sweep restarts from, high byte."
+  },
+  {
+   "address": 9457,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$18: frequency of the note as played, low byte (the pitch envelope restarts from it)."
+  },
+  {
+   "address": 9458,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$19: frequency of the note as played, high byte."
+  },
+  {
+   "address": 9459,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1A: control byte of the sounding note; the gate is cleared from this copy."
+  },
+  {
+   "address": 9460,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1B: frames until the gate is cleared ($FF never)."
+  },
+  {
+   "address": 9461,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1C: frames until the voice's SID registers are cleared after the gate goes off; 0 means the voice is idle and its envelopes are not run ($3022); polled with the others by music_busy ($3417); $FF never ends."
+  },
+  {
+   "address": 9462,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1D: frames left in pitch segment 1."
+  },
+  {
+   "address": 9463,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1E: frames left in pitch segment 2."
+  },
+  {
+   "address": 9464,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$1F: frames left in pitch segment 3."
+  },
+  {
+   "address": 9465,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$20: frames left in pitch segment 4."
+  },
+  {
+   "address": 9466,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$21: frames left in pulse sweep segment 1."
+  },
+  {
+   "address": 9467,
+   "type": "line",
+   "text": "Music driver, voice 1 state +$22: frames left in pulse sweep segment 2."
+  },
+  {
+   "address": 9468,
+   "type": "line",
+   "text": "Music driver, voice 2 state, 35 bytes ($24FC-$251E): the envelopes of the sounding note, loaded from the instrument at each note or from a sound-effect patch by play_sfx ($272F, patch bytes $00-$17 to +$00-$17, $18 to +$1A, $1B-$1C to +$1B-$1C, $1D-$1E to +$18-$19); +$00: pitch step of segment 1, low byte, added to the frequency every frame while the segment 1 counter runs."
+  },
+  {
+   "address": 9469,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$01: pitch step of segment 1, high byte."
+  },
+  {
+   "address": 9470,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$02: pitch step of segment 2, low byte."
+  },
+  {
+   "address": 9471,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$03: pitch step of segment 2, high byte."
+  },
+  {
+   "address": 9472,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$04: pitch step of segment 3, low byte; in arpeggio mode (pmode bit 3) the frame countdown to the next arpeggio note."
+  },
+  {
+   "address": 9473,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$05: pitch step of segment 3, high byte."
+  },
+  {
+   "address": 9474,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$06: pitch step of segment 4, low byte; in arpeggio mode the countdown reload, frames per arpeggio note."
+  },
+  {
+   "address": 9475,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$07: pitch step of segment 4, high byte."
+  },
+  {
+   "address": 9476,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$08: segment 1 length, reloaded into its counter (+$1D) when the envelope restarts; in arpeggio mode the low byte of the arpeggio table's address."
+  },
+  {
+   "address": 9477,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$09: segment 2 length, reloaded into the counter at +$1E; in arpeggio mode the high byte of the arpeggio table's address."
+  },
+  {
+   "address": 9478,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0A: segment 3 length, reloaded into the counter at +$1F; in arpeggio mode the note the arpeggio offsets are added to (set from the sequence's note at $2E94)."
+  },
+  {
+   "address": 9479,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0B: segment 4 length, reloaded into the counter at +$20; in arpeggio mode the index the arpeggio restarts at."
+  },
+  {
+   "address": 9480,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0C: frames left before the pitch envelope starts; in arpeggio mode the current arpeggio table index, counting down."
+  },
+  {
+   "address": 9481,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0D: pitch-envelope mode for the sounding note (0 off; bits as in the instrument)."
+  },
+  {
+   "address": 9482,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0E: pulse sweep segment 1 length, reloaded into the counter at +$21."
+  },
+  {
+   "address": 9483,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$0F: pulse sweep segment 2 length, reloaded into the counter at +$22."
+  },
+  {
+   "address": 9484,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$10: frames left before the pulse-width sweep starts."
+  },
+  {
+   "address": 9485,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$11: pulse-width sweep mode for the sounding note (0 off)."
+  },
+  {
+   "address": 9486,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$12: pulse-width step of segment 1, low byte."
+  },
+  {
+   "address": 9487,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$13: pulse-width step of segment 1, high byte."
+  },
+  {
+   "address": 9488,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$14: pulse-width step of segment 2, low byte."
+  },
+  {
+   "address": 9489,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$15: pulse-width step of segment 2, high byte."
+  },
+  {
+   "address": 9490,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$16: pulse width the sweep restarts from, low byte."
+  },
+  {
+   "address": 9491,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$17: pulse width the sweep restarts from, high byte."
+  },
+  {
+   "address": 9492,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$18: frequency of the note as played, low byte (the pitch envelope restarts from it)."
+  },
+  {
+   "address": 9493,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$19: frequency of the note as played, high byte."
+  },
+  {
+   "address": 9494,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1A: control byte of the sounding note; the gate is cleared from this copy."
+  },
+  {
+   "address": 9495,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1B: frames until the gate is cleared ($FF never)."
+  },
+  {
+   "address": 9496,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1C: frames until the voice's SID registers are cleared after the gate goes off; 0 means the voice is idle and its envelopes are not run ($3022); polled with the others by music_busy ($3417); $FF never ends."
+  },
+  {
+   "address": 9497,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1D: frames left in pitch segment 1."
+  },
+  {
+   "address": 9498,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1E: frames left in pitch segment 2."
+  },
+  {
+   "address": 9499,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$1F: frames left in pitch segment 3."
+  },
+  {
+   "address": 9500,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$20: frames left in pitch segment 4."
+  },
+  {
+   "address": 9501,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$21: frames left in pulse sweep segment 1."
+  },
+  {
+   "address": 9502,
+   "type": "line",
+   "text": "Music driver, voice 2 state +$22: frames left in pulse sweep segment 2."
+  },
+  {
+   "address": 9503,
+   "type": "line",
+   "text": "Music driver, voice 3 state, 35 bytes ($251F-$2541): the envelopes of the sounding note, loaded from the instrument at each note or from a sound-effect patch by play_sfx ($272F, patch bytes $00-$17 to +$00-$17, $18 to +$1A, $1B-$1C to +$1B-$1C, $1D-$1E to +$18-$19); +$00: pitch step of segment 1, low byte, added to the frequency every frame while the segment 1 counter runs."
+  },
+  {
+   "address": 9504,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$01: pitch step of segment 1, high byte."
+  },
+  {
+   "address": 9505,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$02: pitch step of segment 2, low byte."
+  },
+  {
+   "address": 9506,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$03: pitch step of segment 2, high byte."
+  },
+  {
+   "address": 9507,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$04: pitch step of segment 3, low byte."
+  },
+  {
+   "address": 9508,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$05: pitch step of segment 3, high byte."
+  },
+  {
+   "address": 9509,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$06: pitch step of segment 4, low byte."
+  },
+  {
+   "address": 9510,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$07: pitch step of segment 4, high byte."
+  },
+  {
+   "address": 9511,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$08: segment 1 length, reloaded into its counter (+$1D) when the envelope restarts."
+  },
+  {
+   "address": 9512,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$09: segment 2 length, reloaded into the counter at +$1E."
+  },
+  {
+   "address": 9513,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0A: segment 3 length, reloaded into the counter at +$1F."
+  },
+  {
+   "address": 9514,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0B: segment 4 length, reloaded into the counter at +$20."
+  },
+  {
+   "address": 9515,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0C: frames left before the pitch envelope starts."
+  },
+  {
+   "address": 9516,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0D: pitch-envelope mode for the sounding note (0 off; bits as in the instrument)."
+  },
+  {
+   "address": 9517,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0E: pulse sweep segment 1 length, reloaded into the counter at +$21."
+  },
+  {
+   "address": 9518,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$0F: pulse sweep segment 2 length, reloaded into the counter at +$22."
+  },
+  {
+   "address": 9519,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$10: frames left before the pulse-width sweep starts."
+  },
+  {
+   "address": 9520,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$11: pulse-width sweep mode for the sounding note (0 off)."
+  },
+  {
+   "address": 9521,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$12: pulse-width step of segment 1, low byte."
+  },
+  {
+   "address": 9522,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$13: pulse-width step of segment 1, high byte."
+  },
+  {
+   "address": 9523,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$14: pulse-width step of segment 2, low byte."
+  },
+  {
+   "address": 9524,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$15: pulse-width step of segment 2, high byte."
+  },
+  {
+   "address": 9525,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$16: pulse width the sweep restarts from, low byte."
+  },
+  {
+   "address": 9526,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$17: pulse width the sweep restarts from, high byte."
+  },
+  {
+   "address": 9527,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$18: frequency of the note as played, low byte (the pitch envelope restarts from it)."
+  },
+  {
+   "address": 9528,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$19: frequency of the note as played, high byte."
+  },
+  {
+   "address": 9529,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1A: control byte of the sounding note; the gate is cleared from this copy."
+  },
+  {
+   "address": 9530,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1B: frames until the gate is cleared ($FF never)."
+  },
+  {
+   "address": 9531,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1C: frames until the voice's SID registers are cleared after the gate goes off; 0 means the voice is idle and its envelopes are not run ($3022); polled with the others by music_busy ($3417); $FF never ends."
+  },
+  {
+   "address": 9532,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1D: frames left in pitch segment 1."
+  },
+  {
+   "address": 9533,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1E: frames left in pitch segment 2."
+  },
+  {
+   "address": 9534,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$1F: frames left in pitch segment 3."
+  },
+  {
+   "address": 9535,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$20: frames left in pitch segment 4."
+  },
+  {
+   "address": 9536,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$21: frames left in pulse sweep segment 1."
+  },
+  {
+   "address": 9537,
+   "type": "line",
+   "text": "Music driver, voice 3 state +$22: frames left in pulse sweep segment 2."
+  },
+  {
+   "address": 9538,
+   "type": "line",
+   "text": "Music driver: which voice's notes restart the filter sweep (0 voice 1 at $2C54, 1 voice 2 at $2DAB, 2 voice 3 at $2F08); $FF none (sound_reset $2690, and $3751 writes 0). Set with the resonance/routing by the sequence commands at $2AF6/$2B08."
+  },
+  {
+   "address": 9539,
+   "type": "line",
+   "text": "Music driver scratch: the cutoff's low byte while it is shifted into the $D416 value ($2BD5-$2BE1)."
+  },
+  {
+   "address": 9540,
+   "type": "line",
+   "text": "Music driver: the tune's first header byte as read by play_tune ($262E); its low nibble is the tempo, frames per length unit (self-modified into the ADC at $2685). Written, never read as a variable."
+  },
+  {
+   "address": 9541,
+   "type": "line",
+   "text": "Music driver: voice 1 sequence running (1), set by play_tune ($2670), cleared by sound_reset and counted down at the sequence's end ($28FA); voice 1's step ($2C15) does nothing while it is 0. Polled with the other voices by music_busy ($3417)."
+  },
+  {
+   "address": 9542,
+   "type": "line",
+   "text": "Music driver: voice 2 sequence running flag (play_tune $2670 indexed, end at $29FA, step at $2D6C)."
+  },
+  {
+   "address": 9543,
+   "type": "line",
+   "text": "Music driver: voice 3 sequence running flag (play_tune $2670 indexed, end at $2B43, step at $2EC5)."
+  },
+  {
+   "address": 9544,
+   "type": "line",
+   "text": "Music driver scratch: the voice number being set up, in play_tune ($2638-$267D, counting 2 to 0) and play_sfx ($2733)."
+  },
+  {
+   "address": 9545,
+   "type": "line",
+   "text": "Music driver scratch: twice the voice number in play_tune ($263D-$267A); also the base of note_lengths, read as $2549,X with X = a note's length code 1-32 ($2D5A, $2EB3, $3010)."
+  },
+  {
+   "address": 9546,
+   "type": "line",
+   "text": "Music driver: 32 note lengths in frames, entry n = (n+1) x tempo, rebuilt for each tune by play_tune ($2682-$268D); a note's length code 1-32 picks $2549+code. As loaded: 4, 8, ... 128 (tempo 4)."
+  },
+  {
+   "address": 9578,
+   "type": "line",
+   "text": "Music driver: per voice, the SID register offset of the pulse-width register ($02, $09, $10); play_sfx ($2740) writes a patch's bytes $16-$1A to registers +0..+4 from there (pulse width, control, attack/decay, sustain/release) and its bytes $1D-$1E to the frequency just below."
+  },
+  {
+   "address": 9581,
+   "type": "line",
+   "text": "Music driver: per voice, the offset of its instrument block from v1_instr ($00, $1D, $3A), used by play_tune ($265B) to clear the instrument's mode bytes."
+  },
+  {
+   "address": 9584,
+   "type": "line",
+   "text": "Music driver: per voice, the offset of byte +$17 of its state block from v1_state ($17, $3A, $5D); play_sfx ($276E) copies a patch's first 24 bytes in backwards from there."
+  },
+  {
+   "address": 9587,
+   "type": "line",
+   "text": "Music driver: SID frequency table, low bytes, 81 entries for notes 0-80 (note + transpose): note 0 is 279 ($0117, 16.4 Hz on a PAL clock, C0), note 48 is 4471 (262.6 Hz, middle C), note 79 G6; entry 80 is 0. High bytes at freq_hi ($25C4)."
+  },
+  {
+   "address": 9668,
+   "type": "line",
+   "text": "Music driver: SID frequency table, high bytes, 81 entries, $25C4-$2614 (this label's range ends at $25FF; $2600-$2614 continue the table)."
   },
   {
    "address": 9728,
