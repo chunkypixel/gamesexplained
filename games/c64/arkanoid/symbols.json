@@ -624,7 +624,7 @@
   {
    "start": 63370,
    "end": 63370,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63371,
@@ -654,7 +654,7 @@
   {
    "start": 63485,
    "end": 63485,
-   "type": "Undefined"
+   "type": "Byte"
   },
   {
    "start": 63486,
@@ -4204,6 +4204,12 @@
    "kind": "user"
   },
   {
+   "address": 10291,
+   "name": "skip_bit_2833",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 10292,
    "name": "v0_cmd_c2_call",
    "type": "UserDefined",
@@ -4452,6 +4458,12 @@
   {
    "address": 10784,
    "name": "v2_cmd_c6_transpose_call",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 10791,
+   "name": "skip_bit_2a27",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -6118,8 +6130,20 @@
    "kind": "user"
   },
   {
+   "address": 24388,
+   "name": "undoc_nop_5f44",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 24390,
    "name": "protection_start_timer",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 24398,
+   "name": "undoc_nop_5f4e",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -6216,6 +6240,12 @@
   {
    "address": 26752,
    "name": "intro_sprites_vaus_turning",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 27776,
+   "name": "intro_sprite_b2",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -11464,6 +11494,12 @@
    "kind": "user"
   },
   {
+   "address": 63370,
+   "name": "pad_f78a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 63371,
    "name": "screen_row_addresses",
    "type": "Field",
@@ -11516,6 +11552,12 @@
    "name": "b_F7FA",
    "type": "Branch",
    "kind": "auto"
+  },
+  {
+   "address": 63485,
+   "name": "spare_rts_f7fd",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 63486,
@@ -15130,7 +15172,7 @@
   {
    "address": 10291,
    "type": "line",
-   "text": "$2C: the opcode of BIT $03A9 when $C6 runs through here (it only sets flags, skipping LDA #$03); the command $C2 vector points at $2834, the LDA #$03 inside it"
+   "text": "$2C, the opcode of a BIT $xxxx that swallows the two bytes after it: code arriving here from above skips the instruction those bytes hold, while the vector table enters at $2834 and runs it. Part of the driver's code, typed as a byte because it is both."
   },
   {
    "address": 10292,
@@ -15295,7 +15337,7 @@
   {
    "address": 10791,
    "type": "line",
-   "text": "$2C: opcode of BIT $03A9 when $C6 runs through (skips LDA #$03); the $C2 vector points at $2A28"
+   "text": "$2C, the opcode of BIT $03A9: voice 2's command $C6 runs through it and skips LDA #$03, while command $C2's vector enters at $2A28 and loads it. Part of the driver's code, typed as a byte because it is both."
   },
   {
    "address": 10792,
@@ -16005,7 +16047,7 @@
   {
    "address": 24388,
    "type": "line",
-   "text": "$44 $6D: undocumented NOP $6D (zero-page read, 2 bytes), does nothing; executed (simulator) between LDA #$01 and STA $DC04"
+   "text": "$44 $6D: the undocumented NOP $6D (zero page), two bytes that do nothing; the disassembler cannot decode it. Part of the protection routine $5F42, before STA $DC04."
   },
   {
    "address": 24390,
@@ -16015,7 +16057,7 @@
   {
    "address": 24398,
    "type": "line",
-   "text": "$1C $AD $08: undocumented NOP $08AD,X (absolute,X read, 3 bytes), does nothing; executed between STA $DC0E and JSR $A949. A documented-only disassembler shows the $AD as LDA $2008 and misreads the JSR"
+   "text": "$1C $AD $08: the undocumented NOP $08AD,X, three bytes that read memory and do nothing; it hides the JSR $A949 that follows from a decoder that knows only the documented set. Part of the protection routine $5F42."
   },
   {
    "address": 24401,
@@ -16081,6 +16123,11 @@
    "address": 26752,
    "type": "line",
    "text": "Sprite frames $A2-$B5 ($6880-$6D7F): a capsule-shaped craft in cyan and white with red ends, like the Vaus, turning end over end while it shrinks into the distance, to a few pixels at $B4/$B5"
+  },
+  {
+   "address": 27776,
+   "type": "line",
+   "text": "Bank 1 sprite frame $B2 among the intro frames ($6800-$757F): a few pixels only, read by the video chip through a sprite pointer during the intro."
   },
   {
    "address": 28032,
@@ -18618,6 +18665,11 @@
    "text": "Raster interrupt at line $14 (20). Acknowledges, loads CIA 2 timer B with $07A8 and starts it one-shot ($DD0F = $19), so nmi_frame_a ($F855) fires some 30 lines later; sets the next raster interrupt to irq_mux ($FBEE) and places the first six virtual sprites (mux_first_six $F95F)."
   },
   {
+   "address": 63370,
+   "type": "line",
+   "text": "A single $00 between the IRQ code and the screen row address table at $F78B; nothing reads or runs it."
+  },
+  {
    "address": 63371,
    "type": "line",
    "text": "Start address of each screen row, as words: $C000 + 40 x row for rows 0-24 (50 bytes, $F78B-$F7BC). Read as low byte $F78B,Y and high byte $F78C,Y with Y = 2 x row by the text printers (print_menu_text $B635 and others) and by $0629, $A246, $A279, $A6D5, $AE1E, $AE88."
@@ -18646,6 +18698,11 @@
    "address": 63467,
    "type": "line",
    "text": "Finds the last entry of the sorted order $9415 whose sprite has a non-zero Y (searching from entry 11 down), and leaves its index in $04, where the multiplexer starts. Y = 0 marks a slot as unused."
+  },
+  {
+   "address": 63485,
+   "type": "line",
+   "text": "A second RTS straight after mux_count_active's own; nothing jumps to it."
   },
   {
    "address": 63486,
