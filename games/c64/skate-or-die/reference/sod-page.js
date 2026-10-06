@@ -1,12 +1,14 @@
-// Shared by the Skate or Die! pages: High Jump's memory from parts/highjump/listing.json, the half-pipe picture and
+// Shared by the Skate or Die! pages: any part's memory from parts/<id>/listing.json, the half-pipe picture and
 // the skater's poses drawn the game's way. Needs ../../lib/c64.js.
 const SOD = (function () {
-  let game = null;
-  async function load() {
-    if (game) return game;
+  const games = {};
+  // A part's memory as its snapshot holds it, from parts/<id>/listing.json; High Jump's by default.
+  async function load(part) {
+    part = part || 'highjump';
+    if (games[part]) return games[part];
     if (!window.C64) throw new Error('This widget needs the site\'s shared script, lib/c64.js.');
-    game = await C64.load('parts/highjump/listing.json');
-    return game;
+    games[part] = await C64.load('parts/' + part + '/listing.json');
+    return games[part];
   }
   const PAL = () => C64.PAL;
 

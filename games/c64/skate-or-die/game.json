@@ -58,8 +58,32 @@
       "Overview"
     ],
     [
-      "gameplay.html",
+      "loading.html",
+      "Loading and title"
+    ],
+    [
+      "town.html",
+      "The town"
+    ],
+    [
+      "freestyle.html",
+      "Freestyle"
+    ],
+    [
+      "highjump.html",
       "High Jump"
+    ],
+    [
+      "race.html",
+      "Downhill Race"
+    ],
+    [
+      "jam.html",
+      "Downhill Jam"
+    ],
+    [
+      "joust.html",
+      "Pool Joust"
     ],
     [
       "graphics.html",
