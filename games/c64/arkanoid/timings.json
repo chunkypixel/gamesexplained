@@ -53,9 +53,17 @@
    "step": "70-minisite",
    "model": "claude-opus-5-5",
    "start": "2026-10-06T03:22:54Z",
-   "end": null,
-   "minutes": null,
-   "note": ""
+   "end": "2026-10-06T03:32:41Z",
+   "minutes": 9.8,
+   "note": "capsule chooser port (40,000 cases), driver run in the page (8 tunes, every write), round renderer (round 1 screen codes), frame; single agent"
+  },
+  {
+   "step": "80-retro",
+   "model": "claude-opus-5-5",
+   "start": "2026-10-06T03:32:41Z",
+   "end": "2026-10-06T03:33:24Z",
+   "minutes": 0.7,
+   "note": "kit edit (50-coverage), lesson, game.json, feedback, TODO"
   }
  ]
 }

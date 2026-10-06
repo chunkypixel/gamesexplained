@@ -3,16 +3,33 @@
   "platform": "c64",
   "slug": "arkanoid",
   "title": "Arkanoid",
-  "year": null,
+  "year": 1987,
   "publisher": "Imagine",
-  "developer": "",
+  "developer": "David A. Collier",
   "title_image": "reference/title.png",
   "build": "",
-  "tier": "none",
-  "coverage_percent": null,
+  "tier": "silver",
+  "coverage_percent": 100,
   "copy": "agent-draft",
   "steward": "",
-  "credits": [],
+  "credits": [
+    {
+      "by": "David A. Collier",
+      "role": "code (second-hand: web search summaries)"
+    },
+    {
+      "by": "Mark Kevin Jones",
+      "role": "graphics (second-hand; the title picture is signed \"Jones\")"
+    },
+    {
+      "by": "Martin Galway",
+      "role": "music (second-hand: web search summaries)"
+    },
+    {
+      "by": "Taito",
+      "role": "the arcade original"
+    }
+  ],
   "tools": {
     "host": "Linux 6.18 x86_64, Ubuntu 24.04 cloud container with four cores and no display",
     "emulator": "VICE, release v3.13.2, v3.13.2-linux-x86_64-gui.zip",
@@ -289,7 +306,7 @@
     ]
   ],
   "links": {
-    "wiki": "",
+    "wiki": "https://www.c64-wiki.com/wiki/Arkanoid",
     "manual": ""
   }
 }

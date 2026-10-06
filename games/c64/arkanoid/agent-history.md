@@ -36,3 +36,28 @@ up from the title, and only fire on port 1 (after J) starts the game.
 **Network.** Every page fetch was refused by the session's proxy (C64-
 Wiki, Wikipedia, the Internet Archive and its Wayback Machine,
 c64online); web search summaries were the only outside source.
+
+**Annotation, in two waves cut short.** Nine agents on disjoint ranges
+used up the session's usage limit within about nine minutes; the
+container restarted before the limit reset, and the disassembler was
+rebuilt from the agents' logs with `r2000.py --replay`, which restored it
+exactly. A second wave of five agents on larger ranges reached 97 % and
+hit the limit again; after the reset the one unfinished agent was
+resumed, and the run continued as a single agent. One agent corrected an
+early claim of this run: the start-up does not decrypt `$BA0A`, it
+scrambles a second protection check that is plain code in the file.
+
+**Verify.** The round index `$093D` and the bricks-left count `$0455`,
+set in round 1, take the game to any round at the next brick broken;
+that gave the references for rounds 2, 3, 4, 10, 18 and 33. The lives
+cheat and the extra-life threshold were tested with checkpoints and pokes.
+A capsule's letter could not be read from the multicolour table and was
+read from a zoomed screenshot instead (green, C).
+
+**Minisite.** The page's sound driver, run in a small 6502 interpreter
+from `listing.json`, stopped on the ending tune at `$2A27`: the byte there
+is the opcode of a `BIT` skip trick that no agent had typed, so the
+listing left it out. Four such gaps were typed and described, and every
+tune then matched the simulator's recording write for write. The play
+tick rate (two driver ticks a frame, one on the title) was measured live
+with checkpoints before recording.
