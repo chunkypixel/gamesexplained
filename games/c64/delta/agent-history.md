@@ -43,3 +43,111 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   stylesheet's and was renamed. The banner font drawing matched the
   screenshot pixel for pixel once the multicolour pairs were mapped
   (01 white, 10 grey, 11 dark grey).
+
+## 2 October 2026, the page split
+
+- At the contributor's request, the single page became five tabs after
+  the Ghostbusters layout: Overview, The 32 stages, How it works, Music
+  and sound, Discoveries, with the shared styles and widget code in
+  `reference/delta-page.css` and `reference/delta-page.js`. New sections:
+  the game, its makers and the copy studied (makers from web search
+  summaries; page fetches were still refused), every stage in a table,
+  the scenery rows, enemy fire, the sound effects, open questions.
+- A section id equal to a widget's id (`music`) let the music player
+  replace its whole section; the section was renamed.
+
+## 4 October 2026, the attack waves tab
+
+- The Attack waves section moved from How it works to a tab of its own,
+  `waves.html`, in four sections.
+- The `path_segments` comment said bit 7 of a segment's fourth byte
+  mirrors the velocity list. The mover copies it to `$1219` at `$8369`
+  (1 when set, X being 1 from `$8326`) and starts the form change at
+  `$8449` only when `$1219` is not 0, so it is the change-form flag, as
+  `facts.md` already said. The comment was corrected.
+
+## 4 October 2026, the attack-wave player
+
+- Chose to record the game's own wave code rather than port it: Delta runs
+  from the hand-over in `kit/c64/machine.js`, starts on one press of fire,
+  and plays its groups in the order VICE shows.
+- With nobody playing, stage 1 never ended: its last group (`$0D`) is a
+  boss with an escort that never leaves. The stand-in shots had to go in
+  through a hook at `$9024`, because `enemies_flags_clear` wipes the hit
+  flags each frame; had to skip exploding and final enemies, or each hit
+  restarted the explosion; and had to set `$129D` as a weapon hit does,
+  or the escort never exploded.
+- VICE's runs from `wave1_start` restarted the wave list several times:
+  the parked ship was rammed (VICE reports sprite collisions, the kit's
+  machine does not). Both runs then got `$2C44` = 0 so collisions never
+  hit the ship, plus the trainer's two patches. The snapshot `stage2_rows`
+  turned out to hold stage 1's wave list under stage 2's banner, being
+  made by forcing the stage clear, so stage 2 was played into in VICE.
+- The enemy sprite pointers are at `$30` + slot (read by the multiplexer
+  at `$2A99`), not at `$B8` or `$C6`, which are the scenery rows'.
+- "Invisible" was checked across all 32 stages: the empty sprite `$9B`
+  shows only for an enemy's first one to three frames and at the end of
+  an explosion.
+
+## 4 October 2026, stages 4-14 against VICE
+
+- One VICE pass from `wave1_start` recorded stages 4-10 and saved a
+  snapshot at each stage's first frame (`delta_stage04`-`delta_stage11`);
+  stages 11-14 and 15-20 then started from those snapshots.
+- Stage 7 first read as five groups different. VICE was one, then two,
+  then three samples ahead of the machine: in heavy frames the raster
+  interrupts run past line 228, the main loop misses its call at `$17D0`
+  where both sides sample, and two game frames pass between samples. The
+  enemies themselves matched once that was allowed for. `compare2.js`
+  allows a skipped VICE sample and counts it (30 in stages 1-13, 27 of
+  them in stage 9), and stops a group where the stand-in shots begin,
+  since those start a fixed number of samples in.
+- Stage 14 is the first real difference: in group `$32` two enemies leave
+  the top edge on the same frames in both runs, but VICE frees them in
+  the other order, a frame apart, so later enemies take other slots. Left
+  off the page; recorded in `TODO.md`.
+- Stages 15-20 from `delta_stage15`: 16, 17 and 18 matched. Stage 15
+  differs only where the stand-in shots, timed in samples, left a
+  different enemy alive between two runs of the same group. Stage 19's
+  boss group repeats stage 14's symptom at the top edge, and stage 20 has
+  an enemy entering on the right a frame apart; the VICE run's state had
+  also drifted from the machine's since stage 14. 16-18 went on the page;
+  14, 15, 19 and 20 stay off.
+
+## 4-5 October 2026, stages 20-32
+
+- Stages 20-32 ran in VICE from `delta_stage20`; the two-hour limit
+  stopped the run in stage 31, and stages 30-32 ran again from
+  `delta_stage30`. (The script also gained a stop for the wrap round after
+  stage 32, and no longer re-saves the snapshot it starts from.)
+- 21-24, 26-28 and 30-32 matched. Stage 20 failed exactly as in the run
+  carried over from stage 14, so its difference is the stage's own, not
+  drift. Stages 20, 25 and 29 each have an enemy entering on the right a
+  frame apart; letting a group's start line up a sample either way did not
+  make them match (the other slots then disagree), so the tolerance was
+  taken out again.
+- Stage 15, again: the blame on sample-timed stand-in shots was wrong
+  (stage 15 has no skipped samples). The VICE script now times the shots
+  in game frames from VICE's cycle stopwatch anyway, which is the right
+  clock. The real difference was the shot group's last enemies, still
+  exploding as the next group began, freed in a different order. The
+  comparison now leaves those leftovers out, as it already leaves out
+  everything after the shots begin; stage 15 then matched in both VICE
+  runs, and no other stage's result changed.
+- Stage 19 was not a timing difference. At the stage's first frame VICE's
+  memory and the machine's differed in about 900 bytes, the random
+  pointer `$8F` among them ($40 against $50): every VICE snapshot from
+  stage 15 on descends from VICE's own play of stage 14. Writing the
+  machine's memory into VICE at the stage's first sample crashed it, the
+  stage banner's interrupt chain being half in RAM and half in the video
+  chip; at `irq_band_first` (`$1888`) on the boss group's first frame it
+  ran, once `$01` was put back to `$35` (the machine's image holds `$17`
+  there, not the port). From that state VICE played the boss group
+  exactly as recorded.
+- Stages 14, 20 and 25 the same way: each matched from the machine's state
+  (14 and 25 from their first group, 20 from list 210). Two of the
+  injections first stopped at a `$1888` reached outside the raster
+  interrupt (stack pointer 19 against 13), so `inject.py` now also waits
+  for the machine's stack pointer. Stage 29 still differs from the
+  machine's state: VICE drifts within list 90 and an enemy then enters a
+  frame apart in another slot, so that one is a real timing difference.

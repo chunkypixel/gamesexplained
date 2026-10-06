@@ -5,7 +5,7 @@ description: Turn traced claims into verified facts. Test cheaply testable claim
 
 # Verify before publishing
 
-Start the clock: `python3 kit/scripts/clock.py start 60-verify --model <your model id> games/<platform>/<slug>`. No figure yet. Both retros to 19 September 2026 name single features that ate more time here than whole steps did; when one does, say which in the stop note.
+Record your model id in `game.json` under `step_models`, as `"60-verify": ["<your model id>"]`, the same way as for `50-coverage`.
 
 Most serious errors come from trusting an absence, or from a claim that
 sounded right and was never tested.
@@ -25,7 +25,9 @@ or aliasing could hide it. A negative result is a claim about your search,
 not about the binary. Prefer "unknown" to a plausible guess. Before saying
 that nothing reads or writes an address, search with every opcode and
 every index that can reach it: on the C64,
-`python3 kit/c64/opcodes.py games/<platform>/<slug> --refs <address>`.
+`python3 kit/c64/opcodes.py games/<platform>/<slug> --refs <address>`; on
+the ZX Spectrum, `python3 kit/spectrum/codemap.py <game> <snapshot> --refs
+<address>`, which also lists where the address is stored as a word.
 
 "Unreachable" is a negative result too. A search over a model of the
 movement rules finds only what the model allows, and a model re-derived
@@ -34,6 +36,67 @@ with the game's own movement code instead: drive the player with input on
 the 6502 simulator (on the C64, `kit/c64/machine.js`) and watch for the
 item's pickup, or try it in a port that has been checked in lockstep.
 Only then write that something cannot be reached.
+
+## Retained bytes from earlier phases
+
+A non-fill page in a play snapshot need not be play data. Trace its producer before assigning ownership: a boot decompressor may copy a whole page but consume only a short repair table within it. A play-only search misses that producer. Arm the watch before the relevant boot phase and stop at the write; separate startup RAM testing from the program’s own writes. Compare the whole copied extent with its source, then trace the consumer’s actual bound.
+
+On a banked machine, distinguish physical RAM from the I/O or ROM that occupies the same CPU address. Condition RAM watches on the bank selector. Include both a read and a store that must trigger as positive controls before trusting an empty watch log, and report the observed trajectory rather than inferring absence in every phase.
+
+## Claims about the whole game
+
+"Every room", "the only routine", "never", "the test" in the singular:
+each is a claim about all the instances, and the commonest wrong claim
+on a page is one read off a single instance. Before writing one, list
+them all: every caller of the routine, every reader of the variable,
+every copy of the test (a byte search for the call and for the
+operand, not the tracer's cross-references alone), and say how many
+there are. A live test in one room tests one room. One run's maintainer
+found five such claims in a sample of twelve: a collision list that was
+one test's of four, a tune called one room's that played in all of them,
+a bug whose effect was worked out from counts without reading the
+callers.
+
+## Measure the listing before calling it done
+
+The comments in the listing are claims too, and an annotation agent's
+are rarely all right. Draw a random sample of about 60 (a fixed seed,
+spread over every agent's range) and have an agent that wrote none of
+them check each against the bytes; the error rate with its interval goes
+in `facts.md`. One run measured 25 % of its comments
+with a wrong detail (callers, rooms and counts, almost never what a
+routine does); a full pass by fresh agents, each correcting its own range
+and listing callers from the decoded listing rather than from a byte
+search, brought a second, independent sample to 3 %. If the first sample
+is bad, audit the whole listing before the page is published.
+
+Comments a program wrote, a decoder describing every record of a format
+from templates, are a few claims each made hundreds of times. Give them
+a stratum of their own, draw about 20 from it, and beside the plain rate
+give the rate weighted by each stratum's size: three drawn from a
+stratum of thousands would stand for all of it. When they are bad, audit
+them by template, not one by one: test every sentence a template writes
+against the code on every path (a reader cited for a field it reads only
+for some values of a flag, a condition such as "when empty" or "nothing
+reads this"), then the records whose values change what the sentence
+means, and make the corrections with a script from the records' bytes,
+in the decoder too, or its next run puts the errors back. One run's
+decoder wrote 7,973 of its 11,532 comments, and the sample drew three of
+them and found two wrong; the audit that followed corrected 2,017.
+
+If the checking agent cannot run (its provider is out of credit, say:
+`50-coverage`, "Splitting the work across subagents"), run it on another
+proven model, or through another provider. If none can run it, the
+listing is unmeasured, and that is a gap, not a pass: draw the sample
+anyway, write in `facts.md`, where the error rate would go, the seed and
+the size and that the sample is not checked yet, say so in the pull
+request, and leave `tier` where it was before this step.
+
+What the repository keeps is the result: one paragraph in `facts.md`
+naming the seed, the population and the sample's size, how many comments
+were wrong, what was wrong with them and what was changed, and the
+interval. The draw, the verdict on each comment and the checker's notes
+are the working record, and stay in `work/reports/`.
 
 ## What a test lets through
 
@@ -56,6 +119,11 @@ the reprisal) to a routine that returns early unless the player is still
 in the right place loses the rest whenever the player is not. For each,
 list what the test ignores, or what the deferred part requires, and try it.
 
+A value the player sets at the start, a password or a difficulty, is
+the same kind of test at a distance: find every reader of it
+(`opcodes.py --refs`), not only the routine that sets it. The one reader
+may be at the end of the level, and decide whether it can be won at all.
+
 ## Live verification
 
 Any claim that can be tested in the emulator in under a few minutes gets
@@ -77,7 +145,12 @@ tested. Typical tests:
   counter) and poll, or read the state variables that prove it happened.
 - **Time it.** Read the timer latch and compute the tick rate from the
   platform's clock; count in the unit of the loop that decrements the
-  counter before converting anything to seconds.
+  counter before converting anything to seconds. A clock decremented
+  from the main loop is only as regular as the loop: put a non-stopping
+  checkpoint on a routine that certainly runs once a frame (the last
+  raster handler) and one on the counter's routine, advance a few hundred
+  frames, and compare the counts. One game's "30 seconds" ran 195 passes
+  in 250 frames and lasted up to 40 seconds.
 - **Prove reachability with inputs, not pokes.** Poking a state and
   watching the routine accept it proves what the *code* does. It does not
   prove a player can get there: the way the loop orders its tests may make
@@ -170,6 +243,25 @@ writing what the values mean: it may subtract one, use the value as an
 offset, or treat one value as a different command. The callers alone
 read as the answer and can be off by one throughout.
 
+## What the repository keeps
+
+A check is done to change what the page and `facts.md` say, and that
+change is what a reader and the next agent need. Commit the corrections,
+and a line in `facts.md`'s list of live tests naming what was run and
+what it showed. The scripts and what they print stay in `work/`, with the
+snapshots they read. Code is committed when a page depends on it, such as
+a port behind a Play tab and its tests, or a solver behind a solution,
+each with a README naming the private inputs it needs.
+
+Never commit a copy of what the repository already holds (the listing's
+comments or bytes), an inventory of every routine or every input value, a
+file of verdicts, or an audit report beside `facts.md`; `check_docs.py`
+fails a game folder with Markdown the template does not have. A second
+audit of the same game is a correction to `facts.md`, `symbols.json` and
+the page, not a new file. `reference/` is published as it stands, so it
+holds only what a page shows or loads, and a caption points at the
+listing or at `facts.md`, not at a JSON file.
+
 ## Writing facts.md
 
 `facts.md` is current truth for this game: memory layout, timing,
@@ -177,6 +269,13 @@ mechanics, tables, sound, controls. Every fact names the routine or table
 it comes from. It never narrates how understanding developed; that goes in
 `agent-history.md`. Where the code disagrees with documentation, the code
 wins and `features.md` says **differs**.
+
+In a game of several parts (`10-orient`), an address means nothing
+without its part. What is true of one part goes in that part's
+`parts/<id>/facts.md`, where every address is that part's and links into
+its listing. The game's own `facts.md` holds what spans the parts (how
+one leads to the next, what they share), and names the part beside every
+address it gives.
 
 ## Outputs
 

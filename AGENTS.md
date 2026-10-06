@@ -19,11 +19,7 @@ in order:
    creates `games/<platform>/<slug>/` from the template. Copy the
    contributor's image into its `work/` folder; `work/` is gitignored.
 3. **Run the skills in this order.** Each is a folder under `kit/skills/` with a
-   `SKILL.md`; open the file when you reach that step. Each one begins
-   by starting the clock (`kit/scripts/clock.py start <step> --model
-   <id>`); a run takes hours, and the per-step times, each with the model
-   that took it, are what let the next run be shorter. `timings.json` is
-   committed with the game.
+   `SKILL.md`; open the file when you reach that step.
 
    | Step | Skill | Produces |
    |---|---|---|
@@ -35,9 +31,6 @@ in order:
    | verify | `kit/skills/core/60-verify` | every fact traced or observed live; `facts.md` |
    | minisite | `kit/skills/core/70-minisite` | `index.html` (How it works), `listing.json` (Source code), optional `levels.html` and `play.html` |
    | retrospective | `kit/skills/core/80-retro` | the skill text that helped, named; fixes to the kit; `kit-feedback.md`; `game.json` complete |
-
-   Work on a game after its run is clocked apart: `curate` for the
-   Gold pass, `play` for a Play tab added later (`clock.py -h`).
 
    A Bronze run stops after `40-sweep`. It exports the symbol map and
    builds the listing (step 4), cuts `index.html` down to the header plus
@@ -55,7 +48,10 @@ in order:
    listing the Source tab renders from it and your snapshot:
    `python3 kit/scripts/listing.py games/<platform>/<slug> <snapshot.vsf>`.
    Both are committed; the snapshot and disassembler project stay in
-   `work/`. Preview the whole minisite with `python3 kit/scripts/build.py`
+   `work/`. A game that is several loads has a symbol map and a listing
+   for each part, and both scripts take the part's folder
+   (`kit/skills/core/10-orient`, "A game of several parts"). Preview the
+   whole minisite with `python3 kit/scripts/build.py`
    and `python3 -m http.server -d _site 8000` (or any free port).
 5. **Check, commit on a branch, open a pull request.** Name the branch
    `game/<platform>/<slug>`. Contributors never commit to `main`:
@@ -84,7 +80,9 @@ in order:
 Not every task is a game. A maintainer's agent may be asked to change
 the kit, the skills, the scripts or the site templates. The rules below
 apply unchanged, and so does the delivery: branch as `kit/<topic>` or
-`site/<topic>`, run the three checks, run `python3 kit/scripts/build.py`
+`site/<topic>`, run the three checks, run
+`python3 kit/scripts/test_kit.py` (every kit test), run
+`python3 kit/scripts/build.py`
 to confirm every existing game still builds, and open a pull request. A
 change under `kit/` or `site/` reaches every page on the site, so it gets
 the same review a game does, not less. Describe the change in the pull
@@ -103,6 +101,16 @@ adds a lesson file of its own and edits no other, so two pull requests
 never conflict over either. A new platform
 follows `kit/PLATFORMS.md`.
 
+A kit test is a file matching `kit/**/test_*.py` or `kit/**/test_*.js`:
+run as a script it exercises its own subject and exits non-zero on failure,
+and `test_kit.py` finds it, so a new test needs no edit to CI. A test that
+needs an installed tool reads `KIT_REQUIRE_TOOLS` from the environment and
+fails rather than skips when it is set. CI sets it, and there a test that
+skips anyway fails too, so an oracle that is missing cannot pass for a green
+run. The older `--test` self-tests on the tools stay where they are and are
+listed in `test_kit.py`, which fails on a script with the flag that the list
+leaves out; a new test is a `test_*.py` file, not a new flag.
+
 ## Rules that are not negotiable
 
 - **Model.** Any model may run the kit, but only a proven one can take a
@@ -116,7 +124,10 @@ follows `kit/PLATFORMS.md`.
   record `tier` as `bronze` until the check passes. The failures are
   silent: address arithmetic goes wrong in ways that read as confident,
   which is why the check tests claims against the game rather than
-  reading the page. `clock.py start` warns when the model is not proven.
+  reading the page. `python3 kit/scripts/models.py is-proven <id>` says
+  whether yours is. Such a run still builds its whole minisite, not the
+  cut-down Bronze page: the site publishes it with a banner saying it
+  awaits a maintainer's check, until the check passes.
 - **An imported analysis is a starting point, not a run.** Work the
   contributor did outside the kit seeds the disassembler; the listing
   still comes from a snapshot through `listing.py`, coverage and verify
@@ -127,9 +138,9 @@ follows `kit/PLATFORMS.md`.
   your session states (the system prompt, the harness). Never deduce it
   from files, chat transcripts, environment variables or how you seem to
   behave: a transcript on disk may belong to another window, and a
-  guessed id both hides a model that is not proven and puts a false row
-  in the runs table. When the session does not name the model, ask the
-  contributor before starting the clock. If they cannot tell either,
+  guessed id both hides a model that is not proven and puts a false
+  record in `game.json`. When the session does not name the model, ask
+  the contributor before the first step. If they cannot tell either,
   record `unknown` and say in the pull request that the model could not
   be checked.
 - **No binaries, ever.** Disk images, program files, cartridge dumps,
@@ -169,12 +180,12 @@ follows `kit/PLATFORMS.md`.
 - **Record what you used.** `game.json` names the tools, the model and the
   kit version. It is honest and it makes the work reproducible. Some
   hosted sessions tell the agent to keep model identifiers out of
-  everything pushed to a repository. The kit's own records of the run
-  are the exception: `game.json`, `timings.json` and the timings table
-  in `kit-feedback.md` keep the model id, exactly as the session names
-  it, because a time or a result is not comparable without the model
-  that produced it. Commit messages, pull request text and code comments
-  follow the environment.
+  everything pushed to a repository. The kit's own record of the run is
+  the exception: `game.json` keeps the model id, exactly as the session
+  names it, because a result is not comparable without the model that
+  produced it, and `models.py` reads its `step_models` to decide which
+  models are proven. Commit messages, pull request text and code
+  comments follow the environment.
 - **Leave the cleanest footprint you can.** A contributor is trusting this
   repository with their computer. Everything the kit installs goes under
   the gitignored `tools/` folder, tools are started only through
@@ -216,7 +227,8 @@ follows `kit/PLATFORMS.md`.
 | `kit/template/` | the game folder, stubbed and commented |
 | `kit/skills/core/` | the workflow, platform-independent |
 | `kit/skills/<platform>/` | platform facts and tool notes |
-| `games/<platform>/<slug>/` | one game: article, symbols, listing, facts, features, orientation, cheats, agent history, timings, reference images, gitignored `work/` |
+| `games/<platform>/<slug>/` | one game: article, symbols, listing, facts, features, orientation, cheats, agent history, reference images, gitignored `work/` |
+| `games/<platform>/<slug>/parts/<id>/` | one part of a game that is several loads: its own symbols, listing, facts, ledger settings and gitignored `work/` (`kit/scripts/parts.py`) |
 | `site/` | the shared page templates and `site/lib/` css and js; `kit/scripts/build.py` assembles `_site/` from them |
 
 Nothing about a particular game belongs in `AGENTS.md` or `kit/skills/`.
@@ -231,6 +243,11 @@ Nothing about a particular game belongs in `AGENTS.md` or `kit/skills/`.
 | Silver (claimed) | a Silver that a human has started to curate: `tier` is `silver-claimed` and `steward` names them (their GitHub login). Set it when the first edit pass begins, so the page says the work is under way and nobody starts it twice; it turns Gold when every section has had its pass |
 | Gold | a human has curated the Silver, section by section: rewriting the clichéd copy, cutting what is dull, expanding what is interesting and adding what the agent missed, often by prompting the agent for new pieces. A pass that finds nothing to change counts, and `copy` records which it was: `agent` when the human read it and left it, `human-edited` or `human` when they changed it |
 | Platinum | the listing reassembles byte-for-byte to the analysed image and the build boots |
+
+A game that is several loads is at a tier when every one of its parts
+is. Its coverage is the sum over its parts, each byte counted once, and
+a part that has a folder and no analysis keeps the game at Bronze, with
+the page saying how many of its parts are done.
 
 Silver is the default goal and the normal path: the contributor pastes the
 one line, answers a few questions, walks away, and comes back to a Silver
@@ -255,8 +272,17 @@ Report progress by committing, not by pausing.
 
 ## Subagents
 
-Bounded, mechanical work parallelises well: annotating disjoint address
-ranges, sweeping data regions. Judgement does not. When you spawn agents:
+One agent is the default for every step. Each agent you start rereads
+the brief, the notes and the code around its work before it writes, so a
+fan-out multiplies the tokens a step costs and rarely shortens it much;
+nine agents at once have used up a contributor's session limit in
+minutes. Split only large, separable work (a game of several parts, or
+more code than one context holds once you have annotated the core
+yourself), with at most four agents, as `kit/skills/core/50-coverage`
+says, and only as far as the contributor's answer about their usage limit
+allows (`kit/START.md`). Judgement does not parallelise; independent
+checking does, which is why `60-verify` gives its sample to agents that
+wrote none of it. When you spawn agents:
 force the model explicitly; give each a disjoint address range and say so
 in the prompt; give each its own output file; brief them cold with the
 facts established so far and the rules above; spot-check one substantive

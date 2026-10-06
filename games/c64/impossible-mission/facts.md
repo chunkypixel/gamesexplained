@@ -78,8 +78,9 @@ into the RAM under the I/O area and the KERNAL (`move_high_tables`,
 - At six o'clock (`$D4` = 6) `$43` = `$FF` and the game ends
   (`wait_tick_or_end`, `$83F4`).
 - The agent moves once every 3 ticks (`$40` = 3 against the counter `$3E`).
-- The speech plays from CIA 2 timer A NMIs, latch 100: one every 101
-  cycles, 9,755 a second on PAL (`speech_start_timer`, `$0C71`).
+- The speech plays from CIA 2 timer B NMIs (`$DD06`/`$DD07`, `$DD0F`,
+  enabled with `$DD0D` = `$82`), latch 100: one every 101 cycles, 9,755 a
+  second on PAL and 10,126 on NTSC (`speech_start_timer`, `$0C71`).
 
 ## Controls
 
@@ -172,6 +173,32 @@ At the start of each game `new_game_setup` (`$7236`) randomises:
   `$B26D`);
 - every room's lifting platforms back to their starting positions
   (`reset_room_platforms`, `$B045`).
+
+### The map
+
+`make_map` (`$B2BD`) carves the map into 102 glyphs of one bit a pixel at
+`$FC00`-`$FF2F`, 17 across and 6 down (136 × 48 pixels), all set at the
+start. The room grid at `$FF96` is 9 columns by 6 rows; grid square
+(X, Y) starts at glyph 2X - 1 of row Y (glyph 0 for column 0), so the
+odd glyph columns hold the 8 lift shafts and the even ones the rooms.
+The shuffled room numbers are at `$FFCC`, four groups of eight shuffled
+within the group (16 swaps each). Room masks (`tbl_room_shapes`,
+`$B59D`): rooms `$00`-`$0F` take 3 glyphs (shaft, room, shaft, with a
+door to each), `$10`-`$17` 2 glyphs with the shaft and door on the left,
+`$18`-`$1F` 2 glyphs with them on the right; `may_join` (`$B500`) never
+joins a room from its closed side. `join_rooms` (`$B488`) checks the
+neighbour in the row and, if it may not join it, searches up and then
+down the column from that neighbour's square and cuts shaft segments
+(`$E7`, `$B63D`) in the room's own column. The carving can reach past
+`$FF2F` into the first bytes of the cell table. The display shows 17 × 6
+cells (`draw_map_frame`, `$B699`) from the cell table `$FF30`, glyph
+`$FC` (solid) until `reveal_map_cell` (`$B761`, index (x - `$68`)/8 + 17
+× ((y - `$B8`)/8)) writes the cell's own glyph `$8A` + index. The frame
+is glyphs `$F0`-`$F5`, copied from `$B56D` (corners, striped edges), in
+yellow; the cells in green (colour 5) on the panel's black. *Checked:* a
+port of `make_map` gives the same `$FC00`-`$FFEB` as the game's routine
+run in the kit's 6502 simulator for 200 random byte streams, `random`
+(`$82E3`) answered from the same stream; every roll placed all 32 rooms.
 
 ### Rooms
 
@@ -284,6 +311,28 @@ Each table is described in the listing; the main ones:
   and 3 are spoken by the start-up, 1 on entering a room after a game
   hour has passed, 7 when the agent falls, 5 when time runs out, 4 over
   the end picture, 0 on the end screen; line 6 is never called.
+- How the driver plays a line. Each NMI runs one step of a chain of
+  handlers: `nmi_speech_up` plays a window of the buffer at `$0800`
+  forwards, `nmi_speech_down` plays it backwards from where it stopped,
+  then `nmi_speech_hold` writes level 7 once and `nmi_speech_wait` lets
+  the gap run; the period ends in `speech_next_period` (`$08F2`). The gap
+  is half the period length set by the pitch commands (`$0B1D`), so the
+  gap sets the pitch. Frame headers (`$09B6`, the format in the listing):
+  4-bit frames (`$0AE5`) and 1-bit frames (`$0B73`, levels 7 and 8, with
+  the window sliding by `$0951`) are used; the 2-bit decoder (`$0A68`) and
+  encoding 0 (`$0BE3`) are in the driver and no frame of the eight lines
+  uses them. Silent frames carry no samples; bit 7 of a header's byte 3
+  marks the last frame, bit 6 skips the blend between windows (`$0BFD`).
+  None of the driver's state carries from one line to the next: every
+  line starts with a silent gap and a first frame that overwrite it.
+- Line lengths, as timer NMIs (PAL seconds): 0, 30,239 (3.10); 1, 24,268
+  (2.49); 2, 14,861 (1.52); 3, 41,233 (4.23); 4, 32,040 (3.28); 5, 35,611
+  (3.65); 6, 2,083 (0.21); 7, 36,831 (3.78). *Checked:* a port of the
+  driver (on the Sound and speech tab) gives the same level on the same
+  NMI as the game's own code for all eight lines, run on the kit's C64
+  model with its CIA timers (`kit/c64/machine.js`). The model runs each
+  NMI handler to its RTI, so the cycles of its writes are not
+  comparable; the order and count of NMIs are.
 
 ### Hardware register census
 
@@ -354,10 +403,7 @@ Three checks, all verified:
 ## Open questions
 
 - What each of the eight voice lines says: the code shows when each is
-  spoken, not its words; nobody has listened to them in this run.
-- The exact bit layout of the speech frame headers: the reading in the
-  listing follows the code, but parsing the data with it gives one frame
-  per line, so it is incomplete.
+  spoken, and the Sound and speech tab plays them, but nobody has
+  transcribed the words.
 - The meaning of the agent's frame `$0F` (tested against lifting
   platforms by `platform_at`).
-- What the six glyphs copied from `$B56D` draw on the map.

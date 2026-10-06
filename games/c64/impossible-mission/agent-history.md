@@ -61,3 +61,66 @@ the first, a search for comments outside code blocks found the second.
 **The web.** The contributor said yes to looking the game up, but the
 container's network refused every game site; only the summaries of a
 web search could be read, and `features.md` marks those rows "(search)".
+
+## 2 October 2026: the page split into tabs
+
+At the contributor's request the single How it works page was split into
+tabs on the pattern of other games' minisites: an Overview, The
+stronghold (the room browser and the room record), How it works (the
+puzzle pieces, the pocket computer, the robots, time and score), Sound
+and speech, and Discoveries (the protection, the phone, the PAL ending,
+the claims the code contradicts and the open questions). The content is
+the verified material of the single page, regrouped; each page embeds
+only the memory excerpts its widgets draw from.
+
+## 4 October 2026: the speech player
+
+The frame headers had been left as an open question: parsing the data by
+the listing's reading gave one frame per line. Instead of parsing the
+data, the game's own driver was run for each line on the kit's C64 model
+with its CIA timers, recording every write to `$D418`, and a port of the
+driver was written against that record until both gave the same levels
+on the same NMIs for all eight lines. The port showed where the reading
+had gone wrong: a header's end-of-line test is bit 7 of the previous
+header's byte 3, not of byte 0, and a header covers several decodes of
+its samples. Two other slips were corrected on the way: the timer is
+CIA 2's timer B, not A, and the comment on `$0BE3` described a decoder
+no line uses. The page's first build decoded silence: it embedded the
+speech data but not the sample base at `$0CFE`/`$0CFF`, which the port
+reads; the browser test now compares whole streams with the checked
+ones, not their lengths.
+
+## 4 October 2026: The release and Reception
+
+The contributor asked for two Overview sections on the game's release and
+reception from the web. The environment's network policy refused every
+source page, before and after the contributor tried to widen it, so the
+sections were drafted, at the contributor's request, from web search
+summaries alone, keeping what several agreed on. The summaries
+contradicted each other on Zzap!64's score and poll placings, which is
+why no review score appears; they also differed on the British price.
+`features.md` lists the sources to check.
+
+## 4 October 2026: the map generator
+
+The contributor asked for a map generator on The stronghold tab. The game's
+`random` mixes in the raster line, so one game's map cannot be replayed;
+instead `make_map` was ported register for register (the loop counter
+continues from the column a room was actually placed in, and the column
+search starts from the row neighbour's square) and run against the game's
+own routine in the kit's 6502 simulator, with `random` hooked to answer
+from a scripted byte stream: 200 streams, every byte the same. On the way
+two listing comments were found to say 18 map columns where the code
+uses 17, and the open question about the six glyphs at `$B56D` closed:
+they are the map's frame. The page's colour view first drew green rooms
+on green rock and hid nine of them; it draws the rock black.
+
+## 4 October 2026: a second pass on The release and Reception
+
+Asked to look again now that the internet should be reachable, the run
+found the same proxy refusals; the contributor's network change had not
+reached the session. A second round of web searches added what more than
+one result agreed on (see `features.md`). It also showed that the two
+Zzap!64 placings first read as a contradiction are two different lists,
+editors' and readers', and a third figure for the review score appeared,
+so the score stays out.

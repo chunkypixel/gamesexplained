@@ -20,6 +20,7 @@ Sources:
   paraphrase those pages and the manual. Everything below marked
   "(search)" comes from those summaries: second-hand, and each row is
   to be checked against the code like any other claim.
+- Web search summaries, 4 October 2026, for the Overview's "The release" and "Reception": the environment's network refused the pages themselves (Wikipedia, C64-Wiki, MobyGames, Lemon64, The Digital Antiquarian at filfre.net, the Dennis Caswell interviews at mayhem64.co.uk and AtariAge, gb64.com's Zzap!64 ratings, archive.org). Only facts that several summaries agreed on were used. Zzap!64's score for the game was left out, because the summaries disagreed (95 %, 85 %, or Elite as that issue's only 95 %). The Zzap!64 placings (editors second, readers first with 26 %), Caswell's words on the title, Retro Gamer's 2004 readers' vote (45th), the Wii Virtual Console release (11 April 2008) and the Evercade TheC64 Collection 1 cartridge were added in a second pass the same day, each agreed by more than one result; a Retro Gamer platformer-poll placing (12th) rests on one and was left out. To be checked against the pages when they can be read.
 - The game's own screens, read in the emulator, and its stored text, decoded in `30-text` (`facts.md`, Text alphabets), 1 October 2026.
 
 ## Features
@@ -80,5 +81,5 @@ Found in the code, not in the manual.
 
 ## Open questions
 
-- The words of the eight voice lines (not listened to in this run).
+- The words of the eight voice lines: the Sound and speech tab plays them, and nobody has transcribed them.
 - The code rooms' puzzle was not played live.

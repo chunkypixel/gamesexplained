@@ -1,0 +1,86 @@
+{
+  "title": "Las Vegas",
+  "order": 51,
+  "over": "tiles-6",
+  "ranges": [
+    [
+      "$3400",
+      "$59FF"
+    ],
+    [
+      "$DE00",
+      "$EDFF"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [],
+    "extra": [
+      [
+        "$3400",
+        "$59FF",
+        "map 12, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$EDFF",
+        "map 12: its tile layer, one byte a square, 64 rows of 64, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 12, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$4F59",
+      "levels",
+      "map 12: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$4F5A",
+      "$4F5C",
+      "code",
+      "map 12: its own code"
+    ],
+    [
+      "$4F5D",
+      "$521A",
+      "levels",
+      "map 12: record lists and square records"
+    ],
+    [
+      "$521B",
+      "$52D4",
+      "text",
+      "map 12: monster names"
+    ],
+    [
+      "$52D6",
+      "$533D",
+      "levels",
+      "map 12: monster records"
+    ],
+    [
+      "$533E",
+      "$59BF",
+      "text",
+      "map 12: messages"
+    ],
+    [
+      "$DE00",
+      "$EDFF",
+      "levels",
+      "map 12: square tiles"
+    ]
+  ]
+}

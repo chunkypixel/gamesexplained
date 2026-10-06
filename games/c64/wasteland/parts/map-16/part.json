@@ -1,0 +1,80 @@
+{
+  "title": "Base Cochise, outside",
+  "order": 58,
+  "over": "tiles-8",
+  "ranges": [
+    [
+      "$3400",
+      "$48FF"
+    ],
+    [
+      "$DE00",
+      "$E5EF"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E5EF",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$48FF",
+        "map 16, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 16: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 16, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3DCB",
+      "levels",
+      "map 16: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3DCC",
+      "$3F9E",
+      "text",
+      "map 16: monster names"
+    ],
+    [
+      "$3F9F",
+      "$403E",
+      "levels",
+      "map 16: monster records"
+    ],
+    [
+      "$403F",
+      "$4865",
+      "text",
+      "map 16: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 16: square tiles"
+    ]
+  ]
+}

@@ -21,12 +21,13 @@ step needs something only they have.
    opens the pull request, and the retrospective how the asks are filed.
 2. **Read `AGENTS.md` completely.** It is the rulebook and the workflow.
    Everything below assumes you have.
-3. **Ask the contributor six things** if they have not already told you:
+3. **Ask the contributor seven things** if they have not already told you:
    which game, which platform it is for, where their copy of it is on
    disk, **which run they want**, of the two below, **whether you may
    look the game up online**, and **whether you may open the pull request
    yourself when the run is done**, which covers filing the run's asks
-   for the maintainers as issues too. We never download game binaries;
+   for the maintainers as issues too, and **whether their plan's usage
+   limit is tight**. We never download game binaries;
    they supply their own.
 
    - **Silver** (recommended) aims to explain 100 % of the program and
@@ -57,6 +58,15 @@ step needs something only they have.
    full in `kit-feedback.md`, and the repository files them on merge.
    Either answer holds for the whole run; do not ask again at the end.
 
+   **The usage limit sets how many agents the run may start.** The run
+   works with one agent unless the work is large enough to split
+   (`kit/skills/core/50-coverage`, "Splitting the work across
+   subagents"). If they say the limit is tight, or do not know, it stays
+   at one agent throughout: several agents at once have used up a
+   session's allowance in minutes and left the run waiting hours for the
+   reset. If they say there is room, it may split large work across up to
+   four. The answer holds for the whole run.
+
    **Last, make sure the commits will be theirs.** The site credits a
    game to the GitHub accounts that authored its commits, so commits made
    under the agent's identity credit nobody. Ask for their GitHub login
@@ -73,9 +83,9 @@ step needs something only they have.
    sometimes with a number in front (`<id>+<login>@users.noreply.github.com`);
    either form works. Ask them to tick "Keep my email addresses private"
    on that page too: a pull request merged with "Squash and merge" is
-   authored with the account's primary address unless it is, and the
-   site cannot credit that commit to them. Then prove it with a commit
-   that goes nowhere:
+   authored with the account's primary address unless it is, and that
+   address then stays in this repository's public history. Then prove
+   it with a commit that goes nowhere:
 
    ```
    git switch -c identity-check
@@ -152,10 +162,8 @@ more, and what reads like an agent wrote it; you cut, expand, verify
 anything new against the code, and rewrite to `kit/style.md`. When the
 first edit pass begins, set `tier` in `game.json` to `silver-claimed`
 and `steward` to their GitHub login: the page then says who is editing
-it. Start the clock as `curate` (`kit/scripts/clock.py -h`), and as
-`play` for a Play tab the game did not have; each ends with `80-retro`.
-Their time is kept apart from the run's. Set `gold` when every section
-has had its pass. Set `copy` in `game.json` honestly, and open the pull
+it. The pass ends with `80-retro`, as a run does. Set `gold` when every
+section has had its pass. Set `copy` in `game.json` honestly, and open the pull
 request as `AGENTS.md` says. The two questions about the pull request
 and the commit identity in step 3 come first in this job too.
 

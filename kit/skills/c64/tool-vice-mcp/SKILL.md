@@ -241,6 +241,13 @@ the batch.
   count in every batch as the control (`60-verify`, "Carry a control"): on
   a build that fails `checkpoints-survive-load` it is the only thing that
   tells you the instrument is dead.
+- **A store watch can stay silent where the code plainly writes.** On 2
+  October 2026 a stopping store checkpoint on `$0200`-`$03FF`, armed
+  straight after loading a hand-over snapshot, never fired, though the
+  game's set-up copies 512 bytes there within its first frame; why was
+  not found. Arm an execute checkpoint on a routine that must run in the
+  same batch as the control, and read the copy loop in the code before
+  believing the silence.
 - **Memory reads honour banking.** Use the bank argument
   (`vice_memory_banks` lists them) when you need RAM under I/O or ROM. The
   banks are `default`, `cpu`, `ram`, `rom`, `io` and `cart`; reading a
@@ -317,13 +324,18 @@ the batch.
   Try the image before writing the file: VICE's own defaults already run
   the drive's processor. On 26 September 2026 the v3.13.1 Linux release,
   with no `vicerc` at all, autostarted a publisher's original G64 through
-  its custom loader to the game in 143 seconds; the file is for an image
+  its custom loader to the game in 143 seconds (on 2 October 2026 another
+  publisher's G64 took about four minutes of warp from a cold boot to its
+  menu, in a four-core container); the file is for an image
   that hangs.
 - **One emulator answers on :6510, whoever started it.** A second clone of
   the kit on the same computer, or an emulator left from an earlier run,
   takes this session's calls, and its snapshots land in its own folder.
   `tools.py status` warns when the emulator on the port came from another
   folder, and `tools.py vice` refuses to start beside it; stop it from the
-  clone that started it, or ask the contributor to close it.
+  clone that started it, or ask the contributor to close it. When the
+  port is held by something that is not an emulator, start this clone's
+  on another with `KIT_VICE_PORT` (`kit/c64/INSTALL.md`, "Another program
+  on port 6510"); `vice.py` finds it through `tools/vice-port`.
 - The emulator needs a pseudo-terminal and dies with the session that
   started it.

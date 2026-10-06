@@ -53,7 +53,8 @@ evidence.
 ## Rules
 
 - **Your range is yours to write; everything else is read-only.** Read
-  anywhere for context. Never label, comment, type or disassemble an
+  outside it only where your code calls, jumps or reads, and only as much
+  as you need: every page you read is paid for again by every agent. Never label, comment, type or disassemble an
   address outside your range: other agents are writing there now.
 - **Prefer "unknown" to a plausible guess.** A description that says "not
   known" beats an invented purpose. Name what the code does, not what the
@@ -61,6 +62,10 @@ evidence.
 - **Distrust your own negative results.** "Nothing references this" is a
   claim about your search. Indexed, indirect and self-modified accesses
   exist, and so do instructions the disassembler shows as data.
+- **A value in the snapshot is the last one written.** Where code stores
+  into an instruction's operand or into a variable, the snapshot holds
+  whatever the last store left. Find the writers before you call a value
+  fixed or build anything on it.
 - <The emulator: whether agents may use it; usually not, and never start
   or stop a tool.>
 - **Do not edit** game.json, facts.md, features.md, symbols.json or any
@@ -115,6 +120,13 @@ comment counts once, so make every description specific.
    with its address.
 6. At 100 % of your range, re-read your own names and comments for claims
    you did not check, and soften or fix them.
+
+Write as you go. Label and comment each routine in a small batch as soon
+as you understand it, and start your report file early and keep it
+current. A session can stop at any moment (a usage limit, a crash), and
+what is only in your head then is lost: one run's agents read for an
+hour, meant to write everything in one batch at the end, and stopped on
+a usage limit with almost nothing written.
 
 ## Your final report
 

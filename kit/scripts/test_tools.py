@@ -25,9 +25,12 @@ def check(name, ok, detail=""):
         failures.append(name)
 
 
-# A second platform shaped like the ZX Spectrum's launcher, for the rules.
-SECOND = {"COMMANDS": ("status", "zesarux", "stop", "snapshots", "verify-footprint", "check-emulator",
-                       "get-zesarux", "get-skoolkit"), "TOOL_NAMES": ()}
+# A synthetic second platform, for the rules. It serves the shared commands, so the
+# ambiguity rules are tested whatever else is under kit/, and one command of its own;
+# it never copies another platform's own commands (kit/spectrum's), which would make a
+# one-platform command look ambiguous.
+SECOND = {"COMMANDS": ("status", "stop", "check-emulator", "verify-footprint", "snapshots", "second-only"),
+          "TOOL_NAMES": ()}
 
 
 def decls():
@@ -63,14 +66,14 @@ def test_rules():
     check("KIT_PLATFORM wins", resolves(["vice"], env="c64") == ["c64"])
     check("unknown explicit platform is refused", str(resolves(["status"], explicit="nope")).startswith("refused"))
     check("a command one platform serves picks it", resolves(["vice"]) == ["c64"])
-    check("... and the other's picks the other", resolves(["get-zesarux", "download"]) == ["second"])
+    check("... and the other's picks the other", resolves(["second-only"]) == ["second"])
     check("a tool argument picks its platform", resolves(["stop", "r2000", "--force"]) == ["c64"])
     check("a game folder argument picks its platform",
           resolves(["snapshots", os.path.join(games, "second", "x", "work")]) == ["second"])
     check("a working directory in a game picks its platform",
           resolves(["check-emulator"], cwd=os.path.join(games, "c64", "x")) == ["c64"])
-    check("status alone covers every platform", resolves(["status"]) == ["c64", "second"])
-    check("stop alone covers every platform", resolves(["stop"]) == ["c64", "second"])
+    check("status alone covers every platform", resolves(["status"]) == sorted(decls()))
+    check("stop alone covers every platform", resolves(["stop"]) == sorted(decls()))
     for cmd in ("check-emulator", "verify-footprint", "snapshots"):
         r = resolves([cmd])
         check(f"{cmd} alone is refused, naming the flag", isinstance(r, str) and "--platform" in r, r)
@@ -109,6 +112,10 @@ def test_documented_commands():
                         continue                          # a platform not in this checkout
                 if not args or args[0].startswith("<") or args[0] in ("-h", "--help", "--platforms"):
                     continue
+                # Shared browser commands bypass platform selection; test_browser.py
+                # checks their dispatch with both one and multiple platforms.
+                if args == ["browser"] or args in (["stop", "browser"], ["stop", "browser", "--force"]):
+                    continue
                 seen += 1
                 r = resolves(args, explicit=explicit)
                 ok = isinstance(r, list)
@@ -132,7 +139,8 @@ def test_end_to_end():
     with tempfile.TemporaryDirectory() as tmp:
         kit = os.path.join(tmp, "kit")
         os.makedirs(os.path.join(kit, "scripts"))
-        shutil.copy(os.path.join(HERE, "tools.py"), os.path.join(kit, "scripts"))
+        for f in ("tools.py", "launcher.py", "browser.py"):   # the dispatcher, what the launchers share, the browser
+            shutil.copy(os.path.join(HERE, f), os.path.join(kit, "scripts"))
         for p in tools.platforms():
             shutil.copytree(os.path.join(KIT, p), os.path.join(kit, p))
         os.makedirs(os.path.join(kit, "stub"))
@@ -163,10 +171,71 @@ def test_end_to_end():
         check("e2e: no command lists every platform's commands", code == 0 and "c64:" in out and "stub:" in out, out)
 
 
+BUNDLE = r"""
+import os, sys, tempfile
+sys.path.insert(0, sys.argv[1])
+import get_zesarux
+with tempfile.TemporaryDirectory() as d:
+    top = os.path.join(d, "stage", "zesarux.app")
+    os.makedirs(os.path.join(top, "Contents", "MacOS"))
+    open(os.path.join(top, "Contents", "MacOS", "zesarux"), "w").close()
+    dest = os.path.join(d, "tools", "zesarux")
+    os.makedirs(os.path.dirname(dest))
+    get_zesarux.place(top, dest)
+    assert os.path.isfile(os.path.join(dest, "zesarux.app", "Contents", "MacOS", "zesarux")), os.listdir(dest)
+    flat = os.path.join(d, "stage2")
+    os.makedirs(flat)
+    open(os.path.join(flat, "zesarux"), "w").close()
+    dest = os.path.join(d, "tools2", "zesarux")
+    os.makedirs(os.path.dirname(dest))
+    get_zesarux.place(flat, dest)
+    assert os.path.isfile(os.path.join(dest, "zesarux")), os.listdir(dest)
+print("ok")
+"""
+
+
+def test_spectrum_bundle_layout():
+    """get-zesarux leaves a macOS bundle at tools/zesarux/zesarux.app, where the launcher looks first."""
+    if "spectrum" not in tools.platforms():
+        return
+    r = subprocess.run([sys.executable, "-c", BUNDLE, os.path.join(KIT, "spectrum")], capture_output=True, text=True)
+    check("spectrum: an unpacked bundle keeps its .app name; a flat build lands as it is",
+          r.returncode == 0 and "ok" in r.stdout, r.stdout + r.stderr)
+
+
+STATS = r"""
+import importlib.util, os, sys, tempfile
+kit_spectrum = sys.argv[1]
+sys.path.insert(0, os.path.join(os.path.dirname(kit_spectrum), "scripts"))
+spec = importlib.util.spec_from_file_location("spectrum_tools", os.path.join(kit_spectrum, "tools.py"))
+t = importlib.util.module_from_spec(spec); spec.loader.exec_module(t)
+with tempfile.TemporaryDirectory() as d:
+    cfg = os.path.join(d, ".zesaruxrc")
+    open(cfg, "w").write("--zoom 2 \n--stats-send-already-asked \n--stats-send-enabled \n--stats-uuid 1.5 \n")
+    assert t.statistics_enabled(cfg)
+    assert t.keep_statistics_off(cfg) is True
+    assert open(cfg).read() == "--zoom 2 \n--stats-send-already-asked \n--stats-uuid 1.5 \n", open(cfg).read()
+    assert not t.statistics_enabled(cfg) and t.keep_statistics_off(cfg) is False
+    assert not t.statistics_enabled(os.path.join(d, "missing")) and t.keep_statistics_off(os.path.join(d, "missing")) is False
+print("ok")
+"""
+
+
+def test_spectrum_statistics_stay_off():
+    """The launcher takes --stats-send-enabled out of a saved configuration and leaves the rest alone."""
+    if "spectrum" not in tools.platforms():
+        return
+    r = subprocess.run([sys.executable, "-c", STATS, os.path.join(KIT, "spectrum")], capture_output=True, text=True)
+    check("spectrum: a saved configuration cannot turn usage statistics on",
+          r.returncode == 0 and "ok" in r.stdout, r.stdout + r.stderr)
+
+
 if __name__ == "__main__":
     test_declarations()
     test_rules()
     test_documented_commands()
     test_end_to_end()
+    test_spectrum_bundle_layout()
+    test_spectrum_statistics_stay_off()
     print(f"\n{'all passed' if not failures else str(len(failures)) + ' failed'}")
     sys.exit(1 if failures else 0)

@@ -5,8 +5,6 @@ description: Before reading any code, write down everything the game is document
 
 # Features first
 
-Start the clock: `python3 kit/scripts/clock.py start 20-features --model <your model id> games/<platform>/<slug>`. Runs to 19 September 2026: under half an hour. No exact figure yet; yours goes on the runs table.
-
 Read the manual, box copy, in-game instruction screen, a wiki page, a
 longplay: anything that says what the game *does*. Write it down as a
 checklist in `features.md` before annotating a single routine. Then treat
@@ -48,6 +46,17 @@ only (credits, the year, a feature named; not the keys, which often come
 from another machine's version), say under Sources that they are
 second-hand and give the date, and leave open whatever they cannot
 settle. The game's own screens are then the main source.
+
+## Testing a control
+
+Test each control from a moment you have looked at, with nothing in
+motion: the player standing still, the same snapshot run once with the
+input and once without. A snapshot saved just after some input shows the
+result of that input, and reading the next one off it misnames the
+control. One run held the stick up on a snapshot that happened to be
+mid-jump, wrote down "up jumps", and briefed nine agents with it; in
+that game fire jumps and up only climbs. Record the frames and the
+values (the player's sprite position, frame by frame) rather than a screenshot.
 
 ## Status words
 

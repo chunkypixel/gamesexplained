@@ -40,9 +40,48 @@ rules below mechanically, paragraph by paragraph, as described in
 - No tidy triplets for rhythm. Two things or four things are fine when
   there are two or four things.
 - No em-dashes as the default joint between clauses. Write two sentences.
+- Use the Oxford comma: a list of three or more items takes a comma before
+  the final "and" or "or" ("the Doctor, a robot cat, and a mine"). The
+  comma removes the doubt over whether the last two items are a pair.
 - No summary paragraph that restates the section.
+- Name the thing instead of "it" when the reader could mean two things.
+  When a sentence opens with "it" ("It ...", "Once it is ..."), and the
+  sentence before holds two or more singular nouns, replace "it" with the
+  noun it stands for. Not "The hero finds the scroll in a room and takes it
+  to a chamber. Once it is delivered, it gives him a power." but "... A
+  delivered scroll gives the hero a power."
 - Do not describe the tooling or the process ("we pointed an AI at the
   bytes"). The reader is here for the game.
+
+### Paragraphs
+
+A paragraph makes one point, and the reader should be able to say what it
+was. Before keeping a paragraph, state its purpose in a line: "why the
+villain needs the base", "how the game picks a walking frame". Then:
+
+- Every sentence serves that purpose. A sentence that is true and
+  interesting but supports a different point moves to the paragraph or
+  section whose point it serves, or to Discoveries, or is cut. Interesting
+  is not a reason to stay.
+- The point goes first or last, never in the middle. First suits an
+  explanation, so a reader who stops there still has it. Last suits a story
+  or a discovery, where each sentence builds towards it.
+- Each sentence flows from the one before. Open it with something the
+  reader already has (the subject of the last sentence, or a word from its
+  end) and end it with what is new. That puts each new fact where the next
+  sentence can pick it up. If two neighbouring sentences could be swapped
+  without anyone noticing, the paragraph is a list. Order them, or make it
+  a list or a table.
+- A pronoun has one possible antecedent. Do not open a sentence with "it"
+  or "they" when the sentence before names two or more things it could
+  mean. Name the thing again.
+- One paragraph, one purpose. When the purpose line has an "and" in it,
+  it is two paragraphs.
+- The paragraph serves its page. Each tab has a purpose of its own, the
+  one its subtitle states (Gameplay: what the player does; Graphics: how
+  the picture is made). A paragraph whose purpose belongs to another tab
+  moves there and leaves a link behind, however well it reads where it is.
+  The same holds one level down: a paragraph serves its section's heading.
 
 The test is a human reading the page without noticing how it was made.
 
@@ -56,6 +95,22 @@ Real examples:
 | Eighty minus your speed, and a zero that is always there | Secret: it's possible to land while going UP | Spell out the finding, don't be cryptic |
 | The needle cannot tell you whether you are about to land | Secret: the landing gauge lets you go over - by one pixel | Spell out the finding, don't be cryptic |
 | Sixteen numbers and then it stops | An uneven difficulty curve | Spell out the finding, don't be cryptic |
+| A gun barrel, a gunshot, a spoken line and the credits, all driven from one interrupt | One raster interrupt runs the whole intro | The point was at the end of the list; say only that |
+| Five digits, one key and one column: how the bomb is defused | The bomb code the game checks is 67134, not 32768 | The finding was in the section, not the heading |
+| Codes you cannot win without, a fire that ends the level, and a reset that starts the car chase | Without its code, a section can be played but never won | Lead with the strongest finding; the others have sections of their own |
+| City Hall: 75 rooms, a fire that spreads, and two ways out | City Hall, room by room | A map section names the map; the fire that wins the level earns a `Secret:` heading of its own |
+| The mine: four winch parts, five digits and the detonator | Every object in the mine, in the order it is needed | Name what the section shows; a count of items is not a hook |
+
+A heading is never an inventory. Two to four things strung together with
+commas and an "and", often counted, sometimes behind a colon, and with no
+verb saying what they do, list what the section contains without saying
+what any of it means. The counts mean nothing until the section has
+explained them, and the reader has to read all of it to learn which item
+mattered. It is the rhythmic triplet from the rules above, moved into the
+heading, and a margin full of them is the plainest sign that a machine
+wrote the page. Pick the one thing a reader would most want to know and
+say it, or name the subject plainly. A section with three findings that
+each deserve a heading is three sections.
 
 ## Declare provenance
 
