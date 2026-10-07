@@ -9,10 +9,10 @@ music player also transposes pitches beyond a 37-entry frequency table,
 reading six neighboring bytes from each frequency page. A port that clamps
 either index makes a more regular system than the original game.
 
-The verify skill now asks for caller ranges and adjacent reads at the
-point where accepted values are enumerated. Those cases belong in the
-port comparison, with player reachability kept separate for inputs that
-were only forced.
+Caller ranges and adjacent reads belong in the port comparison, with
+player reachability kept separate for inputs that were only forced.
+The proposed verify-skill addition stays under Candidates in this game's
+kit-feedback.md until a second game establishes its broader applicability.
 
 A resource browser also needs the loader's alignment. Comparing with an
 earlier cartridge analysis exposed a two-cell shift in the disk maps:
@@ -20,7 +20,9 @@ the disk reader discards one byte before filling its packed-room buffer.
 The page had decoded raw sector offset zero rather than one. The native
 room-one buffer established the alignment; executing the original reader
 and decoder for every room in all three disks checked the complete set.
-The existing minisite rule about drawing from runtime memory now covers
-this transfer boundary explicitly. A page-specific regression rejects
-offset zero and compares the actual embedded board data with the original
-decoder, rather than checking only the dimensions of a reconstructed map.
+The existing minisite rule about drawing from runtime memory prompted
+that check. Its proposed transfer-boundary addition also stays under
+Candidates until a second game establishes its broader applicability.
+A page-specific regression rejects offset zero and compares the actual
+embedded board data with the original decoder, rather than checking only
+the dimensions of a reconstructed map.

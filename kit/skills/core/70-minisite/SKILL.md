@@ -23,6 +23,11 @@ and warns about any other `.html` in the folder.
 
 Every `$XXXX` inside a `<code>` element on any tab becomes a link into the
 Source tab, so write addresses in code spans and the evidence links itself.
+One the listing holds no record of (a chip register, a stretch the coverage
+leaves out, another part's address) opens the Source tab on a note saying
+so. `build.py --addresses` lists them page by page: a chip register can
+stay, but an address of the wrong part, or one the listing should hold, is
+a mistake to fix.
 
 # The How it works page
 
@@ -213,12 +218,7 @@ can open with that instead.
   one map drawn that way showed letters where the stalactites belong.
   Compare the character set and the colour table of the hand-over with a
   play snapshot, and embed the bytes that differ for the state the
-  picture claims to show. For decoded rooms or other loaded resources,
-  follow the transfer into its runtime buffer before choosing an offset
-  in the extracted file: the reader may discard a prefix or header.
-  Compare at least one decoded payload with a live buffer, then run the
-  original decoder across the stored resource set before publishing the
-  browser.
+  picture claims to show.
 - Reference images go in `reference/`; the page refers to them by
   relative path from the game folder (`reference/<name>.png`).
 - **A game of several parts** (`10-orient`) gets a Source page for each
@@ -260,7 +260,11 @@ checklist mechanically, paragraph by paragraph:
    the control ("Press a direction").
 4. Headings name the thing, never a tautology ("Every character is a
    character") and never a claim the section still has to prove. Prefer the
-   thing over the claim about the thing.
+   thing over the claim about the thing. Read each heading for a list: two
+   or more things joined by commas or "and", with no verb saying what they
+   do, is an inventory of the section ("Five digits, one key and one
+   column: how the bomb is defused"). Rewrite it as the one finding, or as
+   the plain name of the subject (`kit/style.md`, "Section headings").
 5. Collapse triplets written for rhythm into a plain list or two sentences.
    Three genuine items are fine; three arranged for a drumbeat are not.
 6. State it positively. A one-beat correction is fine when the reader would
@@ -311,7 +315,10 @@ The page is titled with the game's name and nothing else, in both the
 eyebrow above it. Readers arrive looking for a game, and a headline in
 place of the name hides it in a tab, a search result and a link. Say the
 interesting thing in the standfirst under the title, where the template
-puts it, and in the section headings.
+puts it, and in the section headings. The standfirst is yours to write,
+a sentence or two, with the rest of the copy: leave it neither empty nor
+for the contributor. The home page shows it on the game's card unless
+`game.json` has a `blurb`, and the Gold pass may rewrite it.
 
 ## Maps / levels, when there is one
 
@@ -367,13 +374,6 @@ limits in `kit/INSTALL.md`.
 `tools.py stop browser` stops only this clone's test browser. It downloads
 nothing and does not use the contributor's personal browser session. See
 `kit/INSTALL.md`, "Browser checks", for the tested host and containment.
-
-If an existing Chromium executable is available instead, select it with
-`KIT_BROWSER_CHROMIUM` through the same launcher and use its CDP endpoint.
-`KIT_BROWSER_PORT` chooses a free port when another session owns 9222.
-The install notes describe the isolated profile and tested client; record
-the executable's origin and client version, and ask before installing
-anything missing.
 
 Check, at least: every canvas has drawn something; the console has no
 errors; every control does something when clicked; and the rebuilt screen

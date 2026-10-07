@@ -36,7 +36,10 @@ and the rest of memory is the other part's, which in turn does not own
 them. So a game's coverage, the sum over its parts, counts each byte once:
 a resident engine once, however many levels are loaded over it. Parts
 that name no other share nothing, whatever their addresses: each is an
-address space of its own.
+address space of its own. A part that lies over another keeps its own
+ranges even where a load over it writes some of them again: a program
+that replaces the first pages of the game for a while holds other bytes
+than the game does there, so each counts its own, in its own snapshot.
 
 Usage:
   parts.py <game dir>                  list the parts, with each one's coverage
@@ -120,23 +123,48 @@ def started(p):
     return bool(S.get("blocks") or S.get("symbols") or S.get("comments"))
 
 
+def _gaps(lo, hi, taken):
+    """The stretches of lo..hi that no (first, last) pair of taken covers."""
+    out, a = [], lo
+    for t_lo, t_hi in sorted(taken):
+        if t_hi < a or t_lo > hi:
+            continue
+        if t_lo > a:
+            out.append((a, t_lo - 1))
+        a = max(a, t_hi + 1)
+    if a <= hi:
+        out.append((a, hi))
+    return out
+
+
 def elsewhere(P, p):
     """[[first, last, whose]] for every address p does not own: all but its own ranges when it
-    lies over another part, and the ranges of the parts that lie over it."""
+    lies over another part, and the ranges of the parts that lie over it, except where they
+    fall in p's own ranges (p's load wrote those bytes; a load over it writes others there)."""
     out, lower = [], under(P, p)
+    own = ranges(p) if lower else []
     if lower:
-        own = ranges(p)
         if not own:
             sys.exit(f'part {p["id"]} lies over {lower[0]["id"]} but its part.json has no "ranges": say which '
                      "addresses its load owns, or every byte of the part beneath is counted twice")
-        a = 0
-        for lo, hi in own:
-            if lo > a:
-                out.append([a, lo - 1, lower[0]["title"]])
-            a = max(a, hi + 1)
-        if a < 0x10000:
-            out.append([a, 0xFFFF, lower[0]["title"]])
+        for g_lo, g_hi in _gaps(0, 0xFFFF, own):
+            a = g_lo            # each stretch is named after the part beneath whose load wrote it
+            while a <= g_hi:
+                for q in lower:
+                    q_own = ranges(q) if q is not lower[-1] else []
+                    hit = [(lo, hi) for lo, hi in q_own if lo <= a <= hi]
+                    if hit or q is lower[-1]:
+                        break
+                if hit:
+                    end = min(g_hi, hit[0][1])
+                else:           # the part at the bottom: up to the next address a part above it loads
+                    nxt = [lo for q2 in lower[:-1] for lo, hi in ranges(q2) if lo > a]
+                    end = min([g_hi] + [x - 1 for x in nxt])
+                out.append([a, end, q["title"]])
+                a = end + 1
     lent = sorted((lo, hi, q["title"]) for q in above(P, p) for lo, hi in ranges(q))
+    if own:
+        lent = [(a, b, who) for lo, hi, who in lent for a, b in _gaps(lo, hi, own)]
     merged = []
     for lo, hi, who in lent:    # several parts at the same addresses (one level after another) are one range
         if merged and lo <= merged[-1][1] + 1:
@@ -151,10 +179,19 @@ def elsewhere(P, p):
     return out
 
 
+def replaces(P, p):
+    """[[first, last, whose]]: the stretches of p's ranges that a part beneath it also wrote in
+    its own load, and owns in its own snapshot. That part's code refers to them as its own."""
+    own = ranges(p) if under(P, p) else []
+    return [[max(lo, a), min(hi, b), q["title"]] for q in under(P, p) for lo, hi in ranges(q)
+            for a, b in own if max(lo, a) <= min(hi, b)]
+
+
 def load_game(gdir):
     """A game folder's game.json. For a part's folder: the game's, with the part's own ledger
-    settings in place of the game's, "part" ({id, title, over}) and "elsewhere", the addresses
-    another part owns (symbols_export.regions leaves them out of this part's ledger)."""
+    settings in place of the game's, "part" ({id, title, over}), "elsewhere", the addresses
+    another part owns (symbols_export.regions leaves them out of this part's ledger), and
+    "replaces", those of its own that a part beneath wrote first (parts.replaces)."""
     top, pid = home(gdir)
     game = json.load(open(os.path.join(top, "game.json")))
     if pid is None:
@@ -166,6 +203,7 @@ def load_game(gdir):
     out.update({k: own.get(k, EMPTY[k]) for k in LEDGER_KEYS})
     out["part"] = {"id": pid, "title": me["title"], "over": [q["id"] for q in under(P, me)]}
     out["elsewhere"] = elsewhere(P, me)
+    out["replaces"] = replaces(P, me)
     return out
 
 
@@ -190,6 +228,20 @@ def clip(blocks, syms, comments, away):
            [c for c in comments if not owned(c["address"], away)]
     return (kept, [s for s in syms if owned(s["address"], away)],
             [c for c in comments if owned(c["address"], away)], left)
+
+
+def strays(syms, away, over, refs):
+    """The addresses of the automatic symbols at addresses this part's load wrote over a part
+    beneath (over: replaces()) that only code this part does not own refers to. A session on
+    this part's snapshot traces the code beneath too, and mints a symbol wherever it refers
+    to its own bytes there, which this part has replaced (#213): a name this part's own code
+    may never use. refs is {address: [the addresses that refer to it]}. A symbol nothing is
+    known to refer to stays, and so does every label a user gave, and every address the part
+    beneath never wrote: code beneath that refers there means what this part holds (a level's
+    entry, its tables)."""
+    return {s["address"] for s in syms if s.get("kind") == "auto" and owned(s["address"], away)
+            and not owned(s["address"], over) and refs.get(s["address"])
+            and not any(owned(r, away) for r in refs[s["address"]])}
 
 
 def seed(gdir):

@@ -11,12 +11,16 @@ Run on 4 October 2026, kit 0.0.74, Ubuntu Linux x86_64, by jankfoundry with Code
 
 - `10-orient`: “Give every part a folder” moved the resident engine and all 150 independently loaded room sectors into the standard part layout. “The game's own loader puts the part in memory” required native captures for each board, even though the room parts contain data rather than new code. The migration used kit 0.0.88.
 
-## Shared changes
+## What was changed in the kit
 
-- `kit/skills/core/60-verify/SKILL.md` sharpens caller/indexed-range verification; `70-minisite` includes resource-transfer alignment. The workflow lesson is `kit/lessons/2026-10-04-lode-runner.md`.
-- `kit/scripts/browser.py` accepts an explicitly selected existing Chromium/headless-shell with a selectable port and local profile/XDG/temp state. `test_browser.py` checks containment and POSIX stop-pattern ownership. `tools.py`, INSTALL, and the minisite skill document the fallback. No browser was downloaded. The existing C64 footprint verifier does not scan browser state; launcher isolation and ownership tests are the narrower evidence.
+- `kit/scripts/browser.py` accepts an explicitly selected existing Chromium/headless-shell with a selectable port and local profile/XDG/temp state. `test_browser.py` checks containment and POSIX stop-pattern ownership. `tools.py` and INSTALL document the fallback; the minisite skill already points to INSTALL's Browser checks. No browser was downloaded. The existing C64 footprint verifier does not scan browser state; launcher isolation and ownership tests are the narrower evidence.
 - `kit/c64/check_emulator.py` selects the emulator status line rather than assuming it precedes browser status. `test_tools.py` covers running/stopped browsers and emulators, legacy output, and missing/ambiguous lines. Dispatcher tests and the real emulator qualification pass.
 - `site/lib/site.css` hides vertical tab-row overflow while preserving horizontal scrolling. This is a layout fix, not a workflow change.
+
+## Candidates
+
+- `kit/skills/core/60-verify`: enumerate caller-supplied indexes against the table's length, including adjacent reads during normal progression. No second game's matching case was established for this proposed addition; the lesson is preserved in `kit/lessons/2026-10-04-lode-runner.md`.
+- `kit/skills/core/70-minisite`: establish loaded-resource offsets from the original transfer and a live buffer before decoding the full resource set. No second game's matching case was established for this proposed addition; the same lesson file preserves it. Both proposals remain outside the core skills until another game establishes their broader applicability.
 
 ## Presentation and private evidence
 

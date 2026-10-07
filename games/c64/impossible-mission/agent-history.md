@@ -100,3 +100,39 @@ summaries alone, keeping what several agreed on. The summaries
 contradicted each other on Zzap!64's score and poll placings, which is
 why no review score appears; they also differed on the British price.
 `features.md` lists the sources to check.
+
+## 4 October 2026: the map generator
+
+The contributor asked for a map generator on The stronghold tab. The game's
+`random` mixes in the raster line, so one game's map cannot be replayed;
+instead `make_map` was ported register for register (the loop counter
+continues from the column a room was actually placed in, and the column
+search starts from the row neighbour's square) and run against the game's
+own routine in the kit's 6502 simulator, with `random` hooked to answer
+from a scripted byte stream: 200 streams, every byte the same. On the way
+two listing comments were found to say 18 map columns where the code
+uses 17, and the open question about the six glyphs at `$B56D` closed:
+they are the map's frame. The page's colour view first drew green rooms
+on green rock and hid nine of them; it draws the rock black.
+
+## 4 October 2026: a second pass on The release and Reception
+
+Asked to look again now that the internet should be reachable, the run
+found the same proxy refusals; the contributor's network change had not
+reached the session. A second round of web searches added what more than
+one result agreed on (see `features.md`). It also showed that the two
+Zzap!64 placings first read as a contradiction are two different lists,
+editors' and readers', and a third figure for the review score appeared,
+so the score stays out.
+
+## 6 October 2026: Reception from the magazines
+
+This session could reach Wikipedia, C64-Wiki and the Internet Archive.
+The magazine scans corrected the page: Zzap!64's first issue did not
+review the game (it predates the magazine) but ran the Zzap Challenge on
+it, so the three review scores the search summaries gave belong to no
+issue checked; the British release was CBS Software's, later US Gold's;
+the Zzap!64 readers' chart that put it first is issue 2's. The reception
+section was rewritten from the scans, with links to them. At the
+contributor's request the Overview no longer says the timing was written
+for American televisions.

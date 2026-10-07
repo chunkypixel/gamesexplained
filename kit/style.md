@@ -34,9 +34,12 @@ rules below mechanically, paragraph by paragraph, as described in
 - No rhetorical question followed by its answer.
 - No "it's not X, it's Y", "not just X but Y", "more than just".
 - The page title is the game's name, never a claim ("The X Is A Y").
-  A subtitle carries the hook, if a human writes one. Section headings may
-  carry a hook of their own; keep them short, and prefer the thing over
-  the claim about the thing ("The landing test" over "The gauge lies").
+  The standfirst, the subtitle under the title, carries the hook: the
+  most interesting thing inside the game, in a sentence or two. The agent
+  writes it with the rest of the copy, and the Gold pass may rewrite it
+  like any other line. Section headings may carry a hook of their own;
+  keep them short, and prefer the thing over the claim about the thing
+  ("The landing test" over "The gauge lies").
 - No tidy triplets for rhythm. Two things or four things are fine when
   there are two or four things.
 - No em-dashes as the default joint between clauses. Write two sentences.
@@ -95,6 +98,22 @@ Real examples:
 | Eighty minus your speed, and a zero that is always there | Secret: it's possible to land while going UP | Spell out the finding, don't be cryptic |
 | The needle cannot tell you whether you are about to land | Secret: the landing gauge lets you go over - by one pixel | Spell out the finding, don't be cryptic |
 | Sixteen numbers and then it stops | An uneven difficulty curve | Spell out the finding, don't be cryptic |
+| A gun barrel, a gunshot, a spoken line and the credits, all driven from one interrupt | One raster interrupt runs the whole intro | The point was at the end of the list; say only that |
+| Five digits, one key and one column: how the bomb is defused | The bomb code the game checks is 67134, not 32768 | The finding was in the section, not the heading |
+| Codes you cannot win without, a fire that ends the level, and a reset that starts the car chase | Without its code, a section can be played but never won | Lead with the strongest finding; the others have sections of their own |
+| City Hall: 75 rooms, a fire that spreads, and two ways out | City Hall, room by room | A map section names the map; the fire that wins the level earns a `Secret:` heading of its own |
+| The mine: four winch parts, five digits and the detonator | Every object in the mine, in the order it is needed | Name what the section shows; a count of items is not a hook |
+
+A heading is never an inventory. Two to four things strung together with
+commas and an "and", often counted, sometimes behind a colon, and with no
+verb saying what they do, list what the section contains without saying
+what any of it means. The counts mean nothing until the section has
+explained them, and the reader has to read all of it to learn which item
+mattered. It is the rhythmic triplet from the rules above, moved into the
+heading, and a margin full of them is the plainest sign that a machine
+wrote the page. Pick the one thing a reader would most want to know and
+say it, or name the subject plainly. A section with three findings that
+each deserve a heading is three sections.
 
 ## Declare provenance
 

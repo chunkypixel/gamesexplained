@@ -124,6 +124,15 @@ class Parts(unittest.TestCase):
             self.assertNotIn('l', by.get(0x1003, {}))              # but the name labels no row of this part
             self.assertIn('OK', run(KIT / 'scripts' / 'check_listing.py', g).stdout)
 
+    def test_a_listing_without_a_snapshot_is_refused(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = fixture(d)
+            before = (g / 'parts' / 'park' / 'listing.json').read_text()
+            r = run(KIT / 'scripts' / 'listing.py', g / 'parts' / 'park', ok=False)
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('no snapshot', r.stderr)
+            self.assertEqual((g / 'parts' / 'park' / 'listing.json').read_text(), before)
+
     def test_a_name_changed_beneath_is_a_listing_to_relabel(self):
         with tempfile.TemporaryDirectory() as d:
             g = fixture(d)
@@ -151,6 +160,22 @@ class Parts(unittest.TestCase):
             self.assertNotIn('code bytes of engine', run(KIT / 'scripts' / 'listing.py', g / 'parts' / 'street',
                                                           g / 'street.vsf').stdout)
 
+    def test_code_beneath_that_this_load_replaces_is_not_reported(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = fixture(d)
+            run(KIT / 'scripts' / 'parts.py', 'add', g, 'patch', '--over', 'engine')
+            f = g / 'parts' / 'patch' / 'part.json'
+            f.write_text(json.dumps(dict(json.loads(f.read_text()), ranges=[['$1000', '$1002']])))
+            symbols(g, 'patch', [(0x1000, 0x1002, 'Code')], [sym(0x1000, 'patch_entry')], [line(0x1000, 'The patch.')])
+            patched = dict(ENGINE)
+            patched[0x1000] = [0xA9, 0x03, 0xEA, 0xAD, 0x10, 0x10, 0x60]    # lda #3 and a nop over the jsr: its own
+            out = run(KIT / 'scripts' / 'listing.py', g / 'parts' / 'patch', snapshot(g / 'patch.vsf', patched)).stdout
+            self.assertNotIn('code bytes of engine', out)
+            patched[0x1000] = [0xA9, 0x03, 0xEA, 0xAD, 0x11, 0x10, 0x60]    # and $1004, which is the engine's
+            out = run(KIT / 'scripts' / 'listing.py', g / 'parts' / 'patch', snapshot(g / 'patch.vsf', patched)).stdout
+            self.assertIn('1 of the 4 code bytes of engine', out)
+            self.assertIn('$1004', out)
+
     def test_a_session_gives_each_part_its_share(self):
         with tempfile.TemporaryDirectory() as d:
             g = fixture(d)
@@ -174,6 +199,20 @@ class Parts(unittest.TestCase):
             self.assertIn('engine_other', out)
             self.assertIn('no other part', out)
 
+    def test_an_export_that_holds_less_than_the_file_says_so(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = fixture(d)
+            proj = g / 'park.regen2000proj'
+            run(KIT / 'scripts' / 'symbols_import.py', g / 'parts' / 'park', g / 'park.vsf', proj)
+            out = run(KIT / 'scripts' / 'symbols_export.py', g / 'parts' / 'park', '--project', proj).stdout
+            self.assertNotIn('more than this session holds', out)
+            p = json.loads(proj.read_text())
+            del p['labels'][str(0x4010)]                            # a session that lacks one of the park's names
+            proj.write_text(json.dumps(p))
+            out = run(KIT / 'scripts' / 'symbols_export.py', g / 'parts' / 'park', '--project', proj).stdout
+            self.assertIn('had 2 user labels', out)
+            self.assertIn('more than this session holds', out)
+
     def test_clip_cuts_a_block_at_the_edge(self):
         blocks, syms, comments, left = P.clip(
             [{'start': 0x3FF0, 'end': 0x410F, 'type': 'Byte'}],
@@ -183,6 +222,36 @@ class Parts(unittest.TestCase):
         self.assertEqual([s['name'] for s in syms], ['low', 'auto'])
         self.assertEqual(comments, [])
         self.assertEqual([x.get('name') or x['text'] for x in left], ['in', 'x'])
+
+    def test_a_symbol_only_the_part_beneath_refers_to_is_left_out(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = fixture(d)
+            run(KIT / 'scripts' / 'parts.py', 'add', g, 'room', '--over', 'park')
+            f = g / 'parts' / 'room' / 'part.json'
+            f.write_text(json.dumps(dict(json.loads(f.read_text()), ranges=[['$4000', '$4011'], ['$5000', '$50FF']])))
+            room, park = P.load_game(str(g / 'parts' / 'room')), P.load_game(str(g / 'parts' / 'park'))
+        # the room is loaded over the park's own bytes at $4000-$4011, and over nothing of the park's at $5000
+        self.assertEqual(room['replaces'], [[0x4000, 0x4011, 'Park']])
+        self.assertEqual(park['replaces'], [])        # the engine beneath owns no ranges the park's load wrote over
+        import symbols_export as X
+
+        def auto(a):
+            return {'address': a, 'name': f's_{a:04X}', 'kind': 'auto', 'type': 'AbsoluteAddress'}
+        syms = [sym(0x4000, 'room_entry'), auto(0x4003), auto(0x4005), auto(0x4008), auto(0x5000)]
+        refs = {0x4000: [0x4020], 0x4003: [0x4005, 0x4020], 0x4005: [0x4020, 0x1004], 0x5000: [0x1000]}
+        asked, keep = [], X.cross_references
+        X.cross_references = lambda plat, addresses, gdir=None: asked.extend(addresses) or refs
+        try:
+            kept, n = X.drop_strays('c64', 'room', syms, room)
+            self.assertEqual(X.drop_strays('c64', 'park', syms, park), (syms, 0))
+        finally:
+            X.cross_references = keep
+        self.assertEqual(asked, [0x4003, 0x4005, 0x4008])     # automatic, the room's, and written by the park first
+        self.assertEqual(n, 1)                                 # $4005: only the park's code and the engine's refer to it
+        # kept: a user's label, one the room's own code refers to, one nothing is known to refer to, and
+        # $5000, which the engine's code refers to as what the room holds there
+        self.assertEqual([s['name'] for s in kept], ['room_entry', 's_4003', 's_4008', 's_5000'])
+        self.assertEqual(X.drop_strays('spectrum', 'room', syms, room), (syms, 0))   # a client that cannot say
 
     def test_a_chain_of_three(self):
         with tempfile.TemporaryDirectory() as d:
@@ -194,9 +263,19 @@ class Parts(unittest.TestCase):
             by = {p['id']: p for p in ps}
             self.assertEqual([q['id'] for q in P.under(ps, by['room'])], ['park', 'engine'])
             self.assertEqual({q['id'] for q in P.above(ps, by['engine'])}, {'park', 'street', 'room'})
-            self.assertEqual(tracked_count(str(g / 'parts' / 'park')), (6, 6))    # the room took the pointer
+            # the room writes the park's pointer again, but in the park's snapshot it is still the park's:
+            # each part counts the bytes its own load wrote (a program that replaces the first pages of
+            # the game for a while does not take the game's own code from it)
+            self.assertEqual(tracked_count(str(g / 'parts' / 'park')), (8, 8))
+            self.assertNotIn(0x4010, [a for lo, hi, _ in P.elsewhere(ps, by['park']) for a in (lo, hi)])
             names = P.names_under(str(g / 'parts' / 'room'))
             self.assertEqual((names[0x4000], names[0x1003]), ('park_entry', 'engine_get'))
+            # what the room does not own is named after the part whose load wrote it, not the nearest
+            away = {(lo, hi): who for lo, hi, who in P.elsewhere(ps, by['room'])}
+            self.assertEqual(away[(0x0000, 0x3FFF)], 'The engine')
+            self.assertEqual(away[(0x4000, 0x400F)], 'Park')
+            self.assertEqual(away[(0x4012, 0x40FF)], 'Park')
+            self.assertEqual(away[(0x4100, 0xFFFF)], 'The engine')
 
     def test_the_layout_is_checked(self):
         with tempfile.TemporaryDirectory() as d:

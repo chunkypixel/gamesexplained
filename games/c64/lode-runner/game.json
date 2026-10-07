@@ -59,8 +59,14 @@
   "kit_version": "0.0.88",
   "created": "2026-10-04",
   "links": {
-    "wiki": "https://www.c64-wiki.com/wiki/Lode_Runner",
-    "manual": "https://www.lemon64.com/doc/lode-runner/355"
+    "wiki": {
+      "title": "Lode Runner - C64-Wiki",
+      "url": "https://www.c64-wiki.com/wiki/Lode_Runner"
+    },
+    "manual": {
+      "title": "Lode Runner - C64 Manual, Docs - Lemon64",
+      "url": "https://www.lemon64.com/doc/lode-runner/355"
+    }
   },
   "model_label": "GPT-6.1 Sol Extra High (contributor-confirmed)",
   "imported": {

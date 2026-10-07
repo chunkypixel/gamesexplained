@@ -105,6 +105,23 @@ format, how to check the result against it, and how to read it back
   byte for byte. Before a region goes in `exclude`, take every table the
   code indexes as an address (lo/hi pairs, split lo/hi tables) and check
   where its entries land. If any land in the region, it is data.
+- **An unpacked load can run on past its own data.** An unpacker that
+  stops at the end of its read window, or on a count, goes on decoding
+  whatever follows its stream (the next file's packed bytes, a sector's
+  filler) with this load's table, and writes the result after the real
+  data, where it looks like more of the same. Find where the stream ends:
+  trace the unpacker and count what it takes, or compare the same file
+  loaded from two disks or sides, which agree on the data and can differ
+  after it. Exclude the rest, with that reason, once nothing reads it.
+- **A comment a program writes is one claim made for every record.**
+  Level data of a known format is quickest described by a script that
+  writes each record's comment from templates. Before it writes, test
+  each sentence a template produces against the code on every path that
+  reads the field: a flag can change which routine reads it, when that
+  runs, or whether anything does, and a sentence written from the
+  commonest case is wrong for every other. Make the template choose its
+  sentence from the record's own bytes (`60-verify` says how such
+  comments are sampled).
 - **Runtime state is excluded** from the denominator: stack, screen
   memory, I/O. Authored data nothing references by address (a character
   set, a packed string block) is **added** through the `coverage` object
@@ -183,7 +200,8 @@ own: give `coverage.py`, `symbols_export.py` and `listing.py` the part's
 folder. The game's figure is the sum, `coverage.py <game dir>`, and it
 counts each byte once, because each byte has one owner: a part that lies
 over another counts only its `"ranges"`, and the part beneath does not
-count them. 100 % means every part the game has a folder for. A part
+count them, unless they fall in ranges of its own (its snapshot holds its
+own bytes there). 100 % means every part the game has a folder for. A part
 with a folder and no analysis is not in the figure, and the page says so
 beside it.
 
@@ -204,6 +222,18 @@ from any snapshot that holds it, and of each part over it from that
 part's own. `listing.py` names what the part calls by the names of the
 part beneath, and `check_listing.py` says when one of those has changed
 (`listing.py <part> --relabel`, no snapshot needed).
+
+The session traces the code of the part beneath as well, and where that
+code refers to an address in this part's ranges the disassembler mints an
+automatic symbol there. Where the part beneath wrote that address in its
+own load (its own routine or table, which this part's load replaced), the
+name is one this part's own code may never use. The export from a live
+session, and `coverage.py --live`, leave out each of those that only code
+another part owns refers to, and the export says how many; a label of
+yours stays. An address the part beneath never wrote is kept, since code
+beneath that refers there means what this part holds (a level's entry, its
+tables). An export from a project file cannot ask what refers to what, so
+it keeps them all: export from the live session.
 
 ## Data the ledger cannot see
 
@@ -322,7 +352,30 @@ needs a guard inside the script or a background run you poll.
 
 ## Splitting the work across subagents
 
-Routines are independent, so the burn-down parallelises. What matters:
+**One agent is the default.** Every agent starts cold: it reads the
+brief, the game's notes and its neighbours' code before it writes
+anything, so tokens grow with the number of agents, not with the game.
+The record bears it out. Single agents took 20 to 22 KB of code to
+100 % in 30 to 40 minutes; runs of seven to twelve agents took 14 to 62
+minutes and then spent the difference on merging, naming collisions and
+reconciling reports in `60-verify`. Two nine-agent runs used up the
+account's session limit within minutes and sat idle for hours. Fanning
+out bought no quality either: what caught wrong readings was checking by
+an agent that did not write them, not parallel writing.
+
+Split only when one of these holds, and the contributor's answer about
+their usage limit (`kit/START.md`) allows it:
+
+- **The game is several parts**: one agent to a part (below).
+- **What is left after your own first pass is too much for one
+  context**: as a guide, more than about 32 KB of code still undescribed.
+
+Annotate first yourself, then split. Take the main loop, the interrupt
+handlers, the core variables and the naming conventions to described
+before anyone else starts: the brief's "Established" list is then short
+and checked, and the agents inherit names instead of inventing rival
+ones. Start at most four agents, and fewer on a tight limit. When you
+do split, what matters:
 
 - **One shared disassembler.** Concurrent reads are safe; concurrent
   writes are safe only if agents own **disjoint address ranges**. Assign

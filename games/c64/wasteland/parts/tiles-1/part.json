@@ -1,0 +1,47 @@
+{
+  "title": "Tile set 1",
+  "order": 16,
+  "over": "game",
+  "ranges": [
+    [
+      "$D000",
+      "$DD7F"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [],
+    "extra": [
+      [
+        "$D000",
+        "$DD7F",
+        "tile set 1, unpacked from T35/L12 by enter_map ($2722) with map 8"
+      ]
+    ],
+    "include": [
+      [
+        "$D000",
+        "$DD7F",
+        "RAM under the I/O area: tile set 1, unpacked from T35/L12 by enter_map ($2722) with map 8"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$D000",
+      "$DBFF",
+      "graphics",
+      "tile set 1 (maps 8, 9, 10, 29, 43, 49): 96 tile bitmaps, 32 bytes each, four multicolour cells"
+    ],
+    [
+      "$DC00",
+      "$DD7F",
+      "graphics",
+      "tile set 1: colour bytes, four a tile, one a cell"
+    ]
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "title": "Needles, waste pit and ammo bunker",
+  "order": 31,
+  "over": "tiles-2",
+  "ranges": [
+    [
+      "$3400",
+      "$47FF"
+    ],
+    [
+      "$DE00",
+      "$E245"
+    ]
+  ],
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [
+      [
+        "$E200",
+        "$E245",
+        "not map data: the unpacker runs on past the 1024-byte tile layer until its input count runs out, decoding the next entry's packed bytes with this entry's table; nothing reads them and the map is never written back from here"
+      ]
+    ],
+    "extra": [
+      [
+        "$3400",
+        "$47FF",
+        "map 31, loaded by enter_map ($25BD)"
+      ],
+      [
+        "$DE00",
+        "$E1FF",
+        "map 31: its tile layer, one byte a square, 32 rows of 32, unpacked from T35/L13 by enter_map ($25BD)"
+      ]
+    ],
+    "include": [
+      [
+        "$DE00",
+        "$DFFF",
+        "RAM under the I/O area: map 31, loaded by enter_map ($25BD)"
+      ]
+    ]
+  },
+  "io": [],
+  "regions": [
+    [
+      "$3400",
+      "$3CA8",
+      "levels",
+      "map 31: square classes, square numbers, map record, record lists and square records"
+    ],
+    [
+      "$3CA9",
+      "$3CAB",
+      "code",
+      "map 31: its own code"
+    ],
+    [
+      "$3CAC",
+      "$3CFE",
+      "text",
+      "map 31: monster names"
+    ],
+    [
+      "$3D00",
+      "$3D2F",
+      "levels",
+      "map 31: monster records"
+    ],
+    [
+      "$3D30",
+      "$47E6",
+      "text",
+      "map 31: messages"
+    ],
+    [
+      "$DE00",
+      "$E1FF",
+      "levels",
+      "map 31: square tiles"
+    ]
+  ]
+}
