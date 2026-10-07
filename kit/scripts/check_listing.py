@@ -9,6 +9,12 @@ the permanent guard against a decoder that drifts under a listing, and against a
 off-by-one record (#142). It needs no snapshot. The empty symbols.json that
 new_game.py writes needs no listing yet.
 
+Where a game commits a code map (codemap.json, from kit/spectrum/codemap.py),
+every byte of it that ran is typed Code in symbols.json: code typed as data
+has no cross-references and still reads as explained (#184). Code only the
+map's trace reached, typed as data, is listed to be read, since a trace can
+walk into data.
+
 A game of several parts (kit/scripts/parts.py) is checked part by part,
 and so is the layout itself: every folder under parts/ is a part, each
 has a place of its own in the order, a part that lies over another says
@@ -24,6 +30,19 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from parts import ID, EMPTY, LEDGER_KEYS, parts, under, ranges, started, load_game, owned   # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+def untyped_code(gdir, S):
+    """(ran, traced): the addresses gdir's codemap.json has as code that symbols.json S types as
+    nothing or as data, those that ran and those only its trace reached; ([], []) with no map."""
+    f = os.path.join(gdir, "codemap.json")
+    if not os.path.isfile(f):
+        return [], []
+    cm = json.load(open(f))
+    span = lambda key: {a for s, e in cm.get(key, []) for a in range(s, e + 1)}
+    loose = span("code") - {a for b in S["blocks"] if b["type"] == "Code" for a in range(b["start"], b["end"] + 1)}
+    ran = loose & span("ran")
+    return sorted(ran), sorted(loose - ran)
 
 
 def check(gdir):
@@ -54,6 +73,13 @@ def check(gdir):
     for c in S["comments"]:
         if c["type"] == "line" and c["text"].strip() and comments.get(c["address"]) != c["text"]:
             errs.append(f"line comment at ${c['address']:04X} missing or different in listing")
+    ran, traced = untyped_code(gdir, S)
+    if ran:
+        errs.append(f"{len(ran)} byte(s) that codemap.json records running as code are not typed Code in "
+                    f"symbols.json (the first at ${ran[0]:04X}); type them as code")
+    if traced:
+        print(f"  !  {gdir}: codemap.json's trace reaches {len(traced)} byte(s) not typed Code (the first at "
+              f"${traced[0]:04X}): code the play never ran, or data the trace walked into; read them")
     if os.path.isfile(os.path.join(gdir, "part.json")):
         game = load_game(gdir)
         away = game.get("elsewhere") or []
