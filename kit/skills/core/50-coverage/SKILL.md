@@ -301,13 +301,6 @@ The same shape hides more than one routine: look for a family of wrappers
 built on one or two stack-unwinding primitives, and check each for the
 number of inline bytes it eats, which need not be the same.
 
-Typing the argument is not the end of it. A trace started later from
-anywhere that reaches the call (another agent's range, a re-run from the
-executed-address map) assumes the call returns, decodes the argument as
-code again and can invent a block where its bogus operands point, which
-coverage then counts. After every agent's export, check that each call
-site's argument is still data, and put the call sites in the brief.
-
 ### Inline jump tables that never come back
 
 A variant has no resume point: an "on n go to". The routine pulls its

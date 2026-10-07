@@ -11,10 +11,8 @@ declared load per game (RFC #124), on kit 0.0.74.
 - `50-coverage`: "Correct the brief the moment a fact in it turns out wrong": four leads in the brief (the NMI vector as a sample player, the end-of-run wait, the CPU port value, a routine's name) were corrected while agents ran, and the reports confirmed each correction.
 - `50-coverage`: "Find every call site of every such routine, type the argument bytes as data": the status-line printer at `$1242` eats the string after its call; typing it removed a bogus block in the bitmap.
 
-## What I changed in the kit
+## What was changed in the kit
 
-- `kit/skills/core/50-coverage/SKILL.md`, "Inline parameters": a typed argument is decoded again by any later trace that reaches the call; check every call site after each agent's export. Lesson: `kit/lessons/2026-10-04-skate-or-die.md`.
-- `kit/skills/core/60-verify/SKILL.md`, "Measuring without fooling yourself": a value the code never writes came from the loaded file; find it there before describing it. Lesson: `kit/lessons/2026-10-04-skate-or-die.md`.
 - `kit/c64/check_emulator.py`: `-h` and `--help` print the usage and stop. They used to run the whole check, which hard-resets the machine; this run, a request for usage reset the paused machine.
 - `kit/scripts/check_docs.py`: a game's title is matched without `\b` at its ends, so a title ending in punctuation (`Skate or Die!`) is found in its lesson heading. The lesson file failed the check before.
 
@@ -42,9 +40,22 @@ traces, which cost two rounds of finding and clearing the same bogus block.
 
 ## Candidates
 
-- A seed or counter the code never writes, on a multi-load game, can differ
-  between the snapshot and the file on disk. Written into `60-verify` this
-  run; another multi-load game that meets it should add its case there.
+No other game folder shows these yet, so they stay here for the next run
+that meets one (`kit/skills/core/80-retro`, step 3):
+
+- **`50-coverage`, "Inline parameters": typed inline arguments do not stay
+  typed.** A trace started later from anywhere that reaches the call (another
+  agent's range, a re-run from the executed-address map) assumes the call
+  returns, decodes the argument as code again and can invent a block where
+  its bogus operands point, which coverage then counts. After every agent's
+  export, check that each call site's argument is still data. Here: High
+  Jump's status-line printer at `$1242`, twice.
+- **`60-verify`: a value the code never writes came from the loaded file.**
+  A random seed, counter or flag with no store anywhere was not "left
+  over": its first value is the one the file brings from the disk, and the
+  snapshot holds whatever it has moved on to since. Find it in the loaded
+  file before describing it. Here: every event's music seed (highjump
+  `$35AB`, ramp `$E13B`, downhill `$7638`, jam `$AB3E`).
 
 ## The whole-game run (5 and 6 October 2026)
 
