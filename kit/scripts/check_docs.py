@@ -4,6 +4,8 @@
   AGENTS.md          agent rules only: no platform or game subject matter
   kit/skills/core/       workflow only: no game names
   kit/skills/<platform>/ platform facts only: no game names
+                     (in the lines a branch adds: a game that gets a folder later does not
+                     fail a sentence written before it, such as a source's own example)
   games/*/*/facts.md, features.md   current truth, no narration of past mistakes; what the
                      game itself prints may be quoted as it appears (`...`, "...", or in capitals)
   games/*/*/*.md     the template's notes and no others: a check's result goes in facts.md,
@@ -128,11 +130,13 @@ def class_collisions(site_css=SITE_CSS, template=TEMPLATE_PAGE, pages=None):
     return bad
 
 
-def scan(path, patterns, label, exempt=None, blank=None):
+def scan(path, patterns, label, exempt=None, blank=None, only=None):
     bad = 0
     with open(path, encoding="utf-8", errors="replace") as fh:
         lines = list(fh)
     for n, line in enumerate(lines, 1):
+        if only is not None and n not in only:
+            continue
         if exempt and exempt.match(line):
             continue
         text = blank.sub(lambda q: " " * len(q.group(0)), line) if blank else line
@@ -143,6 +147,45 @@ def scan(path, patterns, label, exempt=None, blank=None):
                 print(f"        {line.strip()[:88]}")
                 bad += 1
                 break
+    return bad
+
+
+def added_lines(prefix, base=None, root=ROOT):
+    """{path: line numbers} of the lines under prefix that this branch adds or changes since
+    its merge base with base (skill_edits.py's: $GITHUB_BASE_REF on a pull request, else
+    origin/main), with work not yet committed and new files. None with no git or no such ref."""
+    from skill_edits import git, base_ref
+    mb = git("merge-base", base or base_ref(), "HEAD", root=root)
+    if mb.returncode:
+        return None
+    out, path = {}, None
+    diff = git("diff", "-U0", "--no-color", "--no-ext-diff", "--src-prefix=a/", "--dst-prefix=b/",
+               mb.stdout.strip(), "--", prefix, root=root).stdout
+    for ln in diff.splitlines():
+        if ln.startswith("+++ "):
+            path = os.path.normpath(os.path.join(root, ln[6:])) if ln.startswith("+++ b/") else None
+        elif ln.startswith("@@") and path:
+            m = re.match(r"@@ -\S+ \+(\d+)(?:,(\d+))? @@", ln)
+            start, count = int(m.group(1)), int(m.group(2) or 1)
+            out.setdefault(path, set()).update(range(start, start + count))
+    for rel in git("ls-files", "--others", "--exclude-standard", "--", prefix, root=root).stdout.splitlines():
+        f = os.path.normpath(os.path.join(root, rel))
+        with open(f, encoding="utf-8", errors="replace") as fh:
+            out[f] = set(range(1, sum(1 for _ in fh) + 1))
+    return out
+
+
+def skill_game_names(titles, base=None, root=ROOT):
+    """A reusable skill names no game with a folder in games/, in the lines this branch adds.
+    Every line was checked once, so a new game's folder failed whatever sentence already named
+    it: the Spectrum reference's floating-bus note cited the FAQ's example, Arkanoid, and lost
+    it when the C64 game arrived (#224). With nothing to compare, nothing fails."""
+    added = added_lines(os.path.join("kit", "skills"), base, root)
+    bad = 0
+    for sk in sorted(glob.glob(os.path.join(root, "kit", "skills", "*", "*", "*.md"))):
+        lines = (added or {}).get(os.path.normpath(sk))
+        if lines:
+            bad += scan(sk, titles, "a specific game named in a reusable skill", only=lines)
     return bad
 
 
@@ -224,8 +267,7 @@ def main():
             print('        write each as {"title": "<the page\'s own title>", "url": "..."} (kit/skills/core/20-features)')
             fails += 1
     if titles:
-        for sk in glob.glob(os.path.join(ROOT, "kit", "skills", "*", "*", "*.md")):
-            fails += scan(sk, titles, "a specific game named in a reusable skill")
+        fails += skill_game_names(titles)
         for f in sorted(glob.glob(os.path.join(ROOT, "kit", "lessons", "*.md"))):
             if os.path.basename(f) == "README.md":
                 continue
