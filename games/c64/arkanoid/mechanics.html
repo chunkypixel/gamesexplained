@@ -61,46 +61,12 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 <header class="hero">
   <p class="eyebrow">Commodore 64 · 1987 · Imagine</p>
   <h1>Arkanoid</h1>
-  <p class="sub">Which capsule falls from a broken brick is decided by the frame counter, the ball's position and how many lives you have left. Martin Galway's music plays on the Music tab from the game's own driver.</p>
+  <p class="sub">How the play screen is built, how the 32 walls are stored and drawn, how the bat sends the ball off, and what round 33 does differently. How the capsules are chosen is on the <a href="discoveries.html">Discoveries</a> tab, and Martin Galway's music plays on the <a href="music.html">Music</a> tab.</p>
 </header>
 <main class="wrap">
 
 <section>
-  <p class="fig">01 · Capsules</p>
-  <h2 class="t">Secret: the capsules are dealt by the clock</h2>
-  <p class="lede">When a brick breaks, <code>choose_capsule</code> (<code>$B2E6</code>) looks at the low byte of a frame counter that counts up 50 times a second, and that one number sorts every broken brick into three groups.</p>
-  <div class="plate">
-    <div class="row"><span class="lab">Lives</span><select id="capLives"></select>
-      <span class="lab">Frame counter high byte <code>$0241</code></span><input type="range" id="capHi" min="0" max="31" value="0"><span class="lab" id="capHiLab"></span></div>
-    <div class="row"><span class="lab">Silver and gold bricks in the round</span><input type="range" id="capSpecial" min="0" max="20" value="0"><span class="lab" id="capSpecialLab"></span>
-      <button id="capRun">Break 10,000 bricks</button></div>
-    <canvas id="capCv"></canvas>
-    <div class="out" id="capOut"></div>
-    <p class="cap">Each bar is the share of 10,000 broken bricks that gave that capsule, with the frame counter, the ball's X and its height drawn at random, and each result fed back as the "last capsule". The chooser on this page is a port of <code>$B204</code>-<code>$B21B</code>, checked against the game's own code run in a 6502 simulator on 40,000 random cases, with no difference.</p>
-  </div>
-  <table>
-    <tr><th>Frame counter <code>$0201</code></th><th>What falls</th></tr>
-    <tr><td><code>$A0</code>-<code>$FF</code> and <code>$0A</code>-<code>$1F</code> (118 frames of 256)</td><td>nothing</td></tr>
-    <tr><td><code>$20</code>-<code>$9F</code> (128 frames)</td><td>S or C: bits 0-1 of the counter XOR the ball's X give S once in four, C three times in four</td></tr>
-    <tr><td><code>$00</code>-<code>$09</code> (10 frames)</td><td>the first that applies: B if bit 1 of the lives is set, L if <code>$0241</code> is <code>$12</code> or more, D if the round has four or more silver and gold bricks, E if the ball is in the upper half of the screen, else S or C as above</td></tr>
-  </table>
-  <p>Then <code>$B209</code>-<code>$B219</code> apply two rules. A capsule of the same type as the last one is bumped up by one, so a second C in a row arrives as an E, and a second S as a C. And the extra life, P, is never chosen directly: the only way to get one is a B when the last capsule was also a B. A capsule falls at all only when no other is falling and exactly one ball is in play (<code>$B1E5</code>-<code>$B204</code>).</p>
-  <p>The lives test reads the count as stored, in binary-coded decimal, so with 2, 3, 6 or 7 lives the rare window gives the Break capsule, and with 1, 4, 5, 8 or 9 it never does. The laser only becomes possible once <code>$0241</code>, the counter's high byte, reaches <code>$12</code>: 18 × 256 frames, a little over 90 seconds.</p>
-  <table>
-    <tr><th>Type</th><th>Letter</th><th>Effect</th><th>Code</th></tr>
-    <tr><td>1</td><td>S</td><td>ball speed down by one, never below 1</td><td><code>$A8BA</code></td></tr>
-    <tr><td>2</td><td>C</td><td>catch: the ball sticks to the Vaus until fire, or until the counter reaches <code>$80</code></td><td><code>$A8AC</code>, <code>$AA76</code></td></tr>
-    <tr><td>3</td><td>E</td><td>the Vaus grows from width 4 to 12</td><td><code>$AA44</code>, <code>$AD4B</code></td></tr>
-    <tr><td>4</td><td>D</td><td>three balls, and the speed up by one</td><td><code>$A8CD</code></td></tr>
-    <tr><td>5</td><td>L</td><td>laser, two shots at a time</td><td><code>$A870</code>, <code>$A5F3</code></td></tr>
-    <tr><td>6</td><td>B</td><td>an exit opens in the right wall; leaving through it ends the round</td><td><code>$A868</code>, <code>$A41F</code></td></tr>
-    <tr><td>7</td><td>P</td><td>an extra life, up to 99</td><td><code>$A882</code></td></tr>
-  </table>
-  <p>Catching any capsule first switches off catch, laser, break and the enlarged Vaus (<code>cancel_powers</code>, <code>$AA17</code>). A capsule caught is worth 1,000 points (<code>$A9DD</code>).</p>
-</section>
-
-<section>
-  <p class="fig">02 · The screen</p>
+  <p class="fig">01 · The screen</p>
   <h2 class="t">One frame of round 1, rebuilt from memory</h2>
   <div class="plate"><div class="scroll"><canvas id="frameCv"></canvas></div>
     <p class="cap">One frame of play recorded in the emulator: the video chip's registers, every change made to them during the frame, and the memory they read, drawn line by line. It matches the emulator's own picture of the same frame with 0 pixels different.</p></div>
@@ -109,7 +75,7 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 </section>
 
 <section>
-  <p class="fig">03 · The rounds</p>
+  <p class="fig">02 · The rounds</p>
   <h2 class="t">Thirty-two walls in 5 KB</h2>
   <div class="plate">
     <div class="row"><button id="rPrev">◀</button><span class="lab" id="rLab"></span><button id="rNext">▶</button></div>
@@ -126,7 +92,7 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 </section>
 
 <section>
-  <p class="fig">04 · The bat</p>
+  <p class="fig">03 · The bat</p>
   <h2 class="t">The two sides of the Vaus are not mirror images</h2>
   <div class="plate"><canvas id="batCv"></canvas>
     <p class="cap">Where the ball meets the Vaus, measured from a point 6 pixels right of its centre, and the angle it leaves at (<code>bat_collision</code>, <code>$ABB3</code>). Steep, diagonal and shallow are the step ratios the code sets: <code>$FF</code>/<code>$40</code>, <code>$FF</code>/<code>$F0</code> and <code>$80</code>/<code>$FF</code>, vertical against horizontal.</p></div>
@@ -135,7 +101,7 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 </section>
 
 <section>
-  <p class="fig">05 · Round 33</p>
+  <p class="fig">04 · Round 33</p>
   <h2 class="t">Doh takes 23 hits</h2>
   <div class="plate"><img src="reference/round33-doh.png" alt="Round 33: Doh" width="384">
     <p class="cap">Round 33 in the emulator, reached by setting the round number and the bricks-left count so that the next brick broken in round 1 ended the round.</p></div>
@@ -144,15 +110,7 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 </section>
 
 <section>
-  <p class="fig">06 · Protection</p>
-  <h2 class="t">Secret: the protection scrambles its own second check</h2>
-  <p>The game starts at <code>$9400</code> and hides its first steps behind undocumented opcodes: a <code>NOP</code> with an operand at <code>$9404</code> and another at <code>$095A</code>, which a disassembler that knows only the documented set shows as data. The bytes after the <code>JSR $B9C3</code> at <code>$095D</code> look like the continuation and never run, because <code>$B9C3</code> leaves by <code>JMP $F000</code>.</p>
-  <p>The start-up then sends a byte out through the first CIA's serial port and waits for the chip to report it sent (<code>$5F42</code>), a test of the hardware rather than the disk. Both routines erase themselves when they finish: <code>$5F42</code> fills itself with <code>$01</code>, and <code>$B9C3</code> overwrites its first 40 bytes with <code>$20</code>.</p>
-  <p>On the way it XORs 97 bytes at <code>$BA0A</code> with a key at <code>$A71A</code>, which is live game code. The bytes at <code>$BA0A</code> are a longer serial-port check, and in the file they are plain code: the XOR turns them into noise. Nothing calls that check in this build, and the flag it would set, <code>$0944</code>, is the trigger for a routine that wipes memory (<code>$A523</code>). The only other writer of the flag is a checksum over <code>$9500</code>-<code>$A5FF</code> at <code>$F9BC</code>, which nothing calls either, so the wipe never runs.</p>
-</section>
-
-<section>
-  <p class="fig">07 · Quirks</p>
+  <p class="fig">05 · Quirks</p>
   <h2 class="t">Bug: a ball moving left cannot hit an enemy from the side</h2>
   <p>The ball-against-enemy test has a horizontal check for each direction. The one for a ball moving left subtracts 24 where it should add (<code>$9E9B</code>-<code>$9EAB</code>), so it never matches; only the vertical test catches such a ball. This was read in the code and not tried in play.</p>
   <h2 class="t">The Break exit pays nothing</h2>
@@ -170,22 +128,6 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 <script>
 // One frame of round 1, recorded with kit/c64/frame.py and trimmed to the memory it reads.
 const ARK_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","vic":[128,236,136,236,0,0,0,0,0,0,140,0,128,0,136,0,0,27,0,209,0,255,216,0,3,112,241,0,252,0,255,255,240,240,252,254,240,241,254,240,240,251,251,241,251,242,242],"cia2":[144,63],"cpu":[47,53],"writes":[[21,16,65534,238],[21,22,65535,251],[22,21,53263,224],[23,29,53261,224],[24,37,53259,232],[25,45,53257,255],[26,12,65534,32],[26,18,65535,247],[52,46,65530,85],[52,52,65531,248],[245,18,53263,0],[245,30,53261,0],[245,42,53259,0],[245,54,53257,0],[246,48,65530,3],[246,54,65531,249],[247,55,65534,94]],"colour":"Dg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgICAgICAgICAgICDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgEBAQEBAQEBAQEBAQ4JCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQ4ODgEBAQEBAQEBAQ4OCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsODg4ODg4ODg4ODg4JDgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKDg4ODg4ODg4ODg4ODg4PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDg4OAQEBAQEBAQEBDg4NDQ0NDQ0NDQ0NDQ0ODg0NDg4NDQ0NDQ0ODg4ODgEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAQEBAQEBAQEBDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4LCwYGBgYGBgYGBgYGBgYGDAAAAAAAAA==","ram":[{"a":49152,"b":"+/z8/Pz86+zr/Pz8/Pz8/Pz8/P3+/fz8/Pz8/xyoqaqrHR4fILfIHPVUVVZXVFVWV1RVVldUVVZXVFVWV1RVVldUVfocKCcmJSMiIbS6yRzxWElKS0hJSktISUpLSElKS0hJSktISUpLSEn2HBwcHBwcHBwcHBwc8lxNTk9MTU5PTE1OT0xNTk9MTU5PTE1OT0xN9xwICQcIHBwTAw8SBfOFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFifgcHBwwMDAxMzMwHBz0gIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIH5HL2+v8DBw8TFxhw+9YCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCB+hwcHBwcHBwcHBwcHPGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgfYcsrOzs7Ozs7OzszzygIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIH3HDscHBMDDxIFHBw784CBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCB+Bw7HDAwMDEzMzAcO/SAgYCBgIGAgYCBgIFYWYCBWFmAgYCBgIFYWfkcOxwMCRYFExwcMzv1XF1eX1xdXl9cXV5fXE1OX1xNTl9cXV5fXE36HDscEg8VDgQcMDE78VBBQkNAQUJDQEFCQ0BBQkNAQUJDQEFCQ0BB9hy4ubm5ubm5ubm5PfJURUZHREVGR0RFRkdERUZHREVGR0RFRkdERfccHBwcHBwcHBwcHBzzWElKS0hJSktISUpLSElKS0hJSktISUpLSEn4HL2+v8DBw8TFxhw/9FxNTk9MTU5PTE1OT0xNTk9MTU5PTE1OT0xN+RwcHBwcHBwcHBwcHPVQQUJDQEFCQ0BBQkNAQUJDQEFCQ0BBQkNAQfocsrOzs7Ozs7OzszzxVEVGR0RFRkdERUZHREVGR0RFRkdERUZHREX2HDscHBMDDxIFHBw78lhJSktISUpLSElKS0hJSktISUpLSElKS0hJ9xw7HDAwMDAwMDAcO/NcTU5PTE1OT0xNTk9MTU5PTE1OT0xNTk9MTfgcOxwMCRYFExwcHDv0UEFCQ0BBQkNAQUJDQEFCQ0BBQkNAQUJDQEH5HDscEg8VDgQcMDE79VRFRkdERUZHREVGR0RFRkdERUZHREVGR0RF+hy4ubm5ubm5ubm5PfFYSUpLSElKS0hJSktISUpLSElKS0hJSktISegcHBwcHBwcHBwcHBzyXE1OT0xNTk9MTU5PTE1OT0xNTk9MTU5PTE3pHBwcHBwcHBwcHBwc81BBQkNAQUJDQEFCQ0BBQkNAQUJDQEFCQ0BB6hwcHBwcHBwcHBwcHA=="},{"a":50168,"b":"lpdCQkBCQEE="},{"a":51224,"b":"foDAwMCAfgD8jsbGxo78AH6AwDjAgH4A"},{"a":51256,"b":"foDAzsaGfADGxsa6xsbGAAgYGBgYGAgA"},{"a":51296,"b":"wMDAwMCAfgA="},{"a":51312,"b":"xub2ms7GxgB8gsbGxoJ8AA=="},{"a":51344,"b":"/MbGvMbGxgD+gOD+BgL+AA=="},{"a":51368,"b":"xsbGxsaC/gDGxsbGgmw4AA=="},{"a":51424,"b":"AAAAAAAAAAAobO7u7+/v7wAABwcHh4fHAAMPHz07eXsA4Ph8Xu5X9wV3NTkeDwMAAOf3fz4cCAAA7u7u7u4AAA=="},{"a":51496,"b":"AA+evNzudyIADw8PD47MiAC+vr+/uzEgAD9783M7HAg="},{"a":51584,"b":"fILO1uaCfABoGBgYGBgIAA=="},{"a":51608,"b":"/gYGHAYG/gA="},{"a":51672,"b":"Vmtra2traz9Wq6urq6vra6trq6urq6v/FHx8LCwsX38Uv7MLDCy+v/83ytoqaqqqVf////y/s7//f3/f3Pf3/MzzPP////8A/39/39z39/zM8zz//P//AM0xxgbaGmpqVf///Lyzo6MxxjbaGmpqqlX////8v7O//39/39z39/zM8zz//P//AP9/f9/c9/f8zPM8//z//wDNMcYG2hpqalX////8v7O/AwwMPz////8="},{"a":51872,"b":"/8DAMDMDDAz/MMzMAwMAAP8DDA8/P////wAAAwPMzPADDAw/P/////8AAAMDzMzw"},{"a":51936,"b":"/8DAMDMPDAD/MMzMAwMAAv8DDA8/P////wAAAwPMzPA="},{"a":52224,"b":"/////////wD8/Pz8/Pz8AA=="},{"a":52264,"b":"VVVVVVVV/wA="},{"a":52296,"b":"VFxcXFxc/AA="},{"a":52544,"b":"AAEDAwcPHx+AuLu/u7m7vwAODo7O7s+PAAAYPHnz588="},{"a":52624,"b":"VWpqampqa2tVqqqqqqr/AFD3Vs48+OAA"},{"a":52664,"b":"AAB3d3d3d3dra2pqampqfwBVqqqqqqr/AHd3d3d3ZkQ="},{"a":52712,"b":"Vb+ytr+wsPDFy8vLywsLDwAAAAAAAFT8Vb+ytr+ysvPFy8vPwMDAwA=="},{"a":52760,"b":"FCwsvLCwsLBVv7C1v7C1/yUvLC0vLCw8cPCwcMCwsPA="},{"a":52800,"b":"YPB4PB48ePAA4MCAAAAAAA=="},{"a":53056,"b":"/O/v7+/v7+/7M/sz+zP7M//v7+/v7+zs/KhU///8qPyIiMz//8yIzA=="},{"a":53128,"b":"P/v7+/v7+/vvzO/M78zvzP/7+/v7+zs7Pzs7Ozs7Ozs7Ozs7Ozs7O/zv7+/v7+/v+zP7M/sz+zP/7+/v7+/s7Pzs7Ozs7Ozs7Ozs7Ozs7OwADz47Ozs7PwD/qlX///8A/KhU///8qPyIiMz//8yIzADwvOz8/Pz8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK///K///6///1VVVa///6///6///K///K///"},{"a":53312,"b":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//+g//+g//+sVVVc//+k//+s//+s//+g//+g"},{"a":53376,"b":"EAAAdAAAdAAAEIAAAqAAAqAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":58752,"b":"A///AgAAAgAAAgAAAgAAAgAAAgAAAgAAA///FVVVGqqqBVVVBBqqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":58816,"b":"//8AAAEAAAEAAAEAAAEAAAEAAAEAAAEE//8EVVVVqqqqVVVUqqoUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":65535,"b":"9w=="}],"capture":{"phase_cycles_uncertain":0,"frame_cycles":19656,"frame_ended_on_line":0,"picture_lines_low":0,"writes_account_for_end_state":true,"ram_bytes_changed_during_frame":17,"colour_cells_changed_during_frame":0}};
-// The capsule chooser, ported from choose_capsule $B2E6 and the bump at $B209-$B219.
-// Returns 0 for no capsule, else 1-7 (S C E D L B P).
-function chooseCapsule(s){ // s: frame (0-255), ballX, ballY, lives (BCD), frameHi, special, last
-  const f=s.frame;
-  let t;
-  if (f>=0xA0 || (f>=0x0A && f<0x20)) return 0;
-  const rnd=()=>{ const v=(f^s.ballX)&3; return v===2?1:2; };
-  if (f>=0x20) t=rnd();
-  else if (s.lives&2) t=6;
-  else if (s.frameHi>=0x12) t=5;
-  else if (s.special>=4) t=4;
-  else if (s.ballY<0x80) t=3;
-  else t=rnd();
-  for(;;){ t&=7; if(t===0) t=1; if(t!==s.last) return t; t++; }
-}
-
 // A round's playfield as screen codes and colours, following draw_playfield_background $F552 and
 // draw_wall $F40E. ram: the game image (listing). idx: round index 0-31. Returns {scr, col} for the
 // 40x25 screen, playfield cells only (rows 1-24, columns 1-26 background; bricks from $C029).
@@ -219,44 +161,6 @@ function buildRound(ram, idx){
   const needSite = 'This widget needs the site\'s shared scripts: open the page from the built site.';
   const C = globalThis.C64;
   const PAL = C ? C.PAL : [];
-  const LETTERS = ['none', 'S', 'C', 'E', 'D', 'L', 'B', 'P'];
-  const CAPCOL = [0, 8, 5, 6, 3, 2, 10, 11];   // $B2BC
-
-  /* 01 capsules */
-  function capsules() {
-    const lives = $('capLives');
-    for (let n = 1; n <= 9; n++) lives.insertAdjacentHTML('beforeend', `<option value="${n}"${n === 3 ? ' selected' : ''}>${n}</option>`);
-    const cv = $('capCv'), W = 640, H = 220; cv.width = W; cv.height = H; cv.style.width = '100%'; cv.style.maxWidth = W + 'px';
-    const ctx = cv.getContext('2d');
-    let seed = 0x2468ace;
-    const rnd = () => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; return (seed >>> 0) & 255; };
-    function run() {
-      const hi = +$('capHi').value, sp = +$('capSpecial').value, lv = +lives.value;
-      $('capHiLab').textContent = '$' + hi.toString(16).toUpperCase().padStart(2, '0') + ', about ' + Math.round(hi * 256 / 50) + ' s';
-      $('capSpecialLab').textContent = sp;
-      const n = new Array(8).fill(0); let last = 0;
-      for (let i = 0; i < 10000; i++) {
-        const t = chooseCapsule({ frame: rnd(), ballX: rnd(), ballY: rnd(), lives: lv, frameHi: hi, special: sp, last });
-        n[t]++; if (t) last = t;
-      }
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-      const bw = W / 8;
-      n.forEach((v, t) => {
-        const h = (H - 50) * v / 10000;
-        ctx.fillStyle = t ? PAL[CAPCOL[t]] || '#888' : '#ccc';
-        ctx.fillRect(t * bw + 10, H - 30 - h, bw - 20, h);
-        ctx.fillStyle = '#2f3136'; ctx.font = '600 14px IBM Plex Mono, monospace'; ctx.textAlign = 'center';
-        ctx.fillText(LETTERS[t], t * bw + bw / 2, H - 10);
-        ctx.fillText((v / 100).toFixed(1) + '%', t * bw + bw / 2, H - 36 - h);
-      });
-      const special = n[3] + n[4] + n[5] + n[6] + n[7];
-      $('capOut').textContent = `With ${lv} ${lv === 1 ? 'life' : 'lives'}: ${(n[0] / 100).toFixed(1)} % of bricks give nothing, ` +
-        `${((n[1] + n[2]) / 100).toFixed(1)} % give S or C, ${(special / 100).toFixed(1)} % give one of the other five.`;
-    }
-    ['capLives', 'capHi', 'capSpecial'].forEach(id => $(id).addEventListener('input', run));
-    $('capRun').onclick = run;
-    run();
-  }
 
   /* 03 frame */
   function frame() {
@@ -311,7 +215,7 @@ function buildRound(ram, idx){
   }
 
 
-  capsules(); bat();
+  bat();
   if (!C) { ['roundCv'].forEach(id => $(id).replaceWith(document.createTextNode(needSite))); frame(); return; }
   frame();
   C.load('listing.json').then(L => { rounds(L.ram); });
