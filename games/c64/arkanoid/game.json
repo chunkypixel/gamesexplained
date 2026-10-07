@@ -7,6 +7,28 @@
   "publisher": "Imagine",
   "developer": "David A. Collier",
   "title_image": "reference/title.png",
+  "tabs": [
+    [
+      "index.html",
+      "How it works"
+    ],
+    [
+      "levels.html",
+      "Maps / levels"
+    ],
+    [
+      "music.html",
+      "Music"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ],
   "build": "",
   "tier": "silver",
   "coverage_percent": 100,
