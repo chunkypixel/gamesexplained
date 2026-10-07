@@ -64,4 +64,4 @@ wrote were all right; 5 of the 46 written by hand were wrong (11 %). The
 five were a poll count off by one (title `$F598`), a "no caller" claim
 that missed the save path (resident `$F43A`, called from `$F27F`), a table
 position (ramp `$7580`), a label's address (jam `$0BCF`) and which copy of
-a value loses bit 0 (joust `$226B`). All five are corrected.
+a value loses bit 0 (joust `$226B`).
