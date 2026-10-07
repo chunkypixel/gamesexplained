@@ -73,3 +73,11 @@ Found in the code, not in the manual.
 - Which release is this? The upload's name says 1988; the menu says
   "© TAITO 1986 © IMAGINE 1984", and Zzap!64 reviewed the C64 version in
   April 1987 (search).
+- C64-Wiki (`https://www.c64-wiki.com/wiki/Arkanoid`, read 7 October
+  2026) gives a cheat, "Itsmybirthday" typed in the high-score list after
+  finishing a game, and a trainer mode for player 2 at 20,000 points. The
+  word is not in this image under any constant offset or as KERNAL key
+  numbers under any XOR or added constant, and no name entry was found
+  (`work/scripts/textsearch.py`). The VGMPF wiki's track list includes
+  "Name Entry". Whether another release of the game has a high-score
+  table, and whether this image's unplayed tune 7 is that track, is open.
