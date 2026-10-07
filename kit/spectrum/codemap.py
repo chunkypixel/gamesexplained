@@ -13,10 +13,14 @@ from two sources and holds symbols.json against it.
       space-separated, with or without `$`, as ZEsarUX's
       `cpu-code-coverage get` prints them). Reports code the map has that
       symbols.json types as data, and Code blocks neither source reached.
-      Writes <game dir>/work/codemap.json. Exits 1 when code is typed as
-      data.
+      Writes <game dir>/codemap.json: addresses only, no byte of the game,
+      so it is committed beside symbols.json (#184). Code that ran is the
+      evidence: check_listing.py fails the game, and this exits 1, while
+      symbols.json types any of it as data. Code only the trace reached is
+      reported to be read, since a trace can walk into data (an inline table
+      after a call).
   codemap.py <game dir> <snapshot.sna> --refs ADDR
-      Every instruction in work/codemap.json's code whose operand is ADDR,
+      Every instruction in codemap.json's code whose operand is ADDR,
       and every place ADDR occurs in the image as a little-endian word.
       Indexed access (IX+d, HL after arithmetic) is not found by either.
   codemap.py --test
@@ -113,26 +117,30 @@ def build(gdir, sna, entries, maps):
     for b in sym["blocks"]:
         if b["type"] == "Code":
             typed.update(range(b["start"], b["end"] + 1))
-    os.makedirs(os.path.join(gdir, "work"), exist_ok=True)
-    json.dump({"starts": sorted(starts), "code": sorted(code), "executed": sorted(executed)},
-              open(os.path.join(gdir, "work", "codemap.json"), "w"))
+    with open(os.path.join(gdir, "codemap.json"), "w") as f:
+        json.dump({"starts": sorted(starts), "code": runs(code), "executed": sorted(executed),
+                   "ran": runs(ex_bytes)}, f)
     as_data, unreached = code - typed, typed - code
+    ran_as_data = as_data & ex_bytes
     print(f"code map: {len(code)} bytes in {len(runs(code))} runs "
           f"({len(ex_bytes)} executed, {len(code - ex_bytes)} reached by the trace alone)")
     print(f"symbols.json types {len(typed)} bytes as Code")
-    print(f"code typed as data: {len(as_data)} bytes in {len(runs(as_data))} runs")
-    for s, e in sorted(runs(as_data), key=lambda r: r[0] - r[1])[:40]:
-        print(f"  ${s:04X}-${e:04X}  {e - s + 1}")
+    for what, part in (("code that ran, typed as data", ran_as_data),
+                       ("code only the trace reached, typed as data (read it: a trace can walk into data)",
+                        as_data - ran_as_data)):
+        print(f"{what}: {len(part)} bytes in {len(runs(part))} runs")
+        for s, e in sorted(runs(part), key=lambda r: r[0] - r[1])[:40]:
+            print(f"  ${s:04X}-${e:04X}  {e - s + 1}")
     print(f"typed Code, reached by neither source: {len(unreached)} bytes in {len(runs(unreached))} runs "
           "(a handler in a table, an operand written at run time, or data)")
     for s, e in runs(unreached)[:40]:
         print(f"  ${s:04X}-${e:04X}  {e - s + 1}")
-    return 1 if as_data else 0
+    return 1 if ran_as_data else 0
 
 
 def refs(gdir, sna, target):
     mem = bytearray(snapshot.read(sna))
-    path = os.path.join(gdir, "work", "codemap.json")
+    path = os.path.join(gdir, "codemap.json")
     if not os.path.exists(path):
         sys.exit(f"no {path}: build the code map first")
     cm = json.load(open(path))
@@ -145,7 +153,7 @@ def refs(gdir, sna, target):
     print(f"instructions whose operand is ${target:04X}: {len(hits)}")
     for a, text in hits:
         print(f"  ${a:04X}  {text}{'' if a in executed else '   (not executed in the maps)'}")
-    code, sset = set(cm["code"]), set(starts)
+    code, sset = {a for s, e in cm["code"] for a in range(s, e + 1)}, set(starts)
     words = [a for a in range(RAM_LO, 0xFFFF) if mem[a] == target & 255 and mem[a + 1] == target >> 8]
     print(f"the word ${target:04X} occurs at {len(words)} addresses:")
     for a in words:
@@ -197,7 +205,10 @@ def test():
             rc = build(game, sna, [0x8000], [os.path.join(game, "work", "cov.txt")])
         text = out.getvalue()
         assert rc == 1, text
-        assert "$8010-$8013  4" in text and "$8030-$8033  4" in text, text          # typed as data
+        cm = json.load(open(os.path.join(game, "codemap.json")))                     # beside symbols.json
+        assert cm["code"][0] == [0x8000, 0x8008] and [0x8030, 0x8033] in cm["ran"], cm
+        ran, traced = text.split("code only the trace reached")
+        assert "$8030-$8033  4" in ran and "$8010-$8013  4" in traced, text          # typed as data
         assert "$8040-$8041  2" in text, text                                        # typed Code, unreached
         out = io.StringIO()
         with contextlib.redirect_stdout(out):

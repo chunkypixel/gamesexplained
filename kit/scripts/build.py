@@ -20,15 +20,18 @@ names is copied through, and a page in the folder that no tab names is left out
 with a warning (about-layout.html, the game's own About template, aside).
 Every tab but Source lists its sections in the left margin (pagenav).
 Plus a home page with the catalogue and the games most recently added or changed
-(from git history), site/lib/, kit.html (kit/lessons/, newest first),
-status.html (from site/status.html + site/status.json: which kits work on which
-computers, and the work needed) and about.html (from site/about-site.html: who
-runs the site and the principles it follows; static). And what lets a phone
+(from git history), a page for each platform with games, <platform>/index.html
+(from site/platform.html: its catalogue alone, the page the platform in a game's
+breadcrumb links to), site/lib/, status.html (from site/status.html +
+site/status.json: which kits work on which computers, and the work needed)
+and about.html (from site/about-site.html: who runs the site and the
+principles it follows; static). And what lets a phone
 install the site as an app: manifest.webmanifest, icons/ (kit/scripts/icons.py
 draws them) and sw.js at the root, with lines in every page's head that point
 at them.
 The authored pages have {{title}}, {{platform}}, {{year}} and {{publisher}}
-filled from game.json. The build fails on a src or href that points at no
+filled from game.json. A game page's eyebrow leaves out the platform, which its
+breadcrumb names: the build drops a platform name at the eyebrow's start. The build fails on a src or href that points at no
 file it published: a page's own .js beside it would otherwise 404 on the site.
 It lists pages with blocks hidden by the page editor (kit/scripts/edit.py), and
 fails on a Gold or Platinum page that still has one. It counts the links into a
@@ -278,19 +281,6 @@ def read(p):
     return open(p, encoding="utf-8").read() if os.path.exists(p) else ""
 
 
-def lessons():
-    """kit/lessons/ as one page: its README, then a file per lesson, newest first. A lesson's
-    heading starts with the kit version it went into, or with `next` until the bump after its
-    merge; those sort first."""
-    d = os.path.join(ROOT, "kit", "lessons")
-
-    def key(f):
-        m = re.match(r"## (\d+(?:\.\d+)*) · ", read(os.path.join(d, f)))
-        return (tuple(map(int, m.group(1).split("."))) if m else (float("inf"),), f)
-    files = sorted((f for f in os.listdir(d) if f.endswith(".md") and f != "README.md"), key=key, reverse=True)
-    return "\n\n".join(read(os.path.join(d, f)) for f in ["README.md"] + files)
-
-
 TIER_NAMES = {"silver-claimed": "silver (claimed)"}
 
 
@@ -306,8 +296,9 @@ def tabbar(game, present, lib):
     custom_tabs = "tabs" in game
     inner_class = "in many-tabs" if custom_tabs else "in"
     tabs = f'<span class="tab-list">{tabs}</span>' if custom_tabs else tabs
+    plat = game.get("platform")
     return (f'<nav class="gametabs"><div class="{inner_class}"><span class="crumb"><a href="{lib}/../">Games Explained</a> / '
-            f'{PLATFORM_NAMES.get(game.get("platform"), game.get("platform"))} / {html.escape(game.get("title", ""))}</span>'
+            f'<a href="{lib}/../{plat}/">{html.escape(PLATFORM_NAMES.get(plat, plat))}</a> / {html.escape(game.get("title", ""))}</span>'
             f'{tabs}<span class="tier">tier <b>{html.escape(tier_name(tier))}</b></span></div></nav>')
 
 
@@ -393,8 +384,6 @@ def edit_footer(game, tab, f=None):
     f = f or ASSEMBLED.get(tab, tab)
     edit, hist, tree = (f"{repo}/edit/main/{where}/{f}", f"{repo}/commits/main/{where}", f"{repo}/tree/main/{where}")
     return (f'<footer class="editfoot"><div class="in">'
-            f'<p><b>Spotted a mistake, or know something we don\u2019t?</b> '
-            'Make edits on GitHub and submit as a pull request.</p>'
             f'<p class="acts"><a class="btn" href="{html.escape(edit)}">Edit this page on GitHub</a>'
             f'<a href="{html.escape(hist)}">History</a><a href="{html.escape(tree)}">All the files for this game</a></p>'
             f'</div></footer>')
@@ -769,8 +758,15 @@ def authored_page(gdir, game, f, nav, ban, src=None):
     plat = game["platform"]
     head = dict(title=html.escape(game.get("title", game["slug"])), platform=PLATFORM_NAMES.get(plat, plat),
                 year=game.get("year") or "", publisher=html.escape(game.get("publisher") or ""))
-    page = fill(read(os.path.join(gdir, f)) if src is None else src, **head)
+    page = drop_platform(fill(read(os.path.join(gdir, f)) if src is None else src, **head), plat)
     return pagenav(at_end(under_title(inject(page, nav, LIB), ban), edit_footer(game, f)))
+
+
+def drop_platform(page, plat):
+    """The page with the platform's name taken off the start of its eyebrow ("Commodore 64 ·
+    1984 · Epyx" reads "1984 · Epyx"): the breadcrumb above it already names the platform."""
+    name = re.escape(PLATFORM_NAMES.get(plat, plat))
+    return re.sub(r'(<p class="eyebrow"[^>]*>)\s*' + name + r'\s*(?:·|&middot;)\s*', r"\1", page)
 
 
 # --- a game of several parts (kit/scripts/parts.py): a Source page and a footprint for each
@@ -1021,7 +1017,7 @@ def build_game(gdir, out_root):
                  features=whole(markdown(read(os.path.join(gdir, "features.md")), addr=not P, shift=1, parts=part_pages(P))),
                  orientation=whole(markdown(read(os.path.join(gdir, "orientation.md")), addr=not P, shift=1,
                                             parts=part_pages(P)))).replace("<!-- tabs -->", nav)
-    about = under_title(about, ban)
+    about = under_title(drop_platform(about, plat), ban)
     open(os.path.join(out, "about.html"), "w").write(pagenav(at_end(about, edit_footer(game, "about.html"))))
     for f in ("listing.json", "symbols.json"):
         if os.path.exists(os.path.join(gdir, f)):
@@ -1141,7 +1137,7 @@ def add_analytics(out_root):
 PROGRAM = ("code", "graphics", "levels", "sound", "text", "tables", "variables")
 
 
-def shot_html(g, cls="shot"):
+def shot_html(g, cls="shot", root=""):
     plat, slug = g["platform"], g["slug"]
     ti = g.get("title_image") or ""
     # title_image stays inside the game folder: no absolute paths, no parent climbs
@@ -1149,7 +1145,7 @@ def shot_html(g, cls="shot"):
         and ".." not in ti.split(os.sep)
     tip = os.path.join(ROOT, "games", plat, slug, ti) if safe else ""
     if tip and os.path.isfile(tip):
-        return (f'<img class="{cls}" src="{plat}/{slug}/{html.escape(ti, quote=True)}" '
+        return (f'<img class="{cls}" src="{root}{plat}/{slug}/{html.escape(ti, quote=True)}" '
                 f'alt="{html.escape(g.get("title", slug))} title screen" loading="lazy">')
     what = f"title_image {ti!r} is not a file in the game folder" if ti else "has no title_image"
     warn(f"{plat}/{slug} {what} "
@@ -1168,10 +1164,10 @@ def hook(g):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", m.group(1))).strip() if m else ""
 
 
-def strip_html(g):
+def strip_html(g, root=""):
     """The one-dimensional memory map, drawn by C64Map.strip from memmap.json."""
     total = sum(g["_totals"][k] for k in PROGRAM)
-    return f'<div class="strip" data-strip="{g["platform"]}/{g["slug"]}/memmap.json" title="{total:,} bytes of program"></div>'
+    return f'<div class="strip" data-strip="{root}{g["platform"]}/{g["slug"]}/memmap.json" title="{total:,} bytes of program"></div>'
 
 
 def stamp_html(g):
@@ -1188,13 +1184,25 @@ def featured_html(g):
             f'<p class="hook">{html.escape(hook(g))}</p></a>')
 
 
-def card_html(g):
-    """Every game, small: thumbnail, title, a line of facts, the memory strip, the tier."""
+def card_html(g, root=""):
+    """Every game, small: thumbnail, title, a line of facts, the memory strip, the tier.
+    root is the way up to the site's top from the page the card is on."""
     plat, slug = g["platform"], g["slug"]
     kb = sum(g["_totals"][k] for k in PROGRAM) / 1024
-    return (f'<a class="tile" href="{plat}/{slug}/" data-platform="{html.escape(plat)}">{shot_html(g, "thumb")}'
+    return (f'<a class="tile" href="{root}{plat}/{slug}/" data-platform="{html.escape(plat)}">{shot_html(g, "thumb", root)}'
             f'<span class="body"><span class="top"><b>{html.escape(g.get("title", slug))}</b>{stamp_html(g)}</span>'
-            f'<span class="m">{g.get("year") or ""} · {html.escape(g.get("publisher") or "")} · {kb:.0f} KB</span>{strip_html(g)}</span></a>')
+            f'<span class="m">{g.get("year") or ""} · {html.escape(g.get("publisher") or "")} · {kb:.0f} KB</span>{strip_html(g, root)}</span></a>')
+
+
+def platform_pages(games, out_root):
+    """<platform>/index.html for each platform with games: the home page's catalogue of
+    that platform's games alone, where the platform in a game's breadcrumb leads."""
+    for plat in sorted({g["platform"] for g in games}):
+        gs = [g for g in by_tier(games) if g["platform"] == plat]
+        name = html.escape(PLATFORM_NAMES.get(plat, plat))
+        open(os.path.join(out_root, plat, "index.html"), "w").write(
+            fill(read(os.path.join(SITE, "platform.html")), site_title=f"{name} · Games Explained", lib="../lib",
+                 platform_name=name, cards="".join(card_html(g, "../") for g in gs), n_games=len(gs)))
 
 
 def platforms_html(games):
@@ -1620,11 +1628,7 @@ def main():
                 cards="".join(card_html(g) for g in by_tier(games)), featured=featured_html(feat) if feat else "",
                 recent=recent_html(recent_changes(games)), platforms=platforms_html(games), n_games=len(games))
     open(os.path.join(out_root, "index.html"), "w").write(home)
-    # what the kit learned, game by game
-    log = markdown(lessons(), drop_h1=False, addr=False)
-    page = fill(read(os.path.join(SITE, "page.html")), site_title="How the kit has changed", lib="lib", body=log,
-                version=read(os.path.join(ROOT, "kit", "VERSION")).strip())
-    open(os.path.join(out_root, "kit.html"), "w").write(page)
+    platform_pages(games, out_root)
     open(os.path.join(out_root, "status.html"), "w").write(status_page(games))
     # the site's About page; site/about.html is the About tab of a game
     repo = html.escape(json.load(open(os.path.join(SITE, "config.json")))["repo"].rstrip("/"))
