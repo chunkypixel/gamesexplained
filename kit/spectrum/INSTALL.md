@@ -10,6 +10,7 @@ phase by phase, is `kit/EMULATOR.md`.
 |---|---|---|
 | Emulator with an agent interface | run, stop on an instruction, read and write memory, count breakpoints without stopping, advance a frame, hold the keyboard and the joystick, save and load a snapshot, save the screen | ZEsarUX 13.0 over ZRCP (https://github.com/chernandezba/zesarux) |
 | Disassembler with an agent interface | read a 48K snapshot, disassemble, label, comment, type data, round-trip a control file | SkoolKit (`sna2skool.py`, `skool2ctl.py`; https://skoolkit.ca) |
+| A JavaScript runtime | run the site's screen renderer outside a browser, for `kit/spectrum/frame.py` | node. For that one check, macOS's own JavaScriptCore does when node is not on the path, so nothing is installed |
 
 SkoolKit is installed under `tools/skoolkit/` by the launcher
 (`python3 kit/scripts/tools.py --platform spectrum get-skoolkit`). It is
@@ -52,6 +53,129 @@ per boundary. None of the failures costs a phase.
 | 3 live measurement | non-stopping checkpoints that count and agree with the program's own counter; a checkpoint on a routine that never runs stays at zero; the T-state counter, validated against the ROM's frame interrupt (69888 T-states each); store and load watchpoints count | a second connection's read waits for the run loop to finish (1.12 s of a 1.28 s run) | run in bounded chunks (`run <limit>`) and read the counts between them; the machine never stops while a chunk runs. Watch the **last** byte of a multi-byte variable: `MWA`/`MRA` on the first byte counts nothing |
 | 4 frame stepping | the exact stop, on the checkpoint's own instruction; N frames in one call, on the boundary (one frame is 69888 T-states); input that lands before the next instruction, is seen by the program, and is released on request; the joystick byte; a step that returns with its PC; thirty stops at varied moments with nothing lost | `send-keys-ascii` (and `send-keys-string`) presses no key the machine can see, and releases the joystick when it ends | `set_input` for anything held, and `key_event` per character for typing; key events only land while the machine is running |
 | transport | a call made as a checkpoint stops the machine answers; 800 unpaced calls, 7 000 to 8 400 a second across runs, leave ZRCP up and the machine running | | |
+
+## Where the Z80 stands, by test program
+
+`check-emulator` measures the machine's interface; the CPU inside it is measured by
+programs a real Spectrum has already passed, and
+`python3 kit/scripts/tools.py --platform spectrum z80-accuracy`
+(`kit/spectrum/z80_accuracy.py`) runs them and prints what each one said, in its own
+words. Start the emulator first, as above. Every program is a 48K `.tap` that loads
+itself: the script plays it through ZRCP, reads the machine's own screen, and calls a
+run PASS only when the program's last line says so, FAIL when it says otherwise, and
+UNKNOWN when it never reached that line — which is a real answer too. The distinct
+screen lines of every run, and the last screen whole, go to `tools/logs/z80-accuracy/`.
+
+**Fetched at run time, never vendored.** The first run downloads what it needs — one zip
+holding the five z80test tapes, and one `.tap` each for zexdoc and zexall — into the
+gitignored `tools/z80-accuracy/`, naming the URL, licence and size of each before it
+does; `--no-fetch` refuses to download, and then only what is already there can run.
+`check_binaries.py` has nothing to find because nothing is committed.
+
+Measured on macOS arm64 on 4 and 5 October 2026 (the long runs crossed midnight), on the
+ZEsarUX-13.0 release (`ZEsarUX_macos-silicon-13.0.dmg`), at 1x real speed and with the
+launcher's `--emulatorspeed 5000`, where ZEsarUX ran at 5.3 to 5.6 times real speed (the
+multiplier is what the host allowed, not what was asked for; each run prints it). These
+programs are compute-bound, so the speed decides whether a suite finishes inside
+`--timeout` (default 1800 s a program) — and for `z80full` and `z80flags` it decides more
+than that: how many tests they say failed depends on it. Each count below reproduced in
+every run tried at its speed (four runs at 1x, three at about 5x), so what is recorded
+is the count and the speed together, not the count alone.
+
+| Program | What it checks | Result on ZEsarUX 13.0 |
+|---|---|---|
+| `z80full` | every flag and every register | **FAIL: 16 of its 160 tests failed at 1x, 20 at about 5x** — the four that move with the speed are named below |
+| `z80doc` | every register, documented flags only | **PASS: all tests passed** |
+| `z80flags` | every flag, registers ignored | **FAIL: the same sixteen at 1x and the same twenty at about 5x, on the same instructions as `z80full`** |
+| `z80memptr` | flags after `BIT N,(HL)`, where MEMPTR shows | **FAIL: 2 of its 160 tests failed** — `INIR->NOP'` and `INDR->NOP'`, the same at 1x and at about 5x; every `BIT N,(HL)` test passes, so MEMPTR is right and only those two combinations are not |
+| `z80ccf` | flags after `CCF`, which only a genuine Zilog part passes | **FAIL: 67 of its 160 tests failed**, its own `000 SELF TEST` among them. The release's readme says this variant "assumes the genuine Zilog behavior and it will fail half of the tests on CPUs which use other variant, so don't bother": the count is which CPU variant the emulated part behaves as, not 67 separate faults |
+| `zexdoc` | the instruction exerciser, documented flags | **UNKNOWN: did not finish in 240 s** — the three instructions it reached all ended `OK`, and it was part-way through the fourth |
+| `zexall` | the instruction exerciser, all flags | **UNKNOWN: did not finish in 240 s** — the same three instructions ended `OK` and the fourth was part-way through |
+
+**The two counts, and the four tests that move.** At 1x real speed `z80full` and
+`z80flags` fail sixteen tests: `SCF`, `CCF`, `SCF (ST)`, `CCF (ST)`, `BIT N,A`,
+`BIT N,[R,(HL)]`, `LDI`, `LDD`, `LDIR`, `LDDR`, `LDIR->NOP'`, `LDDR->NOP'`, `IN R,(C)`,
+`IN (C)`, `INIR->NOP'` and `INDR->NOP'`. With `--emulatorspeed 5000` the four block-input
+instructions `INI`, `IND`, `INIR` and `INDR` fail as well, making twenty; at 1x those
+four pass. They are the four tests that read a port inside a block instruction, so a port
+read made at the wrong moment is the obvious suspect — but the suspect is not shown.
+Reading the machine's ports by hand (`$00FE`, `$00FF`, `$001F`, `$0000`, `$0080`) returns
+the same byte at 1x and at about 5x, and the two single `IN` tests that do read `$FE`
+print the same `IN FE:BE Expected:BF` at both speeds. What is shown is narrower: for
+every failing test whose CRC line the polls caught at both speeds (twelve of them) the
+CRC is identical, and identical from run to run, so the emulator's answer for those is
+deterministic — and the speed setting was the only thing that differed between the
+sixteen and the twenty. Why it decides those four is recorded as unknown, not guessed at.
+
+What that says: every **documented** flag and register is right (`z80doc`), and what
+fails is the undocumented behaviour — the two SCF/CCF flag variants, the flags `LDI`,
+`LDD`, `LDIR`, `LDDR` and `IN R,(C)` leave behind, the block-input flags, the `BIT`
+result in an accumulator, and the `NOP'` suffix forms. `z80memptr` passing its `BIT`
+tests while failing `INIR->NOP'` is the same set seen from another angle.
+
+**ZEXDOC and ZEXALL did not finish.** They are exhaustive exercisers — every operand
+value of every instruction, checked against a CRC — and in 240 s, at 6.2 to 6.6 times
+real speed, each finished three of its instructions (every one ending `OK`) and was
+part-way through the fourth. A full run is hours at that speed, so both are UNKNOWN here
+rather than passed or failed. What they did reach is in their logs, instruction line by
+instruction line; raise `--timeout` (a program that reaches its last line at all is a
+verdict, however long it took), or run with a higher `--emulatorspeed` if the host
+allows one — but a higher speed is not neutral: it changed the count `z80full` reports,
+so a run at another speed is a different measurement, not the same one run faster.
+
+| Program | Comes from | Licence | Fetched at run time |
+|---|---|---|---|
+| `z80full`, `z80doc`, `z80flags`, `z80memptr`, `z80ccf` | the z80test 1.2a release's own prebuilt `.tap` files, `github.com/raxoft/z80test/releases/download/v1.2a/z80test-1.2a.zip` | MIT (Patrik Rak, 2012-2023) | one zip, unpacked into `tools/z80-accuracy/` and deleted |
+| `zexdoc`, `zexall` | `mdfs.net/Software/Z80/Exerciser/Spectrum/zexdoc.tap` and `.../zexall.tap` — Frank Cringle's exerciser, converted for the Spectrum by J.G.Harston and Stuart Brady | GPL-2.0-or-later | one `.tap` each; this is a third party's conversion, not the project's own file, and its own files are CP/M `.COM`s |
+
+The same z80test release ships `z80docflags` and `z80ccfscr`, which this check does not
+run: the first is `z80doc` with the documented flags checked and nothing else, and the
+second is a visual test that draws which CPU variant it emulates and prints no pass or
+fail at all. **FUSE's Z80 core tests are not runnable here and are not attempted:**
+they are a host program (`z80/coretest.c` with `tests.in`/`tests.expected`) linked
+against FUSE's own CPU core, with no `.tap`, no release asset and nothing a 48K
+Spectrum can load — what they exercise is FUSE's core, not the CPU of the machine under
+test. The run prints that in place of a result rather than reporting it as a pass.
+
+Four things the harness has to do that are worth knowing before changing it, each
+measured on 13.0:
+
+- **Read the screen out of memory, not through `get-ocr`.** `get-ocr` kept answering
+  with the last screen it had drawn even after `hard-reset-cpu`, so back-to-back runs
+  read the previous program's `Result:` line as their own verdict. The screen file at
+  `$4000` (decoded against the ROM's character set at `$3D00`) is the machine's own
+  memory, and the script empties it before each run.
+- **Judge the run by the program's whole last line, not by the word it begins with.**
+  A poll can catch `Result:` while the line is still being written (measured on 13.0, 5
+  October 2026: `z80memptr`'s 32-column `Result: 002 of 160 tests failed.` was read at
+  its first 24 columns), and a harness that stops there reports UNKNOWN for a line the
+  program had printed. The read loop stops only when the kind's own verdict parser can
+  read the line in full, so a line that arrives in pieces is believed once it is whole.
+- **Press ENTER, never SPACE, at the ROM's `scroll?`.** Each program prints more than the
+  screen holds, and the ROM then asks `scroll?` and waits for a key. SPACE broke the
+  tape's own BASIC loader (`D BREAK - CONT repeats`), so ENTER it is; the count of
+  presses is in each run's log.
+- **`hard-reset-cpu` is not enough on its own** for either of the above: it resets the
+  CPU and leaves the screen as it was.
+
+Under the phase table, macOS and Linux were checked on 3 October 2026. The table above
+is a separate run, and a new release needs both: `check-emulator` for the interface,
+this for the arithmetic.
+
+**Against the kit's own Z80.** `node kit/spectrum/check_z80.js zesarux` runs random
+cases of every instruction but HALT through ZEsarUX and through `kit/spectrum/z80.js`,
+the kit's JavaScript Z80, and compares them instruction by instruction. On Linux
+x86_64 on 7 October 2026, with the ZEsarUX-13.0 release, its default run compared
+26,075 executions of 1,601 instructions: every T-state agreed, and every register and
+byte of memory apart from places where ZEsarUX also differs from the published test
+vectors the simulator passes. Flag bits 5 and 3 after `SCF`, `CCF`, `BIT n,r`, `LDI`,
+`LDD`, `LDIR` and `LDDR` are `z80full` failures above. So, by name, are the flags and
+MEMPTR a block instruction leaves when it goes round again: `z80full` fails
+`LDIR->NOP'`, `LDDR->NOP'`, `INIR->NOP'` and `INDR->NOP'`. The rest is new: ZEsarUX
+does not set MEMPTR on `RET`, `RET cc`, `RETN`, `RETI`, `RST`, `JP PE`, `JP P` and `JP M`,
+or on `INC`, `DEC` and `LD n` into `(IX+d)` and `(IY+d)`, and after a `RET` its
+own `BIT n,(HL)` reads the old value. The vectors set it there; nothing run here
+settles which is the machine's behaviour.
 
 ## Why ZEsarUX, and the MAME alternative
 
@@ -171,6 +295,24 @@ than this launcher started.
 `Cursor&Shift`, presses keys on the keyboard matrix, which is what
 `check-emulator` measures; pass `--joystickemulated Kempston` to a run
 whose game reads port `$1F`.
+
+`python3 kit/spectrum/frame.py test` checks the site's screen renderer,
+`Spectrum.drawScreen` in `site/lib/spectrum.js`, against the emulator with
+a test screen of its own: 768 bytes of attributes covering all 64
+ink/paper pairs with BRIGHT and FLASH in both states, a bitmap whose three
+64-line thirds all differ, and a magenta border. It saves the emulator's
+picture of it over ZRCP (`save-screen`, a .bmp), draws the same video
+memory with the site's own code under node (or macOS's JavaScriptCore) and
+compares the two pixel by pixel. It needs no game image and no snapshot,
+and like `check-emulator` it resets the machine, so run it before a game
+is loaded. On 5 October 2026, on macOS arm64 with ZEsarUX 13.0 and node
+22.22, it passed: 0 of 64512 pixels differed, in both FLASH phases. The
+pictures are compared as the Spectrum's colour numbers rather than as RGB,
+because ZEsarUX renders the ULA's levels 0, `#c0` and `#ff` where the
+site's palette says 0, `#d7` and `#ff`; the output prints both.
+`kit/spectrum/test_frame.py` is the part of that check which needs no
+emulator, and is what CI runs; `frame.py test` itself needs an emulator and
+is run by hand.
 
 ## What goes where, and what is left behind
 

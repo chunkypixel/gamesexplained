@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""Refuse a listing.json that does not match its symbols.json.
+"""Refuse a listing.json that does not match its symbols.json or its own bytes.
 
-listing.json is derived from symbols.json plus a private snapshot, so CI
-cannot rebuild it; it checks instead that every user label and every
-comment in symbols.json appears in the listing unchanged, and that the
-listing records the hash of the symbols.json it was built from. The empty
-symbols.json that new_game.py writes needs no listing yet.
+Two parts. Every user label and every comment in symbols.json appears in the listing
+unchanged, and the listing records the hash of the symbols.json it was built from.
+And every code record re-decodes, from the memory image the listing's own bytes
+describe, to the same length, mnemonic, bytes and operand (listing.decode_problems):
+the permanent guard against a decoder that drifts under a listing, and against an
+off-by-one record (#142). It needs no snapshot. The empty symbols.json that
+new_game.py writes needs no listing yet.
+
+Where a game commits a code map (codemap.json, from kit/spectrum/codemap.py),
+every byte of it that ran is typed Code in symbols.json: code typed as data
+has no cross-references and still reads as explained (#184). Code only the
+map's trace reached, typed as data, is listed to be read, since a trace can
+walk into data.
 
 A game of several parts (kit/scripts/parts.py) is checked part by part,
 and so is the layout itself: every folder under parts/ is a part, each
@@ -24,6 +32,19 @@ from parts import ID, EMPTY, LEDGER_KEYS, parts, under, ranges, started, load_ga
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+def untyped_code(gdir, S):
+    """(ran, traced): the addresses gdir's codemap.json has as code that symbols.json S types as
+    nothing or as data, those that ran and those only its trace reached; ([], []) with no map."""
+    f = os.path.join(gdir, "codemap.json")
+    if not os.path.isfile(f):
+        return [], []
+    cm = json.load(open(f))
+    span = lambda key: {a for s, e in cm.get(key, []) for a in range(s, e + 1)}
+    loose = span("code") - {a for b in S["blocks"] if b["type"] == "Code" for a in range(b["start"], b["end"] + 1)}
+    ran = loose & span("ran")
+    return sorted(ran), sorted(loose - ran)
+
+
 def check(gdir):
     lp, sp = os.path.join(gdir, "listing.json"), os.path.join(gdir, "symbols.json")
     S = json.load(open(sp))
@@ -36,6 +57,14 @@ def check(gdir):
     sha = hashlib.sha256(open(sp, "rb").read()).hexdigest()
     if L.get("symbols_sha256") != sha:
         errs.append("listing.json was built from a different symbols.json; rebuild it")
+    else:
+        # every code record must re-decode, from the listing's own bytes, unchanged (#142)
+        from listing import decode_problems
+        bad = decode_problems(gdir)
+        if bad:
+            a, why = bad[0]
+            errs.append(f"listing.json no longer agrees with the decoder at ${a:04X}: {why}"
+                        + (f" (and {len(bad) - 1} more)" if len(bad) > 1 else ""))
     labels = {r["a"]: r.get("l") for r in L["records"] if "l" in r}
     comments = {r["a"]: r.get("c") for r in L["records"] if "c" in r}
     for s in S["symbols"]:
@@ -44,6 +73,13 @@ def check(gdir):
     for c in S["comments"]:
         if c["type"] == "line" and c["text"].strip() and comments.get(c["address"]) != c["text"]:
             errs.append(f"line comment at ${c['address']:04X} missing or different in listing")
+    ran, traced = untyped_code(gdir, S)
+    if ran:
+        errs.append(f"{len(ran)} byte(s) that codemap.json records running as code are not typed Code in "
+                    f"symbols.json (the first at ${ran[0]:04X}); type them as code")
+    if traced:
+        print(f"  !  {gdir}: codemap.json's trace reaches {len(traced)} byte(s) not typed Code (the first at "
+              f"${traced[0]:04X}): code the play never ran, or data the trace walked into; read them")
     if os.path.isfile(os.path.join(gdir, "part.json")):
         game = load_game(gdir)
         away = game.get("elsewhere") or []

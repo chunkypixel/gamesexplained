@@ -201,7 +201,11 @@ game did, and `kit/spectrum/codemap.py` turns the first into a check.
   --entry <hand-over address> --map work/executed.txt` joins a static trace
   with the executed list and reports every byte of code that `symbols.json`
   types as data, and every `Code` block neither source reached. Run it
-  before the annotation starts and after every merge. On the first game the
+  before the annotation starts and after every merge. It writes
+  `codemap.json` beside `symbols.json`, a list of addresses with no byte
+  of the game in it: commit it. `check_listing.py` then fails while any
+  byte that ran is typed as data, and lists what only the trace reached,
+  since a trace can walk into data. On the first game the
   executed list alone gave 21,551 bytes of code and the trace from the
   hand-over 23,132; the two together, 23,672; the last 475 bytes were two
   handlers named only by words stored in data, and a routine nothing calls

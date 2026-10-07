@@ -225,11 +225,15 @@ part beneath, and `check_listing.py` says when one of those has changed
 
 The session traces the code of the part beneath as well, and where that
 code refers to an address in this part's ranges the disassembler mints an
-automatic symbol there, which the export keeps as this part's. It names an
-address this part's own code may never use, and it can hold the figure
-down. Look for automatic symbols in the part's ranges whose every
-cross-reference comes from outside them, and delete each (a temporary
-name, then an empty one); a rebuilt session mints them again. <!-- until #213 -->
+automatic symbol there. Where the part beneath wrote that address in its
+own load (its own routine or table, which this part's load replaced), the
+name is one this part's own code may never use. The export from a live
+session, and `coverage.py --live`, leave out each of those that only code
+another part owns refers to, and the export says how many; a label of
+yours stays. An address the part beneath never wrote is kept, since code
+beneath that refers there means what this part holds (a level's entry, its
+tables). An export from a project file cannot ask what refers to what, so
+it keeps them all: export from the live session.
 
 ## Data the ledger cannot see
 

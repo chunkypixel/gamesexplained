@@ -23,6 +23,11 @@ and warns about any other `.html` in the folder.
 
 Every `$XXXX` inside a `<code>` element on any tab becomes a link into the
 Source tab, so write addresses in code spans and the evidence links itself.
+One the listing holds no record of (a chip register, a stretch the coverage
+leaves out, another part's address) opens the Source tab on a note saying
+so. `build.py --addresses` lists them page by page: a chip register can
+stay, but an address of the wrong part, or one the listing should hold, is
+a mistake to fix.
 
 # The How it works page
 
@@ -306,11 +311,14 @@ a human going through it section by section, whether or not that changes
 anything: `agent` records a pass that found nothing to cut or add.
 
 The page is titled with the game's name and nothing else, in both the
-`<title>` and the `<h1>`, with the platform, year and publisher in the
+`<title>` and the `<h1>`, with the year and publisher in the
 eyebrow above it. Readers arrive looking for a game, and a headline in
 place of the name hides it in a tab, a search result and a link. Say the
 interesting thing in the standfirst under the title, where the template
-puts it, and in the section headings.
+puts it, and in the section headings. The standfirst is yours to write,
+a sentence or two, with the rest of the copy: leave it neither empty nor
+for the contributor. The home page shows it on the game's card unless
+`game.json` has a `blurb`, and the Gold pass may rewrite it.
 
 ## Maps / levels, when there is one
 

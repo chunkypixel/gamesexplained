@@ -4,12 +4,16 @@
   AGENTS.md          agent rules only: no platform or game subject matter
   kit/skills/core/       workflow only: no game names
   kit/skills/<platform>/ platform facts only: no game names
+                     (in the lines a branch adds: a game that gets a folder later does not
+                     fail a sentence written before it, such as a source's own example)
   games/*/*/facts.md, features.md   current truth, no narration of past mistakes; what the
                      game itself prints may be quoted as it appears (`...`, "...", or in capitals)
   games/*/*/*.md     the template's notes and no others: a check's result goes in facts.md,
                      its working record in work/ (kit/skills/core/60-verify)
   games/*/*/kit-feedback.md   the skill text that changed what the run did, named in the
                      form skill_usage.py counts, or "None." (kit/skills/core/80-retro, step 1)
+  kit/skills/core/   a game's branch that adds to a core skill names, in kit-feedback.md,
+                     another game where it would have mattered (skill_edits.py)
   kit/lessons/       one entry a file, under one heading that names the game that taught it
   games/, kit/, site/, AGENTS.md, README.md   no path on the contributor's computer:
                      a home folder usually names a person, and helps nobody else
@@ -18,6 +22,8 @@
   games/*/*/kit-feedback.md   each maintainer ask filed (#123) or fileable (maintainer_asks.py)
   games/*/*/*.html   no class of the page's own that site/lib/site.css also styles: the build
                      links site.css after the page's <style>, so its rules land too (#143)
+  kit/*/INSTALL.md   one section per system, and one measurements row per build on each kind
+                     of computer in site/status.json: a run corrects them in place
 
 Usage: check_docs.py      exit 1 on failure
 """
@@ -124,11 +130,13 @@ def class_collisions(site_css=SITE_CSS, template=TEMPLATE_PAGE, pages=None):
     return bad
 
 
-def scan(path, patterns, label, exempt=None, blank=None):
+def scan(path, patterns, label, exempt=None, blank=None, only=None):
     bad = 0
     with open(path, encoding="utf-8", errors="replace") as fh:
         lines = list(fh)
     for n, line in enumerate(lines, 1):
+        if only is not None and n not in only:
+            continue
         if exempt and exempt.match(line):
             continue
         text = blank.sub(lambda q: " " * len(q.group(0)), line) if blank else line
@@ -142,6 +150,45 @@ def scan(path, patterns, label, exempt=None, blank=None):
     return bad
 
 
+def added_lines(prefix, base=None, root=ROOT):
+    """{path: line numbers} of the lines under prefix that this branch adds or changes since
+    its merge base with base (skill_edits.py's: $GITHUB_BASE_REF on a pull request, else
+    origin/main), with work not yet committed and new files. None with no git or no such ref."""
+    from skill_edits import git, base_ref
+    mb = git("merge-base", base or base_ref(), "HEAD", root=root)
+    if mb.returncode:
+        return None
+    out, path = {}, None
+    diff = git("diff", "-U0", "--no-color", "--no-ext-diff", "--src-prefix=a/", "--dst-prefix=b/",
+               mb.stdout.strip(), "--", prefix, root=root).stdout
+    for ln in diff.splitlines():
+        if ln.startswith("+++ "):
+            path = os.path.normpath(os.path.join(root, ln[6:])) if ln.startswith("+++ b/") else None
+        elif ln.startswith("@@") and path:
+            m = re.match(r"@@ -\S+ \+(\d+)(?:,(\d+))? @@", ln)
+            start, count = int(m.group(1)), int(m.group(2) or 1)
+            out.setdefault(path, set()).update(range(start, start + count))
+    for rel in git("ls-files", "--others", "--exclude-standard", "--", prefix, root=root).stdout.splitlines():
+        f = os.path.normpath(os.path.join(root, rel))
+        with open(f, encoding="utf-8", errors="replace") as fh:
+            out[f] = set(range(1, sum(1 for _ in fh) + 1))
+    return out
+
+
+def skill_game_names(titles, base=None, root=ROOT):
+    """A reusable skill names no game with a folder in games/, in the lines this branch adds.
+    Every line was checked once, so a new game's folder failed whatever sentence already named
+    it: the Spectrum reference's floating-bus note cited the FAQ's example, Arkanoid, and lost
+    it when the C64 game arrived (#224). With nothing to compare, nothing fails."""
+    added = added_lines(os.path.join("kit", "skills"), base, root)
+    bad = 0
+    for sk in sorted(glob.glob(os.path.join(root, "kit", "skills", "*", "*", "*.md"))):
+        lines = (added or {}).get(os.path.normpath(sk))
+        if lines:
+            bad += scan(sk, titles, "a specific game named in a reusable skill", only=lines)
+    return bad
+
+
 def untitled_links(game):
     """The keys of game.json's links that have a url and no title. The About tab shows a
     link by its title, so a bare url, or a {"url"} without one, reads as "wiki" or "manual"."""
@@ -150,6 +197,52 @@ def untitled_links(game):
         url, title = (v.get("url"), v.get("title")) if isinstance(v, dict) else (v, None)
         if url and not (title or "").strip():
             bad.append(k)
+    return bad
+
+
+def platform_notes(paths=None, hosts=None):
+    """A platform's INSTALL.md keeps one section per system and one measurements row per build
+    on each kind of computer, the kinds being site/status.json's hosts. A run that measures
+    again corrects the row or the sentence; a dated section or row of its own each time grew
+    kit/c64/INSTALL.md to three Linux sections and three rows of one release (kit/INSTALL.md)."""
+    if hosts is None:
+        hosts = json.load(open(os.path.join(ROOT, "site", "status.json"), encoding="utf-8"))["hosts"]
+    if paths is None:
+        paths = sorted(glob.glob(os.path.join(ROOT, "kit", "*", "INSTALL.md")))
+    names = sorted({h["name"] for h in hosts}, key=len, reverse=True)
+    bad = 0
+    for path in paths:
+        rel, sections, rows, table = os.path.relpath(path, ROOT), {}, {}, False
+        for n, ln in enumerate(open(path, encoding="utf-8").read().splitlines(), 1):
+            if ln.startswith("## "):
+                system = next((s for s in names if re.match(re.escape(s) + r"\b", ln[3:])), None)
+                if system in sections:
+                    print(f"  x  {rel}:{n}  a second section for {system} (the first is line {sections[system]}):")
+                    print(f"        correct that one in place (kit/INSTALL.md, 'The footprint principle')")
+                    bad += 1
+                sections.setdefault(system or ln, n)
+            cells = [c.strip() for c in ln.strip().strip("|").split("|")] if ln.startswith("|") else []
+            if cells[:2] == ["Build", "Machine"]:
+                table = True
+                continue
+            if not cells:
+                table = False
+            if not table or set(ln) <= set("|-: "):
+                continue
+            kinds = tuple(h["id"] for h in hosts if re.search(h["match"], cells[1]))
+            if not kinds:
+                print(f"  x  {rel}:{n}  a Machine no host in site/status.json matches; name the kind of computer")
+                print(f"        as its hosts' patterns do: {cells[1][:60]!r}")
+                bad += 1
+                continue
+            version = re.search(r"\d+(?:\.\d+)+", cells[0])
+            key = (version.group(0) if version else cells[0], "from source" in cells[0], kinds)
+            if key in rows:
+                print(f"  x  {rel}:{n}  a second row for {cells[0].split(',')[0]} on {', '.join(kinds)} (the first is"
+                      f" line {rows[key]}):")
+                print(f"        replace that row's date and count instead (the rule under the table)")
+                bad += 1
+            rows.setdefault(key, n)
     return bad
 
 
@@ -174,8 +267,7 @@ def main():
             print('        write each as {"title": "<the page\'s own title>", "url": "..."} (kit/skills/core/20-features)')
             fails += 1
     if titles:
-        for sk in glob.glob(os.path.join(ROOT, "kit", "skills", "*", "*", "*.md")):
-            fails += scan(sk, titles, "a specific game named in a reusable skill")
+        fails += skill_game_names(titles)
         for f in sorted(glob.glob(os.path.join(ROOT, "kit", "lessons", "*.md"))):
             if os.path.basename(f) == "README.md":
                 continue
@@ -198,6 +290,7 @@ def main():
              glob.glob(os.path.join(ROOT, "games", "*", "*", "features.md")):
         fails += scan(f, NARRATION, "narrating a past mistake (belongs in agent-history.md)", blank=GAME_TEXT)
     fails += class_collisions()
+    fails += platform_notes()
     notes = sorted(os.path.basename(f) for f in glob.glob(os.path.join(ROOT, "kit", "template", "*.md")))
     for f in sorted(glob.glob(os.path.join(ROOT, "games", "*", "*", "*.md"))):
         if os.path.basename(f) not in notes:
@@ -218,6 +311,8 @@ def main():
         for n, msg in named_skill_text(f)["problems"]:   # the words themselves: skill_usage.py --game
             print(f"  x  {os.path.relpath(f, ROOT)}:{n}  skill text that changed what I did: {msg}")
             fails += 1
+    from skill_edits import check as skill_edits_check
+    fails += skill_edits_check()
     from models import check as models_check
     fails += models_check()
     from maintainer_asks import check as asks_check

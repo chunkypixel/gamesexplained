@@ -11,13 +11,23 @@
 //   sid         a Uint8Array(25): $D400-$D418 as the driver last wrote them
 //   playing()   true while a tune runs, false once it has ended or been stopped
 //   voice(x)    optional: plain data about voice x (0-2) for the display's rows
-//   readback(env3, osc3)  optional: called before each play() with what $D41C and $D41B read,
-//               voice 3's envelope level and the top eight bits of its waveform, as the model has
-//               them at the frame's start (the chip's values move within the frame; these do not)
+//   readback(env3, osc3, bus)  optional: called before each play() with what $D41C and $D41B
+//               read, voice 3's envelope level and the top eight bits of its waveform, and what a
+//               register the chip does not answer reads (bus, below), as the model has them at
+//               the frame's start (the chip's values move within the frame; these do not)
 //   writes      optional: every register write of the last frame in order, as a flat list
 //               [register, value, register, value, ...]. When a driver keeps it, the player
 //               applies the writes in order instead of the frame's final registers, so a gate
 //               turned off and on again within one frame restarts the envelope, as on the chip
+// A driver that reads a register it writes ($D400-$D418) does not get back what it wrote there:
+// the chip answers only $D419-$D41C, and a read of any other register returns the data bus, the
+// last value written to any register (or read from $D41B or $D41C), until it fades (createBus,
+// below). Before the driver's first write of a frame that is readback's bus; after it, the
+// driver's own last write. The player leaves the frame's last write on the bus when the driver
+// keeps writes, and otherwise the last register to change, in register order. Test such a
+// driver's port against its original with the bus, never with a copy of each register:
+// kit/c64/machine.js reads the SID through createBus, and a test on kit/c64/cpu6502.js alone
+// passes it as io (createBus's comment).
 // data is anything that survives structured cloning, usually the driver's tables as the game
 // loads them. Test the port against the game's own code run in a 6502 simulator, every register
 // after every frame, before it goes on a page: kit/c64/cpu6502.js hands the driver's writes to the
@@ -44,7 +54,8 @@
 //   C64Sid.mount(root, options)  the player: tune buttons, a seek bar, a piano roll and a panel
 //                                per voice
 //   C64Sid.host(options)         the sound alone, for a page with its own controls
-//   C64Sid.engine()              the model and the frame player without a page, for tests
+//   C64Sid.engine()              the model, the bus and the frame player without a page, for
+//                                tests
 globalThis.C64Sid = (function () {
   'use strict';
 
@@ -95,6 +106,49 @@ globalThis.C64Sid = (function () {
     }
     const F0 = { '6581': splineTable(F0_6581), '8580': splineTable(F0_8580) };
 
+    // ------------------------------------------------------------------ the data bus
+    // A read of a register the SID does not answer ($D400-$D418, $D41D-$D41F and their mirrors)
+    // returns the data bus: the last value written to any register, or read from $D41B or $D41C,
+    // which put theirs on it. It holds for 0x1D00 cycles on the 6581 and 0xA2000 (about 34
+    // frames) on the 8580, then reads 0, and each read of a register the chip does not answer
+    // halves the time left. That is VICE's reSIDfp (libresidfp's SID.cpp, read() and write(), and
+    // ageBusValue() in SID.h), checked to the cycle against the kit's VICE build (v3.13.2) by
+    // kit/c64/test_sid_bus.js, on readings kit/c64/sid_bus.py recorded there
+    // (kit/c64/fixtures/sid-bus.json). The emulator's rule, not a chip's: a real SID's bits fade
+    // one by one, at rates that differ from chip to chip. $D419 and $D41A, the paddles, are
+    // VICE's own: $FF with none plugged in, and the bus untouched. createSID's bus fades as its
+    // filter's chip's, the 8580's with the filter off (the chip the kit's VICE starts with).
+    // createBus(chip) keeps the bus on the caller's clock t, in cycles:
+    //   write(value, t)  read(register, t, own)  peek(t)  chip(model)  save()  load(state)
+    // own is what $D41B or $D41C holds at t (read ignores it for the other registers). A test
+    // on kit/c64/cpu6502.js passes it as the SID's part of io:
+    //   const bus = C64Sid.engine().createBus('8580');
+    //   io = { read: (a, cpu) => bus.read(a & 31, cpu.cycles, 0), write: (a, v, cpu) => bus.write(v, cpu.cycles) }
+    const HOLD = { '6581': 0x1D00, '8580': 0xA2000 };
+    function createBus(chip) {
+      let value = 0, ttl = 0, at = 0, hold = HOLD[chip] || HOLD['8580'];
+      function age(t) {
+        const n = t - at;
+        at = t;
+        if (ttl !== 0) { ttl -= n; if (ttl <= 0) { value = 0; ttl = 0; } }
+      }
+      return {
+        write(v, t) { age(t); value = v & 0xFF; ttl = hold; },
+        read(r, t, own) {
+          r &= 31;
+          if (r === 0x19 || r === 0x1A) return 0xFF;
+          age(t);
+          if (r === 0x1B || r === 0x1C) { value = own & 0xFF; ttl = hold; return value; }
+          ttl = Math.trunc(ttl / 2);
+          return value;
+        },
+        peek(t) { age(t); return value; },
+        chip(c) { hold = HOLD[c] || HOLD['8580']; },
+        save() { return [value, ttl, at]; },               // the state, for a machine's save
+        load(s) { [value, ttl, at] = s; },
+      };
+    }
+
     function noiseBits(r) {                                  // LFSR bits 20,18,14,11,9,5,2,0 -> output bits 11-4
       return (r >> 9 & 0x800) | (r >> 8 & 0x400) | (r >> 5 & 0x200) | (r >> 3 & 0x100) |
         (r >> 2 & 0x080) | (r << 1 & 0x040) | (r << 3 & 0x020) | (r << 4 & 0x010);
@@ -112,7 +166,8 @@ globalThis.C64Sid = (function () {
       const kLP = 1 - Math.exp(-2 * Math.PI * 15900 / sampleRate);  // the C64's output stage:
       const kHP = 1 - Math.exp(-2 * Math.PI * 15.9 / sampleRate);   // 16 kHz low pass, 16 Hz high pass
       const gain = opts && opts.gain != null ? opts.gain : 0.6;   // the output level
-      let vol = 0, frac = 0, lp = 0, dc = 0;
+      let vol = 0, frac = 0, lp = 0, dc = 0, now = 0;        // now: cycles run, the bus's clock
+      const bus = createBus('8580');
       // the filter: chip 'none', '6581' or '8580'; state in the units of one voice's output
       const F = { chip: 'none', w: 0, n: 1, q1: 1 / 0.707, hp: 0, bp: 0, lp: 0 };
 
@@ -125,11 +180,14 @@ globalThis.C64Sid = (function () {
       }
       function setFilter(chip) {
         F.chip = chip === '6581' || chip === '8580' ? chip : 'none';
+        bus.chip(F.chip === 'none' ? '8580' : F.chip);     // the bus fades as the filter's chip's
         F.hp = F.bp = F.lp = 0;
         filterSet();
       }
 
       function write(r, val) {
+        bus.write(val, now);
+        if (r > 24) return;                                  // $D419-$D41F: nothing to set
         regs[r] = val;
         if (r === 24) { vol = val & 15; return; }            // routing and mode: read in sample()
         if (r > 20) { filterSet(); return; }
@@ -209,6 +267,7 @@ globalThis.C64Sid = (function () {
       function sample() {
         const c0 = frac + cps, c = Math.floor(c0);
         frac = c0 - c;
+        now += c;
         for (let i = 0; i < 3; i++) clockEnv(V[i], c);
         let sum = 0;
         for (let k = 0; k < sub; k++) {
@@ -255,6 +314,7 @@ globalThis.C64Sid = (function () {
       }
 
       function skip(c) {                                     // c cycles with no output: envelopes and phases
+        now += c;
         for (let i = 0; i < 3; i++) {
           const o = V[i];
           clockEnv(o, c);
@@ -266,7 +326,10 @@ globalThis.C64Sid = (function () {
 
       setFilter(opts && opts.filter);
       const read3 = () => [V[2].env, wave(V[2], V[SRC[2]]) >> 4];   // $D41C, $D41B
-      return { V, mute, write, setRegs, sample, skip, setFilter, read3, filter: () => F.chip };
+      // a read of register r ($D400 + r) as the processor makes it, the bus's included
+      const read = r => bus.read(r, now, (r & 31) === 0x1C ? V[2].env : wave(V[2], V[SRC[2]]) >> 4);
+      const peek = () => bus.peek(now);                      // the bus, with no read's effect on it
+      return { V, mute, write, setRegs, sample, skip, setFilter, read3, read, peek, filter: () => F.chip };
     }
 
     // ------------------------------------------------------------------ driver + SID + frames
@@ -301,7 +364,7 @@ globalThis.C64Sid = (function () {
         return { t, run, frame: frames, vol: s[24] & 15, playing: drv.playing(), v };
       }
       function frame() {                                     // the game calls its driver
-        if (drv.readback) drv.readback(...sid.read3());
+        if (drv.readback) drv.readback(...sid.read3(), sid.peek());
         drv.play();
         const w = drv.writes;                                // in order, where the driver keeps them
         if (w) for (let k = 0; k + 1 < w.length; k += 2) sid.write(w[k], w[k + 1]);
@@ -325,7 +388,7 @@ globalThis.C64Sid = (function () {
       return { drv, sid, command, render };
     }
 
-    return { CLOCK, FRAME_CYCLES, createSID, createPlayer };
+    return { CLOCK, FRAME_CYCLES, createBus, createSID, createPlayer };
   }
 
   // ------------------------------------------------------------------ the sound, on a page

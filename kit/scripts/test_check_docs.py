@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""The narration rule reads the agent's words, not the text the game prints (#145), and a page's
-own class that site.css also styles is caught before the built site collapses it (#143)."""
+"""The narration rule reads the agent's words, not the text the game prints (#145), a page's
+own class that site.css also styles is caught before the built site collapses it (#143), a
+platform's install notes keep one section per system and one row per build and kind of computer,
+and a skill names no game in the lines a branch adds, whatever it said before the game arrived."""
 import contextlib
 import io
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -82,6 +86,93 @@ class ClassCollisions(unittest.TestCase):
                       '.strip canvas{width:100%}'):      # .strip used, not styled, by the page
             n, out = collisions(style)
             self.assertEqual(n, 0, (style, out))
+
+
+HOSTS = [{'id': 'macos-arm64', 'name': 'macOS', 'match': 'macOS.*(Apple silicon|arm64)'},
+         {'id': 'linux-x64', 'name': 'Linux', 'match': 'Linux.*x86_64'}]
+TABLE = """| Build | Machine | Measured | Checks passed |
+|---|---|---|---|
+| v3.13.1 release, `v3.13.1-linux-x86_64-gui.zip` | Linux x86_64 | 26 September 2026 | 56 of 57 |
+| v3.13.1, from source (`get-vice build`) | Linux x86_64 | 24 September 2026 | 56 of 56 |
+| v3.13.1 release, `v3.13.1-macos-arm64-gui.dmg` | macOS arm64 | 28 September 2026 | 56 of 57 |
+"""
+
+
+def notes(text):
+    """How many problems check_docs.py finds in a platform's INSTALL.md holding this text."""
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d) / 'INSTALL.md'
+        f.write_text(text, encoding='utf-8')
+        with contextlib.redirect_stdout(io.StringIO()):
+            return check_docs.platform_notes([str(f)], HOSTS)
+
+
+class PlatformNotes(unittest.TestCase):
+    def test_one_row_per_build_and_kind(self):
+        self.assertEqual(notes(TABLE), 0)       # a release and a source build; two kinds
+        for row in ('| v3.13.1 release, GUI | Linux x86_64 (Ubuntu 26.04, desktop) | 6 October 2026 | 57 of 57 |',
+                    '| v3.13.1, from source | Linux x86_64, no display | 25 September 2026 | 56 of 56 |',
+                    '| v3.13.1 release | Ubuntu 24.04.5 x86_64, desktop | 30 September 2026 | 56 of 57 |'):
+            self.assertEqual(notes(TABLE + row + '\n'), 1, row)
+        self.assertEqual(notes(TABLE + '| v3.13.2 release | Linux x86_64 | 2 October 2026 | 57 of 57 |\n'), 0)
+
+    def test_one_section_per_system(self):
+        self.assertEqual(notes('## macOS — known to work\n\n## Linux\n\n## Untried systems\n'), 0)
+        self.assertEqual(notes('## Linux\n\n## Linux — Ubuntu 26.04 desktop, 6 October 2026\n'), 1)
+
+
+SPECTRUM = "kit/skills/spectrum/zx-spectrum-reference/SKILL.md"
+NOTE = "Some games sync to the raster this way (the FAQ names Arkanoid).\n"
+
+
+class SkillGameNames(unittest.TestCase):
+    """A sentence on main that names a game passes when the game's folder arrives; a line the
+    branch writes, committed or not, or in a new file, still fails."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = self.tmp.name
+        self.write(SPECTRUM, "# Spectrum\n" + NOTE)
+        self.git("init", "-q", "-b", "main")
+        self.commit("base")
+        self.git("checkout", "-qb", "game/c64/arkanoid")
+        self.write("games/c64/arkanoid/game.json", '{"title": "Arkanoid"}\n')
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def write(self, rel, text):
+        os.makedirs(Path(self.root, rel).parent, exist_ok=True)
+        Path(self.root, rel).write_text(text, encoding="utf-8")
+
+    def git(self, *args):
+        subprocess.run(["git", "-C", self.root, *args], check=True)
+
+    def commit(self, msg):
+        self.git("add", "-A")
+        self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", msg)
+
+    def found(self, base="main"):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return check_docs.skill_game_names([r"\bArkanoid\b"], base, self.root)
+
+    def test_a_sentence_from_before_the_game_passes(self):
+        self.commit("game")
+        self.assertEqual(self.found(), 0)
+
+    def test_a_line_the_branch_writes_fails(self):
+        self.write(SPECTRUM, "# Spectrum\n" + NOTE + "Arkanoid's start-up hides behind a NOP.\n")
+        self.assertEqual(self.found(), 1)            # before the commit
+        self.commit("game")
+        self.assertEqual(self.found(), 1)            # and after it
+
+    def test_a_changed_line_and_a_new_file_fail(self):
+        self.write(SPECTRUM, "# Spectrum\n" + NOTE.replace("this way", "so"))
+        self.write("kit/skills/core/50-coverage/SKILL.md", "# Coverage\nAs in Arkanoid.\n")
+        self.assertEqual(self.found(), 2)
+
+    def test_no_base_to_compare_fails_nothing(self):
+        self.write(SPECTRUM, "# Spectrum\nArkanoid.\n")
+        self.assertEqual(self.found(base="no-such-ref"), 0)
 
 
 if __name__ == '__main__':

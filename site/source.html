@@ -7,7 +7,7 @@
 <body class="site" data-nolink="1">
 <!-- tabs -->
 <div class="facts">
-  <p class="eyebrow">{{platform_name}} · {{year}} · {{publisher}}</p>
+  <p class="eyebrow">{{year}} · {{publisher}}</p>
   <h1 style="margin-top:0">{{title}}: the source</h1>
   <p class="mute">Every routine, table and variable the game uses, with the names and descriptions given to them. Click an operand to follow it; the counter beside a label lists what refers to it. The reference below the fold is rendered from the game's facts file.</p>
   <!-- parts -->
@@ -85,16 +85,17 @@
     const index=[]; layers.forEach((Lr,k)=>Lr.index.forEach(e=>index.push(Object.assign({},e,{p:layers.length-1-k}))));
     return {records:records,index:index};
   }
-  let recs, byAddr, names, first, addrs, index, unused;
+  let recs, byAddr, names, first, held, index, unused;
   function use(V){
     recs=V.records;
     // what a gap is: in a game of several parts, a part alone leaves out what the others own
     unused=!PART?'not used by the game':V===L?'that are not this part\u2019s, or not used':'that none of these parts uses';
     byAddr=new Map(recs.filter(r=>r.t!=='gap').map(r=>[r.a,r]));
     names=new Map(recs.filter(r=>r.l).map(r=>[r.a,r.l]));
-    // the first record at each address, and the addresses in order, for the nearest record at or before one
+    // the first record at each address, and what holds each address, in order: [start, end, record]
+    // for each row with bytes and each gap, for an address that has no record of its own
     first=new Map(); recs.forEach((r,i)=>{ if(r.t!=='gap'&&!first.has(r.a)) first.set(r.a,i); });
-    addrs=[...first.keys()].sort((x,y)=>x-y);
+    held=[]; recs.forEach((r,i)=>{ const n=r.t==='gap'?r.n:r.b?r.b.length:0; if(n) held.push([r.a,r.a+n,i]); });
     index=V.index.slice().sort((x,y)=>x.a-y.a);
   }
   const WHOLE=UNDER.length?lay(UNDER.concat([L])):L;
@@ -185,31 +186,45 @@
     e.stopPropagation();
   });
   document.addEventListener('click',()=>{if(pop){pop.remove();pop=null;}});
-  // permalinks: reveal hidden rows and highlight
-  let hl=null, nav=0;
+  // permalinks: reveal hidden rows and highlight. An address inside a row opens on that row. One no
+  // record holds (a chip register, a stretch the listing leaves out, another part's address) opens on
+  // the gap that holds it, with a note saying so, not on whatever row comes before it (#215).
+  let hl=null, nav=0, miss=null;
   function goHash(){
     want=-1; const n=++nav;
+    if(miss){ miss.remove(); miss=null; }
     const id=(location.hash||'').slice(1).toUpperCase(); if(!id) return;
-    let el=document.getElementById(id);
-    if(!el){ // nearest record at or before the address
-      const a=parseInt(id,16); let lo=0,hi=addrs.length-1,best=-1;
-      while(lo<=hi){const m=(lo+hi)>>1; if(addrs[m]<=a){best=m;lo=m+1;}else hi=m-1;}
+    let el=document.getElementById(id), note='';
+    if(!el){
+      if(!/^[0-9A-F]{4}$/.test(id)) return;
+      const a=parseInt(id,16);
+      if(first.has(a)){ want=first.get(a); return; }              // its row is not rendered yet: slice() calls back
+      let lo=0,hi=held.length-1,best=-1;
+      while(lo<=hi){const m=(lo+hi)>>1; if(held[m][0]<=a){best=m;lo=m+1;}else hi=m-1;}
       if(best<0) return;
-      if(first.get(addrs[best])>=done){ want=first.get(addrs[best]); return; }   // not rendered yet: slice() calls back
-      el=document.getElementById(id4(addrs[best]));
+      const [, end, i]=held[best], r=recs[i];
+      if(i>=done){ want=i; return; }
+      if(r.t==='gap'){
+        el=main.querySelector(`.gap[data-a="${r.a}"]`);
+        note=`Nothing in this listing is at ${hex4(a)}. It lies in the stretch below, which the listing leaves out.`;
+      } else {
+        el=document.getElementById(id4(r.a));
+        if(a>=end) note=`Nothing in this listing is at ${hex4(a)}. The nearest record before it is ${hex4(r.a)}, below.`;
+      }
     }
     if(!el) return;
-    if(main.contains(el)&&main.classList.contains('explained')&&el.dataset.own==='0'){
+    if(main.contains(el)&&main.classList.contains('explained')&&(el.dataset.own==='0'||el.classList.contains('gap'))){
       document.getElementById('explained').checked=false; applyOpts();
       // that restyles every row: let the browser draw it before the scroll lays out the rows around the target
-      requestAnimationFrame(()=>setTimeout(()=>{ if(n===nav) show(el); },0));
+      requestAnimationFrame(()=>setTimeout(()=>{ if(n===nav) show(el,note); },0));
       return;
     }
-    show(el);
+    show(el,note);
   }
-  function show(el){
+  function show(el,note){
     if(hl) hl.classList.remove('hl');
     hl=el; el.classList.add('hl');
+    if(note){ miss=document.createElement('div'); miss.className='miss'; miss.setAttribute('role','status'); miss.textContent=note; el.before(miss); }
     el.scrollIntoView({block:'center'});
     // the blocks around it are laid out only once on screen; if that moved it, centre it again
     const y=el.getBoundingClientRect().top;
