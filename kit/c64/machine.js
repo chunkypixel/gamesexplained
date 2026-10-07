@@ -9,8 +9,11 @@
 // - CIA 1's keyboard matrix and joystick port 2 ($DC00-$DC03): keys are held as the KERNAL numbers
 //   them (row x 8 + column, KEY below), the stick as the port's five bits, active low;
 // - colour RAM ($D800-$DBFF, four bits, read with the upper four high);
-// - a SID that only records: the last value of each register, and a log of [cycle, register,
-//   value] when sidLog is an array.
+// - a SID that records: the last value of each register, and a log of [cycle, register, value]
+//   when sidLog is an array. A read of a register the chip does not answer returns the data bus,
+//   the last value written to any register, fading as VICE's does (site/lib/sid.js, createBus;
+//   the option sid below), not the register's last value; $D419 and $D41A read $FF, no
+//   paddles, and $D41B and $D41C read 0: the voices are not modelled.
 // The processor port starts as a loader leaves it ($37: BASIC, KERNAL and I/O in); the simulator
 // holds no ROM, so the game must bank the ROMs out itself (most do, with $01 = $35) or a hook must
 // stand in for what it calls. Checked by kit/c64/test_machine.js.
@@ -38,6 +41,8 @@
 // - passAt: the address of the main loop's first instruction. Each time the processor reaches it,
 //   passes counts one and onPass(machine) runs, the place to set the next pass's input; onPass
 //   returning true stops the run with the program counter there, before the pass (runUntilPass).
+// - sid: '6581' or '8580', the chip whose bus fade the SID's reads follow. The default is the
+//   8580, the chip the kit's emulator starts with (v3.13.2; its SidModel resource).
 // - runCycles(n), runFrames(n), runPasses(n), runUntilPass(f): run with the interrupts. frames
 //   counts raster line 0.
 // - joy, keys (a Set of key numbers), press(k), release(k), releaseAll(): the input, read whenever
@@ -48,9 +53,12 @@
 //   minisite skill does, and so does kit/c64/lockstep.js): they see every access in order, with
 //   cpu.cycles as the time. The lockstep also calls them on a second Machine that never runs, as
 //   a port's chips (its line the lockstep's, its keys and joy the game's), so they use nothing but
-//   the chip state and this.line.
+//   the chip state, this.line and this.now (the SID's clock: there, the game's cycles).
 const fs = require('fs');
+const path = require('path');
 const { CPU } = require('./cpu6502.js');
+require(path.join(__dirname, '..', '..', 'site', 'lib', 'sid.js'));
+const { createBus } = globalThis.C64Sid.engine();
 
 function loadListing(file) {
   const L = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -80,6 +88,8 @@ class Machine {
     this.vic = new Uint8Array(0x40);
     this.sidw = new Uint8Array(0x20);
     this.sidLog = null;
+    this.sidChip = opts.sid || '8580';
+    this.sidBus = createBus(this.sidChip);
     this.colour = new Uint8Array(0x400);
     this.pra = 0xFF; this.ddra = 0; this.ddrb = 0;
     this.keys = new Set();
@@ -111,6 +121,7 @@ class Machine {
     };
   }
   get line() { return Math.floor(this.cpu.cycles / LINE) % LINES; }
+  get now() { return this.cpu.cycles; }      // the chips' clock
   ioRead(a) {
     if (a >= 0xD000 && a < 0xD400) {
       const r = a & 0x3F, ln = this.line;
@@ -120,7 +131,7 @@ class Machine {
       if (r === 0x1A) return this.enable | 0xF0;
       return this.vic[r];
     }
-    if (a >= 0xD400 && a < 0xD800) return 0;
+    if (a >= 0xD400 && a < 0xD800) return this.sidBus.read(a & 0x1F, this.now, 0);
     if (a >= 0xD800 && a < 0xDC00) return this.colour[a - 0xD800] | 0xF0;
     if (a >= 0xDC00 && a < 0xDD00) {
       const r = a & 15;
@@ -195,7 +206,7 @@ class Machine {
       else this.vic[r] = v;
       return;
     }
-    if (a >= 0xD400 && a < 0xD800) { this.sidw[a & 0x1F] = v; if (this.sidLog) this.sidLog.push([this.cpu.cycles, a & 0x1F, v]); return; }
+    if (a >= 0xD400 && a < 0xD800) { this.sidw[a & 0x1F] = v; this.sidBus.write(v, this.now); if (this.sidLog) this.sidLog.push([this.cpu.cycles, a & 0x1F, v]); return; }
     if (a >= 0xD800 && a < 0xDC00) { this.colour[a - 0xD800] = v & 15; return; }
     if (a >= 0xDC00 && a < 0xDD00) {
       const r = a & 15;
@@ -255,7 +266,8 @@ class Machine {
   releaseAll() { this.keys.clear(); }
   save() {
     const c = this.cpu;
-    return { ram: Buffer.from(this.ram).toString('base64'), vic: Array.from(this.vic), sidw: Array.from(this.sidw), colour: Buffer.from(this.colour).toString('base64'),
+    return { ram: Buffer.from(this.ram).toString('base64'), vic: Array.from(this.vic), sidw: Array.from(this.sidw),
+      sid: this.sidChip, sidBus: this.sidBus.save(), colour: Buffer.from(this.colour).toString('base64'),
       cpu: { a: c.a, x: c.x, y: c.y, sp: c.sp, pc: c.pc, p: c.p, cycles: c.cycles, pdir: c.pdir, pdata: c.pdata, pout: c.pout },
       cmp: this.cmp, latch: this.latch, enable: this.enable, lastLine: this.lastLine, frames: this.frames, passes: this.passes,
       pra: this.pra, ddra: this.ddra, ddrb: this.ddrb, skipOnce: this.skipOnce, joy: this.joy, keys: Array.from(this.keys), passAt: this.passAt,
@@ -263,11 +275,11 @@ class Machine {
   }
   static restore(s, opts = {}) {
     const m = new Machine({ ram: new Uint8Array(Buffer.from(s.ram, 'base64')), passAt: opts.passAt !== undefined ? opts.passAt : s.passAt,
-      cia: !!s.cia, rom: opts.rom });
+      cia: !!s.cia, rom: opts.rom, sid: s.sid });
     const c = m.cpu;
     Object.assign(c, { a: s.cpu.a, x: s.cpu.x, y: s.cpu.y, sp: s.cpu.sp, pc: s.cpu.pc, cycles: s.cpu.cycles });
     c.p = s.cpu.p; c.pdir = s.cpu.pdir; c.pdata = s.cpu.pdata; c.pout = s.cpu.pout; c.mapPort();
-    m.vic.set(s.vic); if (s.sidw) m.sidw.set(s.sidw); m.colour.set(Buffer.from(s.colour, 'base64'));
+    m.vic.set(s.vic); if (s.sidw) m.sidw.set(s.sidw); if (s.sidBus) m.sidBus.load(s.sidBus); m.colour.set(Buffer.from(s.colour, 'base64'));
     Object.assign(m, { cmp: s.cmp, latch: s.latch, enable: s.enable, lastLine: s.lastLine, frames: s.frames, passes: s.passes, pra: s.pra, ddra: s.ddra, ddrb: s.ddrb,
       skipOnce: !!s.skipOnce, joy: s.joy === undefined ? 0x1F : s.joy, keys: new Set(s.keys || []) });
     if (s.joy1 !== undefined) m.joy1 = s.joy1;
