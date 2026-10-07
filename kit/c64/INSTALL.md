@@ -325,8 +325,11 @@ The launcher writes the port it used to `tools/vice-port`, and
 so every later command reaches this emulator even in a shell that has
 lost the variable. Without the file a client falls back to 6510 and talks
 to whatever is there: on 30 September 2026 a contributor's own web server
-answered the kit's first call with a 404. `.mcp.json` still names 6510;
-`vice.py` is the way to the emulator on another port.
+answered the kit's first call with a 404. `.mcp.json` names the port as
+`${KIT_VICE_PORT:-6510}`, which Claude Code fills in from the environment
+its session started in: it cannot read `tools/vice-port`, so export the
+variable before starting the session, or use `vice.py`, which reaches the
+emulator on any port.
 
 ## Another program on port 3000
 
