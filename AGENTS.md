@@ -114,10 +114,10 @@ leaves out; a new test is a `test_*.py` file, not a new flag.
 ## Titling a pull request
 
 This applies to every pull request to this repository, a game's, the
-kit's, the site's or anything else, and to commit subject lines, since a
-pull request's title becomes its merge commit's. Title it so a reader
-scanning the list of pull requests knows what changed and why, without
-opening it:
+kit's, the site's or anything else, and to every commit subject line: a
+pull request of one commit can be merged under that commit's subject
+rather than its title. Title it so a reader scanning the list of pull
+requests knows what changed and why, without opening it:
 
 - Start with a verb: Fix, Stop, Add, Remove, Limit, Merge.
 - Name what a reader recognises: a file, a feature, a game.
