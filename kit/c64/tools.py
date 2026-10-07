@@ -112,13 +112,20 @@ def virtual_display(cmd, env):
     """The GUI build needs an X display. A Linux server or container has none; give it a virtual one.
 
     xvfb-run starts Xvfb on a free display number, runs the emulator on it and stops it when the
-    emulator exits. Nothing is drawn anywhere, and screenshots still work: VICE renders them itself."""
+    emulator exits. Nothing is drawn anywhere, and screenshots still work: VICE renders them itself.
+
+    Nothing is heard either, and such a machine usually has no sound device: VICE then turns its
+    sound off, and with it off the SID's reads are not the chip's ($D41B and $D41C read the low
+    byte of the cycle counter, the write-only registers 0; VICE's sid.c). Its `dummy` device is
+    no better: nothing drains its buffer, so once the buffer fills the SID stops being clocked
+    and voice 3 and the data bus freeze (v3.13.2, 7 October 2026). The `fs` device writing to
+    /dev/null keeps the chip clocked as on a machine with sound (kit/c64/sid_bus.py, #194)."""
     if not sys.platform.startswith("linux") or env.get("DISPLAY") or env.get("WAYLAND_DISPLAY"):
         return cmd
     if not shutil.which("xvfb-run"):
         sys.exit("no display and no xvfb-run: install Xvfb (Debian/Ubuntu: xvfb), or run with a desktop session")
     env["NO_AT_BRIDGE"] = "1"      # no accessibility bus in a container; GTK waits for it otherwise
-    return ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24"] + cmd
+    return ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24"] + cmd + ["-sounddev", "fs", "-soundarg", os.devnull]
 
 
 def vice(machine="x64sc"):
