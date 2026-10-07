@@ -340,22 +340,6 @@ music driver's three dispatch tables this way. Such an operand is often
 assembled as `$0000`, which sends the tracer into zero page
 (`tool-regen2000`).
 
-### Code only the running game reaches
-
-Before splitting the image, run the game from the hand-over in the kit's
-6502 simulator (`kit/c64/machine.js` on the C64) with an `executed` map
-(the simulator's header says how), through each state a script can
-reach: the title, every menu choice, the attract mode, a game with
-random input. Every address it executed that the flow trace has not
-typed as code is an instruction start: seed the disassembler with each
-one. It finds what the rules above find by reading (operands written at
-run time, jump tables, code behind undocumented opcodes) without having
-to find them first. One game's trace stopped at an undocumented `NOP`
-in its first three instructions and gained 765 instruction starts this
-way. Where the simulator stalls, the chip it waits on is usually one it
-does not model: read the loop, and stand in for the wait with a hook
-that sets what the real machine leaves.
-
 **Reaching 100 % is a correctness pass, not a formality.** Writing a
 precise description of every routine forces re-reading code that was
 "already understood", and that is where confident wrong claims get
