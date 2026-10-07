@@ -17,9 +17,48 @@ Six G64 images, two sides in three dumps. Each header reads `GCR-1541`,
 | `platoon_s1ocean_1987v1_1ntsc.g64` | `platoon`, one file PLATOON of 321 bytes at `$010A` | a different build |
 | `platoon_s2ocean_1987v1_1ntsc.g64` | `platoon-sd 2` | O1, O2, O3 of other sizes; LAY1 to LAY3 differ |
 
-The PAL side 1 and side 2 are the images analysed. The "alt" dumps hold
-the same files with a different disk name; the NTSC v1.1 disks are
-another build and are not analysed.
+The PAL side 1 and side 2 are the images analysed.
+
+## The three versions
+
+Compared on 7 October 2026, sector by sector (GCR decoded from the G64
+files) and, for side 1's program, memory at the hand-over to `$0400`.
+
+**PAL and PAL alt are the same disks.** All 683 sectors of each side hold
+the same data, except the directory header (18/0), which names the alt
+disk `rouven ross`. Both side 1 images carry the same deliberate error,
+a data checksum error on 22/10, the sector the fast loader F tests. The
+two differ only in how the dump was written: the alt image's tracks are
+a uniform length for each speed zone (7,692 bytes in zone 3), the PAL
+image's lengths vary track by track as a raw read does, and the PAL
+side 1 image keeps a track 41.
+
+**NTSC v1.1 is the US release, rebuilt.** Its loading picture carries the
+Data East logo in place of the RCA/Columbia video advert. Side 1 holds
+one 321-byte file that loads into the stack page and pulls the program in
+with a two-bit serial loader: there is no PICCY wait for SPACE, no OVL1
+in the directory, and 22/10 reads cleanly. The program reaches `$0400`
+like the PAL one, with `$01` = `$35`, and is the same source assembled
+again: matching blocks sit at the same addresses from `$4400` to `$B224`
+and from `$CE38` up, and the code below `$4000` sits 208 bytes later
+from `$0868` and 225 bytes later from `$17DC`. What changed:
+
+| Change | PAL | NTSC v1.1 |
+|---|---|---|
+| Music tempo | `$17CC` calls the music driver `$E395` every frame | `$189C` counts frames in `$18BA` and skips the call every sixth one, so the driver runs 50 times a second on a 60 Hz machine |
+| Test keys | none | `$0832`: keys 0, 9, 8 and 7 each put the soldier at a fixed place in the jungle (`$20`/`$21` = `$0001`, `$014E`, `$003C`, `$0467`) and redraw; 8 also sets `$2B52` (live: the scene jumped on each key) |
+| Wording | TORCH | FLASHLIGHT, in four messages |
+| Title credits | PROGRAMMED BY ZACH TOWNSEND, GRAPHICS BY ANDREW SLEIGH and MARTIN MACDONALD, MUSIC & FX BY JONATHAN DUNN | only the Hemdale and Ocean copyright lines |
+| High scores | PLATOON on all ten, top score 199998 | the team's names: Z A C H 199990, TOWNSEND, ANDREW, SLEIGH, MARTIN, MACDONALD, JONATHON, DUNN, GARY, BRACEY |
+| Scroll redraw | `$B238`-`$B2B0` | the tests of `$0303` changed (6 to 5, 0 to 6, 0 to 2) and `$031E` set to 1 after each redraw; what this fixes is open |
+| Title interrupt | raster line 0 at `$1D8A` | line 20 at `$1E6B` |
+| ZACH1 cheat | `$07B5`, patches `$2BC8` | `$07BF`, patches `$2CA9`, the same routine moved |
+
+On side 2 the NTSC LAY files skip straight to their loader with `jmp
+$4100`, and the O files are packed with the same Dynamic Duo packer to
+other sizes (O1 55,928 bytes against 56,673). The PAL LAY files still
+hold the 22/10 check, but jump over it at `$4022`. The NTSC O files were
+not unpacked or compared.
 
 ## From power-on to play
 
@@ -106,8 +145,8 @@ on, any other goes to `$0150` instead. F then sends its drive code with
 M-W and starts it with M-E, loads PICCY into bank 1 and shows it as a
 multicolour bitmap, waits for SPACE, blanks the screen, loads OVL1 over
 almost all of memory with code it copied into the stack page, and
-reaches the game with `jmp $0400`. Each LAY file on side 2 begins the
-same way. Not annotated further, by policy.
+reaches the game with `jmp $0400`. Each LAY file on side 2 carries the
+same check and jumps over it. Not annotated further, by policy.
 
 ## Emulator
 

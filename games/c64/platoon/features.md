@@ -50,6 +50,7 @@ Sources:
 | P sets a flag, G clears it | traced | `$1E55` writes 1 or 0 to `$0C85`; one try in the jungle showed no change, so the effect is open (a pause is the likely reading) |
 | RUN/STOP leaves play | traced | `$0893` jumps to `$A709` with RUN/STOP held; where that goes is open |
 | The opening line THE FIRST CASUALTY OF WAR IS INNOCENCE | traced | the film's tagline, in the messages at `$A9F4` with ENTERING THE COMBAT ZONE |
+| NTSC v1.1 only: keys 0, 9, 8 and 7 move the soldier to fixed places in the jungle | live | `$0832` in the NTSC build; not in the PAL build (`orientation.md`, "The three versions") |
 | The search finds ordinary things too | traced | A SACK OF FLOUR, A STOOL, A TABLE, A POT OF RICE, A POT OF WATER, RUBBISH, PROVISIONS, EMPTY at `$C7FD` |
 
 ## Open questions
