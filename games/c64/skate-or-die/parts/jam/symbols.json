@@ -8936,7 +8936,7 @@
   {
    "address": 3023,
    "type": "line",
-   "text": "Player-against-player attacks, once per pass, only when the skaters are within 16 pixels of each other across ($61/$62) and down the screen ($63/$64). If both face the same way (flags $3C78/$3C79) only the one behind can hit: its attack in the hitting frame ($3CF4/$3CF5), if the victim has no recovery time ($3D54/$3D55) and hit_blocked ($0D98) lets it through, knocks the one in front down (knock_down_player1 $0C6F, knock_down_player0 $0CA7). Facing each other, one attack only shoves the other aside (shove_player $0D5E, 2 points) and two attacks at once go to resolve_double_attack ($0CCC). Facing apart, nothing happens."
+   "text": "Player-against-player attacks, once per pass, only when the skaters are within 16 pixels of each other across ($61/$62) and down the screen ($63/$64). If both face the same way (flags $3C78/$3C79) only the one behind can hit: its attack in the hitting frame ($3CF4/$3CF5), if the victim has no recovery time ($3D54/$3D55) and hit_blocked ($0D98) lets it through, knocks the one in front down (knock_down_player1 $0C6F, after the checks at $0C5C; knock_down_player0 $0C94, which makes the checks itself). Facing each other, one attack only shoves the other aside (shove_player $0D5E, 2 points) and two attacks at once go to resolve_double_attack ($0CCC). Facing apart, nothing happens."
   },
   {
    "address": 3183,

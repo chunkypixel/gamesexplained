@@ -12161,7 +12161,7 @@
   {
    "address": 30080,
    "type": "line",
-   "text": "Poses 64-71: upright on the board pushing off from the platform (64-70, push_off_poses $2EDD, phase 0); 71 ($47) is the last entry of class_ride_poses, shown while riding."
+   "text": "Poses 64-71: upright on the board pushing off from the platform (64-70, push_off_poses $2EDD, phase 0); 71 ($47) is trick class 3's entry (the fourth of seven) in class_ride_poses, shown while riding."
   },
   {
    "address": 30320,

@@ -1253,7 +1253,7 @@
   {
    "address": 62522,
    "type": "line",
-   "text": "Write one sector: command 5 (on the drive, resets its buffer index), 128 commands 3 each carrying two bytes read from ($EF/$F0), then command 4 with track Y and sector X (patched into $F47C/$F477), which writes the drive's buffer to disk, then wait for the drive's one-byte reply. No caller in this snapshot"
+   "text": "Write one sector: command 5 (on the drive, resets its buffer index), 128 commands 3 each carrying two bytes read from ($EF/$F0), then command 4 with track Y and sector X (patched into $F47C/$F477), which writes the drive's buffer to disk, then wait for the drive's one-byte reply. Called only by save_file_body ($F27F), reached through save_file ($F233), which the shop's save_records ($0BBA) calls; nothing in this snapshot calls save_file"
   },
   {
    "address": 62583,

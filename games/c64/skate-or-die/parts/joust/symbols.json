@@ -10237,7 +10237,7 @@
   {
    "address": 8811,
    "type": "line",
-   "text": "Per-slot shadow of the SID control register (waveform bits and gate) at $226B/$226D/$226F; the gate timer clears bit 0 from it, notes set bit 0."
+   "text": "Per-slot shadow of the SID control register (waveform bits and gate) at $226B/$226D/$226F; notes set bit 0 in it ($274F); the gate timer writes it to the SID with bit 0 clear ($236E) and leaves the shadow as it is."
   },
   {
    "address": 8816,

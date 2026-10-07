@@ -4349,7 +4349,7 @@
   {
    "address": 62872,
    "type": "line",
-   "text": "Receive reply bytes from the drive while the countdown $F9 lasts: for each byte wait (up to $30 polls, else return) for $DD00 bit 7 to go high, then take 8 bits, each read as bit 6 of $DD00 inverted and acknowledged by a pulse on bit 5; bit 7 falling mid-byte means failure (xfer_state = $80). For command 3 and up the single byte is the whole reply. For a sector, raw mode stores each byte at ($EF/$F0) until the end pointer (end flag $E0); the other mode (not used by load_file) takes bytes 0/1 as the next track/sector link and asks for that sector itself ($F63F). After 256 bytes the transfer is done"
+   "text": "Receive reply bytes from the drive while the countdown $F9 lasts: for each byte wait (up to $2F polls: Y = $30, DEY before each, else return) for $DD00 bit 7 to go high, then take 8 bits, each read as bit 6 of $DD00 inverted and acknowledged by a pulse on bit 5; bit 7 falling mid-byte means failure (xfer_state = $80). For command 3 and up the single byte is the whole reply. For a sector, raw mode stores each byte at ($EF/$F0) until the end pointer (end flag $E0); the other mode (not used by load_file) takes bytes 0/1 as the next track/sector link and asks for that sector itself ($F63F). After 256 bytes the transfer is done"
   },
   {
    "address": 62941,

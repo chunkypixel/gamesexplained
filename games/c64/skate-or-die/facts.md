@@ -55,3 +55,13 @@ High Jump and the resident part: a sample of 60 line comments (seed
 20261004) checked by an agent that wrote none of them: 4 wrong details,
 none a wrong purpose, 6.7 % (95 % Wilson interval 2.6 % to 15.9 %).
 Details in `parts/highjump/facts.md`.
+
+The other parts (boot, title, resident, shop, ramp, downhill, jam,
+joust): a sample of 60 labelled line comments (seed 20261005, stratified
+by part over 4,153) checked the same way: 5 wrong details, none a wrong
+purpose, 8.3 % (95 % Wilson interval 3.6 % to 18.1 %). The 14 that scripts
+wrote were all right; 5 of the 46 written by hand were wrong (11 %). The
+five were a poll count off by one (title `$F598`), a "no caller" claim
+that missed the save path (resident `$F43A`, called from `$F27F`), a table
+position (ramp `$7580`), a label's address (jam `$0BCF`) and which copy of
+a value loses bit 0 (joust `$226B`). All five are corrected.
