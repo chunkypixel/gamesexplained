@@ -67,6 +67,12 @@ What CI checks (check_listing.py): every code record re-decodes, from the image 
 listing's own bytes describe, to the same length, mnemonic, bytes and operand. That
 is the permanent guard against a decoder that drifts and against an off-by-one record.
 
+Beside the records, listing.json names what it was built from: `symbols_sha256`, and
+`snapshot`, the snapshot's file (from the game folder, or its name alone when it lies
+outside) and its SHA-256. A game's snapshots differ in the data it changes as it runs,
+so building over a listing from another snapshot says so and names the old one (#214).
+--relabel and --recomment keep the field; --rebuild has no snapshot of its own.
+
 Record fields (short, the file is large):
   a  address            t  kind: code | byte | word | addr | lohi | text | gap | note
   b  bytes              m  mnemonic (code)         o  operand text, symbolic
@@ -715,17 +721,33 @@ def main():
     out.update({
         "title": game.get("title"), "build": game.get("build"),
         "symbols_sha256": hashlib.sha256(open(spath, "rb").read()).hexdigest(),
-        "index": index, "records": records,
     })
-    if rebuild:
-        sys.exit(compare(json.load(open(os.path.join(gdir, "listing.json"))), out))
     path = os.path.join(gdir, "listing.json")
+    try:
+        was = json.load(open(path)).get("snapshot")
+    except (OSError, ValueError):
+        was = None
+    if rebuild:   # the image is the listing's own bytes, so the snapshot is still the one it names
+        shot = was
+    else:
+        rel = os.path.relpath(os.path.abspath(vsf), os.path.abspath(gdir))
+        shot = {"file": os.path.basename(vsf) if rel.startswith("..") else rel.replace(os.sep, "/"),
+                "sha256": hashlib.sha256(open(vsf, "rb").read()).hexdigest()}
+    if shot:
+        out["snapshot"] = shot
+    out.update({"index": index, "records": records})
+    if rebuild:
+        sys.exit(compare(json.load(open(path)), out))
     with open(path, "w") as f:
         json.dump(out, f, separators=(",", ":"))
     kinds = {}
     for i in index: kinds[i["k"]] = kinds.get(i["k"], 0) + 1
     print(f"wrote {path}: {len(records)} records, {sum(1 for r in records if r['t']=='code')} instructions, "
           f"index {kinds}, {os.path.getsize(path)//1024} KB")
+    if was and was.get("sha256") != shot["sha256"]:
+        print(f"note: the listing was built from {was.get('file')} ({str(was.get('sha256'))[:12]}), and this one "
+              f"from {shot['file']} ({shot['sha256'][:12]}). Data the game changes as it runs may have moved: "
+              "read git diff before committing it.")
     for line in uncounted(game, reg, L, ram, entry) + beneath(gdir, game, ram):
         print(line)
 
