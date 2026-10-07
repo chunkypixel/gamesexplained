@@ -29,22 +29,25 @@ else (not this skill's), and breaks its lines down by area.
    `facts.md`, and coverage and verify on proven models (`python3
    kit/scripts/models.py is-proven <id>` for each in `step_models`) or a
    recorded `verification`.
-2. **The size fits the game.** Compare the lines and bytes by area with
+2. **The model used.** Say which model the run recorded (`model` and
+   `step_models` in `game.json`), and call out any that is not on the
+   approved list (`python3 kit/scripts/models.py`).
+3. **The size fits the game.** Compare the lines and bytes by area with
    the game's size and complexity, and with games on `main`.
    `symbols.json` is usually most of a new game's lines; a large share
    anywhere else needs a reason. Wizard (#193) once had 98 % of its 25.7k
    lines in audit ledgers and reports, which belong in `work/`.
-3. **Kit changes are justified.** Read every change outside the game
+4. **Kit changes are justified.** Read every change outside the game
    folder line by line, and ask whether this run needed it and what it
    does to other games. #227 changed how coverage counts, which moved its
    own figure from 32.8 to 52.8 % and no other game's.
-4. **Skill changes are reusable.** Each addition to `kit/skills/` must
+5. **Skill changes are reusable.** Each addition to `kit/skills/` must
    help at least one other game, named in `kit-feedback.md`
    (`kit/skills/core/80-retro`, step 3). `check_docs.py` checks that a
    game is named, not that the lesson fits it: read it. One game's
    debugging with its nouns swapped (#196) belongs in that game's
    `kit/lessons/` file.
-5. **Urgent kit asks.** Read the run's asks (`kit-feedback.md`,
+6. **Urgent kit asks.** Read the run's asks (`kit-feedback.md`,
    "Maintainer asks", and any `kit-ask` issue it filed) and flag any that
    is urgent – measured by things that are broken, or where subsequent runs
    could be saved significant time by shipping the improvement.
