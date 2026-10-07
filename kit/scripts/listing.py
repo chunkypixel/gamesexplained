@@ -56,16 +56,23 @@ Usage:
                          the listing was built (its blocks, its symbols'
                          addresses and types, which addresses carry a comment,
                          the ledger), or when git no longer has that symbols.json
-  listing.py <game dir> --rebuild
+  listing.py <game dir> --rebuild [--write]
                          build the listing again from the image its own records
                          describe, and say whether it matches the file; needs no
                          snapshot. For maintainers: a mismatch means the kit has
-                         moved under a listing that was never rebuilt. What CI
-                         gates on is the narrower decode check below
+                         moved under a listing that was never rebuilt, and CI
+                         fails it (check_listing.py). With --write, the rebuild
+                         replaces the file, as the snapshot would have built it;
+                         refused when symbols.json has changed since. A byte the
+                         ledger counts that the listing does not hold, which only
+                         the snapshot has, becomes a gap with a note (LOST) until a
+                         build from the snapshot fills it
 
 What CI checks (check_listing.py): every code record re-decodes, from the image the
-listing's own bytes describe, to the same length, mnemonic, bytes and operand. That
-is the permanent guard against a decoder that drifts and against an off-by-one record.
+listing's own bytes describe, to the same length, mnemonic, bytes and operand, and
+the whole listing builds again from those bytes to the same file. That is the
+permanent guard against a decoder, a ledger or a record format that drifts under a
+listing, and against an off-by-one record.
 
 Beside the records, listing.json names what it was built from: `symbols_sha256`, and
 `snapshot`, the snapshot's file (from the game folder, or its name alone when it lies
@@ -81,8 +88,9 @@ Record fields (short, the file is large):
   s  side comment       x  addresses that reference this one
   d  decoded text (text records) / value list (word, addr)
   ta the targets of a split table, on its first row, as addresses
+  note on a gap: bytes the game uses that the listing does not hold (LOST)
 """
-import hashlib, importlib.util, json, os, sys
+import contextlib, hashlib, importlib.util, io, json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ledger import compute
@@ -456,6 +464,19 @@ def recomment(gdir):
     print(f"wrote {lpath}: {changed} records with new comments or names")
 
 
+# The note on a gap of bytes the ledger counts and the listing does not hold: it was built
+# before the kit counted them, and its snapshot is gone (#210). The Source tab shows it.
+LOST = "the game uses, missing from this listing"
+
+
+def held_by_records(gdir):
+    """1 at each address gdir's listing.json holds a byte for, else 0."""
+    have = bytearray(0x10000)
+    for r in json.load(open(os.path.join(gdir, "listing.json")))["records"]:
+        have[r["a"]:r["a"] + len(r.get("b") or [])] = b"\x01" * len(r.get("b") or [])
+    return have
+
+
 def image_from_records(gdir):
     """The memory image gdir's listing.json describes, rebuilt from the bytes its own
     records carry. State 0 (a gap) is read for its state, never its bytes, so only the
@@ -549,8 +570,9 @@ def main():
     spath = os.path.join(gdir, "symbols.json")
     sym = json.load(open(spath))
     entry = None
+    have = bytearray(b"\x01" * 0x10000)   # a snapshot gives every byte; a rebuild only the listing's
     if rebuild:
-        ram = image_from_records(gdir)
+        ram, have = image_from_records(gdir), held_by_records(gdir)
     else:
         ram = snap.read(vsf)
         from symbols_export import PLATFORM_DEFAULTS
@@ -597,6 +619,12 @@ def main():
                 a += 1
             records.append({"a": g, "t": "gap", "n": a - g})
             continue
+        if not have[a]:
+            g = a
+            while a < 0x10000 and state[a] and not have[a]:
+                a += 1
+            records.append({"a": g, "t": "gap", "n": a - g, "note": LOST})
+            continue
         rec = {"a": a}
         if a in names: rec["l"] = names[a]
         if a in line: rec["c"] = line[a]
@@ -604,6 +632,9 @@ def main():
         t = TYPES[btype[a]]
         if code[a]:
             d = cpu.decode(ram, a)
+            if d and not all(have[a:a + d[2]]):
+                sys.exit(f"${a:04X}: the listing holds only part of the instruction there: "
+                         "rebuild it from the snapshot")
             if d:
                 m, mode, n = d
                 bs = list(ram[a:a + n])
@@ -621,7 +652,7 @@ def main():
         # data: an item never crosses a labelled address, a comment, a block edge or a state edge
         def run_end(limit):
             e = a + 1
-            while e < 0x10000 and e < a + limit and state[e] and btype[e] == btype[a] \
+            while e < 0x10000 and e < a + limit and state[e] and have[e] and btype[e] == btype[a] \
                     and e not in names and e not in line and e not in side:
                 e += 1
             return e
@@ -631,7 +662,7 @@ def main():
         def pair_end(limit):
             blk = next(b for b in sym["blocks"] if b["start"] <= a <= b["end"])
             e = a + 1
-            while e < 0x10000 and e < a + limit and state[e] and btype[e] == btype[a] \
+            while e < 0x10000 and e < a + limit and state[e] and have[e] and btype[e] == btype[a] \
                     and ((e - blk["start"]) % 2 == 1 or (e not in names and e not in line and e not in side)):
                 e += 1
             return e
@@ -655,6 +686,9 @@ def main():
             if a == blk["start"]:
                 n = (blk["end"] - blk["start"] + 1) // 2
                 lo, hi = (blk["start"], blk["start"] + n) if t == "Lo/Hi Address" else (blk["start"] + n, blk["start"])
+                if not all(have[blk["start"]:blk["end"] + 1]):
+                    sys.exit(f"${a:04X}: the listing holds only part of the split table there: "
+                             "rebuild it from the snapshot")
                 targets = [ram[lo + i] | (ram[hi + i] << 8) for i in range(n)]
                 for i, ta in enumerate(targets):
                     xref(ta, lo + i)
@@ -683,7 +717,9 @@ def main():
         if ad in names: rec["l"] = names[ad]
         if ad in line: rec["c"] = line[ad]
         if ad in side: rec["s"] = side[ad]
-        if state[ad]:
+        if state[ad] and not have[ad]:
+            rec["note"] = "in bytes this listing does not hold"
+        elif state[ad]:
             host = max(r["a"] for r in records if r["t"] != "gap" and r["a"] < ad)
             rec["note"] = f"inside the item at ${host:04X}"
         else:
@@ -736,8 +772,26 @@ def main():
     if shot:
         out["snapshot"] = shot
     out.update({"index": index, "records": records})
-    if rebuild:
+    if rebuild and "--write" not in argv:
         sys.exit(compare(json.load(open(path)), out))
+    if rebuild:
+        old = json.load(open(path))
+        if old == out:
+            print(f"OK - {path} already rebuilds from its own bytes"); return
+        if old.get("symbols_sha256") != out["symbols_sha256"]:
+            sys.exit(f"{path} was built from a different symbols.json: rebuild it from the snapshot")
+        said = io.StringIO()
+        with contextlib.redirect_stdout(said):
+            compare(old, out)
+        with open(path, "w") as f:
+            json.dump(out, f, separators=(",", ":"))
+        print(f"wrote {path}, rebuilt from its own bytes: {len(records)} records; it differed from the file "
+              f"first in {said.getvalue().splitlines()[0].replace('FAILED - ', '')}")
+        lost = [r for r in records if r.get("note") == LOST]
+        if lost:
+            print(f"  {sum(r['n'] for r in lost)} byte(s) the ledger counts are not in the listing, the first at "
+                  f"${lost[0]['a']:04X}: only the snapshot has them, so they show as missing until a build from it")
+        return
     with open(path, "w") as f:
         json.dump(out, f, separators=(",", ":"))
     kinds = {}

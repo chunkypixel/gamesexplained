@@ -362,6 +362,12 @@ def add(gdir, pid, title=None, over=None, adopt=False):
     # with the work on it, so a game can name forty parts it has not opened without forty stubs.
     with open(os.path.join(d, "part.json"), "w") as f:
         json.dump(part, f, indent=2)
+    if "listing.json" in own and adopt:   # the same bytes, a listing that names its part now (#210)
+        import subprocess
+        r = subprocess.run([sys.executable, os.path.join(HERE, "listing.py"), d, "--rebuild", "--write"],
+                           capture_output=True, text=True)
+        if r.returncode:
+            print(f"next: {r.stderr.strip() or r.stdout.strip()}")
     print(f"added {os.path.relpath(d)}" + (f", over {over}" if over else "")
           + (": the game's own symbol map, listing, facts and ledger settings are this part's now" if adopt else ""))
     if stale:

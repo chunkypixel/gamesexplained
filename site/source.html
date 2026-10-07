@@ -115,7 +115,7 @@
     let h=0, he=0;
     for(let k=done;k<end;k++){
       const r=recs[k];
-      if(r.t==='gap'){ rows.push(`<div class="gap" data-a="${r.a}">… ${r.n} bytes ${unused} (${hex4(r.a)}–${hex4(r.a+r.n-1)})</div>`); h+=GAP; continue; }
+      if(r.t==='gap'){ rows.push(`<div class="gap" data-a="${r.a}">… ${r.n} bytes ${r.note?esc(r.note):unused} (${hex4(r.a)}–${hex4(r.a+r.n-1)})</div>`); h+=GAP; continue; }
       const id=id4(r.a);
       const own=commentedOwner(r.a);
       if(r.c){ rows.push(`<div class="cmt" data-a="${r.a}" data-own="1">${esc(r.c)}</div>`); const c=cmtH(r.c); h+=c; he+=c; }
