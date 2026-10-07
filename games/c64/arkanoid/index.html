@@ -55,265 +55,56 @@ th{font-size:12px;font-family:var(--fm);text-transform:uppercase;letter-spacing:
 .stages button.hz{border-bottom:3px solid var(--amber)}
 .msg{font-size:14px;color:var(--coral)}
 @media (max-width:760px){:root{--gx:16px;--h1:36px;--pp:14px}.two{grid-template-columns:1fr}.stages{grid-template-columns:repeat(8,1fr)}}
+.overview-shot{margin:22px 0 0}.overview-shot img{max-width:100%;height:auto;image-rendering:pixelated;border-radius:6px}
+.overview-shot figcaption{font-size:14px;color:var(--ink-mute);margin-top:8px}
+.overview-links{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+.overview-links a{font-family:var(--fm);font-size:13px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 12px;color:var(--link);text-decoration:none}
+.sources{font-size:14px;color:var(--ink-mute)}
 </style>
-
 <!-- tabs -->
 <header class="hero">
   <p class="eyebrow">Commodore 64 · 1987 · Imagine</p>
   <h1>Arkanoid</h1>
-  <p class="sub">Which capsule falls from a broken brick is decided by the frame counter, the ball's position and how many lives you have left. Martin Galway's music plays on the Music tab from the game's own driver.</p>
+  <p class="sub">Arkanoid is a brick game: a bat at the bottom of the screen, a ball, and a wall of bricks to knock down one hit at a time. Taito took the idea of Atari's Breakout and added coloured, silver and indestructible gold bricks, capsules that change the bat or the ball, enemies that drift down from the top, and a boss at the end. Imagine's 1987 conversion for the Commodore 64 keeps all 33 rounds, and Martin Galway's music. Inside, the capsules are not shuffled: a frame counter and the number of lives left decide which one falls.</p>
 </header>
 <main class="wrap">
 
-<section>
-  <p class="fig">01 · Capsules</p>
-  <h2 class="t">Secret: the capsules are dealt by the clock</h2>
-  <p class="lede">When a brick breaks, <code>choose_capsule</code> (<code>$B2E6</code>) looks at the low byte of a frame counter that counts up 50 times a second, and that one number sorts every broken brick into three groups.</p>
-  <div class="plate">
-    <div class="row"><span class="lab">Lives</span><select id="capLives"></select>
-      <span class="lab">Frame counter high byte <code>$0241</code></span><input type="range" id="capHi" min="0" max="31" value="0"><span class="lab" id="capHiLab"></span></div>
-    <div class="row"><span class="lab">Silver and gold bricks in the round</span><input type="range" id="capSpecial" min="0" max="20" value="0"><span class="lab" id="capSpecialLab"></span>
-      <button id="capRun">Break 10,000 bricks</button></div>
-    <canvas id="capCv"></canvas>
-    <div class="out" id="capOut"></div>
-    <p class="cap">Each bar is the share of 10,000 broken bricks that gave that capsule, with the frame counter, the ball's X and its height drawn at random, and each result fed back as the "last capsule". The chooser on this page is a port of <code>$B204</code>-<code>$B21B</code>, checked against the game's own code run in a 6502 simulator on 40,000 random cases, with no difference.</p>
-  </div>
+<section id="game">
+  <p class="fig">01 · The game</p>
+  <h2 class="t">Knock down the wall, catch what falls</h2>
+  <p>The player steers the Vaus, a small spacecraft that serves as the bat, left and right along the bottom of the playfield. A ball bounces between it, the three walls and the bricks; each brick it touches breaks, and when the last breakable brick is gone the round ends. Coloured bricks break at once and are worth 70 to 130 points by colour. Silver ones take two hits in the first rounds and up to five later on. Gold ones never break. Missing the ball costs a life, and the game starts with four.</p>
+  <p>Some bricks drop a capsule as they break, and catching it with the Vaus gives a power: S slows the ball, C catches it, E widens the Vaus, D splits the ball into three, L fits a laser, B opens an exit in the right wall that ends the round, and P adds a life. Enemies drift in through a gate in the top wall, and the ball, the laser or the Vaus destroys them. After 32 rounds of bricks comes round 33, where Doh, a giant stone head, has to be hit 23 times while it fires back.</p>
+  <p>Before play a menu chooses the controller: a joystick, the keyboard, paddles or the Neos mouse, for one or two players taking turns. The story screen sets the scene: the mothership Arkanoid has been destroyed, and the Vaus has escaped from it only to be trapped in space.</p>
+  <figure class="overview-shot"><img src="reference/round01.png" width="384" height="272" alt="Arkanoid on the Commodore 64: round 1, with rows of coloured bricks, the Vaus at the bottom and the score panel on the right"><figcaption>Round 1 in an emulator: a row of silver bricks above six rows of coloured ones, the Vaus at the bottom, and the two players' panels on the right.</figcaption></figure>
+  <p class="overview-links"><a href="mechanics.html">How it works</a><a href="levels.html">Maps / levels</a><a href="music.html">Music</a></p>
+</section>
+
+<section id="release">
+  <p class="fig">02 · The release</p>
+  <h2 class="t">A Taito arcade hit, converted by David Collier with music by Martin Galway</h2>
+  <p>Taito released Arkanoid in Japanese arcades in July 1986. It was designed by Akira Fujita and Hiroshi Tsujino of Taito's Yokohama Research Institute, and it took the idea of Atari's Breakout from a decade earlier and built a full game around it. In Japan it was the highest-grossing table arcade game of 1987, and in the United States the highest-grossing conversion kit of the year.</p>
+  <p>In Europe the home computer versions were published under Imagine, the label that Ocean Software kept for its arcade licences after taking over the Liverpool company in 1984. The Commodore 64 version came out in 1987, programmed by David A. Collier with music by Martin Galway; the title picture is signed "Jones". The game names none of them: its menu says only "© TAITO 1986 © IMAGINE 1984".</p>
+  <p>Galway is credited with the first published use of sampled sound on the Commodore 64, in Arkanoid's theme. He later said the drums came from a drum synthesizer package and that he did not yet understand real sample data, and the code agrees: each drum routine writes a running sum, not a recorded sample, to the sound chip's volume register while the tune plays on the three voices (<a href="mechanics.html">How it works</a>). The <a href="music.html">Music</a> tab plays the tunes from the game's own driver.</p>
+  <p class="sources">Sources: Wikipedia, "Arkanoid" and "Martin Galway"; C64-Wiki, "Arkanoid"; the Video Game Music Preservation Foundation wiki, "Arkanoid (C64)", read on 7 October 2026. Ocean's takeover of Imagine is from C64-Wiki, "Ocean Software", as quoted in web search results on 7 October 2026. The menu text, the signature and the drum routines were read from the game.</p>
+</section>
+
+<section id="reception">
+  <p class="fig">03 · Reception</p>
+  <h2 class="t">Reviews between 66 % and 85 %</h2>
+  <p>Magazines liked the conversion without raving about it. Zzap!64's three reviewers, Gary Penn, Julian Rignall and Steve Jarratt, gave it 80 % in April 1987, and the magazine gave it 80 % again in March 1990. Commodore User gave it 8 out of 10 in a review by Eugene Lacey.</p>
   <table>
-    <tr><th>Frame counter <code>$0201</code></th><th>What falls</th></tr>
-    <tr><td><code>$A0</code>-<code>$FF</code> and <code>$0A</code>-<code>$1F</code> (118 frames of 256)</td><td>nothing</td></tr>
-    <tr><td><code>$20</code>-<code>$9F</code> (128 frames)</td><td>S or C: bits 0-1 of the counter XOR the ball's X give S once in four, C three times in four</td></tr>
-    <tr><td><code>$00</code>-<code>$09</code> (10 frames)</td><td>the first that applies: B if bit 1 of the lives is set, L if <code>$0241</code> is <code>$12</code> or more, D if the round has four or more silver and gold bricks, E if the ball is in the upper half of the screen, else S or C as above</td></tr>
+    <tr><th>Magazine</th><th>Issue</th><th>Score</th></tr>
+    <tr><td>Happy Computer</td><td>Game special 3/86</td><td>85 %</td></tr>
+    <tr><td>Commodore User</td><td>42, March 1987</td><td>8/10</td></tr>
+    <tr><td>Zzap!64</td><td>24, April 1987</td><td>80 %</td></tr>
+    <tr><td>ASM</td><td>5/87</td><td>8/12</td></tr>
+    <tr><td>Zzap!64</td><td>59, March 1990</td><td>80 %</td></tr>
+    <tr><td>Commodore Force</td><td>7, July 1993</td><td>66 %</td></tr>
+    <tr><td>Commodore Force</td><td>9, September 1993</td><td>68 %</td></tr>
   </table>
-  <p>Then <code>$B209</code>-<code>$B219</code> apply two rules. A capsule of the same type as the last one is bumped up by one, so a second C in a row arrives as an E, and a second S as a C. And the extra life, P, is never chosen directly: the only way to get one is a B when the last capsule was also a B. A capsule falls at all only when no other is falling and exactly one ball is in play (<code>$B1E5</code>-<code>$B204</code>).</p>
-  <p>The lives test reads the count as stored, in binary-coded decimal, so with 2, 3, 6 or 7 lives the rare window gives the Break capsule, and with 1, 4, 5, 8 or 9 it never does. The laser only becomes possible once <code>$0241</code>, the counter's high byte, reaches <code>$12</code>: 18 × 256 frames, a little over 90 seconds.</p>
-  <table>
-    <tr><th>Type</th><th>Letter</th><th>Effect</th><th>Code</th></tr>
-    <tr><td>1</td><td>S</td><td>ball speed down by one, never below 1</td><td><code>$A8BA</code></td></tr>
-    <tr><td>2</td><td>C</td><td>catch: the ball sticks to the Vaus until fire, or until the counter reaches <code>$80</code></td><td><code>$A8AC</code>, <code>$AA76</code></td></tr>
-    <tr><td>3</td><td>E</td><td>the Vaus grows from width 4 to 12</td><td><code>$AA44</code>, <code>$AD4B</code></td></tr>
-    <tr><td>4</td><td>D</td><td>three balls, and the speed up by one</td><td><code>$A8CD</code></td></tr>
-    <tr><td>5</td><td>L</td><td>laser, two shots at a time</td><td><code>$A870</code>, <code>$A5F3</code></td></tr>
-    <tr><td>6</td><td>B</td><td>an exit opens in the right wall; leaving through it ends the round</td><td><code>$A868</code>, <code>$A41F</code></td></tr>
-    <tr><td>7</td><td>P</td><td>an extra life, up to 99</td><td><code>$A882</code></td></tr>
-  </table>
-  <p>Catching any capsule first switches off catch, laser, break and the enlarged Vaus (<code>cancel_powers</code>, <code>$AA17</code>). A capsule caught is worth 1,000 points (<code>$A9DD</code>).</p>
-</section>
-
-<section>
-  <p class="fig">02 · The screen</p>
-  <h2 class="t">One frame of round 1, rebuilt from memory</h2>
-  <div class="plate"><div class="scroll"><canvas id="frameCv"></canvas></div>
-    <p class="cap">One frame of play recorded in the emulator: the video chip's registers, every change made to them during the frame, and the memory they read, drawn line by line. It matches the emulator's own picture of the same frame with 0 pixels different.</p></div>
-  <p>Play uses video bank 3: the screen at <code>$C000</code> and one character set at <code>$C800</code>, in multicolour mode. Characters <code>$00</code>-<code>$3F</code> are the font and the logo, <code>$40</code>-<code>$7F</code> the background tiles, copied in each round, and <code>$80</code>-<code>$FF</code> the bricks, walls and panel. The bricks are character pairs, not sprites: <code>$80 $81</code> for a coloured brick, <code>$85 $89</code> for silver and <code>$8D $91</code> for gold (<code>draw_wall</code>, <code>$F40E</code>).</p>
-  <p>The Vaus, the balls, the capsule, the laser shots and the enemies are twelve sprite objects on eight hardware sprites. A chain of three raster interrupts (<code>$F720</code>, <code>$F75E</code>, <code>$FBEE</code>) sorts the objects by height once a frame and places them down the screen. The right-hand panel is drawn once from a template of 25 rows of 13 screen codes at <code>$7800</code> (<code>$F2B5</code>).</p>
-</section>
-
-<section>
-  <p class="fig">03 · The rounds</p>
-  <h2 class="t">Thirty-two walls in 5 KB</h2>
-  <div class="plate">
-    <div class="row"><button id="rPrev">◀</button><span class="lab" id="rLab"></span><button id="rNext">▶</button></div>
-    <canvas id="roundCv"></canvas>
-    <p class="cap">Drawn from the round's 160 bytes at <code>$8000</code> + 160 × (round − 1), with the game's own wall routine ported: tile pattern, colours, brick characters and the shading each brick casts. For round 1 the port's screen codes match the game's screen in the play snapshot in every cell but the three bricks already broken there. The <a href="levels.html">Maps / levels</a> tab shows all 32.</p>
-  </div>
-  <p>Each round is 16 rows of 10 bytes: a 16-bit mask saying which of the 14 columns hold a brick, then 16 four-bit brick types (<code>$F40E</code>). A type below 8 is a coloured brick in colour type + 8. From 8 up, type AND 3 = 1 makes a silver brick and anything else a gold one, which is never counted and never breaks. Round 33 has no map: it is Doh.</p>
-  <table>
-    <tr><th>Rounds</th><th>Hits to break silver</th></tr>
-    <tr><td>1-8</td><td>2</td></tr><tr><td>9-16</td><td>3</td></tr><tr><td>17-24</td><td>4</td></tr><tr><td>25-32</td><td>5</td></tr>
-  </table>
-  <p class="cap">From the table at <code>$F52A</code>, plus one (<code>$F4DF</code>).</p>
-  <p>A coloured brick's value depends on its colour, from 70 to 130 points (<code>brick_points</code>, <code>$B2C4</code>): white 100, red 80, cyan 120, purple 90, green 110, blue 70, yellow 130. The background alternates between two sets of 64 tile characters (<code>$EC00</code> for rounds 1, 2, 5, 6…, <code>$EE00</code> for 3, 4, 7, 8…) in blue or red (<code>$F552</code>).</p>
-</section>
-
-<section>
-  <p class="fig">04 · The bat</p>
-  <h2 class="t">The two sides of the Vaus are not mirror images</h2>
-  <div class="plate"><canvas id="batCv"></canvas>
-    <p class="cap">Where the ball meets the Vaus, measured from a point 6 pixels right of its centre, and the angle it leaves at (<code>bat_collision</code>, <code>$ABB3</code>). Steep, diagonal and shallow are the step ratios the code sets: <code>$FF</code>/<code>$40</code>, <code>$FF</code>/<code>$F0</code> and <code>$80</code>/<code>$FF</code>, vertical against horizontal.</p></div>
-  <p>The left half sends the ball left and the right half sends it right, each in three zones: two of 4 pixels, then the rest. Near the middle the left side gives a diagonal and the next zone out a steep bounce; on the right side the order is the other way round (<code>$AC12</code>-<code>$AC3A</code> against <code>$AD0F</code>-<code>$AD38</code>). Both outer zones give the shallow angle. On the enlarged Vaus the distance is halved first, so the zones are twice as wide.</p>
-  <p>The ball's speed is a number of steps per frame, from 1 to 11 (<code>move_balls</code>, <code>$ADB3</code>). Every brick hit adds 4 to a fraction that carries into it (<code>$AF5F</code>), and the time since the life began sets a floor that rises by one every 1,024 frames (<code>$ADE7</code>). A new life starts at 2. With the joystick the Vaus moves faster as the ball does: each frame it steps 2 × (speed + 1) pixels (<code>$FDBF</code>).</p>
-</section>
-
-<section>
-  <p class="fig">05 · Round 33</p>
-  <h2 class="t">Doh takes 23 hits</h2>
-  <div class="plate"><img src="reference/round33-doh.png" alt="Round 33: Doh" width="384">
-    <p class="cap">Round 33 in the emulator, reached by setting the round number and the bricks-left count so that the next brick broken in round 1 ended the round.</p></div>
-  <p>Doh is not a sprite. The round copies a 26 × 24 screen of characters from <code>$7B90</code> into the playfield and swaps in its own character set (<code>doh_setup</code>, <code>$9C59</code>). The bricks-left counter becomes a hit counter, set to 22 (<code>$95F4</code>); every ball hit on one of Doh's characters takes one off (<code>$B11E</code>), and the ending starts when it goes below zero (<code>$9637</code>): the 23rd hit. Doh fires one shot per cycle of its mouth, aimed at the Vaus (<code>$9819</code>-<code>$987B</code>).</p>
-  <p>After the last hit Doh dissolves, the ending tune and the title picture play, and the story's last page is printed (<code>$B8B0</code>): "DIMENSION CONTROLLING FORT DOH HAS NOW BEEN DEMOLISHED AND TIME STARTED FLOWING BACKWARDS". Then the game sets the player's lives to none and goes to game over (<code>$96B7</code>).</p>
-</section>
-
-<section>
-  <p class="fig">06 · Protection</p>
-  <h2 class="t">Secret: the protection scrambles its own second check</h2>
-  <p>The game starts at <code>$9400</code> and hides its first steps behind undocumented opcodes: a <code>NOP</code> with an operand at <code>$9404</code> and another at <code>$095A</code>, which a disassembler that knows only the documented set shows as data. The bytes after the <code>JSR $B9C3</code> at <code>$095D</code> look like the continuation and never run, because <code>$B9C3</code> leaves by <code>JMP $F000</code>.</p>
-  <p>The start-up then sends a byte out through the first CIA's serial port and waits for the chip to report it sent (<code>$5F42</code>), a test of the hardware rather than the disk. Both routines erase themselves when they finish: <code>$5F42</code> fills itself with <code>$01</code>, and <code>$B9C3</code> overwrites its first 40 bytes with <code>$20</code>.</p>
-  <p>On the way it XORs 97 bytes at <code>$BA0A</code> with a key at <code>$A71A</code>, which is live game code. The bytes at <code>$BA0A</code> are a longer serial-port check, and in the file they are plain code: the XOR turns them into noise. Nothing calls that check in this build, and the flag it would set, <code>$0944</code>, is the trigger for a routine that wipes memory (<code>$A523</code>). The only other writer of the flag is a checksum over <code>$9500</code>-<code>$A5FF</code> at <code>$F9BC</code>, which nothing calls either, so the wipe never runs.</p>
-</section>
-
-<section>
-  <p class="fig">07 · Quirks</p>
-  <h2 class="t">Bug: a ball moving left cannot hit an enemy from the side</h2>
-  <p>The ball-against-enemy test has a horizontal check for each direction. The one for a ball moving left subtracts 24 where it should add (<code>$9E9B</code>-<code>$9EAB</code>), so it never matches; only the vertical test catches such a ball. This was read in the code and not tried in play.</p>
-  <h2 class="t">The Break exit pays nothing</h2>
-  <p>In the arcade game, leaving through the Break exit is worth 10,000 points. Here the exit ends the round (<code>$A41F</code> to <code>round_cleared</code>, <code>$95CF</code>) and nothing on that path adds to the score.</p>
-  <h2 class="t">An extra life every 20,000 points, all at once</h2>
-  <p>The threshold starts at 20,000 and rises by 20,000 with each life awarded (<code>check_extra_life</code>, <code>$FAA5</code>). In the emulator a score set to 199,900 paid out ten lives in a row, taking the lives from 3 to 13 and the threshold to 220,000. The published cheat <code>POKE 39801,189</code> turns the store at <code>$9B79</code> that takes a life away into a load, so a lost ball costs nothing: in the emulator three lost balls left the lives at 3.</p>
-  <h2 class="t">Two programs in one file</h2>
-  <p>The 63 KB file carries an older build of much of the game beside the one that runs: an earlier assembly of <code>$A971</code>-<code>$B5FF</code> from <code>$096B</code>, of the interrupt and input code at <code>$BA6B</code>-<code>$BFFF</code> (with a 30-sprite multiplexer and a joystick reader for port 2 only), and of the sound driver at <code>$3B8B</code>, assembled <code>$1000</code> higher. Nothing reads or runs any of it. The enemies' second gate is unused in the same way: its path needs <code>$0246</code>, which nothing writes, so every enemy comes in through the gate at X <code>$47</code>.</p>
+  <p>The arcade game did better with the awards: Gamest named it one of the four best games of 1986. Players on Lemon64, the Commodore 64 games database, rate the conversion at about 7.8 out of 10.</p>
+  <p class="sources">Sources: the table is C64-Wiki's, "Arkanoid", read on 7 October 2026; the Zzap!64 reviewers and Commodore User's reviewer are from Lemon64 and Amiga Magazine Rack as quoted in web search results on 5 and 7 October 2026. Wikipedia dates the Commodore User review February 1987 where C64-Wiki says issue 42, March 1987. Lemon64's page refused to open; its rating is from search results on 7 October 2026. Wikipedia also lists scores from Computer and Video Games and The Games Machine without saying which version they reviewed, and they are left out.</p>
 </section>
 
 </main>
-
 <footer style="margin:16px 0 0;padding:22px var(--gx) 0;border-top:1px solid #e0ded8;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px;color:#80838a"><a href="/kit.html" style="color:#1f5fa8;text-decoration:none">Kit changelog</a> · <a href="https://github.com/gamesexplained/gamesexplained" style="color:#1f5fa8;text-decoration:none">GitHub</a> · <a href="https://discord.gg/3V9GWyRDWV" style="color:#1f5fa8;text-decoration:none">Discord</a><br>© Games Explained contributors. Write-ups, facts and symbol maps are available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#1f5fa8;text-decoration:none">CC BY-SA 4.0</a>; code under <a href="https://opensource.org/licenses/MIT" style="color:#1f5fa8;text-decoration:none">MIT</a></footer>
-<script src="../../lib/c64.js"></script>
-<script>
-// One frame of round 1, recorded with kit/c64/frame.py and trimmed to the memory it reads.
-const ARK_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","vic":[128,236,136,236,0,0,0,0,0,0,140,0,128,0,136,0,0,27,0,209,0,255,216,0,3,112,241,0,252,0,255,255,240,240,252,254,240,241,254,240,240,251,251,241,251,242,242],"cia2":[144,63],"cpu":[47,53],"writes":[[21,16,65534,238],[21,22,65535,251],[22,21,53263,224],[23,29,53261,224],[24,37,53259,232],[25,45,53257,255],[26,12,65534,32],[26,18,65535,247],[52,46,65530,85],[52,52,65531,248],[245,18,53263,0],[245,30,53261,0],[245,42,53259,0],[245,54,53257,0],[246,48,65530,3],[246,54,65531,249],[247,55,65534,94]],"colour":"Dg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgICAgICAgICAgICDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgEBAQEBAQEBAQEBAQ4JCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQ4ODgEBAQEBAQEBAQ4OCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsODg4ODg4ODg4ODg4JDgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKDg4ODg4ODg4ODg4ODg4PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDg4OAQEBAQEBAQEBDg4NDQ0NDQ0NDQ0NDQ0ODg0NDg4NDQ0NDQ0ODg4ODgEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAQEBAQEBAQEBDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODgEBAQEBAQEBAQ4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4BAQEBAQEBAQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4LCwYGBgYGBgYGBgYGBgYGDAAAAAAAAA==","ram":[{"a":49152,"b":"+/z8/Pz86+zr/Pz8/Pz8/Pz8/P3+/fz8/Pz8/xyoqaqrHR4fILfIHPVUVVZXVFVWV1RVVldUVVZXVFVWV1RVVldUVfocKCcmJSMiIbS6yRzxWElKS0hJSktISUpLSElKS0hJSktISUpLSEn2HBwcHBwcHBwcHBwc8lxNTk9MTU5PTE1OT0xNTk9MTU5PTE1OT0xN9xwICQcIHBwTAw8SBfOFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFifgcHBwwMDAxMzMwHBz0gIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIH5HL2+v8DBw8TFxhw+9YCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCB+hwcHBwcHBwcHBwcHPGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgfYcsrOzs7Ozs7OzszzygIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIH3HDscHBMDDxIFHBw784CBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCB+Bw7HDAwMDEzMzAcO/SAgYCBgIGAgYCBgIFYWYCBWFmAgYCBgIFYWfkcOxwMCRYFExwcMzv1XF1eX1xdXl9cXV5fXE1OX1xNTl9cXV5fXE36HDscEg8VDgQcMDE78VBBQkNAQUJDQEFCQ0BBQkNAQUJDQEFCQ0BB9hy4ubm5ubm5ubm5PfJURUZHREVGR0RFRkdERUZHREVGR0RFRkdERfccHBwcHBwcHBwcHBzzWElKS0hJSktISUpLSElKS0hJSktISUpLSEn4HL2+v8DBw8TFxhw/9FxNTk9MTU5PTE1OT0xNTk9MTU5PTE1OT0xN+RwcHBwcHBwcHBwcHPVQQUJDQEFCQ0BBQkNAQUJDQEFCQ0BBQkNAQfocsrOzs7Ozs7OzszzxVEVGR0RFRkdERUZHREVGR0RFRkdERUZHREX2HDscHBMDDxIFHBw78lhJSktISUpLSElKS0hJSktISUpLSElKS0hJ9xw7HDAwMDAwMDAcO/NcTU5PTE1OT0xNTk9MTU5PTE1OT0xNTk9MTfgcOxwMCRYFExwcHDv0UEFCQ0BBQkNAQUJDQEFCQ0BBQkNAQUJDQEH5HDscEg8VDgQcMDE79VRFRkdERUZHREVGR0RFRkdERUZHREVGR0RF+hy4ubm5ubm5ubm5PfFYSUpLSElKS0hJSktISUpLSElKS0hJSktISegcHBwcHBwcHBwcHBzyXE1OT0xNTk9MTU5PTE1OT0xNTk9MTU5PTE3pHBwcHBwcHBwcHBwc81BBQkNAQUJDQEFCQ0BBQkNAQUJDQEFCQ0BB6hwcHBwcHBwcHBwcHA=="},{"a":50168,"b":"lpdCQkBCQEE="},{"a":51224,"b":"foDAwMCAfgD8jsbGxo78AH6AwDjAgH4A"},{"a":51256,"b":"foDAzsaGfADGxsa6xsbGAAgYGBgYGAgA"},{"a":51296,"b":"wMDAwMCAfgA="},{"a":51312,"b":"xub2ms7GxgB8gsbGxoJ8AA=="},{"a":51344,"b":"/MbGvMbGxgD+gOD+BgL+AA=="},{"a":51368,"b":"xsbGxsaC/gDGxsbGgmw4AA=="},{"a":51424,"b":"AAAAAAAAAAAobO7u7+/v7wAABwcHh4fHAAMPHz07eXsA4Ph8Xu5X9wV3NTkeDwMAAOf3fz4cCAAA7u7u7u4AAA=="},{"a":51496,"b":"AA+evNzudyIADw8PD47MiAC+vr+/uzEgAD9783M7HAg="},{"a":51584,"b":"fILO1uaCfABoGBgYGBgIAA=="},{"a":51608,"b":"/gYGHAYG/gA="},{"a":51672,"b":"Vmtra2traz9Wq6urq6vra6trq6urq6v/FHx8LCwsX38Uv7MLDCy+v/83ytoqaqqqVf////y/s7//f3/f3Pf3/MzzPP////8A/39/39z39/zM8zz//P//AM0xxgbaGmpqVf///Lyzo6MxxjbaGmpqqlX////8v7O//39/39z39/zM8zz//P//AP9/f9/c9/f8zPM8//z//wDNMcYG2hpqalX////8v7O/AwwMPz////8="},{"a":51872,"b":"/8DAMDMDDAz/MMzMAwMAAP8DDA8/P////wAAAwPMzPADDAw/P/////8AAAMDzMzw"},{"a":51936,"b":"/8DAMDMPDAD/MMzMAwMAAv8DDA8/P////wAAAwPMzPA="},{"a":52224,"b":"/////////wD8/Pz8/Pz8AA=="},{"a":52264,"b":"VVVVVVVV/wA="},{"a":52296,"b":"VFxcXFxc/AA="},{"a":52544,"b":"AAEDAwcPHx+AuLu/u7m7vwAODo7O7s+PAAAYPHnz588="},{"a":52624,"b":"VWpqampqa2tVqqqqqqr/AFD3Vs48+OAA"},{"a":52664,"b":"AAB3d3d3d3dra2pqampqfwBVqqqqqqr/AHd3d3d3ZkQ="},{"a":52712,"b":"Vb+ytr+wsPDFy8vLywsLDwAAAAAAAFT8Vb+ytr+ysvPFy8vPwMDAwA=="},{"a":52760,"b":"FCwsvLCwsLBVv7C1v7C1/yUvLC0vLCw8cPCwcMCwsPA="},{"a":52800,"b":"YPB4PB48ePAA4MCAAAAAAA=="},{"a":53056,"b":"/O/v7+/v7+/7M/sz+zP7M//v7+/v7+zs/KhU///8qPyIiMz//8yIzA=="},{"a":53128,"b":"P/v7+/v7+/vvzO/M78zvzP/7+/v7+zs7Pzs7Ozs7Ozs7Ozs7Ozs7O/zv7+/v7+/v+zP7M/sz+zP/7+/v7+/s7Pzs7Ozs7Ozs7Ozs7Ozs7OwADz47Ozs7PwD/qlX///8A/KhU///8qPyIiMz//8yIzADwvOz8/Pz8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK///K///6///1VVVa///6///6///K///K///"},{"a":53312,"b":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//+g//+g//+sVVVc//+k//+s//+s//+g//+g"},{"a":53376,"b":"EAAAdAAAdAAAEIAAAqAAAqAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":58752,"b":"A///AgAAAgAAAgAAAgAAAgAAAgAAAgAAA///FVVVGqqqBVVVBBqqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":58816,"b":"//8AAAEAAAEAAAEAAAEAAAEAAAEAAAEE//8EVVVVqqqqVVVUqqoUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},{"a":65535,"b":"9w=="}],"capture":{"phase_cycles_uncertain":0,"frame_cycles":19656,"frame_ended_on_line":0,"picture_lines_low":0,"writes_account_for_end_state":true,"ram_bytes_changed_during_frame":17,"colour_cells_changed_during_frame":0}};
-// The capsule chooser, ported from choose_capsule $B2E6 and the bump at $B209-$B219.
-// Returns 0 for no capsule, else 1-7 (S C E D L B P).
-function chooseCapsule(s){ // s: frame (0-255), ballX, ballY, lives (BCD), frameHi, special, last
-  const f=s.frame;
-  let t;
-  if (f>=0xA0 || (f>=0x0A && f<0x20)) return 0;
-  const rnd=()=>{ const v=(f^s.ballX)&3; return v===2?1:2; };
-  if (f>=0x20) t=rnd();
-  else if (s.lives&2) t=6;
-  else if (s.frameHi>=0x12) t=5;
-  else if (s.special>=4) t=4;
-  else if (s.ballY<0x80) t=3;
-  else t=rnd();
-  for(;;){ t&=7; if(t===0) t=1; if(t!==s.last) return t; t++; }
-}
-
-// A round's playfield as screen codes and colours, following draw_playfield_background $F552 and
-// draw_wall $F40E. ram: the game image (listing). idx: round index 0-31. Returns {scr, col} for the
-// 40x25 screen, playfield cells only (rows 1-24, columns 1-26 background; bricks from $C029).
-function buildRound(ram, idx){
-  const scr=new Uint8Array(1000).fill(0x1C), col=new Uint8Array(1000);
-  const base=ram[0xF54E+(idx&3)], colour=ram[0xF54A+(idx&3)];
-  for(let r=1;r<=24;r++) for(let c=1;c<=26;c++){ scr[r*40+c]=(base+(r&3)*4+((c-1)&3))|(r===1||c===1?0x10:0); col[r*40+c]=colour; }
-  let p=0x8000+idx*160, o=41;               // $C029
-  let bricks=0;
-  for(let row=0;row<16;row++,o+=40){
-    let mask=ram[p]<<8|ram[p+1]; const nib=[];
-    for(let i=0;i<8;i++){ nib.push(ram[p+2+i]>>4, ram[p+2+i]&15); }
-    p+=10;
-    for(let x=0,y=0;x<14;x++,y+=2){
-      const on=mask&0x8000; mask=(mask<<1)&0xFFFF;
-      if(!on) continue;
-      const t=nib[x];
-      let a,b;
-      if(t<8){ a=0x80; b=0x81; bricks++; } else if((t&3)===1){ a=0x85; b=0x89; bricks++; } else { a=0x8D; b=0x91; }
-      const cc=t<8?t|8:9;
-      scr[o+y]=a; scr[o+y+1]=b; col[o+y]=cc; col[o+y+1]=cc;
-      scr[o+y+41]|=0x10;
-      if(!(scr[o+y+42]&0x80)) scr[o+y+42]|=0x10;
-    }
-  }
-  return {scr,col,bricks};
-}
-
-(function () {
-  const $ = id => document.getElementById(id);
-  const needSite = 'This widget needs the site\'s shared scripts: open the page from the built site.';
-  const C = globalThis.C64;
-  const PAL = C ? C.PAL : [];
-  const LETTERS = ['none', 'S', 'C', 'E', 'D', 'L', 'B', 'P'];
-  const CAPCOL = [0, 8, 5, 6, 3, 2, 10, 11];   // $B2BC
-
-  /* 01 capsules */
-  function capsules() {
-    const lives = $('capLives');
-    for (let n = 1; n <= 9; n++) lives.insertAdjacentHTML('beforeend', `<option value="${n}"${n === 3 ? ' selected' : ''}>${n}</option>`);
-    const cv = $('capCv'), W = 640, H = 220; cv.width = W; cv.height = H; cv.style.width = '100%'; cv.style.maxWidth = W + 'px';
-    const ctx = cv.getContext('2d');
-    let seed = 0x2468ace;
-    const rnd = () => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; return (seed >>> 0) & 255; };
-    function run() {
-      const hi = +$('capHi').value, sp = +$('capSpecial').value, lv = +lives.value;
-      $('capHiLab').textContent = '$' + hi.toString(16).toUpperCase().padStart(2, '0') + ', about ' + Math.round(hi * 256 / 50) + ' s';
-      $('capSpecialLab').textContent = sp;
-      const n = new Array(8).fill(0); let last = 0;
-      for (let i = 0; i < 10000; i++) {
-        const t = chooseCapsule({ frame: rnd(), ballX: rnd(), ballY: rnd(), lives: lv, frameHi: hi, special: sp, last });
-        n[t]++; if (t) last = t;
-      }
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-      const bw = W / 8;
-      n.forEach((v, t) => {
-        const h = (H - 50) * v / 10000;
-        ctx.fillStyle = t ? PAL[CAPCOL[t]] || '#888' : '#ccc';
-        ctx.fillRect(t * bw + 10, H - 30 - h, bw - 20, h);
-        ctx.fillStyle = '#2f3136'; ctx.font = '600 14px IBM Plex Mono, monospace'; ctx.textAlign = 'center';
-        ctx.fillText(LETTERS[t], t * bw + bw / 2, H - 10);
-        ctx.fillText((v / 100).toFixed(1) + '%', t * bw + bw / 2, H - 36 - h);
-      });
-      const special = n[3] + n[4] + n[5] + n[6] + n[7];
-      $('capOut').textContent = `With ${lv} ${lv === 1 ? 'life' : 'lives'}: ${(n[0] / 100).toFixed(1)} % of bricks give nothing, ` +
-        `${((n[1] + n[2]) / 100).toFixed(1)} % give S or C, ${(special / 100).toFixed(1)} % give one of the other five.`;
-    }
-    ['capLives', 'capHi', 'capSpecial'].forEach(id => $(id).addEventListener('input', run));
-    $('capRun').onclick = run;
-    run();
-  }
-
-  /* 03 frame */
-  function frame() {
-    if (!C) { $('frameCv').replaceWith(document.createTextNode(needSite)); return; }
-    C.drawFrame($('frameCv'), ARK_FRAME, 2);
-  }
-
-  /* 04 rounds */
-  function drawRound(cv, ram, idx, s) {
-    const ctx = C.canvas(cv, 28 * 8 * s, 25 * 8 * s);
-    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
-    if (idx === 32) return;
-    const { scr, col } = buildRound(ram, idx);
-    const cs = new Uint8Array(0x800);
-    cs.set(ram.subarray((idx & 2) ? 0xEE00 : 0xEC00, ((idx & 2) ? 0xEE00 : 0xEC00) + 0x200), 0x200);  // $F552: tiles into $CA00
-    cs.set(ram.subarray(0xCC00, 0xD000), 0x400);                                                       // bricks, walls
-    for (let r = 1; r <= 24; r++) for (let c = 1; c <= 26; c++) {
-      const i = r * 40 + c, cc = col[i];
-      C.drawGlyphMC(ctx, cs, scr[i], (c - 1) * 8 * s + 8 * s, (r - 1) * 8 * s + 8 * s, s, [PAL[0], PAL[12], PAL[14], PAL[cc & 7]]);
-    }
-  }
-  function rounds(ram) {
-    let idx = 0;
-    const show = () => { drawRound($('roundCv'), ram, idx, 2); $('rLab').textContent = 'Round ' + (idx + 1) + ' · $' + (0x8000 + idx * 160).toString(16).toUpperCase(); };
-    $('rPrev').onclick = () => { idx = (idx + 31) % 32; show(); };
-    $('rNext').onclick = () => { idx = (idx + 1) % 32; show(); };
-    show();
-  }
-
-  /* 05 bat */
-  function bat() {
-    const cv = $('batCv'), W = 640, H = 170; cv.width = W; cv.height = H; cv.style.width = '100%'; cv.style.maxWidth = W + 'px';
-    const ctx = cv.getContext('2d');
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-    const x0 = W / 2, px = 12;            // 12 canvas pixels per C64 pixel
-    // d = centre + 6 - ball X: left side d >= 0, right side d < 0
-    const zones = [[0, 4, 'diagonal', 1], [4, 8, 'steep', 1], [8, 13, 'shallow', 1], [-4, 0, 'steep', -1], [-8, -4, 'diagonal', -1], [-13, -8, 'shallow', -1]];
-    const ang = { steep: [0x40, 0xFF], diagonal: [0xF0, 0xFF], shallow: [0xFF, 0x80] };
-    zones.forEach(([a, b, k, side]) => {
-      const xa = x0 - b * px, xb = x0 - a * px;
-      ctx.fillStyle = k === 'diagonal' ? '#cfe0f5' : k === 'steep' ? '#f5dccf' : '#e4e4e4';
-      ctx.fillRect(xa, 120, xb - xa, 26); ctx.strokeStyle = '#999'; ctx.strokeRect(xa, 120, xb - xa, 26);
-      ctx.fillStyle = '#2f3136'; ctx.font = '12px IBM Plex Mono, monospace'; ctx.textAlign = 'center';
-      ctx.fillText(k, (xa + xb) / 2, 162);
-      const [hx, vy] = ang[k], cx = (xa + xb) / 2, len = 90;
-      const dx = -side * hx / 255, dy = -vy / 255, m = len / Math.hypot(dx, dy);
-      ctx.strokeStyle = '#1f5fa8'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx, 118); ctx.lineTo(cx + dx * m * 0.9, 118 + dy * m * 0.9); ctx.stroke(); ctx.lineWidth = 1;
-    });
-    ctx.fillStyle = '#c25a00'; ctx.fillRect(x0 - 1, 112, 2, 40);
-    ctx.fillStyle = '#2f3136'; ctx.textAlign = 'left'; ctx.fillText('ball goes left', 10, 20); ctx.textAlign = 'right'; ctx.fillText('ball goes right', W - 10, 20);
-    ctx.textAlign = 'center'; ctx.fillText('centre + 6', x0, 104);
-  }
-
-
-  capsules(); bat();
-  if (!C) { ['roundCv'].forEach(id => $(id).replaceWith(document.createTextNode(needSite))); frame(); return; }
-  frame();
-  C.load('listing.json').then(L => { rounds(L.ram); });
-})();
-</script>
