@@ -225,11 +225,15 @@ part beneath, and `check_listing.py` says when one of those has changed
 
 The session traces the code of the part beneath as well, and where that
 code refers to an address in this part's ranges the disassembler mints an
-automatic symbol there, which the export keeps as this part's. It names an
-address this part's own code may never use, and it can hold the figure
-down. Look for automatic symbols in the part's ranges whose every
-cross-reference comes from outside them, and delete each (a temporary
-name, then an empty one); a rebuilt session mints them again. <!-- until #213 -->
+automatic symbol there. Where the part beneath wrote that address in its
+own load (its own routine or table, which this part's load replaced), the
+name is one this part's own code may never use. The export from a live
+session, and `coverage.py --live`, leave out each of those that only code
+another part owns refers to, and the export says how many; a label of
+yours stays. An address the part beneath never wrote is kept, since code
+beneath that refers there means what this part holds (a level's entry, its
+tables). An export from a project file cannot ask what refers to what, so
+it keeps them all: export from the live session.
 
 ## Data the ledger cannot see
 
@@ -335,22 +339,6 @@ game gained 4.5 KB of code from its display lists and 1 KB from its
 music driver's three dispatch tables this way. Such an operand is often
 assembled as `$0000`, which sends the tracer into zero page
 (`tool-regen2000`).
-
-### Code only the running game reaches
-
-Before splitting the image, run the game from the hand-over in the kit's
-6502 simulator (`kit/c64/machine.js` on the C64) with an `executed` map
-(the simulator's header says how), through each state a script can
-reach: the title, every menu choice, the attract mode, a game with
-random input. Every address it executed that the flow trace has not
-typed as code is an instruction start: seed the disassembler with each
-one. It finds what the rules above find by reading (operands written at
-run time, jump tables, code behind undocumented opcodes) without having
-to find them first. One game's trace stopped at an undocumented `NOP`
-in its first three instructions and gained 765 instruction starts this
-way. Where the simulator stalls, the chip it waits on is usually one it
-does not model: read the loop, and stand in for the wait with a hook
-that sets what the real machine leaves.
 
 **Reaching 100 % is a correctness pass, not a formality.** Writing a
 precise description of every routine forces re-reading code that was

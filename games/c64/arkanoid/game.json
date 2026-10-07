@@ -336,7 +336,7 @@
     ]
   ],
   "links": {
-    "wiki": "https://www.c64-wiki.com/wiki/Arkanoid",
+    "wiki": {"title": "Arkanoid – C64-Wiki", "url": "https://www.c64-wiki.com/wiki/Arkanoid"},
     "manual": ""
   }
 }

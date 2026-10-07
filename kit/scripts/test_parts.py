@@ -223,6 +223,36 @@ class Parts(unittest.TestCase):
         self.assertEqual(comments, [])
         self.assertEqual([x.get('name') or x['text'] for x in left], ['in', 'x'])
 
+    def test_a_symbol_only_the_part_beneath_refers_to_is_left_out(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = fixture(d)
+            run(KIT / 'scripts' / 'parts.py', 'add', g, 'room', '--over', 'park')
+            f = g / 'parts' / 'room' / 'part.json'
+            f.write_text(json.dumps(dict(json.loads(f.read_text()), ranges=[['$4000', '$4011'], ['$5000', '$50FF']])))
+            room, park = P.load_game(str(g / 'parts' / 'room')), P.load_game(str(g / 'parts' / 'park'))
+        # the room is loaded over the park's own bytes at $4000-$4011, and over nothing of the park's at $5000
+        self.assertEqual(room['replaces'], [[0x4000, 0x4011, 'Park']])
+        self.assertEqual(park['replaces'], [])        # the engine beneath owns no ranges the park's load wrote over
+        import symbols_export as X
+
+        def auto(a):
+            return {'address': a, 'name': f's_{a:04X}', 'kind': 'auto', 'type': 'AbsoluteAddress'}
+        syms = [sym(0x4000, 'room_entry'), auto(0x4003), auto(0x4005), auto(0x4008), auto(0x5000)]
+        refs = {0x4000: [0x4020], 0x4003: [0x4005, 0x4020], 0x4005: [0x4020, 0x1004], 0x5000: [0x1000]}
+        asked, keep = [], X.cross_references
+        X.cross_references = lambda plat, addresses, gdir=None: asked.extend(addresses) or refs
+        try:
+            kept, n = X.drop_strays('c64', 'room', syms, room)
+            self.assertEqual(X.drop_strays('c64', 'park', syms, park), (syms, 0))
+        finally:
+            X.cross_references = keep
+        self.assertEqual(asked, [0x4003, 0x4005, 0x4008])     # automatic, the room's, and written by the park first
+        self.assertEqual(n, 1)                                 # $4005: only the park's code and the engine's refer to it
+        # kept: a user's label, one the room's own code refers to, one nothing is known to refer to, and
+        # $5000, which the engine's code refers to as what the room holds there
+        self.assertEqual([s['name'] for s in kept], ['room_entry', 's_4003', 's_4008', 's_5000'])
+        self.assertEqual(X.drop_strays('spectrum', 'room', syms, room), (syms, 0))   # a client that cannot say
+
     def test_a_chain_of_three(self):
         with tempfile.TemporaryDirectory() as d:
             g = fixture(d)

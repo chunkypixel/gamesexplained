@@ -15,9 +15,23 @@ operating system and tool versions.
 
 ## What was changed in the kit
 
-- `kit/skills/core/50-coverage/SKILL.md`: a new subsection, "Code only the running game reaches": run the game in the simulator with an `executed` map before splitting the image, and seed the disassembler from it. Lesson: `kit/lessons/2026-10-06-arkanoid.md`.
+- `kit/lessons/2026-10-06-arkanoid.md`: the lesson below, seeding the disassembler from the simulator's executed map. No other game folder was found with the same miss, so the skill edit waits under "Candidates" (`kit/skills/core/80-retro`, step 3).
 
 ## Candidates
+
+**Code only the running game reaches.** The start-up hides behind
+undocumented `NOP`s, and the flow trace stopped in its first three
+instructions. Running the game from the hand-over in the kit's 6502
+simulator with an `executed` map (`kit/c64/cpu6502.js`'s header says
+how), through the title, every menu choice, the attract mode and a game
+with random input, gave 765 instruction starts the trace had not
+reached; seeding the disassembler with them mapped the code before any
+agent read it. Where the simulator stalled, the chip it waited on was
+one it does not model, and a hook stood in for the wait. A skill line
+would go in `kit/skills/core/50-coverage`, beside "When the disassembler
+does not follow control flow": with a flow-tracing disassembler too, run
+the game in the simulator and seed from what it executed before
+splitting the image.
 
 **An XOR at start-up taken for a decryption.** The start-up XORs 97 bytes
 at `$BA0A` with a key, and the first `facts.md` said it decrypted them.
@@ -41,8 +55,6 @@ repository's issues, so the asks are written in full for the repository
 to file on merge.
 
 - **Have listing.py or check_listing.py flag untyped bytes between code blocks.** Arkanoid's listing reached 100 % coverage with gaps at `$2833`, `$2A27`, `$5F44` and `$5F4E`: the opcode byte of a `BIT` skip trick and two undocumented `NOP`s, left untyped by the disassembler. `listing.json` then carried no bytes there, and the page's 6502 interpreter, which reads its code from the listing, stopped on a zero opcode. A warning in `listing.py` for any gap of under 16 bytes between two code blocks would have caught it at the first build, in `kit/scripts/listing.py` where it already lists untracked data.
-- **Make one agent the default for annotation, and spread the work only for a large image.** On 5 October 2026 nine annotation agents, then five, each used the session's usage limit up within about ten minutes, and the run waited 18 h and 4.5 h for it to reset; the agents' cold starts (reading the brief, the skills, their neighbours' code) cost more than the parallel work saved on a 15 KB program, where Delta's single agent did 22 KB of code in under an hour. Suggest `kit/skills/core/50-coverage`, "Splitting the work across subagents", say to start with one agent and split only when the image is large and the session has no usage limit to hit.
-- **Keep waits for a usage limit out of clock.py's minutes.** The 50-coverage step reads 1,380 minutes because the clock ran through two waits for the session's usage limit to reset; the agents worked about 45 minutes. `kit/scripts/clock.py` could take `pause` and `resume`, or `stop` could take a `--minutes` override with a reason, so the runs table compares work and not waiting.
 
 ## What took longest
 
@@ -63,8 +75,9 @@ limit to reset; the work itself was about 45 minutes of agents and 20
 minutes of merging.
 
 The one change to the kit that would have saved the most minutes: annotate
-with a single agent from the start (maintainer ask above), which would have
-stayed under the usage limit and avoided both waits.
+with a single agent from the start, as `kit/skills/core/50-coverage`
+("Splitting the work across subagents") makes the default, which would
+have stayed under the usage limit and avoided both waits.
 
 ## Operating system and tools
 
