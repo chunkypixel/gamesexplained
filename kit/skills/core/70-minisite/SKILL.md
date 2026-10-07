@@ -310,7 +310,10 @@ The page is titled with the game's name and nothing else, in both the
 eyebrow above it. Readers arrive looking for a game, and a headline in
 place of the name hides it in a tab, a search result and a link. Say the
 interesting thing in the standfirst under the title, where the template
-puts it, and in the section headings.
+puts it, and in the section headings. The standfirst is yours to write,
+a sentence or two, with the rest of the copy: leave it neither empty nor
+for the contributor. The home page shows it on the game's card unless
+`game.json` has a `blurb`, and the Gold pass may rewrite it.
 
 ## Maps / levels, when there is one
 
