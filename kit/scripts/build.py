@@ -20,10 +20,10 @@ names is copied through, and a page in the folder that no tab names is left out
 with a warning (about-layout.html, the game's own About template, aside).
 Every tab but Source lists its sections in the left margin (pagenav).
 Plus a home page with the catalogue and the games most recently added or changed
-(from git history), site/lib/, kit.html (kit/lessons/, newest first),
-status.html (from site/status.html + site/status.json: which kits work on which
-computers, and the work needed) and about.html (from site/about-site.html: who
-runs the site and the principles it follows; static). And what lets a phone
+(from git history), site/lib/, status.html (from site/status.html +
+site/status.json: which kits work on which computers, and the work needed)
+and about.html (from site/about-site.html: who runs the site and the
+principles it follows; static). And what lets a phone
 install the site as an app: manifest.webmanifest, icons/ (kit/scripts/icons.py
 draws them) and sw.js at the root, with lines in every page's head that point
 at them.
@@ -276,19 +276,6 @@ def footprint_table(totals, plat="c64", span=(0, 0x10000)):
 # --- pieces -----------------------------------------------------------------
 def read(p):
     return open(p, encoding="utf-8").read() if os.path.exists(p) else ""
-
-
-def lessons():
-    """kit/lessons/ as one page: its README, then a file per lesson, newest first. A lesson's
-    heading starts with the kit version it went into, or with `next` until the bump after its
-    merge; those sort first."""
-    d = os.path.join(ROOT, "kit", "lessons")
-
-    def key(f):
-        m = re.match(r"## (\d+(?:\.\d+)*) · ", read(os.path.join(d, f)))
-        return (tuple(map(int, m.group(1).split("."))) if m else (float("inf"),), f)
-    files = sorted((f for f in os.listdir(d) if f.endswith(".md") and f != "README.md"), key=key, reverse=True)
-    return "\n\n".join(read(os.path.join(d, f)) for f in ["README.md"] + files)
 
 
 TIER_NAMES = {"silver-claimed": "silver (claimed)"}
@@ -1618,11 +1605,6 @@ def main():
                 cards="".join(card_html(g) for g in by_tier(games)), featured=featured_html(feat) if feat else "",
                 recent=recent_html(recent_changes(games)), platforms=platforms_html(games), n_games=len(games))
     open(os.path.join(out_root, "index.html"), "w").write(home)
-    # what the kit learned, game by game
-    log = markdown(lessons(), drop_h1=False, addr=False)
-    page = fill(read(os.path.join(SITE, "page.html")), site_title="How the kit has changed", lib="lib", body=log,
-                version=read(os.path.join(ROOT, "kit", "VERSION")).strip())
-    open(os.path.join(out_root, "kit.html"), "w").write(page)
     open(os.path.join(out_root, "status.html"), "w").write(status_page(games))
     # the site's About page; site/about.html is the About tab of a game
     repo = html.escape(json.load(open(os.path.join(SITE, "config.json")))["repo"].rstrip("/"))

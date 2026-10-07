@@ -240,7 +240,7 @@ Hard to read: `kit: a run corrects the install notes in place, not with a row or
 | `kit/EMULATOR.md` | what an emulator must do, by phase of use, and the test for each |
 | `kit/style.md` | house style for minisite copy |
 | `kit/CHECKING.md` | the maintainer's check that lets a run on an unproven model be Silver |
-| `kit/lessons/` | what the kit learned, from which game and whom: one entry to a file, the site's kit page |
+| `kit/lessons/` | what the kit learned, from which game and whom: one entry to a file |
 | `kit/scripts/` | shared tooling; every script prints usage with `-h` |
 | `kit/<platform>/` | one machine's tools: install notes, launcher, scripting clients |
 | `kit/PLATFORMS.md` | what a platform owns, and how to add one |
