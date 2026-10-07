@@ -23,6 +23,11 @@ and warns about any other `.html` in the folder.
 
 Every `$XXXX` inside a `<code>` element on any tab becomes a link into the
 Source tab, so write addresses in code spans and the evidence links itself.
+One the listing holds no record of (a chip register, a stretch the coverage
+leaves out, another part's address) opens the Source tab on a note saying
+so. `build.py --addresses` lists them page by page: a chip register can
+stay, but an address of the wrong part, or one the listing should hold, is
+a mistake to fix.
 
 # The How it works page
 
