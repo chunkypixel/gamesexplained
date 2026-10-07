@@ -10,17 +10,6 @@ Record your model id in `game.json` under `step_models`, as `"60-verify": ["<you
 Most serious errors come from trusting an absence, or from a claim that
 sounded right and was never tested.
 
-## Verify the final wording
-
-Read the published explanation against the evidence after simplifying its
-language. A correct reset coordinate does not establish "back to its starting
-position": compare initialization and reset for each actor. A tested respawn
-does not establish an unconditional return: check the last-life branch too.
-Keep the measured unit in every copy of a timing claim; an interrupt entry
-and a serviced game update need not be the same event. Check the article,
-feature list and level notes together, and make private-code links select
-the source image that contains the cited routine.
-
 ## Negative results
 
 | Claimed absence | What was actually true |
@@ -135,97 +124,7 @@ the same kind of test at a distance: find every reader of it
 (`opcodes.py --refs`), not only the routine that sets it. The one reader
 may be at the end of the level, and decide whether it can be won at all.
 
-For a small input space, enumerate it when execution is cheap. A sample of
-nonzero random seeds can miss nonzero predecessors of a trapped zero state.
-Check whether a chooser returns as well as which value it returns; stop a
-non-returning original routine by detecting repeated state, not by silently
-accepting a step limit. Keep that controlled result separate from reachability
-in the initialized game's random sequence. Exercise the published widget with
-the failing input too: its explanatory control should report the trap rather
-than hang or throw an uncaught error.
-
-When a listing changes from a gameplay snapshot to an original load image,
-audit the comments about self-modified operands and mutable data. A comment
-correct for the old snapshot can contradict the new bytes. Compare each
-source image with its input file; reproduce and name any loader changes
-instead of either hiding the differences or mistaking them for corruption.
-Annotation coverage and byte identity are separate from semantic correctness.
-
-Check stored callback pointers against exact instruction boundaries and labels.
-A useful name on the preceding return can leave every byte annotated while
-misidentifying the callable entry. When one such error appears, check all
-entries in the same header/table format rather than only the sampled name.
-Follow later writes to those pointers too: a transformation can install a
-different callback or record table. Execute the request and the original
-installation step, then check the replacement entries against the listing.
-
-For packed drawing records, distinguish lengths, offsets and commands from
-pixel values before describing their material or colour. Execute the original
-renderer on both empty and filled backgrounds: an eraser can look like a
-no-op on an empty bitmap. Compare changed pixels in a native input replay
-separately from the shape's total number of writes.
-
-A coordinate is not the whole collision state. Animation masks and probes
-retained from the previous movement can change the sampled material. Label
-supplied probe/pose values in exhaustive tests, and replay ordinary inputs
-before turning a table anomaly into a claim about a blocked route or fall.
-
-## A count is not necessarily the table boundary
-
-Trace the consumer before using a nearby count to split a record table.
-A completion target can differ from the number of records: special records
-may compensate a decrement or install another table. When the scanner
-actually stops at a sentinel, find that byte in the loaded image. If it is
-missing, preserve the following code/data as itself and record the missing
-terminator. Do not invent one, and do not claim a visible failure until a
-reachable unmatched key has exercised the overrun.
-
-Trace the index width and pointer updates too: a scanner can wrap within a
-small window rather than advance through memory. Enumerate that window
-and check for incidental terminators or false matches. For a suspected
-collision-key mismatch, run the original sampler over the actual geometry
-and every relevant position/mask; then check whether geometry edits can
-introduce new contacts. This can settle the ordinary-contact question
-without pretending a bounded movement search proved all routes.
-
-## Callback order is part of the mechanic
-
-An isolated routine test cannot establish the result of a whole update.
-Run the relevant original dispatcher, or verify its order before scheduling
-the original callbacks yourself. Input polling, a countdown, contact and
-movement can each see a different state within one service. Test the last
-nonzero countdown, the zero-entry call and the next input poll separately.
-For moving supports, test the corner where a stored velocity changes: a
-rider callback before movement uses the old direction.
-
-Name each clock. A private callback divider may ignore the shared player
-or hazard pulse, so an "update" is not automatically a video frame or a
-speed-dependent tick. For history followers, distinguish a cursor gap from
-the age of the displayed sample; replay-before-record and increment-before-
-read can shift that age by one. Test creation on both sides of the cursor
-boundary and after wrapping. Use ordinary-input captures separately to
-establish which controlled cases actually occur in play.
-
-Before deriving a queue bound from a divider, execute the divider across
-several periods, including its fastest setting. A reset followed by an
-increment in the same service changes the period. State the initial queue,
-producer/consumer order and assumptions of any abstract bound; a permissive
-model reaching overflow does not establish that the real game can reach it.
-
-If a bound assumes a finite number of pickups or objects, establish that
-limit across every producer and consumer. Deferred drawing can leave old
-occupancy visible after a spawn, and an interrupt-side collector may run
-before the foreground observes completion. A supplied zero-count input
-can test whether the collector guards underflow; it does not establish a
-reachable underflow. Keep a bound conditional until its count and ordering
-assumptions are verified.
-
 ## Live verification
-
-A screen can lag a RAM update. Record the instruction stop for a numerical
-claim, then let the original display refresh run before taking its matching
-screenshot. Keep those phases separate when completion itself changes the
-life or movement state.
 
 Any claim that can be tested in the emulator in under a few minutes gets
 tested. Typical tests:

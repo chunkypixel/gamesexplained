@@ -225,11 +225,15 @@ part beneath, and `check_listing.py` says when one of those has changed
 
 The session traces the code of the part beneath as well, and where that
 code refers to an address in this part's ranges the disassembler mints an
-automatic symbol there, which the export keeps as this part's. It names an
-address this part's own code may never use, and it can hold the figure
-down. Look for automatic symbols in the part's ranges whose every
-cross-reference comes from outside them, and delete each (a temporary
-name, then an empty one); a rebuilt session mints them again. <!-- until #213 -->
+automatic symbol there. Where the part beneath wrote that address in its
+own load (its own routine or table, which this part's load replaced), the
+name is one this part's own code may never use. The export from a live
+session, and `coverage.py --live`, leave out each of those that only code
+another part owns refers to, and the export says how many; a label of
+yours stays. An address the part beneath never wrote is kept, since code
+beneath that refers there means what this part holds (a level's entry, its
+tables). An export from a project file cannot ask what refers to what, so
+it keeps them all: export from the live session.
 
 ## Data the ledger cannot see
 
@@ -272,32 +276,6 @@ against the ledger.
 If a CPU trace reaches an interpreter or calls into a loaded level,
 follow the program it dispatches too. Read [compiled-programs.md](compiled-programs.md)
 for operand decoding, branch checks and separate loaded-image meanings.
-
-## Programs loaded into the same addresses
-
-A snapshot contains one state of memory. It cannot explain every disk file
-when later loads replace that memory with different code. Before dividing
-address ranges between agents, inventory the loaded files and the actual
-load/copy destinations. Stop after each file has reached its execution
-address and before its initialization overwrites data. Capture a separate
-real snapshot and compare its loaded bytes with the supplied file. Record
-when a file was selected through controlled state rather than ordinary
-progression; loading it does not prove its gameplay is reachable.
-
-Use the parts layout from `10-orient`: each loaded program has a
-`parts/<id>/` folder, and `over` and `ranges` identify the shared resident
-program and the addresses replaced. Export that part's annotations and run
-`listing.py` on its actual snapshot; `--entry` may name that same snapshot
-when it was stopped before initialization. Snapshots and projects remain
-in the part's `work/`. Do not splice different files into one invented
-memory image or hand-build listing records. `coverage.py <game>` sums the
-parts; give it a part's folder to inspect that part's ledger.
-
-Files can retain code or art from a previous file's construction workspace.
-Compare those tails against their possible donors; describe the matching
-fragments and their active readers separately. A byte's presence does not
-prove it is executed. Resolve header callbacks and per-item pointers as
-well as direct instruction targets before excluding an alignment gap.
 
 ## Inline parameters: the reason a flow disassembler stalls
 

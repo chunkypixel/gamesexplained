@@ -116,6 +116,21 @@ def read_live(gdir=None):
              for c in comments if c["comment"].strip()])
 
 
+def cross_references(addresses, gdir=None):
+    """{address: [the addresses that refer to it]} from the running server, asked 200 at a
+    time. symbols_export.py asks about the automatic symbols of a part's session (#213); an
+    address the server gave no answer for is left out."""
+    rpc, out, addresses = make_client(gdir), {}, list(addresses)
+    for i in range(0, len(addresses), 200):
+        ask = addresses[i:i + 200]
+        got = json.loads(call(rpc, "r2000_batch_execute", {"calls": [
+            {"name": "r2000_get_cross_references", "arguments": {"address": a}} for a in ask]}))
+        for a, r in zip(ask, got):
+            if r.get("status") == "success":
+                out[a] = json.loads(r["result"]["content"][0]["text"])
+    return out
+
+
 def game_dir(explicit=None):
     for cand in (explicit, os.environ.get("GAME_DIR"), os.getcwd()):
         if cand and any(os.path.exists(os.path.join(cand, f)) for f in ("game.json", "part.json")):

@@ -31,9 +31,12 @@ The authored pages have {{title}}, {{platform}}, {{year}} and {{publisher}}
 filled from game.json. The build fails on a src or href that points at no
 file it published: a page's own .js beside it would otherwise 404 on the site.
 It lists pages with blocks hidden by the page editor (kit/scripts/edit.py), and
-fails on a Gold or Platinum page that still has one.
+fails on a Gold or Platinum page that still has one. It counts the links into a
+Source page at an address its listing holds no record of (a chip register, a
+stretch the coverage leaves out, another part's address): the page says so when
+one is followed, and --addresses lists them, page by page.
 
-Usage: build.py [--out _site]
+Usage: build.py [--out _site] [--addresses]
 With GITHUB_TOKEN (or GH_TOKEN) set, as in CI, the build asks GitHub which account
 an author's address belongs to when the address is not a GitHub noreply one; without
 it the build makes no request and shows that author's name unlinked.
@@ -913,6 +916,18 @@ def game_footprint(P, out, plat):
     return totals, footprint_table(t, plat, span) + f'<p class="mute">{said}</p>', span
 
 
+def link_list(game):
+    """(title, url) for each of game.json's links, in order. A link is {"title", "url"}, the
+    title being the linked page's own; an empty url is a slot the template left, not a link.
+    A bare url string, the older form, shows its key."""
+    out = []
+    for k, v in (game.get("links") or {}).items():
+        t, u = (v.get("title") or k, v.get("url")) if isinstance(v, dict) else (k, v)
+        if u:
+            out.append((t, u))
+    return out
+
+
 def data_links(P):
     """Where the symbol maps and listings are, for the About tab's {{data_links}}."""
     if not P:
@@ -975,8 +990,8 @@ def build_game(gdir, out_root):
     site_contributors = f"<ul>{site_contributor_items}</ul>"
     game_credits = f"<ul>{game_credit_items}</ul>"
     con_html = f"<ul>{site_contributor_items}{game_credit_items}</ul>"
-    links = {k: u for k, u in (game.get("links") or {}).items() if u}   # empty slots from the template are not links
-    link_html = "<ul>" + "".join(f'<li><a href="{html.escape(u)}">{html.escape(k)}</a></li>' for k, u in links.items()) + "</ul>" if links else "<p class='mute'>None listed yet. Know a write-up, port or forum thread about this game? Add it to game.json.</p>"
+    links = link_list(game)
+    link_html = "<ul>" + "".join(f'<li><a href="{html.escape(u)}">{html.escape(t)}</a></li>' for t, u in links) + "</ul>" if links else "<p class='mute'>None listed yet. Know a write-up, port or forum thread about this game? Add it to game.json.</p>"
     tools = game.get("tools") or {}
     if P:
         totals, foot, span = game_footprint(P, out, plat)
@@ -1476,6 +1491,102 @@ def broken_links(out_root):
     return bad
 
 
+class AddressLinks(html.parser.HTMLParser):
+    """The links into a Source page that a built page carries, as (page, address): each
+    <a href="source….html#XXXX">, and each bare <code>$XXXX</code> that site.js makes one of
+    when the page loads, sent where its nearest data-part says. Nothing inside a block hidden
+    with the page editor (data-cut) is read: a reader never sees it."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.open, self.links, self.code, self.nolink = [], [], None, False   # open: (tag, data-part, hidden)
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        hidden = "data-cut" in a or bool(self.open and self.open[-1][2])
+        if tag == "body":
+            self.nolink = "data-nolink" in a
+        if self.code:
+            self.code["bare"] = False   # site.js leaves a <code> with an element inside it
+        m = tag == "a" and re.fullmatch(r"(source(?:-[\w.-]+)?\.html)#([0-9A-Fa-f]{4})", a.get("href") or "")
+        if m and not hidden:
+            self.links.append((m.group(1), int(m.group(2), 16)))
+        if tag in VOID_TAGS:
+            return
+        self.open.append((tag, a.get("data-part"), hidden))
+        if tag == "code" and not self.code:
+            self.code = {"depth": len(self.open), "text": "",
+                         "bare": not hidden and not any(t in ("a", "pre") for t, _, _ in self.open[:-1])}
+
+    def handle_data(self, data):
+        if self.code:
+            self.code["text"] += data
+
+    def handle_endtag(self, tag):
+        if all(t != tag for t, _, _ in self.open):
+            return
+        while self.open:   # an element left open (a <p>, an <li>) closes with the one around it
+            if self.code and len(self.open) == self.code["depth"]:
+                c, self.code = self.code, None
+                m = re.fullmatch(r"\s*\$([0-9A-Fa-f]{4})\s*", c["text"])
+                part = next((p for _, p, _ in reversed(self.open) if p is not None), None)
+                if m and c["bare"] and not self.nolink and part != "":
+                    self.links.append((f"source-{part}.html" if part else "source.html", int(m.group(1), 16)))
+            if self.open.pop()[0] == tag:
+                break
+
+
+_recorded = {}
+
+
+def recorded(listings):
+    """The addresses that have a record in these listings, laid one over another as a part's
+    Source page lays them: an int with bit 8*a set for each address a a row covers or a label
+    stands at. A gap covers none."""
+    bits = 0
+    for f in listings:
+        if f not in _recorded:
+            got = bytearray(0x10000)
+            for r in json.load(open(f))["records"]:
+                if r["t"] != "gap":
+                    end = min(0x10000, r["a"] + max(1, len(r.get("b") or [])))
+                    got[r["a"]:end] = b"\1" * (end - r["a"])
+            _recorded[f] = int.from_bytes(got, "little")
+        bits |= _recorded[f]
+    return bits
+
+
+def unrecorded(out_root):
+    """(links into a Source page, [(page, Source page, address)] for those that land on no record).
+
+    Every $XXXX on a game's pages links to a Source page, and one whose listing holds no
+    record at it (a chip register, a stretch the coverage leaves out, an address of another
+    part) opens on the gap that holds it, with a note (#215). The count keeps them in sight."""
+    total, lost = 0, []
+    for out in sorted(glob.glob(os.path.join(out_root, "*", "*", ""))):
+        held, again = {}, None
+        for f in glob.glob(os.path.join(out, "source*.html")):
+            m = re.search(r'<script type="application/json" id="part">(.*?)</script>', read(f), re.S)
+            info = json.loads(m.group(1)) if m else {"listing": "listing.json", "under": []}
+            listings = [os.path.join(out, x) for x in [info["listing"]] + [u["listing"] for u in info["under"]]]
+            if all(os.path.exists(x) for x in listings):
+                held[os.path.basename(f)] = recorded(listings)
+            if m and os.path.basename(f) == "source.html":
+                again = f   # a game of several parts: the first part's page again
+        for f in sorted(glob.glob(os.path.join(out, "*.html"))):
+            if f == again:
+                continue
+            p = AddressLinks()
+            p.feed(read(f))
+            p.close()
+            for page, a in p.links:
+                if page in held:
+                    total += 1
+                    if not held[page] >> (8 * a) & 1:
+                        lost.append((os.path.relpath(f, out_root), page, a))
+    return total, lost
+
+
 def cut_blocks(games):
     """(page, tier, count) for every authored page that still has blocks hidden with the page editor.
 
@@ -1531,6 +1642,16 @@ def main():
         sys.exit(f"{len(bad)} link(s) to nothing the build published. A game folder publishes its authored pages, "
                  "listing.json, symbols.json and reference/ (and for each of its parts, parts/<id>/listing.json and "
                  "symbols.json, and source-<id>.html), nothing else; site/lib/ is at ../../lib/")
+    total, lost = unrecorded(out_root)
+    if "--addresses" in argv:
+        pages = {}
+        for page, src, a in lost:
+            pages.setdefault(page, []).append(f"{src}#{a:04X}")
+        for page, to in pages.items():
+            print(f"{page}: {len(to)}: {', '.join(sorted(set(to)))}")
+    if lost:
+        print(f"{len(lost):,} of {total:,} links into a Source page land on no record there, and the page says so "
+              "when one is followed" + ("" if "--addresses" in argv else "; build.py --addresses lists them"))
     cut = cut_blocks(games)
     for page, tier, n in cut:
         warn(f"{page} has {n} block(s) hidden with the page editor; the cleanup pass in kit/START.md removes them")

@@ -31,8 +31,14 @@
   "kit_version": "0.0.54",
   "created": "2026-10-02",
   "links": {
-    "wiki": "https://www.c64-wiki.com/wiki/Jumpman",
-    "manual": "https://www.abandonwaredos.com/docawd.php?idg=1121&sf=jumpman_manual.txt&sg=Jumpman&st=manual"
+    "wiki": {
+      "title": "Jumpman – C64-Wiki",
+      "url": "https://www.c64-wiki.com/wiki/Jumpman"
+    },
+    "manual": {
+      "title": "Jumpman manual – Abandonware DOS",
+      "url": "https://www.abandonwaredos.com/docawd.php?idg=1121&sf=jumpman_manual.txt&sg=Jumpman&st=manual"
+    }
   },
   "step_models": {
     "50-coverage": [

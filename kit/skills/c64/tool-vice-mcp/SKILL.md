@@ -5,7 +5,8 @@ description: How to drive VICE through the vice-mcp server, the recommended emul
 
 # VICE through vice-mcp
 
-Registered in `.mcp.json` as the `vice` server (HTTP, `127.0.0.1:6510`).
+Registered in `.mcp.json` as the `vice` server (HTTP, `127.0.0.1:6510`,
+or the port `KIT_VICE_PORT` names in the environment the session starts in).
 Claude Code connects to MCP servers when a session starts, so the
 `vice_*` tools are there only if the emulator was already running then; a
 server started later does not appear by itself. Other harnesses are
