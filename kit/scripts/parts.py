@@ -179,10 +179,19 @@ def elsewhere(P, p):
     return out
 
 
+def replaces(P, p):
+    """[[first, last, whose]]: the stretches of p's ranges that a part beneath it also wrote in
+    its own load, and owns in its own snapshot. That part's code refers to them as its own."""
+    own = ranges(p) if under(P, p) else []
+    return [[max(lo, a), min(hi, b), q["title"]] for q in under(P, p) for lo, hi in ranges(q)
+            for a, b in own if max(lo, a) <= min(hi, b)]
+
+
 def load_game(gdir):
     """A game folder's game.json. For a part's folder: the game's, with the part's own ledger
-    settings in place of the game's, "part" ({id, title, over}) and "elsewhere", the addresses
-    another part owns (symbols_export.regions leaves them out of this part's ledger)."""
+    settings in place of the game's, "part" ({id, title, over}), "elsewhere", the addresses
+    another part owns (symbols_export.regions leaves them out of this part's ledger), and
+    "replaces", those of its own that a part beneath wrote first (parts.replaces)."""
     top, pid = home(gdir)
     game = json.load(open(os.path.join(top, "game.json")))
     if pid is None:
@@ -194,6 +203,7 @@ def load_game(gdir):
     out.update({k: own.get(k, EMPTY[k]) for k in LEDGER_KEYS})
     out["part"] = {"id": pid, "title": me["title"], "over": [q["id"] for q in under(P, me)]}
     out["elsewhere"] = elsewhere(P, me)
+    out["replaces"] = replaces(P, me)
     return out
 
 
@@ -218,6 +228,20 @@ def clip(blocks, syms, comments, away):
            [c for c in comments if not owned(c["address"], away)]
     return (kept, [s for s in syms if owned(s["address"], away)],
             [c for c in comments if owned(c["address"], away)], left)
+
+
+def strays(syms, away, over, refs):
+    """The addresses of the automatic symbols at addresses this part's load wrote over a part
+    beneath (over: replaces()) that only code this part does not own refers to. A session on
+    this part's snapshot traces the code beneath too, and mints a symbol wherever it refers
+    to its own bytes there, which this part has replaced (#213): a name this part's own code
+    may never use. refs is {address: [the addresses that refer to it]}. A symbol nothing is
+    known to refer to stays, and so does every label a user gave, and every address the part
+    beneath never wrote: code beneath that refers there means what this part holds (a level's
+    entry, its tables)."""
+    return {s["address"] for s in syms if s.get("kind") == "auto" and owned(s["address"], away)
+            and not owned(s["address"], over) and refs.get(s["address"])
+            and not any(owned(r, away) for r in refs[s["address"]])}
 
 
 def seed(gdir):
