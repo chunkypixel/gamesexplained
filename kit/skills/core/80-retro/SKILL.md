@@ -59,12 +59,13 @@ unnoticed.
      a coverage figure that is not what it says, a test that passes
      without testing anything. These are what the skills are for. Edit a
      skill when all three hold:
-     - You can name another game in `games/` where it would have mattered
-       (search their `agent-history.md` and `kit-feedback.md`), or a kind
-       of game you can describe in a phrase: every game whose start-up
-       moves its data, every game with a split screen. If you can name
-       only this one, write it in `kit-feedback.md` under "Candidates":
-       the next run that meets it finds it there and makes the edit.
+     - You can name another game folder in `games/` where it would have
+       mattered: its `agent-history.md` or `kit-feedback.md` shows the
+       same mistake, or its code has the same shape. A kind of game you
+       can describe does not count: rewording this game's case in general
+       nouns makes any lesson sound general. If you can name only this
+       one, write it in `kit-feedback.md` under "Candidates": the next run
+       that meets it finds it there and makes the edit.
      - No rule covers it already. If one does, sharpen that rule or add
        the case to it rather than writing a second.
      - It goes where the moment comes: in the step where it happens,
@@ -83,7 +84,10 @@ unnoticed.
    the kit, what cost the most time, anything about your operating system
    or tool versions that the install notes should say, and your asks for
    a maintainer (step 5). List each change in one line: the file and what
-   it now says. Where the reason is a lesson (step 6), name the lesson's
+   it now says. A line for text added to a core skill names the skill's
+   folder and the other game's, as `kit/skills/core/50-coverage` and
+   `games/<platform>/<slug>`: `check_docs.py` fails the branch without
+   it. Where the reason is a lesson (step 6), name the lesson's
    file and stop there: a lesson is written once, in that file. A change
    that teaches nothing of the kind (a script, a path, the site) gives
    its reason here. Under "What cost the most time", one sentence naming

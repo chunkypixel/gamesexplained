@@ -10,6 +10,8 @@
                      its working record in work/ (kit/skills/core/60-verify)
   games/*/*/kit-feedback.md   the skill text that changed what the run did, named in the
                      form skill_usage.py counts, or "None." (kit/skills/core/80-retro, step 1)
+  kit/skills/core/   a game's branch that adds to a core skill names, in kit-feedback.md,
+                     another game where it would have mattered (skill_edits.py)
   kit/lessons/       one entry a file, under one heading that names the game that taught it
   games/, kit/, site/, AGENTS.md, README.md   no path on the contributor's computer:
                      a home folder usually names a person, and helps nobody else
@@ -218,6 +220,8 @@ def main():
         for n, msg in named_skill_text(f)["problems"]:   # the words themselves: skill_usage.py --game
             print(f"  x  {os.path.relpath(f, ROOT)}:{n}  skill text that changed what I did: {msg}")
             fails += 1
+    from skill_edits import check as skill_edits_check
+    fails += skill_edits_check()
     from models import check as models_check
     fails += models_check()
     from maintainer_asks import check as asks_check
