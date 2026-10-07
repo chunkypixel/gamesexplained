@@ -111,6 +111,26 @@ run. The older `--test` self-tests on the tools stay where they are and are
 listed in `test_kit.py`, which fails on a script with the flag that the list
 leaves out; a new test is a `test_*.py` file, not a new flag.
 
+## Titling a pull request
+
+This applies to every pull request to this repository, a game's, the
+kit's, the site's or anything else, and to commit subject lines, since a
+pull request's title becomes its merge commit's. Title it so a reader
+scanning the list of pull requests knows what changed and why, without
+opening it:
+
+- Start with a verb: Fix, Stop, Add, Remove, Limit, Merge.
+- Name what a reader recognises: a file, a feature, a game.
+- Say the problem fixed or the effect, not how the fix works. The how
+  goes in the description.
+- No negations or contrasts ("X, not Y"), and no abstract nouns standing
+  in for concrete things ("a run", "the notes").
+- Keep the area first (`kit:`, `site:`, or the game and its platform) and
+  the whole title under about 70 characters.
+
+Good: `kit: Fix INSTALL.md growing with every game run`.
+Hard to read: `kit: a run corrects the install notes in place, not with a row or section of its own`.
+
 ## Rules that are not negotiable
 
 - **Model.** Any model may run the kit, but only a proven one can take a
