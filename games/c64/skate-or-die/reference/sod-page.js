@@ -78,6 +78,17 @@ const SOD = (function () {
       }
     }
   }
+  // Any multicolour bitmap as the VIC shows it: 8 bytes a cell in screen order, 2 bits a pixel; pair 01 is
+  // the screen byte's high nibble, 10 its low nibble, 11 the colour-RAM nibble, 00 the background.
+  function mcBitmap(cv, M, o) {
+    const s = o.s || 2, ctx = C64.canvas(cv, 320 * s, 200 * s);
+    for (let i = 0; i < 1000; i++) {
+      const cx = i % 40, cy = Math.floor(i / 40), sc = M[o.screen + i], c = [o.bg || 0, sc >> 4, sc & 15, M[o.colour + i] & 15];
+      for (let r = 0; r < 8; r++) { const b = M[o.bitmap + i * 8 + r];
+        for (let k = 0; k < 4; k++) { ctx.fillStyle = PAL()[c[(b >> (6 - 2 * k)) & 3]]; ctx.fillRect((cx * 8 + k * 2) * s, (cy * 8 + r) * s, 2 * s, s); } }
+    }
+    return ctx;
+  }
   function fail(e) { document.querySelectorAll('canvas').forEach(c => c.insertAdjacentHTML('afterend', '<p class="cap">' + e.message + '</p>')); }
-  return { load, picture, cellRects, parts, bounds, pose, fail };
+  return { load, mcBitmap, picture, cellRects, parts, bounds, pose, fail };
 })();

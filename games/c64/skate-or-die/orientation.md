@@ -45,7 +45,7 @@ stops are made with `pause()` as `kit/skills/c64/tool-vice-mcp/workarounds.md`
 says. A non-stopping execution checkpoint at `$0AF0` gains hits while the
 event runs.
 
-The listing comes from `work/highjump-play.vsf`, High Jump in practice
+High Jump's listing comes from `work/highjump-play.vsf` (copied to `parts/highjump/work/play.vsf`), High Jump in practice
 mode with the skater waiting on the left platform: `PRACTICE`, `PASS: 0`
 and `HEIGHT: 0' 0"` at the top. The CPU port is `$25` (RAM at `$A000` and
 `$E000`, I/O in); a RAM read of `$0001` shows `$E4`, which is the RAM under
@@ -56,15 +56,29 @@ The hand-over snapshot `work/entry.vsf` is the same load stopped at
 `$095C`, after the four files are in memory and before the event has run.
 A byte that differs between the two is written at run time.
 
-## What this listing covers
+## Reaching every part
 
-One load: High Jump. The title, the shop and town, and each event are
-separate loads over the same memory, so one snapshot holds one of them.
-Going from the town to High Jump replaces `$0800`-`$3DFF` and then
-`$4000`-`$C2AF`; `$C300`-`$FFFF` keeps what earlier loads left, including
-the resident loader and the event manager (page-by-page comparison of the
-town, `$088D` and play snapshots). The other events are left for another
-run.
+The game is nine parts, each with its own snapshots in `parts/<id>/work/`
+(`play.vsf` for the listing, `entry.vsf` at the part's hand-over):
+
+| Part | `play.vsf` holds |
+|---|---|
+| `boot` | the first instruction of the title (`$4000`), after the boot has run |
+| `title` | the title waiting for fire, music playing (`$4022`) |
+| `resident` | the High Jump snapshot; `$F230`-`$FFF7` is the same in every part from the shop on |
+| `shop` | the shop and town program running |
+| `ramp`, `highjump`, `downhill`, `jam` | the event in practice, the skater waiting at the start |
+| `joust` | the opponent-choice screen in practice |
+
+Driving the town by stick to each event is slow and fragile. Faster, from
+any snapshot with the event manager in memory (High Jump's will do): pause,
+attach the side the event needs (side 2 for the race and the Jam), set
+X to the event's row of the load table (1 ramp, 2 High Jump, 3 race, 4 Jam,
+5 joust), set PC to `$F99C`, the manager's own entry for going to an event,
+and run with warp on. The manager checks the disk side; at INSERT SIDE n,
+press fire on joystick 2. A checkpoint at the event's entry, `$0880`
+(`$0820` for the joust), stops it with the files loaded. Entering at
+`$F9E4`, past the side check, crashed.
 
 ## The loader, in a paragraph
 

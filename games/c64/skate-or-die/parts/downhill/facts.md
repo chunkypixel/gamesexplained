@@ -59,7 +59,7 @@ from the disk's own files. The scripts are in `GAME/work/agent-downhill/`
   That is right for 60 Hz; on a PAL machine a game second is 1.2 real
   seconds. Landing in the water adds a 3-second penalty (`$3F61`).
   (traced)
-- Trick points (BCD, `add_points` `$0C4E`): skull ramp 2 (`$146D`), roof
+- Trick points (BCD, `add_points` `$0C47`): skull ramp 2 (`$146D`), roof
   4 (`$172D`), passing a hurdle 4 (`$17C1`), into the pipe 3 (`$141A`),
   out of its mouth 10 (`$13D3`), bouncing off a wall in the air 2
   (`$1B9F`), landing the other way round 1, two half turns in one jump 20,

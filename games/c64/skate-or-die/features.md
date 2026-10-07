@@ -19,13 +19,13 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 | Feature | Status | Evidence / next check |
 |---|---|---|
 | EA logo, title and on-screen developer credits | live | `reference/title-screen.png` names Michael Kosaka, Stephen Landrum and David Bunch |
-| Title music includes sampled guitar and SID voices | open | The title is another load, not in this listing. High Jump's own music is SID only: nothing in the load uses the NMI or CIA 2 timers (`facts.md`, "Sound", register census) |
+| Title music includes sampled guitar and SID voices | traced, simulated | title `$5106`: a CIA 2 timer NMI writes seven 4-bit samples to `$D418` (`parts/title/facts.md`) |
 | Rodney's shop has a movable cursor and context-sensitive dialogue | live | `reference/skate-shop.png`; pointing at Practice changes the speech bubble |
-| Sign in up to eight skaters; type or remove names | open | The shop is another load. The resident roster has room for eight 16-byte names (`$FCDA`) |
-| Choose a board colour after signing in | traced (High Jump side) | High Jump colours the board, sprite 4, from the skater attribute `$FE02` (`$09EE`). That the shop's colour choice sets `$FE02` is inferred: the shop is another load |
-| View high scores and save competition results to disk | open | The shop is another load. The resident loader has a save entry (`save_file` `$F233`) and the drive server a write command; nothing in High Jump calls them |
+| Sign in up to eight skaters; type or remove names | traced | shop: 15 characters, an empty name deletes (`$1D5B`), eight at most |
+| Choose a board colour after signing in | traced | shop `$1A7E` stores colours 1-15 in `$FCD2`; the events colour the board from `$FE02` |
+| View high scores and save competition results to disk | traced; save not tested live | shop: records `$1DC8`, merge `$0ACA`, save `$0BB4` through `save_file` `$F233` |
 | Go Practice leads to event selection without sign-in | live | Shop to `reference/town-square.png` |
-| Go Compete supports named skaters and tournament play | open | The shop is another load. The event manager's competition path (NEXT SKATER, results) is traced in `facts.md`; not played |
+| Go Compete supports named skaters and tournament play | traced, simulated | shop `$1A65`; the event manager's NEXT SKATER and results (`parts/resident/facts.md`); not played live |
 | Town-square skater travels down labelled paths to events | live | Forward moves in the facing direction; left/right steer. `orientation.md` gives measured routes to four events |
 | Compete All plays five events in sequence; placings award 5/3/1 points | traced (in part) | The resident event manager sorts results and awards 5, 3 and 1 points (`$F743`, `$F7E0`); its load table lists the five events (`$F8A0`). The competition flow was not played |
 | Commodore key toggles sound; RUN/STOP aborts an event | live (High Jump) | C= flips `$FE10` and silences or restarts the music (`$1A24`); RUN/STOP returns to the skate shop (`$1A08`, `$1A49`) |
@@ -33,15 +33,13 @@ screenshots are C64-Wiki examples, not captures from the supplied disks.
 
 ## Freestyle
 
-This event is a separate load and is not in this listing; its rows stay open until a run documents that load.
-
 | Feature | Status | Evidence / next check |
 |---|---|---|
-| U-shaped ramp has ten passes, tricks, a score and falls | open | Manual, `reference/wiki-freestyle.png` |
-| Forward/back sets entry position; dropping through the channel causes a fall | open | Manual |
-| Fire in pump zones builds speed; zero, one or two pumps select tricks | open | Manual; find pump timing |
-| Kickturn, Rock-n-Roll, Footplant, Rail Slide, Handplant, Ollie Air and Aerial use lean/pump combinations | open | Manual trick table; verify labels and inputs |
-| Rotations, held tricks, variety and channel crossing affect points; bad landings fall | open | Manual and wiki; trace score and failure rules |
+| U-shaped ramp has ten passes, tricks, a score and falls | traced, simulated | ramp: passes `$4C`, phases `$2E7E`; fourteen simulated runs (`parts/ramp/facts.md`) |
+| Forward/back sets entry position; dropping through the channel causes a fall | traced | ramp `$1C14`, `$1D0A` |
+| Fire in pump zones builds speed; zero, one or two pumps select tricks | traced | ramp `$1BAF` (band y `$E0`-`$EF`, +`$50`), `$1C81` |
+| Kickturn, Rock-n-Roll, Footplant, Rail Slide, Handplant, Ollie Air and Aerial use lean/pump combinations | traced (classes); names open | ramp `$1C81` picks seven classes from pumps and lean; which class is which named trick was not matched to the manual |
+| Rotations, held tricks, variety and channel crossing affect points; bad landings fall | traced | ramp `$325B`, `$32FB`, `$3305`, `$1957` |
 
 ## High Jump
 
@@ -54,26 +52,22 @@ This event is a separate load and is not in this listing; its rows stay open unt
 
 ## Downhill Race and Jam
 
-This event is a separate load and is not in this listing; its rows stay open until a run documents that load.
-
 | Feature | Status | Evidence / next check |
 |---|---|---|
-| Race is a timed obstacle course with jump, duck, slide turns and stunt bonuses | open | `reference/race-play.png` confirms the course and timer at zero; the moves and scoring remain to be tested |
-| Regular and Goofy foot change movement direction; fire combinations trigger moves | open | `reference/race-play.png` confirms a Regular Foot choice; the alternate choice and control effects remain open |
-| Jam races an opponent through hazards, with kicks and punches against rival and scenery | open | `reference/jam-play.png` confirms the street and Practice prompt; combat and finish rules remain open |
-| Jam placement uses finish time and score; a trailing opponent can be moved forward with a penalty | open | C64-Wiki; verify live or trace |
-| Lester can stand in for a missing human opponent | open | Manual |
+| Race is a timed obstacle course with jump, duck, slide turns and stunt bonuses | traced | downhill `$0C47`, `$0B14`; score = time score + 100 per trick point |
+| Regular and Goofy foot change movement direction; fire combinations trigger moves | traced | downhill `$3984`, `$0998`; jam `$2DC7` (Goofy does not swap the fire rows) |
+| Jam races an opponent through hazards, with kicks and punches against rival and scenery | traced | jam `$315C`, `$0BCF`, `$17AA` |
+| Jam placement uses finish time and score; a trailing opponent can be moved forward with a penalty | traced | jam time bonus `$23F8`, penalty `$2476` (5 s, 300 off the bonus) |
+| Lester can stand in for a missing human opponent | traced | jam `$32BA`; joust `$1D4F`; the manager sets `$FE0F` |
 
 ## Pool Joust and results
 
-This event is a separate load and is not in this listing; its rows stay open until a run documents that load.
-
 | Feature | Status | Evidence / next check |
 |---|---|---|
-| Joust alternates hunter and hunted after five passes with the paddle | open | Manual, `reference/wiki-joust.png` |
-| A flashing paddle can strike; first to three slams wins by two | open | Manual; verify score and end conditions |
-| Poseur Pete, Aggro Eddie and Lester are opponents with different difficulty | open | `reference/joust-select.png` confirms all three choices; the difficulty distinction remains open |
-| Multiplayer tournament uses round-robin Joust and displays results/high scores | open | Manual; exercise with signed-in skaters |
+| Joust alternates hunter and hunted after five passes with the paddle | traced, simulated | joust `$0FD1` |
+| A flashing paddle can strike; first to three slams wins by two | traced, simulated | joust `$1A85`, `$1B3C`; ten simulated matches ended 3-0 |
+| Poseur Pete, Aggro Eddie and Lester are opponents with different difficulty | traced | joust `$1CE0`, `$2F69`-`$2F85`, `$1E01` |
+| Multiplayer tournament uses round-robin Joust and displays results/high scores | open | Pairing for the joust was not traced; the manager fills slot B for an odd skater out with LESTER (`$FE0F`) |
 
 ## Beyond the documentation
 
@@ -92,8 +86,6 @@ This event is a separate load and is not in this listing; its rows stay open unt
 
 ## Open questions
 
-- Which files belong to each event beyond High Jump? The loader's file table (`$F2F9`) lists 49 files; side 1 holds `$00`-`$1A`, side 2 `$1B`-`$30`.
-- Which other assets are on each disk side, and when does each event request a flip? High Jump and Joust selection were seen on side 1; Race and Jam loaded from side 2.
-- Which states' code and data are overwritten by later overlays? Shop and High Jump RAM differ substantially.
-- Is port-1 title input image-specific or accepted in addition to documented port 2?
-- Can this G64 pair write high scores, and if so to which side?
+- Whether this G64 pair can write high scores (the save is traced, not run).
+- Is port-1 title input image-specific? The title's code accepts fire on either port (`parts/title/facts.md`); one live run saw only port 1 advance it.
+- How the joust pairs skaters in a tournament.

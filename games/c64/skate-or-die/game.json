@@ -48,9 +48,18 @@
   "kit_version": "0.0.74",
   "created": "2026-10-04",
   "links": {
-    "wiki": "https://www.c64-wiki.com/wiki/Skate_or_Die!",
-    "manual": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual",
-    "Stephen Landrum interview": "https://www.ataricompendium.com/archives/interviews/stephen_landrum/interview_stephen_landrum.html"
+    "wiki": {
+      "title": "Skate or Die! – C64-Wiki",
+      "url": "https://www.c64-wiki.com/wiki/Skate_or_Die!"
+    },
+    "manual": {
+      "title": "Skate or Die manual – Abandonware DOS",
+      "url": "https://www.abandonwaredos.com/docawd.php?idg=1509&sf=skate_or_die_manual.txt&sg=Skate+or+Die&st=manual"
+    },
+    "interview": {
+      "title": "Stephen Landrum interview – The Atari Compendium",
+      "url": "https://www.ataricompendium.com/archives/interviews/stephen_landrum/interview_stephen_landrum.html"
+    }
   },
   "tabs": [
     [

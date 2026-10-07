@@ -8,9 +8,9 @@
 <header class="hero">
   <p class="eyebrow">Commodore 64 · 1987 · Electronic Arts</p>
   <h1>Skate or Die!</h1>
-  <p class="sub">Five skateboarding events around a town square, each loaded from disk on its own. This site takes one of them apart, High Jump, from the game's own code.</p>
+  <p class="sub">Five skateboarding events around a town square, each loaded from disk on its own, taken apart from the game's own code.</p>
 </header>
-<main class="wrap" data-part="highjump">
+<main class="wrap" data-part="resident">
   <section id="game">
     <p class="fig">01 · The game</p>
     <h2 class="t">Rodney's shop, a town and five events</h2>
@@ -31,18 +31,23 @@
   </section>
   <section id="covers">
     <p class="fig">04 · What this site covers</p>
-    <h2 class="t">One event, every byte</h2>
-    <p>Because each event replaces the last in memory, one snapshot of the running game holds one event. This site documents High Jump: all of the code and data it loads, 49,370 bytes, each one described in the <a href="source.html">Source code</a>, along with the resident disk code and the part of the game that runs between events, which High Jump hands its result to (<code>$FE13</code>). The shop, the town and the other four events are left for another study.</p>
+    <h2 class="t">Nine programs, every byte</h2>
+    <p>Because each event replaces the last in memory, the game is studied as nine programs, each from a snapshot of it running: the loader, the title, the disk code that stays in memory, the shop and town, and the five events. Every byte each one loads is described in the <a href="source.html">Source code</a>, which has a listing for each.</p>
   </section>
   <section id="explore">
-    <p class="fig">05 · Inside High Jump</p>
+    <p class="fig">05 · Inside the game</p>
     <h2 class="t">Explore how it works</h2>
     <ul>
-      <li><a href="highjump.html"><b>High Jump</b></a>: a half-pipe that is one line, speed from waggling the stick (<code>$16E3</code>), and why the height of the last pass is the one that counts (<code>$1798</code>).</li>
-      <li><a href="graphics.html"><b>Graphics</b></a>: the picture and its moving crowd (<code>$192E</code>), and all 158 poses of the skater drawn from the game's data (<code>$7000</code>).</li>
-      <li><a href="music.html"><b>Music and sound</b></a>: nine phrases chained at random (<code>$3549</code>), played by the game's own sound driver, and the event's sound effects.</li>
-      <li><a href="discoveries.html"><b>Discoveries</b></a>: rules the manual leaves out, code nothing calls, and what the shop and the town leave behind in memory.</li>
-      <li><a href="source.html"><b>Source code</b></a>: the High Jump load disassembled and annotated.</li>
+      <li><a href="loading.html"><b>Loading and title</b></a>: a one-sector loader that runs itself from the stack, a loader decrypted in layers (<span data-part="boot"><code>$0340</code></span>), a disk check the drive does with its own code, and a title picture that moves only its colours.</li>
+      <li><a href="town.html"><b>The town</b></a>: Rodney's shop as a menu, a square whose edges choose the event, and the table that loads each one (<span data-part="resident"><code>$F8A0</code></span>).</li>
+      <li><a href="freestyle.html"><b>Freestyle</b></a>: a trick decided before the coping (<span data-part="ramp"><code>$1C81</code></span>) and a bonus for variety.</li>
+      <li><a href="highjump.html"><b>High Jump</b></a>: speed from waggling the stick (<span data-part="highjump"><code>$16E3</code></span>), and why the height of the last pass is the one that counts.</li>
+      <li><a href="race.html"><b>Downhill Race</b></a>: a course where every cell knows its ground, and a score that is mostly time (<span data-part="downhill"><code>$0B14</code></span>).</li>
+      <li><a href="jam.html"><b>Downhill Jam</b></a>: twelve attacks, rubbish worth points, and a time bonus that drains away (<span data-part="jam"><code>$23F8</code></span>).</li>
+      <li><a href="joust.html"><b>Pool Joust</b></a>: first to three by two clear (<span data-part="joust"><code>$1B3C</code></span>), and three computer skaters with their own habits.</li>
+      <li><a href="graphics.html"><b>Graphics</b></a>: the half-pipe picture and its moving crowd, and all 158 poses of the skater drawn from the game's data.</li>
+      <li><a href="music.html"><b>Music and sound</b></a>: Rob Hubbard's sampled guitars, and one sound driver that plays every event's music at random.</li>
+      <li><a href="discoveries.html"><b>Discoveries</b></a>: rules the manual leaves out, credits nobody sees, and code nothing calls.</li>
     </ul>
   </section>
 </main>

@@ -46,6 +46,29 @@ traces, which cost two rounds of finding and clearing the same bogus block.
   between the snapshot and the file on disk. Written into `60-verify` this
   run; another multi-load game that meets it should add its case there.
 
+## The whole-game run (5 and 6 October 2026)
+
+- **Loading each event without the town.** The event manager's own entry
+  for going to an event (here `$F99C`, X = the row) loaded every event
+  from one snapshot, where steering the town never reached Freestyle. A
+  multi-load game with a hub likely has such an entry; `10-orient`'s "A
+  game of several parts" could say to look for the hub's dispatch before
+  driving its map. Not changed: one game's evidence.
+- **Several disassemblers at once.** `KIT_R2000_PORT` per part, with the
+  stdio bridge, ran seven instances side by side, and the annotation logs
+  replayed into fresh instances after a container restart. Both worked as
+  `tool-regen2000` describes.
+- **Importing an over-part.** `symbols_import` into a part that is "over"
+  another failed with overlapping blocks; clipping offline with
+  `parts.clip` worked. A maintainer may want `symbols_import` to clip as
+  `symbols_export` does.
+- **Fan-out cost.** Seven annotation agents and then seven page agents ran
+  into the usage limit and a restart; main's kit (#221) now caps this.
+
 ## Maintainer asks
 
-None from this run.
+- **`symbols_import` on a part that is over another** fails with "symbol
+  blocks overlap" where the part's session holds the resident part's
+  addresses too. Ask: clip to the addresses the part owns, as
+  `symbols_export` does (`parts.clip`), or say in `-h` that it must be
+  done first. <!-- kit-ask -->

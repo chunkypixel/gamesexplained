@@ -90,3 +90,27 @@ cleared at the next takeoff, and fire at the top of a pass keeping its
 figure.
 
 The comment audit found four comments with a wrong detail (`$16E3`, `$3291`, `$F4B7`, `$FF3F`); the auditing agent rewrote each in the disassembler. Two more came from checks while writing the pages: sound 15 had been described as never queued, but `ramp_bottom_sounds` (`$172E`) queues it, and the music's seed, described as left over from earlier loads, turned out to come from the disk with the event's file and to move on with every use (`$358D`).
+
+## The whole game (5 and 6 October 2026)
+
+The contributor asked for every load after High Jump reached Silver. The
+town route to Freestyle was never found by steering; instead the event
+manager's own entry `$F99C`, with X = the load-table row, loaded each event
+from the High Jump snapshot (`orientation.md`). Entering past the side check
+at `$F9E4` crashed. Each part got its own regenerator2000 instance on its
+own port (`KIT_R2000_PORT`, 3001-3007) and its own agent; a container
+restart killed four of them, and their annotation logs replayed into fresh
+instances (`r2000.py --replay`) let them resume without loss.
+
+Main's kit then changed to one `part.json` per part with "over" (PR #202),
+and the run moved to it: the shared loader and manager became the
+`resident` part, each event "over" it owning `$0000`-`$F22F`. Importing an
+over-part's symbols failed with overlapping blocks, so each part's
+`symbols.json` was clipped offline with `parts.clip` (`work/reclip.py`).
+The title's first snapshot had been taken mid-load; it was replaced by one
+waiting for fire, and the old one kept as `play-loading.vsf`.
+
+The pages were first handed to seven agents at once; a restart lost them,
+and after main's kit asked for one agent by default the pages were written
+by the lead alone from the parts' facts, with one independent agent for the
+comment audit.
