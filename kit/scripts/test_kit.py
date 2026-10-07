@@ -2,8 +2,9 @@
 """Run every kit self-test, wherever it lives.
 
 The convention (`AGENTS.md`, "Working on the kit or the site"): a kit test is
-a file matching `kit/**/test_*.py` or `kit/**/test_*.js`. Run as a script it
-exercises its own subject and exits non-zero on failure. A Python test that
+a file matching `kit/**/test_*.py` or `kit/**/test_*.js`, or `test_*.py` in a
+game's folder beside the page it checks. Run as a script it exercises its own
+subject and exits non-zero on failure. A Python test that
 needs an installed tool reads `KIT_REQUIRE_TOOLS` from the environment and,
 when it is set, FAILS with a clear message instead of skipping when the tool
 is missing - so CI cannot pass because an oracle was absent. Under
@@ -64,8 +65,15 @@ HAS_TEST_FLAG = re.compile(r"""["']--test["']""")
 def discovered():
     """(label, argv) for every test file, in a stable order."""
     out = []
+    # A game's own test sits beside the page it checks, and the parts of a game that is
+    # several loads each get one: both run here, so a page's port cannot quietly drift
+    # from the game. Neither pattern reaches the gitignored work/ folder.
     for pat, runner in ((os.path.join("kit", "**", "test_*.py"), [sys.executable]),
-                        (os.path.join("kit", "**", "test_*.js"), ["node"])):
+                        (os.path.join("games", "*", "*", "test_*.py"), [sys.executable]),
+                        (os.path.join("games", "*", "*", "parts", "*", "test_*.py"), [sys.executable]),
+                        (os.path.join("kit", "**", "test_*.js"), ["node"]),
+                        (os.path.join("games", "*", "*", "test_*.js"), ["node"]),
+                        (os.path.join("games", "*", "*", "parts", "*", "test_*.js"), ["node"])):
         for path in sorted(glob.glob(os.path.join(ROOT, pat), recursive=True)):
             if "__pycache__" in path or os.path.basename(path) == "test_kit.py":
                 continue        # itself: running it would recurse
