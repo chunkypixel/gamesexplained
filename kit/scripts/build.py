@@ -393,8 +393,6 @@ def edit_footer(game, tab, f=None):
     f = f or ASSEMBLED.get(tab, tab)
     edit, hist, tree = (f"{repo}/edit/main/{where}/{f}", f"{repo}/commits/main/{where}", f"{repo}/tree/main/{where}")
     return (f'<footer class="editfoot"><div class="in">'
-            f'<p><b>Spotted a mistake, or know something we don\u2019t?</b> '
-            'Make edits on GitHub and submit as a pull request.</p>'
             f'<p class="acts"><a class="btn" href="{html.escape(edit)}">Edit this page on GitHub</a>'
             f'<a href="{html.escape(hist)}">History</a><a href="{html.escape(tree)}">All the files for this game</a></p>'
             f'</div></footer>')
