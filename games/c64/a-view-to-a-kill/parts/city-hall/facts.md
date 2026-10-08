@@ -113,10 +113,9 @@ tune is the intro's too. `read_joystick` (`$4700`) is the mine's `$17A0`,
 
 ## Open
 
-- Whether the live prompt and end screen are the original game's or the
-  crackers'. The older prompt, the older end screen and the mine's end
-  screen at `$0A00` point to the crackers, but the memo page uses the
-  KERNAL too.
+- Whether the live end screen is the original game's or the crackers'.
+  The prompt is the game's: it is the same on Domark's uncracked disk
+  (`facts.md`, "The original disk").
 - `AND $03E9,Y` at `$95AD` reads a screen cell; `AND #` was probably meant.
 - `use_energy` sets `$1B5B` to `$80`, more than the 42 rows the gauge
   draws, so the draw loop may write over Stacey's figure (`$3480`-`$34FF`).

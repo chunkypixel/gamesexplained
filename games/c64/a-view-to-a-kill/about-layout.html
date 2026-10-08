@@ -33,10 +33,23 @@
   <ul>
     <li><b>An earlier crack's menu</b>, in the intro. Fourteen bytes at <code>$8020</code> patch over the start of another group's title and menu ("THE DYNAMIC-DUO PRESENTS … BROKEN BY THE DARK-ANGLE &amp; THE EXECUTOR"), whose menu offers SEE OPENING, PARIS-CHASE, CITY ESCAPE, SILICON MINE and FINALE and loads files named <code>P*</code>, <code>C*</code>, <code>S*</code> and <code>F*</code>. The rest of it is still there and never runs.</li>
     <li><b>An earlier packer</b>, in Paris: a BASIC line (<code>SYS 2067</code>, "MAGIC") and its depacker at <code>$0800</code>.</li>
-    <li><b>An older code prompt and end screen</b>, in City Hall (code QRS21; "WEBL DONE 007 YOUR CODE IS 111122"), and the mine's end screen at <code>$0A00</code>. Whether the code prompts in use are the game's or were written for the split is open.</li>
+    <li><b>An older code prompt and end screen</b>, in City Hall (code QRS21; "WEBL DONE 007 YOUR CODE IS 111122"), and the mine's end screen at <code>$0A00</code>.</li>
     <li><b>Leftover memory</b>: the power-on pattern of the machine the files were saved from, text from a machine-code monitor in City Hall, and in the finale, memory its packer never writes, which holds bytes that half match Paris's code.</li>
   </ul>
-  <p>The original disk's own loader is not on this copy. No game image is hosted here.</p>
+  <p>A second copy, Domark's own PAL disk with no crack on it, was compared with this one on 7 October 2026. Each part was loaded from that disk's menu and saved in play, and every byte this copy's listings call code was compared with it, setting aside the operands the game rewrites as it runs. The intro differs in 231 of 3,015 bytes, Paris in 185 of 5,741, City Hall in 168 of 6,078 and the mine in 51 of 7,927. The finale was not compared, because the original's menu has no entry for it. The differences are of two kinds.</p>
+  <p>What the crack changed:</p>
+  <ul>
+    <li><b>Going back to the menu.</b> On the original, ABORT and RESTORE in City Hall and the mine open a small screen with two choices, play the part again or load the menu from the disk (<code>$0C00</code>, loading "MENU" at <code>$0C54</code>). This copy has no such screen and restarts the part at once (City Hall <a href="source-city-hall.html#966F"><code>$966F</code></a>, the mine <a href="source-mine.html#176A"><code>$176A</code></a> and <a href="source-mine.html#3A93"><code>$3A93</code></a>).</li>
+    <li><b>The music on Paris's instruction page.</b> On the original, the interrupt on the instruction page and on the success telex plays the theme (<code>$5046</code>). This copy swaps in an interrupt that does nothing (<a href="source-paris.html#4F30"><code>$4F30</code></a>), so both pages are silent.</li>
+    <li><b>The intro's hand-over</b>: this copy's code at <code>$8000</code>-<code>$80BF</code> is not on the original. The original also blanks the colour of the top text rows before the credits (<code>$90CD</code>), which this copy skips.</li>
+  </ul>
+  <p>What plays differently, where it is not known which of the two came first. A crack would not normally add a feature, so this copy may have been made from another release of the game.</p>
+  <ul>
+    <li><b>Bond and the energy gauge in City Hall.</b> On the original, sprites 4 and 5 follow Bond every pass and change with his direction and walking frame (<code>$8900</code>, called from <code>$703D</code>), so he is drawn with four hi-res sprites. This copy uses those two sprites for the energy gauge, the outline figure that empties over time, and makes sprite 0 multicolour. The original has no gauge: the energy items still set the gauge's byte <code>$1B5B</code>, but nothing draws it or counts it down. When Stacey is in Bond's room, the original draws her in the panel with characters (<code>$8999</code>).</li>
+    <li><b>The menu highlight in City Hall.</b> This copy blinks the item window's edge between red and yellow (<a href="source-city-hall.html#6D5D"><code>$6D5D</code></a>). The original's two colours are both purple, so it does not visibly blink.</li>
+    <li><b>The pace of the mine.</b> The original's main loop waits twice as long (<code>$254E</code>, 10 against 5), a second wait is four times as long (<code>$2E5E</code>, 128 against 32), and the three hazard animations step once a pass of the main loop instead of every frame (<code>$2558</code>). The original mine runs slower.</li>
+  </ul>
+  <p>The code prompts are the same on both disks, byte for byte (City Hall <a href="source-city-hall.html#1000"><code>$1000</code></a>, the mine's text at <a href="source-mine.html#56AD"><code>$56AD</code></a>), so they are the game's own. No game image is hosted here.</p>
   </div>
 
   <h2>Research record</h2>

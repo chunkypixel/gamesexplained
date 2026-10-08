@@ -95,12 +95,45 @@ runs:
 - finale: memory the part's packer never writes, holding bytes that
   match Paris's code in part.
 
-Whether the code prompts and end screens are the original game's or the
-crackers' is open. For the crackers: the older prompt and end screen left
-in City Hall, and the mine's prompt placed in character-set glyphs the
-mine's tiles do not use. Against: the memos, which are plainly the game's,
-also print through the KERNAL. The published game is documented with the
-three codes (C64-Wiki, `features.md`).
+The code prompts are the original game's: City Hall's `code_prompt`
+(`$1000`) and the mine's prompt text (`$56AD`) are byte for byte the same
+on Domark's uncracked disk (below). The published game is documented with
+the three codes (C64-Wiki, `features.md`).
+
+## The original disk
+
+Domark's uncracked PAL disk (`a_view_to_a_killdomark_1985pal.g64`) was
+compared on 7 October 2026: each part loaded from that disk's menu and
+saved in play (City Hall and the mine entered with CCPHJ and DB4CT), every
+byte the listings call code compared, operands the game rewrites set
+aside. Bytes that differ: intro 231 of 3,015, Paris 185 of 5,741, City
+Hall 168 of 6,078, mine 51 of 7,927. The finale was not compared: the
+original menu has no entry for it.
+
+- The crack's: on the original, ABORT and RESTORE in City Hall and the
+  mine go to a screen at `$0C00` offering to replay the part or load
+  "MENU" (`$0C54`, KERNAL SETLFS, SETNAM, LOAD); the crack restarts the
+  part (City Hall `$966F`, mine `$176A` and `$3A93`). On the original,
+  Paris's instruction page and success telex play the theme from their
+  interrupt (`$5046` JSR `$7AAB`); the crack swaps in a do-nothing
+  interrupt (`$4F30`, `$5800`) and starts the chase through its own reset
+  (`$43E0`-`$43F7`, `$4025`). The intro's `$8000`-`$80BF` is the crack's
+  hand-over; the original blanks the top text rows' colour before the
+  credits (`$90CD` JSR `$9FA0`) and clears the credit line differently
+  (`$900A`).
+- Play, order of the two unknown: in the original's City Hall, sprites 4
+  and 5 follow Bond every pass by direction and walking frame (`$8900`,
+  called from `$703D`), all four of his sprites hi-res (`$8654` writes 0
+  to the multicolour register); the crack uses them for the energy gauge
+  (`gauge_update`, `$8900`) and makes sprite 0 multicolour. The original
+  draws no gauge, though the energy items still set `$1B5B`, and draws
+  Stacey in the panel with characters when she is in Bond's room
+  (`$8999`, three rows from `$89B0`). The crack blinks the item window's
+  edge red and yellow (`$6D5D`, `$6D66`); the original's two colours are
+  both purple. In the original mine the main loop's delay is 10 against 5
+  (`$254E`), a second wait 128 against 32 (`$2E5E`), and the three hazard
+  animations step once a main-loop pass (`$2558` JSR `$2CD6`) instead of
+  every frame in the mid-screen interrupt (`$10CD`).
 
 ## Live tests
 

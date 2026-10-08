@@ -32,3 +32,12 @@ agent's benefit. This is the only file that narrates; `facts.md` and
   now says only what was seen, and it is listed as open.
 - The mine's agent put ILVCT one byte late (`$0AFF`); the image has it at
   `$0AFE`-`$0B02`, and the symbol was moved.
+
+## 7-8 October 2026: the original disk
+
+Euan supplied Domark's uncracked PAL disk. Each part was loaded from its
+menu, dumped in play and compared with the crack's listings code byte by
+code byte, counting a byte as different only when it differed from every
+snapshot of the crack. The findings went into `facts.md` ("The original
+disk") and the About tab on a new branch, since the first pull request had
+merged. They settled one open question: the code prompts are the game's.

@@ -133,6 +133,6 @@ Hall at the same address; the tune is Paris's. Only port 2 is read
   per-type counters `$1B11`-`$1B23`.
 - The planks' handler compares with `$54`, which no object is, so the
   branch at `$8651` never runs.
-- Whether the prompt and end screen are the original's or the crackers':
-  the prompt sits in character-set glyphs the tiles do not use
-  (`$CC`-`$EB`), and City Hall holds the same `$0A00` routine.
+- Whether the end screen is the original's or the crackers': City Hall
+  holds the same `$0A00` routine. The prompt is the original's; it is the
+  same on Domark's uncracked disk (`facts.md`, "The original disk").
