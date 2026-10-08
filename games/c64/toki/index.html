@@ -49,15 +49,26 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 <header class="hero">
   <p class="eyebrow">Commodore 64 · 1991 · Ocean Software</p>
   <h1>Toki</h1>
-  <p class="sub">Ocean's conversion of TAD Corporation's 1989 arcade platformer, in which a warrior turned into an ape spits fireballs to rescue his captured love. On the C64 it shipped only as a 128 KB cartridge.</p>
+  <p class="sub">Ocean's conversion of TAD Corporation's 1989 arcade platformer, in which a warrior turned into an ape spits fireballs to rescue his captured love. On the C64 it shipped as a 128 KB cartridge, and the game treats that cartridge as a library it copies from rather than a program it runs.</p>
 </header>
 <main class="wrap">
 <section>
   <p class="fig">01 · The cartridge</p>
   <h2 class="t">Sixteen banks behind one window</h2>
-  <p>The cartridge holds 128 KB in sixteen 8 KB banks, and the C64 sees one bank at a time in the window at $8000. The image's header names it an Ocean type 1 cartridge (CRT hardware type 5) titled TOKI. Bank 0 starts with the C64's autostart signature, CBM80 at $8004, so the machine jumps straight into the cartridge at $812C when it is switched on.</p>
-  <div class="plate"><img class="reference" src="reference/stage-1.png" alt="Toki standing in the jungle at the start of stage 1, with the status bar below"><p class="cap"><b>Stage 1, Labyrinth of Caves.</b> Fire on the title screen leads to a stage card with a choice of sound effects or music; fire again starts play.</p></div>
-  <p>Nothing else about the program has been explained yet: the code has not been read.</p>
+  <p>The cartridge holds 128 KB in sixteen 8 KB banks, and the C64 sees one bank at a time at $8000. Switching on starts bank 0, and by the time the game's first routine in RAM runs <code>$51FB</code>, most of the program has been copied out of the cartridge. During play the game keeps the cartridge out of sight and runs entirely from RAM, including a copy of bank 3 at $8000.</p>
+  <p>When it needs something from the cartridge, a short routine in the stack page brings bank 0 back, looks the item up in a directory of eight-byte entries, switches to the bank that holds it, and copies it into place <code>$011F</code>. The stage names, GAME OVER, and STAGE CLEAR never reach RAM: they stay in bank 0.</p>
+</section>
+<section>
+  <p class="fig">02 · Timing</p>
+  <h2 class="t">A frame driven by an NMI</h2>
+  <p>A CIA timer set to one PAL frame raises an NMI every frame <code>$4D1D</code>, and two raster interrupts split the screen between the play area <code>$837E</code> and the status panel <code>$BCE1</code>. The main loop spends its spare time waiting for the next frame <code>$819B</code>.</p>
+</section>
+<section>
+  <p class="fig">03 · Screens</p>
+  <h2 class="t">From title to stage 1</h2>
+  <div class="plate"><img class="reference" src="reference/title.png" alt="Toki title screen, the logo over a volcano and jungle"><p class="cap"><b>Title.</b> Fire on joystick port 2 moves on.</p></div>
+  <div class="plate" style="margin-top:20px"><img class="reference" src="reference/stage-card.png" alt="Stage card reading Stage 1, Labyrinth of Caves, with SFX and Music choices"><p class="cap"><b>Stage card.</b> Each stage has a name, and the player picks sound effects or music. The game stores five names: Labyrinth of Caves, Lake Neptune, Caverns of Fire, Ice Palace, and Dark Jungle.</p></div>
+  <div class="plate" style="margin-top:20px"><img class="reference" src="reference/stage-1.png" alt="Toki standing in the jungle at the start of stage 1, with the status bar below"><p class="cap"><b>Stage 1.</b> The timer starts at 4:30.</p></div>
 </section>
 </main>
 <footer style="margin:16px 0 0;padding:22px var(--gx) 0;border-top:1px solid #e0ded8;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px;color:#80838a"><a href="https://github.com/gamesexplained/gamesexplained" style="color:#1f5fa8;text-decoration:none">GitHub</a> · <a href="https://discord.gg/3V9GWyRDWV" style="color:#1f5fa8;text-decoration:none">Discord</a><br>© Games Explained contributors. Write-ups, facts and symbol maps are available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#1f5fa8;text-decoration:none">CC BY-SA 4.0</a>; code under <a href="https://opensource.org/licenses/MIT" style="color:#1f5fa8;text-decoration:none">MIT</a></footer>
