@@ -28,6 +28,13 @@
   <p class="fig">02 · The fighters</p>
   <h2 class="t">Every pose is built from nine pieces</h2>
   <p class="lede">A fighter is a three-by-three grid of multicolour sprites. The game never stores a whole pose. Each shape frame is nine cell numbers, and each cell is a 64-byte piece of a karateka.</p>
+  <h3 class="fx-h3">The moves</h3>
+  <p>Each fighter has 21 moves, numbered as the game numbers them. Nineteen come from the stick, with or without fire: down-forward gives one punch from standing and another from a crouch, and back with fire gives the turn round and then, held, the spinning kick. The two blocks happen on their own when a fighter pulls back as a blow comes in reach. The rest of this tab refers to the moves by these numbers.</p>
+  <div class="plate">
+    <div class="fx-moves" id="moveCards"></div>
+    <p class="cap">Each card is the move's key frame, built from the game's tables like the viewer below: the frame a blow is tested on (<code>$1204</code>), or a typical pose for the other moves. The stick is shown for a fighter facing right, so → is towards the opponent; facing left swaps left and right (<code>$2857</code>). Points are for a whole point, in the game's own table (<code>$12A5</code>). The game stores no names, so the names describe what each move's frames show. The block each blow meets confirms its height (<code>$118F</code>): the high block answers the high punch and the high, flying, back and spinning kicks, and the low block answers the low and middle punches and the low and middle kicks. A pull-back never blocks a sweep (<code>$2AF2</code>); the computer opponent jumps it instead. Click a card to play the move in the viewer.</p>
+  </div>
+  <h3 class="fx-h3">The animations</h3>
   <div class="plate">
     <div class="fx-row">
       <div>
@@ -42,7 +49,7 @@
     </div>
     <p class="cap">Press a direction, with or without fire, to play that move's animation as the game stores it: a list of steps, each a number of ticks, a shape frame and a step in X and Y (<code>$7720</code>). The pose is assembled the way the sprite builder (<code>$3914</code>) does it, from the frame tables at <code>$7AE0</code> and the cells at <code>$8000</code>; facing left takes the columns in reverse and mirrors every byte through the table at <code>$7E00</code> (<code>$3BC5</code>). Checked against both fighters' sprites in a snapshot of play.</p>
   </div>
-  <p>Sixteen stick positions give sixteen moves, in the table at <code>$286C</code>. Down-forward from standing is a punch (move <code>$18</code>), and from a crouch a different blow (move 7); fire with back from standing becomes a turn round (<code>$12</code>). There are 79 shape frames. The karateka use <code>$00</code>-<code>$3A</code>, and <code>$3B</code>-<code>$4C</code> are the bull of the bonus round, which uses the same tables but takes each byte as a sprite pointer instead of a cell (<code>$5D</code> = <code>$40</code>).</p>
+  <p>Sixteen stick positions give sixteen moves, in the table at <code>$286C</code>. Down-forward from standing is the middle punch (move <code>$18</code>), and from a crouch the low punch (move 7). Fire with back from standing becomes the turn round (<code>$12</code>), and only a fighter still holding it there gets the spinning kick (<code>$11</code>, <code>$29B4</code>). There are 79 shape frames. The karateka use <code>$00</code>-<code>$3A</code>, and <code>$3B</code>-<code>$4C</code> are the bull of the bonus round, which uses the same tables but takes each byte as a sprite pointer instead of a cell (<code>$5D</code> = <code>$40</code>).</p>
   <p>Each fighter has two 576-byte buffers at <code>$C040</code>-<code>$C93F</code> and is rebuilt into the spare one whenever its frame changes, so a half-built pose is never on screen. A cell of 0 leaves its sprite blank: the standing pose fills six of the nine.</p>
 </section>
 

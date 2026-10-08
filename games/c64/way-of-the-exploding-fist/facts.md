@@ -102,8 +102,15 @@ KERNAL is out and the game owns the vectors: NMI `$2FF2`, RESET `$1990`
   Sixteen inputs give sixteen moves; with standing that is the eighteen
   movements of the box once the crouching variant 7 and the turn round
   `$12` (fire + back from standing, `$11` turned into `$12`) are counted.
-  Which kick or punch each fire move is was judged from screenshots only
-  for the moves named in the table.
+  The game stores no names. The names used on the page (high, middle
+  and low punch 6, `$18`, 7; foot sweep `$0A`; low, middle and high kick
+  `$0B`, `$0C`, `$0D`; back kick `$0F`; back sweep `$10`; spinning kick
+  `$11`; low and high block `$13`, `$14`) describe each move's frames as
+  the pose builder draws them. The heights agree with `move_block_answer`
+  (`$118F`): `$14` answers 6, `$0D`, `$0E`, `$0F`, `$11`; `$13` answers
+  7, `$0B`, `$0C`, `$18`; the jump 5 answers the sweeps `$0A` and `$10`.
+  `$0F` and `$10` strike behind the fighter (`$11A8`). The spinning kick
+  `$11` is taken only from a held turn round `$12` (`$29B4`).
 - **Keyboard** (F7 in the attract mode, `$C6`): player 1 Q W E / A D /
   Z X C with fire S or left SHIFT (`$28B2`-`$2930`); player 2 P @ * / L ; /
   , . / with fire : or right SHIFT (`$2931`-`$29B3`). The first held

@@ -234,9 +234,18 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
                '#8e5029', '#553800', '#c46c71', '#4a4a4a', '#7b7b7b', '#a9ff9f', '#706deb', '#b2b2b2'];
   const needSite = 'This widget reads the game’s bytes from listing.json and the site’s shared scripts: open the page from the built site, not from disk.';
   const MOVES = { 1: 'stand', 2: 'walk forward', 3: 'walk back', 4: 'crouch', 5: 'jump', 6: 'high punch',
-    7: 'down-forward from a crouch', 8: 'somersault backwards', 9: 'somersault forwards', 0x0A: 'fire + down',
-    0x0B: 'fire + down-forward', 0x0C: 'fire + forward', 0x0D: 'fire + up-forward', 0x0E: 'flying kick',
-    0x0F: 'fire + up-back', 0x10: 'fire + down-back', 0x11: 'fire + back', 0x12: 'turn round', 0x18: 'punch' };
+    7: 'low punch', 8: 'somersault backwards', 9: 'somersault forwards', 0x0A: 'foot sweep',
+    0x0B: 'low kick', 0x0C: 'middle kick', 0x0D: 'high kick', 0x0E: 'flying kick',
+    0x0F: 'back kick', 0x10: 'back sweep', 0x11: 'spinning kick', 0x12: 'turn round', 0x13: 'low block', 0x14: 'high block', 0x18: 'middle punch' };
+  // The move cards: move, key frame (the strike frame $1204 for a blow), stick as read facing right, fire, how it is reached.
+  const MOVE_CARDS = [
+    [1, 0x00, '○', 0, 'stick centred'], [2, 0x02, '→', 0, ''], [3, 0x31, '←', 0, 'blocks instead when a blow is in reach'],
+    [4, 0x0C, '↓', 0, ''], [5, 0x09, '↑', 0, ''], [6, 0x07, '↗', 0, ''], [0x18, 0x13, '↘', 0, 'from standing'],
+    [7, 0x0D, '↘', 0, 'from a crouch'], [8, 0x17, '↙', 0, ''], [9, 0x14, '↖', 0, ''],
+    [0x0A, 0x10, '↓', 1, 'crouches first'], [0x0B, 0x08, '↘', 1, ''], [0x0C, 0x05, '→', 1, ''], [0x0D, 0x0B, '↗', 1, ''],
+    [0x0E, 0x0A, '↑', 1, ''], [0x0F, 0x12, '↖', 1, 'strikes behind'], [0x10, 0x39, '↙', 1, 'crouches first, strikes behind'],
+    [0x11, 0x24, '←', 1, 'held on from the turn'], [0x12, 0x1B, '←', 1, 'from standing'],
+    [0x13, 0x23, '←', 0, 'automatic, against a low or middle blow'], [0x14, 0x0E, '←', 0, 'automatic, against a high blow']];
 
   // A multicolour sprite at (px, py): %01 $D025 (black), %10 the fighter's colour, %11 $D026 (light red),
   // as the game sets them ($19BD, $19C2; the frame's registers show 0 and $0A).
@@ -321,6 +330,21 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
     $('gridBtn').onclick = () => { grid = !grid; $('gridBtn').classList.toggle('on', grid); show(frame); };
     $('frameIn').oninput = e => { clearInterval(timer); show(+e.target.value); };
     play(0x0E);
+    if ($('moveCards')) {
+      const box = $('moveCards');
+      for (const [m, f, arrow, fired, how] of MOVE_CARDS) {
+        const b = document.createElement('button'); b.className = 'fx-move'; b.type = 'button';
+        const cv = document.createElement('canvas'); cv.width = 144; cv.height = 126;
+        drawPose(cv, FIST.pose(ram, f, false, false), 2, 1, false);
+        const pts = ram[0x1176 + m] ? ' · ' + ram[0x12A5 + m] * 100 + ' pts' : '';
+        b.appendChild(cv);
+        b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Move ${hex(m)}${pts}</span><b>${MOVES[m][0].toUpperCase() + MOVES[m].slice(1)}</b>` +
+          `<span class="fx-move-in"><span class="fx-move-arrow">${arrow}</span>${fired ? '<span class="fx-move-fire">fire</span>' : ''}${how ? ' ' + how : ''}</span>`);
+        b.title = 'Play move ' + hex(m) + ' in the viewer below';
+        b.onclick = () => { play(m); $('poseCv').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+        box.appendChild(b);
+      }
+    }
 
     }
     if ($('bdCv')) {
