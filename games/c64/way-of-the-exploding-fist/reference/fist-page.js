@@ -475,7 +475,20 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
       const upd = () => {
         const m = +sel.value, f = +$('gFrame').value;
         $('gFrameOut').textContent = hex(f);
-        drawPose($('gPose'), FIST.pose(ram, f, true, false), 2, 2, false);
+        // both fighters as the hit test sees them: the attacker (white, facing right) on the frame its
+        // blow is tested on, move_strike_frame $1204, and the defender (red, facing left) on frame f,
+        // placed at the distance the reach profile aims at; X units are two pixels ($386C doubles $6A)
+        const sf = ram[0x1204 + m], p0 = ram[(ram[0x121D + 2 * m] | ram[0x121E + 2 * m] << 8) + f];
+        const dist = p0 === 0x80 ? 30 : (p0 << 24) >> 24, gc = $('gPose'), gx = gc.getContext('2d'), k = 2;
+        gx.fillStyle = '#edf171'; gx.fillRect(0, 0, gc.width, gc.height);
+        const left = 8 + Math.max(0, -2 * dist) * k;
+        const at = (slots, x0, colour) => slots.forEach((s, i) => { if (s) drawSpriteMC(gx, s, x0 + (i % 3) * 24 * k, Math.floor(i / 3) * 21 * k + 14, k, colour); });
+        at(FIST.pose(ram, sf, false, false), left, 1);
+        at(FIST.pose(ram, f, true, false), left + 2 * dist * k, 2);
+        gx.fillStyle = '#55585f'; gx.font = '11px IBM Plex Mono, monospace';
+        gx.fillText('attacker: move ' + hex(m) + ', frame ' + hex(sf), 6, 11);
+        const label = 'defender: frame ' + hex(f) + (p0 === 0x80 ? ' (cannot be hit; drawn at 30)' : ', at distance ' + dist);
+        gx.fillText(label, gc.width - 6 - gx.measureText(label).width, 11);
         bctx2.fillStyle = '#fff'; bctx2.fillRect(0, 0, bar.width, bar.height);
         const lo = -10, hi = 60, w = bar.width / (hi - lo + 1);
         const spans = [];
@@ -487,7 +500,11 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         }
         bctx2.fillStyle = '#80838a'; bctx2.font = '11px IBM Plex Mono, monospace';
         for (let d = lo; d <= hi; d += 10) bctx2.fillText(String(d), (d - lo) * w, 72);
-        const p = ram[(ram[0x121D + 2 * m] | ram[0x121E + 2 * m] << 8) + f];
+        if (p0 !== 0x80 && dist >= lo && dist <= hi) {           // the distance the picture shows
+          bctx2.fillStyle = '#2f3136'; bctx2.fillRect((dist - lo) * w + w / 2 - 1, 2, 2, 58);
+          bctx2.fillText('shown', Math.min(bar.width - 40, (dist - lo) * w + 4), 86);
+        }
+        const p = p0;
         $('gOut').textContent = p === 0x80 ? 'Profile byte $80: a defender in this frame cannot be hit by this blow.'
           : 'Profile byte ' + hex(p) + ' (aims at ' + ((p << 24) >> 24) + '); whole point at ' + spans.filter(s => s[1] === 2).map(s => s[0]).join(', ') +
             (spans.some(s => s[1] === 1) ? '; half at ' + spans.filter(s => s[1] === 1).map(s => s[0]).join(', ') : '');
