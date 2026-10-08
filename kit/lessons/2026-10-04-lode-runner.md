@@ -1,4 +1,4 @@
-## next · 4 October 2026 · Lode Runner · jankfoundry with Codex
+## 0.0.113 · 4 October 2026 · Lode Runner · jankfoundry with Codex
 
 An indexed table's declared length does not bound what the engine reads.
 Enumerate the caller's whole normal range, including sums and pitch
