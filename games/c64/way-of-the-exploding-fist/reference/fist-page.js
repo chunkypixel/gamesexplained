@@ -483,8 +483,8 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         gx.fillStyle = '#edf171'; gx.fillRect(0, 0, gc.width, gc.height);
         const left = 8 + Math.max(0, -2 * dist) * k;
         const at = (slots, x0, colour) => slots.forEach((s, i) => { if (s) drawSpriteMC(gx, s, x0 + (i % 3) * 24 * k, Math.floor(i / 3) * 21 * k + 14, k, colour); });
-        at(FIST.pose(ram, sf, false, false), left, 1);
-        at(FIST.pose(ram, f, true, false), left + 2 * dist * k, 2);
+        at(FIST.pose(ram, f, true, false), left + 2 * dist * k, 2);   // the defender first, so the
+        at(FIST.pose(ram, sf, false, false), left, 1);                // attacker's blow is drawn over it
         gx.fillStyle = '#55585f'; gx.font = '11px IBM Plex Mono, monospace';
         gx.fillText('attacker: move ' + hex(m) + ', frame ' + hex(sf), 6, 11);
         const label = 'defender: frame ' + hex(f) + (p0 === 0x80 ? ' (cannot be hit; drawn at 30)' : ', at distance ' + dist);
