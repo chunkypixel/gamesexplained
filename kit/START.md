@@ -72,9 +72,33 @@ step needs something only they have.
 
    **Last, make sure the commits will be theirs.** The site credits a
    game to the GitHub accounts that authored its commits, so commits made
-   under the agent's identity credit nobody. Ask for their GitHub login
-   and the name they want shown, and set both for this repository only,
-   never globally:
+   under the agent's identity credit nobody. First look at what the
+   commits would be authored as now:
+
+   ```
+   git var GIT_AUTHOR_IDENT
+   ```
+
+   That includes `GIT_AUTHOR_*` and `GIT_COMMITTER_*` from the
+   environment, which override `git config`: in a hosted session the
+   contributor's identity may already be set there. If it shows their
+   name on a noreply address (`<login>@users.noreply.github.com`), it
+   is already theirs: show it, ask for a yes, and move on. Ask for
+   their GitHub login and the name they want shown only when it shows
+   something else (the agent's identity, a personal address, nothing).
+
+   Where the environment variables are set and wrong, `git config`
+   changes nothing: set the identity in the environment of each commit
+   instead:
+
+   ```
+   GIT_AUTHOR_NAME="<their name>" GIT_AUTHOR_EMAIL="<login>@users.noreply.github.com" \
+   GIT_COMMITTER_NAME="<their name>" GIT_COMMITTER_EMAIL="<login>@users.noreply.github.com" \
+   git commit ...
+   ```
+
+   Where they are not set, set both for this repository only, never
+   globally:
 
    ```
    git config user.name "<their name>"
