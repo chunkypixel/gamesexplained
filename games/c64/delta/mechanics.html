@@ -81,8 +81,20 @@
   <p>Weapons change the enemies too. Owning the shield brings out the homing bombs, and the double laser and slow-down change how finely they aim (<code>enemy_fire_setup</code>, <code>$9100</code>; <a href="#fire">enemy fire</a>). Every weapon is lost when the ship dies (<code>$397E</code>).</p>
 </section>
 
+<section id="enemies">
+  <p class="fig">04 · The enemies</p>
+  <h2 class="t">An enemy's toughness comes from its wave, not its shape</h2>
+  <p class="lede">Across the 32 stages the attack waves use 22 different enemies. Most are one sprite. Three are big ones built from seven sprites that fly together.</p>
+  <div class="plate">
+    <div class="grid-cards" id="enemyCards"></div>
+    <p class="cap"><b>Each enemy once, whatever stage it flies in.</b> A single-sprite enemy is told apart by its animation list: the wave record's byte 1 plus its first path segment's offset, an index into the lists at <code>$1300</code>. It is drawn with that list's frames, one every 4 frames as <code>enemy_anim_step</code> (<code>$3C89</code>) steps it. A big enemy is drawn as its parts stood on the first frame they were all on screen. Everything else is counted from the <a href="waves.html">wave recordings</a> of 31 stages, shop icons left out (stage 29 is not recorded, but its wave list holds no enemy that is not here): the stages each enemy flies in, how many came, the hit points and points each started with (points as the panel shows them, ten times what the game adds, <code>$11D8</code>), the colours it was given (<code>$A800</code>), and whether its path ever let it fire. The shapes are the ones the video chip showed in the recordings, since the game rewrites <code>$4000</code>-<code>$40FF</code> in play. The two shared multicolours change by stage; each card uses the first stage it appears in. Some enemies turn into a new form when shot instead of dying (bit 7 of a path segment's byte 3); those forms come from the list read through <code>$12FE</code> and are not drawn here.</p>
+  </div>
+  <p>The hit points come from the wave, not the enemy: <code>wave_hits_table</code> (<code>$A100</code>) is indexed by the record and the enemy's place in its group, so one shape can die at the first hit in one stage and take 32 hits, or none, in another. The points work the same way, through the record's byte 3, and so does the colour. 0 or 1 hit points dies at the first hit; <code>$FF</code> cannot be destroyed.</p>
+  <p>The commonest is enemy 10, a single frame (<code>$60</code>) that came 650 times in 10 stages, from one hit to seven or indestructible. Enemy 4 shows the spread at its widest: the same shape takes anything from 1 to 32 hits, or cannot be destroyed at all.</p>
+</section>
+
 <section id="fire">
-  <p class="fig">04 · Enemy fire</p>
+  <p class="fig">05 · Enemy fire</p>
   <h2 class="t">Three kinds of fire, paid for from one budget</h2>
   <p>Enemies fire three ways, all drawn with characters (<code>enemy_fire_decide</code>, <code>$9208</code>): aimed shots that travel along a row, six at most; homing bombs two characters square, two at most; and bullets, the character <code>$ED</code> moving in one of eight directions, seven at most.</p>
   <p>Each frame one enemy, taking the seven in turn, may fire. It must be alive, past its entrance and allowed to fire by its wave, and its own counter must have reached the stage's fire rate. New fire is allowed only while the fire already in flight costs less than the stage's budget: a shot counts 5, a bomb 10 and a bullet 1 (<a href="levels.html#table">every stage's numbers</a>).</p>
@@ -90,7 +102,7 @@
 </section>
 
 <section id="controls">
-  <p class="fig">05 · Controls</p>
+  <p class="fig">06 · Controls</p>
   <h2 class="t">Controls</h2>
   <div class="scroll"><table>
     <tr><th>Input</th><th>Where</th><th>Effect</th></tr>

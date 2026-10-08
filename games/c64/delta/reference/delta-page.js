@@ -519,6 +519,67 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
     draw();
   }
 
+  /* the enemies: one card each, from reference/enemies.json (built from the wave recordings) */
+  function enemiesWidget() {
+    const box = $('enemyCards');
+    fetch('reference/enemies.json').then(r => r.json()).then(J => {
+      const shape = {};
+      for (const [id, b] of Object.entries(J.shapes)) shape[parseInt(id, 16)] = Uint8Array.from(atob(b), c => c.charCodeAt(0));
+      const NOTE = { 0xC6: 'stage 1’s boss is record $0D: 8 hits, circled by six indestructible copies' };
+      const list = v => v.length < 3 ? v.join(' or ') : v.slice(0, -1).join(', ') + ' or ' + v[v.length - 1];
+      function hits(hp) {
+        const n = [...new Set(hp.filter(h => h !== 255).map(h => Math.max(1, h)))].sort((a, b) => a - b);
+        const t = n.length ? (n.length > 2 ? n[0] + ' to ' + n[n.length - 1] : list(n)) + (n.length === 1 && n[0] === 1 ? ' hit' : ' hits') : '';
+        return hp.includes(255) ? (t ? t + ', or indestructible' : 'indestructible') : t;
+      }
+      function stages(v) {                       // 1, 2, 3, 5 -> "1-3, 5"
+        const out = [];
+        for (let i = 0; i < v.length; i++) { let j = i; while (j + 1 < v.length && v[j + 1] === v[j] + 1) j++; out.push(j > i + 1 ? v[i] + '-' + v[j] : j > i ? v[i] + ', ' + v[j] : String(v[i])); i = j; }
+        return out.join(', ');
+      }
+      const cards = [];
+      J.enemies.forEach((k, i) => {
+        const parts = k.parts || [{ dx: 0, dy: 0, colour: k.colour, frames: k.frames }];
+        const w = Math.max(...parts.map(p => p.dx)) + 24, h = Math.max(...parts.map(p => p.dy)) + 21;
+        const S = Math.max(1, Math.min(4, Math.floor(Math.min(136 / w, 84 / h))));
+        const div = document.createElement('div'); div.className = 'card';
+        const cv = document.createElement('canvas'); cv.width = Math.max(w * S, 48) + 8; cv.height = h * S + 8;
+        cv.style.width = cv.width + 'px'; cv.style.maxWidth = '100%'; div.appendChild(cv);
+        const killable = k.parts ? k.parts.filter(p => p.hits !== 255).length : 0;
+        const note = k.parts ? `${k.parts.length} sprites flying as one; ` + (killable ? `${killable} of them can be destroyed` : 'none can be destroyed')
+          : NOTE[k.anim] || '';
+        const frames = k.parts ? [...new Set(k.parts.map(p => p.frame))] : k.frames;
+        div.insertAdjacentHTML('beforeend', `<b>Enemy ${i + 1}</b> · ${list(k.points.map(p => p * 10))} points<br>` +
+          `${hits(k.hits)}; ${k.fires ? 'may fire' : 'never fires'}` +
+          (note ? `<br><i>${note}</i>` : '') +
+          `<br>stage${k.stages.length > 1 ? 's' : ''} ${stages(k.stages)} · ${k.count} in the recordings` +
+          `<br>${k.colours.map(c => `<span class="sw" style="background:${PAL[c]}"></span>`).join('')}` +
+          `<br><span class="k">${k.anim == null ? 'records ' + k.records.map(r => hex(r)).join(' ') : 'list ' + hex(0x1300 + k.anim, 4)} · frames ${frames.map(f => hex(f)).join(' ')}</span>`);
+        box.appendChild(div);
+        cards.push({ ctx: cv.getContext('2d'), S, w: cv.width, h: cv.height, mc: k.mc,
+          parts: k.parts ? k.parts.map(p => ({ dx: p.dx, dy: p.dy, colour: p.colour, frames: [p.frame] })) : parts });
+      });
+      function sprite(ctx, d, x0, y0, S, cols) {
+        for (let r = 0; r < 21; r++) for (let c = 0; c < 12; c++) {
+          const v = d[r * 3 + (c >> 2)] >> (6 - 2 * (c & 3)) & 3;
+          if (v) { ctx.fillStyle = cols[v]; ctx.fillRect(x0 + c * 2 * S, y0 + r * S, 2 * S, S); }
+        }
+      }
+      function draw(t) {                         // the game steps an enemy's animation every 4 frames
+        for (const c of cards) {
+          c.ctx.fillStyle = '#000'; c.ctx.fillRect(0, 0, c.w, c.h);
+          for (const p of c.parts) {
+            const f = p.frames[Math.floor(t / 4) % p.frames.length];
+            sprite(c.ctx, shape[f], 4 + p.dx * c.S, 4 + p.dy * c.S, c.S, [null, PAL[c.mc[0]], PAL[p.colour], PAL[c.mc[1]]]);
+          }
+        }
+      }
+      let t = 0; draw(0);
+      setInterval(() => { if (!document.hidden) draw(++t); }, 20);
+    }).catch(() => { box.textContent = 'This widget reads reference/enemies.json: open the page from the built site, not from disk.'; });
+  }
+  if ($('enemyCards')) enemiesWidget();
+
   const need = ['music', 'sfx', 'stageOut', 'stageTable', 'shopOut', 'shotOut', 'starLab'].filter(id => $(id));
   if (!need.length) return;
   if (!window.C64) {
