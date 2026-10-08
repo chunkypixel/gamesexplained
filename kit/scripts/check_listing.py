@@ -27,6 +27,7 @@ that points at a part beneath reads as that part names it now.
 
 Usage: check_listing.py [game dir ...]      default: every game, and every part of one
 """
+import concurrent.futures
 import glob, hashlib, json, os, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -50,14 +51,15 @@ def untyped_code(gdir, S):
 
 
 def check(gdir):
+    """(errors, notes) for one listing: errors fail the check, notes are printed as warnings."""
     lp, sp = os.path.join(gdir, "listing.json"), os.path.join(gdir, "symbols.json")
     S = json.load(open(sp))
     if not os.path.exists(lp):
         if not (S["blocks"] or S["symbols"] or S["comments"]):
-            return []   # a new game's empty map: nothing to list yet
-        return [f"{gdir}: no listing.json (run kit/scripts/listing.py)"]
+            return [], []   # a new game's empty map: nothing to list yet
+        return [f"{gdir}: no listing.json (run kit/scripts/listing.py)"], []
     L = json.load(open(lp))
-    errs = []
+    errs, notes = [], []
     sha = hashlib.sha256(open(sp, "rb").read()).hexdigest()
     if L.get("symbols_sha256") != sha:
         errs.append("listing.json was built from a different symbols.json; rebuild it")
@@ -79,8 +81,8 @@ def check(gdir):
             from listing import LOST
             lost = [x for x in L["records"] if x.get("note") == LOST]
             if lost:
-                print(f"  !  {gdir}: {sum(x['n'] for x in lost)} byte(s) the ledger counts are not in the listing "
-                      f"(the first at ${lost[0]['a']:04X}); a build from the snapshot fills them")
+                notes.append(f"{gdir}: {sum(x['n'] for x in lost)} byte(s) the ledger counts are not in the listing "
+                             f"(the first at ${lost[0]['a']:04X}); a build from the snapshot fills them")
     labels = {r["a"]: r.get("l") for r in L["records"] if "l" in r}
     comments = {r["a"]: r.get("c") for r in L["records"] if "c" in r}
     for s in S["symbols"]:
@@ -94,8 +96,8 @@ def check(gdir):
         errs.append(f"{len(ran)} byte(s) that codemap.json records running as code are not typed Code in "
                     f"symbols.json (the first at ${ran[0]:04X}); type them as code")
     if traced:
-        print(f"  !  {gdir}: codemap.json's trace reaches {len(traced)} byte(s) not typed Code (the first at "
-              f"${traced[0]:04X}): code the play never ran, or data the trace walked into; read them")
+        notes.append(f"{gdir}: codemap.json's trace reaches {len(traced)} byte(s) not typed Code (the first at "
+                     f"${traced[0]:04X}): code the play never ran, or data the trace walked into; read them")
     if os.path.isfile(os.path.join(gdir, "part.json")):
         game = load_game(gdir)
         away = game.get("elsewhere") or []
@@ -109,7 +111,7 @@ def check(gdir):
             if n:
                 errs.append(f"{n} operand(s) point at a part beneath this one whose names have changed since the "
                             "listing was built; name them again: listing.py <part> --relabel")
-    return [f"{gdir}: {e}" for e in errs[:20]]
+    return [f"{gdir}: {e}" for e in errs[:20]], notes
 
 
 def check_parts(gdir):
@@ -178,8 +180,21 @@ def main():
             dirs.append(g)
         if not layout:
             dirs += [p["dir"] for p in parts(g) if os.path.isfile(os.path.join(p["dir"], "symbols.json"))]
+    # one listing never touches another: the rebuild of each runs on its own,
+    # so they are checked side by side and the report still comes out in folder order.
+    # processes, not threads: check() re-decodes every record in Python, and the
+    # GIL would serialize that; each worker is handed one listing folder
+    workers = min(8, os.cpu_count() or 2)
+    with concurrent.futures.ProcessPoolExecutor(max_workers=workers) as ex:
+        fut = {ex.submit(check, d): d for d in dirs}
+        got = {}
+        for f in concurrent.futures.as_completed(fut):
+            got[fut[f]] = f.result()
     for d in dirs:
-        errs += check(d)
+        dir_errs, notes = got[d]
+        for n in notes:
+            print(f"  !  {n}")
+        errs += dir_errs
     for e in errs:
         print("  x ", e)
     if errs:

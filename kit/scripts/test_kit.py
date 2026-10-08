@@ -33,6 +33,7 @@ Exit status is 1 if any test failed, 0 otherwise. A test that exits 0 but
 says it skipped is reported as SKIP, which is not a failure without
 `--require-tools` - locally it is the reason to install the tool.
 """
+import concurrent.futures
 import glob
 import os
 import re
@@ -162,12 +163,8 @@ def main(argv):
         print(f"  x  nothing matched {wanted!r}")
         return 1
 
-    results, failed = [], 0
-    for label, argv_ in tests:
-        verdict, rc, took, tail, out = run(label, argv_, require_tools, capture=True)
-        results.append((verdict, label, took, tail, out))
+    def report(verdict, label, took, rc, tail):
         if verdict == "FAIL":
-            failed += 1
             why = f"exit {rc}" if rc else "it skipped, and --require-tools allows no skips"
             print(f"  FAIL  {label}  ({took:.1f}s, {why})")
             for ln in tail[-25:]:
@@ -175,9 +172,32 @@ def main(argv):
         else:
             note = "" if verdict == "PASS" else "  (no tool: it said so)"
             print(f"  {verdict}  {label}  ({took:.1f}s){note}")
-        if until and label == until:
-            print(f"  --until {until}: stopping")
-            break
+
+    results, failed = [], 0
+    if until:
+        # --until keeps its serial meaning: run in discovery order, stop after it
+        ordered = []
+        for label, argv_ in tests:
+            ordered.append((label, run(label, argv_, require_tools, capture=True)))
+            if label == until:
+                print(f"  --until {until}: stopping")
+                break
+    else:
+        # each test is its own process, so they run side by side; the report
+        # below still comes out in discovery order, not completion order
+        workers = min(8, os.cpu_count() or 2)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as ex:
+            fut = {ex.submit(run, label, argv_, require_tools, True): label
+                   for label, argv_ in tests}
+            got = {}
+            for f in concurrent.futures.as_completed(fut):
+                got[fut[f]] = f.result()
+        ordered = [(label, got[label]) for label, _ in tests]
+    for label, (verdict, rc, took, tail, out) in ordered:
+        results.append((verdict, label, took, tail, out))
+        if verdict == "FAIL":
+            failed += 1
+        report(verdict, label, took, rc, tail)
 
     slow = [r for r in results if r[2] > 60]
     if slow:
