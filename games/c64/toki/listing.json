@@ -1,0 +1,1 @@
+{"schema":1,"platform":"c64","game":"toki","title":"Toki","build":"Ocean type 1 cartridge, 16 banks of 8 KB (128 KB)","symbols_sha256":"8a20c586798c9d326be856fb0dddd3404368d4d8f1d52bf43bb8c6b2503210f3","snapshot":{"file":"work/play.vsf","sha256":"0ec983c17540138caf40576f9193765aa45b25689c3f1d05cc9afbe1caf1deb2"},"index":[],"records":[{"a":0,"t":"gap","n":65536}]}
