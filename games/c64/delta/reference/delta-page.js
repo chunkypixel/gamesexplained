@@ -425,6 +425,53 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
   }
   const BANNER_COLS = [null, PAL[1], PAL[12], PAL[11]];
 
+  /* 03 the seven weapon icons: one card each, drawn from the sprite shapes at $4000 + 64 x frame */
+  function iconCards(ram) {
+    const box = $('iconCards');
+    const shp = f => ram.subarray(0x4000 + 64 * f, 0x4000 + 64 * f + 63);
+    const MC_SHOP = [15, 11], MC_ROW = [ram[0x105E], ram[0x105F]];    // stage 1's multicolours; the icon row's ($3765 and $376B point here in play)
+    function sprite(ctx, f, x0, y0, S, col, mc) {
+      const d = shp(f), cols = [null, PAL[mc[0]], PAL[col], PAL[mc[1]]];
+      for (let r = 0; r < 21; r++) for (let c = 0; c < 12; c++) {
+        const v = d[r * 3 + (c >> 2)] >> (6 - 2 * (c & 3)) & 3;
+        if (v) { ctx.fillStyle = cols[v]; ctx.fillRect(x0 + c * 2 * S, y0 + r * S, 2 * S, S); }
+      }
+    }
+    function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+    // each icon's row frames by level, read from the game's own tables ($0F07-$0F19), and what it does
+    const owned = (t, label) => [['not owned', ram[t]], [label || 'owned', ram[t + 1]]];
+    const ICONS = [
+      ['speed', 0x0F00, [0, 1, 2, 3].map(l => [(1 << l) + ' px', ram[0x0F07 + l]]),
+        'ship speed 1, 2, 4 or 8 pixels a frame; buying it at the top speed goes back to the slowest'],
+      ['fire rate', 0x0F01, [0, 1, 2].map(l => [(l + 1) + ' bolt' + (l ? 's' : ''), ram[0x0F0D + l]]),
+        '1, 2 or 3 laser bolts on screen at once (<code>ship_fire</code>, <code>$349A</code>)'],
+      ['extra weapon', 0x0F02, owned(0x0F11), 'each shot also fires one up, one down and one backwards (<code>$3502</code>)'],
+      ['double laser', 0x0F03, owned(0x0F13), 'two more beams, level with the ship and two rows below (<code>$3E88</code>)'],
+      ['orbiter', 0x0F04, owned(0x0F15), 'a satellite circling the ship through 16 positions; it destroys what it touches and is never used up (<code>$3E5E</code>)'],
+      ['slow-down', 0x0F05, owned(0x0F17), 'the attack wave moves and spawns only every second frame (<code>wave_step</code>, <code>$2C22</code>)'],
+      ['shield', 0x0F06, [['not owned', ram[0x0F19]], ...[3, 2, 1].map(c => [c + ' left', 0x89 + c])],
+        'absorbs three hits, with 16 frames of safety after each (<code>$3880</code>); its icon counts the hits left (<code>$89</code> + <code>$12C0</code>)'],
+    ];
+    ICONS.forEach(([name, kept, levels, does], i) => {
+      const k = i + 1, shop = [0x7F, 0x83, 0x86, 0x87, 0x88, 0x89, 0x8C][i];   // the frame each shop sprite shows, as recorded
+      const div = document.createElement('div'); div.className = 'card icard';
+      const top = canvas(2 * 52 + 12, 46);                  // the shop sprite, affordable and too dear
+      const tc = top.getContext('2d'); tc.fillStyle = '#000'; tc.fillRect(0, 0, top.width, top.height);
+      sprite(tc, shop, 4, 2, 2, 14, MC_SHOP); sprite(tc, shop, 60, 2, 2, 12, MC_SHOP);
+      div.appendChild(top);
+      div.insertAdjacentHTML('beforeend', `<b>Icon ${k} · ${name}</b><br>${k} credit${k > 1 ? 's' : ''} · shop frame ${hex(shop)}<br>${does}<br><span class="k">kept in ${hex(kept, 4)}</span><div class="lv"></div>`);
+      const lv = div.querySelector('.lv');
+      for (const [label, f] of levels) {
+        const cell = document.createElement('span');
+        const c = canvas(52, 46), cc = c.getContext('2d'); cc.fillStyle = '#000'; cc.fillRect(0, 0, 52, 46);
+        sprite(cc, f, 2, 2, 2, 14, MC_ROW);
+        cell.appendChild(c); cell.insertAdjacentHTML('beforeend', `<small>${label}<br>${hex(f)}</small>`);
+        lv.appendChild(cell);
+      }
+      box.appendChild(div);
+    });
+  }
+
   /* 05 shop */
   function shopWidget(ram) {
     const ctx = $('shopCv').getContext('2d');
@@ -580,7 +627,7 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
   }
   if ($('enemyCards')) enemiesWidget();
 
-  const need = ['music', 'sfx', 'stageOut', 'stageTable', 'shopOut', 'shotOut', 'starLab'].filter(id => $(id));
+  const need = ['music', 'sfx', 'stageOut', 'stageTable', 'shopOut', 'iconCards', 'shotOut', 'starLab'].filter(id => $(id));
   if (!need.length) return;
   if (!window.C64) {
     need.forEach(id => { $(id).innerHTML = '<span class="msg">' + needSite + '</span>'; });
@@ -593,6 +640,7 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
     if ($('starCv')) starsWidget(ram);
     if ($('shotCv')) shotWidget(ram);
     if ($('shopCv')) shopWidget(ram);
+    if ($('iconCards')) iconCards(ram);
     if ($('bannerCv')) stageWidget(ram);
     if ($('stageTable')) stageTable(ram);
   });
