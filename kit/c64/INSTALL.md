@@ -317,8 +317,12 @@ emulator), ask before stopping it, and offer the alternative: start the
 emulator elsewhere with `KIT_VICE_PORT`.
 
 ```
-KIT_VICE_PORT=6511 python3 kit/scripts/tools.py vice
+KIT_VICE_PORT=6520 python3 kit/scripts/tools.py vice
 ```
+
+The emulator also listens for VICE's own monitor on the port above the
+MCP port (6511 by default): `kit/c64/codemap.py` reads the executed-address
+record through it (#236). Pick a `KIT_VICE_PORT` whose successor is free too.
 
 The launcher writes the port it used to `tools/vice-port`, and
 `kit/c64/vice.py`, `check_emulator.py` and `check_cpu6502.js` read it back,
@@ -374,7 +378,8 @@ behaved as on 3000.
 
 ```
 python3 kit/scripts/tools.py status
-python3 kit/scripts/tools.py vice                 # emulator, MCP on 127.0.0.1:6510 (or KIT_VICE_PORT)
+python3 kit/scripts/tools.py vice                 # emulator, MCP on 127.0.0.1:6510 (or KIT_VICE_PORT),
+                                                  # VICE monitor on the port above (6511)
 python3 kit/scripts/tools.py r2000 <snapshot.vsf> # disassembler, MCP on :3000 (or KIT_R2000_PORT)
 python3 kit/scripts/tools.py --platform c64 snapshots            # where emulator snapshots land
 python3 kit/scripts/tools.py stop vice            # the emulator only

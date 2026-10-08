@@ -17,6 +17,7 @@ Usage:
   tools.py status
   tools.py vice [x64sc]            start the emulator with its MCP server on 127.0.0.1:6510
                                    (or $KIT_VICE_PORT, when something else holds 6510)
+                                   and VICE's monitor on the port above it (#236)
   tools.py r2000 <file>            start the disassembler's MCP server on :3000 on a .vsf/.prg/project
                                    (or $KIT_R2000_PORT, when something else holds 3000: a .vsf or a
                                    project then, served through kit/c64/stdio_bridge.py).
@@ -78,6 +79,12 @@ def r2000_port():
 
 
 VICE_PORT, R2000_PORT = vice_port(), r2000_port()
+# VICE's own remote monitor (#236: the memmap is the executed-address record).
+# One above the MCP port, so KIT_VICE_PORT moves it too; VICE refuses to start
+# when something else holds it, and vice() below says so plainly.
+MONITOR_PORT = VICE_PORT + 1
+if MONITOR_PORT > 65535:
+    sys.exit("KIT_VICE_PORT is 65535: the monitor needs the next port, pick a lower one")
 RELEASE_NOTE = ".kit-release"    # written by get-vice into a downloaded release: "<tag> <asset>"
 
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
@@ -122,6 +129,16 @@ def vice(machine="x64sc"):
         # the MCP server and this clone's scripts would drive that machine, and its snapshots land in its own clone
         sys.exit(f"an emulator started from another folder already answers on :{VICE_PORT}:\n{detail}\n"
                  "stop it there (its own `tools.py stop vice`) before starting this clone's")
+    detail = foreign_detail(MONITOR_PORT)
+    if detail:
+        sys.exit(f"something from another folder already listens on :{MONITOR_PORT} (the monitor port):\n{detail}\n"
+                 "stop it before starting this clone's emulator")
+    owner = port_owner(VICE_PORT)
+    if owner and "x64sc" in owner and "remotemonitoraddress" in owner:
+        # VICE_PORT is held by a monitor (an emulator's -remotemonitoraddress), not an MCP
+        # server: `start` would see the port answering and stop, leaving no usable emulator.
+        sys.exit(f":{VICE_PORT} is a VICE monitor, not an MCP server:\n  {owner}\n"
+                 f"pick a KIT_VICE_PORT other than {VICE_PORT} (the monitor takes the port above it)")
     os.makedirs(TOOLS, exist_ok=True)
     with open(PORT_FILE, "w") as f:
         f.write(str(VICE_PORT))
@@ -136,7 +153,8 @@ def vice(machine="x64sc"):
     data, share = os.path.join(env["XDG_DATA_HOME"], "vice"), os.path.join(VICE_DIR, "share", "vice")
     if os.path.isdir(share) and not os.path.lexists(data):
         os.symlink(os.path.relpath(share, env["XDG_DATA_HOME"]), data)
-    start(virtual_display([exe, "-mcpserver", "-mcpserverport", str(VICE_PORT)], env), os.path.join(LOGS, "vice.log"), env=env, cwd=VICE_DIR,
+    start(virtual_display([exe, "-mcpserver", "-mcpserverport", str(VICE_PORT),
+                           "-remotemonitor", "-remotemonitoraddress", f"127.0.0.1:{MONITOR_PORT}"], env), os.path.join(LOGS, "vice.log"), env=env, cwd=VICE_DIR,
           port=VICE_PORT, name="emulator")
 
 

@@ -231,6 +231,19 @@ music takes four minutes to record; run it in the background. A batch of
 frames per call would be faster and would lose every note shorter than
 the batch.
 
+### Recording what ran
+
+`kit/c64/codemap.py` builds the game's code map from VICE's executed-address
+record (#236): `zap` clears it at the start of a play session, `dump` writes
+`games/c64/<slug>/codemap.json` at the end. The record is VICE's monitor
+memmap, a per-address access map that marks every address the CPU fetched an
+instruction from; it is always on and complete, unlike the cpuhistory ring
+buffer (8,192 entries, ~28 ms). The emulator listens for its monitor on the
+port above the MCP port (6511 by default). `check_listing.py` fails the game
+while `symbols.json` types any ran byte as data. Do not use `trace exec`
+tracepoints for this: a full-address-space trace floods the monitor faster
+than it can be consumed and wedges the emulator.
+
 ## Behaviours that waste time, on any build
 
 - **Prove the machine is running before you believe a negative result.**
