@@ -11,8 +11,21 @@
   <p class="sub">The fighters built from nine sprites, the stick and the keyboard, a hit test that measures distance, an opponent tuned by eight tables, and seven raster interrupts a frame.</p>
 </header>
 <main class="wrap">
+<section id="screen">
+  <p class="fig">01 · The screen</p>
+  <h2 class="t">Seven raster interrupts draw one frame</h2>
+  <p class="lede">Two fighters need eighteen sprites and the machine has eight. The game draws the top row of both fighters with sprites 0-5, then moves those sprites down the screen as the beam passes.</p>
+  <div class="plate">
+    <canvas id="frameCv" width="768" height="544"></canvas>
+    <div class="fx-ctl" style="margin-top:12px"><button class="fx-btn" id="bandBtn">Show the raster writes</button><span class="fx-out" id="bandOut"></span></div>
+    <p class="cap">One frame of a two-player bout, drawn from memory and the recorded writes to the video chip with the site's renderer: all 104,448 pixels match the emulator's own picture of the same frame. The chain: <code>$31F2</code> at line 0 sets up the frame, <code>$2FB0</code> switches to the bitmap at line 90, the sprite handlers move sprites 0-5 down a row of 21 lines at a time, a handler on line 217 draws the shadow, and <code>$30E5</code> at line 255 returns to text for the panel and plays the music.</p>
+  </div>
+  <p>The gap between the two fighters' heights decides which of seven interrupt chains runs that frame (<code>$32CD</code>). When one fighter is exactly 20 lines higher than the other, one fighter's second row and the other's third start a line apart, and a combined handler moves all six sprites at once (<code>$2F02</code>, <code>$2F59</code>). The routines that set this up (<code>$3291</code>-<code>$3750</code>) work by rewriting the handlers' own instructions: the raster line, the sprite heights and the pointers are all operands patched every frame.</p>
+  <p>A jumping fighter casts a shadow on the floor. It is a fourth row of sprites from a fixed set under the I/O chips (<code>$D480</code>), shown at a fixed height while the fighter is off the ground.</p>
+</section>
+
 <section id="fighters">
-  <p class="fig">01 · The fighters</p>
+  <p class="fig">02 · The fighters</p>
   <h2 class="t">Every pose is built from nine pieces</h2>
   <p class="lede">A fighter is a three-by-three grid of multicolour sprites. The game never stores a whole pose. Each shape frame is nine cell numbers, and each cell is a 64-byte piece of a karateka.</p>
   <div class="plate">
@@ -34,7 +47,7 @@
 </section>
 
 <section id="controls">
-  <p class="fig">02 · Controls</p>
+  <p class="fig">03 · Controls</p>
   <h2 class="t">Two joysticks, or two halves of the keyboard</h2>
   <p class="lede">The white fighter reads joystick port 2 and the red fighter port 1 (<code>$2851</code>). F7 in the attract mode swaps both to the keyboard, with a block of nine keys for each player.</p>
   <table class="fx-tab">
@@ -47,7 +60,7 @@
 </section>
 
 <section id="scoring">
-  <p class="fig">03 · Scoring</p>
+  <p class="fig">04 · Scoring</p>
   <h2 class="t">A blow scores by distance, not timing</h2>
   <p class="lede">The manual talks of well-executed and loosely timed blows. In the code a blow is tested once, on its striking frame, and the only question is how far apart the fighters stand.</p>
   <div class="plate">
@@ -61,26 +74,13 @@
 </section>
 
 <section id="opponent">
-  <p class="fig">04 · The opponent</p>
+  <p class="fig">05 · The opponent</p>
   <h2 class="t">Ten dans of the same opponent, with faster reflexes</h2>
   <p class="lede">The computer fights every bout with the same rules. What changes with rank is a set of eight masks that limit how long it waits, walks, holds a move and reacts.</p>
   <div class="plate"><table class="fx-tab" id="aiTab"></table>
     <p class="cap">The per-level tables at <code>$27A9</code>-<code>$27FC</code>, as <code>ai_level_setup</code> (<code>$2593</code>) loads them. Each is a mask the computer applies to a random number: for the timers (hold, wait, walk, pause, reaction) a smaller mask means shorter waits; the others narrow its choices. Level 0 is Novice; the level rises by one with each bout won.</p></div>
   <p>When attacked, the computer either blocks with the right block for the blow (<code>$118F</code>), starts one of nine scripted plans (<code>$2774</code>), or counter-attacks. When close it picks an attack from a table indexed by distance (<code>$26D5</code>), and against a blocking player it chooses among the blows that block does not stop (<code>$27A1</code>). The reaction-delay mask is zero from level 4 up, so from 4th dan the computer reacts at once. The walking table has 11 entries for 12 levels, so level 11 reads the first byte of the next table.</p>
   <p>In a one-player game, two bout wins clear a rank, from Novice to 10th dan (<code>$1BA7</code>); a lost bout ends the game. Past 10th dan the rank stays on screen as 10TH DAN while the opponent's level is drawn at random from 7 to 10 (<code>$1C65</code>).</p>
-</section>
-
-<section id="screen">
-  <p class="fig">05 · The screen</p>
-  <h2 class="t">Seven raster interrupts draw one frame</h2>
-  <p class="lede">Two fighters need eighteen sprites and the machine has eight. The game draws the top row of both fighters with sprites 0-5, then moves those sprites down the screen as the beam passes.</p>
-  <div class="plate">
-    <canvas id="frameCv" width="768" height="544"></canvas>
-    <div class="fx-ctl" style="margin-top:12px"><button class="fx-btn" id="bandBtn">Show the raster writes</button><span class="fx-out" id="bandOut"></span></div>
-    <p class="cap">One frame of a two-player bout, drawn from memory and the recorded writes to the video chip with the site's renderer: all 104,448 pixels match the emulator's own picture of the same frame. The chain: <code>$31F2</code> at line 0 sets up the frame, <code>$2FB0</code> switches to the bitmap at line 90, the sprite handlers move sprites 0-5 down a row of 21 lines at a time, a handler on line 217 draws the shadow, and <code>$30E5</code> at line 255 returns to text for the panel and plays the music.</p>
-  </div>
-  <p>The gap between the two fighters' heights decides which of seven interrupt chains runs that frame (<code>$32CD</code>). When one fighter is exactly 20 lines higher than the other, one fighter's second row and the other's third start a line apart, and a combined handler moves all six sprites at once (<code>$2F02</code>, <code>$2F59</code>). The routines that set this up (<code>$3291</code>-<code>$3750</code>) work by rewriting the handlers' own instructions: the raster line, the sprite heights and the pointers are all operands patched every frame.</p>
-  <p>A jumping fighter casts a shadow on the floor. It is a fourth row of sprites from a fixed set under the I/O chips (<code>$D480</code>), shown at a fixed height while the fighter is off the ground.</p>
 </section>
 </main>
 <footer style="margin:16px 0 0;padding:22px var(--gx) 0;border-top:1px solid #e0ded8;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px;color:#80838a"><a href="https://github.com/gamesexplained/gamesexplained" style="color:#1f5fa8;text-decoration:none">GitHub</a> · <a href="https://discord.gg/3V9GWyRDWV" style="color:#1f5fa8;text-decoration:none">Discord</a><br>© Games Explained contributors. Write-ups, facts and symbol maps are available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#1f5fa8;text-decoration:none">CC BY-SA 4.0</a>; code under <a href="https://opensource.org/licenses/MIT" style="color:#1f5fa8;text-decoration:none">MIT</a></footer>
