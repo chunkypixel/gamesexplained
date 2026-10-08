@@ -239,6 +239,18 @@ def tools(*args):
                           capture_output=True, text=True).stdout.strip()
 
 
+def emulator_status(output):
+    """Select the C64 launcher line; browser status may precede it."""
+    matches = [line.strip() for line in output.splitlines() if line.lstrip().startswith("emulator ")]
+    if len(matches) != 1:
+        raise ValueError("expected one C64 emulator status line")
+    return matches[0]
+
+
+def emulator_up(output):
+    return emulator_status(output).split()[2] == "up"
+
+
 def phase(title):
     def deco(f):
         def wrapped(*a, **k):
@@ -591,7 +603,7 @@ def p_transport(rpc):
     except Exception as e:
         err = repr(e)
     dt = time.time() - t0
-    check("unpaced-calls", err is None and "up" in tools("status").splitlines()[0] and advancing(rpc),
+    check("unpaced-calls", err is None and emulator_up(tools("status")) and advancing(rpc),
           "1600 calls with no pacing leave the server up and the machine running", f"{calls / dt:.0f} a second {err or ''}")
 
 
@@ -620,7 +632,7 @@ def main():
         print(__doc__)
         return
     os.makedirs(OUT, exist_ok=True)
-    build = tools("status").splitlines()[0]
+    build = emulator_status(tools("status"))
     print(build)
     for name in SNAPS:                               # a snapshot name cannot be reused
         for ext in (".vsf", ".json"):
