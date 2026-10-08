@@ -7,7 +7,7 @@ Current tier and what is missing for the next one. Coverage gaps from
 
 Silver: 462,622 of 462,622 bytes explained in 64 of 64 parts, every
 feature confirmed, traced, live or marked as differing, the comment
-sample checked (`facts.md`, "Comment sample"), and the copy
+samples checked (`facts.md`, "Comment sample"), and the copy
 `agent-draft`.
 
 ## For Gold
@@ -43,3 +43,5 @@ play. The ones a reader is likeliest to ask about:
   make, beside side 1's.
 - The parties: how splitting the group keeps each party's square, map and
   return point (game `$9C17`).
+- Pictures 37 and 75, which the disks hold and no code in the listings
+  shows.

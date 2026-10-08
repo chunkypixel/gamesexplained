@@ -20,7 +20,8 @@ Sources:
 - Hardcore Gaming 101, "Armalyte" by Willem Elbers (5 July 2023),
   http://www.hardcoregaming101.net/armalyte/, read 7 October 2026.
 - The game's own title screens (credits, "Ship Enhancements", "Keyboard
-  Controls", high scores) and disk menu, from the emulator, 7 October 2026.
+  Controls", high scores), disk menu and the music demo behind the
+  menu's third entry, from the emulator, 7 October 2026.
 
 ## Features
 
@@ -28,7 +29,8 @@ Addresses are the engine's (`parts/engine`) unless a part is named.
 
 | Feature | Status | Where |
 |---|---|---|
-| Disk menu on side 1: 1 Armalyte, 2 Loading picture, 3 Walker's Warbles | live | menu at boot (`reference/disk-menu.png`); only the first entry was followed |
+| Disk menu on side 1: 1 Armalyte, 2 Loading picture, 3 Walker's Warbles | live | menu at boot (`reference/disk-menu.png`); the first loads the engine, the third a music demo (`parts/warbles`, section 16), and the second was not followed |
+| The third menu entry is a music demo of Martin Walker's, dated 1988, with eight tunes in it and four on keys | live | `parts/warbles/facts.md`; its screen is `reference/warbles.png`, and the page plays all eight through a port of its driver that `tests/warbles.js` checks against it |
 | "Turn disk to side B & press fire" after the first load | live | `wrong_disk` (`$B5CC`): the engine asks for level 1's file, does not find it on side 1 and shows the prompt (`reference/turn-disk-side-b.png`) |
 | Title screen cycles credits, high scores, ship enhancements and keyboard controls | live | seven pages, `title_pages` (`$B953`) (`reference/title-*.png`) |
 | Fire starts the game (title) | live | fire on either joystick, `title_start_keys` (`$B58A`) |
@@ -68,7 +70,7 @@ Addresses are the engine's (`parts/engine`) unless a part is named.
 | Scoreboard: battery status, score, generator status, generator type, converge status, super weapon indicator, craft in reserve | traced | the eight hardware sprites in the lower border, redrawn one item a frame (`panel_update`, `$99FA`) from the front-end font's glyphs: batteries, score, the generator's rebuild box and count, weapon-level bars, the super weapon's letter, and each player's lives at either end |
 | Three craft in reserve at the start | live | three lives each (`title_start_keys`, `$B58A`; `reference/level-1-start.png`) |
 | High-score table of six entries with three-letter names | live | `high_score_check` (`$BA72`), names entered with the stick (`high_score_name_entry`, `$BB3C`) (`reference/title-high-scores.png`) |
-| Music on the title and loading screens only; sound effects in play | traced | tunes 0 title, 1 demo, 2 high scores and the ending's pictures, 3 loading screen (`tune_headers`, `$C765`); in play only the 32 effects (`sfx_voice_step`, `$FA3C`) |
+| Music on the title and loading screens only; sound effects in play | traced | tunes 0 title, 1 demo, 2 high scores and the ending's pictures, 3 loading screen (`tune_headers`, `$C765`); in play only the 32 effects (`sfx_voice_step`, `$FA3C`); the How it works page plays the four tunes through a port of the driver that `tests/music.js` checks against it |
 | Exploding enemies carry on along their path | traced | `enemies_follow_paths` (`$EE8D`) moves exploding objects too |
 | More than 30 sprites on screen at once, without flicker, at 50 frames a second | differs | at most 30 in a frame: 20 objects multiplexed on six sprites, the two ships, and eight scoreboard sprites in the border (`multiplexer_start`, `$A305`); *live*, the main loop made one pass a frame through all of level 1 |
 | Cheat: `POKE 59891,173` ($E9F3) "cheat mode" | differs | it turns the `DEC` of player 1's life into an `LDA`, and `anti_cheat_check` (`$F77D`) notices and hangs the machine (*live*: frozen within five frames) |
@@ -118,5 +120,9 @@ Found in the code, not in the manual.
 
 ## Open questions
 
-- The disk menu's other two programs, the loading picture and Martin
-  Walker's music, were not followed.
+- The disk menu's second program, the loading picture on its own, was
+  not followed.
+- How the menu loads its second and third entries. Neither is a file
+  the directory can open, so `cyberdos` must fetch them from tracks of
+  its own; which tracks was not traced
+  (`parts/warbles/facts.md`, "How it is reached").

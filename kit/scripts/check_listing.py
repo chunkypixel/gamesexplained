@@ -6,8 +6,11 @@ unchanged, and the listing records the hash of the symbols.json it was built fro
 And every code record re-decodes, from the memory image the listing's own bytes
 describe, to the same length, mnemonic, bytes and operand (listing.decode_problems):
 the permanent guard against a decoder that drifts under a listing, and against an
-off-by-one record (#142). It needs no snapshot. The empty symbols.json that
-new_game.py writes needs no listing yet.
+off-by-one record (#142). Then the whole listing builds again from those bytes, with
+the current kit, to the same file (listing.py --rebuild): a decoder, ledger or record
+format that moved under a listing fails here until the listing is rebuilt (#210), and
+bytes the ledger counts that the listing has no snapshot for are named. It needs no
+snapshot. The empty symbols.json that new_game.py writes needs no listing yet.
 
 Where a game commits a code map (codemap.json, from kit/spectrum/codemap.py),
 every byte of it that ran is typed Code in symbols.json: code typed as data
@@ -24,12 +27,13 @@ that points at a part beneath reads as that part names it now.
 
 Usage: check_listing.py [game dir ...]      default: every game, and every part of one
 """
-import glob, hashlib, json, os, sys
+import glob, hashlib, json, os, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from parts import ID, EMPTY, LEDGER_KEYS, parts, under, ranges, started, load_game, owned   # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+LISTING = os.path.join(os.path.dirname(os.path.abspath(__file__)), "listing.py")
 
 
 def untyped_code(gdir, S):
@@ -65,6 +69,18 @@ def check(gdir):
             a, why = bad[0]
             errs.append(f"listing.json no longer agrees with the decoder at ${a:04X}: {why}"
                         + (f" (and {len(bad) - 1} more)" if len(bad) > 1 else ""))
+        else:
+            # the whole listing, built again from its own bytes with the current kit (#210)
+            r = subprocess.run([sys.executable, LISTING, gdir, "--rebuild"], capture_output=True, text=True)
+            if r.returncode:
+                said = (r.stdout.strip() or r.stderr.strip() or "no output").splitlines()[0].replace("FAILED - ", "")
+                errs.append(f"listing.json no longer rebuilds from its own bytes ({said}); "
+                            f"rebuild it: listing.py {gdir} --rebuild --write")
+            from listing import LOST
+            lost = [x for x in L["records"] if x.get("note") == LOST]
+            if lost:
+                print(f"  !  {gdir}: {sum(x['n'] for x in lost)} byte(s) the ledger counts are not in the listing "
+                      f"(the first at ${lost[0]['a']:04X}); a build from the snapshot fills them")
     labels = {r["a"]: r.get("l") for r in L["records"] if "l" in r}
     comments = {r["a"]: r.get("c") for r in L["records"] if "c" in r}
     for s in S["symbols"]:

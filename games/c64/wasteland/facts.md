@@ -93,7 +93,7 @@ but the I/O area, both ROMs out.
 | `$CA00-$CFFF` | a module, the party-order program, or a picture unpacked for the picture window | module-*n*, order |
 | `$D000-$DD7F` | the tile set, in RAM under the I/O area | tiles-*n* |
 | `$DD80-$DDFF` | the map window's scroll copy, in RAM under the I/O area | engine |
-| `$DE00-$EDFF` | the tile layer of the map, one byte a square, under the I/O area and above it | map-*nn* |
+| `$DE00-$EDFF` | the tile layer of the map, one byte a square, under the I/O area and above it; from `$E000`, a picture asked for with bit 7 set (engine `$2631`) | map-*nn* |
 | `$EE00-$F3FF` | cleared by the start-up (startup `$7F3D-$7F55`); the game keeps four 376-byte records from `$EE00` (game `$BBC7`) | engine |
 | `$F400-$FBFF` | the game state: party tables, saved zero page, line buffer, character records from `$F500`, written to the disk as the save | engine |
 | `$FC00-$FFFF` | the fast loader's computer side, and the hardware vectors in RAM | engine |
@@ -245,6 +245,61 @@ lines into view for a moment, and the programs load from `$7E00`.
   11's message 53, "Ah! Fresh air and open spaces once again.", every
   time (*live*). The wall is next to squares the party can walk to from
   the map's exit at column 28, row 0 (a search of the map's classes).
+
+## The portraits
+
+- 75 pictures for the picture window, numbers 0-50, 54-62 and 64-78:
+  entry *n* of the directory at T35/L10, or for *n* from `$40` entry *n*
+  AND `$3F` of T35/L9 (engine `$2790`). On every side entries 51-53 and
+  79-126 are zero, and entries 63 and 127 are each sector's last four
+  bytes, which hold the track and sector its offsets count from.
+  Sixty-eight pictures are on one side, seven on two to four; where a
+  picture is on several sides, its own bytes are the same on each.
+- Each was loaded with the engine's own `load_portrait` (`$2631`) in
+  VICE, on every side that holds it, and the How it works and Levels
+  pages carry its bytes (`PORTRAIT_BYTES`), from the start of its buffer
+  to the last byte the picture code reads. Pictures 0-3
+  and 59 are loaded to `$E000`, as their callers ask (`$041C`): the
+  doctor (module-0 `$CA15`), the shop (module-1 `$CA1E`), the library
+  (module-2 `$CA15`), the Ranger Center (ranger `$7E13`) and the Grim
+  Reaper (death `$7E13`). Loaded to `$CA00` instead, they give the same
+  bytes up to `$CFFF`. Picture 8 is the radio's (radio `$7EB7`, `$7FA0`)
+  and the fights' when no group is in reach (game `$B91E`); picture 11
+  the radio's promotion (radio `$7EEB`, `$7FBE`). Every other number but
+  37 and 75 is byte 7 of monster records in the maps' tables, 66 numbers
+  in all. No code in the 64 parts' listings shows 37 or 75.
+- All 75 cover columns 1-11 and pixel rows 16-99, the top of the picture
+  window, which `picture_window_open` (`$12CF`) clears down to row 111.
+  Twelve use one animation channel, 15 two, 28 three and 20 all four,
+  with 2 to 37 frames each, 636 in all. The bytes the picture code reads run from
+  the buffer's start without a gap, 630 bytes for picture 64 up to 1,505
+  for picture 59.
+- A load reads a window of two to five sectors from the entry's start
+  byte, and the unpacker decodes all of it, 851 to 1,634 bytes; six
+  loads stop at the end of the `$CA00` buffer (`$CFFF`). Each window's
+  sectors were read in VICE with the engine's own routines (`$2790`,
+  `$FD0B`, `$FD19`), and the page's port of the unpacker turned all 75
+  into exactly the bytes the loads wrote.
+- Where the next picture's packed bytes start inside a window (67
+  pictures), the bytes up to there are the picture's own: they decode to
+  the bytes the picture code reads and one more, made from the stream's
+  last bits, for 64 of them. For three they decode further, to bytes
+  nothing reads: picture 39's 15 read as ASCII "SITIONOMONPR#PR",
+  picture 60's are `$08` and 17 zeros, and picture 62's are 199 bytes of
+  no structure the picture code uses. For the other 8 nothing in the
+  window marks where the picture ends. The pages carry none of these
+  bytes past the last one read.
+- The engine's picture code (`$0586`, `$05C5`) was run on the kit's 6502
+  simulator beside the page's port for every portrait, 400 steps each,
+  the bitmap compared after every step: no difference
+  (`test_portraits.js`, which needs only committed files).
+- Byte 7 of a monster's record is also the index of its pronoun in the
+  engine's table at `$5B00`, 79 bytes: 0 he, 1 she, 2 it (game `$9EBC`).
+- The GIF a page makes runs from the base frame to the first step from
+  100 on where the picture is the base frame again: 100 to 340 steps for
+  the 76 pictures (the title 298, the Grim Reaper 340), about 14.5 to 49
+  seconds at the 6.9 steps a second measured on the title, and none has
+  to stop with a jump.
 
 ## Text
 

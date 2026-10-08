@@ -163,15 +163,20 @@ Hard to read: `kit: a run corrects the install notes in place, not with a row or
   the contributor before the first step. If they cannot tell either,
   record `unknown` and say in the pull request that the model could not
   be checked.
-- **No binaries, ever.** Disk images, program files, cartridge dumps,
-  emulator snapshots and disassembler project files that embed the memory
-  image are never committed and never uploaded anywhere. `work/` is
-  gitignored for this reason. `check_binaries.py` must pass. The
-  machine's ROMs are never committed either, with one exception: when a
-  mechanic depends on data the game reads from a ROM, a page may carry
-  that excerpt (the bytes the game reads, or the values it computes from
-  them) and names the ROM, its revision and the addresses. Never a whole
-  ROM.
+- **No binaries, ever.** A binary is a file that holds the game or the
+  machine whole: a disk image, a program file, a cartridge dump, an
+  emulator snapshot, a disassembler project file that embeds the memory
+  image. None is ever committed or uploaded anywhere. `work/` is
+  gitignored for this reason. `check_binaries.py` must pass. Game data
+  is not a binary. The listings carry the game's bytes with their
+  annotations, and a page carries the data its widgets need, embedded in
+  the page: a character set, a level, a tune, the pictures a viewer shows
+  (`kit/skills/core/70-minisite`). What a page never carries is the
+  program, or enough of the game to rebuild it. The machine's ROMs are
+  never committed either, with one exception: when a mechanic depends on
+  data the game reads from a ROM, a page may carry that excerpt (the
+  bytes the game reads, or the values it computes from them) and names
+  the ROM, its revision and the addresses. Never a whole ROM.
 - **Prefer "unknown" to a plausible guess.** An admitted gap costs nothing.
   A wrong claim is copied into every downstream document.
 - **Distrust your own negative results.** "It isn't there" is a claim about
@@ -259,7 +264,7 @@ Nothing about a particular game belongs in `AGENTS.md` or `kit/skills/`.
 | Tier | Requires |
 |---|---|
 | Bronze | a partial run, off the starting line: boots; `orientation.md`; `features.md`; coverage below 100 %; `symbols.json` and `listing.json` committed for what there is |
-| Silver | 100 % coverage; `facts.md`; every feature confirmed, traced or explicitly open; `symbols.json` and `listing.json`; the minisite built; all of it agent-authored, copy `agent-draft`; coverage and verify done on proven models, or a maintainer's check recorded in `game.json` (`kit/CHECKING.md`) |
+| Silver | 100 % coverage; `facts.md`; every feature confirmed, traced or explicitly open; `symbols.json` and `listing.json`; the minisite built, with a player for every tune when the game has music; all of it agent-authored, copy `agent-draft`; coverage and verify done on proven models, or a maintainer's check recorded in `game.json` (`kit/CHECKING.md`) |
 | Silver (claimed) | a Silver that a human has started to curate: `tier` is `silver-claimed` and `steward` names them (their GitHub login). Set it when the first edit pass begins, so the page says the work is under way and nobody starts it twice; it turns Gold when every section has had its pass |
 | Gold | a human has curated the Silver, section by section: rewriting the clichéd copy, cutting what is dull, expanding what is interesting and adding what the agent missed, often by prompting the agent for new pieces. A pass that finds nothing to change counts, and `copy` records which it was: `agent` when the human read it and left it, `human-edited` or `human` when they changed it |
 | Platinum | the listing reassembles byte-for-byte to the analysed image and the build boots |

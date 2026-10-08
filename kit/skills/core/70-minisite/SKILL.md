@@ -43,7 +43,8 @@ reconstructed screen.
 ## Sections
 
 Not every game has every section, and the list below is in no order: each
-page chooses its own ("The order", below).
+page chooses its own ("The order", below). The sound is the exception: a
+game with music gets its player, at every tier above Bronze.
 It is a starting set, not a form: the page is open to any structure that
 works for this game, any number of sections at any depth, and the human
 who takes it to Gold will cut what is dull, expand what is interesting and
@@ -78,7 +79,10 @@ address links into the Source tab, and the house style in `kit/style.md`.
 - **Progression and difficulty.** The tables, as tables, and what they
    do to play.
 - **The sound.** The player for the stored tunes and effects, tied to
-   the bytes that produce each note. Port the game's own music driver
+   the bytes that produce each note. When the game has music, the player
+   is required, with a button for every tune the game stores, unused
+   ones too: a run that names the music driver and leaves the player to
+   `TODO.md` has not built the page. Port the game's own music driver
    and play it through the site's model of the SID, `../../lib/sid.js`:
    it runs the driver once a frame, plays it, and shows each voice on a
    piano roll with the lines the port supplies about what the driver
@@ -163,8 +167,14 @@ can open with that instead.
   in that list, and nothing else is: the prefix is the only way to get a
   tag. Head the section about the tunes `Music:` and the one about sound
   effects `Sound:`.
-- Embed only the data you need: extracted character set, level data,
-  tables, tune bytes. Small excerpts for commentary; never the program.
+- Embed the data a widget needs in the page: extracted character set,
+  level data, tables, tune bytes, the pictures a viewer shows. That is
+  not what "No binaries" (`AGENTS.md`) forbids, which is files holding
+  the game or the machine whole. Small excerpts for commentary; never the
+  program. Data the game fetches into a buffer during play, a portrait
+  for each fight or a tune for each room, goes in the page that shows
+  it, from the game's own loads in the emulator, and not into a part made
+  to hold it (`10-orient`).
 - A game can read the machine's ROM as data: a table, or code used as
   noise. When a mechanic on the page depends on it, embed only the bytes
   the game reads, or the values it computes from them, and never the
