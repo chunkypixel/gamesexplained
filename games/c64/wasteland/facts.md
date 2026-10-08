@@ -337,6 +337,51 @@ lines into view for a moment, and the programs load from `$7E00`.
   hidden keys I, J, K and L move the party, back-arrow and space (game
   `$7F18`).
 
+## The NPCs
+
+- Fourteen records can join: every entry of the 42 maps' lists 17 (the
+  non-player characters, map record word `+$28`), copied whole to the
+  first free record by Hire (game `$A424-$A433`). test_npcs.js holds the
+  page's table (`index.html`, `#wl-cast-t`) and the widget's NPCS
+  against the maps' bytes.
+- Nine of them carry a hidden skill, number 36 to 48, at level `$FF` in
+  the last skill pair (`+$BA/+$BB`); no two share one, and no other pair
+  of any NPC record is above 35. The skills page and a Use show only
+  skills below 36 (engine `$11A7`), skill_level searches all 30 pairs
+  (engine `$1392`), and a check square's skill pair at difficulty 0
+  passes on the skill alone (game `$8EAE`). Squares that ask for them,
+  counted from the maps' bytes (flags bit 6 set): 36 Mayor Pedros 7, in
+  maps 2, 3, 4 and 6; 37 Dan Citrine 87, 4 in map 6 and 83 in 27 other
+  maps whose only pair is skill 37, 60 of those with an effect on CON;
+  38 Ace 3, maps 0, 4 and 34; 40 Covenant 1, map 40; 48 Redhawk 1, map
+  49 (with item 69, the Grazer bat fetish, as the other pair). Skills
+  39 (Felicia), 41 (Jackie), 42 (Ralf) and 43 (Christina) are asked for
+  nowhere. Map 41's check_22 asks for a skill 129, which no record holds.
+- No Ranger can hold a skill above 35: the Ranger Center's list stops at
+  35 (ranger `$8502`), and the eight libraries of the 42 maps (records
+  starting `$82`, skills from `+$10`) offer nothing above 35.
+- square_checks (game `$8E14`) on the simulator, map 1's cactus (class
+  2 number 5, CON − 1d6 for each member who fails), 1,000 runs for a
+  party of a Ranger and Dan Citrine: the Ranger got the effect every
+  time without a throw, Dan 107 times, exactly the runs where his throw
+  was under 5. His father's cell in map 6 (class 2 number 30) passes on
+  every run with Dan in the party and fails on every run without.
+- Hire (game `$A435-$A4B2`): with `+$31` = 0 (nine of the fourteen) no
+  dice; otherwise (CHR + IQ)/2 + CHR + rank of the hirer + the open 2d6
+  against the NPC's (CHR + IQ)/2 + `+$31` + rank, a throw under 5
+  failing. On a join `+$31` becomes the hirer's CHR (`$A492`), the only
+  store to `+$31` in the code.
+- Refusals: a Use tests the byte for its kind against `+$31` (game
+  `$8D83-$8D95`), a trade `+$2E` against the taker's CHR (engine
+  `$0F63-$0F85`), both through npc_obey_check, whose target is 15 for
+  every byte but `$FF` (the engine's facts). Only Redhawk (map 36) has a
+  byte of `$FF`, his trade byte. test_npcs.js runs the page's port
+  beside the original code for every byte and 38,528 checks, trades and
+  hires, with no difference.
+- In a fight an NPC chooses its own line and fire mode (game
+  `$B50B-$B589`, as above), the automatic-fire chance growing with the
+  characters who are not conscious: `$B4F8` = `$FF 9 7 5 3 0 0 0`.
+
 ## Live tests
 
 - Side 3 booted on its own; side 3's start-up run over side 1's engine
@@ -469,6 +514,16 @@ lines into view for a moment, and the programs load from `$7E00`.
   flags, and the channels stepped 7 times, about 7 steps a second; in a
   later stretch of the same sequence 2,624 to 3,176 calls and 5 or 6
   steps. Between the two the flag at engine `$AC` was 0 and nothing moved.
+- npc_obey_check on the original disk: on 8 October 2026, side 1 of
+  the C64 Preservation Project's G64 booted to the title in VICE
+  (release v3.13.2, check-emulator: 57 passed, 0 failed), and a stub at
+  `$3200` called the engine's `$021F` 256 times for each of six cases,
+  with a record at `$3300` (`+$29` = 1) and the byte at `+$2C`. With a
+  byte of 10 and A = 20 the target `$71/$72` read 15 after every call,
+  and the call refused 39 times; with a byte of 0, 54. A = 0 refused 220
+  and 223 times, a byte of `$FF` all 256. The stub's calls follow one
+  another by a few hundred cycles, so its random bytes are not the
+  game's in play, and the counts say nothing about the odds.
 
 ## Comment sample
 

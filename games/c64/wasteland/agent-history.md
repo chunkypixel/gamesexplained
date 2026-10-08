@@ -238,3 +238,38 @@ the load on every side that holds each picture, a port run from them
 alone animated the same as from the whole buffer, and
 `test_portraits.js` reads them from the page. The generated comments,
 and the sample that checked them, went with the parts.
+
+## 8 October 2026, the NPCs (claude-opus-5-5[1m])
+
+Aaron asked for the feature where NPCs refuse requests, then for a cast
+of the NPCs in general, with the weight on what the manual and play do
+not show.
+
+**The refusal.** The engine's comments already named npc_obey_check
+(`$0D61`) and said its target was 15 + 5 × the byte. The page's port,
+written from that comment, disagreed with the original code on the
+simulator in 15,280 of the first cases. Stepping the original showed the
+target at `$71/$72` was 15 with a byte of 1: the TAX at `$0D6D` comes
+before num2_clear, which returns X = 0. With the port following the
+code, every case agreed. The comment had been read off the routine's
+shape, from skill_check and attribute_check, which load X after the
+clear. On the original side 1 at the title, a stub calling `$021F`
+showed the same 15 after every call. The engine's comments were
+corrected and the listing re-commented.
+
+**The cast.** Each record's last skill pair holds a number from 36 up at
+level `$FF` for nine of the fourteen. The maps' own comments already
+called these markers. Counting the squares that ask for them from the
+bytes, rather than from the comments, gave the table's column; one
+square in map 41 asks for a skill 129 that nobody holds, which the test
+leaves aside. Dan Citrine's 37 is asked for by 87 squares, 83 of them
+far from Quartz with skill 37 as their only pair. Per Jorner's guide
+already describes the effect (page 81), so the page credits it and adds
+the cause and the counts. The game's square_checks ran map 1's cactus on
+the simulator with a party of a Ranger and Dan, which needed the zero
+page a map load leaves (`$55`, `$56`, `$61/$62`, `$63`); without them
+square_action_record found no record and the check returned at once.
+
+**Wrong turns.** The first count of the squares counted the words
+"difficulty" in the listing comments, which also say "at a difficulty
+above 0" for Dan's marker; counting pairs from the bytes fixed it.
