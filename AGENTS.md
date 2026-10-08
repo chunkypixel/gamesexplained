@@ -101,9 +101,10 @@ adds a lesson file of its own and edits no other, so two pull requests
 never conflict over either. A new platform
 follows `kit/PLATFORMS.md`.
 
-A kit test is a file matching `kit/**/test_*.py` or `kit/**/test_*.js`:
-run as a script it exercises its own subject and exits non-zero on failure,
-and `test_kit.py` finds it, so a new test needs no edit to CI. A test that
+A kit test is a file matching `kit/**/test_*.py` or `kit/**/test_*.js`, or
+`games/<platform>/<slug>/test_*.py` beside the page it checks: run as a script
+it exercises its own subject and exits non-zero on failure, and `test_kit.py`
+finds it, so a new test needs no edit to CI. A test that
 needs an installed tool reads `KIT_REQUIRE_TOOLS` from the environment and
 fails rather than skips when it is set. CI sets it, and there a test that
 skips anyway fails too, so an oracle that is missing cannot pass for a green
