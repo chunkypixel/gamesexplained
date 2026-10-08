@@ -804,6 +804,17 @@ def main():
               "read git diff before committing it.")
     for line in uncounted(game, reg, L, ram, entry) + beneath(gdir, game, ram):
         print(line)
+    # a short run of untyped bytes between two code records is usually a missed
+    # instruction (the opcode byte of a BIT skip, an undocumented NOP), and the
+    # page's interpreter reads its code from the listing: name them at build time (#229)
+    for i, r in enumerate(records):
+        if r["t"] == "gap" and not r.get("note") and r["n"] < 16:
+            prev = records[i - 1] if i else None
+            nxt = records[i + 1] if i + 1 < len(records) else None
+            if prev and nxt and prev["t"] == "code" and nxt["t"] == "code":
+                span = f"${r['a']:04X}" if r["n"] == 1 else f"${r['a']:04X}-${r['a'] + r['n'] - 1:04X}"
+                print(f"  {span}: {r['n']} byte(s) with no type between code: likely a missed "
+                      f"instruction; give it a type, or the page's interpreter reads a zero opcode there")
 
 
 if __name__ == "__main__":
