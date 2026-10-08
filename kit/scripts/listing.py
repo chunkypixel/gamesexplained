@@ -582,7 +582,7 @@ def main():
         epath = argv[argv.index("--entry") + 1] if "--entry" in argv else os.path.join(gdir, "work", f"entry.{ext}")
         if os.path.exists(epath) and os.path.abspath(epath) != os.path.abspath(vsf):
             entry = snap.read(epath)
-        elif "--entry" in argv:
+        elif not os.path.exists(epath) and "--entry" in argv:
             sys.exit(f"no hand-over snapshot at {epath}")
 
     from symbols_export import regions

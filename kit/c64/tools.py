@@ -46,6 +46,7 @@ stops it, and then lists every file outside the repository that changed meanwhil
 looks like it belongs to one of the tools. An empty list is the pass.
 """
 import glob, os, re, shlex, shutil, subprocess, sys, time
+from pathlib import Path
 
 # What this launcher serves, read by the dispatcher (kit/scripts/tools.py) when several
 # platforms have a launcher. Keep in step with main() below.
@@ -60,47 +61,28 @@ VICE_RELEASE = os.path.join(TOOLS, "vice-mcp-release")
 VICE_HOME = os.path.join(TOOLS, "vice-home")
 LOGS = os.path.join(TOOLS, "logs")
 SNAPSHOTS = os.path.join(VICE_HOME, "config", "vice", "mcp_snapshots")
-# The emulator's MCP port: KIT_VICE_PORT when it is set, for a machine where something else already
-# holds 6510, else the port the last `tools.py vice` used (tools/vice-port, which it writes), else
-# 6510. kit/c64/vice.py resolves it the same way, so a shell that loses the variable between two
-# commands still reaches this clone's emulator and not whatever holds 6510.
+# Clients and launcher resolve environment overrides, saved ports and legacy settings together.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from ports import resolve_ports
 PORT_FILE = os.path.join(TOOLS, "vice-port")
-
-
-def vice_port():
-    if os.environ.get("KIT_VICE_PORT"):
-        return int(os.environ["KIT_VICE_PORT"])
-    try:
-        return int(open(PORT_FILE).read())
-    except (OSError, ValueError):
-        return 6510
-
-
-VICE_PORT = vice_port()
-# The disassembler's, resolved the same way: KIT_R2000_PORT, else the port the last `tools.py r2000`
-# used (tools/r2000-port), else 3000. kit/c64/r2000.py reads it back, so an annotation never goes to
-# another clone's disassembler on 3000. regenerator2000 0.9.20 serves HTTP on 3000 only: any other
-# port is its stdio server behind kit/c64/stdio_bridge.py.
 R2000_PORT_FILE = os.path.join(TOOLS, "r2000-port")
 BRIDGE = os.path.join(ROOT, "kit", "c64", "stdio_bridge.py")
 
 
+def vice_port():
+    return resolve_ports(Path(PORT_FILE).parent)["vice"]
+
+
 def r2000_port():
-    if os.environ.get("KIT_R2000_PORT"):
-        return int(os.environ["KIT_R2000_PORT"])
-    try:
-        with open(R2000_PORT_FILE) as f:
-            return int(f.read())
-    except (OSError, ValueError):
-        return 3000
+    return resolve_ports(Path(R2000_PORT_FILE).parent)["r2000"]
 
 
-R2000_PORT = r2000_port()
+VICE_PORT, R2000_PORT = vice_port(), r2000_port()
 RELEASE_NOTE = ".kit-release"    # written by get-vice into a downloaded release: "<tag> <asset>"
 
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 from launcher import (up, start, foreign_detail, missing_libraries, kill_matching,   # noqa: E402
-                      elapsed, footprint_signatures, written_outside, judge_footprint)
+                      elapsed, footprint_signatures, written_outside, judge_footprint, port_owner, foreign)
 import launcher  # noqa: E402
 
 
@@ -254,38 +236,129 @@ def r2000(path):
 R2000_NATIVE = "regenerator2000 --mcp-server " + re.escape(os.path.join(ROOT, ""))   # on :3000, as it serves HTTP itself
 R2000_BRIDGED = re.escape(BRIDGE)                                                     # on any other port
 STOP_PATTERNS = {"vice": re.escape(VICE_DIR + os.sep) + ".*-mcpserver",
-                 "r2000": None}      # stop() finds the disassemblers itself: there can be one for each part of a game
+                 "r2000": "regenerator2000 --mcp-server(-stdio)? " + re.escape(os.path.join(ROOT, "")) + "|" + re.escape(os.path.join(ROOT, "kit", "c64", "stdio_bridge.py")) + "( |$)"}
+
+
+def process_args(pid, command):
+    """Use real argv on Linux; ps shell quoting is only a fallback elsewhere."""
+    try:
+        with open(f"/proc/{int(pid)}/cmdline", "rb") as f:
+            raw = f.read()
+        if raw:
+            return [os.fsdecode(a) for a in raw.rstrip(b"\0").split(b"\0")]
+    except (OSError, ValueError):
+        pass
+    try:
+        return shlex.split(command)
+    except ValueError:
+        return []
+
+
+def r2000_source(args, port=None):
+    """Recognize an actual server/bridge argv, never a wrapper containing its text."""
+    if len(args) == 3 and os.path.basename(args[0]) == "regenerator2000" and args[1] in (
+            "--mcp-server", "--mcp-server-stdio"):
+        source = args[2]
+    elif (len(args) == 5 and os.path.basename(args[0]).startswith("python")
+          and os.path.abspath(args[1]) == os.path.join(ROOT, "kit", "c64", "stdio_bridge.py")
+          and args[4] == str(R2000_PORT if port is None else port)):
+        source = args[3]
+    else:
+        return None
+    # A path boundary matters: /clone-other is not contained in /clone.
+    try:
+        if os.path.isabs(source) and os.path.commonpath((os.path.realpath(ROOT), os.path.realpath(source))) == os.path.realpath(ROOT):
+            return source
+    except ValueError:                    # different drives, or an unusable path
+        pass
+    return None
+
+
+def r2000_running():
+    """(file, start time) of this clone's disassembler: the file it was started on, and when it started.
+    ("", 0) when one answers but ps cannot tell which or since when; None when none runs."""
+    owner = port_owner(R2000_PORT)
+    if foreign(owner):
+        return None
+    if not owner and not up(R2000_PORT):
+        return None
+    try:
+        result = subprocess.run(["ps", "-A", "-ww", "-o", "pid=,etime=,command="], capture_output=True, text=True)
+    except OSError:
+        return ("", 0) if up(R2000_PORT) else None
+    candidates = []
+    for line in result.stdout.splitlines():
+        parts = line.strip().split(None, 2)
+        if len(parts) != 3:
+            continue
+        pid, etime, command = parts
+        source = r2000_source(process_args(pid, command))
+        if source is None:
+            continue
+        try:
+            started = time.time() - elapsed(etime) - 1   # etime drops the fraction
+        except ValueError:
+            started = 0
+        if owner == command:
+            return source, started
+        candidates.append((source, started))
+    # An unidentifiable listener may hold annotations for any game. Fail closed
+    # rather than mistaking a shell wrapper or a second process for its source.
+    if owner:
+        return "", 0
+    if len(candidates) == 1:
+        return candidates[0]
+    return ("", 0) if candidates or up(R2000_PORT) else None
 
 
 def r2000_instances():
-    """This clone's running disassemblers, as (port, file it was started on, start time): one, or one
-    for each part of a game being worked on at once. ("", 0) for the file and the time when ps cannot
-    say which or since when."""
+    """This clone's actual native servers and bridges, including each part's session.
+
+    Read argv rather than matching command text inside shell wrappers. Unknown
+    listeners retain an empty source, so unexported annotations remain protected.
+    """
     try:
-        out = subprocess.run(["ps", "-A", "-ww", "-o", "etime=,command="], capture_output=True, text=True).stdout
+        result = subprocess.run(["ps", "-A", "-ww", "-o", "pid=,etime=,command="], capture_output=True, text=True)
     except OSError:
-        return [(R2000_PORT, "", 0)] if up(R2000_PORT) else []
+        running = r2000_running()
+        return [(R2000_PORT, *running)] if running else []
     found = {}
-    for line in out.splitlines():
-        for pattern, native in ((R2000_NATIVE, True), (R2000_BRIDGED, False)):
-            m = re.search(pattern + ".*$", line)
-            if not m:
-                continue
+    for line in result.stdout.splitlines():
+        fields = line.strip().split(None, 2)
+        if len(fields) != 3:
+            continue
+        pid, etime, command = fields
+        args = process_args(pid, command)
+        if len(args) == 3 and args[1] == "--mcp-server":
+            port = 3000
+        elif len(args) == 5:
             try:
-                started = time.time() - elapsed(line.split()[0]) - 1   # etime drops the fraction
+                port = int(args[4])
             except ValueError:
-                started = 0
-            if native:
-                port, path = 3000, m.group(0).split(" --mcp-server ", 1)[1]
-            else:
-                try:                                   # the bridge's arguments: the binary, the file, the port
-                    args = shlex.split(m.group(0))
-                    port, path = int(args[3]), args[2]
-                except (ValueError, IndexError):
-                    port, path = R2000_PORT, ""
-            found.setdefault((port, path), started)     # the wrapper round a tool repeats its command line
-            break
-    return [(port, path, started) for (port, path), started in found.items()]
+                continue
+            if not 1024 <= port <= 65535:
+                continue
+        else:
+            continue
+        source = r2000_source(args, port)
+        if source is None:
+            continue
+        owner = port_owner(port)
+        if foreign(owner):
+            continue
+        if owner and owner != command:
+            found.setdefault(port, ("", 0))
+            continue
+        try:
+            started = time.time() - elapsed(etime) - 1
+        except ValueError:
+            started = 0
+        found[port] = (source, started)
+    if R2000_PORT not in found:
+        running = r2000_running()
+        if running:
+            found[R2000_PORT] = running
+    return [(port, path, started) for port, (path, started) in found.items()]
 
 
 def unexported(path, started):
@@ -307,6 +380,7 @@ def unexported(path, started):
         games = [os.path.join(base, p, s) for p in sorted(os.listdir(base)) if os.path.isdir(os.path.join(base, p))
                  for s in sorted(os.listdir(os.path.join(base, p)))
                  if os.path.isfile(os.path.join(base, p, s, "game.json"))] if os.path.isdir(base) else []
+        games += [os.path.dirname(f) for f in glob.glob(os.path.join(base, "*", "*", "parts", "*", "part.json"))]
     found = []
     for g in games:
         work = os.path.join(g, "work")
@@ -340,7 +414,7 @@ def stop(which="all", force=False, only=None):
             for port, path, _ in mine:
                 kill_matching(("regenerator2000 --mcp-server " if port == 3000 else R2000_BRIDGED + " .*") + re.escape(path))
         else:     # every one this clone started, on :3000 and on any other port
-            kill_matching(R2000_NATIVE); kill_matching(R2000_BRIDGED)
+            kill_matching(STOP_PATTERNS["r2000"])
         if k == "r2000":
             for port, _, _ in mine:
                 forget_port(port)

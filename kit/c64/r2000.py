@@ -24,26 +24,27 @@ reproduce your mistakes. A batch is logged as a whole, so check its result.
 """
 import json, os, sys, urllib.request
 
+from ports import resolve_ports
+
+
 def _port(gdir=None):
-    """KIT_R2000_PORT; else the port the disassembler was started on for this game or part
-    (its work/r2000-port); else the one the launcher last started on; else 3000 (kit/c64/tools.py)."""
-    if os.environ.get("KIT_R2000_PORT"):
-        return int(os.environ["KIT_R2000_PORT"])
-    here = os.path.dirname(os.path.abspath(__file__))
-    for f in ([os.path.join(gdir, "work", "r2000-port")] if gdir else []) + [os.path.join(here, "..", "..", "tools", "r2000-port")]:
+    """An explicit environment override, the part's own session, or the clone's port."""
+    if gdir and "KIT_R2000_PORT" not in os.environ:
         try:
-            return int(open(f).read())
-        except (OSError, ValueError):
-            # one part of a game (kit/scripts/parts.py) never falls back to the clone's last
-            # disassembler: that is another part's session, and it would be read as this one's
-            if gdir and f.startswith(os.path.join(gdir, "")) and os.path.isfile(os.path.join(gdir, "part.json")):
+            with open(os.path.join(gdir, "work", "r2000-port")) as f:
+                raw = f.read().strip()
+        except FileNotFoundError:
+            if os.path.isfile(os.path.join(gdir, "part.json")):
                 sys.exit(f"no disassembler is running on a snapshot of {gdir} (`tools.py r2000 <its snapshot>` starts one).\n"
                          "To read this part's share of another part's session, name that part's folder:\n"
                          "  symbols_export.py <this part> --from <that part>      coverage.py <this part> --live --from <that part>")
-    return 3000
+        else:
+            return resolve_ports(environ=dict(os.environ, KIT_R2000_PORT=raw))["r2000"]
+    return resolve_ports()["r2000"]
 
 
 URL = f"http://127.0.0.1:{_port()}/mcp"
+
 MUTATING = {"r2000_set_label_name", "r2000_set_comment", "r2000_set_data_type",
             "r2000_disassemble", "r2000_batch_execute", "r2000_toggle_splitter",
             "r2000_add_scope", "r2000_set_immediate_format", "r2000_apply_enum_usage",

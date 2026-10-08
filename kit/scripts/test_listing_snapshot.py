@@ -65,6 +65,19 @@ class Snapshot(unittest.TestCase):
         run(self.p, '--relabel')
         self.assertEqual(self.listing()['snapshot']['file'], 'work/play.vsf')
 
+    def test_explicit_entry_can_be_the_listing_snapshot(self):
+        capture = self.p / 'work' / 'play.vsf'
+        run(self.p, capture)
+        expected = self.listing()
+        run(self.p, capture, '--entry', capture)
+        self.assertEqual(self.listing(), expected)
+
+    def test_missing_explicit_entry_is_refused(self):
+        with self.assertRaises(subprocess.CalledProcessError) as raised:
+            run(self.p, self.p / 'work' / 'play.vsf', '--entry', self.p / 'work' / 'missing.vsf')
+        self.assertIn('no hand-over snapshot', raised.exception.stderr)
+        self.assertFalse((self.p / 'listing.json').exists())
+
 
 if __name__ == '__main__':
     unittest.main()

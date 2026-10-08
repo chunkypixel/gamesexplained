@@ -408,6 +408,42 @@ the pixel. On 26 September, on Linux x86_64 with the v3.13.1 release and
 node, the same, and on 2 October with the v3.13.2 release, there and on
 macOS arm64.
 
+## Separate ports for concurrent checkouts
+
+The defaults are VICE 6510 and regenerator2000 3000. If they belong to
+another active project, leave that project running. The launcher and Python
+clients resolve ports in the same order: `KIT_VICE_PORT` / `KIT_R2000_PORT`,
+then the saved `tools/vice-port` / `tools/r2000-port` files, then the legacy
+`tools/ports.json`, then the defaults. The launcher saves its chosen ports
+so later clients can find them. The legacy file remains supported:
+
+```json
+{"vice": 16510, "r2000": 13000}
+```
+
+Ports must be different integers from 1024 to 65535; malformed settings
+fail explicitly. A separately configured MCP client must also use those
+URLs; the static `.mcp.json` still names the defaults.
+
+VICE receives its configured port directly. regenerator2000 0.9.20 has a
+fixed HTTP port, so an alternate port uses its stdio server behind
+`kit/c64/stdio_bridge.py`. That path accepts a `.vsf` or `.regen2000proj`;
+it does not accept a `.prg`. Snapshot conversion checks the C64MEM module
+boundaries and writes a uniquely named project under `tools/`, with RAM
+only, not CPU/ROM metadata. Existing projects are opened directly. Export
+annotations before stopping the disassembler. The bridge serializes
+requests and fails closed after a broken stream; restart and replay/export
+as appropriate rather than retrying mutations blindly. This stdio path was
+exercised on Linux on 2 October 2026; Windows pipe support is not verified.
+
+The launcher sets regenerator2000's XDG config/data/state/cache paths under
+`tools/r2000-home/`. On 2 October 2026, release VICE-MCP 3.13.2 plus an existing
+regenerator2000 0.9.20 binary copied into `tools/cargo/bin/` passed a complete
+launch/snapshot/disassembler/exit footprint check on Linux x86_64 with no
+display. No unexpected writes outside the repository were found. The
+existing Xvfb, Chromium and JavaScript packages were reused; no system
+package installation was needed for that run.
+
 ## macOS — known to work
 
 - **The emulator** serves MCP over HTTP; `.mcp.json` registers it as the
