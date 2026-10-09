@@ -234,9 +234,18 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
                '#8e5029', '#553800', '#c46c71', '#4a4a4a', '#7b7b7b', '#a9ff9f', '#706deb', '#b2b2b2'];
   const needSite = 'This widget reads the game’s bytes from listing.json and the site’s shared scripts: open the page from the built site, not from disk.';
   const MOVES = { 1: 'stand', 2: 'walk forward', 3: 'walk back', 4: 'crouch', 5: 'jump', 6: 'high punch',
-    7: 'down-forward from a crouch', 8: 'somersault backwards', 9: 'somersault forwards', 0x0A: 'fire + down',
-    0x0B: 'fire + down-forward', 0x0C: 'fire + forward', 0x0D: 'fire + up-forward', 0x0E: 'flying kick',
-    0x0F: 'fire + up-back', 0x10: 'fire + down-back', 0x11: 'fire + back', 0x12: 'turn round', 0x18: 'punch' };
+    7: 'low punch', 8: 'somersault backwards', 9: 'somersault forwards', 0x0A: 'foot sweep',
+    0x0B: 'low kick', 0x0C: 'middle kick', 0x0D: 'high kick', 0x0E: 'flying kick',
+    0x0F: 'back kick', 0x10: 'back sweep', 0x11: 'spinning kick', 0x12: 'turn round', 0x13: 'low block', 0x14: 'high block', 0x18: 'middle punch' };
+  // The move cards: move, key frame (the strike frame $1204 for a blow), stick as read facing right, fire, how it is reached.
+  const MOVE_CARDS = [
+    [1, 0x00, '○', 0, 'stick centred'], [2, 0x02, '→', 0, ''], [3, 0x31, '←', 0, 'blocks instead when a blow is in reach'],
+    [4, 0x0C, '↓', 0, ''], [5, 0x09, '↑', 0, ''], [6, 0x07, '↗', 0, ''], [0x18, 0x13, '↘', 0, 'from standing'],
+    [7, 0x0D, '↘', 0, 'from a crouch'], [8, 0x17, '↙', 0, ''], [9, 0x14, '↖', 0, ''],
+    [0x0A, 0x10, '↓', 1, 'crouches first'], [0x0B, 0x08, '↘', 1, ''], [0x0C, 0x05, '→', 1, ''], [0x0D, 0x0B, '↗', 1, ''],
+    [0x0E, 0x0A, '↑', 1, ''], [0x0F, 0x12, '↖', 1, 'strikes behind'], [0x10, 0x39, '↙', 1, 'crouches first, strikes behind'],
+    [0x11, 0x24, '←', 1, 'held on from the turn'], [0x12, 0x1B, '←', 1, 'from standing'],
+    [0x13, 0x23, '←', 0, 'automatic, against a low or middle blow'], [0x14, 0x0E, '←', 0, 'automatic, against a high blow']];
 
   // A multicolour sprite at (px, py): %01 $D025 (black), %10 the fighter's colour, %11 $D026 (light red),
   // as the game sets them ($19BD, $19C2; the frame's registers show 0 and $0A).
@@ -321,6 +330,21 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
     $('gridBtn').onclick = () => { grid = !grid; $('gridBtn').classList.toggle('on', grid); show(frame); };
     $('frameIn').oninput = e => { clearInterval(timer); show(+e.target.value); };
     play(0x0E);
+    if ($('moveCards')) {
+      const box = $('moveCards');
+      for (const [m, f, arrow, fired, how] of MOVE_CARDS) {
+        const b = document.createElement('button'); b.className = 'fx-move'; b.type = 'button';
+        const cv = document.createElement('canvas'); cv.width = 144; cv.height = 126;
+        drawPose(cv, FIST.pose(ram, f, false, false), 2, 1, false);
+        const pts = ram[0x1176 + m] ? ' · ' + ram[0x12A5 + m] * 100 + ' pts' : '';
+        b.appendChild(cv);
+        b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Move ${hex(m)}${pts}</span><b>${MOVES[m][0].toUpperCase() + MOVES[m].slice(1)}</b>` +
+          `<span class="fx-move-in"><span class="fx-move-arrow">${arrow}</span>${fired ? '<span class="fx-move-fire">fire</span>' : ''}${how ? ' ' + how : ''}</span>`);
+        b.title = 'Play move ' + hex(m) + ' in the viewer below';
+        b.onclick = () => { play(m); $('poseCv').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+        box.appendChild(b);
+      }
+    }
 
     }
     if ($('bdCv')) {
@@ -475,7 +499,20 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
       const upd = () => {
         const m = +sel.value, f = +$('gFrame').value;
         $('gFrameOut').textContent = hex(f);
-        drawPose($('gPose'), FIST.pose(ram, f, true, false), 2, 2, false);
+        // both fighters as the hit test sees them: the attacker (white, facing right) on the frame its
+        // blow is tested on, move_strike_frame $1204, and the defender (red, facing left) on frame f,
+        // placed at the distance the reach profile aims at; X units are two pixels ($386C doubles $6A)
+        const sf = ram[0x1204 + m], p0 = ram[(ram[0x121D + 2 * m] | ram[0x121E + 2 * m] << 8) + f];
+        const dist = p0 === 0x80 ? 30 : (p0 << 24) >> 24, gc = $('gPose'), gx = gc.getContext('2d'), k = 2;
+        gx.fillStyle = '#edf171'; gx.fillRect(0, 0, gc.width, gc.height);
+        const left = 8 + Math.max(0, -2 * dist) * k;
+        const at = (slots, x0, colour) => slots.forEach((s, i) => { if (s) drawSpriteMC(gx, s, x0 + (i % 3) * 24 * k, Math.floor(i / 3) * 21 * k + 14, k, colour); });
+        at(FIST.pose(ram, f, true, false), left + 2 * dist * k, 2);   // the defender first, so the
+        at(FIST.pose(ram, sf, false, false), left, 1);                // attacker's blow is drawn over it
+        gx.fillStyle = '#55585f'; gx.font = '11px IBM Plex Mono, monospace';
+        gx.fillText('attacker: move ' + hex(m) + ', frame ' + hex(sf), 6, 11);
+        const label = 'defender: frame ' + hex(f) + (p0 === 0x80 ? ' (cannot be hit; drawn at 30)' : ', at distance ' + dist);
+        gx.fillText(label, gc.width - 6 - gx.measureText(label).width, 11);
         bctx2.fillStyle = '#fff'; bctx2.fillRect(0, 0, bar.width, bar.height);
         const lo = -10, hi = 60, w = bar.width / (hi - lo + 1);
         const spans = [];
@@ -487,7 +524,11 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         }
         bctx2.fillStyle = '#80838a'; bctx2.font = '11px IBM Plex Mono, monospace';
         for (let d = lo; d <= hi; d += 10) bctx2.fillText(String(d), (d - lo) * w, 72);
-        const p = ram[(ram[0x121D + 2 * m] | ram[0x121E + 2 * m] << 8) + f];
+        if (p0 !== 0x80 && dist >= lo && dist <= hi) {           // the distance the picture shows
+          bctx2.fillStyle = '#2f3136'; bctx2.fillRect((dist - lo) * w + w / 2 - 1, 2, 2, 58);
+          bctx2.fillText('shown', Math.min(bar.width - 40, (dist - lo) * w + 4), 86);
+        }
+        const p = p0;
         $('gOut').textContent = p === 0x80 ? 'Profile byte $80: a defender in this frame cannot be hit by this blow.'
           : 'Profile byte ' + hex(p) + ' (aims at ' + ((p << 24) >> 24) + '); whole point at ' + spans.filter(s => s[1] === 2).map(s => s[0]).join(', ') +
             (spans.some(s => s[1] === 1) ? '; half at ' + spans.filter(s => s[1] === 1).map(s => s[0]).join(', ') : '');
