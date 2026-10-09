@@ -425,6 +425,53 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
   }
   const BANNER_COLS = [null, PAL[1], PAL[12], PAL[11]];
 
+  /* 03 the seven weapon icons: one card each, drawn from the sprite shapes at $4000 + 64 x frame */
+  function iconCards(ram) {
+    const box = $('iconCards');
+    const shp = f => ram.subarray(0x4000 + 64 * f, 0x4000 + 64 * f + 63);
+    const MC_SHOP = [15, 11], MC_ROW = [ram[0x105E], ram[0x105F]];    // stage 1's multicolours; the icon row's ($3765 and $376B point here in play)
+    function sprite(ctx, f, x0, y0, S, col, mc) {
+      const d = shp(f), cols = [null, PAL[mc[0]], PAL[col], PAL[mc[1]]];
+      for (let r = 0; r < 21; r++) for (let c = 0; c < 12; c++) {
+        const v = d[r * 3 + (c >> 2)] >> (6 - 2 * (c & 3)) & 3;
+        if (v) { ctx.fillStyle = cols[v]; ctx.fillRect(x0 + c * 2 * S, y0 + r * S, 2 * S, S); }
+      }
+    }
+    function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+    // each icon's row frames by level, read from the game's own tables ($0F07-$0F19), and what it does
+    const owned = (t, label) => [['not owned', ram[t]], [label || 'owned', ram[t + 1]]];
+    const ICONS = [
+      ['speed', 0x0F00, [0, 1, 2, 3].map(l => [(1 << l) + ' px', ram[0x0F07 + l]]),
+        'ship speed 1, 2, 4 or 8 pixels a frame; buying it at the top speed goes back to the slowest'],
+      ['fire rate', 0x0F01, [0, 1, 2].map(l => [(l + 1) + ' bolt' + (l ? 's' : ''), ram[0x0F0D + l]]),
+        '1, 2 or 3 laser bolts on screen at once (<code>ship_fire</code>, <code>$349A</code>)'],
+      ['extra weapon', 0x0F02, owned(0x0F11), 'each shot also fires one up, one down and one backwards (<code>$3502</code>)'],
+      ['double laser', 0x0F03, owned(0x0F13), 'two more beams, level with the ship and two rows below (<code>$3E88</code>)'],
+      ['orbiter', 0x0F04, owned(0x0F15), 'a satellite circling the ship through 16 positions; it destroys what it touches and is never used up (<code>$3E5E</code>)'],
+      ['slow-down', 0x0F05, owned(0x0F17), 'the attack wave moves and spawns only every second frame (<code>wave_step</code>, <code>$2C22</code>)'],
+      ['shield', 0x0F06, [['not owned', ram[0x0F19]], ...[3, 2, 1].map(c => [c + ' left', 0x89 + c])],
+        'absorbs three hits, with 16 frames of safety after each (<code>$3880</code>); its icon counts the hits left (<code>$89</code> + <code>$12C0</code>)'],
+    ];
+    ICONS.forEach(([name, kept, levels, does], i) => {
+      const k = i + 1, shop = [0x7F, 0x83, 0x86, 0x87, 0x88, 0x89, 0x8C][i];   // the frame each shop sprite shows, as recorded
+      const div = document.createElement('div'); div.className = 'card icard';
+      const top = canvas(2 * 52 + 12, 46);                  // the shop sprite, affordable and too dear
+      const tc = top.getContext('2d'); tc.fillStyle = '#000'; tc.fillRect(0, 0, top.width, top.height);
+      sprite(tc, shop, 4, 2, 2, 14, MC_SHOP); sprite(tc, shop, 60, 2, 2, 12, MC_SHOP);
+      div.appendChild(top);
+      div.insertAdjacentHTML('beforeend', `<b>Icon ${k} · ${name}</b><br>${k} credit${k > 1 ? 's' : ''} · shop frame ${hex(shop)}<br>${does}<br><span class="k">kept in ${hex(kept, 4)}</span><div class="lv"></div>`);
+      const lv = div.querySelector('.lv');
+      for (const [label, f] of levels) {
+        const cell = document.createElement('span');
+        const c = canvas(52, 46), cc = c.getContext('2d'); cc.fillStyle = '#000'; cc.fillRect(0, 0, 52, 46);
+        sprite(cc, f, 2, 2, 2, 14, MC_ROW);
+        cell.appendChild(c); cell.insertAdjacentHTML('beforeend', `<small>${label}<br>${hex(f)}</small>`);
+        lv.appendChild(cell);
+      }
+      box.appendChild(div);
+    });
+  }
+
   /* 05 shop */
   function shopWidget(ram) {
     const ctx = $('shopCv').getContext('2d');
@@ -519,7 +566,68 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
     draw();
   }
 
-  const need = ['music', 'sfx', 'stageOut', 'stageTable', 'shopOut', 'shotOut', 'starLab'].filter(id => $(id));
+  /* the enemies: one card each, from reference/enemies.json (built from the wave recordings) */
+  function enemiesWidget() {
+    const box = $('enemyCards');
+    fetch('reference/enemies.json').then(r => r.json()).then(J => {
+      const shape = {};
+      for (const [id, b] of Object.entries(J.shapes)) shape[parseInt(id, 16)] = Uint8Array.from(atob(b), c => c.charCodeAt(0));
+      const NOTE = { 0xC6: 'stage 1’s boss is record $0D: 8 hits, circled by six indestructible copies' };
+      const list = v => v.length < 3 ? v.join(' or ') : v.slice(0, -1).join(', ') + ' or ' + v[v.length - 1];
+      function hits(hp) {
+        const n = [...new Set(hp.filter(h => h !== 255).map(h => Math.max(1, h)))].sort((a, b) => a - b);
+        const t = n.length ? (n.length > 2 ? n[0] + ' to ' + n[n.length - 1] : list(n)) + (n.length === 1 && n[0] === 1 ? ' hit' : ' hits') : '';
+        return hp.includes(255) ? (t ? t + ', or indestructible' : 'indestructible') : t;
+      }
+      function stages(v) {                       // 1, 2, 3, 5 -> "1-3, 5"
+        const out = [];
+        for (let i = 0; i < v.length; i++) { let j = i; while (j + 1 < v.length && v[j + 1] === v[j] + 1) j++; out.push(j > i + 1 ? v[i] + '-' + v[j] : j > i ? v[i] + ', ' + v[j] : String(v[i])); i = j; }
+        return out.join(', ');
+      }
+      const cards = [];
+      J.enemies.forEach((k, i) => {
+        const parts = k.parts || [{ dx: 0, dy: 0, colour: k.colour, frames: k.frames }];
+        const w = Math.max(...parts.map(p => p.dx)) + 24, h = Math.max(...parts.map(p => p.dy)) + 21;
+        const S = Math.max(1, Math.min(4, Math.floor(Math.min(136 / w, 84 / h))));
+        const div = document.createElement('div'); div.className = 'card';
+        const cv = document.createElement('canvas'); cv.width = Math.max(w * S, 48) + 8; cv.height = h * S + 8;
+        cv.style.width = cv.width + 'px'; cv.style.maxWidth = '100%'; div.appendChild(cv);
+        const killable = k.parts ? k.parts.filter(p => p.hits !== 255).length : 0;
+        const note = k.parts ? `${k.parts.length} sprites flying as one; ` + (killable ? `${killable} of them can be destroyed` : 'none can be destroyed')
+          : NOTE[k.anim] || '';
+        const frames = k.parts ? [...new Set(k.parts.map(p => p.frame))] : k.frames;
+        div.insertAdjacentHTML('beforeend', `<b>Enemy ${i + 1}</b> · ${list(k.points.map(p => p * 10))} points<br>` +
+          `${hits(k.hits)}; ${k.fires ? 'may fire' : 'never fires'}` +
+          (note ? `<br><i>${note}</i>` : '') +
+          `<br>stage${k.stages.length > 1 ? 's' : ''} ${stages(k.stages)} · ${k.count} in the recordings` +
+          `<br>${k.colours.map(c => `<span class="sw" style="background:${PAL[c]}"></span>`).join('')}` +
+          `<br><span class="k">${k.anim == null ? 'records ' + k.records.map(r => hex(r)).join(' ') : 'list ' + hex(0x1300 + k.anim, 4)} · frames ${frames.map(f => hex(f)).join(' ')}</span>`);
+        box.appendChild(div);
+        cards.push({ ctx: cv.getContext('2d'), S, w: cv.width, h: cv.height, mc: k.mc,
+          parts: k.parts ? k.parts.map(p => ({ dx: p.dx, dy: p.dy, colour: p.colour, frames: [p.frame] })) : parts });
+      });
+      function sprite(ctx, d, x0, y0, S, cols) {
+        for (let r = 0; r < 21; r++) for (let c = 0; c < 12; c++) {
+          const v = d[r * 3 + (c >> 2)] >> (6 - 2 * (c & 3)) & 3;
+          if (v) { ctx.fillStyle = cols[v]; ctx.fillRect(x0 + c * 2 * S, y0 + r * S, 2 * S, S); }
+        }
+      }
+      function draw(t) {                         // the game steps an enemy's animation every 4 frames
+        for (const c of cards) {
+          c.ctx.fillStyle = '#000'; c.ctx.fillRect(0, 0, c.w, c.h);
+          for (const p of c.parts) {
+            const f = p.frames[Math.floor(t / 4) % p.frames.length];
+            sprite(c.ctx, shape[f], 4 + p.dx * c.S, 4 + p.dy * c.S, c.S, [null, PAL[c.mc[0]], PAL[p.colour], PAL[c.mc[1]]]);
+          }
+        }
+      }
+      let t = 0; draw(0);
+      setInterval(() => { if (!document.hidden) draw(++t); }, 20);
+    }).catch(() => { box.textContent = 'This widget reads reference/enemies.json: open the page from the built site, not from disk.'; });
+  }
+  if ($('enemyCards')) enemiesWidget();
+
+  const need = ['music', 'sfx', 'stageOut', 'stageTable', 'shopOut', 'iconCards', 'shotOut', 'starLab'].filter(id => $(id));
   if (!need.length) return;
   if (!window.C64) {
     need.forEach(id => { $(id).innerHTML = '<span class="msg">' + needSite + '</span>'; });
@@ -532,6 +640,7 @@ const DELTA_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about"
     if ($('starCv')) starsWidget(ram);
     if ($('shotCv')) shotWidget(ram);
     if ($('shopCv')) shopWidget(ram);
+    if ($('iconCards')) iconCards(ram);
     if ($('bannerCv')) stageWidget(ram);
     if ($('stageTable')) stageTable(ram);
   });
