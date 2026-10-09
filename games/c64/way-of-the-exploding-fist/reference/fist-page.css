@@ -57,3 +57,9 @@ main a{color:var(--link)}
 .fx-move-in{font-size:13px;color:var(--ink-soft);line-height:1.35}
 .fx-move-arrow{font-size:18px;color:var(--ink);margin-right:5px}
 .fx-move-fire{font-family:var(--fm);font-size:11px;background:var(--coral);color:#fff;border-radius:4px;padding:1px 5px;margin-right:4px}
+.fx-steps{padding-left:1.3em}.fx-steps li{margin:0 0 .6em}
+.fx-tab .sel{background:var(--hl);font-weight:700}
+.fx-bars{margin-top:12px;font-family:var(--fm);font-size:13px;color:var(--ink-soft)}
+.fx-bars div{display:flex;align-items:center;gap:8px;margin:3px 0}
+.fx-bar{display:inline-block;height:12px;border-radius:2px;flex:none}
+.fx-scroll{overflow-x:auto}
