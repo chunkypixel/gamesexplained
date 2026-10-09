@@ -32,60 +32,70 @@ Sources:
 
 | Feature | Status | Where |
 |---|---|---|
-| Title picture: MAD Magazine's Official Spy vs Spy, by Mike Riedel, First Star Software, 1984 | live | the loader's file `S1`/`S2` (`orientation.md`); `reference/title.png` |
-| Options screen in "the top room": number of players, difficulty level, computer IQ (one player only), airport hidden till the end (manual) | live | `reference/options.png`: `NUMBER OF PLAYERS`, `LEVEL OF DIFFICULTY`, `COMPUTER IQ (1 PLAYER)`, `HIDE AIRPORT TILL END`, with the level's rooms (06), traps (12) and minutes (07) |
-| Up/down moves the option cursor, left/right changes the setting, fire or space starts (manual; the lower monitor says the same) | open | |
-| Joystick port 2 drives the white spy, port 1 the black (the options screen's own text) | open | |
-| Simulvision: split screen, white spy above, black below, both shown in either game (manual) | live | `reference/play.png`; a raster split at line 151 changes the background colour (`orientation.md`) |
-| Simulplay: both spies move at once; in one-player games the computer plays black (manual) | live | |
-| Embassy: a randomly generated maze of rooms on a grid, size by level (manual: "selectable, yet randomly generated") | open | |
-| Rooms drawn in 3D; up moves to the back of the room, down to the front (manual) | open | |
-| Doors on left, right, back and front walls; fire opens a closed door (manual) | open | |
-| A room is drawn as a dashed outline first, then filled in, when a spy enters it | live | `work/shots/menu1.png` |
-| Searching furniture: in range a short tone and a flash; fire opens or lifts it (manual) | open | |
-| Items to collect: passport, money, key, secret plans, and the briefcase to hold them; one of each per game; never in a remedy's place (manual) | open | |
-| Carrying: one thing at a time except inside the briefcase; an item found without the briefcase is carried in a white satchel and flashes on the trapulator (manual) | open | |
-| Trapulator: clock at the top, six buttons (bomb, spring, water bucket, gun and string, time bomb, map), inventory row of passport, money, key, plans (manual) | live | `reference/trapulator-arrow.png`: fire twice shows a yellow arrow on the buttons |
-| Fire twice opens the trapulator; the stick moves the arrow; fire takes the trap (manual) | live | the arrow appears after two presses and moves with the stick |
-| Traps: bomb and spring anywhere but a door; water bucket and gun with string on a closed door only; time bomb anywhere, armed at once, 15 seconds, cannot be carried or defused (manual) | open | |
-| Setting a trap costs time, with beeps while the clock deducts it (manual) | open | |
-| A trap victim loses 7 seconds of real time and 20 of game time, 27 in all; the other spy laughs (manual) | open | |
-| Number of traps limited by level ("total traps available..12" on level 1) | open | |
-| Remedies: water bucket (red fire box, left wall) for the bomb, wire cutters (white tool box, right wall) for the spring, umbrella (coat rack) for the water bucket, scissors (first-aid kit, back wall) for the gun (manual) | open | |
-| Map button: the embassy's rooms, the spy's room blinking, visited rooms filled, a dot where a needed item is; not the other spy, not the other floor (manual) | open | |
-| Clock: both start with equal time; time lost to traps and fights never comes back; the red light flashes when time is nearly out (manual) | live | both clocks start at 7 minutes on level 1 (`reference/options.png`, `06:59` a second in) |
-| The two can never run out of time together; the survivor plays on; the dead spy's traps stay (manual) | open | |
-| Hand-to-hand combat when both are in one room: one monitor goes blank, the other shows both (manual) | live | `reference/combat.png` |
-| In combat: no searching, no trapulator; doors and door traps work (manual) | open | |
-| Club: hold fire, stick up to down hits the head, left/right jabs; about 7 blows kill; strength recovers over time (manual) | open | |
-| A spy carrying something into a shared room drops it: traps and remedies lost, items and briefcase hidden in the room (manual) | open | |
-| Both spies start each game in the same room, a few steps apart (manual) | live | `reference/combat.png`: the game opens in combat |
-| Exit: one marked door; the airport guard stops a spy without all four items (manual) | open | |
-| Airport: the spy who leaves with everything reaches the plane; a ranking is shown | live | `reference/airport-ranking.png`: the computer's black spy escaped, `2045` and `YOUR RANKING: AVERAGE GUY SPY` |
-| Hide airport till end option (manual) | open | |
-| Split-level embassies: two floors, ladders (fire lowers or raises), holes under rugs (fire lifts the rug) (manual) | open | |
-| "Bread crumbs": arrows below the room pointing the way back, up to 9 rooms, not on the higher levels (manual) | live | arrows show under the black spy's room in `reference/play.png` |
-| Scoring: +80 win a fight, −20 lose one, +30 place a trap, −80 trap victim or the guard's boot, +60 steal an item, −70 call up the map, +40 use a remedy (manual) | open | |
-| Rank at the end of each game, with bonus points and time penalties (manual) | live | `AVERAGE GUY SPY` with 2045 points; the other ranks are open |
-| F5 returns to the options screen (manual) | live | pressed during play, the options screen came back |
-| RUN/STOP pauses (manual) | open | |
-| S turns the music off and on again (manual) | open | |
-| Music by Nick Scarim (wiki) | open | |
-| Spy sounds and the laugh when a trap goes off (manual) | open | |
-| Computer IQ levels (manual) | open | |
-| Difficulty levels change rooms, traps and minutes (options screen) | open | |
-| Copy protection: the loader expects read errors 21 and 23 from the original disk and formats the disk on failure | traced | `S0` at `$6114` (`orientation.md`); not annotated, by policy |
+| Title picture: MAD Magazine's Official Spy vs Spy, by Mike Riedel, First Star Software, 1984 | live | the loader's files `S1`/`S2` (`orientation.md`); `reference/title.png` |
+| Options screen: number of players, difficulty level, computer IQ (one player only), airport hidden till the end (manual) | confirmed | `options_screen` `$9F7E`, `options_loop` `$A00B`; `reference/options.png`. Eight levels, IQ 1-5 |
+| Up/down moves the option cursor, left/right changes the setting, fire starts (manual; the lower monitor says the same) | live | `options_loop` `$A00B`: walked every row in the code-map sessions. Space is not read: fire only |
+| Joystick port 2 drives the white spy, port 1 the black (the options screen's own text) | confirmed | `read_controls` `$94A1` |
+| Simulvision: split screen, white spy above, black below (manual) | confirmed | two raster interrupts, `irq_handler` `$8FA6`; `reference/play.png` |
+| Simulplay: both spies move at once; in one-player games the computer plays black (manual) | confirmed | `next_spy` `$674E` alternates the spies; `computer_player` `$9A67` |
+| Embassy: a maze of rooms, "selectable, yet randomly generated" (manual) | differs | each level's room layout is fixed (`$29BC`-`$2DAB`, `$BCE1`-`$BEC3`); the exit room (one of four), colours, door places, furniture and item places are random (`build_embassy` `$7EF8`) |
+| Rooms in 3D; up moves to the back, down to the front (manual) | live | `spy_move` `$6BEA`; depth `$57` grew to 21 holding down (`t2b.py`) |
+| Doors on four walls; fire opens a closed door (manual) | confirmed | `search_door` `$725A`, `toggle_door` `$72BE`; doors start closed (`build_embassy`) |
+| A room is drawn as a dashed outline first, then filled in | live | `monitor_off` `$7D6A` wipes the monitor in steps; `work/shots/menu1.png` |
+| Searching furniture: a short tone and a flash in range; fire opens it (manual) | confirmed | `search_target` `$70B7` (effect 6, `flash_room` `$906C`), `search_furniture` `$7310` |
+| Items: passport, money, key, plans, and the briefcase; one of each; never in a remedy's place (manual) | confirmed | items 0-4 at `$0210`-`$021E`; placed only in empty furniture (`build_embassy`). *Live*: one item per room at the start |
+| Carrying one thing at a time except inside the briefcase (manual) | confirmed | `take_item` `$73E8`, `add_to_briefcase` `$7425`, `follow_briefcase` `$74F4` |
+| Trapulator: clock, six buttons, inventory row (manual) | live | `trapulator` `$98E6`, `place_arrow` `$9142`; `reference/trapulator-arrow.png` |
+| Fire twice opens the trapulator; the stick moves the arrow; fire takes the trap (manual) | live | `$68E7`, `trapulator` `$98E6` (`t4.py`, `t5.py`) |
+| Traps: bomb and spring anywhere but a door; bucket and gun on a closed door; time bomb anywhere, 15 seconds, cannot be carried or defused (manual) | confirmed | `search_furniture`, `search_door`; the time bomb is a fuse of 200 of its owner's turns (`$022A`), about 12 seconds at the measured pace; not timed live |
+| Setting a trap costs time, with beeps (manual) | confirmed | scoring cause 1: −10 s, paid with effect `$11` (`score_event` `$8937`, `tick_clock` `$9362`) |
+| A trap victim loses 20 seconds of game time and lies out (manual: 7 + 20) | confirmed | cause 4 (−20 s); stun `$90` passes (`spy_falling` `$6959`) |
+| Number of traps limited ("total traps available..12" on level 1) | differs | the trapulator refuses past 2 × (rooms − 1) = 11 on level 1; the screen shows 2 × rooms = 12. *Live* (`t4.py`) |
+| Remedies: fire bucket (fire box, left wall) for the bomb, wire cutters (tool box, right wall) for the spring, umbrella (coat rack) for the bucket, scissors (first-aid kit, back wall) for the gun (manual) | confirmed | `furniture_contents` `$0900` by type; remedy checks in `search_furniture`, `search_door` |
+| Map button: rooms visited filled, a dot where an item is, the spy's room blinking; not the other spy, not the other floor (manual) | confirmed | `show_map` `$8B7F`. *Live*: −70 points, −15 s (`t5.py`) |
+| Clock: equal time; losses never come back; red light when time is nearly out (manual) | confirmed | `tick_clock` `$9362`: the light blinks under two minutes with effect 7. *Live*: the clock rate |
+| The survivor plays on; the dead spy's traps stay (manual) | confirmed | `$0261` per spy; `main_loop` ends the game when both have finished |
+| Hand-to-hand combat in a shared room: one monitor goes blank (manual) | live | `enter_shared_room` `$75C5`, `monitor_off` `$7D6A`; `reference/combat.png` |
+| In combat: no searching, no trapulator; doors work (manual) | confirmed | `spy_walk` `$6B3D` sends fire to a swing when `$F8` is set |
+| Club: up-down hits the head, left-right jabs; about 7 blows kill (manual) | differs | `spy_move` `$6BEA`: a hit is counted in `$020E`, and ten knock a spy out (`spy_walk` `$6B66`) |
+| Items carried into a shared room are dropped (manual) | traced | `drop_object` `$99C0` is called on entering; items hidden in the room, traps and remedies lost |
+| Both spies start in the same room (manual) | live | room 0 (`place_spies` `$9705`); `reference/combat.png` |
+| Exit: one marked door; the airport guard stops a spy without all four items (manual) | confirmed | `door_or_ladder` `$6F40`, guard cause 4 |
+| Airport: the spy who leaves with everything reaches the plane; a ranking is shown | live | `escape_to_airport` `$86BB`, `airport_scene` `$8722`; `reference/airport-ranking.png` |
+| Hide airport till end option (manual) | confirmed | the exit door is a wall until a briefcase is full (`build_embassy`, `check_full_briefcase` `$7494`) |
+| Split-level embassies: ladders and holes under rugs (manual) | traced | door slots 4 and 5 (`rec_door_opposite` `$BBD4`), `door_or_ladder` `$6F40`, `spy_climb_step` `$6E51`; not played on a two-floor level |
+| "Bread crumbs": arrows back, up to 9 rooms, not on the higher levels (manual) | differs | `trail_step` `$8A93`, `draw_trail` `$8AC7`: ten places, levels 1-4 only |
+| Scoring: +80, −20, +30, −80, +60, −70, +40 (manual) | confirmed | `score_event` `$8937`, tables `$1D23`; the map's −70 *live* |
+| Rank at the end of each game (manual) | live | the thousands digit of the score picks one of ten ranks (`airport_scene`) |
+| F5 returns to the options screen (manual) | live | `read_controls` bit 7 of `$0282` |
+| RUN/STOP pauses (manual) | live | `main_loop` (`t1.py`) |
+| S turns the music off and on (manual) | live | `read_controls`, `music_off` `$0263` (`t1.py`) |
+| Music by Nick Scarim (wiki) | confirmed | two-voice driver `play_music` `$954E`, tunes `$245A`, `$24D2`; the name is not in the image |
+| Spy sounds and the laugh when a trap goes off (manual) | traced | effects at `$2127`; which effect is the laugh was not identified |
+| Computer IQ levels (manual) | confirmed | `cpu_check_route` `$9D01`, `cpu_flee` `$A30F`, `iq_swing_rate` `$1B1E` |
+| Difficulty levels change rooms, traps and minutes | confirmed | `level_rooms` `$BC91`, `level_minutes` `$1B0E` |
+| Copy protection: read errors 21 and 23 expected, the disk formatted on failure | traced | `S0` at `$6114` (`orientation.md`); not annotated, by policy |
 
 ## Beyond the documentation
 
 Found in the code, not in the manual.
 
-- The game runs only on NTSC machines: a 60 Hz timing loop at `$8E38`
-  restarts for ever on PAL (`orientation.md`).
+- The game runs only on NTSC machines (`wait_ntsc_sync` `$8E38`, *live*).
+- An attract demo plays recorded moves at level 5 when the options screen
+  is left alone (`options_loop` `$A00B`, `$C000`-`$CFF4`, *live*).
+- A build switch at `$6603` would turn on a recording mode that writes both
+  joysticks into the demo tables (`$67B0`).
+- The computer player knows where every item and trap is, and plans routes
+  with a breadth-first search over the rooms (`facts.md`).
+- Leftovers of the original assembler's symbol table name the computer's
+  fighting code (`$BEC4`, `facts.md`).
+- A spy whose clock runs out sees OUT OF TIME..ITS ALL OVER (`spy_falling`).
+- Ten ranks, from A KNEE HIGH SPY to GRAND MASTER SPY, by the thousands
+  digit of the score.
 
 ## Open questions
 
-- After loading on NTSC, one boot showed both spies in rooms with the
-  clocks at `-20:53` before any key was pressed: an attract mode, or a game
-  the options screen starts by itself after a wait? Not reproduced at the
-  hand-over boot, which reached the options screen and waited.
+- The time bomb's fuse is 200 of its owner's turns; at the measured 342
+  passes in 600 frames, one turn per spy every 3.5 frames, that is about
+  12 real seconds against the manual's 15. Not timed live.
+- Which sound effect is the laugh the manual describes was not identified.
