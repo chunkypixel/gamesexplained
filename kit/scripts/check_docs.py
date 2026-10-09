@@ -22,6 +22,8 @@
   games/*/*/kit-feedback.md   each maintainer ask filed (#123) or fileable (maintainer_asks.py)
   games/*/*/*.html   no class of the page's own that site/lib/site.css also styles: the build
                      links site.css after the page's <style>, so its rules land too (#143)
+  games/*/*/*.html   no id on two elements: getElementById finds the first, so a script
+                     meant for the second never reaches it
   kit/*/INSTALL.md   one section per system, and one measurements row per build on each kind
                      of computer in site/status.json: a run corrects them in place
 
@@ -189,6 +191,31 @@ def skill_game_names(titles, base=None, root=ROOT):
     return bad
 
 
+def duplicate_ids(pages=None):
+    """An id that two elements of one page carry. getElementById returns the first, so a
+    handler meant for the second goes on the first: Gribbly's Day Out's Outline the pieces
+    button did nothing because the canvas before it had the same id. Markup only: an id a
+    script writes, or one in a comment, is not read."""
+    if pages is None:
+        pages = sorted(glob.glob(os.path.join(ROOT, "games", "*", "*", "*.html")))
+    blank = lambda m: re.sub(r"[^\n]", " ", m.group(0))   # line numbers stay where they were
+    bad = 0
+    for f in pages:
+        html = open(f, encoding="utf-8", errors="replace").read()
+        html = re.sub(r"(?is)<!--.*?-->|<script\b[^>]*>.*?</script>|<style\b[^>]*>.*?</style>", blank, html)
+        seen = {}
+        for m in re.finditer(r"<[a-zA-Z][^>]*?\sid\s*=\s*[\"']([^\"']+)[\"']", html):
+            line = html.count("\n", 0, m.start()) + 1
+            if m.group(1) in seen:
+                print(f"  x  {os.path.relpath(f, ROOT)}:{line}  id=\"{m.group(1)}\" is already on the element at line"
+                      f" {seen[m.group(1)]}")
+                print("        getElementById finds only the first: give each element an id of its own")
+                bad += 1
+            else:
+                seen[m.group(1)] = line
+    return bad
+
+
 def untitled_links(game):
     """The keys of game.json's links that have a url and no title. The About tab shows a
     link by its title, so a bare url, or a {"url"} without one, reads as "wiki" or "manual"."""
@@ -249,12 +276,15 @@ def platform_notes(paths=None, hosts=None):
 def main():
     fails = 0
     fails += scan(os.path.join(ROOT, "AGENTS.md"), SUBJECT, "subject matter in the rules file", EXEMPT)
-    titles = []
+    titles, heading_titles = [], []
     for gj in glob.glob(os.path.join(ROOT, "games", "*", "*", "game.json")):
         try:
             t = json.load(open(gj)).get("title")
-            if t and len(t) > 3:
-                titles.append(r"(?<!\w)" + re.escape(t) + r"(?!\w)")
+            if t:
+                pat = r"(?<!\w)" + re.escape(t) + r"(?!\w)"
+                heading_titles.append(pat)  # a lesson's heading names its game, however short
+                if len(t) > 3:
+                    titles.append(pat)
         except Exception:
             pass
     for gj in sorted(glob.glob(os.path.join(ROOT, "games", "*", "*", "game.json"))):
@@ -278,7 +308,7 @@ def main():
                 print(f"  x  {rel}  a lesson file is one entry: its first line, and its only '## ' line, is")
                 print(f"        ## next · <date> · <game> · <who>   (the kit-version workflow numbers 'next')")
                 fails += 1
-            elif not any(re.search(t, heads[0]) for t in titles):
+            elif not any(re.search(t, heads[0]) for t in heading_titles):
                 print(f"  x  {rel}  a lesson that names no game: every lesson comes from one")
                 print(f"        {heads[0].strip()[:88]}")
                 fails += 1
@@ -290,6 +320,7 @@ def main():
              glob.glob(os.path.join(ROOT, "games", "*", "*", "features.md")):
         fails += scan(f, NARRATION, "narrating a past mistake (belongs in agent-history.md)", blank=GAME_TEXT)
     fails += class_collisions()
+    fails += duplicate_ids()
     fails += platform_notes()
     notes = sorted(os.path.basename(f) for f in glob.glob(os.path.join(ROOT, "kit", "template", "*.md")))
     for f in sorted(glob.glob(os.path.join(ROOT, "games", "*", "*", "*.md"))):
