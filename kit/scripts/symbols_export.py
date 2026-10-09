@@ -67,6 +67,10 @@ PLATFORM_DEFAULTS = {
 
 
 def load_by_path(path, name):
+    # The module imports its neighbours by bare name (r2000.py: `from ports import ...`).
+    here = os.path.dirname(os.path.abspath(path))
+    if here not in sys.path:
+        sys.path.insert(0, here)
     spec = importlib.util.spec_from_file_location(name, path)
     mod = importlib.util.module_from_spec(spec)
     sys.modules[name] = mod
