@@ -121,7 +121,57 @@ var FIST = (function () {
     return out;
   }
 
-  return { unpackBitmap, unpackColour, pose, anim, grade, speech, speechCycles };
+  // The computer opponent's two choices, each tried with every one of the 255 states of the random
+  // number ($2589: $98 shifted left, XOR $1D when a bit falls out), so the counts are its odds.
+  // L is the computer's level, 0-11: ai_level_setup ($2593) loads the masks from the tables at $27A9.
+  const rnd = v => ((v << 1) & 255) ^ (v & 0x80 ? 0x1D : 0);
+  const tally = (f) => { const n = {}; for (let s = 1; s < 256; s++) { const k = f(s); n[k] = (n[k] || 0) + 1; } return n; };
+
+  // Answering a blow in reach, $237D (after the reaction delay): random AND $9C. Bit 7 counter-attacks,
+  // bits 4-6 block with $118F, a low nibble of 0 is move 9 or $0B on a second number, anything else
+  // starts the plan $2788[blow], or blocks when the blow has none. Keys: 'counter', 'block <move>',
+  // 'move <move>', 'plan <n>'.
+  function aiAnswer(ram, L, blow) {
+    const mask = ram[0x27F0 + L];
+    return tally(s => {
+      const r = rnd(s), v = r & mask;
+      if (v & 0x80) return 'counter';
+      const block = 'block ' + ram[0x118F + blow];
+      if (v & 0x70) return block;
+      if (!(v & 0x0F)) return 'move ' + (rnd(r) & 0x80 ? 9 : 0x0B);
+      const plan = ram[0x2788 + blow];
+      return plan ? 'plan ' + plan : block;
+    });
+  }
+
+  // Choosing an attack, $24B1, at distance d ($73: the opponent ahead along the computer's facing when
+  // they face each other, behind it when they face the same way), against an opponent in move opp.
+  // Keys: 'move <m>' (the request), 'plan5' (crouch, then the low punch 7), 'turn' (move $12),
+  // 'none' (no request made: the foot sweep below level 2).
+  function aiAttack(ram, L, d, same, opp) {
+    const spread = ram[0x27B5 + L], back = ram[0x27E4 + L];
+    const lower = m => [0x0A, 0x10, 4, 7].includes(opp) ? ram[0x12D0 + m] : m;      // $2698
+    const backAttack = (m, r) => { const v = rnd(r) & back;                          // $2567
+      return v & 0x80 ? 'turn' : v >= 0x40 ? 'move 3' : v >= 0x20 ? 'move 8' : 'move ' + m; };
+    return tally(s => {
+      const r = rnd(s);
+      if (same) {                                                                   // $2544
+        const m = lower(ram[0x2725 + (((d + 0x29) & 255) + (r & spread) & 255)]);
+        return m === 0x0F || m === 0x10 ? backAttack(m, r) : 'move ' + m;
+      }
+      if (opp === 0x14) { const m = ram[0x27A5 + (r & 3)]; return m === 7 ? 'plan5' : 'move ' + m; }
+      if (opp === 0x13) return 'move ' + ram[0x27A1 + (r & 3)];
+      let m = ram[0x26D5 + (((d + 0x33) & 255) + (r & spread) & 255)];
+      if (m === 0x0E) return 'move ' + (L < 7 ? 0x0E : 2);                          // $2521
+      m = lower(m);
+      if (m === 0x0A) return L < 2 ? 'none' : 'move 10';                           // $252B
+      if (m === 7) return 'plan5';
+      if (m === 0x0F || m === 0x10) return backAttack(m, r);
+      return 'move ' + m;
+    });
+  }
+
+  return { unpackBitmap, unpackColour, pose, anim, grade, speech, speechCycles, aiAnswer, aiAttack };
 })();
 
 // createDriver for site/lib/sid.js: runs the game's own music driver ($09A5, called once a frame
@@ -558,9 +608,64 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
     {
       const T = [[0x27A9, 'hold a move'], [0x27B5, 'attack spread'], [0x27C1, 'wait when close'], [0x27CD, 'walk'], [0x27D8, 'pause'],
                  [0x27E4, 'move back'], [0x27F0, 'defence mix'], [0x27FC, 'reaction delay']];
-      let h = '<tr><th>mask</th>' + Array.from({ length: 12 }, (_, l) => `<th>${l === 0 ? 'Nov' : l <= 10 ? l + ' dan' : l}</th>`).join('') + '</tr>';
-      for (const [a, n] of T) h += `<tr><td><code>${hex(a, 4)}</code> ${n}</td>` + Array.from({ length: 12 }, (_, l) => `<td>${hex(ram[a + l])}</td>`).join('') + '</tr>';
-      $('aiTab').innerHTML = h;
+      const ord = n => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+      const rank = L => L === 0 ? 'Novice' : L <= 10 ? ord(L) + ' dan' : 'level 11 (attract mode)';
+      const name = m => hex(m) + ' ' + (MOVES[m] || '');
+      const pct = (n, t) => n ? Math.round(100 * n / t) + '%' : '–';
+      const PLANS = { 1: 'crouch, wait, then foot sweep', 2: 'foot sweep', 3: 'flying kick', 4: 'somersault forwards', 5: 'crouch, then low punch',
+        6: 'high or middle punch', 7: 'foot sweep or back sweep', 8: 'a punch, or crouch and low punch', 9: 'crouch, wait, then foot sweep' };
+      const lv = $('aiLevel');
+      for (let L = 0; L < 12; L++) lv.add(new Option(rank(L), L));
+      let same = false;
+      const BLOWS = [6, 0x18, 7, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11];
+      const KIND = m => [6, 7, 0x18].includes(m) ? '#1f5fa8' : [0x0B, 0x0C, 0x0D, 0x11].includes(m) ? '#2a8a4a' : m === 0x0E ? '#d04a3a'
+        : m === 0x0A ? '#c25a00' : [0x0F, 0x10].includes(m) ? '#4a5bd6' : [8, 9].includes(m) ? '#80838a' : '#d5d3cc';
+      const label = k => k === 'plan5' ? name(4) + ', then ' + name(7) : k === 'turn' ? name(0x12) : k === 'none' ? 'nothing: the foot sweep is skipped below 2nd dan'
+        : name(+k.split(' ')[1]);
+      function updAnswer(L) {
+        const mask = ram[0x27FC + L];
+        $('aiDelay').textContent = rank(L) + ': ' + (mask ? 'before answering, waits a random 0-' + mask + ' passes of the main loop (reaction mask ' + hex(mask) + ').' : 'answers a blow at once (reaction mask 0).');
+        let h = '<tr><th>Blow</th><th>Counter-attack</th><th>Block</th><th>Somersault forwards / low kick</th><th>Plan</th></tr>';
+        for (const b of BLOWS) {
+          const n = FIST.aiAnswer(ram, L, b), blk = ram[0x118F + b], plan = ram[0x2788 + b];
+          const pd = plan === 9 ? (L >= 7 ? 'high kick, or plan 1' : PLANS[9]) : PLANS[plan];
+          h += `<tr><td>${name(b)}</td><td>${pct(n.counter, 255)}</td><td>${pct(n['block ' + blk], 255)}${n['block ' + blk] ? ' ' + name(blk) : ''}</td>` +
+            `<td>${pct((n['move 9'] || 0) + (n['move 11'] || 0), 255)}</td><td>${plan ? pct(n['plan ' + plan], 255) + (n['plan ' + plan] ? ' plan ' + plan + ': ' + pd : '') : '– (none)'}</td></tr>`;
+        }
+        $('aiAnswer').innerHTML = h;
+      }
+      const dist = $('aiDist');
+      function setRange() { const lo = same ? -30 : -43, hi = same ? 33 : 20; dist.min = lo; dist.max = hi; dist.value = Math.max(lo, Math.min(hi, +dist.value || 8)); }
+      function updAttack(L) {
+        const a = +dist.value, opp = +$('aiOpp').value, d = same ? -a : a;
+        $('aiDistOut').textContent = a + (a >= 0 ? ' ahead' : ' behind');
+        const cv = $('aiStrip'), cx = cv.getContext('2d'), tab = same ? 0x2725 : 0x26D5, len = same ? 79 : 80, off = same ? 0x29 : 0x33;
+        const spread = ram[0x27B5 + L], w = cv.width / len, base = (d + off) & 255;
+        cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+        for (let i = 0; i < len; i++) { cx.fillStyle = KIND(ram[tab + i]); cx.fillRect(i * w, 14, w - 1, 30); }
+        const blocking = !same && (opp === 0x13 || opp === 0x14);
+        if (!blocking) { cx.strokeStyle = '#2f3136'; cx.lineWidth = 2; cx.strokeRect(base * w, 11, (spread + 1) * w, 36); }
+        cx.fillStyle = '#80838a'; cx.font = '11px IBM Plex Mono, monospace';
+        cx.fillText('entry for distance ' + a + (blocking ? ' (not read: the opponent is blocking)' : ', + 0-' + spread + ' at random'), 2, 10);
+        for (let i = 0; i < len; i += 10) { const dd = same ? -(i - off) : i - off; cx.fillText(String(dd), Math.min(cv.width - 20, i * w), 60); }
+        cx.fillText('distance whose entry this is', cv.width - 200, 72);
+        const n = FIST.aiAttack(ram, L, d, same, opp);
+        $('aiPick').innerHTML = Object.entries(n).sort((x, y) => y[1] - x[1]).map(([k, c]) => {
+          const m = k.startsWith('move') ? +k.split(' ')[1] : k === 'plan5' ? 7 : 0;
+          return `<div><span class="fx-bar" style="width:${Math.round(160 * c / 255)}px;background:${KIND(m)}"></span>${pct(c, 255)} ${label(k)}</div>`;
+        }).join('');
+      }
+      function upd() {
+        const L = +lv.value;
+        updAnswer(L); updAttack(L);
+        let h = '<tr><th>mask</th>' + Array.from({ length: 12 }, (_, l) => `<th${l === L ? ' class="sel"' : ''}>${l === 0 ? 'Nov' : l <= 10 ? l + ' dan' : l}</th>`).join('') + '</tr>';
+        for (const [a, nm] of T) h += `<tr><td><code>${hex(a, 4)}</code> ${nm}</td>` + Array.from({ length: 12 }, (_, l) => `<td${l === L ? ' class="sel"' : ''}>${hex(ram[a + l])}</td>`).join('') + '</tr>';
+        $('aiTab').innerHTML = h;
+      }
+      $('aiFace').onclick = () => { same = !same; $('aiFace').classList.toggle('on', same);
+        $('aiFace').textContent = same ? 'Fighters face the same way' : 'Fighters face each other'; setRange(); upd(); };
+      lv.onchange = upd; $('aiOpp').onchange = upd; dist.oninput = upd;
+      dist.value = 6; setRange(); upd();
     }
 
     }

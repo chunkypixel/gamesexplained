@@ -243,10 +243,32 @@ KERNAL is out and the game owns the vectors: NMI `$2FF2`, RESET `$1990`
   from `$26D5` (facing each other) and `$2725` (same way); against a block
   it picks the blows that block does not stop (`$27A1`/`$27A5`). Eight
   per-level masks (`$27A9`-`$27FC`) set its timing; the level is 0 at
-  NOVICE and rises with each bout won (`$1C2D`). Random numbers:
+  NOVICE and rises by one with each rank cleared, two bout wins (`$1C2D`). Random numbers:
   `random_next` (`$2589`), shift left and XOR `$1D` on carry, all 255
   non-zero values (checked by computing the cycle); `$99` is stepped every
   frame (`$1AFF`).
+- **How the computer answers a blow** (`$237D`, ported in
+  `reference/fist-page.js` and matched against the game's code for every
+  level, blow and all 255 random states): `random AND $9C`; bit 7
+  counter-attacks (`$24B1`), bits 4-6 block with `$118F`, a low nibble of 0
+  takes move 9 or `$0B` on a second number, anything else starts the plan
+  `$2788[blow]` (6->8, 7->2, `$0A`->4, `$0B`->3, `$0C`->2, `$0E`->9,
+  `$0F`->4, `$10`->7, `$11`->2, `$18`->6), or blocks when it is 0 (`$0D`).
+  Before answering it waits `random AND $AC` passes (`$2363`), zero from
+  level 4. Novice counter-attacks 128 times in 255; level 4 blocks 224 in
+  255; level 7 starts a plan 240 in 255 and never blocks except the high
+  kick.
+- **How the computer picks an attack** (`$24B1`, ported and matched the same
+  way for every level, both relative facings, opponent standing, crouching,
+  low punch, foot sweep and both blocks, and every close distance): facing
+  each other, against `$13`/`$14` from `$27A1`/`$27A5`, otherwise
+  `$26D5[$73 + $33 + random AND $94]`; `$0E` becomes 2 from level 7, `$0A`
+  makes no request below level 2, 7 becomes crouch and plan 5, `$0F`/`$10`
+  go through `$2567` (`random AND $A3`: bit 7 turn, `$40`+ walk back, `$20`+
+  move 8). Facing the same way, `$2725[$73 + $29 + random AND $94]` with
+  only the `$0F`/`$10` step. A low opponent (4, 7, `$0A`, `$10`) swaps the
+  move through `$12D0` first. Close range is `$73` from -43 to 20 facing
+  each other and -33 to 30 facing the same way (`$241A`, `$2477`).
 - **High scores:** one per mode in the panel (`$1299` one player, `$129F`
   two); a five-place table with names and ranks for one player
   (`$146A`-`$17BA`), with name entry by the game's own keyboard scan
