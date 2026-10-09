@@ -1,4 +1,4 @@
-## next · 9 October 2026 · Classic Adventure · air with Claude
+## 0.0.116 · 9 October 2026 · Classic Adventure · air with Claude
 
 **An index that counts down past zero lands 255 bytes on.** Classic
 Adventure counts its turns as four ASCII digits and carries to the left
