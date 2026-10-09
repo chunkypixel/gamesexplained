@@ -68,7 +68,7 @@ record was cleared.
 
 ## Timing
 
-- **NTSC only.** `wait_ntsc_sync` (`$8E38`) waits for ten raster
+- **NTSC only.** `wait_ntsc_sync` (`$8E38`) waits for eleven raster
   interrupts in a row with interrupts off, giving up after 1,536 polls of
   `$D019` (about 18,400 cycles). An NTSC frame (17,095 cycles) fits, a PAL
   frame (19,656) does not, so on PAL the routine restarts for ever. *Live*:
@@ -322,8 +322,26 @@ Run on VICE v3.13.2 (NTSC), 9 October 2026, scripts in `work/scripts/`.
 
 ## Listing error rate
 
-To be measured: a sample of 60 comments (seed 20261009) is with an
-independent checker.
+Two independent samples of the listing's comments, each checked comment by
+comment against the code by an agent that wrote none of them
+(`60-verify`); the population each time was every commented record, 617.
+
+- **First sample**, seed 20261009, 60 comments: 12 wrong (20 %; 95 %
+  Wilson interval 12-32 %). The errors were details, not what routines do:
+  ten minor (a wrong caller, a block's size, ten interrupts where the code
+  waits for eleven), and two major: the weight tables `$1B26`/`$1B29`
+  swapped, and `$5D`/`$5F` read as climbing states where they are the
+  clip edges of a side door's frame. All
+  twelve were rewritten, and the whole listing was then audited by a fresh
+  agent, which rewrote 83 more comments before it stopped at a usage
+  limit; its changes were spot-checked against the code.
+- **Second sample**, seed 20261010, 60 comments, drawn after those
+  corrections: 2 wrong (3.3 %; 95 % Wilson interval 0.9-11.4 %).
+  `furniture_rec_lo` `$0914` said the high bytes at `$0925` are all `$09`
+  (type 0's is `$00`), and `plane_takeoff` `$885D` said the engine rises
+  for 60 of 160 steps where it is 61. Both were rewritten, with the same
+  error in the `$0925` record and a wrong note size in `play_music`
+  `$954E` (three bytes, not two) found alongside.
 
 ## Open questions
 

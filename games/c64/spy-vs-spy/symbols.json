@@ -11488,12 +11488,12 @@
   {
    "address": 2324,
    "type": "line",
-   "text": "Low bytes of the furniture type records' addresses, by type 0-$10 (high bytes at $0925, all $09). Type 0 is unused."
+   "text": "Low bytes of the furniture type records' addresses, by type 0-$10 (high bytes at $0925: $09 for types 1-$10, $00 for type 0). Type 0 is unused."
   },
   {
    "address": 2341,
    "type": "line",
-   "text": "High bytes of the furniture type records' addresses, by type: all $09, the records being at $0936-$096C."
+   "text": "High bytes of the furniture type records' addresses, by type: $09 for types 1-$10, the records being at $0936-$096C; $00 for type 0, which is unused."
   },
   {
    "address": 2358,
@@ -13303,7 +13303,7 @@
   {
    "address": 34909,
    "type": "line",
-   "text": "The plane leaves: airport mode $81 moves the plane's sprites, the spy disappears ($7E7A), and voice 1 plays the engine, its frequency ($0005/$0006) rising from $0100 by 2 for 255 steps. For 160 more steps, each with a pause, the plane moves right ($02C2), climbing ($02C3) one line every fourth step once past $4B across, while the engine's pitch keeps rising for the first 60; the volume then fades from 15 to 0. The game waits for fire on either stick (or 256 waits), turns both monitors off, clears colour RAM and starts a new game ($6745)."
+   "text": "The plane leaves: airport mode $81 moves the plane's sprites, the spy disappears ($7E7A), and voice 1 plays the engine, its frequency ($0005/$0006) rising from $0100 by 2 for 255 steps. For 160 more steps, each with a pause, the plane moves right ($02C2), climbing ($02C3) one line every fourth step once past $4B across, while the engine's pitch keeps rising for the first 61; the volume then fades from 15 to 0. The game waits for fire on either stick (or 256 waits), turns both monitors off, clears colour RAM and starts a new game ($6745)."
   },
   {
    "address": 35127,
@@ -13628,7 +13628,7 @@
   {
    "address": 38222,
    "type": "line",
-   "text": "The music driver, called on the lower half's interrupt (60 times a second on NTSC). Two voices, X = 1 then 0, each with its SID register pointer from $2402/$2404 and its tune pointer from $2406/$2408. Skipped (and the voice's gate released) while music_off $0263 is set or the voice's bit in $0264 is clear. Otherwise it counts down the note's length $026C,x; while the note lasts it applies the instrument's slide or vibrato ($0270-$027C, stepping the frequency by $0272/$0274 every $0278 frames). When the note ends it reads the next one: a byte pair of length (via $23DA), pitch (note $23E2/$23EE shifted down by the octave) and instrument (pointer from $240A/$241A: its control, pulse, attack/decay and sustain/release bytes), with a release between notes. The tune loops at its end ($0268)."
+   "text": "The music driver, called on the lower half's interrupt (60 times a second on NTSC). Two voices, X = 1 then 0, each with its SID register pointer from $2402/$2404 and its tune pointer from $2406/$2408. Skipped (and the voice's gate released) while music_off $0263 is set or the voice's bit in $0264 is clear. Otherwise it counts down the note's length $026C,x; while the note lasts it applies the instrument's slide or vibrato ($0270-$027C, stepping the frequency by $0272/$0274 every $0278 frames). When the note ends it reads the next one: three bytes: pitch and octave (note $23E2/$23EE shifted down by the octave), length (via $23DA; a length code of 8 or more ties the note on) and instrument (pointer from $240A/$241A: its control, pulse, attack/decay and sustain/release bytes), with a release between notes. The tune loops at its end ($0268)."
   },
   {
    "address": 38641,
