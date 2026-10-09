@@ -3,9 +3,12 @@
 
 VICE's monitor keeps a per-address access map (the memmap): every address the
 CPU fetched an instruction from is marked execute, while reads and writes are
-marked separately. It is a complete record, not a sample -- the map is always
-on, costs nothing measurable, and unlike the cpuhistory ring buffer (8,192
-entries, ~28 ms) it covers the whole session. `memmapzap` clears it;
+marked separately. It is a record, not a sample: the map costs nothing
+measurable, and unlike the cpuhistory ring buffer (8,192 entries, ~28 ms) it
+covers the session, but a snapshot load or a stop through the MCP server
+ends it (vice-mcp v3.13.2), so zap after the load and drive the game without
+stopping it (kit/skills/c64/tool-vice-mcp, "Recording what ran"). Its ROM and
+RAM columns follow the address, not the banking. `memmapzap` clears it;
 `memmapshow 9` (mask 9 = ROM+RAM execute) lists what ran.
 
   codemap.py <game dir> zap     clear the record at the start of a play session
