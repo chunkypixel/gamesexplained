@@ -79,19 +79,23 @@ var FIST = (function () {
 
   // The hit test $2B8E-$2C1D for fighters facing each other: move m, defender frame f, distance d
   // (signed, along the attacker's facing). 2 whole point, 1 half, 0 miss.
-  function grade(ram, m, f, d) {
-    const p = ram[w16(ram, 0x121D + 2 * m) + f];
+  function grade(ram, m, f, d, same) {
+    // d: how far the defender stands ahead of the attacker, along the attacker's facing.
+    // same: both face the same way, so the blow lands on the defender's back: the profile comes
+    // from $124F instead of $121D ($2BA8), the distance is taken the other way round ($2C55-$2C6D)
+    // and the forward and backward comparisons swap places ($2C76, $2C8F).
+    const p = ram[w16(ram, (same ? 0x124F : 0x121D) + 2 * m) + f];
     if (p === 0x80) return 0;
-    const aim = (p + 0x80) & 255, dist = (d + 0x80) & 255;
+    const aim = (p + 0x80) & 255, dist = ((same ? -d : d) + 0x80) & 255;
     const full = ram[0x11BD + m], half = ram[0x11D6 + m];
-    if (!ram[0x11A8 + m]) {                       // forward blows, $2BEB-$2C04
+    if (!ram[0x11A8 + m] === !same) {              // $2BEB-$2C04, and $2C8F-$2CA7 from behind
       if (dist === aim) return 2;
       if (dist > aim) return 0;
       if (((dist + full) & 255) >= aim) return 2;
       if (((dist + half) & 255) >= aim) return 1;
       return 0;
     }
-    if (dist === aim) return 2;                   // backward blows, $2C05-$2C1D
+    if (dist === aim) return 2;                   // $2C05-$2C1D, and $2C76-$2C8E from behind
     if (dist < aim) return 0;
     if (((dist - full) & 255) < aim) return 2;
     if (((dist - half) & 255) < aim) return 1;
@@ -496,43 +500,53 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
       blows.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = hex(m) + ' ' + (MOVES[m] || ''); sel.appendChild(o); });
       sel.value = 0x0C;
       const bar = $('gBar'), bctx2 = bar.getContext('2d');
+      let same = false;
       const upd = () => {
-        const m = +sel.value, f = +$('gFrame').value;
+        const m = +sel.value, f = +$('gFrame').value, rev = !!ram[0x11A8 + m];
         $('gFrameOut').textContent = hex(f);
         // both fighters as the hit test sees them: the attacker (white, facing right) on the frame its
-        // blow is tested on, move_strike_frame $1204, and the defender (red, facing left) on frame f,
-        // placed at the distance the reach profile aims at; X units are two pixels ($386C doubles $6A)
-        const sf = ram[0x1204 + m], p0 = ram[(ram[0x121D + 2 * m] | ram[0x121E + 2 * m] << 8) + f];
-        const dist = p0 === 0x80 ? 30 : (p0 << 24) >> 24, gc = $('gPose'), gx = gc.getContext('2d'), k = 2;
+        // blow is tested on, move_strike_frame $1204, and the defender (red) on frame f, facing left or,
+        // with same, right ($2B90), placed at the distance the reach profile aims at ($121D or $124F,
+        // taken the other way round when both face the same way); X units are two pixels ($386C doubles $6A)
+        const sf = ram[0x1204 + m], p0 = ram[(ram[(same ? 0x124F : 0x121D) + 2 * m] | ram[(same ? 0x1250 : 0x121E) + 2 * m] << 8) + f];
+        const dist = p0 === 0x80 ? (rev ? -30 : 30) : (same ? -1 : 1) * ((p0 << 24) >> 24), gc = $('gPose'), gx = gc.getContext('2d'), k = 2;
         gx.fillStyle = '#edf171'; gx.fillRect(0, 0, gc.width, gc.height);
         const left = 8 + Math.max(0, -2 * dist) * k;
         const at = (slots, x0, colour) => slots.forEach((s, i) => { if (s) drawSpriteMC(gx, s, x0 + (i % 3) * 24 * k, Math.floor(i / 3) * 21 * k + 14, k, colour); });
-        at(FIST.pose(ram, f, true, false), left + 2 * dist * k, 2);   // the defender first, so the
+        at(FIST.pose(ram, f, !same, false), left + 2 * dist * k, 2);  // the defender first, so the
         at(FIST.pose(ram, sf, false, false), left, 1);                // attacker's blow is drawn over it
         gx.fillStyle = '#55585f'; gx.font = '11px IBM Plex Mono, monospace';
         gx.fillText('attacker: move ' + hex(m) + ', frame ' + hex(sf), 6, 11);
-        const label = 'defender: frame ' + hex(f) + (p0 === 0x80 ? ' (cannot be hit; drawn at 30)' : ', at distance ' + dist);
+        const label = 'defender: frame ' + hex(f) + (p0 === 0x80 ? ' (cannot be hit; drawn at ' + dist + ')' : ', at distance ' + dist);
         gx.fillText(label, gc.width - 6 - gx.measureText(label).width, 11);
         bctx2.fillStyle = '#fff'; bctx2.fillRect(0, 0, bar.width, bar.height);
-        const lo = -10, hi = 60, w = bar.width / (hi - lo + 1);
+        const lo = -40, hi = 40, w = bar.width / (hi - lo + 1);
         const spans = [];
         for (let d = lo; d <= hi; d++) {
-          const g = FIST.grade(ram, m, f, d);
+          const g = FIST.grade(ram, m, f, d, same);
           bctx2.fillStyle = g === 2 ? '#2a8a4a' : g === 1 ? '#c25a00' : '#d5d3cc';
           bctx2.fillRect((d - lo) * w, 10, w - 1, 44);
           if (g) spans.push([d, g]);
         }
         bctx2.fillStyle = '#80838a'; bctx2.font = '11px IBM Plex Mono, monospace';
-        for (let d = lo; d <= hi; d += 10) bctx2.fillText(String(d), (d - lo) * w, 72);
+        for (let d = lo; d <= hi; d += 10) bctx2.fillText(String(d), Math.min(bar.width - 16, (d - lo) * w), 72);
         if (p0 !== 0x80 && dist >= lo && dist <= hi) {           // the distance the picture shows
           bctx2.fillStyle = '#2f3136'; bctx2.fillRect((dist - lo) * w + w / 2 - 1, 2, 2, 58);
           bctx2.fillText('shown', Math.min(bar.width - 40, (dist - lo) * w + 4), 86);
         }
-        const p = p0;
-        $('gOut').textContent = p === 0x80 ? 'Profile byte $80: a defender in this frame cannot be hit by this blow.'
-          : 'Profile byte ' + hex(p) + ' (aims at ' + ((p << 24) >> 24) + '); whole point at ' + spans.filter(s => s[1] === 2).map(s => s[0]).join(', ') +
-            (spans.some(s => s[1] === 1) ? '; half at ' + spans.filter(s => s[1] === 1).map(s => s[0]).join(', ') : '');
+        // where the blow lands and the defender's reaction, $2CA8: a blow on the defender's front
+        // knocks it backwards ($16), or doubles it over for $18, 7 and $0C ($1B); one on its back
+        // pitches it forwards ($1A). Only a blow at the front can be blocked ($2D00).
+        const front = same === rev;
+        const react = !front ? 'pitches forward onto its face (reaction $1A)' : (!same && [0x18, 7, 0x0C].includes(m)) ? 'doubles over (reaction $1B)' : 'falls backwards (reaction $16)';
+        const where = 'Lands on the defender\'s ' + (front ? 'front' : 'back') + '; a hit defender ' + react + '. ' +
+          (front ? ([0x0A, 0x10].includes(m) ? 'A sweep is never blocked by pulling back. ' : 'Pulling back while it is in reach blocks it. ') : 'It cannot be blocked. ');
+        $('gOut').textContent = where + (p0 === 0x80 ? 'Profile byte $80: a defender in this frame cannot be hit by this blow.'
+          : 'Profile byte ' + hex(p0) + ' (aims at ' + dist + '); whole point at ' + spans.filter(s => s[1] === 2).map(s => s[0]).join(', ') +
+            (spans.some(s => s[1] === 1) ? '; half at ' + spans.filter(s => s[1] === 1).map(s => s[0]).join(', ') : ''));
       };
+      $('gFace').onclick = () => { same = !same; $('gFace').classList.toggle('on', same);
+        $('gFace').textContent = same ? 'Defender faces the same way' : 'Defender faces the attacker'; upd(); };
       sel.onchange = upd; $('gFrame').oninput = upd; upd();
       $('ptsTab').innerHTML = '<tr><th>blow</th>' + blows.map(m => `<td>${hex(m)}</td>`).join('') + '</tr><tr><th>points</th>' +
         blows.map(m => `<td>${ram[0x12A5 + m] * 100}</td>`).join('') + '</tr>';

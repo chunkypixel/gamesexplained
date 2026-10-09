@@ -185,11 +185,29 @@ KERNAL is out and the game owns the vectors: NMI `$2FF2`, RESET `$1990`
   frame its pose reaches `move_strike_frame[move]` (`$1204`) and only on
   the tick a step starts (`$88,X`). The distance between the fighters is
   compared with the reach profile for the move and the defender's frame
-  (`$121D` facing each other, `$124F` from behind): at the profile's
+  (`$121D` facing each other, `$124F` facing the same way): at the profile's
   distance or nearer by up to `$11BD[move]` a whole point, nearer by up to
   `$11D6[move]` a half point, otherwise a miss; `$80` means a defender in
   that frame cannot be hit (`$2B70`-`$2C40`). The backward test is one unit
   narrower (`$2BF4` against `$2C0D`).
+- **Fighters facing the same way** (`$2B90` compares `$53,X` with
+  `$53,Y`): the profile comes from `$124F`, the distance is taken the
+  other way round (`$2C55`-`$2C6D`) and the forward and backward tests swap
+  (`$2C76` is the backward test, `$2C8F` the forward one). A forward blow
+  then lands on a defender's back; the back kick `$0F` and back sweep `$10`
+  land on the front of a defender standing behind the attacker. Every
+  blow has both profiles, with about as many hittable frames in each
+  (e.g. `$0C` 29 facing, 31 same way). The port in `reference/fist-page.js`
+  matches `$2B8E` in 262,196 cases (every blow, defender frame `$00`-`$3A`,
+  distance -40 to 60, both relative facings, attacker facing either way).
+- **Hit reaction by side** (`$2CA8`): a blow on the defender's front gives
+  `$16` (falls backwards, frames `$29`-`$2C`), or `$1B` (doubles over,
+  `$2D`-`$2F`) for a forward blow `$18`, 7 or `$0C` between fighters facing
+  each other; a blow on the back gives `$1A` (pitches forward, `$25`-`$28`).
+  The automatic block needs the blow to come at the front: `$2D00` accepts
+  a forward blow between fighters facing each other or a backward blow
+  between fighters facing the same way, and `$2AF2` leaves out the sweeps
+  `$0A` and `$10`.
 - **Points** (`$12A5`, hundreds, halved for a half point): moves 6, 7,
   `$0D`, `$0F`, `$10` 800; `$0A` 400; `$0B`, `$0C` 200; `$0E`, `$11` 1000;
   `$18` 600. *Live*: a whole point with `$0C` scored 200. The score lives
