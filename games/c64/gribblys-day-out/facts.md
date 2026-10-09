@@ -263,11 +263,19 @@ row.
   (`scatter_rocks` `$4BFD`).
 - Level names by level from `level_names` `$E060`; starting view
   columns from `start_cols` `$E050`.
-- Level 4's name (`$E198`) is "Wot, no ground?" with a Chad at each
+- Level 4's name (`$E198`) is "Wot, no ground?" with a Mr Chad at each
   end: the British wartime doodle of a face peering over a wall, whose
-  caption is always "Wot, no ...?". Chad is two characters of the panel
-  font, `$7E` and `$7F`, with `$FE` and `$FF` below them as for every
-  double-height glyph. (Identified by Aaron Bell from the drawing.)
+  caption is always "Wot, no ...?". Mr Chad is two characters of the
+  panel font, `$7E` and `$7F`, with `$FE` and `$FF` below them as for
+  every double-height glyph. (Identified by Aaron Bell from the drawing.)
+  Observed: the "Psi-energy Transfer Stage" screen before level 4 prints
+  the name with both faces (`reference/level4-name.png`, from
+  `work/py/live_name4.py`).
+- Level 4 is the only map whose bottom row (row 63) has no ground: of
+  its 224 cells right of the wall, 196 are sky and 28 the web's tiles,
+  where every other level has ground in all 224, and its scene list has 14 ground words where the
+  others have 35 to 65 (`work/pagedata.json`, read from the maps in
+  memory at the first frame of play).
 - `collide_table` `$1000`: row = type of the sprite affected - 2,
   column = type of the other - 2; bit 7 kill, 6 reverse, 5 stun Seon, 4
   the Topsy rule, 3 drop a Gribblet.

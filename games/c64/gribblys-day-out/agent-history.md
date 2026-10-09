@@ -94,3 +94,14 @@ only during a look. Reading `$D025`/`$D026` for the widget showed the
 creature strip had drawn every multicolour sprite with cyan and white
 for the shared colours; the game sets white and black once, in
 `new_game`, and the strip now uses them.
+
+**Mr Chad.** Aaron asked for level 4's name to have a section of its
+own on the Maps page, with a link that explains the reference, and
+pointed out that the doodle is Mr Chad. The notes had called him Chad;
+every mention now says Mr Chad. The section's screen shot came from
+`work/py/live_name4.py`, which starts level 4 from a level 1 snapshot
+and stops on the screen that prints its name. Counting the bottom row
+of every map confirmed that level 4's is the only one with no ground.
+The Outline the pieces button had done nothing because the canvas
+before it carried the same id; `check_docs.py` now fails any page with
+an id on two elements.
