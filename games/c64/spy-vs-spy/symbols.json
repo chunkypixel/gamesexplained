@@ -2793,13 +2793,13 @@
   },
   {
    "address": 6950,
-   "name": "cpu_weight_remedy",
+   "name": "cpu_weight_route",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 6953,
-   "name": "cpu_weight_route",
+   "name": "cpu_weight_remedy",
    "type": "Field",
    "kind": "user"
   },
@@ -2919,31 +2919,31 @@
   },
   {
    "address": 7219,
-   "name": "hole_mask",
+   "name": "door_clip_mask_left",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 7223,
-   "name": "hole_skip",
+   "name": "door_clip_skip_left",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 7227,
-   "name": "ladder_mask",
+   "name": "door_clip_mask_right",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 7231,
-   "name": "ladder_skip",
+   "name": "door_clip_skip_right",
    "type": "Field",
    "kind": "user"
   },
   {
    "address": 7235,
-   "name": "clip_steps",
+   "name": "door_clip_steps",
    "type": "Field",
    "kind": "user"
   },
@@ -4257,7 +4257,7 @@
   },
   {
    "address": 26855,
-   "name": "trapulator_toggle",
+   "name": "map_or_trapulator",
    "type": "Branch",
    "kind": "user"
   },
@@ -4305,7 +4305,7 @@
   },
   {
    "address": 26969,
-   "name": "spy_falling",
+   "name": "spy_sinking",
    "type": "Branch",
    "kind": "user"
   },
@@ -4623,7 +4623,7 @@
   },
   {
    "address": 27923,
-   "name": "spy_fight_or_walk",
+   "name": "walk_by_stick",
    "type": "Jump",
    "kind": "user"
   },
@@ -4869,7 +4869,7 @@
   },
   {
    "address": 28643,
-   "name": "fall_or_climb",
+   "name": "door_clip",
    "type": "Jump",
    "kind": "user"
   },
@@ -10443,7 +10443,7 @@
   },
   {
    "address": 46432,
-   "name": "fall_frame",
+   "name": "sink_frame",
    "type": "Field",
    "kind": "user"
   },
@@ -11463,9 +11463,9 @@
   },
   {
    "address": 64738,
-   "name": "j_FCE2",
-   "type": "Jump",
-   "kind": "auto"
+   "name": "KERNAL_RESET_VECTOR",
+   "type": "Predefined",
+   "kind": "system"
   },
   {
    "address": 64768,
@@ -11498,7 +11498,7 @@
   {
    "address": 2358,
    "type": "line",
-   "text": "The furniture type records, five bytes each from $0936 to $096C, shared by some types: byte 1 the width across the room (bit 7: counted leftwards), byte 2 the depth, byte 3 the closed shape, byte 4 the open shape (shape numbers in the object shape tables at $09B3). Used to draw a room ($8199), to mark it in the object map, and by the computer player to stand in front of a piece."
+   "text": "The furniture type records, five bytes each from $0936 to $096C, shared by some types: byte 0 the fixed coordinate the piece gets on its wall (build_embassy), byte 1 its extent across the room less one (bit 7: counted leftwards), byte 2 its depth less one, byte 3 the closed shape, byte 4 the open shape (shape numbers in the object shape tables at $09B3). Used to draw a room ($8199), to mark it in the object map, and by the computer player to stand in front of a piece."
   },
   {
    "address": 2413,
@@ -11513,22 +11513,22 @@
   {
    "address": 2435,
    "type": "line",
-   "text": "The base of the across offsets for the spring's bounce: read as $0983 + step for steps $20-$27, so the offsets themselves are at $09A3-$09AA; the bytes here belong to the action frames."
+   "text": "The base of the across offsets for action type 4 (the trap of the gun with its string; trap object 8 gives type 4 at $733A and $71F6): read as $0983 + step for steps $20-$27, so the offsets themselves are at $09A3-$09AA; the bytes here belong to the action frames."
   },
   {
    "address": 2443,
    "type": "line",
-   "text": "The base of the height offsets, read as $098B + step for steps $20-$27 (the offsets are at $09AB-$09B2); these bytes are action frames."
+   "text": "The base of the height offsets for action type 4, read as $098B + step for steps $20-$27 (the offsets are at $09AB-$09B2); these bytes are action frames."
   },
   {
    "address": 2467,
    "type": "line",
-   "text": "For action steps $20-$27 (type 4), the across offset ($11) added as the shape is drawn: 7, 6, 5 ... 0, read as $0983 + step."
+   "text": "For action steps $20-$27 (type 4, the trap of the gun with its string going off), the across offset ($11) added as the shape is drawn, read as $0983 + step: 0, 0, 8, 8, 0, 0, 0, 0 for steps $20-$27 (the step counter $89 counts down, so the last two entries come first)."
   },
   {
    "address": 2475,
    "type": "line",
-   "text": "For action steps $20-$27, the height offset ($12), read as $098B + step: all zero."
+   "text": "For action steps $20-$27, the height offset ($12) added to the shape's screen line, read as $098B + step: \u221212, \u221212, \u22127, \u22127, \u22122, \u22122, +3, +3 for steps $20-$27 (the step counter counts down, so the shape starts low and rises)."
   },
   {
    "address": 2483,
@@ -11563,7 +11563,7 @@
   {
    "address": 2795,
    "type": "line",
-   "text": "The object shapes' pixels, first part: multicolour bitmap bytes, row after row, each shape at the address its entry in $09B3/$09E7 gives, from shape 0 at $0AEB: the furniture, open and closed, and the doors."
+   "text": "The object shapes' pixels, first part: multicolour bitmap bytes, row after row, each shape at the address its entry in $09B3/$09E7 gives, from shape 0 at $0AEB to the end of shape 11 at $0DFF: the doors of the six door slots, closed and open (draw_door draws shape 2 \u00d7 slot + open flag). The furniture starts with shape 12 at $0E00."
   },
   {
    "address": 3584,
@@ -11573,7 +11573,7 @@
   {
    "address": 4096,
    "type": "line",
-   "text": "The object shapes' pixels, continued from $1000 to the end of shape 51 at $142F, including the shapes the actions and traps animate through ($0973)."
+   "text": "The object shapes' pixels, continued from $1000 to $13FF (the last bytes, to the end of shape 51 at $142F, are labelled at $1400), including most of the shapes the actions and traps animate through ($0973)."
   },
   {
    "address": 5120,
@@ -11593,7 +11593,7 @@
   {
    "address": 5263,
    "type": "line",
-   "text": "The x positions of sprites 0-3, the overlay sprites, set by reset_play_state."
+   "text": "The x positions of sprites 0-3, the trapulator's sprites (not the in-hand overlay sprite), set by reset_play_state."
   },
   {
    "address": 5267,
@@ -11603,7 +11603,7 @@
   {
    "address": 5268,
    "type": "line",
-   "text": "The y position of the overlay sprites in each half: $76 for the white spy's, $D6 for the black's."
+   "text": "The y position of the trapulator's sprites 0-3 in each half, written on each play interrupt: $76 for the white spy's, $D6 for the black's."
   },
   {
    "address": 5270,
@@ -11618,12 +11618,12 @@
   {
    "address": 5278,
    "type": "line",
-   "text": "The frame shown when an action starts: $0F for the white spy, $10 for the black."
+   "text": "The value put into the spy's held object $7B,x when an action starts ($69CD): $0F for the white spy, $10 for the black (overlay classes $0C and $0D in $14A0). It is replaced by $FF ($6A62) when the step counter first runs out and the action's sound starts."
   },
   {
    "address": 5280,
    "type": "line",
-   "text": "The overlay-sprite class for each held-object number (17 entries): which small sprite is shown in the spy's hand. Classes 12 and up have no sprite."
+   "text": "The overlay-sprite class for each held-object number $7B,x (17 entries, objects 0-$10): which small sprite is shown in the spy's hand. Objects 0-$0A have classes 0-$0A, the four items $0B-$0E share class $0B, $0F and $10 have $0C and $0D. Classes $0C and up still get a sprite but are never mirrored ($9322) and take a fixed x nudge of \u221210 ($90D0); class 2 takes \u221218."
   },
   {
    "address": 5297,
@@ -11718,7 +11718,7 @@
   {
    "address": 5418,
    "type": "line",
-   "text": "Low bytes of the 19 packed sprite shapes' addresses ($1576-$16CD): the trapulator sprites and the things a spy can hold."
+   "text": "Low bytes of the 19 packed sprite shapes' addresses ($1576-$16E4, the last shape starting at $16CD): the trapulator sprites and the things a spy can hold."
   },
   {
    "address": 5437,
@@ -11853,12 +11853,12 @@
   {
    "address": 6702,
    "type": "line",
-   "text": "The font: five bytes per glyph, multicolour, one character cell (four pixels) wide, for screen codes 1-$2F: letters, space, punctuation and digits. The same font draws the options, the messages and the score."
+   "text": "The font: five bytes per glyph, multicolour, one character cell (four pixels) wide, for the screen codes that have a pointer in $19BA/$19F4: the letters 1-$1A, space, and the few signs \" (a colon), & (a small f), (, ), -, . and /. The digits' glyphs follow at $1AD8 with their own pointers ($19EA). The same glyphs draw the options, the messages and the score."
   },
   {
    "address": 6872,
    "type": "line",
-   "text": "Further glyphs for the score digits and the hide-airport N and Y."
+   "text": "The glyph for the digit 0 ($1AD8-$1ADC); the digits 1-9 follow at $1ADD. The hide-airport Y and N are drawn with the letters' glyphs ($1AA6, $1A6F), not from here."
   },
   {
    "address": 6877,
@@ -11898,12 +11898,12 @@
   {
    "address": 6950,
    "type": "line",
-   "text": "The same decision's weights by how far the remedy is."
+   "text": "The trap decision's weight by the detour: whether going round the trap (a second search to the waypoint's room, $02A3 = 0) is impossible, short, or 8 or more rooms longer than the plan ($0F, $9DDA-$9DE5)."
   },
   {
    "address": 6953,
    "type": "line",
-   "text": "The same decision's weights by the route's length."
+   "text": "The trap decision's weight by how far the remedy is ($0B, from the remedy search at $9D94-$9DAF): 0 no route to one, 1 under three rooms away, 2 farther."
   },
   {
    "address": 6956,
@@ -11913,12 +11913,12 @@
   {
    "address": 6974,
    "type": "line",
-   "text": "The computer's goal choice, weight by what the other spy holds (nothing, an item, the briefcase)."
+   "text": "The computer's goal choice, weight by what its own spy holds ($7C, the black spy, which the computer always plays): 0 for nothing or any object other than the briefcase or an item, $0F for the briefcase, $1E for an item."
   },
   {
    "address": 6977,
    "type": "line",
-   "text": "The goal choice's weight by what the computer's spy holds."
+   "text": "The goal choice's weight by what the other spy holds ($7B, the white spy): 0 nothing or another object, 5 the briefcase, $0A an item."
   },
   {
    "address": 6980,
@@ -12003,27 +12003,27 @@
   {
    "address": 7219,
    "type": "line",
-   "text": "Masks for the bytes a spy going down a hole keeps at the hole's edge, by position."
+   "text": "Masks for the byte at a left door frame's edge, by pixel position: the part of the figure that shows."
   },
   {
    "address": 7223,
    "type": "line",
-   "text": "Lines skipped at a hole's edge, by position."
+   "text": "Bytes skipped at the left door frame's edge, by position."
   },
   {
    "address": 7227,
    "type": "line",
-   "text": "Masks for the bytes kept at a ladder's top edge."
+   "text": "Masks for the byte at a right door frame's edge."
   },
   {
    "address": 7231,
    "type": "line",
-   "text": "Lines skipped at a ladder's edge."
+   "text": "Bytes skipped at the right frame's edge."
   },
   {
    "address": 7235,
    "type": "line",
-   "text": "How many lines of a spy are hidden at each step into a hole or up a ladder."
+   "text": "The number of pixel bytes left out of a strip for each distance past a door frame's edge."
   },
   {
    "address": 7256,
@@ -12048,7 +12048,7 @@
   {
    "address": 7262,
    "type": "line",
-   "text": "The object map offset for each depth (0-24): 0 to 12, two depths to a cell."
+   "text": "The object map offset for each depth (0-24): 0 to 10, so 11 rows; two depths to a row up to depth 10, three from there on (0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6 ... 9, 10)."
   },
   {
    "address": 7287,
@@ -12418,7 +12418,7 @@
   {
    "address": 10126,
    "type": "line",
-   "text": "The eight bytes repeated along the bottom row of the floor ($278E-$2795), which also begin the second floor picture."
+   "text": "The eight bytes repeated along the bottom row of the floor ($278E-$2795), between the two packed floor pictures (the second begins at $2796)."
   },
   {
    "address": 10134,
@@ -12488,7 +12488,7 @@
   {
    "address": 11692,
    "type": "line",
-   "text": "The rest of the file, $2DAC-$2DFF: an old copy of the bread-crumb code (trail_step from $8AAC onwards, as it stood in an earlier build) and other left-over bytes. Nothing reads it."
+   "text": "The rest of the file, $2DAC-$2DFF: a byte-for-byte copy of $8AAC-$8AFF (the end of trail_step and the start of draw_trail, identical to the code that runs), left over from building the file. Nothing reads it."
   },
   {
    "address": 16384,
@@ -12498,7 +12498,7 @@
   {
    "address": 16416,
    "type": "line",
-   "text": "A bitmap byte in the white spy's monitor frame top that the computer player's door-search code overwrites with a random number ($A549), apparently left in from debugging: a speck that changes on screen."
+   "text": "A bitmap byte in the white spy's monitor frame top that the computer player's search code overwrites with a random number when its target is not in reach ($A549), apparently left in from debugging: a speck that changes on screen."
   },
   {
    "address": 16432,
@@ -12508,12 +12508,12 @@
   {
    "address": 17240,
    "type": "line",
-   "text": "Bitmap row 2, columns 27-39 (the white spy's trapulator beside its room), and row 3, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 2, columns 27-39: the white spy's trapulator beside its room."
   },
   {
    "address": 17344,
    "type": "line",
-   "text": "The bitmap, rows 3-5: the sides of the white spy's monitor and the middle of its trapulator."
+   "text": "The bitmap, row 3, columns 0-1 ($43C0-$43CF): the left edge of the white spy's monitor frame. The room window follows, not counted; the rest of rows 3-5 is in the bands labelled at $4498, $45D8 and $4718."
   },
   {
    "address": 17560,
@@ -12528,12 +12528,12 @@
   {
    "address": 18200,
    "type": "line",
-   "text": "Bitmap row 5, columns 27-39 (the white spy's trapulator beside its room), and row 6, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 5, columns 27-39 ($4718-$477F): the white spy's trapulator beside its room. Row 6 begins at $4780."
   },
   {
    "address": 18304,
    "type": "line",
-   "text": "The bitmap, rows 6-8: the white spy's monitor sides and the lower part of its trapulator."
+   "text": "The bitmap, row 6, columns 0-1 ($4780-$478F): the left edge of the white spy's monitor frame. The room window follows, not counted; the rest of rows 6-8 is in the bands labelled at $4858, $4998 and $4AD8."
   },
   {
    "address": 18520,
@@ -12548,12 +12548,12 @@
   {
    "address": 19160,
    "type": "line",
-   "text": "Bitmap row 8, columns 27-39 (the white spy's trapulator beside its room), and row 9, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 8, columns 27-39 ($4AD8-$4B3F): the white spy's trapulator beside its room. Row 9 begins at $4B40."
   },
   {
    "address": 19264,
    "type": "line",
-   "text": "The bitmap, rows 9-11: the bottom of the white spy's monitor with the WHITE label and the strip where its bread crumbs are drawn, and the foot of its trapulator."
+   "text": "The bitmap, row 9, columns 0-1 ($4B40-$4B4F): the left edge of the white spy's monitor frame. The room window follows, not counted; the foot of the monitor and the bread-crumb strip are in the bands at $4D58 and $4DE8."
   },
   {
    "address": 19480,
@@ -12578,7 +12578,7 @@
   {
    "address": 21080,
    "type": "line",
-   "text": "Bitmap row 14, columns 27-39 (the black spy's trapulator beside its room), and row 15, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 14, columns 27-39: the black spy's trapulator beside its room."
   },
   {
    "address": 21162,
@@ -12588,7 +12588,7 @@
   {
    "address": 21184,
    "type": "line",
-   "text": "The bitmap, rows 15-17: the black spy's monitor sides and the middle of its trapulator."
+   "text": "The bitmap, row 15, columns 0-1 ($52C0-$52CF): the left edge of the black spy's monitor frame. The room window follows, not counted; the rest of rows 15-17 is in the bands labelled at $5398, $54D8 and $5618."
   },
   {
    "address": 21400,
@@ -12603,12 +12603,12 @@
   {
    "address": 22040,
    "type": "line",
-   "text": "Bitmap row 17, columns 27-39 (the black spy's trapulator beside its room), and row 18, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 17, columns 27-39 ($5618-$567F): the black spy's trapulator beside its room. Row 18 begins at $5680."
   },
   {
    "address": 22144,
    "type": "line",
-   "text": "The bitmap, rows 18-20: the black spy's monitor sides and the lower part of its trapulator."
+   "text": "The bitmap, row 18, columns 0-1 ($5680-$568F): the left edge of the black spy's monitor frame. The room window follows, not counted; the rest of rows 18-20 is in the bands labelled at $5758, $5898 and $59D8."
   },
   {
    "address": 22360,
@@ -12623,12 +12623,12 @@
   {
    "address": 23000,
    "type": "line",
-   "text": "Bitmap row 20, columns 27-39 (the black spy's trapulator beside its room), and row 21, columns 0-1 (the left edge of the monitor's frame)."
+   "text": "Bitmap row 20, columns 27-39 ($59D8-$5A3F): the black spy's trapulator beside its room. Row 21 begins at $5A40."
   },
   {
    "address": 23104,
    "type": "line",
-   "text": "The bitmap, rows 21-23: the bottom of the black spy's monitor with its bread-crumb strip, and the foot of its trapulator."
+   "text": "The bitmap, row 21, columns 0-1 ($5A40-$5A4F): the left edge of the black spy's monitor frame. The room window follows, not counted; the foot of the monitor and the bread-crumb strip are in the bands at $5C58 and $5CE8."
   },
   {
    "address": 23320,
@@ -12698,7 +12698,7 @@
   {
    "address": 26454,
    "type": "line",
-   "text": "Starts a spy's turn. When the two share a room ($43 not negative), the one nearer the front of the room (larger depth $57) is drawn last ($43). Erases the spy from the screen ($9861), counts down $021F,x (a short freeze after being hit), then fetches this pass's control byte: from the demo tables in the demo ($CFF7 negative: run-length pairs of value and count, through $67EA/$67F7), written to them in recording mode ($CFF7 positive), or from the joystick otherwise ($6804)."
+   "text": "Starts a spy's turn. When the two share a room ($43 not negative), the one nearer the front of the room (larger depth $57, the current $43 on a tie) becomes $43, the one drawn last. Points ($1B) at the spy's room record ($9861), counts down $021F,x (a short freeze after being hit), then fetches this pass's control byte: from the demo tables in the demo ($CFF7 negative: run-length pairs of value and count, through $67EA/$67F7), written to them in recording mode ($CFF7 positive), or from the joystick otherwise ($6804)."
   },
   {
    "address": 26602,
@@ -12723,12 +12723,12 @@
   {
    "address": 26746,
    "type": "line",
-   "text": "A spy whose time has just run out ($025F,x = 1) is marked ($025F,x = $81) and goes into the action state $C0 with its figure redrawn ($99C0, $8199). Otherwise the time bombs: $0228,x is the room of the bomb the spy set and $022A,x its fuse. While a fuse burns in this spy's room the bomb ticks (effect $12 or $13 every fourth pass), and when it reaches 1 the spy is caught in the blast (scoring cause 4, $8937; action $C0). Ends in the trapulator check at $68E7."
+   "text": "A spy whose time has just run out ($025F,x = 1) is marked ($025F,x = $81), drops what it holds ($99C0), has its trapulator closed and map flag cleared, and goes into the action state $C0 with the room redrawn ($8199); once marked it goes straight to spy_action. Otherwise the time bombs: $0228,x is the room of the bomb a spy set and $022A,x its fuse, counted down on its owner's passes. While a fuse of either spy burns in this spy's room the bomb ticks (effect $12 or $13 when the fuse's low two bits are both set, one pass in four), and when it reaches 1 the spy is caught in the blast (scoring cause 4, $8937; action $C0). Otherwise goes on to the map and trapulator check at $68E7."
   },
   {
    "address": 26855,
    "type": "line",
-   "text": "Fire pressed and released twice opens or closes the trapulator: $0237,x counts the presses (with fire held on the second, $68FE waits and opens the trapulator, $8B7F); a spy whose trapulator is open ($81,x negative) is handed to the trapulator's own code ($98E6)."
+   "text": "While the spy is looking at the map ($0237,x, set by the trapulator's map button at $9978) it stays on it, the map redrawn each pass ($8B7F), until fire is pressed: that clears $0237,x and redraws the room and its bread-crumb trail ($8199, $8AC7). Then a spy whose trapulator is open ($81,x negative) is handed to the trapulator's own code ($98E6) after a short delay."
   },
   {
    "address": 26901,
@@ -12738,17 +12738,17 @@
   {
    "address": 26969,
    "type": "line",
-   "text": "A spy dropping through a hole in the floor: the height $55,x falls one unit every other pass until the spy reaches the floor below, which takes it to the room underneath ($999C), clears the action, updates the shared-room state ($7623, $7D6A), stuns the spy for $90 passes ($0246,x, $020C,x) and, if its time has also run out, ends its game. Until then the falling frame ($B560) is drawn with effect $10."
+   "text": "Action state 1, after a trap, the guard or a lost fight: the spy sinks out of the picture, its height $55,x falling one unit every other pass, until floor line + depth + height ($97 + $57 + $55) is less than the floor line less 14. Then its sprite rows are moved by depth + 14 ($999C), the action cleared, the shared room left ($7623) and the spy's own monitor turned off ($7D6A, with $F8 set to the other spy), and the spy lies stunned for $90 of its turns ($0246,x, $020C,x). If its time has also run out, its game ends ($0261,x) and its monitor shows OUT OF TIME..ITS ALL OVER (string $12). Until then the sinking frame ($B560) is drawn with effect $10."
   },
   {
    "address": 27074,
    "type": "line",
-   "text": "The first pass of an action (bit 6 of $83,x set): takes the action's frame ($149E,x), sets its timing ($89 = 8 steps, $87 = 12 passes) and, when the spies share a room, redraws the room and both spies in their new order ($7E7A, $7663). An action of type 1 (opening a door) turns the spy to face it; otherwise the object being worked on is marked ($7ABA), and whether this action is one the other spy should see ($0242) is noted."
+   "text": "The first pass of an action (bit 6 of $83,x set): clears bit 6, puts the action marker $149E,x into the held object $7B,x, sets the timing ($89 = 8 steps, $87 = 12 passes) and, when the spies share a room ($F8 not negative), redraws the room and both spies in their new order ($7E7A, $7663). An action of type 1 (the spring, or the guard at the exit door) adds 6 to the facing $45,x and shortens the wait to 2 passes; any other copies the spy's figure into the backdrop ($7ABA, bake_spy), and notes in $0242 whether the spies share a room and the type is 2, 3 or 4."
   },
   {
    "address": 27214,
    "type": "line",
-   "text": "The later passes of an action: every $87 passes it moves on one step ($89). The first step hides the spy's held object and plays the action's sound ($096D). Type 1 (opening a door, a trap on it) and its last step lead to the death sequence ($6DC9) or redraw the door and spy ($988D). Type 2 is springing a trap, with a flash. Other types animate through the frames at $0973 with the springs' bounce ($0983/$098B), drawn by $7C7E."
+   "text": "The later passes of an action: every $87 passes it moves on one step ($89). When the wait first runs out the action marker in $7B,x is replaced by $FF, the other spy is frozen for $28 passes ($021F,y) and the action's sound plays ($096D). Type 1 (the spring or the guard) runs the spy animation ($6D92, $6DC9) while its step is 7, then shakes the screen ($8B = $84), puts the facing back ($45,x \u2212 6), calls guard_done ($988D) and becomes state 1, the sinking. The other types count their steps down; at the end type 2 (the water bucket) flashes ($8B,x = 4) and becomes the nine-step sequence (state 2), the rest state 1. Until then each step draws the frame at $0973 + type \u00d7 8 + step with draw_shape ($7C7E): type 0 shakes the screen ($8B = $82), type 3 sounds effect 9 on odd steps, and type 4 adds the offsets read through $0983/$098B and sounds effect 9 on odd steps."
   },
   {
    "address": 27432,
@@ -12758,12 +12758,12 @@
   {
    "address": 27453,
    "type": "line",
-   "text": "An ordinary pass. A spy frozen by a hit ($021F,x) shows its flinch frame. A spy climbing ($99,x) carries on climbing ($6D92). Then the fire button ($23,x): pressed with the stick still, at a place with nothing to search, it counts towards opening the trapulator (two presses); pressed when the spies share a room it starts a fight swing ($6D13). The club hits a spy has taken ($020E,x) knock it out at ten (cause 5 for the loser, 0 for the winner, both via $8937). Then movement ($6BEA)."
+   "text": "An ordinary pass. A spy frozen by a hit ($021F,x) shows its flinch frame. A spy with an animation under way ($99,x, set while it goes through an opening between floors) carries it on ($6DC9, or $6D92 when the facing changes). Then the fire button, latched in $23,x ($80 released, 1 on the pass it is pressed): in separate rooms, a press while holding nothing ($7B,x = $FF) with the stick centred counts down $81,x, and the second such press opens the trapulator ($81,x = $80, $98E6); any other press resets the count. When the spies share a room, the pass fire is pressed walks ($6D13) and the passes it is held fight ($6BEA). The club hits a spy has taken ($020E,x) knock it out at ten (cause 5 for the loser, 0 for the winner, both via $8937; the winner is frozen for $28 passes, the loser goes into state 1); while no hit is being shown ($73,x negative) the count goes down one every $19 passes. Then movement ($6BEA or $6D13)."
   },
   {
    "address": 27626,
    "type": "line",
-   "text": "Works out the spy's facing from the stick ($B594: 1 right, 2 front, 3 left, 4 back), and, in a fight, whether a change of direction is a club swing: a swing that matches the other spy's position (checked by $6CF1) is a hit, worth one more hit counted in $020E (effect $0F, cause 7 via $8937). The new frame comes from $B5A4 by direction, spy and which side the other spy is on ($77, $78)."
+   "text": "Fight movement, used while the spies share a room with fire held or while a hit is being shown ($73,x): the spy faces the other spy ($45,x from $77/$78, set by which side the other is on, from the across positions $53/$54). The stick ($B594: 1-4) gives a direction; a change to the opposite direction is a club swing, whose frame and depth class come from $B5B8/$B5CC; a swing that reaches the other spy (checked by $6CF1) is a hit: the other spy gets the hit frame ($73), effect $0F, one more hit counted in its $020E and cause 7 via $8937. The new frame comes from $B5A4 by direction, side and spy, with effect $0E when it changes."
   },
   {
    "address": 27889,
@@ -12773,12 +12773,12 @@
   {
    "address": 27923,
    "type": "line",
-   "text": "Fire held with a direction: in a fight that is a jab or a swing (handled with the facing and frame tables $B532 and $B542). Without fire, the spy walks: sets the walking animation for its facing, and when it stands at a door it is facing, opens it (a door in the back wall checks the room record's door state through ($1B))."
+   "text": "The spy walks by the stick ($B532 gives the facing for the stick bits): a pressed direction resets the trapulator count ($81,x = 1); keeping the same facing steps the walk animation ($6DC9); a new facing shows a turning frame from $B542 (old facing \u00d7 4 + new, $FF for none) and starts the new facing's animation ($6D92). With the stick centred the spy stands (frame from $B552) and, standing on the opening between floors marked $85 in the object map (slot 5) while it is open (bit 7 of the record's slot-5 link), goes through it ($6F40)."
   },
   {
    "address": 28050,
    "type": "line",
-   "text": "Starts an animation sequence for the spy from the table at $B602/$B60E indexed by its facing: frame count ($47), the first frame ($4B, plus $B55A,x for the black spy) and the step tables for across ($4D), height ($4F) and depth ($51)."
+   "text": "Starts an animation sequence for the spy from the table at $B602/$B60E indexed by its facing: step count ($47), the frame list ($4B, plus $B55A,x for the black spy) and the step tables for across ($4D), height ($4F) and depth ($51). A goes to $CF, a frame held before the first step ($FF for none)."
   },
   {
    "address": 28105,
@@ -12793,17 +12793,17 @@
   {
    "address": 28410,
    "type": "line",
-   "text": "Ends the step: checks the spies against each other ($7526), then what lies at the spy's new position ($97D3): nothing, a door, a ladder, a hole or a piece of furniture. Standing at a piece of furniture or a door makes the object the spy's target ($6B,x). A door in the back wall with something behind it starts a door action ($6F40)."
+   "text": "Ends the step: checks the spies against each other ($7526), then what lies at the spy's new position in the object map ($97D3). During an animation through an opening ($99,x) the position is simply stored. Otherwise the target $6B,x is cleared and: nothing there walks on ($7011); a piece of furniture, a wall ($FF) or any value below $80 stops the spy (standing frame, $6FFA); a door slot ($80 + slot) that is open (bit 7 of its link) is gone through ($6F40); a closed door in slots 0-3 stops the spy; a closed opening (slot 4 or 5) or the value $86 is walked over."
   },
   {
    "address": 28480,
    "type": "line",
-   "text": "The spy reached a door, ladder or hole slot ($0F): doors 0 and 1 lead to the fall into a hole or the climb ($6FE3); a ladder or hole in a room shared with the other spy waits until the other is off it; otherwise the spy starts climbing ($99,x = slot, target depth from $BB32 and position from the room record). The exit door (slot 2 of the exit room $0243) opens only for a spy carrying the briefcase with all four items ($021B-$021E): otherwise the guard throws the spy back (scoring cause 4, $8937, action $C1). A door that opens leads to the next room."
+   "text": "The spy reached a door or opening ($0F = its slot). A side door (slot 0 or 1) sets the clip edge of its frame ($6FE3), so the figure passes behind the frame. A back or front door (2, 3): slot 2 of the exit room is the exit, which lets a spy through only with the briefcase holding all four items ($021B-$021E, then $86BB), otherwise the guard throws the spy back (scoring cause 4, $8937, action $C1); any other back or front door takes the spy to the depth for going through ($BBEC) and into the next room ($750B, $757E). Slots 4 and 5, the openings between floors, start climbing ($99,x = slot, target depth from $BB32, position from the room record) unless the other spy is on the same ladder or opening."
   },
   {
    "address": 28643,
    "type": "line",
-   "text": "Puts the spy into the hole-falling state ($5D,x) or the ladder state ($5F,x = height + 4), from the room record's slot data."
+   "text": "Going through a side door: stores the door frame's screen column (room-record byte 2 or 6, the door's place) as the spy's clip edge, $5D,x for the left door, $5F,x (+4) for the right. draw_spy_shape leaves out whatever of the figure lies beyond it, so the spy walks out behind the frame."
   },
   {
    "address": 28666,
@@ -12813,7 +12813,7 @@
   {
    "address": 28689,
    "type": "line",
-   "text": "Clears the ladder and hole states and redraws the spy if its figure changed ($9867, $8199, $9861)."
+   "text": "Clears the door-clip edges ($5D, $5F) and redraws the room if the spy's room needs it ($9867 closes open furniture; then $8199, $9861)."
   },
   {
    "address": 28706,
@@ -12823,12 +12823,12 @@
   {
    "address": 28756,
    "type": "line",
-   "text": "Stores the frame to draw ($C9,x). Then redraws whatever was marked as needing it ($F4,x), takes the frame for an action under way ($B564), computes the figure's height on screen ($61,x: the floor line plus 17, or 0 while airborne), and, for a spy holding the gun with its string (object 8), moves the string's loose end to the spy's hand ($A6/$AA) and redraws the string (effect $0A, $7B07). Draws both spies in order ($7663). In the airport scene the routine returns here."
+   "text": "Stores the frame to draw ($C9,x). Then redraws the room if it was marked as needing it ($F4,x, $7E7A). During an action of type 1 (the spring or the guard) the frame comes from $B564 by facing \u2212 6 and spy; during any other action the routine goes straight on to search_target without drawing. Computes $61,x (the floor line plus 17 while the height $55,x is positive, 0 when it is 0 or negative), and, for a spy holding the gun with its string (object 8), moves the string's loose end to the spy's hand ($A6/$AA) and redraws the string (effect $0A, $7B07). Draws both spies in order ($7663). In the airport scene the routine returns here."
   },
   {
    "address": 28855,
    "type": "line",
-   "text": "A spy standing still with no action under way looks at what is in front of it ($7111, twice: two steps ahead): with fire pressed that is a search of it; without, the first time it comes into reach the room flashes and effect 6 sounds ($8B,x = 2, $69,x latched until it moves away)."
+   "text": "A spy with no action under way ($83,x not negative) looks at the two places ahead of it ($7111, twice). On the pass fire is pressed ($23,x = 1) whatever is there is searched (look_ahead does that); with nothing in either place the spy drops what it holds ($99C0). Without fire, when something is within the two places the room flashes and effect 6 sounds the first time ($8B,x = 2, $69,x latched until nothing is in reach)."
   },
   {
    "address": 28924,
@@ -12838,22 +12838,22 @@
   {
    "address": 28945,
    "type": "line",
-   "text": "Steps the probe position ($9B, $9D) one step in the spy's facing ($B5EE/$B5F8), and reads the room's object map at that place: the map row for the depth ($1C5E) and column for the across position ($1C77 through $1C8E), in the page ($59,x + 6) of the spy's monitor. Returns 1 for nothing there; 0 for something when fire is not pressed. With fire pressed, a value below $80 is a door (handled at $7310); otherwise the low three bits name a door slot, a piece of furniture or a trap spot, which the rest of this routine searches."
+   "text": "Steps the probe position ($9B, $9D) one step in the spy's facing ($B5EE/$B5F8) and reads the room's object map at that place: the map row for the depth ($1C5E) and column for the across position ($1C77 through $1C8E), in the page ($59,x + 6) of the spy's monitor, keeping the value in $028B,x. Returns 1 for nothing there (0 or $FF); 0 for something when fire is not pressed. With fire pressed: a piece of furniture (1-3) is searched at $7310, unless the spies share a room (then it returns 1); a door slot ($80 + slot) is handled here. An open door goes to $725A. At a closed door: slot 2 of the exit room brings the guard (action $C1, $0244,x, the held object dropped, cause 4) unless the spy holds the briefcase with all four items ($021B-$021E), and the door is then toggled ($72BE); a trap in the flag byte's high nibble (object number \u00d7 16: $60 the water bucket, $80 the gun and string) is disarmed by its remedy in hand (2, the umbrella, for $60; 3, the scissors, for anything higher; 1 for anything lower); without it the trap goes off (action $C0 + object \u2212 4, cause 4) and the code runs on into the disarming, so either way the trap is cleared on both sides of the door, the held object dropped, cause 3 scored and the door toggled; an untrapped door in slots 0-3 with the water bucket (6) or the gun with its string (8) in hand gets that trap set on both sides ($1B and $1D, $9A17); anything else goes on to $725A."
   },
   {
    "address": 29274,
    "type": "line",
-   "text": "Fire at a door slot. Slot 2 of the exit room without the briefcase holding all four items ($021B-$021E) brings the guard (action $C1, scoring cause 4). A door whose flag byte has a trap in its high nibble (the trap's object number times 16: $60 the water bucket, $80 the gun and string): holding its remedy (object 2, the umbrella, for the bucket; 3, the scissors, for the gun) removes it from both sides of the door (scoring cause 3); otherwise it goes off on the spy (action $C0 + the trap's number, cause 4). An untrapped door with the bucket (6) or the gun with its string tied (8) in hand gets that trap set on both sides of the door (via ($1B) and ($1D); $9A17). A door with nothing on it opens or closes ($72BE)."
+   "text": "Fire at an open door, a closed opening between floors, or an untrapped closed door with no trap in hand. Slot 2 of the exit room: with the briefcase holding all four items ($021B-$021E) the door is toggled; without, the guard comes (action $C1, $0244,x, the held object dropped, cause 4) and the door is toggled anyway. Otherwise nothing happens if this spy stands in the doorway ($6B,x = the slot) or the other spy does (the same slot in a shared room, or the matching slot from the room beyond, $BBF2); else effect 2 sounds and the door is opened or closed ($72BE)."
   },
   {
    "address": 29374,
    "type": "line",
-   "text": "Opens or closes the door: flips bit 7 of its state in this room's record and, unless it is the exit, in the neighbouring room's record too. If the other spy is in the room beyond and standing, redraws that spy."
+   "text": "Opens or closes the door: flips bit 7 of its link byte in this room's record and, unless it is the exit door (slot 2 of the exit room), in the neighbouring room's record too. If the door leads to the other spy's room, the spies are not sharing a room, and the other spy is not stunned, finished or looking at the map, redraws the other spy's room ($8199; not for the exit door)."
   },
   {
    "address": 29456,
    "type": "line",
-   "text": "Fire at a piece of furniture ($0F = its slot). Its trap byte ($BBB8, bit 7 set when trapped, bits 0-2 the trap): when the spy holds the trap's remedy (the trap number less 4: the fire bucket, 0, for the bomb, 4; the wire cutters, 1, for the spring, 5) it is removed (scoring cause 3); otherwise it goes off (action $C0 + trap number, cause 4). With no trap: the gun (object 7) in hand has its string tied to the furniture ($97F5); the bomb or spring (4, 5) in hand is hidden there (trap byte = object + $80; $9A17 counts it as set); otherwise the spy opens it and looks inside ($73A7)."
+   "text": "Fire at a piece of furniture ($0F = its slot). Its trap byte ($BBB8, bit 7 set when trapped, bits 0-2 the trap): when the spy holds the trap's remedy (the trap number less 4: the fire bucket, 0, for the bomb, 4; the wire cutters, 1, for the spring, 5) it is removed (scoring cause 3) and the furniture opened; otherwise it goes off (action $C0 + trap number \u2212 4, the trap cleared, the held object dropped, cause 4). With no trap: the gun (object 7) in hand has its string tied to the furniture ($97F5); the bomb or spring (4, 5) in hand is hidden there (trap byte = object + $80; $9A17 counts it as set); otherwise the spy opens it and looks inside ($73A7)."
   },
   {
    "address": 29607,
@@ -12863,7 +12863,7 @@
   {
    "address": 29661,
    "type": "line",
-   "text": "Redraws the spy ($8199, $9861) and clears the fire latch $23,x."
+   "text": "Redraws the room ($8199), points ($1B) back at the spy's room ($9861) and clears the fire latch $23,x."
   },
   {
    "address": 29672,
@@ -12873,7 +12873,7 @@
   {
    "address": 29733,
    "type": "line",
-   "text": "Marks item Y as carried in the spy's briefcase (its bit $148B,y in the spy's inventory $79,x) and, if the other spy had it, takes it from the other's inventory with effect 2 (cause 2, the stealing points)."
+   "text": "Marks item Y as carried in the spy's briefcase (its bit $148B,y\u22121 in the spy's inventory $79,x) and, if the other spy had it, takes it from the other's inventory (scoring cause 2, the stealing points, for this spy)."
   },
   {
    "address": 29772,
@@ -12893,7 +12893,7 @@
   {
    "address": 29844,
    "type": "line",
-   "text": "Flags ($021A,y = 1) every item at the same place as the briefcase, and when all four are there with it (none of $021B-$021E negative) opens the exit: writes the exit room's number into its door slot 2 ($BBBE) if it was hidden ($FF), and redraws the other spy if it is standing in that room."
+   "text": "Flags ($021A,y = 1) every item at the same place as the briefcase, and when all four are there with it (none of $021B-$021E negative) opens the exit: writes the exit room's number into its door slot 2 ($BBBE) if it was hidden ($FF), and, when the spies are in separate rooms, redraws the other spy's room if the other spy is in the exit room and not finished, stunned or looking at the map."
   },
   {
    "address": 29940,
@@ -12908,27 +12908,27 @@
   {
    "address": 29990,
    "type": "line",
-   "text": "When the spies share a room and this one is not in an action (or only opening a door), checks whether the probe position ($9B across, $9D depth) is within 4 across and 1 deep of the other spy: if so the move is cancelled (the position is put back) and the routine returns 1, else 0. Spies cannot walk through each other."
+   "text": "When the spies share a room and this one is walking or in an action other than type 1 (the spring or the guard; those and the positive states skip the check), checks whether the probe position ($9B across, $9D depth) is within 4 across and 1 deep of the other spy: if so the move is cancelled (the position is put back) and the routine returns 1, else 0. Spies cannot walk through each other."
   },
   {
    "address": 30078,
    "type": "line",
-   "text": "The spy goes through to the room at room-record offset Y: lets go of the gun and string (object 8) if it holds it, erasing the string ($7B07), sets the spy's room $5B,x, marks it visited for the map ($8A93, and the map flags at $1DBD/$1DBF), and either draws the new room in the spy's monitor ($7623, $8199, $9861) or, when it is the other spy's room, starts the shared-room state ($75C5)."
+   "text": "The spy goes through to the room at room-record offset Y: lets go of the gun and string (object 8) if it holds it, erasing the string ($7B07), sets the spy's room $5B,x, records the move in its bread-crumb trail ($8A93), marks the room visited in its list for the map ($1DBD/$1DBF), and either starts the shared-room state ($75C5), when the other spy is in that room and neither spy is stunned, or leaves any shared room and draws the new room in the spy's monitor ($7623, $8199, $9861)."
   },
   {
    "address": 30149,
    "type": "line",
-   "text": "The two spies are now in one room: $F8 = the spy whose monitor shows it (the one who was there first). Both spies' trapulators close, their fire latches clear, the room is drawn ($7E08, $7D6A) and the new arrival is moved into that monitor's coordinates: its monitor page $59,x, its floor line $97,x from $1C58, and its sprite rows $C1/$C3 shifted by $1C5A. Decides who is in front ($43, $44)."
+   "text": "The two spies are now in one room: $F8 = the spy whose monitor shows it (the one who was there first). Both spies drop what they hold ($99C0), their trapulators close, their fire latches and map flags clear, the room's picture is copied for sharing and the arriving spy's monitor turned off ($7E08, $7D6A), the room drawn ($8199), and the new arrival is moved into that monitor's coordinates: its monitor page $59,x, its floor line $97,x from $1C58, and its sprite rows $C1/$C3 shifted by $1C5A. The spy with the larger depth goes in front ($43, $44)."
   },
   {
    "address": 30243,
    "type": "line",
-   "text": "When the shared-room state ends ($F8 not negative): the spy who left goes back to its own monitor (its page, floor line and sprite rows put back from $1C58/$1C5A), $F8 and $43 become $FF, and the spy is redrawn ($8199)."
+   "text": "When the shared-room state ends ($F8 not negative): the guest spy (the one that is not $F8) goes back to its own monitor (its page, floor line from $1C58 and sprite rows shifted back by $1C5A), $F8 and $43 become $FF, and a room is redrawn ($8199): the guest's own when this spy is the host, the host's (now without the guest) when this spy is the guest."
   },
   {
    "address": 30307,
    "type": "line",
-   "text": "Draws the two spies into the bitmap in the right order. With the spies in separate rooms ($43 negative) it draws the current spy alone ($774E). In a shared room, when the order changes ($43 against $44) it first restores the room picture under the spy now at the back ($7A03). Otherwise it restores the background under the moving spy's old and new boxes ($776D, $77FC), merges the boxes ($CB-$CE), redraws the back spy where the boxes overlap so it is not wiped, and finally draws the front spy ($79FD). The four box bytes per spy are $C5/$C7 (left and right column) and $C1/$C3 (top and bottom line)."
+   "text": "Draws the two spies into the bitmap in the right order. With the spies in separate rooms ($43 negative) it draws the current spy alone ($774E). In a shared room, $43 is the front spy (larger depth): when the order has changed ($43 against $44) the backdrop under the front spy's box is first refreshed from the clean copy of the shared room ($7A03 with $0D = 7). Called for the front spy it does nothing more. Called for the back spy, it draws the back spy into the backdrop itself (destination table $EE00, background from the clean copy $EE60 or $EDA0, mask 7), widens the box to restore ($CB-$CE) over its old and new places, draws the front spy over the backdrop into the bitmap ($7751, skipped while $0242 is set), and copies the backdrop to the bitmap over the rest of the box ($79FD), which shows the back spy behind the front one."
   },
   {
    "address": 30542,
@@ -12948,7 +12948,7 @@
   {
    "address": 30716,
    "type": "line",
-   "text": "Draws a spy's frame into the bitmap, strip by strip: the frame header lists its strips (count at offset 1, then three bytes each: shape number, pixel shift and row count), each drawn by $78F1. The figure is clipped at the bottom by its floor line $61,x (or line $BF), and, while it is going down a hole ($5D,x) or up a ladder ($5F,x), by the hole's or ladder's edge (tables $1C33-$1C43), so the spy disappears into the floor or the ceiling. Updates the box's top and bottom lines ($C1/$C3), restoring the lines between the old and new box ($78DE)."
+   "text": "Draws a spy's frame into the bitmap, strip by strip. The frame header holds the width (byte 0), the strip count (byte 1), the top's offset from the spy's line (byte 2) and the facing it was drawn in (byte 3, into $BC); then two bytes per strip, the row count and the shape number, each strip drawn by $78F1 with the pixel shift of the figure's left edge ($D4 & 3). The figure is clipped at the bottom at line $61,x (or line $BF when that is 0) and, while it walks through a side door, at the door frame's column: left of $5D,x or right of $5F,x nothing is drawn, the partly covered byte masked by $1C33-$1C43. Updates the box's top and bottom lines ($C1/$C3), restoring the lines between the old and new box ($78DE)."
   },
   {
    "address": 30942,
@@ -13003,7 +13003,7 @@
   {
    "address": 31131,
    "type": "line",
-   "text": "The offset of the beq at $799C, used as a counter of lines to skip: 0 normally, or the number of lines hidden below a hole's or ladder's edge ($7800, $783C)."
+   "text": "The operand of ldx #$00 at $799A in draw_strip_line: the number of pixel bytes skipped at the start of each line, 0 normally (written at $7800) or, past a left door frame's edge, the count from $1C43 (written at $783C). When it is not 0 the beq at $799C falls through and the bits carried over from the last skipped byte are fetched ($799E)."
   },
   {
    "address": 31224,
@@ -13013,7 +13013,7 @@
   {
    "address": 31229,
    "type": "line",
-   "text": "Sets up the other spy for $7A03: Y = the spy at the back, X = the front one."
+   "text": "Sets up for $7A03: Y = the front spy ($43), X = the other, the back one; the box's lines covered by the front spy are left alone."
   },
   {
    "address": 31235,
@@ -13023,7 +13023,7 @@
   {
    "address": 31340,
    "type": "line",
-   "text": "Copies $0F + 1 lines of D2 + 1 bytes each from the backdrop to the bitmap, starting at line $DC and byte $D0. The backdrop page for each line is $EE00 for the spy's own monitor, $EE60 or $EDA0 for the other monitor's picture shown in a shared room ($0D, $0E choose)."
+   "text": "Copies $0F + 1 lines of $D2 + 1 bytes each, starting at line $DC and byte $D0. With $0D negative it copies the backdrop ($EE00 table) to the bitmap ($ED00 table); with $0D positive (7) it copies into the backdrop from the clean copy of a shared room ($EE60 table, or $EDA0 when $0E is negative), the line's low byte masked with $0D."
   },
   {
    "address": 31418,
@@ -13078,12 +13078,12 @@
   {
    "address": 32106,
    "type": "line",
-   "text": "Turns off the monitor of the spy who is not shown ($F8 xor 1) when the spies share a room: its background colour becomes red ($0255,y = 2), its picture is wiped in widening steps from the middle, with short pauses, and its frame's inner edge redrawn; then its panel is redrawn ($8B46)."
+   "text": "Turns off the monitor of the spy who is not shown ($F8 xor 1): its background colour becomes red ($0255,y = 2), its picture is cleared in eight passes of a widening pattern, with short pauses, and its frame's inner edge redrawn; then its bread-crumb strip is blanked ($8B46). Also used with $F8 set by the caller to turn off a given monitor (both of them for the options screen)."
   },
   {
    "address": 32264,
    "type": "line",
-   "text": "Copies the shared room's picture from the bitmap of the showing monitor ($F8) into the backdrop pages ($EE60 or $EDA0) used while the spies share it."
+   "text": "Copies the shared room's picture from the backdrop of the showing monitor ($F8; the $EE00 line table, nine character rows from line $10 or $70) into the clean-copy pages ($EE60 table for the white spy's monitor, $EDA0 for the black's) used while the spies share it."
   },
   {
    "address": 32329,
@@ -13108,32 +13108,32 @@
   {
    "address": 33177,
    "type": "line",
-   "text": "Draws the room of spy X (or of the shared monitor's spy $F8 when the spies share a room) into that monitor's backdrop, ready to be copied to the screen. Points ($1B) at the room's record ($853D), draws the walls and floor ($83D4), clears the room's object map and walls it in ($838B), then draws into the backdrop ($EB = 1) each of the six door slots that has a door (the record's link byte not $FF; bit 7 = open): slots 0 and 1 in the left and right walls ($833E, $834C), 2 to 5 placed by their own rules (slots 4 and 5 are the openings between floors; which is which is open), each marked in the object map with $80 + the slot. Then each piece of furniture ($BBAB of them): its type's record (pointer pair $0914/$0925: width, depth, closed shape, open shape) gives the shape, drawn at its across and depth ($BBAF, $BBB2) by $7C70 and marked in the map with its number + 1 ($82F9). Finally sets the monitor's background colour from the low nibble of the room's colour byte ($BBBB) and marks the spy's monitor as needing to be copied to the screen ($F4,x, $F3)."
+   "text": "Draws the room of spy X (or of the shared monitor's spy $F8 when the spies share a room) into that monitor's backdrop, ready to be copied to the screen. Points ($1B) at the room's record ($853D), draws the walls and floor ($83D4), clears the room's object map and walls it in ($838B), then draws into the backdrop ($EB = 1) each of the six door slots that has a door (the record's link byte not $FF; bit 7 = open), each marked in the object map with $80 + the slot: slots 0 and 1, the side doors, six places along the depth ($833E); slots 2 and 3, the back and front doors, six places across ($834C); slot 4 a block 2 across and 1 deep; slot 5 a block 8 across and 6 deep when closed, or, when open, a block 8 by 5 marked $86 with one 6 by 5 marked $85 over it. Then each piece of furniture ($BBAB of them): its type's record (pointer pair $0914/$0925) gives the extents and the closed or open shape (bit 7 of its contents), drawn at its across and depth ($BBAF, $BBB2) by $7C70 and marked in the map with its number + 1 ($82F9). Finally sets the monitor's background colour from the low nibble of the room's colour byte ($BBBB) and marks the spy's monitor as needing to be copied to the screen ($F4,x, $F3); in a shared room it also refreshes the clean copy ($7E08)."
   },
   {
    "address": 33475,
    "type": "line",
-   "text": "Draws the door in slot X: shape 2X + open flag ($0254), or, for the exit door (slot 2 of the exit room $0243), shape $30 (closed) or $32 when the guard is showing ($0244,x)."
+   "text": "Draws the door in slot X: shape 2X + open flag ($0254), or, for the exit door (slot 2 of the exit room $0243), shape $30, or $32 when the guard is showing ($0244,x), whatever the open flag."
   },
   {
    "address": 33520,
    "type": "line",
-   "text": "Marks a block of the object map for the door slot X ($80 + X) with width A and depth Y, then falls into mark_block."
+   "text": "Marks a block of the object map for the door slot X ($80 + X), A + 1 places across and Y + 1 deep, then falls into mark_block."
   },
   {
    "address": 33529,
    "type": "line",
-   "text": "Fills a block of the room's object map with the value $0D: width $27 across from $BF (counting leftwards when bit 7 of $27 is set) and $28 + 1 deep from $C0. Each map cell's offset is the row for the depth ($1C5E) plus the column for the across position ($1C77 through $1C8E)."
+   "text": "Fills a block of the room's object map with the value $0D: ($27 & $7F) + 1 places across, from $BF rightwards, or ending at $BF when bit 7 of $27 is set, and $28 + 1 deep from $C0. Each map cell's offset is the row for the depth ($1C5E) plus the column for the across position ($1C77 through $1C8E)."
   },
   {
    "address": 33598,
    "type": "line",
-   "text": "Marks the six map cells of a door in the left or right wall, from depth $C0 forwards."
+   "text": "Marks the six map places of a door in the left or right wall (slot 0 or 1), from depth $C0 backwards (decreasing depth)."
   },
   {
    "address": 33612,
    "type": "line",
-   "text": "Marks the six map cells of a door in the back wall, from across $BF rightwards."
+   "text": "Marks the six map places of a door in the back or front wall (slot 2 or 3), from across $BF rightwards."
   },
   {
    "address": 33626,
@@ -13148,7 +13148,7 @@
   {
    "address": 33675,
    "type": "line",
-   "text": "Clears the 256-byte object map of the spy's monitor (page $06 + $59,x) and writes $FF along its edges: columns 0 and $16, rows 0 and $18. The spies and the search probe read this map to know what is at each place in the room."
+   "text": "Clears the 256-byte object map of the spy's monitor (page $06 + $59,x) and writes $FF along its edges: map columns 0 and $16, and the rows for depths 0 and $18 (map rows 0 and 10). The spies and the search probe read this map to know what is at each place in the room."
   },
   {
    "address": 33748,
@@ -13243,12 +13243,12 @@
   {
    "address": 34120,
    "type": "line",
-   "text": "Sets the video chip up for play: bank 1 ($DD00: $4000-$7FFF), screen matrix at $6000 and bitmap at $4000 ($D018 = $80), border blue, bitmap mode with the 25-row display ($D011), multicolour ($D016)."
+   "text": "Sets the video chip up for play: bank 1 ($DD00: $4000-$7FFF), screen matrix at $6000 and bitmap at $4000 ($D018 = $80), border blue, bitmap mode on with bit 8 of the raster compare cleared ($D011), multicolour ($D016)."
   },
   {
    "address": 34164,
    "type": "line",
-   "text": "Builds the play screen before the options: colour RAM and the screen matrix ($85F7), the two monitors and trapulators ($8CAC), clears the page at $E900 and the sprite area $6400-$653F, then unpacks the five overlay sprites into $6400-$653F (sprite pointers $90-$94), each from the packed shapes at $152A/$153D with its row count ($1563) and bytes per row ($1550), padded to three bytes a row."
+   "text": "Builds the play screen before the options: colour RAM and the screen matrix ($85F7), the line tables and the screen's frames ($8CAC), clears the page at $E900 and the sprite area $6400-$653F, then unpacks the first five packed sprite shapes, the trapulator's four sprites and its arrow, into $6400-$653F (sprite pointers $90-$94), each from $152A/$153D with its row count ($1563) and bytes per row ($1550), padded to three bytes a row."
   },
   {
    "address": 34234,
@@ -13283,7 +13283,7 @@
   {
    "address": 34491,
    "type": "line",
-   "text": "The win: the spy at the exit door with the briefcase holding all four items ($6FB2) gets out. Both clocks stop, both monitors go off ($7D6A), and the winner's monitor turns green ($0255,x = 5) and shows the airport: its screen-matrix cells (pointer pair $21BF/$21C1) are recoloured, a column at a time."
+   "text": "The win: the spy at the exit door with the briefcase holding all four items ($6FB2) gets out. Both clocks stop, both monitors go off ($7D6A), and the winner's monitor turns green ($0255,x = 5) and shows the airport: its screen-matrix cells (pointer pair $21BF/$21C1) are recoloured row by row, 27 cells wide: a border of $5C round nine rows of $1A."
   },
   {
    "address": 34580,
@@ -13293,17 +13293,17 @@
   {
    "address": 34594,
    "type": "line",
-   "text": "Sets the airport up: clears both object maps, puts the spies' floor lines and monitor pages back, gives the winner to the computer ($0287,x = 1) facing back ($45 = 3), clears every per-spy state, copies the aeroplane's sprites from $219A/$229A (and the winner's own from $235A or $239A) into $6400-$653F, unpacks the airport picture from $F700 (the file S3) into the winner's backdrop ($8476, nine rows) and puts it on screen ($7E7A). The spy stands at across $0E, depth $11; the plane's sprites start at $02C2 = $0C across and the floor line, airport mode on ($02C1 = $80). Then the score ($89AE) and two lines of text: YOUR RANKING: (string $13) and the rank, string $14 + the thousands digit of the score ($02BD), so 0-999 points is A KNEE HIGH SPY and 9000 or more GRAND MASTER SPY ($A18E)."
+   "text": "Sets the airport up: clears both object maps, puts the spies' floor lines and monitor pages back, gives the winner to the computer ($0287,x = 1) facing back ($45 = 3), clears every per-spy state, copies the aeroplane's sprite block from $219A/$229A into $6400-$65FF (then the winner's own 64 bytes from $235A or $239A over $6400-$643F), unpacks the airport picture from $F700 (the file S3) into the winner's backdrop ($8476, nine rows) and puts it on screen ($7E7A). The spy stands at across $0E, depth $11; the plane's sprites start at $02C2 = $0C across and the floor line, airport mode on ($02C1 = $80). Then the score ($89AE) and two lines of text: YOUR RANKING: (string $13) and the rank, string $14 + the thousands digit of the score ($02BD), so 0-999 points is A KNEE HIGH SPY and 9000 or more GRAND MASTER SPY ($A18E)."
   },
   {
    "address": 34856,
    "type": "line",
-   "text": "The winner walks to the plane by itself: the computer's input $0289,x is $FB (right) until the spy passes across $F0; near the plane's door (across below 4) it stops once for 20 passes ($021F,x). Each step is a normal spy turn ($6756) with a pause."
+   "text": "The winner walks to the plane by itself: the computer's input $0289,x is $FB (left) until the spy passes across $F0; near the plane's door (across 0-3) it stops once for 20 passes ($021F,x). Each step is a normal spy turn ($6756) with a pause."
   },
   {
    "address": 34909,
    "type": "line",
-   "text": "The plane leaves: airport mode $81 moves the plane's sprites, the spy disappears, and voice 1 plays the engine (a falling-then-rising frequency sweep, $0005/$0006). For 160 frames the plane moves right ($02C2), climbing ($02C3) once past $4B across, while the engine's pitch rises; the volume then fades from 15 to 0. The game waits for fire on either stick (or about 255 waits), turns both monitors off, clears colour RAM and starts a new game ($6745)."
+   "text": "The plane leaves: airport mode $81 moves the plane's sprites, the spy disappears ($7E7A), and voice 1 plays the engine, its frequency ($0005/$0006) rising from $0100 by 2 for 255 steps. For 160 more steps, each with a pause, the plane moves right ($02C2), climbing ($02C3) one line every fourth step once past $4B across, while the engine's pitch keeps rising for the first 60; the volume then fades from 15 to 0. The game waits for fire on either stick (or 256 waits), turns both monitors off, clears colour RAM and starts a new game ($6745)."
   },
   {
    "address": 35127,
@@ -13458,7 +13458,7 @@
   {
    "address": 36282,
    "type": "line",
-   "text": "A longer busy-wait: A times Y times 256 empty turns (Y starts at 0, so 256), X and Y preserved. Called once at start-up with A = $18 and from the death animation."
+   "text": "A longer busy-wait: A times Y times 256 empty turns (Y starts at 0, so 256), X and Y preserved. Called once at start-up with A = $18 and once at the airport as the plane's engine starts (A = 1)."
   },
   {
    "address": 36310,
@@ -13473,7 +13473,7 @@
   {
    "address": 36408,
    "type": "line",
-   "text": "Start-up synchronisation. Stops the interrupt (mode $0257 = 0), sets up the video ($8548) and the vectors and raster interrupt ($8E6C), then waits, with interrupts off, for ten raster interrupts in a row by polling $D019. If 1,536 polls (about 18,400 cycles) pass without one it bumps the border colour and starts again. An NTSC frame is 17,095 cycles and a PAL frame 19,656, so on a PAL machine this never finishes: the game hangs here on a garbled screen. On NTSC it returns with interrupts on."
+   "text": "Start-up synchronisation. Stops the interrupt (mode $0257 = 0), sets up the video ($8548) and the vectors and raster interrupt ($8E6C), then waits, with interrupts off, for eleven raster interrupts in a row by polling $D019 ($0D counts from $0A down past 0). If 1,536 polls (about 18,400 cycles) pass without one it bumps the border colour and starts again. An NTSC frame is 17,095 cycles and a PAL frame 19,656, so on a PAL machine this never finishes: the game hangs here on a garbled screen. On NTSC it returns with interrupts on."
   },
   {
    "address": 36460,
@@ -13503,17 +13503,17 @@
   {
    "address": 36972,
    "type": "line",
-   "text": "Counts down a spy's flash timer $8B,x and, while it runs, turns the background of the half being drawn white ($D021 = 1): the flash that says a spy is in range of something to search, a door or a trap spot. A negative timer is the screen-shake timer instead and is left alone here."
+   "text": "Counts down a spy's flash timer $8B,x and, while it runs, turns the background of the half being drawn white ($D021 = 1). The timer is set to 2 with a sound when a spy comes up against something it can act on ($70F3), and by the action and nine-step sequences ($6ABA, $6942). A negative timer is the screen-shake timer instead and is left alone here."
   },
   {
    "address": 36988,
    "type": "line",
-   "text": "On the upper half's interrupt (the setting then holds for the whole frame): while the white spy's timer $8B has bit 7 set it counts down its low bits, and the horizontal scroll ($D016 bits 0-2) alternates between 0 and 1 every frame, shaking the picture sideways (an explosion). Then goes on to place the half's spy sprite."
+   "text": "On the upper half's interrupt (X = 0; with X = 1 it goes straight to place_spy_sprite), so the setting holds for the whole frame: while the white spy's timer $8B has bit 7 set it counts down its low bits, and the horizontal scroll ($D016 bits 0-2) alternates between 0 and 1 every frame, shaking the picture sideways (an explosion). Then goes on to place the half's spy sprite."
   },
   {
    "address": 37028,
    "type": "line",
-   "text": "Places the sprite that the spy of the half being drawn ($35) wears over its bitmap figure, when it has one: the frame number $7B,x picks a shape class from $14A0; the shape's offsets and colour come from the pointer pair $14D8/$14E6; the figure's position is $7D,x (times 2) and $7F,x plus the per-direction nudge $151E. The sprite's data is rebuilt in $6580 by $92AC when the frame changes. Not drawn while the spy is in a death or trapped state ($99/$55, $5F, $5D). Sprite 0 or 1 by spy ($14D2), pointer $90 + that number."
+   "text": "Places the small sprite showing what the spy of the half being drawn ($35) holds, when it holds something ($7B,x not negative; otherwise place_arrow): the held object picks a class from $14A0; the class's x offset, y offset and colour come from the pointer pair $14D8/$14E6; the position is $7D,x (times 2) and $7F,x plus an x nudge (by facing from $151E, or \u221218 for class 2, \u221210 for classes $0C and up). The sprite's data is rebuilt in $6540 or $6580 by $92AC when the class or facing changes. Not drawn (place_arrow instead) while the spy passes through a side door's frame ($5D,x or $5F,x not 0), or while $99,x is set and $55,x is 9-$7F. Sprite 5 for the white spy, 6 for the black ($14D2), pointer $90 + that number."
   },
   {
    "address": 37186,
@@ -13543,12 +13543,12 @@
   {
    "address": 37414,
    "type": "line",
-   "text": "The sound-effect player, on SID voice 1. On the upper half it counts down the note's gate time $37 (then drops the gate bit) and its length $38 (then frees the voice). For the spy of the half ($67,x = effect number, 0 none) an effect of lower priority ($20F3) than the one playing ($36) is dropped; one of equal or higher priority first cuts the playing one off (voice silent, $36-$38 cleared) and starts on the next interrupt, writing the effect's seven register bytes (pointer from $20CB/$20DF) to $D400-$D406 and gating it on. The effect's eighth byte holds two nibbles that pick its gate time ($2107) and length ($2117)."
+   "text": "The sound-effect player, on SID voice 1. On the upper half it counts down the note's gate time $37 (then drops the gate bit) and its length $38 (then frees the voice). For the spy of the half ($67,x = effect number, 0 none) an effect of lower priority ($20F3) than the one playing ($36) is dropped; one of equal or higher priority first cuts the playing one off (voice silent, $36-$38 cleared) and starts on that spy's next interrupt, a frame later, writing the effect's seven register bytes (pointer from $20CB/$20DF) to $D400-$D406 and gating it on. The effect's eighth byte holds two nibbles that pick its gate time ($2107) and length ($2117)."
   },
   {
    "address": 37548,
    "type": "line",
-   "text": "Rebuilds a spy's overlay sprite in $6580-$65BF when its frame class changes ($3B,x): clears the 64 bytes and copies the shape from the packed table at $1691, a given number of bytes per row and rows (from $152A-$1563, self-modified into the copy loop). Then, if the spy faces the other way ($3A against $3D,x), mirrors the sprite through the bit-reversal table at $E800."
+   "text": "Rebuilds a spy's overlay sprite ($6540 for the white spy, $6580 for the black, from $1526/$1528) when the class of its held object changes ($3B,x): clears the 64 bytes and copies the shape (number class + 5) from the packed table, a given number of bytes per row and rows (from $152A-$1563, self-modified into the copy loop). Then, for classes below $0C, if the spy faces the other way ($3A against $3D,x), mirrors the sprite through the bit-reversal table at $E800."
   },
   {
    "address": 37610,
@@ -13583,7 +13583,7 @@
   {
    "address": 37730,
    "type": "line",
-   "text": "Runs a spy's clock (X = $35) once a frame while $025D,x says it is running. Under two minutes left the red light on the trapulator ($604E for white, $622E for black, in the screen matrix) blinks with the low digit of $8F, and a warning beep (effect 7) sounds at each turn of $8F to $40. A pending penalty in $95,x (low 7 bits a count, bit 7 add or take away) moves one second every ten frames with a beep (effect $11), the clock running backwards or forwards meanwhile; otherwise the clock counts down by one in BCD: $8F (frames, 99 to 0), $91 (seconds, 59 to 0), $93 (minutes). At zero it stops the clock ($025D,x = 0) and marks the spy out of time ($025F,x = 1). Falls through to draw the digits."
+   "text": "Runs a spy's clock (X = $35) once a frame while $025D,x says it is running. Under two minutes left the red light on the trapulator ($604E for white, $622E for black, in the screen matrix) blinks with the low digit of $8F, and a warning beep (effect 7) sounds each time $8F reaches $40; the black spy's beep is skipped while the white spy also has under two minutes, so the two do not sound together. A pending penalty in $95,x (low 7 bits a count, bit 7 add or take away) moves one second every ten frames with a beep (effect $11), the clock running backwards or forwards meanwhile; otherwise the clock counts down by one in BCD: $8F (frames, 99 to 0), $91 (seconds, 59 to 0), $93 (minutes). At zero it stops the clock ($025D,x = 0) and marks the spy out of time ($025F,x = 1). Falls through to draw the digits."
   },
   {
    "address": 37917,
@@ -13673,7 +13673,7 @@
   {
    "address": 39142,
    "type": "line",
-   "text": "The open trapulator. On opening ($81,x = $80) the arrow goes to the first button. Every fourth pass the stick moves the arrow over the six buttons, three columns ($0200,x) by two rows ($0202,x), clamped at the edges ($14B1-$14BE). Fire chooses: button 5 is the map ($9973, scoring cause 6); button 3 the time bomb, which is lit in the spy's room ($0228,x = the room, fuse $022A,x = 200 passes) unless one of the spy's is already burning; the others hand the spy its trap object from $14C2 (4 bomb, 7 gun, 5 spring, 6 water bucket). A spy who has already set more than twice ($0225) traps hears the refusal (effect $0B) and gets nothing. Choosing closes the trapulator."
+   "text": "The open trapulator. On opening ($81,x = $80) the arrow goes to the first button. Every fourth pass the stick moves the arrow over the six buttons, three columns ($0200,x) by two rows ($0202,x), wrapping round at the edges ($14B1-$14BE). Fire, pressed after a release ($81,x = $82), chooses: button 5 is the map ($9973, scoring cause 6); otherwise, when the spy's trap count $85,x is more than twice $0225 (the room count less one) it hears the refusal (effect $0B) and gets nothing; button 3 is the time bomb, which is lit in the spy's room ($0228,x = the room, fuse $022A,x = 200 passes) unless one of the spy's is already burning; the others hand the spy its trap object from $14C2 (4 bomb, 7 gun, 5 spring, 6 water bucket). Choosing closes the trapulator."
   },
   {
    "address": 39317,
@@ -13768,7 +13768,7 @@
   {
    "address": 40830,
    "type": "line",
-   "text": "The options screen. Turns both monitors off, colours the text area (colour RAM = $0A on 18 rows of 25 cells) and draws the 18 lines of text, eight in the upper monitor from text row 2 and the rest in the lower from row $0E ($A1A5, strings 0-$11 of the table at $170D/$172C/$174B). Then demo_mode $CFF7 is set from the operand at $A000 (0, unless the record switch at $6603 says 1) and the option cursor is shown on the first line ($A173)."
+   "text": "The options screen. Turns both monitors off, colours the text area (colour RAM = $0A on 18 rows of 25 cells) and draws the 18 lines of text, nine (strings 0-8) in the upper monitor from text row 2 and the other nine in the lower from row $0E ($A1A5, strings 0-$11 of the table at $170D/$172C/$174B). Then demo_mode $CFF7 is set from the operand at $A000 (0, unless the record switch at $6603 says 1) and the option cursor is shown on the first line ($A173)."
   },
   {
    "address": 40960,
@@ -13778,7 +13778,7 @@
   {
    "address": 40971,
    "type": "line",
-   "text": "Waits for the stick. The idle count ($CFF6:$CFF5 = 3 \u00d7 $58 rounds of two short waits, the cursor blinking) runs out into the attract demo ($CFF7 = $FF, $A123). F5 or fire in the demo comes back here ($A056). Up and down (bits 0 and 1 of either stick, $16FB) move the cursor over the four options, wrapping, with effect 4, or $11 at the end; left and right change the value under the cursor through its pointer ($16F3/$16F7: $022F players, $022D level, $0231 IQ, $0233 hide airport), held between 1 and the option's maximum ($16FF: 2, 8, 5, 2), and redraw its digit ($8A31; the last is drawn as N or Y). A change of level redraws the three figures below: rooms (the level's room count, $BC91), traps (twice that) and minutes ($1B16), each as two decimal digits ($A105). Fire starts the game ($A123)."
+   "text": "Waits for the stick. For its first four passes ($04) it acts as if down were pressed, stepping the cursor once round the four options so each value is drawn. The idle count (CFF5 from $58, CFF6 from 3: $58 + 2 \u00d7 256 = 600 rounds of two short waits, the cursor blinking) runs out into the attract demo ($CFF7 = $FF, $A123); $0282 going negative while it waits restarts the options screen ($A056). Up and down (bits 0 and 1 of the white stick, or of the black when the white is idle; $16FB) move the cursor over the four options, wrapping, with effect 4, or $11 when the cursor stays where it is; left and right change the value under the cursor through its pointer ($16F3/$16F7: $022F players, $022D level, $0231 IQ, $0233 hide airport), wrapping between 1 and the option's maximum ($16FF: 2, 8, 5, 2), and redraw its digit ($8A31; the last is drawn as N or Y). Any move with the cursor on the level line redraws the three figures below: rooms (the level's room count, $BC91), traps (twice that) and minutes ($1B16), each as two decimal digits ($A105). Fire starts the game ($A123)."
   },
   {
    "address": 41221,
@@ -13838,7 +13838,7 @@
   {
    "address": 42401,
    "type": "line",
-   "text": "Opening furniture: presses and releases fire, giving up after ten tries ($0292), then carries on with the waypoint ($A67D) or, at random, wanders ($A5C9)."
+   "text": "Opening furniture: presses and releases fire. Once the fire latch is clear the waypoint is done ($A67D); if ten tries ($0292) pass first, the computer gives up and takes a random step ($A5C9)."
   },
   {
    "address": 42441,
@@ -14043,7 +14043,7 @@
   {
    "address": 46402,
    "type": "line",
-   "text": "In a fight, the move made by changing from one stick direction to another (old \u00d7 4 + new): 1, 2, 3 or 0 for a blow, $FF for none."
+   "text": "The in-between facing shown when a walking spy turns round ($6D83, old facing \u00d7 4 + new): right to left passes through front (1), front to back through left (2), left to right through back (3), back to front through right (0); $FF for any other turn, which shows none."
   },
   {
    "address": 46418,
@@ -14053,7 +14053,7 @@
   {
    "address": 46426,
    "type": "line",
-   "text": "Added to an animation's frame numbers for each spy: 0 (white), 6 (black)."
+   "text": "Added to an animation's frame-list number ($4B) for each spy: 0 (white), 6 (black), so the black spy uses lists 6-11."
   },
   {
    "address": 46428,
@@ -14068,7 +14068,7 @@
   {
    "address": 46432,
    "type": "line",
-   "text": "The falling frame for each spy: $1D, $1F."
+   "text": "The frame of a sinking spy: $1D (white), $1F (black)."
   },
   {
    "address": 46434,
@@ -14078,7 +14078,7 @@
   {
    "address": 46436,
    "type": "line",
-   "text": "The spy's frame during each kind of action under way, two bytes per kind (white, black)."
+   "text": "The spy's frame during an action of type 1 (the spring or the guard), by facing, two bytes per facing (white, black): read at $707D with (facing $45,x \u2212 6)."
   },
   {
    "address": 46448,
@@ -14118,7 +14118,7 @@
   {
    "address": 46560,
    "type": "line",
-   "text": "The club's reach across the room for each depth pair and swing kind."
+   "text": "The club's reach across the room, by depth (two entries for each band of four depths, index (depth / 2) AND $FE) and swing kind ($B5CC)."
   },
   {
    "address": 46574,
@@ -14143,7 +14143,7 @@
   {
    "address": 46618,
    "type": "line",
-   "text": "The animation sequences, five bytes each: the number of steps less one, the first frame, and which across, height and depth step tables to use."
+   "text": "The animation sequences, five bytes each: the number of steps less one, the frame list ($B6B0/$B6BC, 0-5, plus 6 for the black spy from $B55A), and which across, height and depth step tables to use."
   },
   {
    "address": 46678,
@@ -14213,7 +14213,7 @@
   {
    "address": 47724,
    "type": "line",
-   "text": "Each spy shape's width (bits 2-7: bytes; bits 0-1 a shift for mirroring) and rows less one, two bytes per shape."
+   "text": "Each spy shape's width (bits 2-7: bytes less one; bits 0-1 a shift for mirroring) and rows less one, two bytes per shape."
   },
   {
    "address": 47725,
