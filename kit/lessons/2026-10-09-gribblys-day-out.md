@@ -1,4 +1,4 @@
-## next · 9 October 2026 · Gribbly's Day Out · air with Claude
+## 0.0.118 · 9 October 2026 · Gribbly's Day Out · air with Claude
 
 **A row read with `(zp),Y` runs on into the next row.** Gribbly's Day
 Out keeps its map as 256-byte rows, one to a page, and draws the view
