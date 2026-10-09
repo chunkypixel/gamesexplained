@@ -135,7 +135,7 @@ ul.gdo-list li{margin:0 0 .5em}
       <button type="button" data-face="195" aria-pressed="false">Facing right</button>
       <button type="button" data-pts="100">Save a Gribblet (+100)</button>
       <button type="button" data-pts="-20">Put one down (−20)</button>
-      <button type="button" id="gdo-face-parts" aria-pressed="true">Outline the pieces</button>
+      <button type="button" id="gdo-face-outline" aria-pressed="true">Outline the pieces</button>
     </div>
     <p class="gdo-out" id="gdo-face-out">&nbsp;</p>
     <p class="cap">The shape on screen, enlarged, in level 0's colours, and every piece the game can draw into it, from its tables at <code>$7DF5</code>-<code>$7F33</code>, with the one in place outlined. Under them: one cycle of 128 frames, about two and a half seconds, and where the picture is in it. The face is drawn by a port of <code>animate_face</code> (<code>$6AAD</code>), run beside the game's own routine on the kit's 6502 simulator for 2,048 calls, every frame number eight times with random noise and points; the three shapes matched after every call. In the emulator, on level 0, the antennae changed only on frame 2 of every 8 and the eyes only on frames 2, 8, 10 and 16 of every 128.</p>
@@ -706,7 +706,7 @@ ul.gdo-list li{margin:0 0 .5em}
       document.querySelectorAll('[data-pts]').forEach(b => b.addEventListener('click', () => {
         const v = +b.dataset.pts; if (v > 0) st.add += v; else st.sub -= v; draw();
       }));
-      const pb = document.getElementById('gdo-face-parts');
+      const pb = document.getElementById('gdo-face-outline');
       pb.addEventListener('click', () => { st.parts = !st.parts; pb.setAttribute('aria-pressed', String(st.parts)); draw(); });
       draw();
       setPlay(playing);
