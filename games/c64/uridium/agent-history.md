@@ -77,3 +77,21 @@ for i in range(8):
 open(dst, "wb").write(d)
 print("wrote", dst, "signature $%02X" % key)
 ```
+
+## Verify and the pages (10 October 2026)
+
+The independent check of 60 comments (seed 1986) found 8 wrong. Because
+13 % is a bad first sample, every comment was read again against the
+others and the bytes, which found 13 more: the collision flags were
+described as "bit 0 edge-on", when bit 0 marks the end-on frames of a
+half-loop and the edge-on frames are the ones with no flag at all (one row,
+three columns); `copy_enemy_shapes` copied the tile set, not sprites, and
+became `copy_tile_set`; `level_setup` leaves the Manta facing left, not
+right. The page's draft carried the collision mistake and was fixed with
+the listing.
+
+The sound driver and the map builder were ported for the page and
+compared with the game's code in `kit/c64/cpu6502.js`; `test_ports.py`
+keeps the comparison. A first mutation of the driver (`& 15` to `& 7` on
+the mode) passed the test because every mode value agrees under both
+masks; a change to the tempo failed it, as it should.
