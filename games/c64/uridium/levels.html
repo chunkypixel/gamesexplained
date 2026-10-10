@@ -56,6 +56,9 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 .ur-rods .ur-lit{background:#2a8a4a;color:#fff}
 .ur-msg{font-size:14px;color:var(--coral)}
 .ur-wide{width:100%;height:auto}
+.ur-click{cursor:pointer}
+.ur-note{font-size:13px;color:var(--ink-mute)}
+.ur-wide{width:100%;height:auto}
 </style>
 <!-- tabs -->
 <header class="hero">
@@ -100,8 +103,9 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     // Port of build_message ($2415), index_pieces ($2C66) and build_map ($2CB2), step for step, on a copy of memory:
     // the level's Dreadnought at $8200-$A3FF (17 rows of 512 columns, row r at $8200 + $200 r)
     // and the generator ports note_port ($2DE4) records at $0200-$024F, with their count - 1
-    // in $54.
-    const m = Uint8Array.from(ram0);
+    // in $54. uses lists where each piece was laid, for the page: {n, col, row, over}, row being the
+    // row of the piece's bottom character and over true for the second list's pieces.
+    const m = Uint8Array.from(ram0), uses = [];
     // build_message ($2415), which the title runs before any level is built: level 0's piece
     // list at $8010, from the message text at $349F, the non-zero of each character's four
     // letter pieces ($C060 + the character's offset at $C000), then piece 1 as a gap, and
@@ -145,6 +149,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
       let n = m[list], src;
       if (!n) src = piece(1);
       else { src = piece(n); list = (list + 1) & 0xFFFF; }
+      uses.push({ n: n || 1, col: dst - 0xA200, row: 16, over: false });
       let y = 0, cols = m[src + y]; y++;
       for (;;) {                                                                  // $2D09
         let d = dst, k = m[src + y] & 0x1F; y++;
@@ -165,6 +170,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
       if (!n) break;
       list = (list + 3) & 0xFFFF;
       const src = piece(n);
+      uses.push({ n, col: (page & 1) << 8 | (d0 & 255), row: (page - 0x82) >> 1, over: true });
       let y = 0, cols = m[src]; y++;
       for (;;) {                                                                  // $2DA6
         let d = d0, k = m[src + y] & 0x1F; y++;
@@ -173,7 +179,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
           if (v !== 0x20) m[d] = v;
           notePort(v, d);
           d = (d - 0x200) & 0xFFFF;
-          if (!((d >> 8) & 0x80)) return { m, ended: true };
+          if (!((d >> 8) & 0x80)) return { m, ended: true, uses };
           k = (k - 1) & 255;
         } while (k);
         d0 = (d0 + 1) & 0xFFFF;
@@ -181,7 +187,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
         if (!cols) break;
       }
     }
-    return { m, ended: false };
+    return { m, ended: false, uses };
   }
   // end of buildMap
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Hold the page's two ports against the game's own code.
 
-index.html plays the music and effects through a port of the sound driver
+music.html plays the music and effects through a port of the sound driver
 ($0E23), and index.html and levels.html draw the Dreadnoughts with a port of
 build_message ($2415), index_pieces ($2C66) and build_map ($2CB2). A port is a
 claim about the game, so this runs both sides and compares them:
@@ -13,8 +13,11 @@ claim about the game, so this runs both sides and compares them:
 Sound: the title tune from its start past its end, every one of the 46
 effects on each voice with and without the force bit, and 300 runs of random
 requests; every SID write, the driver's zero page and its data compared call
-by call. Maps: all fifteen Dreadnoughts and the title message, the map, the
-piece index and the generator ports compared byte for byte.
+by call. Then every effect button on the music page is rendered through the
+site's SID model and must make a sound. Maps: all fifteen Dreadnoughts and
+the title message, the map, the piece index and the generator ports compared
+byte for byte, and the piece placements the port records for the page must
+rebuild each map exactly.
 
 Everything it needs is committed: no game image, no snapshot, no emulator.
 It needs node; with KIT_REQUIRE_TOOLS set it fails without it.
@@ -34,14 +37,15 @@ while not os.path.isfile(os.path.join(ROOT, "kit", "c64", "cpu6502.js")):
     if parent == ROOT:
         sys.exit("test_ports.py must run from inside the repository")
     ROOT = parent
-PAGES = [p for p in ("index.html", "levels.html") if os.path.isfile(os.path.join(HERE, p))]
+# music.html carries the driver; index.html and levels.html each carry a copy of the map builder
+PAGES = ["music.html"] + [p for p in ("index.html", "levels.html") if os.path.isfile(os.path.join(HERE, p))]
 
 JS = r"""'use strict';
 // Written out and run by test_ports.py; see there.
 const fs = require('fs'), path = require('path');
 const GAME = process.argv[2], ROOT = process.argv[3], PAGES = process.argv.slice(4);
 globalThis.fetch = async url => ({ ok: true, json: async () => JSON.parse(fs.readFileSync(path.join(GAME, url), 'utf8')) });
-require(path.join(ROOT, 'site/lib/c64.js'));
+require(path.join(ROOT, 'site/lib/c64.js')); require(path.join(ROOT, 'site/lib/sid.js'));
 const { CPU } = require(path.join(ROOT, 'kit/c64/cpu6502.js'));
 function grab(src, name, end) {
   const a = src.indexOf('function ' + name), b = src.indexOf(end);
@@ -49,7 +53,7 @@ function grab(src, name, end) {
   return src.slice(a, b);
 }
 const texts = PAGES.map(p => fs.readFileSync(path.join(GAME, p), 'utf8'));
-const mapSrc = texts.map(t => grab(t, 'buildMap(', '// end of buildMap'));
+const mapSrc = texts.slice(1).map(t => grab(t, 'buildMap(', '// end of buildMap'));
 if (mapSrc.some(t => t !== mapSrc[0])) { console.log('the pages carry different copies of buildMap'); process.exit(1); }
 const createDriver = new Function(grab(texts[0], 'createDriver(D)', '// end of createDriver') + '\nreturn createDriver;')();
 const buildMap = new Function(mapSrc[0] + '\nreturn buildMap;')();
@@ -122,7 +126,35 @@ const buildMap = new Function(mapSrc[0] + '\nreturn buildMap;')();
     if (diff) { mfail++; console.log('level', lv, diff, 'bytes differ, first $' + first.toString(16)); }
     else console.log('level', lv, 'matches, ports', r.m[0x54] + 1 & 255);
   }
-  process.exit(fail || mfail ? 1 : 0);
+  // every effect button of the page, rendered through the site's SID model, must make a sound
+  const FXT = texts[0].slice(texts[0].indexOf('const FX = ') + 11);
+  const FX = new Function('return ' + FXT.slice(0, FXT.indexOf('];') + 1))();
+  const E = C64Sid.engine(); let silent = 0;
+  FX.forEach(([name], k) => {
+    const d = createDriver({ kind: 'fx', mem: MEM, requests: FX.map(f => f[1]), length: 250 });
+    const P = E.createPlayer(d, 48000); P.command({ cmd: 'start', tune: k });
+    const out = new Float32Array(48000 * 5); P.render(out, out.length, 0);
+    let e = 0; for (const v of out) e += v * v;
+    if (Math.sqrt(e / out.length) < 1e-3) { silent++; console.log('SILENT effect button', name); }
+  });
+  console.log(`effect buttons: ${FX.length - silent} of ${FX.length} sound`);
+  // the piece placements the map builder records rebuild each map exactly
+  let ufail = 0;
+  for (let lv = 0; lv < 16; lv++) {
+    const R = buildMap(ram2, lv), m = R.m, g = new Uint8Array(17 * 512).fill(0x20);
+    for (const u of R.uses) {
+      const src = m[0xA400 + u.n] | m[0xA500 + u.n] << 8; let y = 1;
+      for (let c = 0; c < m[src]; c++) {
+        const col = u.col + c, k = m[src + y] & 31; y++;
+        for (let r = 0; r < k; r++) { const v = m[src + y]; y++; const row = u.row - r; if (row >= 0 && col < 512 && (!u.over || v !== 0x20)) g[row * 512 + col] = v; }
+        if (!u.over && col < 512) for (let row = u.row - k; row >= 0; row--) g[row * 512 + col] = 0x20;
+      }
+    }
+    let d = 0; for (let r = 0; r < 17; r++) for (let c = 0; c < 512; c++) if (g[r * 512 + c] !== m[0x8200 + r * 0x200 + c]) d++;
+    if (d) { ufail++; console.log('level', lv, 'placements leave', d, 'cells different'); }
+  }
+  console.log(`piece placements: ${16 - ufail} of 16 maps rebuilt exactly`);
+  process.exit(fail || mfail || silent || ufail ? 1 : 0);
 })().catch(e => { console.log(e.stack || e); process.exit(1); });
 """
 

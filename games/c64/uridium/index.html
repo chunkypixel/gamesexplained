@@ -55,6 +55,9 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 .ur-rods span{padding:2px 8px;border-radius:4px;background:var(--surface-2)}
 .ur-rods .ur-lit{background:#2a8a4a;color:#fff}
 .ur-msg{font-size:14px;color:var(--coral)}
+.ur-wide{width:100%;height:auto}
+.ur-click{cursor:pointer}
+.ur-note{font-size:13px;color:var(--ink-mute)}
 </style>
 <!-- tabs -->
 <header class="hero">
@@ -77,26 +80,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">02 · Music</p>
-  <h2 class="t">Music: the title tune</h2>
-  <p class="lede">Steve Turner's title tune, played by the game's own sound driver ported to JavaScript.</p>
-  <div class="plate"><div id="ur-tune"></div>
-  <p class="cap">The driver at <code>$0E23</code>, ported and run once a frame through the site's model of the SID. The port was checked against the game's code in a 6502 simulator: 99,762 calls, the tune to its end and every effect on every voice, with every SID write in the same order. <code>test_ports.py</code> beside this page repeats the check.</p></div>
-  <p>Music and sound effects share one driver, and a note of music is a sound effect. The song (<code>$3D2C</code>) is 22 rows of three pattern numbers, one per voice. Each pattern byte is a note: its length in the high four bits and its pitch in the low four, with control bytes that set the octave and the instrument. The sequencer (<code>$0E6B</code>) steps every fifth frame. For each new note it writes the note's frequency into the instrument's 16-byte effect record and asks for that effect on the voice, exactly as the game asks for an explosion. The seven instruments are effects <code>$27</code> to <code>$2D</code>.</p>
-  <p>An effect record holds a voice set-up (waveform, envelope and how long the gate stays open), a start frequency and a step added to it every frame, a pulse width that sweeps, a time after which the step reverses or the frequency restarts, a duration, and the effect to chain after it.</p>
-</section>
-
-<section>
-  <p class="fig">03 · Sound effects</p>
-  <h2 class="t">Sound: the effects voice that doubles as the dice</h2>
-  <p class="lede">Every effect the game asks for, on the voices it uses.</p>
-  <div class="plate"><div id="ur-fx"></div>
-  <p class="cap">The same port, given the requests the game makes for each event, on the voices it uses. An effect asked for with bit 7 set starts even over a forced effect already sounding; others wait their turn. Each effect, on each voice, with and without bit 7, was compared with the game's code to its end.</p></div>
-  <p>Voice 3 has a second job. Whenever no effect is using it, the driver sets it to noise at the highest frequency and turns its output off through bit 7 of <code>$D418</code>. Every random choice in the game, from a fighter's decision to fire to the order of the stars, reads its waveform at <code>$D41B</code>. The table of 256 random bytes at <code>$0800</code> starts life as a copy of the sound driver's own code and is stirred with that noise at each life.</p>
-</section>
-
-<section>
-  <p class="fig">04 · The screen</p>
+  <p class="fig">02 · The screen</p>
   <h2 class="t">One frame, rebuilt from memory</h2>
   <p class="lede">A frame of play drawn by this page from the memory and video registers recorded in the emulator.</p>
   <div class="plate"><canvas id="ur-frame" class="ur-cv" width="384" height="272"></canvas>
@@ -106,7 +90,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">05 · The Dreadnought</p>
+  <p class="fig">03 · The Dreadnought</p>
   <h2 class="t">Every Dreadnought is built from the same 148 pieces</h2>
   <p class="lede">Each Dreadnought is 512 characters long and 17 high, assembled at the start of the level from a list of pieces.</p>
   <div class="plate">
@@ -119,7 +103,17 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     <p class="ur-out" id="ur-mapout"></p>
     <p class="cap">The map as <code>build_map</code> (<code>$2CB2</code>) builds it, from the level's list and the piece store at <code>$E100</code>, in the level's colours and tile set, 40 columns wide as the screen shows it. The port matches the game's own builder, run in a 6502 simulator, byte for byte on all fifteen levels and the title message (<code>test_ports.py</code>). The <b>Levels</b> tab shows every Dreadnought whole.</p>
   </div>
-  <p>The pieces are columns of characters, stored bottom up: piece 1 is a single space, others are hull ends, plating and markings up to six columns wide. A level's list fills columns 64 to 511 with pieces side by side, and a second list lays more pieces over them at a given row and column, the targets, ports and markings among them. Columns 0 to 63 are open space where the Manta turns.</p>
+  <p>A level's list fills columns 64 to 511 with pieces side by side, and a second list lays more pieces over them at a given row and column, the targets, ports and markings among them. Columns 0 to 63 are open space where the Manta turns.</p>
+  <p>Every Dreadnought draws on the same store of 148 pieces at <code>$E100</code>. The routine that indexes the store (<code>$2C66</code>) never reads the level number: a level chooses only its two lists, its colours and one of three tile sets, which is copied into the characters <code>$80</code> to <code>$FF</code> (<code>$1A54</code>). The same piece therefore looks different from one Dreadnought to the next.</p>
+  <div class="plate">
+    <div class="ur-ctl"><span class="ur-note">Drawn in the tiles and colours of the Dreadnought chosen above.</span>
+      <button type="button" id="ur-pprev">Previous use</button>
+      <button type="button" id="ur-pnext">Next use</button></div>
+    <canvas id="ur-pieces" class="ur-cv ur-wide ur-click" width="1024" height="600"></canvas>
+    <p class="ur-out" id="ur-pout">Choose a piece to see where this Dreadnought uses it.</p>
+    <p class="cap">The 148 pieces in store order, numbered as <code>$2C66</code> numbers them, each a set of columns stored bottom up. A faded piece is not used by the Dreadnought chosen above. Choose a piece to outline it on the map and move the map to it; the buttons step through its uses. Where each piece is laid was recorded by the same port, and replaying those placements rebuilds every map exactly.</p>
+  </div>
+  <p>The pieces range from piece 1, a single column holding one space that a 0 in the list repeats for open space, to sections of hull fifteen columns wide and the full seventeen rows high. Pieces 31 to 80 and 87 are the giant letters and digits of the title message; the letters it does not spell can still appear, since a new high score writes its initials into the message (<code>$17F8</code>) and the title builds the message again each time round (<code>$2415</code>). No level's list and no letter names pieces 18 and 27.</p>
   <p>The characters decide what is solid. Codes <code>$80</code> to <code>$8F</code> are walls, and the Manta is destroyed if one is under it (<code>$27D5</code>). Codes <code>$90</code> to <code>$9F</code> are targets: a shot that reaches any character of one turns the whole target into wreckage, each character becoming the one <code>$20</code> below it (<code>$2AE9</code>). The game never reads the video chip's collision registers; every hit is worked out from these codes.</p>
   <table class="ur-tbl"><thead><tr><th>Target</th><th>Characters</th><th>Points</th></tr></thead><tbody>
     <tr><td>Single character</td><td><code>$9D</code>-<code>$9F</code></td><td>10</td></tr>
@@ -130,7 +124,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">06 · The Manta</p>
+  <p class="fig">04 · The Manta</p>
   <h2 class="t">The Manta's manoeuvres</h2>
   <p class="lede">The Manta has 46 frames: two cycles of a roll, one facing each way, and the frames of a half-loop seen end-on.</p>
   <div class="plate">
@@ -146,7 +140,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">07 · Waves</p>
+  <p class="fig">05 · Waves</p>
   <h2 class="t">Fighters on numbered paths</h2>
   <p class="lede">Each Dreadnought sends its fighters in a fixed order of formations, up to six fighters each.</p>
   <div class="plate">
@@ -160,7 +154,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">08 · Landing</p>
+  <p class="fig">06 · Landing</p>
   <h2 class="t">The landing test is one character and one attitude</h2>
   <p class="lede">After the last wave, the Manta lands only over one particular character, flying level and facing right.</p>
   <div class="ur-shots"><figure><img src="reference/land-now.png" alt="Land now! in the status line above the Dreadnought"><figcaption><i>Land now!</i> in the status line once the wave list is used up.</figcaption></figure></div>
@@ -168,7 +162,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">09 · The bonus game</p>
+  <p class="fig">07 · The bonus game</p>
   <h2 class="t">The fuel rod chamber</h2>
   <p class="lede">The bonus for destroying the ship is a timing game against a countdown.</p>
   <div class="plate">
@@ -188,7 +182,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">10 · Quirks</p>
+  <p class="fig">08 · Quirks</p>
   <h2 class="t">Quirks</h2>
   <p>After <i>Land now!</i>, fighters keep coming. Once a level's list of waves is used up, the game picks one of four filler waves at random (<code>$12</code> to <code>$15</code>), and their fighters score nothing and count no formation (<code>$1E4B</code>).</p>
   <p>An extra Manta comes with every 10,000 points, at the carry out of the score's thousands byte (<code>$19F5</code>). The lives are kept in BCD and stop at 99.</p>
@@ -198,174 +192,17 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </main>
 <footer style="margin:16px 0 0;padding:22px var(--gx) 0;border-top:1px solid #e0ded8;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px;color:#80838a"><a href="https://github.com/gamesexplained/gamesexplained" style="color:#1f5fa8;text-decoration:none">GitHub</a> · <a href="https://discord.gg/3V9GWyRDWV" style="color:#1f5fa8;text-decoration:none">Discord</a><br>© Games Explained contributors. Write-ups, facts and symbol maps are available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#1f5fa8;text-decoration:none">CC BY-SA 4.0</a>; code under <a href="https://opensource.org/licenses/MIT" style="color:#1f5fa8;text-decoration:none">MIT</a></footer>
 <script src="../../lib/c64.js"></script>
-<script src="../../lib/sid.js"></script>
 <script>
 (function () {
 'use strict';
 const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","vic":[230,156,220,108,210,180,200,132,190,204,162,152,170,152,186,160,63,27,0,0,0,255,192,0,45,112,241,128,127,0,255,255,240,240,255,251,243,247,241,248,248,248,248,248,248,240,251],"cia2":[150,63],"cpu":[47,53],"writes":[[1,5,53256,180],[7,61,53254,190],[14,62,53252,200],[21,55,53250,210],[28,48,53248,220],[82,57,53270,212],[82,63,53272,47],[83,7,53281,241],[84,16,65534,115],[97,42,65534,0],[252,18,53270,192],[252,24,53272,45],[252,48,53281,240],[252,59,65534,56]],"colour":"AQEBAQEBAQEBAQoKCgoKCgoKCgoKCgoKCgoKCgoKAAAAAAAAAAAAAA4ODg4ODg4ODg4CAgICAgICAgICAgICAgICAgICAgAAAAAAAAAAAAABAQEBAQEBAQEBAgIBAQEBAQEBAQEBAQEBAQEBAQEAAAAAAAAAAAAADQ0NDQ0NDQ0NDQUGBwcHBwcHBwcHBwcHBwcHBwcHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgACAgICAgICAgICAgICAgICAgICAgICAgICAgACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAAgICAgICAgICAgICAgICAgICAgICAgICAgICAgACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAAICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIPCAcADwQPBA8FDwMOAAsECwIPAAcFDA==","ram":[{"a":18432,"b":"MAEeGTB6ezADMDAwMDAwMDAwMDAwMDAwMDAwMDAwMHp7MAMwAh4ZMDCBnpmw+vuwgzAwMDAwMLCwsLCwsLCwsLCwMDAwMDD6+7CDsIKemTAwMDAwMDAwMAAwMDAwMDAxMjM0NTY3ODl9MDAwMDAwMDAwMDAwMAAwMLCwsLCwsLCAMLCwsLCwsbKztLW2t7i5/bCwsLCwMLCwsLCwsLCAMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgQiAgICAgICAgICAgICAgICAgICAgICAgICAgICAwJiYmJiYmJiYmJiYvLiAgICAgICAgICAgICAgICAgICAgICAgICAgMCUlJSUlJSUlJSUlJS0vLiAgICAgICAgICAgICAgICAgICAgICAgIDCVllRUlJWWVFRUVFRUVCggICAgICAgICAgICAgICMpICAgICAgICAwmJlVVpeYmVVWVVVWVlYoICAgICAgICAgICAgICAiKCAgQyAgICAgMJucWFiam5xYWFhYWFhYKCAgICAgICAgICAgICAgIiggICAgICAgIDAlJSUlJSUlJSUlJSU0NTMgICAgICAgICAgICAgICIoICAgICAgICAwJCQkJCQkJCQkJCQ1MyAgICAgICAgICAgICAgICAiKFEpIykjKSMpMCBDICAgICAgICAgICAgICAgICAgICAgICAgICBDIihSKCIoIigiKDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIoUigiKCIoIigwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiKFIoIigiKCIoMCYmJiYmJiYmJiYmLy4gICAgICAgICAgICAgICAgIihTJyEnISchJzAlJSUlJSUlJSUlJSUtLy4gICAgICAgICAgICAgICIoICAgICAgICAwVFRUVFRUVFRUVFRUVFQoICAgICAgICAgICAgICAiKCAgICAgICAgMFVVVVZVVVVVVlVVVlZWKCAgICAgICAgICAgQiAgIiggICAgICAgIDBYWFhYWFhYWFhYWFhYWChDICAgICAgICAgICAgICEnICAgICAgICAwJSUlJSUlJSUlJSUlNDUzICAgICAgICAgICAgICAgICAgICAgIEIgMCQkJCQkJCQkJCQkNTMgICAgICAgICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgICAgICAgICAgIEMgICAgICAgICAgMA=="},{"a":19448,"b":"ubm5ubm5QXE="},{"a":20544,"b":"AAAAD/8APVf/N/3V99Vw33/83fq83ers1f+t/+uv1ev9/+uv1f+t3ers3fq833/899VwN/3/PVfVD/8AAAAA"},{"a":23616,"b":"AAAAD/8AP///P//////w///8///8///8///////////////////////8///8///8///wP///P///D/8AAAAA"},{"a":28224,"b":"AFUAAapABqpQGqlUapVdalVdaVV9aV/9aXV9/9ZdVVVVqpdVqqVpaaqpaWqtaVq9ZVf9FV/0BX/QAf9AAFUA"},{"a":28672,"b":"AAA8AGYAZgAAAAwAPAAMAAAAfAAOABwAAAA8AGYADAA="},{"a":28872,"b":"AAAAAAAAfAA="},{"a":28912,"b":"AAAAAAAAZgA="},{"a":29056,"b":"AAAAAAAAAAAAAPz+DgYGBgAAAwMDAwMDAAA/PzgwMDMAAPH6Ohk4+QAAn19AgACYAAD4/R0MDAwAAMwsLMwMzAAABgYGBgYGAAA8fndjYWA="},{"a":29648,"b":"MAAzAH8AfwAMAMwA/gD+AA=="},{"a":29672,"b":"AAA8fu7GhgY="},{"a":29696,"b":"ZgA8AAAAAAAMAAwAAAAAADgAfgAAAAAAZgA8AAAAAAA="},{"a":29896,"b":"ZgB8AGAAYAA="},{"a":29936,"b":"ZgA8AAAAAAA="},{"a":30080,"b":"AAAAAAAAAAAHBwMAAP//AAf//gAA//8AMzEwMHDw4ADx4fF5PR8PAJyfj4CA//8AHPz4AAH//wDOz8fAwMODAA7+/AAA//8AYGBgYODgwAA="},{"a":30672,"b":"fwB/AB8AAAD+AP4A+AAAAA=="},{"a":30696,"b":"BgYGBgYGBgA="},{"a":30976,"b":"//////////8VFRUVFRUqqhUVFRUVFRUVAAAVFRUVFRVVVVVVVVWqqlVVVVVVVVVVAABVVVVVVVVWVlZWVlaqqlZWVlZWVlZWAAJWVlZWVlY="},{"a":31080,"b":"VFVVVVVVVVX//////z9PU/8/T1NUVVVV5fn+//////8="},{"a":31128,"b":"Wmuvv/////9VVVVVVVVVVlVVVVZaa6+/"},{"a":31248,"b":"///////v/////+/v/////w=="},{"a":31368,"b":"oKipqampqampqampqampqampqampqaqqVRFVVVVVVVVVVVUBAVVVVVUVBQEBBRVV"},{"a":31424,"b":"VVVVVVVVEVU="},{"a":31904,"b":"VQDERUVFQBVVAf4qRVEAVVURVVVVVRVllRVARWoqqSVVVVSUpJVVVWUBVlZWqmppalpFRQbrKlWqqmmlAf6qVampVVVVVRFV"},{"a":32767,"b":"FQ=="}],"capture":{"phase_cycles_uncertain":0,"frame_cycles":19657,"frame_ended_on_line":0,"picture_lines_low":0,"writes_account_for_end_state":true,"ram_bytes_changed_during_frame":161,"colour_cells_changed_during_frame":1}};
-  function createDriver(D) {
-    // A port of Uridium's sound driver (sound_frame $0E23 and the routines it calls), one call
-    // per frame. D.mem holds $3900-$3EFF as loaded (voice set-ups, effects, notes, song,
-    // patterns); the driver writes into it (note frequencies into the instruments' records, the
-    // song position), so it keeps its own copy. D.kind 'tune' plays the title tune; 'fx' plays
-    // D.requests[t], a list of [frame, voice, effect] requests.
-    const mem = Uint8Array.from(D.mem), BASE = 0x3900;
-    const rd = (a) => mem[a - BASE], wr = (a, v) => { mem[a - BASE] = v & 255; };
-    const sid = new Uint8Array(25), z = new Uint8Array(256);
-    let writes = [], op0F5F = 0x80, frame = 0, reqs = [], ended = false;
-    const SIDOFF = [0, 7, 14], BLOCK = [0, 0x0F, 0x1E], BLOCKEND = [0x0E, 0x1D, 0x2C], FIRST = [0x08, 0, 0, 0];
-    const W = (r, v) => { sid[r] = v & 255; writes.push(r, v & 255); };
-    function noiseOn() { W(0x0E, 0xFF); W(0x0F, 0xFF); W(0x13, 0); W(0x14, 0); W(0x12, 0x81); }            // $112B
-    function soundReset(a) {                                                                            // $1108
-      z[0x90] = a & 15;
-      for (let y = 0x18; y >= 0; y--) W(y, 0);
-      z[0x96] = z[0x97] = z[0x98] = z[0x91] = z[0x92] = z[0x93] = 0;
-      op0F5F = 0x80; noiseOn();
-    }
-    function silence() { const y = z[0xA1]; W(y + 6, 0); W(y + 5, 0); W(y + 4, 8); W(y + 4, 0); }        // $10A5
-    function startVoice(a) {                                                                            // $10BA
-      z[0xA0] = (a << 2) & 255;
-      silence();
-      let y = z[0xA1];
-      for (let x = 3; x >= 0; x--) { W(y, FIRST[x]); y++; }
-      z[0xA1] = y;
-      for (let x = 3; x > 0; x--) { const v = rd(0x3947 + z[0xA0]); z[0xA0]++; W(z[0xA1], v); z[0xA1]++; }
-      const v9f = z[0x9F];
-      z[0x99 + v9f] = rd(0x3947 + z[0xA0]);
-      const wave = rd(0x3947 + z[0xA0] - 3);
-      z[0x9C + v9f] = wave;
-      W(z[0xA1] - 3, wave | 1);
-    }
-    function startEffect(y) {                                                                           // $105D
-      z[0xA1] = SIDOFF[z[0x9F]];
-      const n = ((z[0x96 + y] - 1) & 0x7F);
-      const rec = 0x39AB + 16 * n;
-      z[0xA2] = rec & 255; z[0xA3] = rec >> 8;
-      startVoice(rd(rec));
-      let x = BLOCKEND[z[0x9F]];
-      for (let k = 0x0F; k > 0; k--) { z[(0xC0 + x) & 255] = rd(rec + k); x--; }
-      if (z[0x9F] === 2) op0F5F = 0;
-    }
-    function neg16(lo, hi) { const v = ((z[hi] << 8 | z[lo]) ^ 0xFFFF) + 1; z[lo] = v & 255; z[hi] = (v >> 8) & 255; }
-    function voices() {                                                                                 // $0F5C
-      W(0x18, z[0xEF] | op0F5F);
-      for (let y = 0; y < 3; y++) {
-        z[0x9F] = y;
-        const a = z[0x91 + y];
-        if (a && ((a & 0x80) || !(z[0x96 + y] & 0x80))) { z[0x96 + y] = a; startEffect(y); }
-        z[0x91 + y] = 0;
-      }
-      z[0x9F] = 0; z[0xA0] = 0;
-      for (;;) {
-        const v = z[0x9F]; z[0xA1] = SIDOFF[v];
-        const x = z[0xA0], b = 0xC0 + x;
-        if (z[b + 6]) {
-          let f = (z[b + 1] << 8 | z[b]) + (z[b + 3] << 8 | z[b + 2]);
-          z[b] = f & 255; W(z[0xA1], z[b]); z[b + 1] = (f >> 8) & 255; W(z[0xA1] + 1, z[b + 1]);
-          let p = (z[b + 8] << 8 | z[b + 7]) + (z[b + 10] << 8 | z[b + 9]);
-          z[b + 7] = p & 255; W(z[0xA1] + 2, z[b + 7]); z[b + 8] = (p >> 8) & 255; W(z[0xA1] + 3, z[b + 8]);
-          if (z[b + 8] === 0 || z[b + 8] >= 0x0F) neg16(b + 9, b + 10);
-          let g = z[0x99 + v];
-          if (g) { g--; z[0x99 + v] = g; if (!g) W(z[0xA1] + 4, z[0x9C + v] & 0xFE); }
-          z[b + 4] = (z[b + 4] - 1) & 255;
-          if (!z[b + 4]) {
-            z[b + 4] = z[b + 5];
-            if (z[b + 11] === 1) { z[b] = z[b + 12]; z[b + 1] = z[b + 13]; }
-            else { neg16(b + 2, b + 3); neg16(b + 9, b + 10); }
-            z[b + 6] = (z[b + 6] - 1) & 255;
-            if (!z[b + 6]) {
-              silence();
-              const c = z[b + 14];
-              if (c) z[0x91 + v] = c;
-              z[0x96 + v] = 0;
-              if (v === 2) noiseOn();
-            }
-          }
-        } else {
-          z[0x96 + v] = 0;
-          if (v === 2) noiseOn();
-        }
-        z[0x9F]++;
-        if (z[0x9F] >= 3) return;
-        z[0xA0] = BLOCK[z[0x9F]];
-      }
-    }
-    function musicTick() {                                                                              // $0E6B
-      z[0xF2] = (z[0xF2] - 1) & 255;
-      if (z[0xF2]) { voices(); return; }
-      z[0xF2] = 5;
-      let a = rd(0x3E9A);
-      if (a === 0xFF) return;
-      let row = a === 0xFE;
-      for (;;) {
-        if (row) {                                                                                      // $0E81
-          let y = rd(0x3E99) * 3 & 255;
-          a = rd(0x3D2C + y); wr(0x3E9A, a);
-          if (a === 0xFF) { ended = true; return; }
-          for (let x = 0; x < 3; x++) {
-            const p = rd(0x3D2C + y); z[0xA0] = y;
-            z[0xF3 + x] = rd(0x3D71 + p); z[0xFC + x] = rd(0x3D90 + p); z[0xF6 + x] = 1; y = (y + 1) & 255;
-          }
-        }
-        row = false;
-        let restart = false;
-        for (z[0x9F] = 0; z[0x9F] < 3; z[0x9F]++) {                                                    // $0EB3
-          const x = z[0x9F];
-          z[0xF6 + x] = (z[0xF6 + x] - 1) & 255;
-          if (z[0xF6 + x]) continue;
-          const ptr = z[0xFC + x] << 8 | z[0xF3 + x];
-          z[0xA2] = ptr & 255; z[0xA3] = ptr >> 8;
-          const at = (o) => rd(ptr + o);
-          let y = 0;
-          if (at(0) === 0) { z[0xF9 + x] = 7 - (at(1) & 7) & 255; z[0xA4 + x] = at(1) >> 4; y = 2; }
-          const n = at(y);
-          if (n === 0xFF) { wr(0x3E9A, 0xFE); wr(0x3E99, rd(0x3E99) + 1); row = true; restart = true; break; }
-          const np = ptr + y + 1; z[0xF3 + x] = np & 255; z[0xFC + x] = (np >> 8) & 255;
-          z[0xF6 + x] = (n & 0xF0) ? n >> 4 : 0x10;
-          let lo = rd(0x3D10 + (n & 15)), hi = rd(0x3D00 + (n & 15)), k = z[0xF9 + x];
-          do { const c = hi & 1; hi >>= 1; lo = (lo >> 1) | (c << 7); k = (k - 1) & 255; } while (k);
-          const ins = z[0xA4 + x];
-          z[0x91 + x] = (ins + 0x27) & 255;
-          const rec = rd(0x3D1E + ins) << 8 | rd(0x3D25 + ins);
-          z[0xA3] = rec >> 8; z[0xA2] = rec & 255;
-          wr(rec + 1, lo); wr(rec + 0x0D, lo); wr(rec + 0x0E, hi); wr(rec + 2, hi);
-          z[0xF0] = lo; z[0xF1] = hi;
-        }
-        if (!restart) break;
-      }
-      voices();
-    }
-    function play() {                                                                                   // $0E23
-      writes = [];
-      if (D.kind === 'fx') {
-        for (const r of reqs) if (r[0] === frame) z[0x91 + r[1]] = r[2];
-        frame++;
-      }
-      const a = z[0x90];
-      if (a === 0) soundReset(0);
-      else if (a === 2 || a === 3) voices();
-      else if (a === 1) musicTick();
-      else if (a === 0x11 || a === 0x13) { soundReset(a); z[0xEF] = z[0x95]; z[0xF2] = 1; wr(0x3E99, 0); wr(0x3E9A, 0xFE); }
-      else if (a === 0x12) { soundReset(a); z[0xEF] = 0x0F; }
-    }
-    return {
-      sid, z, mem, get writes() { return writes; }, set writes(w) { writes = w; }, rd, wr,
-      get op0F5F() { return op0F5F; }, set op0F5F(v) { op0F5F = v; },
-      init(t) { frame = 0; ended = false; z[0x95] = D.volume == null ? 5 : D.volume;
-        if (D.kind === 'tune') { z[0x90] = 0x11; } else { z[0x90] = 0x12; reqs = (D.requests || [])[t] || []; } },
-      stop() { soundReset(0); ended = true; },
-      play, playing() { return !ended && (D.kind === 'tune' || frame < (D.length || 150)); },
-      voice(x) { return { effect: z[0x96 + x], note: D.kind === 'tune' ? z[0xF6 + x] : 0 }; }
-    };
-  }
-  // end of createDriver
-
   function buildMap(ram0, level) {
     // Port of build_message ($2415), index_pieces ($2C66) and build_map ($2CB2), step for step, on a copy of memory:
     // the level's Dreadnought at $8200-$A3FF (17 rows of 512 columns, row r at $8200 + $200 r)
     // and the generator ports note_port ($2DE4) records at $0200-$024F, with their count - 1
-    // in $54.
-    const m = Uint8Array.from(ram0);
+    // in $54. uses lists where each piece was laid, for the page: {n, col, row, over}, row being the
+    // row of the piece's bottom character and over true for the second list's pieces.
+    const m = Uint8Array.from(ram0), uses = [];
     // build_message ($2415), which the title runs before any level is built: level 0's piece
     // list at $8010, from the message text at $349F, the non-zero of each character's four
     // letter pieces ($C060 + the character's offset at $C000), then piece 1 as a gap, and
@@ -409,6 +246,7 @@ const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","v
       let n = m[list], src;
       if (!n) src = piece(1);
       else { src = piece(n); list = (list + 1) & 0xFFFF; }
+      uses.push({ n: n || 1, col: dst - 0xA200, row: 16, over: false });
       let y = 0, cols = m[src + y]; y++;
       for (;;) {                                                                  // $2D09
         let d = dst, k = m[src + y] & 0x1F; y++;
@@ -429,6 +267,7 @@ const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","v
       if (!n) break;
       list = (list + 3) & 0xFFFF;
       const src = piece(n);
+      uses.push({ n, col: (page & 1) << 8 | (d0 & 255), row: (page - 0x82) >> 1, over: true });
       let y = 0, cols = m[src]; y++;
       for (;;) {                                                                  // $2DA6
         let d = d0, k = m[src + y] & 0x1F; y++;
@@ -437,7 +276,7 @@ const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","v
           if (v !== 0x20) m[d] = v;
           notePort(v, d);
           d = (d - 0x200) & 0xFFFF;
-          if (!((d >> 8) & 0x80)) return { m, ended: true };
+          if (!((d >> 8) & 0x80)) return { m, ended: true, uses };
           k = (k - 1) & 255;
         } while (k);
         d0 = (d0 + 1) & 0xFFFF;
@@ -445,36 +284,17 @@ const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","v
         if (!cols) break;
       }
     }
-    return { m, ended: false };
+    return { m, ended: false, uses };
   }
   // end of buildMap
 
 const say = (id, t) => { const e = document.getElementById(id); if (e) e.innerHTML = '<p class="ur-msg">' + t + '</p>'; };
 const hex2 = (n) => '$' + n.toString(16).toUpperCase().padStart(2, '0');
 const NAMES = ['Message', 'Zinc', 'Lead', 'Copper', 'Silver', 'Iron', 'Gold', 'Platinum', 'Tungsten', 'Iridon', 'Kallisto', 'Tri-alloy', 'Quadmium', 'Ergonite', 'Galactium', 'Uridium'];
-if (!window.C64) { ['ur-frame', 'ur-map', 'ur-manta', 'ur-waves', 'ur-tune', 'ur-fx'].forEach(id => say(id, 'This needs the site’s scripts: open the page from the built site.')); return; }
+if (!window.C64) { ['ur-frame', 'ur-map', 'ur-manta', 'ur-waves'].forEach(id => say(id, 'This needs the site’s scripts: open the page from the built site.')); return; }
 try { C64.drawFrame(document.getElementById('ur-frame'), FRAME, 1); } catch (e) { say('ur-frame', 'The frame could not be drawn: ' + e.message); }
 C64.load('listing.json').then((L) => {
   const ram = L.ram, P = C64.PAL;
-  // ---------------------------------------------------------------- sound
-  const MEM = Array.from(ram.slice(0x3900, 0x3F00));
-  if (window.C64Sid) {
-    C64Sid.mount(document.getElementById('ur-tune'), {
-      driver: createDriver, data: { kind: 'tune', mem: MEM }, tunes: ['Title tune'],
-      rows: [{ k: 'Effect', f: v => v.effect ? hex2(v.effect) : '-' }, { k: 'Note time', f: v => String(v.note) }]
-    });
-    const FX = [['Launch screen', [[0, 0, 3], [0, 1, 4], [0, 2, 5]]], ['Transporter door', [[0, 0, 6]]], ['Manta out', [[0, 1, 7]]],
-      ['Transporter leaves', [[0, 0, 8], [0, 1, 8], [0, 2, 8]]], ['Shot', [[0, 0, 9]]], ['Burst', [[0, 1, 0x0A]]], ['Fighter fires', [[0, 1, 0x0B]]],
-      ['Manta explodes', [[0, 0, 0x0C], [0, 1, 0x0C]]], ['Mine appears', [[0, 1, 0x0D]]], ['Mine', [[0, 1, 0x0E]]], ['Chamber wipe', [[0, 0, 0x14], [0, 1, 6], [0, 2, 0x14]]],
-      ['Countdown', [[0, 0, 0x15]]], ['Chamber flash', [[0, 1, 0x16]]], ['Destruct primed', [[0, 0, 0x17]]], ['Formation bonus', [[0, 1, 0x18]]], ['Ship bonus', [[0, 1, 0x19]]],
-      ['Take-off noise', [[0, 0, 0x1A]]], ['Target hit', [[0, 1, 0x1B]]], ['Game over', [[0, 0, 0x1C], [0, 1, 0x1D], [0, 2, 0x1E]]], ['Great score', [[0, 0, 0x1F], [0, 2, 0x1F], [0, 1, 0x20]]],
-      ['Shot hits wall', [[0, 0, 0x21]]], ['Take-off', [[0, 0, 0x22], [0, 1, 0x23]]], ['Fighter shot', [[0, 1, 0x26]]], ['Extra life', [[0, 0, 0x81]]],
-      ['Land now', [[0, 0, 0x8F]]], ['Landing', [[0, 0, 0x92], [0, 1, 0x93]]], ['New wave', [[0, 1, 0xAE]]]];
-    C64Sid.mount(document.getElementById('ur-fx'), {
-      driver: createDriver, data: { kind: 'fx', mem: MEM, requests: FX.map(f => f[1]), length: 250 }, tunes: FX.map(f => f[0]),
-      rows: [{ k: 'Effect', f: v => v.effect ? hex2(v.effect) : '-' }]
-    });
-  } else { say('ur-tune', 'The sound player needs ../../lib/sid.js.'); say('ur-fx', 'The sound player needs ../../lib/sid.js.'); }
   // ---------------------------------------------------------------- map
   function levelColours(lv) {
     const b = 0x3372 + 5 * ram[0xE030 + lv];
@@ -488,6 +308,16 @@ C64.load('listing.json').then((L) => {
     return cs;
   }
   const maps = [];
+  // ---------------------------------------------------------------- the piece store
+  // each piece as index_pieces ($2C66) walks it: a count of columns, then for each a count of
+  // characters (low five bits) and the characters from the bottom up
+  const pieces = [null];
+  for (let a = 0xE100; ram[a]; ) {
+    const cols = [], w = ram[a]; let o = 1, h = 0;
+    for (let c = 0; c < w; c++) { const k = ram[a + o] & 31; cols.push(Array.from(ram.slice(a + o + 1, a + o + 1 + k))); o += 1 + k; h = Math.max(h, k); }
+    pieces.push({ a, w, h, cols }); a += o;
+  }
+  let selPiece = 0, selUse = -1, sheet = [];
   function mapOf(lv) { if (!maps[lv]) maps[lv] = buildMap(ram, lv); return maps[lv]; }
   function drawCell(ctx, cs, code, x, y, s, C) {
     if (C.map & 8) C64.drawGlyphMC(ctx, cs, code, x, y, s, [P[1], P[C.mc1], P[C.mc2], P[C.map & 7]]);
@@ -511,6 +341,11 @@ C64.load('listing.json').then((L) => {
       const col = m[0x0230 + k] << 8 | m[0x0210 + k], row = m[0x0220 + k] - 6;
       if (col >= c0 && col < c0 + 40) { ctx.strokeStyle = '#ffd400'; ctx.lineWidth = 2; ctx.strokeRect((col - c0) * 8 * s - 2, row * 8 * s - 2, 8 * s + 4, 8 * s + 4); }
     }
+    if (selPiece) for (const u of R.uses) if (u.n === selPiece) {          // the chosen piece's uses
+      const P_ = pieces[u.n], x0 = (u.col - c0) * 8 * s, y0 = (u.row - P_.h + 1) * 8 * s;
+      if (u.col + P_.w <= c0 || u.col >= c0 + 40) continue;
+      ctx.strokeStyle = '#1f5fa8'; ctx.lineWidth = 3; ctx.strokeRect(x0 + 1, y0 + 1, P_.w * 8 * s - 2, P_.h * 8 * s - 2);
+    }
     for (let a = 0x8200; a < 0xA400; a++) { const v = m[a]; if (v >= 0x80 && v < 0x90) walls++; else if (v >= 0x90 && v < 0xA0) targets++; }
     document.getElementById('ur-mapout').textContent = `Level ${lv}, ${NAMES[lv]}: tile set at $${(ram[0xE040 + lv] << 8).toString(16).toUpperCase()}, ${walls} wall and ${targets} target characters, ${(m[0x54] + 1) & 255} generator ports. Columns ${c0}-${c0 + 39} of 512.`;
   }
@@ -518,8 +353,61 @@ C64.load('listing.json').then((L) => {
     const b = document.getElementById('ur-' + k);
     b.addEventListener('click', () => { tog[k] = !tog[k]; b.setAttribute('aria-pressed', tog[k]); drawMap(); });
   }
-  lvSel.addEventListener('change', drawMap); pos.addEventListener('input', drawMap);
+  lvSel.addEventListener('change', () => { drawMap(); drawPieces(); }); pos.addEventListener('input', drawMap);
   drawMap();
+  drawPieces();
+  function drawPieces() {
+    const lv = +lvSel.value, cs = charset(lv), C = levelColours(lv), cv = document.getElementById('ur-pieces');
+    const used = new Set(mapOf(lv).uses.map(u => u.n)), PER = 128, GAP = 2;
+    // shelves: pieces in store order, side by side, each shelf as tall as its tallest piece
+    const shelves = []; let cur = { items: [], w: 0, h: 0 };
+    for (let n = 1; n < pieces.length; n++) {
+      const P_ = pieces[n];
+      if (cur.w + P_.w > PER) { shelves.push(cur); cur = { items: [], w: 0, h: 0 }; }
+      cur.items.push({ n, x: cur.w }); cur.w += P_.w + GAP; cur.h = Math.max(cur.h, P_.h);
+    }
+    shelves.push(cur);
+    const H = shelves.reduce((t, sh) => t + sh.h + 2, 0);
+    const ctx = C64.canvas(cv, PER * 8, H * 8);
+    ctx.fillStyle = '#e9e7e1'; ctx.fillRect(0, 0, cv.width, cv.height);
+    sheet = []; let y = 0;
+    for (const sh of shelves) {
+      for (const it of sh.items) {
+        const P_ = pieces[it.n], bx = it.x * 8, by = (y + sh.h) * 8;     // bottom of the shelf
+        P_.cols.forEach((col, c) => col.forEach((code, r) => {
+          const px = bx + c * 8, py = by - (r + 1) * 8;
+          ctx.fillStyle = P[1]; ctx.fillRect(px, py, 8, 8);
+          drawCell(ctx, cs, code, px, py, 1, C);
+        }));
+        if (!used.has(it.n)) { ctx.fillStyle = 'rgba(233,231,225,.72)'; ctx.fillRect(bx, by - P_.h * 8, P_.w * 8, P_.h * 8); }
+        if (it.n === selPiece) { ctx.strokeStyle = '#1f5fa8'; ctx.lineWidth = 3; ctx.strokeRect(bx - 2, by - P_.h * 8 - 2, P_.w * 8 + 4, P_.h * 8 + 4); }
+        ctx.fillStyle = '#80838a'; ctx.font = '9px monospace'; ctx.fillText(String(it.n), bx, by + 10);
+        sheet.push({ n: it.n, x: bx, y: by - P_.h * 8, w: P_.w * 8, h: P_.h * 8 + 12 });
+      }
+      y += sh.h + 2;
+    }
+  }
+  function showUse(step) {
+    const lv = +lvSel.value, U = mapOf(lv).uses.filter(u => u.n === selPiece), out = document.getElementById('ur-pout');
+    const P_ = pieces[selPiece];
+    if (!selPiece) return;
+    if (!U.length) { out.textContent = `Piece ${selPiece}, ${P_.w} × ${P_.h} at $${P_.a.toString(16).toUpperCase()}: not used by ${NAMES[lv]}.`; drawMap(); drawPieces(); return; }
+    selUse = (selUse + step + U.length) % U.length;
+    const u = U[selUse];
+    pos.value = Math.max(0, Math.min(472, u.col - Math.max(0, (40 - P_.w) >> 1)));
+    out.textContent = `Piece ${selPiece}, ${P_.w} × ${P_.h} at $${P_.a.toString(16).toUpperCase()}: use ${selUse + 1} of ${U.length} on ${NAMES[lv]}, column ${u.col}, ${u.over ? 'laid over the hull by the second list' : 'from the first list'}.`;
+    drawMap(); drawPieces();
+  }
+  document.getElementById('ur-pieces').addEventListener('click', (e) => {
+    const cv = e.currentTarget, r = cv.getBoundingClientRect(), k = cv.width / r.width;
+    const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+    const hit = sheet.find(t => x >= t.x - 4 && x < t.x + t.w + 4 && y >= t.y && y < t.y + t.h);
+    if (!hit) return;
+    selPiece = hit.n; selUse = -1; showUse(1);
+  });
+  document.getElementById('ur-pnext').addEventListener('click', () => showUse(1));
+  document.getElementById('ur-pprev').addEventListener('click', () => showUse(-1));
+  lvSel.addEventListener('change', () => { if (selPiece) { selUse = -1; showUse(1); } });
   // ---------------------------------------------------------------- Manta
   const SEQS = [];
   for (const [side, lo, hi, n] of [['right', 0x3292, 0x32A4, 18], ['left', 0x3266, 0x327C, 22]])
@@ -619,6 +507,6 @@ C64.load('listing.json').then((L) => {
     }
     render();
   });
-}).catch((e) => { ['ur-map', 'ur-manta', 'ur-waves', 'ur-tune', 'ur-fx'].forEach(id => say(id, 'The listing could not be loaded: ' + e.message)); });
+}).catch((e) => { ['ur-map', 'ur-manta', 'ur-waves'].forEach(id => say(id, 'The listing could not be loaded: ' + e.message)); });
 })();
 </script>
