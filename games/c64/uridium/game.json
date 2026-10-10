@@ -80,7 +80,7 @@
       [
         "$7C00",
         "$7FFF",
-        "runtime: the playfield characters $80-$FF, copied in for each level from a tile set at $D400, $D800 or $DC00 (copy_enemy_shapes), or from $D200 for the chamber"
+        "runtime: the playfield characters $80-$FF, copied in for each level from a tile set at $D400, $D800 or $DC00 (copy_tile_set), or from $D200 for the chamber"
       ],
       [
         "$8000",

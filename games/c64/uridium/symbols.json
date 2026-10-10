@@ -44,7 +44,7 @@
    [
     31744,
     32767,
-    "runtime: the playfield characters $80-$FF, copied in for each level from a tile set at $D400, $D800 or $DC00 (copy_enemy_shapes), or from $D200 for the chamber"
+    "runtime: the playfield characters $80-$FF, copied in for each level from a tile set at $D400, $D800 or $DC00 (copy_tile_set), or from $D200 for the chamber"
    ],
    [
     32768,
@@ -2861,7 +2861,7 @@
   },
   {
    "address": 6740,
-   "name": "copy_enemy_shapes",
+   "name": "copy_tile_set",
    "type": "Subroutine",
    "kind": "user"
   },
@@ -7491,7 +7491,7 @@
   {
    "address": 47,
    "type": "line",
-   "text": "The raster interrupts' frame flag: set at line 252 and 82, cleared at line 97; the main loops wait on it. $80 on the title screens."
+   "text": "The raster interrupts' frame flag: in play set at lines 252 and 82 and cleared at line 97; on the other screens $80 from line 128 and 0 from line 0 (title_irq). The main loops wait on it."
   },
   {
    "address": 48,
@@ -7616,7 +7616,7 @@
   {
    "address": 72,
    "type": "line",
-   "text": "Fire-button state for fire_control: 0 waiting, 1 pressed, bit 7 set on the frame the shots go."
+   "text": "Fire-button state for fire_control: 1 waiting for a press, 0 held (set to 1 when a life starts). The Manta fires on the press and again on the release; bit 7 is set on the frame the shots go."
   },
   {
    "address": 73,
@@ -7686,7 +7686,7 @@
   {
    "address": 86,
    "type": "line",
-   "text": "The collision flags of the Manta's frame, from $33E8: bit 0 edge-on (middle only), bit 7 tall (rows above and below too)."
+   "text": "The collision flags of the Manta's frame, from $33E8 + frame (collide_shapes): bit 0 set, test only the middle column; bit 7 set, test the rows above and below the middle too."
   },
   {
    "address": 87,
@@ -8281,7 +8281,7 @@
   {
    "address": 2592,
    "type": "line",
-   "text": "The title sequence, the game's outer loop. Resets the stack, points read_stick at both ports again, colours and prints the two status lines (\"Player1\", \"Player2\" and the scores), shows the player-option and colour icons (colour_icons), and builds the giant message's map (build_message). Then loops: the title page with the music (title_page), the giant scrolling message (level 0, message_page), the hall of fame, and a demo flight (demo); fire on any of them starts a game at new_game."
+   "text": "The title sequence, the game's outer loop. Resets the stack, points read_stick at both ports again, colours the status lines and prints \"Player1\" and \"Player2\" over the scores game_start printed, colours the colour icon (colour_icons) and builds the giant message's map (build_message). Then loops: the title page with the music (title_page), the giant scrolling message (level 0, message_page), the hall of fame, and a demo flight (demo); the option icons are printed inside those pages, and fire on any of them starts a game at new_game."
   },
   {
    "address": 2917,
@@ -8296,7 +8296,7 @@
   {
    "address": 3097,
    "type": "line",
-   "text": "Starts a life: the title interrupt, an empty status line and the lives, the status colours of the current player (status_colours), then the launch screen: \"Player 1\" or \"Player 2\", the lives left and \"Game On!\", with the transporter sprite (record $32CC). Waits for fire to be released, stirs the random table (stir_random), plays effects 3, 4 and 5, and waits for fire or about four seconds ($62 from $BF). Then builds the Dreadnought (level_setup), starts its wave list (waves_start), runs the launch out of the transporter (launch_sequence), sets the Manta's movement limits from $32ED into $35-$3C and enters the play loop."
+   "text": "Starts a life: the title interrupt, an empty status line and the lives, the status colours of the current player (status_colours), then the launch screen: \"Player 1\" or \"Player 2\", the lives left and \"Game On!\", with the Manta's sprite (record $32CC). Waits for fire to be released, stirs the random table (stir_random), plays effects 3, 4 and 5, and waits for fire or about four seconds ($62 from $BF). Then builds the Dreadnought (level_setup), starts its wave list (waves_start), runs the launch out of the transporter (launch_sequence), sets the Manta's movement limits from $32ED into $35-$3C and enters the play loop."
   },
   {
    "address": 3321,
@@ -8526,12 +8526,12 @@
   {
    "address": 6712,
    "type": "line",
-   "text": "Starts the current level's waves: the wave list pointer $6D/$6E from $C100/$C110 by level $26, no formations destroyed yet ($87), not landing ($85 = 0), no wave in flight ($6C = $80, $68 = $80), then copies the level's enemy shapes (copy_enemy_shapes)."
+   "text": "Starts the current level's waves: the wave list pointer $6D/$6E from $C100/$C110 by level $26, no formations destroyed yet ($87), not landing ($85 = 0), no wave in flight ($6C = $80, $68 = $80), then copies the level's tile set into the playfield characters (copy_tile_set)."
   },
   {
    "address": 6740,
    "type": "line",
-   "text": "Copies four pages from the page $E040 names for this level ($26) to $7C00-$7FFF, sprite shapes $F0-$FF: the fighters of the current Dreadnought. Runs with every ROM and the I/O banked out."
+   "text": "Copies four pages, the level's tile set from the page $E040 names for level $26 ($D400, $D800 or $DC00), to $7C00-$7FFF: the playfield's characters $80-$FF. Runs with every ROM and the I/O banked out, since the sets lie under the I/O."
   },
   {
    "address": 6773,
@@ -8621,7 +8621,7 @@
   {
    "address": 8428,
    "type": "line",
-   "text": "Builds the Dreadnought for level $26 and resets the Manta: indexes the map pieces (index_pieces), map position $0040 (the left edge of the map), background $4A = $F1, builds the map (build_map), clears the piece index (clear_piece_index), sets the level's colours (level_colours), scatters the stars (make_stars), draws the first screen (draw_map, draw_stars), the star rows above and below the playfield (star_rows). Then the Manta at rest: speed 0, no manoeuvre, facing right level ($45 = 5), height $3D = $10, Y $98, frame $59, and switches to the play interrupt."
+   "text": "Builds the Dreadnought for level $26 and resets the Manta: indexes the map pieces (index_pieces), map position $0040 (the left edge of the map), background $4A = $F1, builds the map (build_map), clears the piece index (clear_piece_index), sets the level's colours (level_colours), scatters the stars (make_stars), draws the first screen (draw_map, draw_stars), the star rows above and below the playfield (star_rows). Then the Manta at rest: speed 0, no manoeuvre, level and facing left ($45 = 5), as it reverses out of the transporter, height $3D = $10, Y $98, frame $59, and switches to the play interrupt."
   },
   {
    "address": 8528,
@@ -8736,7 +8736,7 @@
   {
    "address": 10197,
    "type": "line",
-   "text": "The Manta against the Dreadnought: $33E8 gives the collision shape of frame $40. Looks at the map characters under the Manta through $52/$53 (the character under its middle into $86; its left and right unless the frame is edge-on, bit 0; the rows above and below for a tall frame, bit 7). Any of the solid characters $80-$8F there destroys the Manta ($32 = $80)."
+   "text": "The Manta against the Dreadnought: $33E8 + frame gives the collision flags (collide_shapes). Looks at the map characters under the Manta through $52/$53: the middle one always (kept in $86), the left and right ones unless bit 0 is set (an end-on frame), and the cells above and below the middle when bit 7 is set (every frame but an edge-on one). Any of the solid characters $80-$8F there destroys the Manta ($32 = $80)."
   },
   {
    "address": 10297,
@@ -9016,7 +9016,7 @@
   {
    "address": 12946,
    "type": "line",
-   "text": "Low bytes of the animations while facing right ($45 bit 2 clear, as after the launch)."
+   "text": "Low bytes of the animations while facing right ($45 bit 2 clear)."
   },
   {
    "address": 12964,
@@ -9061,12 +9061,12 @@
   {
    "address": 13070,
    "type": "line",
-   "text": "launch_rec_lo's entry 8: the demo Manta's record ($32B6), which start_life and demo use."
+   "text": "launch_rec_lo's entry 8: the Manta's record ($32B6, facing left, shape $59), which launch_sequence places when the door has opened."
   },
   {
    "address": 13071,
    "type": "line",
-   "text": "launch_rec_lo's entry 9: the shadow's record ($32D7)."
+   "text": "launch_rec_lo's entry 9: the shadow's record ($32D7), placed by launch_sequence and demo."
   },
   {
    "address": 13072,
@@ -9146,7 +9146,7 @@
   {
    "address": 13352,
    "type": "line",
-   "text": "The collision flags of each Manta frame $40-$6D (manta_collide): $80 a level frame, tested on three rows; 0 a frame seen edge-on, tested only in the middle; $81 the end frames of a roll."
+   "text": "The collision flags of each Manta frame $40-$6D (manta_collide): $80 for the level frames and the frames between, three columns on the Manta's row and the cells above and below its middle; $00 for the edge-on frames ($44-$46, $4C-$4E, $54-$56, $5C-$5E), the three columns of one row only, which is how a roll slips through a gap one character high; $81 for the end-on frames of the half-loops ($62-$64, $69-$6B), the middle column with the cells above and below."
   },
   {
    "address": 13398,
@@ -9686,12 +9686,12 @@
   {
    "address": 14632,
    "type": "line",
-   "text": "The value's four characters as drawn: two digits (written by two_digits) and two blanks."
+   "text": "The value's four characters as drawn: two digits written by two_digits, then $80 $80, which in the chamber's character set is the digit 0, so the value reads in hundreds (\"1000\")."
   },
   {
    "address": 14633,
    "type": "line",
-   "text": "The value's second digit, then two blank cells."
+   "text": "The value's second digit, then the two $80 characters (the digit 0)."
   },
   {
    "address": 14636,
@@ -9721,12 +9721,12 @@
   {
    "address": 15085,
    "type": "line",
-   "text": "The frequency of effect $15, the chamber's countdown beep, written by chamber_tick from countdown_pitches."
+   "text": "The high byte of effect $15's start frequency (the chamber's countdown beep), written by chamber_tick from countdown_pitches."
   },
   {
    "address": 15101,
    "type": "line",
-   "text": "The frequency of effect $16, the chamber's flash beep, written by fuel_rod_chamber from flash_pitches."
+   "text": "The high byte of effect $16's start frequency (the chamber's flash beep), written by fuel_rod_chamber from flash_pitches."
   },
   {
    "address": 15165,
@@ -9751,12 +9751,12 @@
   {
    "address": 15616,
    "type": "line",
-   "text": "The high bytes of the twelve notes' frequencies at the top octave (music_tick halves them per octave)."
+   "text": "The high bytes of the sixteen notes' frequencies at the top octave, one per pitch nibble 0-15 (music_tick halves them per octave)."
   },
   {
    "address": 15632,
    "type": "line",
-   "text": "The low bytes of the notes' frequencies."
+   "text": "The low bytes of the sixteen notes' frequencies; the last two are the first bytes of instr_hi."
   },
   {
    "address": 15646,
@@ -9846,7 +9846,7 @@
   {
    "address": 16768,
    "type": "line",
-   "text": "Shapes $06-$0B: the transporter's door, a set of vertical bars that narrow as launch_sequence steps sprite 6 from $06 to $0B and the Manta comes out."
+   "text": "Shapes $06-$0B: the transporter's doors, sets of vertical bars that narrow as launch_sequence steps sprite 6 from $07 to $0B (sprite 7 shows $06) and the Manta comes out."
   },
   {
    "address": 17152,
@@ -9856,7 +9856,7 @@
   {
    "address": 17472,
    "type": "line",
-   "text": "Shapes $11-$13: the homing mine ($11, a cross), a small dot ($12) and an empty shape ($13)."
+   "text": "Shapes $11-$13: the homing mine as it appears ($11, a cross), two small blobs ($12, the enemy bullet shape in type_bullet) and an empty shape ($13). The mines' other shapes are $14-$1D."
   },
   {
    "address": 17664,
@@ -9986,12 +9986,12 @@
   {
    "address": 31323,
    "type": "line",
-   "text": "Characters $4B-$7F of the fixed set: hull plating and edges, the generator ports $59-$5B, the runway's end $6F, and the wreckage $70-$7F that a target becomes when shot (its code minus $20)."
+   "text": "The fixed characters continued from the fourth row of character $4B to $7F: hull plating and edges, the generator ports $59-$5B, the runway's end $6F, and the wreckage $70-$7F that a target becomes when shot (its code minus $20)."
   },
   {
    "address": 31328,
    "type": "line",
-   "text": "Characters $4C-$7F of the fixed set: hull plating and edges, the generator ports $59-$5B, the runway's end $6F, and the wreckage $70-$7F that a target becomes when shot (its code minus $20)."
+   "text": "Character $4C."
   },
   {
    "address": 41984,
@@ -10276,7 +10276,7 @@
   {
    "address": 45970,
    "type": "line",
-   "text": "Not referenced: a string record for row 2, column 12 (\"abmon : ... - \" in the game's alphabet, with zeros for digits) and 20 more bytes, left over from development."
+   "text": "Not referenced: a string record for row 2, column 12 (\"abmon : ... - \" in the game's alphabet, with zeros for digits), $B392-$B3A5, and 18 more bytes up to str_volume, left over from development."
   },
   {
    "address": 46008,
@@ -10456,7 +10456,7 @@
   {
    "address": 57344,
    "type": "line",
-   "text": "The first bytes of the block game_start copies from $8000: the cartridge start vectors ($0900, $0900) and the CBM80 signature; the copy left at $8000, with restart's vectors, makes RESTORE and reset restart the game."
+   "text": "The first bytes of the block game_start copies from $8000: the cartridge start vectors ($0900, $0900) and the CBM80 signature. The copy left at $8000 makes a hardware reset restart the game; RESTORE does nothing, since the NMI vector points at an RTI."
   },
   {
    "address": 57360,
@@ -10476,7 +10476,7 @@
   {
    "address": 57408,
    "type": "line",
-   "text": "Each level's tile set: the page $D4, $D8 or $DC copied to $7C00 (copy_enemy_shapes)."
+   "text": "Each level's tile set: the page $D4, $D8 or $DC whose four pages copy_tile_set copies to $7C00, characters $80-$FF."
   },
   {
    "address": 57424,
@@ -10511,7 +10511,7 @@
   {
    "address": 60672,
    "type": "line",
-   "text": "Map pieces 133-148, then the 0 that ends the store at $EF54."
+   "text": "The last byte of map piece 132, then pieces 133-148 from $ED01, then the 0 that ends the store at $EF54."
   },
   {
    "address": 61269,

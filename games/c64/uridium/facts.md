@@ -111,10 +111,11 @@ layout; `orientation.md` lists the moves, each compared byte for byte.
   column, piece) that add targets, ports and markings. Columns 0-63 are
   empty space.
 - **Crashing.** Map characters `$80`-`$8F` are walls: the Manta is
-  destroyed when one is under its middle, or under its left or right in
-  a level frame, or in the rows above and below for the tall frames
-  (`collide_shapes`). Edge-on, only the middle counts, which is how the
-  roll gets through narrow gaps.
+  destroyed when one is in the cells it tests (`collide_shapes`). A level
+  frame tests three columns on its row and the cells above and below its
+  middle; an edge-on frame only the three columns of its row, which is
+  how the roll gets through a gap one character high; the end-on frames
+  of a half-loop the middle column and the cells above and below it.
 - **Targets.** Characters `$90`-`$9F` are targets. A shot that reaches
   one destroys the whole target, every character becoming its wreck
   (code - `$20`), and scores by its size: 1 character 10, 2 × 2 25,
@@ -223,6 +224,30 @@ light pen, the CIA timers, and voice 3's envelope output `$D41C`.
 - `landing_check` has four bytes after its RTS (`$16B4`) that nothing
   reaches.
 - `init_vars` sets `$B7`, `$B8`, `$BB` and `$BC`, which nothing reads.
+
+## The listing's error rate
+
+A sample of 60 of the listing's 661 comments, drawn with seed 1986 over
+the whole address range, was checked against the bytes by an agent that
+wrote none of them: 8 were wrong, 13 % (95 % Wilson interval 7 % to
+24 %). The errors were details, not what a routine does: the two states
+of the fire button swapped (`fire_state`), work credited to the wrong
+routine (the scores in `title`, RESTORE in `cbm80_copy`), data read
+wrongly (the chamber's `$80` digits, a sprite shape), an off-by-one start or
+boundary (the transporter door's first shape, the last map pieces) and a
+count (18 bytes, not 20). All eight were rewritten. Because 13 % is
+high, every comment was then read again against its neighbours and the
+table sizes its labels imply, and each one that disagreed was tested on
+the bytes. That turned up 13 more wrong comments, all rewritten: the
+collision flags of the Manta's frames (three comments, and the same claim
+in this file, `features.md` and the page), a routine that copies the
+level's tile set described as copying fighter shapes (renamed
+`copy_tile_set`), the facing set by `level_setup`, the record `start_life`
+shows, the users of two launch records, the chamber's last digits again
+at `$3929`, the note tables (sixteen notes, not twelve), the title
+screens' frame flag, two frequency bytes and a duplicated character
+comment. The rate after these corrections was not measured with a
+second sample.
 
 ## Live tests
 
