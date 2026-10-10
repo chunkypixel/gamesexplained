@@ -9036,7 +9036,7 @@
   {
    "address": 13015,
    "type": "line",
-   "text": "Sprite record: sprite 7, the Manta's shadow, X $BA, Y $A8, expanded, colour $FB, shape $89 (demo, launch_sequence)."
+   "text": "Sprite record: sprite 7, the Manta's shadow, X $BA, Y $A8 (the Manta's $AA, $98 moved by the height $10 and half of it), hires behind the background, colour $FB, shape $89 (demo, launch_sequence)."
   },
   {
    "address": 13026,
