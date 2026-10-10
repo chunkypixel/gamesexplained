@@ -13,13 +13,78 @@
    ],
    [
     53248,
-    57343,
+    53759,
     "I/O and colour RAM"
    ],
    [
     18432,
     19455,
     "screen RAM"
+   ],
+   [
+    1024,
+    2047,
+    "not the game's: the loader's loading screen (\"GMA86\", \"URIDIUM\", \"BY ANDREW BRAYBROOK\", \"PUBLISHED BY HEWSON CONSULTANTS LTD\"), left in the default screen; the game shows video bank 1 only"
+   ],
+   [
+    2048,
+    2303,
+    "runtime: the random byte table, a copy of the sound driver's 256 bytes at $1000 made by game_start and stirred with noise by stir_random"
+   ],
+   [
+    18432,
+    19455,
+    "runtime: the screen and the sprite pointers, drawn by the code (draw_map, print_string); the loaded screen here is the fuel rod chamber, which game_start copies to $A600 before the code ever reads it"
+   ],
+   [
+    23552,
+    26623,
+    "runtime: the shadow shapes $70-$9F, built from the Manta's frames at $5000 by thicken_shapes at every restart; the loaded bytes here are the Dreadnought tile sets, which game_start has moved to $D400"
+   ],
+   [
+    31744,
+    32767,
+    "runtime: the playfield characters $80-$FF, copied in for each level from a tile set at $D400, $D800 or $DC00 (copy_enemy_shapes), or from $D200 for the chamber"
+   ],
+   [
+    32768,
+    33279,
+    "runtime and leftover: the load's copy of $E000-$E1FF, left behind by game_start, with the reset vectors restart writes at $8000 and the giant message's piece list build_message writes from $8010"
+   ],
+   [
+    33280,
+    41983,
+    "runtime: the Dreadnought map, 17 rows of 512 columns, built at every level start by build_map"
+   ],
+   [
+    44544,
+    45055,
+    "leftover: the load's copy of $CE00-$CFFF (level 15's map list), moved there by game_start; the code reads that copy"
+   ],
+   [
+    48896,
+    49151,
+    "not loaded: the RAM fill pattern above the end of the file"
+   ],
+   [
+    51375,
+    52735,
+    "unused: zeros after the enemy paths, inside the block game_start copies to $C000"
+   ],
+   [
+    53248,
+    53759,
+    "unused: the RAM fill pattern under the I/O chips, below the chamber's characters"
+   ],
+   [
+    61427,
+    61439,
+    "unused: zeros after the level names"
+   ],
+   [
+    65474,
+    65529,
+    "unused: the RAM fill pattern at the top of the last level list's page, below the hardware vectors"
    ]
   ],
   "extra": [
@@ -33,6 +98,16 @@
  "blocks": [
   {
    "start": 0,
+   "end": 511,
+   "type": "Undefined"
+  },
+  {
+   "start": 512,
+   "end": 623,
+   "type": "Byte"
+  },
+  {
+   "start": 624,
    "end": 2303,
    "type": "Undefined"
   },
@@ -58,16 +133,6 @@
   },
   {
    "start": 5820,
-   "end": 9197,
-   "type": "Code"
-  },
-  {
-   "start": 9198,
-   "end": 9198,
-   "type": "Undefined"
-  },
-  {
-   "start": 9199,
    "end": 12553,
    "type": "Code"
   },
@@ -103,6 +168,56 @@
   },
   {
    "start": 16343,
+   "end": 16383,
+   "type": "Undefined"
+  },
+  {
+   "start": 16384,
+   "end": 18431,
+   "type": "Byte"
+  },
+  {
+   "start": 18432,
+   "end": 19455,
+   "type": "Undefined"
+  },
+  {
+   "start": 19456,
+   "end": 23551,
+   "type": "Byte"
+  },
+  {
+   "start": 23552,
+   "end": 26623,
+   "type": "Undefined"
+  },
+  {
+   "start": 26624,
+   "end": 31743,
+   "type": "Byte"
+  },
+  {
+   "start": 31744,
+   "end": 41983,
+   "type": "Undefined"
+  },
+  {
+   "start": 41984,
+   "end": 42335,
+   "type": "Byte"
+  },
+  {
+   "start": 42336,
+   "end": 42495,
+   "type": "Undefined"
+  },
+  {
+   "start": 42496,
+   "end": 44543,
+   "type": "Byte"
+  },
+  {
+   "start": 44544,
    "end": 45055,
    "type": "Undefined"
   },
@@ -133,8 +248,58 @@
   },
   {
    "start": 45920,
-   "end": 65535,
+   "end": 48895,
+   "type": "Byte"
+  },
+  {
+   "start": 48896,
+   "end": 49151,
    "type": "Undefined"
+  },
+  {
+   "start": 49152,
+   "end": 51374,
+   "type": "Byte"
+  },
+  {
+   "start": 51375,
+   "end": 52735,
+   "type": "Undefined"
+  },
+  {
+   "start": 52736,
+   "end": 53247,
+   "type": "Byte"
+  },
+  {
+   "start": 53248,
+   "end": 53759,
+   "type": "Undefined"
+  },
+  {
+   "start": 53760,
+   "end": 61426,
+   "type": "Byte"
+  },
+  {
+   "start": 61427,
+   "end": 61439,
+   "type": "Undefined"
+  },
+  {
+   "start": 61440,
+   "end": 65473,
+   "type": "Byte"
+  },
+  {
+   "start": 65474,
+   "end": 65529,
+   "type": "Undefined"
+  },
+  {
+   "start": 65530,
+   "end": 65535,
+   "type": "Byte"
   }
  ],
  "symbols": [
@@ -1304,39 +1469,39 @@
   },
   {
    "address": 512,
-   "name": "f_0200",
+   "name": "port_half_col",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 528,
-   "name": "f_0210",
+   "name": "port_col",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 544,
-   "name": "f_0220",
+   "name": "port_row",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 560,
-   "name": "f_0230",
+   "name": "port_col_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 576,
-   "name": "f_0240",
+   "name": "port_screen_col",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 592,
-   "name": "f_0250",
+   "name": "player1_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 597,
@@ -1346,9 +1511,9 @@
   },
   {
    "address": 608,
-   "name": "f_0260",
+   "name": "player2_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 613,
@@ -3475,6 +3640,12 @@
    "kind": "auto"
   },
   {
+   "address": 9198,
+   "name": "rts_23ee",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 9199,
    "name": "colour_icons",
    "type": "Subroutine",
@@ -5185,6 +5356,48 @@
    "kind": "auto"
   },
   {
+   "address": 13830,
+   "name": "hof_entry2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13852,
+   "name": "hof_entry3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13874,
+   "name": "hof_entry4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13896,
+   "name": "hof_entry5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13918,
+   "name": "hof_entry6",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13940,
+   "name": "hof_entry7",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 13962,
+   "name": "hof_entry8",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 13984,
    "name": "str_colour",
    "type": "UserDefined",
@@ -5659,6 +5872,12 @@
    "kind": "auto"
   },
   {
+   "address": 15165,
+   "name": "effects_b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 15499,
    "name": "countdown_pitches",
    "type": "Field",
@@ -5803,6 +6022,36 @@
    "kind": "user"
   },
   {
+   "address": 16384,
+   "name": "spr_transporter",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 16768,
+   "name": "spr_transporter_door",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 17152,
+   "name": "spr_bullets",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 17472,
+   "name": "spr_mine",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 17664,
+   "name": "spr_sparkle",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 18716,
    "name": "a_491C",
    "type": "AbsoluteAddress",
@@ -5875,16 +6124,70 @@
    "kind": "auto"
   },
   {
+   "address": 19456,
+   "name": "spr_manta_explosion",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 20480,
+   "name": "spr_manta_a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 21504,
+   "name": "spr_manta_b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 22528,
+   "name": "spr_manta_c",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 26624,
+   "name": "spr_fighters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 27648,
+   "name": "spr_fighters_mirror",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 28672,
+   "name": "font_status_top",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 29064,
    "name": "f_7188",
    "type": "Field",
    "kind": "auto"
   },
   {
+   "address": 29128,
+   "name": "font_status_top_b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 29672,
    "name": "f_73E8",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 29696,
+   "name": "font_status_bottom",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 30088,
@@ -5900,9 +6203,9 @@
   },
   {
    "address": 30720,
-   "name": "f_7800",
+   "name": "chars_play_low",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30792,
@@ -5917,10 +6220,28 @@
    "kind": "auto"
   },
   {
+   "address": 30864,
+   "name": "char_logo_12",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 30872,
    "name": "f_7898",
    "type": "Field",
    "kind": "auto"
+  },
+  {
+   "address": 30936,
+   "name": "chars_play_1b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 30976,
+   "name": "chars_play_fixed",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 31253,
@@ -5939,6 +6260,12 @@
    "name": "a_7A1B",
    "type": "AbsoluteAddress",
    "kind": "auto"
+  },
+  {
+   "address": 31323,
+   "name": "chars_play_hull",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 32768,
@@ -5984,9 +6311,9 @@
   },
   {
    "address": 41984,
-   "name": "f_A400",
+   "name": "stars_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41985,
@@ -5996,117 +6323,117 @@
   },
   {
    "address": 42000,
-   "name": "f_A410",
+   "name": "stars_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42016,
-   "name": "f_A420",
+   "name": "stars_char",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42032,
-   "name": "f_A430",
+   "name": "shot_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42048,
-   "name": "f_A440",
+   "name": "shot_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42064,
-   "name": "f_A450",
+   "name": "shot_under",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42080,
-   "name": "f_A460",
+   "name": "shot_step",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42096,
-   "name": "f_A470",
+   "name": "shot_row",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42112,
-   "name": "f_A480",
+   "name": "stars_colour_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42128,
-   "name": "f_A490",
+   "name": "enemy_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42136,
-   "name": "f_A498",
+   "name": "enemy_vx",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42144,
-   "name": "f_A4A0",
+   "name": "enemy_vy",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42152,
-   "name": "f_A4A8",
+   "name": "enemy_vx_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42160,
-   "name": "f_A4B0",
+   "name": "enemy_timer",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42168,
-   "name": "f_A4B8",
+   "name": "enemy_flags",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42176,
-   "name": "f_A4C0",
+   "name": "enemy_vx_frac",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42184,
-   "name": "f_A4C8",
+   "name": "enemy_vy_frac",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42192,
-   "name": "f_A4D0",
+   "name": "vapour_heights",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42216,
-   "name": "f_A4E8",
+   "name": "enemy_edge",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42240,
-   "name": "f_A500",
+   "name": "star_rows_used",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42241,
@@ -6116,9 +6443,27 @@
   },
   {
    "address": 42264,
-   "name": "f_A518",
+   "name": "star_cols_used",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 42496,
+   "name": "chamber_screen",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 43520,
+   "name": "level7_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 43992,
+   "name": "level8_map",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 45056,
@@ -6554,15 +6899,27 @@
   },
   {
    "address": 45920,
-   "name": "f_B360",
+   "name": "row_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45945,
-   "name": "f_B379",
+   "name": "row_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 45970,
+   "name": "unused_b392",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 46008,
+   "name": "str_volume",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 46017,
@@ -6577,40 +6934,118 @@
    "kind": "auto"
   },
   {
+   "address": 46021,
+   "name": "unused_b3c5",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 46032,
+   "name": "level14_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 46592,
+   "name": "level12_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 47152,
+   "name": "level11_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 47824,
+   "name": "level10_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 48304,
+   "name": "level13_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 49152,
-   "name": "f_C000",
+   "name": "giant_letter_index",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 49248,
+   "name": "giant_letters",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 49408,
-   "name": "f_C100",
+   "name": "wave_list_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49424,
-   "name": "f_C110",
+   "name": "wave_lists_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49440,
-   "name": "f_C120",
+   "name": "path_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49552,
-   "name": "f_C190",
+   "name": "path_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 49664,
+   "name": "wave_records",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 50576,
+   "name": "wave_lists",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 50760,
+   "name": "fighter_paths",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 52736,
+   "name": "level15_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 53760,
+   "name": "chamber_chars",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 54272,
+   "name": "tiles_a",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 55296,
-   "name": "f_D800",
+   "name": "tiles_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 55326,
@@ -6679,40 +7114,142 @@
    "kind": "auto"
   },
   {
+   "address": 55510,
+   "name": "tiles_b_rest",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 56320,
+   "name": "tiles_c",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57344,
+   "name": "cbm80_copy",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 57360,
-   "name": "f_E010",
+   "name": "level_map_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57376,
-   "name": "f_E020",
+   "name": "level_map_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57392,
-   "name": "f_E030",
+   "name": "level_scheme",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57408,
-   "name": "f_E040",
+   "name": "level_tiles",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57424,
-   "name": "f_E050",
+   "name": "level_name_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57440,
-   "name": "f_E060",
+   "name": "level_name_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 57456,
+   "name": "level_names_a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 57600,
+   "name": "pieces_a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 58624,
+   "name": "pieces_b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59648,
+   "name": "pieces_c",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 60672,
+   "name": "pieces_d",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 61269,
+   "name": "level_names_b",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 61440,
+   "name": "level3_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 61928,
+   "name": "level2_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62488,
+   "name": "level1_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 63008,
+   "name": "level9_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 63696,
+   "name": "level4_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 64272,
+   "name": "level5_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 64808,
+   "name": "level6_map",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 65530,
+   "name": "hw_vectors",
+   "type": "UserDefined",
+   "kind": "user"
   }
  ],
  "comments": [
@@ -7687,6 +8224,51 @@
    "text": "The pattern pointers' high bytes ($FC-$FE); $FF unused."
   },
   {
+   "address": 512,
+   "type": "line",
+   "text": "Generator ports (up to 16, note_port): each port's map column / 2, compared with the visible columns $50/$51."
+  },
+  {
+   "address": 528,
+   "type": "line",
+   "text": "Each generator port's map column, low byte."
+  },
+  {
+   "address": 544,
+   "type": "line",
+   "text": "Each generator port's screen row."
+  },
+  {
+   "address": 560,
+   "type": "line",
+   "text": "Each generator port's map column, high bit."
+  },
+  {
+   "address": 576,
+   "type": "line",
+   "text": "Each generator port's screen column while it is on screen, $FF while not (draw_ports); spawn_mine picks from those on screen."
+  },
+  {
+   "address": 592,
+   "type": "line",
+   "text": "Player 1's saved state, nine bytes in the order of $20-$28 (score, wave, lives, level, next level, difficulty); the rest of the 16 bytes unused."
+  },
+  {
+   "address": 597,
+   "type": "line",
+   "text": "Player 1's saved lives, which next_turn tests to skip a player who has none."
+  },
+  {
+   "address": 608,
+   "type": "line",
+   "text": "Player 2's saved state, as player1_state."
+  },
+  {
+   "address": 613,
+   "type": "line",
+   "text": "Player 2's saved lives."
+  },
+  {
    "address": 2304,
    "type": "line",
    "text": "The game's first instruction, where the loader hands over. Blanks the screen, banks everything to RAM ($01 = $24), clears zero page, then lays memory out for play with copy_pages: $8000-$9FFF to $E000-$FFFF (level tables and pieces, under the KERNAL), $A000-$AFFF to $C000-$CFFF (wave and path tables), $7C00-$7DFF to $D200-$D3FF and $5C00-$67FF to $D400-$DFFF (both under the I/O), $4800-$4BFF to $A600-$A9FF and $7400-$77FF to $AA00-$ADFF, and copies the 256 bytes at $1000 to $0800 (the random byte table) with copy_bytes. Then spreads the status font (spread_font), copies the logo into it (copy_logo_glyphs), and falls into restart."
@@ -7795,6 +8377,21 @@
    "address": 4417,
    "type": "line",
    "text": "Per voice: the SID register offset (0, 7, 14), the offset of its state block from $C0 (0, $0F, $1E), and the last byte of that block ($0E, $1D, $2C, start_effect copies backwards). Then $114A: $08 0 0 0, the frequency and pulse bytes start_voice writes first, in reverse order."
+  },
+  {
+   "address": 4420,
+   "type": "line",
+   "text": "Each voice's state block offset from $C0: 0, $0F, $1E (part of sid_voice_offsets)."
+  },
+  {
+   "address": 4423,
+   "type": "line",
+   "text": "Each voice's last state byte, $0E, $1D, $2C: start_effect copies a record backwards from there."
+  },
+  {
+   "address": 4426,
+   "type": "line",
+   "text": "The four bytes start_voice writes first into a voice's frequency and pulse registers: $08, 0, 0, 0, read backwards."
   },
   {
    "address": 4430,
@@ -8080,6 +8677,11 @@
    "address": 9141,
    "type": "line",
    "text": "F7 sets colour ($61 = 0, \"Colour\"), SHIFT and F7 (F8) black and white ($61 = $FF, \"Blck-Whte\"), and updates the icons (colour_icons). Black and white makes level_colours use scheme 0 for every level."
+  },
+  {
+   "address": 9198,
+   "type": "line",
+   "text": "An RTS nothing reaches: the routine before it ends with a JMP."
   },
   {
    "address": 9199,
@@ -8699,37 +9301,37 @@
   {
    "address": 13830,
    "type": "line",
-   "text": "Hall of fame entry 2: its string record and score."
+   "text": "Hall of fame entry 2: \"2.    11000\" and its score."
   },
   {
    "address": 13852,
    "type": "line",
-   "text": "Hall of fame entry 3: its string record and score."
+   "text": "Hall of fame entry 3: \"3.    10000\" and its score."
   },
   {
    "address": 13874,
    "type": "line",
-   "text": "Hall of fame entry 4: its string record and score."
+   "text": "Hall of fame entry 4: \"4.     9000\" and its score."
   },
   {
    "address": 13896,
    "type": "line",
-   "text": "Hall of fame entry 5: its string record and score."
+   "text": "Hall of fame entry 5: \"5.     8000\" and its score."
   },
   {
    "address": 13918,
    "type": "line",
-   "text": "Hall of fame entry 6: its string record and score."
+   "text": "Hall of fame entry 6: \"6.     7000\" and its score."
   },
   {
    "address": 13940,
    "type": "line",
-   "text": "Hall of fame entry 7: its string record and score."
+   "text": "Hall of fame entry 7: \"7.     6000\" and its score."
   },
   {
    "address": 13962,
    "type": "line",
-   "text": "Hall of fame entry 8: its string record and score."
+   "text": "Hall of fame entry 8: \"8.     5000\" and its score, the bottom of the table."
   },
   {
    "address": 13984,
@@ -9127,6 +9729,11 @@
    "text": "The frequency of effect $16, the chamber's flash beep, written by fuel_rod_chamber from flash_pitches."
   },
   {
+   "address": 15165,
+   "type": "line",
+   "text": "Sound effects $1A-$2E continued: the game's later effects and, from $3C0B, the seven music instruments ($27-$2D)."
+  },
+  {
    "address": 15499,
    "type": "line",
    "text": "The countdown beep's pitch for each countdown value, higher as it nears zero."
@@ -9232,6 +9839,291 @@
    "text": "The end of title_irq, and also the NMI vector: an RTI, so the RESTORE key does nothing."
   },
   {
+   "address": 16384,
+   "type": "line",
+   "text": "Sprite shapes $00-$05: the Manta's transporter, a long ship in six multicolour pieces placed side by side in two rows (rec_transporter)."
+  },
+  {
+   "address": 16768,
+   "type": "line",
+   "text": "Shapes $06-$0B: the transporter's door, a set of vertical bars that narrow as launch_sequence steps sprite 6 from $06 to $0B and the Manta comes out."
+  },
+  {
+   "address": 17152,
+   "type": "line",
+   "text": "Shapes $0C-$10: the fighters' bullets, horizontal dashes of different lengths (type_bullet)."
+  },
+  {
+   "address": 17472,
+   "type": "line",
+   "text": "Shapes $11-$13: the homing mine ($11, a cross), a small dot ($12) and an empty shape ($13)."
+  },
+  {
+   "address": 17664,
+   "type": "line",
+   "text": "Shapes $14-$1D: a burst of dots, used both ways: a fighter's explosion steps through them upwards ($14 to $1D, explosion_move) and a mine materialises through them downwards (mine_appear). $1E and $1F are empty."
+  },
+  {
+   "address": 19456,
+   "type": "line",
+   "text": "Shapes $30-$3A: the Manta's explosion, a ball of fire breaking into scattered pieces (manta_explodes steps the eight sprites from $30); $3B-$3F empty."
+  },
+  {
+   "address": 20480,
+   "type": "line",
+   "text": "Shapes $40-$4F: the Manta's roll, one way round: level ($41), turning to edge-on ($45) and back, sixteen frames (the manoeuvres facing left)."
+  },
+  {
+   "address": 21504,
+   "type": "line",
+   "text": "Shapes $50-$5F: the Manta's roll facing the other way, from level ($59) through edge-on ($55, $5D)."
+  },
+  {
+   "address": 22528,
+   "type": "line",
+   "text": "Shapes $60-$6D: the Manta seen nose-on and tail-on as it turns in a half-loop ($6E and $6F empty). Shapes $40-$6F are also the source of the shadows at $70-$9F (thicken_shapes)."
+  },
+  {
+   "address": 26624,
+   "type": "line",
+   "text": "Shapes $A0-$AF: the sixteen types of enemy fighter, facing one way; a wave of type n flies shape $A0 + n or its mirror $B0 + n."
+  },
+  {
+   "address": 27648,
+   "type": "line",
+   "text": "Shapes $B0-$BF: the sixteen fighters mirrored, for waves flying the other way."
+  },
+  {
+   "address": 28672,
+   "type": "line",
+   "text": "The status lines' font, top halves, codes $00-$7F: the loaded 8-row font spread by spread_font, one glyph row in two. Digits $00-$09, a-z $0A-$23, punctuation, the wide capitals $3A-$53 and their right halves $5A-$73, the joystick and colour icons, the URIDIUM logo at $31-$39 and $7D (copy_logo_glyphs)."
+  },
+  {
+   "address": 29064,
+   "type": "line",
+   "text": "The top halves of the URIDIUM logo's glyphs $31-$39, copied from the play characters by copy_logo_glyphs."
+  },
+  {
+   "address": 29128,
+   "type": "line",
+   "text": "The status font's top halves, continued: codes $39-$7C, the wide capitals' halves, the icons and the rest of the logo."
+  },
+  {
+   "address": 29672,
+   "type": "line",
+   "text": "The top half of the logo's last glyph, $7D."
+  },
+  {
+   "address": 29696,
+   "type": "line",
+   "text": "The status font's bottom halves, codes $80-$FF: glyph rows 4-7 of each character, printed on the row below its top half (put_char)."
+  },
+  {
+   "address": 30088,
+   "type": "line",
+   "text": "The bottom halves of the logo glyphs, $B1-$B9."
+  },
+  {
+   "address": 30696,
+   "type": "line",
+   "text": "The bottom half of the logo's last glyph, $FD."
+  },
+  {
+   "address": 30720,
+   "type": "line",
+   "text": "The playfield's characters $00-$1F. At load $00-$13 are the URIDIUM logo in two rows; once copied to the status font, $00-$05 and $10-$15 become the six shots' own characters, rebuilt every frame by draw_bullets."
+  },
+  {
+   "address": 30784,
+   "type": "line",
+   "text": "Characters $08 and $09 of the logo's top row."
+  },
+  {
+   "address": 30792,
+   "type": "line",
+   "text": "Character $09, the logo's last top glyph, copied to the status font as $7D."
+  },
+  {
+   "address": 30800,
+   "type": "line",
+   "text": "Characters $0A-$12: the logo's bottom row, copied as the status glyphs $B1-$B9."
+  },
+  {
+   "address": 30864,
+   "type": "line",
+   "text": "Character $12, the end of the logo's bottom row in the play set (copied as status glyph $B9)."
+  },
+  {
+   "address": 30872,
+   "type": "line",
+   "text": "Character $13, the logo's last bottom glyph (status $FD), then $14-$1F."
+  },
+  {
+   "address": 30936,
+   "type": "line",
+   "text": "Characters $1B-$1F of the play set, all zero in the snapshot."
+  },
+  {
+   "address": 30976,
+   "type": "line",
+   "text": "Characters $20-$7F, the same on every Dreadnought: the space ($20), hull edges and plating, the stars $42 and $43 (whose rows draw_stars rewrites), the generator ports $59-$5B, the runway's end $6F and the wreckage $70-$7F that targets $90-$9F turn into."
+  },
+  {
+   "address": 31253,
+   "type": "line",
+   "text": "Rows of the star characters $42/$43 that draw_stars rewrites with the fine scroll's mask."
+  },
+  {
+   "address": 31258,
+   "type": "line",
+   "text": "Another star row draw_stars rewrites."
+  },
+  {
+   "address": 31259,
+   "type": "line",
+   "text": "The last star row draw_stars rewrites, then the rest of the fixed characters."
+  },
+  {
+   "address": 31323,
+   "type": "line",
+   "text": "Characters $4B-$7F of the fixed set: hull plating and edges, the generator ports $59-$5B, the runway's end $6F, and the wreckage $70-$7F that a target becomes when shot (its code minus $20)."
+  },
+  {
+   "address": 31328,
+   "type": "line",
+   "text": "Characters $4C-$7F of the fixed set: hull plating and edges, the generator ports $59-$5B, the runway's end $6F, and the wreckage $70-$7F that a target becomes when shot (its code minus $20)."
+  },
+  {
+   "address": 41984,
+   "type": "line",
+   "text": "Piece index low bytes while a map is built (by piece number); then the 16 stars' screen row addresses, high byte (make_stars)."
+  },
+  {
+   "address": 41985,
+   "type": "line",
+   "text": "Piece 1's address, low byte: the piece build_map repeats for a 0 in a level's list."
+  },
+  {
+   "address": 42000,
+   "type": "line",
+   "text": "The stars' screen addresses, low byte."
+  },
+  {
+   "address": 42016,
+   "type": "line",
+   "text": "The stars' characters, $42 or $43."
+  },
+  {
+   "address": 42032,
+   "type": "line",
+   "text": "The six shots' map addresses, low byte (draw_bullets)."
+  },
+  {
+   "address": 42048,
+   "type": "line",
+   "text": "The shots' map addresses, high byte."
+  },
+  {
+   "address": 42064,
+   "type": "line",
+   "text": "The map character each shot covers, put back every frame."
+  },
+  {
+   "address": 42080,
+   "type": "line",
+   "text": "Each shot's step in columns a frame (2 or $FE), 0 for a free slot."
+  },
+  {
+   "address": 42096,
+   "type": "line",
+   "text": "Each shot's pixel row inside its character."
+  },
+  {
+   "address": 42112,
+   "type": "line",
+   "text": "The stars' colour RAM addresses, high byte."
+  },
+  {
+   "address": 42128,
+   "type": "line",
+   "text": "Each enemy sprite's state: 0 free, 2 fighter, 4 bullet, 6 explosion, 8 mine appearing, 10 homing mine (enemies_frame)."
+  },
+  {
+   "address": 42136,
+   "type": "line",
+   "text": "Each enemy's horizontal velocity, low byte."
+  },
+  {
+   "address": 42144,
+   "type": "line",
+   "text": "Each enemy's vertical velocity."
+  },
+  {
+   "address": 42152,
+   "type": "line",
+   "text": "Each enemy's horizontal velocity, high byte."
+  },
+  {
+   "address": 42160,
+   "type": "line",
+   "text": "Each enemy's timer: the steps of a fighter's path, a bullet's or mine's life."
+  },
+  {
+   "address": 42168,
+   "type": "line",
+   "text": "Each fighter's current path flags."
+  },
+  {
+   "address": 42176,
+   "type": "line",
+   "text": "Each enemy's horizontal velocity, fraction."
+  },
+  {
+   "address": 42184,
+   "type": "line",
+   "text": "Each enemy's vertical velocity, fraction."
+  },
+  {
+   "address": 42192,
+   "type": "line",
+   "text": "The ragged edge of the vaporising Dreadnought, one height per row (random_heights)."
+  },
+  {
+   "address": 42216,
+   "type": "line",
+   "text": "Each enemy's state at the screen edge: $80 on screen, then $FF or 0 for the side it went off."
+  },
+  {
+   "address": 42240,
+   "type": "line",
+   "text": "Piece index high bytes while a map is built; then a flag for each screen row that has a star (make_stars)."
+  },
+  {
+   "address": 42241,
+   "type": "line",
+   "text": "Piece 1's address, high byte."
+  },
+  {
+   "address": 42264,
+   "type": "line",
+   "text": "A flag for each screen column that has a star."
+  },
+  {
+   "address": 42496,
+   "type": "line",
+   "text": "The fuel rod chamber's screen, the loaded screen copied here by game_start: rows 4-24 draw the chamber, its two columns of rods in a pyramid of panels with the countdown at the top (fuel_rod_chamber copies it from $A6A0)."
+  },
+  {
+   "address": 43520,
+   "type": "line",
+   "text": "Level 7's map list (Platinum), from the block game_start copies from $7400: piece numbers for columns 64-511, a 0, then overlay records (a row's page, a column, a piece), ending with three zeros."
+  },
+  {
+   "address": 43992,
+   "type": "line",
+   "text": "Level 8's map list (Tungsten), as level7_map, followed by zeros."
+  },
+  {
    "address": 45056,
    "type": "line",
    "text": "One-time set-up of a few variables at start-up: $BC = 1, $BB = $80, $B7/$B8 = $0010, $94 = 0 (cassette motor flag, cassette_motor), and the music volume $95 = 5."
@@ -9265,6 +10157,21 @@
    "address": 45141,
    "type": "line",
    "text": "The eight single-bit masks $01, $02 .. $80, by sprite or bit number."
+  },
+  {
+   "address": 45142,
+   "type": "line",
+   "text": "bit_masks' $02: down, which read_stick tests."
+  },
+  {
+   "address": 45143,
+   "type": "line",
+   "text": "bit_masks' $04: left."
+  },
+  {
+   "address": 45144,
+   "type": "line",
+   "text": "bit_masks' $08: right, then $10-$80."
   },
   {
    "address": 45149,
@@ -9355,6 +10262,301 @@
    "address": 45851,
    "type": "line",
    "text": "Every fourth frame, while F5 is held (bit 6 of $19 clear): with SHIFT (F6) turns the music volume $95 down, without it up, between 0 and 15; then writes the volume as two digits into the string at $B3B8, sets the playing volume $EF and prints the string."
+  },
+  {
+   "address": 45920,
+   "type": "line",
+   "text": "The screen's row addresses, high bytes, rows 0-24 (screen $4800)."
+  },
+  {
+   "address": 45945,
+   "type": "line",
+   "text": "The screen's and colour RAM's row addresses, low bytes, rows 0-24."
+  },
+  {
+   "address": 45970,
+   "type": "line",
+   "text": "Not referenced: a string record for row 2, column 12 (\"abmon : ... - \" in the game's alphabet, with zeros for digits) and 20 more bytes, left over from development."
+  },
+  {
+   "address": 46008,
+   "type": "line",
+   "text": "String record: \"Volume 05\", row 0, column 15; volume_keys writes the digits at $B3C1/$B3C2."
+  },
+  {
+   "address": 46017,
+   "type": "line",
+   "text": "The volume's tens digit."
+  },
+  {
+   "address": 46018,
+   "type": "line",
+   "text": "The volume's units digit, then the string's end."
+  },
+  {
+   "address": 46021,
+   "type": "line",
+   "text": "Not referenced: eleven bytes that decode as the middle of some code (CMP #$46, BEQ, CMP #$53, BNE), left over."
+  },
+  {
+   "address": 46032,
+   "type": "line",
+   "text": "Level 14's map list (Galactium): piece numbers, a 0, overlay records, three zeros."
+  },
+  {
+   "address": 46592,
+   "type": "line",
+   "text": "Level 12's map list (Quadmium)."
+  },
+  {
+   "address": 47152,
+   "type": "line",
+   "text": "Level 11's map list (Tri-alloy)."
+  },
+  {
+   "address": 47824,
+   "type": "line",
+   "text": "Level 10's map list (Kallisto)."
+  },
+  {
+   "address": 48304,
+   "type": "line",
+   "text": "Level 13's map list (Ergonite); after it the RAM fill pattern to the end of the file."
+  },
+  {
+   "address": 49152,
+   "type": "line",
+   "text": "For each character code of the giant message, the offset of its four piece numbers in giant_letters (build_message)."
+  },
+  {
+   "address": 49248,
+   "type": "line",
+   "text": "Four map piece numbers per letter of the giant message (0 for none): each letter is built from up to four column pieces of the piece store."
+  },
+  {
+   "address": 49408,
+   "type": "line",
+   "text": "Each level's wave list address, low byte (level 0, the message, has none)."
+  },
+  {
+   "address": 49424,
+   "type": "line",
+   "text": "Each level's wave list address, high byte."
+  },
+  {
+   "address": 49440,
+   "type": "line",
+   "text": "The fighters' path addresses, low byte, by path number: 1-40 used, the rest 0."
+  },
+  {
+   "address": 49552,
+   "type": "line",
+   "text": "The path addresses' high bytes."
+  },
+  {
+   "address": 49664,
+   "type": "line",
+   "text": "57 wave records of 16 bytes (new_wave): six path numbers, six start heights, the spacing, the entry side, the type and one spare byte. Waves $12-$15 are also the fillers flown once a level's list has run out."
+  },
+  {
+   "address": 50576,
+   "type": "line",
+   "text": "The fifteen levels' wave lists: wave numbers in the order they fly, each list ending with $FF."
+  },
+  {
+   "address": 50760,
+   "type": "line",
+   "text": "The 40 fighter paths: steps of flags (1 and 2 horizontal acceleration, 4 down, 8 up, $10 fire, $20 stop, $40 follow the Manta's height), with bit 7 set for a step whose length follows, ending with $FF (fighter_move)."
+  },
+  {
+   "address": 52736,
+   "type": "line",
+   "text": "Level 15's map list (Uridium), then zeros."
+  },
+  {
+   "address": 53760,
+   "type": "line",
+   "text": "The fuel rod chamber's characters $80-$BF, copied to $7C00 for the chamber screen (fuel_rod_chamber)."
+  },
+  {
+   "address": 54272,
+   "type": "line",
+   "text": "Dreadnought tile set A, characters $80-$FF, used by levels 2, 4, 8, 11 and 14: walls $80-$8F (fatal to fly into), targets $90-$9F (2 x 2 and 3 x 3 shapes and single characters that shots destroy), and the hull's plating and markings."
+  },
+  {
+   "address": 55296,
+   "type": "line",
+   "text": "In RAM, tile set B's first characters; the label comes from colour RAM writes (STA $D800,Y), whose meaning here is the chip's."
+  },
+  {
+   "address": 55326,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by the status colour writes to $D81E."
+  },
+  {
+   "address": 55336,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D828."
+  },
+  {
+   "address": 55366,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D846."
+  },
+  {
+   "address": 55376,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D850."
+  },
+  {
+   "address": 55386,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour_icons' writes to $D85A."
+  },
+  {
+   "address": 55387,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour_icons' writes to $D85B."
+  },
+  {
+   "address": 55406,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D86E."
+  },
+  {
+   "address": 55416,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D878."
+  },
+  {
+   "address": 55426,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour_icons' writes to $D882."
+  },
+  {
+   "address": 55427,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour_icons' writes to $D883."
+  },
+  {
+   "address": 55446,
+   "type": "line",
+   "text": "In RAM, a tile set B byte named by colour writes to $D896, then the rest of the set."
+  },
+  {
+   "address": 55510,
+   "type": "line",
+   "text": "Tile set B, continued: characters $9A-$FF, the rest of the targets and the hull."
+  },
+  {
+   "address": 56320,
+   "type": "line",
+   "text": "Dreadnought tile set C, for levels 1, 3, 6, 10, 12 and 15."
+  },
+  {
+   "address": 57344,
+   "type": "line",
+   "text": "The first bytes of the block game_start copies from $8000: the cartridge start vectors ($0900, $0900) and the CBM80 signature; the copy left at $8000, with restart's vectors, makes RESTORE and reset restart the game."
+  },
+  {
+   "address": 57360,
+   "type": "line",
+   "text": "Each level's map list address, low byte (level 0 is the giant message at $8010)."
+  },
+  {
+   "address": 57376,
+   "type": "line",
+   "text": "Each level's map list address, high byte."
+  },
+  {
+   "address": 57392,
+   "type": "line",
+   "text": "Each level's colour scheme (colour_schemes)."
+  },
+  {
+   "address": 57408,
+   "type": "line",
+   "text": "Each level's tile set: the page $D4, $D8 or $DC copied to $7C00 (copy_enemy_shapes)."
+  },
+  {
+   "address": 57424,
+   "type": "line",
+   "text": "Each level's name string, low byte."
+  },
+  {
+   "address": 57440,
+   "type": "line",
+   "text": "Each level's name string, high byte."
+  },
+  {
+   "address": 57456,
+   "type": "line",
+   "text": "String records of the names of levels 1-7 for the status line: \"01. Zinc.\", \"02. Lead.\", \"03. Copper.\", \"04. Silver.\", \"05. Iron.\", \"06. Gold.\", \"07. Platinum.\"."
+  },
+  {
+   "address": 57600,
+   "type": "line",
+   "text": "The map pieces (index_pieces numbers them from 1): each a count of columns, and for each column a count of characters and the characters from the bottom row up. Pieces 1-46 start here, most of them one to six columns wide; piece 1 is a single empty column."
+  },
+  {
+   "address": 58624,
+   "type": "line",
+   "text": "Map pieces, continued: the end of piece 46 and pieces 47-80."
+  },
+  {
+   "address": 59648,
+   "type": "line",
+   "text": "Map pieces, continued: the end of piece 80 and pieces 81-132."
+  },
+  {
+   "address": 60672,
+   "type": "line",
+   "text": "Map pieces 133-148, then the 0 that ends the store at $EF54."
+  },
+  {
+   "address": 61269,
+   "type": "line",
+   "text": "String records of the names of levels 8-15: \"08. Tungsten.\", \"09. Iridon.\", \"10. Kallisto.\", \"11. Tri-alloy.\", \"12. Quadmium.\", \"13. Ergonite.\", \"14. Galactium.\", \"15. Uridium.\" (level 0 shares the last)."
+  },
+  {
+   "address": 61440,
+   "type": "line",
+   "text": "Level 3's map list (Copper)."
+  },
+  {
+   "address": 61928,
+   "type": "line",
+   "text": "Level 2's map list (Lead)."
+  },
+  {
+   "address": 62488,
+   "type": "line",
+   "text": "Level 1's map list (Zinc)."
+  },
+  {
+   "address": 63008,
+   "type": "line",
+   "text": "Level 9's map list (Iridon)."
+  },
+  {
+   "address": 63696,
+   "type": "line",
+   "text": "Level 4's map list (Silver)."
+  },
+  {
+   "address": 64272,
+   "type": "line",
+   "text": "Level 5's map list (Iron)."
+  },
+  {
+   "address": 64808,
+   "type": "line",
+   "text": "Level 6's map list (Gold)."
+  },
+  {
+   "address": 65530,
+   "type": "line",
+   "text": "The hardware vectors: NMI $3FD6 (an RTI), RESET $099D (restart), IRQ (rewritten by each raster handler)."
   }
  ]
 }
