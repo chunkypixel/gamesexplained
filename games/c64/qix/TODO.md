@@ -11,8 +11,10 @@ a sample checked by a second agent). Copy is `agent-draft`.
   "variable N of game_vars") are true but thin: describe the variables of
   `game_vars` ($1550-$15D2) and `music_vars` ($E009-$E071) one by one.
 - The sample found 13 % of hand-written comments wrong in a detail; the
-  six were fixed and the edge-walk names audited, but no second sample
-  has been drawn since. Draw one before calling the listing measured.
+  six were fixed and the edge-walk names audited. The Qix's movement
+  routines, audited against the port, held six more wrong comments, so
+  other families read only once may hold as many. Draw a second sample
+  before calling the listing measured.
 
 ## Open questions
 
@@ -26,8 +28,9 @@ a sample checked by a second agent). Copy is `agent-draft`.
 
 ## Ideas for the page
 
-- A Qix you can watch: run the game's own `qix_step` on the page's 6502
-  core, with the pull towards the marker shown as an arrow.
+- The Qix viewer (section 07) runs one Qix. On two-Qix levels the two take
+  turns, and a split ends the level: a second Qix and the split test
+  would show both.
 - The Sparx's edge walk, stepped on a small drawn field, showing the
   junction choice towards the Qix.
 - The spiral death trap from the attract demonstration, replayed from

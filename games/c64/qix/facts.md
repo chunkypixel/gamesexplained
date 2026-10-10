@@ -124,13 +124,56 @@ program.
   which every line scores and fills as slow, until the player dies
   (roam_next_dir, life_lost): the manual's "All FAST fills will now
   generate SLOW points until you die".
-- **The Qix** (qix_step): each of its two ends moves with its own speed
-  inside the field (qix_limits); at walls, or every few frames at random
-  (turn time masked by the level's `$6F`), speeds are re-drawn, with a
-  pull of `$6D`/`$6E` towards the marker's side. Its line is kept between
-  a minimum and maximum length and drawn with a trail of the last eight
-  lines. A Qix line crossing the line being drawn kills (pixel_op). Two
-  Qix on levels 3, 4, 6, 8, 9 and 11 (`$BB`).
+- **The Qix** (qix_step, `$946A`, once a pass; on two-Qix levels the
+  two take turns): a line between two ends, each with a speed across
+  (3 or 4 multicolour pixels a step) and a speed down (4 or 5 lines),
+  kept as signed bytes. Every change of a speed draws a new size and
+  flips its sign (negate_speed, random_speed1). A speed changes only:
+  - when the turn timer `$0271` passes zero: a new time (a random byte
+    kept if `$20`-`$3E`, about one draw in eight, else cut to 0-3, then
+    masked by the level's `$6F`), and each speed reversed three times in
+    four; no pull;
+  - when an end would leave the box two pixels inside the field
+    (qix_limits): that speed reversed, plus the level's pull towards the
+    marker (`$6E` if the first end is left of or above the marker, `$6D`
+    otherwise, chosen after each step); the end stays put for the step;
+  - when an end's move crosses a claimed edge (colour 3 in the `$E000`
+    plane; qix1_check_line): the move across and the move down are tested
+    on their own, and each that crosses is bounced as at a wall.
+- **Qix line length**: the second end is stepped 5 towards the first
+  while they are 30 or more apart on either axis; there is no minimum
+  (the test against `$156F` can never decide alone). *Live*: the largest
+  span seen in 1,000 steps was 29 on each axis.
+- **Turn times by level**: 1-4 steps on level 1 (`$6F` = 3); one turn in
+  eight 1-8 steps on level 3 (`$07`), 1-31 on levels 2 and 4-6 (`$1F`),
+  33-48 from level 7 (`$2F`). *Live* with level 7's values: times up to 45.
+- **Bounce turn time**: a bounce calls new_turn_time, which stores at
+  `$0273`; nothing reads `$0273`, so a bounce leaves the turn timer
+  running. *Live*: a read watch on `$0273` stayed silent for 1,600 steps.
+- **Qix fallback**: when the new line itself still crosses a claimed
+  edge (only possible in a concave field), the Qix takes the line in
+  trail slot `$B5`, the oldest, erased at the start of the step, and the
+  turn timer is cleared. *Live*: with a claimed peninsula, 5 fallbacks in
+  500 steps, each onto the line of exactly eight steps before.
+- **Qix trail**: the last eight lines stay on screen (tables at
+  `$021E`-`$026D`, eight of ten slots used, `$156B` = 7). pixel_op tests
+  each pixel against the line being drawn (colour 1 in the `$6000` plane)
+  when drawing and when erasing, so the newest line kills as it is drawn
+  and the oldest as it is erased. *Live*: a colour-1 pixel placed under
+  trail lines of different ages, six times; five kills came from the
+  erase. Erasing clears every Qix pixel of the old line, crossings with
+  newer lines included; drawing XORs the pattern into the bitmap, so
+  crossings change colour (by reading pixel_op).
+- **Qix colour**: a random 0-3 each step, 0 read as 1, so pattern `$55`
+  half the time and `$AA` or `$FF` a quarter each (qix_colour,
+  qix_pattern).
+- **Port**: `work/page/qixmove.js` follows qix_step for one Qix with the
+  line routine it uses. Fed the random numbers the game drew, it gives
+  the same line, speeds, turn time, pulls, trail index and colour as the
+  game for 1,000 recorded steps (3 runs: level 1 in the open field; level
+  7's values with a claimed peninsula; level 3's with a claimed box and a
+  spur), 4,256 random numbers, 112 bounces off claimed edges and 4
+  fallbacks among them. The minisite's viewer runs it.
 - **Sparx timer**: the bar right of the field shortens from both ends
   (timer_bar_tick); each time it runs out it counts (timer_runs) and the
   edge walkers are released by those counts (lvl_91D5-$91D7). Pair B, from
@@ -196,6 +239,12 @@ on, levels alternate the settings of 10 and 11 (level_params).
 - Level end: requirement poked to 1 %, a 6 % claim ended the level.
 - Lives and requirement at the start of a game: lives 3, level 1, `$B8` =
   `$41`.
+- The Qix, after each qix_step: speed sizes (3-4 across, 4-5 down
+  without a pull), turn times, the largest span, the pull against the
+  marker's position (600 of 600 steps on level 7's values), fallbacks,
+  kills on erase, and a read watch on `$0273` (Mechanics).
+- The Qix port: 1,000 steps replayed with the game's random numbers,
+  every step equal.
 
 ## The listing's error rate
 
@@ -213,4 +262,8 @@ they came from were audited: the eight edge-walk routines (`perimeter_*` and `fi
 renamed by the direction they go straight on) and the music source's
 block descriptions (re-derived from the tune pointers). The generated
 comments are true but thin ("part of a table, referred to by a routine"),
-and they are what a Gold pass would most improve.
+and they are what a Gold pass would most improve. The Qix's movement
+routines, from qix_reset to pixel_op, were audited against the port
+(Mechanics): six of their comments were wrong, among them the fallback
+line (the oldest, not the newest), the line length (a maximum only) and
+the erase (a clear, not an XOR), and the listing carries the checked text.

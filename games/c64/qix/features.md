@@ -62,7 +62,11 @@ Sources:
 | Hints at the end of levels 2 and 4 ("SPLITTING QIXS MULTIPLIES POINTS", "CAPTURE SPRITZ FOR EXTRA POINTS") | traced | level_messages |
 | The same music tempo on PAL and NTSC | live | music_frame skips one frame in six on NTSC |
 | Either joystick port works | traced | read_stick EORs both ports |
-| The Qix drifts towards the marker's side, harder on later levels | traced | qix_step, $6D/$6E from lvl_tables |
+| The Qix leans towards the marker, harder on later levels | live | only at a bounce: the level's pull ($6E/$6D, 0, 1 or 2) is added to the reversed speed, towards the marker (qix_step, qix1_move_*); on level 7's values the pull matched the marker's side in 600 of 600 steps |
+| The Qix runs straight for longer on later levels | live | the turn timer: 1-4 steps, and one turn in eight up to 8 (level 3), 31 (levels 2, 4-6) or 48 (level 7 on) steps, by the mask $6F; times up to 45 seen with level 7's values |
+| Every line of the Qix's trail can kill, up to eight steps after it was drawn | live | pixel_op tests the line being drawn when erasing as well as drawing; five of six planted kills came from the erase |
+| A Qix whose new line crosses a claimed corner jumps back to its line of eight steps before | live | qix1_check_line at $9774 takes the oldest trail slot; 5 of 5 fallbacks seen landed on the line of eight steps before |
+| A bounce draws a new turn time that nothing uses | live | new_turn_time stores at $0273, which nothing reads; a read watch stayed silent for 1,600 steps |
 | A C128 is held at 1 MHz | traced | $D030 cleared every frame |
 | The game's own crash screen ("ERROR" and "ADDRS") | traced | fatal_error, when a search runs out of room |
 

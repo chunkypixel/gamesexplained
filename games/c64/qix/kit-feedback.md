@@ -20,6 +20,7 @@ time, operating system and tool versions.
 ## Candidates
 
 - **Direction names off by a quarter turn.** Four edge walks in Qix (`$A930`-`$A9A5`) and four perimeter walks (`$B460`-`$B4B4`) were named by the first neighbour each tests rather than the step it takes; nothing showed it until the independent sample. A line in `50-coverage` saying "name a walk by its straight-on step" would have caught it, but no other game here is known to have made the same mistake.
+- **Replay a port with the game's own random numbers.** The Qix moves by random draws from a generator that mixes CIA timers, SID noise and the raster line, so a pass-by-pass trace cannot be matched by a port drawing its own numbers. A stopping checkpoint on the generator's return (`$A5F2`), armed only while the routine under test runs, recorded each value with the range asked for; the port took them in order and asserted the same range at each draw. 1,000 steps then compared exactly, and the assertion would have caught a draw taken out of order. `70-minisite`'s port-testing paragraph could say this for any mechanic driven by a random generator; no other game here is known to have needed it.
 - **A crack's loader timed for one video standard.** The NEC loader in this image stalls on PAL and loads on NTSC; the symptom is a loader waiting on `$DD00` for ever. It shows itself (a hang), so it is recorded here and in `agent-history.md` only.
 
 ## Maintainer asks
