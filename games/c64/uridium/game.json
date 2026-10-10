@@ -8,6 +8,28 @@
   "developer": "Graftgold",
   "title_image": "reference/title.png",
   "build": "Hewson's disk release, a GCR image of the protected original (disk name gma240286); booted through a copy with track 39's sync marks restored (orientation.md)",
+  "tabs": [
+    [
+      "index.html",
+      "How it works"
+    ],
+    [
+      "levels.html",
+      "Maps / levels"
+    ],
+    [
+      "music.html",
+      "Music and sound"
+    ],
+    [
+      "source.html",
+      "Source code"
+    ],
+    [
+      "about.html",
+      "About"
+    ]
+  ],
   "tier": "silver",
   "coverage_percent": 100,
   "copy": "agent-draft",
