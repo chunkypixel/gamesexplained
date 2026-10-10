@@ -63,3 +63,30 @@ The worker restarted part way through verify and the contributor's usage
 limit paused the run; the files, snapshots and the exported symbols
 survived, and work continued from `symbols.json` with the listing rebuilt
 from the snapshot.
+
+## The Qix's movement (10 October 2026, after Silver)
+
+The contributor asked for a deep dive on how the Qix moves and a viewer
+for it. Reading qix_step and the routines around it line by line found
+six of their listing comments wrong: the fallback takes the oldest trail
+line, not the newest; the line-length test has a maximum and no minimum;
+erase_segment clears pixels rather than XORing them; a bounce's
+new_turn_time writes `$0273`, which nothing reads, so it does not restart
+the countdown as the comments said; the timer's turn reverses each speed
+rather than re-randomising it; and qix_reset's speeds are overwritten
+before use. The facts' summary of the Qix had the length and the pull
+wrong too: the pull is added only at a bounce.
+
+Each reading was then tested in VICE from `play-round1.vsf`. Poking `$6F`
+did not hold, because level_params runs again at every round start after
+a lost life; poking level 1's entries in the level table did. A colour-3
+wall poked into the `$E000` plane kept the Qix on its side, but a convex
+box gave no fallbacks, which need a concave field: a peninsula gave five,
+each onto the line of eight steps before. A colour-1 pixel planted under
+trail lines of different ages showed the erase kills (five of six). The
+port, `work/page/qixmove.js`, was compared step by step with three
+recordings that captured every random number qix_step drew (stopping on
+the generator's return at `$A5F2`): 1,000 steps, all equal, on the first
+attempt for the first 300. The disassembler project was not updated:
+`symbols.json` was edited directly (`work/editsym.py`) and the listing
+rebuilt from the snapshot, as for the checker's fixes.

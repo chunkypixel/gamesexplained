@@ -15668,7 +15668,7 @@
   {
    "address": 37338,
    "type": "line",
-   "text": "Puts both Qix in the middle of the field. Sets the inner limits (qix_limits), the trail indices $B5/$B6/$AF/$B0 to $156B (the trail length less one), empties both trails (the eight ten-entry tables at $021E-$026D: x1, y1, x2, y2 for Qix 1, the same for Qix 2), and starts each Qix as the line from (centre x - 5, centre y - 5) to (centre x + 5, centre y + 5), held in $0287-$028E and the copies at $020C-$0213. The endpoint speeds come from random_speed ($A557, $A564): $C3/$C4 and $C7/$C8 for the first endpoint, $CB/$CC and $CF/$D0 for the second."
+   "text": "Puts both Qix in the middle of the field. Sets the inner limits (qix_limits), the trail indices $B5/$B6/$AF/$B0 to $156B (the trail length less one), empties both trails (the eight ten-entry tables at $021E-$026D: x1, y1, x2, y2 for Qix 1, the same for Qix 2), and starts each Qix as the line from (centre x - 5, centre y - 5) to (centre x + 5, centre y + 5), held in $0287-$028E and the copies at $020C-$0213. The speeds it draws into $C3/$C4, $C7/$C8, $CB/$CC and $CF/$D0 (random_speed_pos, random_speed_neg) are never used: qix_step loads the speeds from $027B-$0282 over them, so each life starts with the speeds the Qix last had."
   },
   {
    "address": 37516,
@@ -15678,7 +15678,7 @@
   {
    "address": 37549,
    "type": "line",
-   "text": "Moves Qix 1's first endpoint vertically: y1 + speed $C7. Outside $C0-$BF the speed is reversed and re-randomised (negate_speed_y at $A555, plus the bias $0274 towards the marker) and the old position kept; a new countdown is drawn (new_turn_time). The result goes to $D4."
+   "text": "Moves Qix 1's first endpoint vertically: y1 + speed $C7. Outside $C0 to $BF - 1 the speed is reversed with a new size (negate_speed), the pull $0274 towards the marker is added, and the old position is kept for this step. The JSR new_turn_time stores a time at $0273, which nothing reads, so the turn timer $0271 runs on. The result goes to $D4."
   },
   {
    "address": 37584,
@@ -15688,7 +15688,7 @@
   {
    "address": 37619,
    "type": "line",
-   "text": "Moves Qix 1's second endpoint vertically (speed $CF, bias $0274), then keeps it within the line-length limits of the first: while the distance between y2 and y1 is outside $156F-$1570 it is stepped by $156E towards range. Result in $D6."
+   "text": "Moves Qix 1's second endpoint vertically (speed $CF, pull $0274, as qix1_move_y1), then keeps it near the first: while y2 and y1 are 30 ($1570) or more apart it is stepped 5 ($156E) towards y1. The test against $156F (15) comes first and can never decide alone, so the length has a maximum and no minimum. Result in $D6."
   },
   {
    "address": 37695,
@@ -15723,7 +15723,7 @@
   {
    "address": 37994,
    "type": "line",
-   "text": "Moves a Qix one step. On levels with two Qix ($BB bit 7) it alternates between them ($027A bit 7; Qix 2 is qix2_step). For Qix 1: erases the oldest line of its trail (erase_segment), takes the current line and speeds, and counts down the turn time $0271; at zero a new random time is drawn (masked by the level's $6F), the hum (sound 3, or 4 for a long time) starts if it is not already playing, and each of the four speeds is re-randomised with probability 3/4. Then the four endpoints move (qix1_move_*), the colour and pattern are chosen ($98EB, $98C7), the new line is checked against the walls (qix1_check_line), stored as the newest entry of the trail and as the current line, and the bias towards the marker is chosen for each axis: $6E if the Qix is to the left of (or above) the marker, $6D otherwise."
+   "text": "Moves a Qix one step. On levels with two Qix ($BB bit 7) it alternates between them ($027A bit 7; Qix 2 is qix2_step). For Qix 1: erases the oldest line of its trail (erase_segment), takes the current line and speeds, and counts down the turn time $0271. When it passes zero a new time is drawn (a random byte, kept if $20-$3E and cut to 0-3 otherwise, then masked by the level's $6F), the hum (sound 3, or 4 for a time of 4 or more) starts if it is not already playing, and each of the four speeds is reversed with a new size when a random byte is $40 or more (three times in four). No pull is added here. Then the four endpoints move (qix1_move_y1, y2, x1, x2), the colour and pattern are chosen ($98EB, $98C7), the new line is checked against the claimed edges (qix1_check_line), stored as the newest entry of the trail and as the current line, and the pull for the next bounce is chosen for each axis: $6E if the first endpoint is left of (or above) the marker, $6D otherwise."
   },
   {
    "address": 38315,
@@ -15733,7 +15733,7 @@
   {
    "address": 38602,
    "type": "line",
-   "text": "Tests Qix 1's new line against what is drawn: each of its sides is traced (line_test at $A62C, which sets $0285 bit 7 on a set pixel), and for each side that would cross a wall the endpoint's move is undone and re-randomised. If the line still crosses, the line falls back to the newest one in the trail and the turn time is cleared. The result becomes the current line, and is drawn (draw_qix_line)."
+   "text": "Tests Qix 1's new line against the claimed edges (colour 3 in the $E000 plane), with $0286 bit 7 set so pixel_op tests instead of drawing. First the path from the old second endpoint to the new first one: if it crosses, the move across alone and the move down alone are tested, and each that crosses is bounced (as at a wall) and moved again. The same for the path from the old first endpoint to the new second one. Last, at $9774, the new line itself: if it still crosses, the Qix falls back to the line in trail slot $B5, the oldest one, erased at the start of this step, and the turn time $0271 is cleared so it turns on the next step. The result becomes the current line and is drawn (qix1_store_line)."
   },
   {
    "address": 38815,
@@ -15758,7 +15758,7 @@
   {
    "address": 39077,
    "type": "line",
-   "text": "Erases the line ($D3,$D4)-($D5,$D6) by drawing it again in XOR mode ($B3 = 0)."
+   "text": "Erases the line ($D3,$D4)-($D5,$D6): line_begin with $B3 = 0 runs pixel_op in erase mode, which clears every Qix pixel on it and also tests it against the line being drawn."
   },
   {
    "address": 39096,
@@ -15778,7 +15778,7 @@
   {
    "address": 39131,
    "type": "line",
-   "text": "Puts a random number in $0273: a value from $20 to $3E is kept, any other is cut to 0-3. Then falls into qix_colour."
+   "text": "Puts a random number in $0273: a value from $20 to $3E is kept, any other is cut to 0-3. Nothing reads $0273 (no instruction names it, and a read watch on it stayed silent for 1,600 steps of play), so the bounces that call this leave the turn timer $0271 as it was. Then falls into qix_colour."
   },
   {
    "address": 39147,
@@ -16188,7 +16188,7 @@
   {
    "address": 42325,
    "type": "line",
-   "text": "Entry with carry from the caller: a new speed for a Qix endpoint that has hit a wall, the other way from the old one (random_speed_pos or random_speed_neg)."
+   "text": "Entry with carry from the caller, the old speed's sign after its ASL: a new speed the other way from the old one, of a new size (random_speed_neg, -4 or -5, after a positive speed; random_speed_pos, 4 or 5, after a negative one). Used for every change of a Qix's vertical speed, at a bounce or when the turn timer runs out."
   },
   {
    "address": 42327,
@@ -16433,7 +16433,7 @@
   {
    "address": 44388,
    "type": "line",
-   "text": "One pixel of a Qix line (line_to): in test mode ($0286 bit 7) a colour-3 pixel in the $E000 plane sets $0285 bit 7 and stops the line; a colour-1 pixel (the line being drawn) means the Qix has touched it: the marker is hit ($1E = $80). In plot mode the pixel is XORed in pattern $4F."
+   "text": "One pixel of a Qix line (line_to). In test mode ($0286 bit 7) a colour-3 pixel in the $E000 plane sets $0285 bit 7 and ends the line (the PLA PLA returns to line_to's caller). Otherwise, drawing or erasing, a colour-1 pixel in the $6000 plane (the line being drawn) sets the hit flag $1E, so the newest line kills as it is drawn and the oldest as it is erased. Drawing ($4E bit 7): over an empty pixel or another Qix pixel, marks it colour 2 in the $E000 plane and XORs pattern $4F into the bitmap; edges and the line being drawn are left alone. Erasing: a pixel marked colour 2 is cleared in both, crossings with newer lines included."
   },
   {
    "address": 44520,
