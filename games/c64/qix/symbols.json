@@ -3552,13 +3552,13 @@
   },
   {
    "address": 5922,
-   "name": "msg_split",
+   "name": "msg_spritz_hint",
    "type": "Jump",
    "kind": "user"
   },
   {
    "address": 5925,
-   "name": "txt_msg_split",
+   "name": "txt_spritz_hint",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -3570,13 +3570,13 @@
   },
   {
    "address": 5971,
-   "name": "msg_split2",
+   "name": "msg_split_hint",
    "type": "Jump",
    "kind": "user"
   },
   {
    "address": 5974,
-   "name": "txt_msg_split2",
+   "name": "txt_split_hint",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -6474,7 +6474,7 @@
   },
   {
    "address": 37154,
-   "name": "var_9122",
+   "name": "roamer_delay",
    "type": "AbsoluteAddress",
    "kind": "user"
   },
@@ -8826,7 +8826,7 @@
   },
   {
    "address": 43312,
-   "name": "fill_follow_right",
+   "name": "fill_follow_up",
    "type": "Jump",
    "kind": "user"
   },
@@ -8838,7 +8838,7 @@
   },
   {
    "address": 43349,
-   "name": "fill_follow_down",
+   "name": "fill_follow_right",
    "type": "Branch",
    "kind": "user"
   },
@@ -8850,7 +8850,7 @@
   },
   {
    "address": 43389,
-   "name": "fill_follow_left",
+   "name": "fill_follow_down",
    "type": "Branch",
    "kind": "user"
   },
@@ -8862,7 +8862,7 @@
   },
   {
    "address": 43429,
-   "name": "fill_follow_up",
+   "name": "fill_follow_left",
    "type": "Jump",
    "kind": "user"
   },
@@ -9996,7 +9996,7 @@
   },
   {
    "address": 46176,
-   "name": "perimeter_right",
+   "name": "perimeter_up",
    "type": "Jump",
    "kind": "user"
   },
@@ -10008,7 +10008,7 @@
   },
   {
    "address": 46204,
-   "name": "perimeter_down",
+   "name": "perimeter_right",
    "type": "Jump",
    "kind": "user"
   },
@@ -10020,7 +10020,7 @@
   },
   {
    "address": 46232,
-   "name": "perimeter_left",
+   "name": "perimeter_down",
    "type": "Jump",
    "kind": "user"
   },
@@ -10032,7 +10032,7 @@
   },
   {
    "address": 46260,
-   "name": "perimeter_up",
+   "name": "perimeter_left",
    "type": "Jump",
    "kind": "user"
   },
@@ -14003,7 +14003,7 @@
   {
    "address": 5453,
    "type": "line",
-   "text": "$154D bit 7 forces slow-draw scoring (set when a roamer is trapped, cleared on a death); $154E-$154F are unused."
+   "text": "$154D bit 7 forces slow scoring and the slow fill pattern for every line (and lets a slow draw move at full speed). roam_next_dir sets it when a roamer is walled in all round (trapped); life_lost clears it. $154E-$154F are unused."
   },
   {
    "address": 5456,
@@ -14433,12 +14433,12 @@
   {
    "address": 5922,
    "type": "line",
-   "text": "Prints the split bonus text: \"CAPTURE SPRITZ / 500 EXTRA POINTS\" or \"SPLITTING QIXS / MULTIPLIES / POINTS\", by inline arguments."
+   "text": "Prints \"CAPTURE SPRITZ / FOR / EXTRA POINTS\" in the message box (inline print): the hint shown at the end of level 4, before the first level with Spritz."
   },
   {
    "address": 5925,
    "type": "line",
-   "text": "The inline text msg_split prints: \"CAPTURE SPRITZ\" at $2E20; \"FOR\" at $2F60; \"EXTRA POINTS\" at $30A0 (bitmap addresses), each ended by 0, the list by a further 0."
+   "text": "The inline text msg_spritz_hint prints: \"CAPTURE SPRITZ\" at $2E20; \"FOR\" at $2F60; \"EXTRA POINTS\" at $30A0 (bitmap addresses), each ended by 0, the list by a further 0."
   },
   {
    "address": 5970,
@@ -14448,12 +14448,12 @@
   {
    "address": 5971,
    "type": "line",
-   "text": "The other split message, by inline arguments."
+   "text": "Prints \"SPLITTING QIXS / MULTIPLIES / POINTS\" (inline print): the hint shown at the end of level 2, before the first level with two Qix."
   },
   {
    "address": 5974,
    "type": "line",
-   "text": "The inline text msg_split2 prints: \"SPLITTING QIXS\" at $2E20; \"MULTIPLIES\" at $2F60; \"POINTS\" at $30A0 (bitmap addresses), each ended by 0, the list by a further 0."
+   "text": "The inline text msg_split_hint prints: \"SPLITTING QIXS\" at $2E20; \"MULTIPLIES\" at $2F60; \"POINTS\" at $30A0 (bitmap addresses), each ended by 0, the list by a further 0."
   },
   {
    "address": 6020,
@@ -14463,12 +14463,12 @@
   {
    "address": 6021,
    "type": "line",
-   "text": "The level's message kind from lvl_tables (level_params): 1 or 2 picks the message level_messages shows from level 9 on."
+   "text": "The level's message kind from lvl_tables (level_params): 1 or 2 picks the hint level_messages shows at the end of levels below 9 (level 2: the split hint, level 4: the Spritz hint)."
   },
   {
    "address": 6022,
    "type": "line",
-   "text": "From level 9 on, a level whose $1785 entry is 1 or 2 shows one of the two messages above in the message box."
+   "text": "On levels below 9, a level whose level_msg_kind is 2 shows msg_spritz_hint and one whose kind is 1 shows msg_split_hint, in a cleared message box; the table gives 1 on level 2 and 2 on level 4 (and 2 on level 11, which the level test excludes)."
   },
   {
    "address": 6055,
@@ -14928,32 +14928,32 @@
   {
    "address": 17408,
    "type": "line",
-   "text": "Bytes $4400-$47FF of the music source: the copy of the voice routines."
+   "text": "Bytes $4400-$47FF of the music source ($E400-$E7FF where it runs): voice 2's and voice 3's routines."
   },
   {
    "address": 18432,
    "type": "line",
-   "text": "Bytes $4800-$4BFF of the music source: the copy of the player's command handlers and the start of its tables."
+   "text": "Bytes $4800-$4BFF of the music source ($E800-$EBFF where it runs): the filter routine's end and most of the command handlers."
   },
   {
    "address": 19456,
    "type": "line",
-   "text": "Bytes $4C00-$4FFF of the music source: the end of the frequency tables and the tune pointers."
+   "text": "Bytes $4C00-$4FFF of the music source ($EC00-$EFFF): the last command handlers, the dispatch and frequency tables, the tune pointers and the start of tune 0."
   },
   {
    "address": 20480,
    "type": "line",
-   "text": "Bytes $5000-$53FF of the music source: tunes 1-3."
+   "text": "Bytes $5000-$53FF of the music source ($F000-$F3FF): the rest of tune 0 and tunes 1-4, and the start of tune 5."
   },
   {
    "address": 21504,
    "type": "line",
-   "text": "Bytes $5400-$57FF of the music source: tunes 3-6."
+   "text": "Bytes $5400-$57FF of the music source ($F400-$F7FF): the rest of tune 5, tunes 6-8 and the start of tune 9."
   },
   {
    "address": 22528,
    "type": "line",
-   "text": "Bytes $5800-$5BFF of the music source: tunes 6-10."
+   "text": "Bytes $5800-$5BFF of the music source ($F800-$FBFF): the rest of tune 9 and the start of tune 10, the title tune."
   },
   {
    "address": 23552,
@@ -15418,7 +15418,7 @@
   {
    "address": 35216,
    "type": "line",
-   "text": "Starts a game: blanks the screen, clears the play memory, saves the empty bitmap under the I/O ($84AD), runs $8F9E, installs the play interrupt, takes the starting lives from $1567 into lives ($026E), sets the level ($B7) to 1, clears both players' scores ($1560-$1562 and $1563-$1565) and $155C-$155F, sets $02B2/$02B3 to $80, sets the first round up (round_setup), turns on multicolour bitmap mode at $2000 in VIC bank 0, and sets each player's next extra-life score to 50,000 ($00C350 at $1F90-$1F92 and $1F93-$1F95)."
+   "text": "Starts a game: blanks the screen ($D011 = 0), clears the play memory, saves the empty bitmap under the I/O ($84AD), runs $8F9E, installs the play interrupt, takes the starting lives from $1567 into lives ($026E), sets the level ($B7) to 1, clears both players' scores ($1560-$1562 and $1563-$1565) and $155C-$155F, sets $02B2/$02B3 to $80, sets the first round up (round_setup), sets multicolour ($D016 = $D8), the bitmap at $2000 ($D018 bit 3) and VIC bank 0 (bitmap mode itself is turned on by game_start), and sets each player's next extra-life score to 50,000 ($00C350 at $1F90-$1F92 and $1F93-$1F95)."
   },
   {
    "address": 35357,
@@ -15548,7 +15548,7 @@
   {
    "address": 36448,
    "type": "line",
-   "text": "Scores a finished fill. The area counted by the fill ($70/$71, pixels) is halved, then doubled again for a slow draw ($154D bit 7, or $23 bit 7), then multiplied by split_count+1 by repeated addition. The fill's area ($8EB7/$8EB8) is added to the current player's claimed total ($155C/$155D for player 1, $155E/$155F for player 2), and the points to the score (add_score)."
+   "text": "Scores a finished fill. The area counted by the fill ($70/$71, pixels) is halved, then doubled again unless the line was fast ($23 bit 7) with no forced slow scoring ($154D bit 7 clear): a slow line scores twice a fast one. Then for each split ($0291, the times this player has split the Qix so far in the game; only new_game clears it) the points are doubled again, but the doubling adds only the low byte to itself and carries into the high byte without doubling it: a bug, so from 256 points on each split adds less than the manual's doubling. The fill's area ($8EB7/$8EB8) is added to the current player's claimed total ($155C/$155D for player 1, $155E/$155F for player 2), and the points to the score (add_score)."
   },
   {
    "address": 36535,
@@ -15628,7 +15628,7 @@
   {
    "address": 37154,
    "type": "line",
-   "text": "Set to 32 by level_start and to 1 by the attract demo; read and counted down by $A1A0-$A1BC."
+   "text": "Passes before the roamers start moving: 32 at the start of a round (level_start), 1 in the attract demo; enemies_step counts it down."
   },
   {
    "address": 37155,
@@ -15798,7 +15798,7 @@
   {
    "address": 39196,
    "type": "line",
-   "text": "One step of a line being drawn. $33 bit 7 toggles each call, and on alternate calls, while fire is held ($52 bit 4) for a slow draw (and $154D, count_8B08 clear), the step is skipped: a slow draw moves at half the speed of a fast one. Otherwise the marker advances twice (draw_advance): each new pixel goes in the plotter slots ($0C/$0E, then $0D/$0F). Reaching the edge ($28 bit 7) or failing to move ends the line: the last pixel is plotted (plot_line_pixel with $9B = $80), $5F is set to 8 if $155B bit 7 is set, $23 is set to $80 for a slow line (fire still held, $154D clear), and the drawing flags are cleared."
+   "text": "One step of a line being drawn. $33 bit 7 toggles each call, and on alternate calls, while fire is held ($52 bit 4), the step is skipped unless $154D bit 7 or count_8B08 is set: a slow draw moves at half the speed of a fast one. Otherwise the marker advances twice (draw_advance): each new pixel goes in the plotter slots ($0C/$0E, then $0D/$0F). Reaching the edge ($28 bit 7) or failing to move ends the line: the last pixel is plotted (plot_line_pixel with $9B = $80), $5F is set to 8 if $155B bit 7 is set, and if the line ends with fire released ($27 bit 7 clear) and $154D clear, $23 is set to $80: the line counts as fast. Then the drawing flags are cleared."
   },
   {
    "address": 39331,
@@ -16108,7 +16108,7 @@
   {
    "address": 41333,
    "type": "line",
-   "text": "Moves the enemies once a pass (none in practice): pair B ($A23A), then pair A unless $BE bit 6 ($A1C0), then pair C unless $BE bit 7 ($A316), checking for a hit after each; with $BE bit 6 the roamers move instead ($B589, then spritz_step), and var_9122 counts down."
+   "text": "Moves the enemies once a pass of the main loop: walker pair B (walker_pair_b) except in practice; walker pair A (walker_pair_a) unless $BE bit 6 is set; walker pair C (walker_pair_c) unless $BE bit 7 is set; checking for a hit after each. With $BE bit 6 the second roamer pair (roam2_step, sprites 6-7) moves instead of pair A, and with bit 7 the first roamer pair (spritz_step, sprites 2-3) instead of pair C, both only once roamer_delay has counted down to 0 (one count a pass)."
   },
   {
    "address": 41408,
@@ -16118,7 +16118,7 @@
   {
    "address": 41530,
    "type": "line",
-   "text": "Walker pair B, sprites 4 and 5: only once the timer has run out lvl_91D6 times and $159B bit 7 is set; colours 7 and 8. If a walker reaches the marker's last corner ($29,$2A) it starts to follow the marker's line ($6A, $6B bit 7, handled at $B200 and $B21D)."
+   "text": "Walker pair B, sprites 4 and 5, which move every pass (walker_b1_step, walker_b2_step) and are shown each time. Once the timer has run out lvl_91D6 times their colours are set to 0, and on levels where $159B bit 7 is set they turn yellow (7) and begin to chase: a walker standing on the marker's last corner ($29,$2A) sets $6A or $6B, and from then on follows the marker's line (chaser_b1_step, chaser_b2_step). The code reads the colour back to alternate between 7 and 5, but it has just written 0 there, so the 5 is never chosen."
   },
   {
    "address": 41647,
@@ -16313,22 +16313,22 @@
   {
    "address": 43312,
    "type": "line",
-   "text": "Edge walk, heading right: keeps the edge on one side, turning as the pixels around demand (fill_edge_test, fill_edge_test_empty); hands over to the walk in the next direction at each corner."
+   "text": "Edge walk heading up (straight on is y - 1): keeps the edge on one side, turning as the pixels around demand (fill_edge_test, fill_edge_test_empty); hands over to the walk in the next direction at each corner."
   },
   {
    "address": 43349,
    "type": "line",
-   "text": "Edge walk heading down."
+   "text": "Edge walk heading right (straight on is x + 1)."
   },
   {
    "address": 43389,
    "type": "line",
-   "text": "Edge walk heading left."
+   "text": "Edge walk heading down (straight on is y + 1)."
   },
   {
    "address": 43429,
    "type": "line",
-   "text": "Edge walk heading up."
+   "text": "Edge walk heading left (straight on is x - 1)."
   },
   {
    "address": 43472,
@@ -16408,7 +16408,7 @@
   {
    "address": 43948,
    "type": "line",
-   "text": "Clears the seed stack ($6000 page, $1F, $20) and chooses the fill's pattern table at $1C/$1D: $0292 for a fast fill, $02A2 for a slow one ($154D bit 7 or $23 bit 7)."
+   "text": "Clears the seed stack ($6000 page, $1F, $20) and chooses the fill's pattern table at $1C/$1D: $02A2 (the slow pattern) when slow scoring is forced ($154D bit 7) or the line was slow ($23 bit 7 clear), $0292 (the fast pattern) for a fast line."
   },
   {
    "address": 43982,
@@ -16728,7 +16728,7 @@
   {
    "address": 45635,
    "type": "line",
-   "text": "Turns the line just closed into wall: walks tracer 3 along it from the last corner (tracer3_walk), changing each colour-1 pixel in the $E000 plane to colour 3 and counting the pixels into the area. A line that cannot be followed ends with $1948."
+   "text": "Turns the line just closed into wall: walks tracer 3 along the line until it reaches the marker's last corner ($29,$2A), repainting each pixel it passes as colour 3 in the $E000 plane and the bitmap and counting it into the area. A colour-2 pixel on the way (a line the Fuse has burnt) costs a life (life_lost); a line that cannot be followed ends with $1948."
   },
   {
    "address": 45778,
@@ -16773,22 +16773,22 @@
   {
    "address": 46176,
    "type": "line",
-   "text": "perimeter_walk heading right."
+   "text": "perimeter_walk heading up (straight on is y - 1), turning at corners."
   },
   {
    "address": 46204,
    "type": "line",
-   "text": "perimeter_walk heading down."
+   "text": "perimeter_walk heading right (straight on is x + 1)."
   },
   {
    "address": 46232,
    "type": "line",
-   "text": "perimeter_walk heading left."
+   "text": "perimeter_walk heading down (straight on is y + 1)."
   },
   {
    "address": 46260,
    "type": "line",
-   "text": "perimeter_walk heading up."
+   "text": "perimeter_walk heading left (straight on is x - 1)."
   },
   {
    "address": 46288,
@@ -18413,17 +18413,17 @@
   {
    "address": 59827,
    "type": "line",
-   "text": "Music command $80 for voice 1: pulse-width sweep: three bytes set the sweep step, start and limit."
+   "text": "Music command $80 for voice 1: pulse-width sweep: three bytes, the sweep's step and a 16-bit starting pulse width; the sweep turns round at the fixed widths $0064 and $0F9B."
   },
   {
    "address": 59871,
    "type": "line",
-   "text": "Music command $80 for voice 2: pulse-width sweep: three bytes set the sweep step, start and limit."
+   "text": "Music command $80 for voice 2: pulse-width sweep: three bytes, the sweep's step and a 16-bit starting pulse width; the sweep turns round at the fixed widths $0064 and $0F9B."
   },
   {
    "address": 59915,
    "type": "line",
-   "text": "Music command $80 for voice 3: pulse-width sweep: three bytes set the sweep step, start and limit."
+   "text": "Music command $80 for voice 3: pulse-width sweep: three bytes, the sweep's step and a 16-bit starting pulse width; the sweep turns round at the fixed widths $0064 and $0F9B."
   },
   {
    "address": 59959,
