@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "platform": "c64",
+  "slug": "uridium",
+  "title": "Uridium",
+  "year": 1986,
+  "publisher": "Hewson Consultants",
+  "developer": "Graftgold",
+  "title_image": "reference/title.png",
+  "build": "Hewson's disk release, a GCR image of the protected original (disk name gma240286); booted through a copy with track 39's sync marks restored (orientation.md)",
+  "tier": "bronze",
+  "coverage_percent": null,
+  "copy": "agent-draft",
+  "steward": "",
+  "credits": [
+    {
+      "by": "Andrew Braybrook",
+      "role": "Design and programming, as the title page credits it"
+    },
+    {
+      "by": "Steve Turner",
+      "role": "Music, as the manual credits it"
+    }
+  ],
+  "tools": {
+    "emulator": "release v3.13.2, v3.13.2-linux-x86_64-gui.zip",
+    "disassembler": "regenerator2000 0.9.20 (cargo install from crates.io)",
+    "host": "Linux x86_64, Ubuntu 24.04, no display (cloud container)",
+    "node": "22"
+  },
+  "model": "claude-opus-5-5",
+  "step_models": {
+    "10-orient": [
+      "claude-opus-5-5"
+    ],
+    "20-features": [
+      "claude-opus-5-5"
+    ],
+    "30-text": [
+      "claude-opus-5-5"
+    ]
+  },
+  "kit_version": "0.0.122",
+  "created": "2026-10-09",
+  "video": {
+    "screen": "",
+    "charset": ""
+  },
+  "coverage": {
+    "exclude": [],
+    "extra": [],
+    "include": []
+  },
+  "io": [],
+  "regions": [],
+  "links": {
+    "wiki": {
+      "title": "Uridium – C64-Wiki",
+      "url": "https://www.c64-wiki.com/wiki/Uridium"
+    },
+    "manual": {
+      "title": "Commodore C64 Manual: Uridium - Paradroid Double Value Pack (1987)(Hewson)[compilation]",
+      "url": "https://archive.org/details/Uridium_Paradroid_Double_Value_Pack_1987_Hewson_compilation"
+    }
+  }
+}
