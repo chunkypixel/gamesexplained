@@ -43,8 +43,8 @@
   "kit_version": "0.0.122",
   "created": "2026-10-09",
   "video": {
-    "screen": "",
-    "charset": ""
+    "screen": "$4800",
+    "charset": "$7800"
   },
   "coverage": {
     "exclude": [],
