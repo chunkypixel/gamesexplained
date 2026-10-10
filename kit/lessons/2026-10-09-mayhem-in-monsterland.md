@@ -1,4 +1,4 @@
-## next · 9 October 2026 · Mayhem in Monsterland · Vai with Claude
+## 0.0.130 · 9 October 2026 · Mayhem in Monsterland · Vai with Claude
 
 **After a full audit, sample again and aim the next pass at what the
 sample names.** The first independent check of 80 comments found 12
