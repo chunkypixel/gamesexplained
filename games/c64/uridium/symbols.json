@@ -5003,25 +5003,25 @@
   },
   {
    "address": 12902,
-   "name": "seq_lo_right",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 12924,
-   "name": "seq_hi_right",
-   "type": "Field",
-   "kind": "user"
-  },
-  {
-   "address": 12946,
    "name": "seq_lo_left",
    "type": "Field",
    "kind": "user"
   },
   {
-   "address": 12964,
+   "address": 12924,
    "name": "seq_hi_left",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 12946,
+   "name": "seq_lo_right",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 12964,
+   "name": "seq_hi_right",
    "type": "Field",
    "kind": "user"
   },
@@ -8301,7 +8301,7 @@
   {
    "address": 3321,
    "type": "line",
-   "text": "The play loop, once a frame: waits for the frame flag $2F to clear (set by the raster interrupt at line 252), then draws the bullets (draw_bullets), scrolls (scroll_step), copies the map to the screen (draw_map), updates the stars (draw_stars), the generator ports (draw_ports) and the enemies (enemies_frame); counts the frame ($62), reads the stick, calls one of eight routines in turn by the frame counter (table $36CD/$36D5, through the operand at $0D25), then fire, vertical movement, speed, manoeuvres and the Manta's sprites, and the landing check. Leaves when the Manta is lost ($32) or the Dreadnought is destroyed ($85 bit 7, end_level)."
+   "text": "The play loop, once a frame: waits for the frame flag $2F to clear (at line 97, irq_frame_start), then draws the shots (draw_bullets), scrolls (scroll_step), copies the map to the screen (draw_map), draws the stars (draw_stars), the generator ports (draw_ports) and the enemies (enemies_frame); counts the frame ($62), reads the stick, calls one of eight routines in turn by the frame counter (table $36CD/$36D5, through the operand at $0D25), then fire, vertical movement, speed, manoeuvres and the Manta's sprites, and the landing check. A pass sometimes takes longer than a frame: 382 passes in 400 frames from play-level1.vsf. Leaves when the Manta is lost ($32) or the Dreadnought is destroyed ($85 bit 7, end_level)."
   },
   {
    "address": 3366,
@@ -8396,7 +8396,7 @@
   {
    "address": 4430,
    "type": "line",
-   "text": "The bonus game after landing. Puts up the chamber: its screen from $A6A0 (the copy of the loaded screen at $4800) and its shapes from $D200 to $7C00, fading the colours in over five steps ($38DE, $38E3, $38E8). Then six steps ($A9) with a countdown $A8 from 9, one digit every $AE frames ($310A by level and difficulty). At each step a value and \"Quit\" flash alternately in two columns (which side is random, $AC); the value is the countdown plus the bonus so far $AD, which starts at the level number. Fire while the value is lit takes it into $AD and goes to the next step; fire on \"Quit\" ends with the bonus; the countdown reaching 0 ends with nothing ($A8 = 0)."
+   "text": "The bonus game after landing. Puts up the chamber: its screen from $A6A0 (the copy of the loaded screen at $4800) and its characters from $D200 to $7C00, fading the colours in over five steps ($38DE, $38E3, $38E8). Then six steps ($A9), from the bottom row of slots up, with a countdown $A8 from 9 that steps every 256 - $AE frames ($AE from chamber_speeds by level and difficulty). At each step a value and \"Quit\" flash alternately in the row's two slots (which side is random, $AC); the value is the countdown plus the bonus so far $AD, which starts at the level number, in hundreds. Fire while the value is lit takes it into $AD and goes to the next step; fire on \"Quit\" ends with the bonus; the countdown reaching 0 ends with nothing ($A8 = 0)."
   },
   {
    "address": 4850,
@@ -8486,7 +8486,7 @@
   {
    "address": 5998,
    "type": "line",
-   "text": "Counts a bonus up: shows \"100 X n0 / 0000\" with the count $8F as two digits (the operands of the string at $3868), then for each count adds 100 to the score (add_score, entry 4), reprints the score and waits, until the count is 0."
+   "text": "Counts a bonus up: shows \"100 X n = n00\" with the count $8F as two digits (the operands of the string at $3868), then for each count adds 100 to the score (add_score, entry 4), reprints the score and waits, until the count is 0."
   },
   {
    "address": 6092,
@@ -8731,7 +8731,7 @@
   {
    "address": 10003,
    "type": "line",
-   "text": "Starts and steps the Manta's manoeuvres. A request ($46 bit 7) picks the animation from the tables $3266/$327C (facing one way) or $3292/$32A4 (the other), by the current roll position (bits 0-1 of $45) and the requested one: each sequence is a length, whether the height changes, the push $3F and the frames. While one runs (bit 7 of $45) it steps every other frame: the frame into $40 and, for a half-loop, the height $3D changed by $32F5. At the end the manoeuvre bits are cleared. Then places the Manta (sprite 6, shape $40, Y $33) and its shadow (sprite 7, shape $40 + $30, lower and further right by the height $3D) and falls into manta_collide."
+   "text": "Starts and steps the Manta's manoeuvres. A request ($46 bit 7) picks the animation from the tables $3292/$32A4 (facing right, $45 bit 2 clear) or $3266/$327C (facing left), by the current roll position (bits 0-1 of $45) and the requested one: each sequence is a length, the frames, whether the height changes and the push $3F. While one runs (bit 7 of $45) it steps every other frame: the frame into $40 and, for a half-loop, the height $3D changed by $32F5. At the end the manoeuvre bit is cleared. Then places the Manta (sprite 6, shape $40, Y $33) and its shadow (sprite 7, shape $40 + $30, lower and further right by the height $3D) and falls into manta_collide."
   },
   {
    "address": 10197,
@@ -8926,7 +8926,7 @@
   {
    "address": 12554,
    "type": "line",
-   "text": "The fuel rod chamber's countdown speeds, frames per digit, indexed by the level plus the difficulty / 16 (fuel_rod_chamber): $90 at level 1 falling by 8, then by 4, to $F0 for the highest index. The byte at $310A, index 0, is never used."
+   "text": "The fuel rod chamber's countdown speeds, indexed by the level plus the difficulty / 16: the counter starts at the value and counts up to 256, so a digit lasts 256 minus it frames ($90 at level 1, 112 frames), down to 16 frames at $F0. The byte at $310A, index 0, is never used."
   },
   {
    "address": 12574,
@@ -9001,27 +9001,27 @@
   {
    "address": 12770,
    "type": "line",
-   "text": "The Manta's twelve manoeuvre animations, each a length, that many sprite frames (played last first), a byte that says whether the height changes and the speed push $3F. Four-frame rolls, and sixteen-frame half-loops that turn the Manta round ($31FE and $3211 facing left, $3240 and $3253 facing right), which change the height and push the speed."
+   "text": "The Manta's twelve manoeuvre animations, each a length, that many sprite frames (played last first), a byte that says whether the height changes, and the speed push $3F. Eight four-frame rolls between level and edge-on; two sixteen-frame turns through the whole roll cycle ($3211 facing right, $3253 facing left); and the two half-loops, which climb and push the speed and end facing the other way: $31FE through the end-on frames $60-$66 to the left-facing level frame $59, $3240 through $67-$6D to the right-facing $41."
   },
   {
    "address": 12902,
    "type": "line",
-   "text": "Low bytes of the animation for each change of attitude while facing right: index = current roll (bits 0-1 of $45) x 8 + requested attitude's low three bits; 0 for none (manta_animate)."
+   "text": "Low bytes of the animation for each change of attitude while facing left ($45 bit 2 set): index = current roll (bits 0-1 of $45) x 8 + requested attitude's low three bits; 0 for none (manta_animate)."
   },
   {
    "address": 12924,
    "type": "line",
-   "text": "High bytes of the animations facing right."
+   "text": "High bytes of the animations facing left."
   },
   {
    "address": 12946,
    "type": "line",
-   "text": "Low bytes of the animations while facing left."
+   "text": "Low bytes of the animations while facing right ($45 bit 2 clear, as after the launch)."
   },
   {
    "address": 12964,
    "type": "line",
-   "text": "High bytes of the animations facing left."
+   "text": "High bytes of the animations facing right."
   },
   {
    "address": 12982,
@@ -9576,7 +9576,7 @@
   {
    "address": 14440,
    "type": "line",
-   "text": "String record: \"100 X 00 / 0000\", row 13; count_bonus writes the count's digits into it (at $3870/$3871 and $3875/$3876) and the callers its column."
+   "text": "String record: \"100 X 00 = 0000\", row 13; count_bonus writes the count's digits into it (at $3870/$3871 and $3875/$3876) and the callers its column."
   },
   {
    "address": 14448,
@@ -9826,12 +9826,12 @@
   {
    "address": 16275,
    "type": "line",
-   "text": "The raster interrupt for every screen that is not play (title, launch, hall of fame, bonus): $D018 = $2D, black background, $D016 = $C8 (hires, 40 columns). It sets $2F to $80, interrupts alternately at lines $C8 and $48 (the line is the operand at $3FB0, its top bit flipped each time), and runs cassette_motor and the sound driver each time, so the sound driver runs twice a frame on these screens."
+   "text": "The raster interrupt for every screen that is not play (title, launch, hall of fame, chamber, bonus): $D018 = $2D, black background, $D011 = $1B, $D016 = $C8 (hires, 40 columns). It fires twice a frame, at lines 128 and 0: the operand of LDA #$80 at $3FAF is both the value put in the frame flag $2F and the next raster line, and is flipped between $80 and 0 each time. So $2F is $80 from line 128 and 0 from line 0, and the sound driver runs once a frame, at line 128; cassette_motor runs at both. Measured: 400 interrupts and 200 calls of sound_frame in 200 frames of the title."
   },
   {
    "address": 16304,
    "type": "line",
-   "text": "The operand of LDA #$C8 in title_irq, the next interrupt's raster line, flipped between $C8 and $48 each time. The rest acknowledges the interrupt, drives the cassette line and runs the sound driver."
+   "text": "The operand of LDA #$80 in title_irq, flipped between $80 and 0 each time: stored in $2F and written to $D012 as the next interrupt's line (128 or 0). The rest acknowledges the interrupt, drives the cassette line and runs the sound driver when $2F is set."
   },
   {
    "address": 16342,
@@ -9871,12 +9871,12 @@
   {
    "address": 20480,
    "type": "line",
-   "text": "Shapes $40-$4F: the Manta's roll, one way round: level ($41), turning to edge-on ($45) and back, sixteen frames (the manoeuvres facing left)."
+   "text": "Shapes $40-$4F: the Manta facing right, rolling: level ($41), edge-on ($4D, reached by fire and up), and the frames between, sixteen in all."
   },
   {
    "address": 21504,
    "type": "line",
-   "text": "Shapes $50-$5F: the Manta's roll facing the other way, from level ($59) through edge-on ($55, $5D)."
+   "text": "Shapes $50-$5F: the Manta facing left, rolling, from level ($59) through edge-on."
   },
   {
    "address": 22528,
@@ -10111,7 +10111,7 @@
   {
    "address": 42496,
    "type": "line",
-   "text": "The fuel rod chamber's screen, the loaded screen copied here by game_start: rows 4-24 draw the chamber, its two columns of rods in a pyramid of panels with the countdown at the top (fuel_rod_chamber copies it from $A6A0)."
+   "text": "The fuel rod chamber's screen, the loaded screen copied here by game_start (fuel_rod_chamber copies rows 4-24 from $A6A0): a grey panel of six rows of paired slots joined by arrows, narrow at the top and widest at the bottom, with the countdown digit in a box at each top corner."
   },
   {
    "address": 43520,

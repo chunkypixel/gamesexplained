@@ -80,8 +80,10 @@ What the disk holds, and where it lands:
    - `title.vsf`: `entry.vsf` left running for 3 seconds: the title page.
    - `play-level1.vsf`: `entry.vsf` run for 4 seconds, fire held on port
      2 for 1 second, then 6 seconds more (`work/py/playsnap.py 6
-     play-level1`): the Manta just launched beside its mothership, three
-     ships, "01. Zinc.". The disassembler and the listing are built from
+     play-level1`): "01. Zinc.", three ships, the Manta out of its
+     transporter while the launch sequence (`launch_sequence`) is still
+     sliding the transporter away; the play loop starts about two seconds
+     later. Live tests start from it and run 150 frames first. The disassembler and the listing are built from
      this one.
 
 The emulator was VICE vice-mcp, release v3.13.2,
