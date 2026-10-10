@@ -95,3 +95,21 @@ compared with the game's code in `kit/c64/cpu6502.js`; `test_ports.py`
 keeps the comparison. A first mutation of the driver (`& 15` to `& 7` on
 the mode) passed the test because every mode value agrees under both
 masks; a change to the tempo failed it, as it should.
+
+## The music page and the piece sheet (10 October 2026)
+
+The contributor reported that none of the sound effect buttons played.
+The driver port had passed its comparison with the game, but that test
+set the effect requests itself, one frame after the switch to effects
+mode. The page made its requests on the same frame as the switch, and the
+switch runs `sound_reset`, which clears `$91`-`$93`: every button was
+silent while the title tune, which needs no request, played. The port
+now counts the page's request frames from the first frame after the
+switch, and `test_ports.py` renders every button of the page through the
+SID model and fails if one is silent; with the old driver it reports 0 of
+27.
+
+The sound sections moved to their own page, `music.html`. For the piece
+sheet, the map port records where it lays each piece; replaying those
+placements rebuilds all 16 maps exactly, and that is in `test_ports.py`
+too.

@@ -110,6 +110,16 @@ layout; `orientation.md` lists the moves, each compared byte for byte.
   built from the bottom row up (`build_map`), then overlay records (row,
   column, piece) that add targets, ports and markings. Columns 0-63 are
   empty space.
+- **The pieces.** One store of 148 pieces at `$E100` serves every level
+  and the title message: `index_pieces` (`$2C66`) never reads the level,
+  which chooses only its lists, its colours and its tile set. Pieces are
+  1 to 15 columns wide and up to 17 rows high; piece 1 is one space.
+  Pieces 31-80 and 87 are the giant message's letters and digits
+  (`giant_letters`). Over the 15 levels and the default message, 129
+  pieces are laid; the letters the message does not spell can appear
+  once a new high score writes its initials into it, and no level's list
+  and no letter names pieces 18 and 27 (the port's placement record,
+  checked by `test_ports.py`).
 - **Crashing.** Map characters `$80`-`$8F` are walls: the Manta is
   destroyed when one is in the cells it tests (`collide_shapes`). A level
   frame tests three columns on its row and the cells above and below its

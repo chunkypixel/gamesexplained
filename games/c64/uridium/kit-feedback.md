@@ -25,6 +25,8 @@ None.
 
 - `60-verify`, the audit after a bad sample: reading every comment against its neighbours found most of the 13 extra errors. Three checks did the work: a variable's comment against the comment of the routine that reads it (the collision flags were described two incompatible ways), a table base plus index against the label it lands on, and a count against the address of the next label. Only this game shows it so far; the next run with a bad sample can make it a rule if it works there too.
 
+- `70-minisite`, testing a widget's port: the sound driver's port matched the game on 99,762 calls, and every effect button on the page was still silent, because the test fed the driver its inputs in a way the page did not (on the frame after the mode change, where the page asked on the same frame and the game's reset cleared the requests). The test now drives the port with the page's own button data and measures the sound. Only this game shows it so far.
+
 ## Maintainer asks
 
 - **Let the listing's error-rate paragraph in facts.md say what was corrected.** `60-verify` asks for "what was wrong with them and what was changed", and `check_docs.py` fails "corrected" and "misread" in `facts.md` as narrating a past mistake, so the paragraph has to avoid the plain words. Suggest exempting a section headed for the error rate (here `## The listing's error rate`) from that check in `kit/scripts/check_docs.py`. Uridium (C64), 10 October 2026, branch `game/c64/uridium`.
