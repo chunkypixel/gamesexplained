@@ -164,6 +164,13 @@ program.
   erase. Erasing clears every Qix pixel of the old line, crossings with
   newer lines included; drawing XORs the pattern into the bitmap, so
   crossings change colour (by reading pixel_op).
+- **Two Qix** (`$BB` bit 7): qix_step serves Qix 1 and Qix 2 on
+  alternate passes (`$027A`), so each moves half as often; both use the
+  same planes, and qix_reset puts both on the same line. Qix 2's copy of
+  the edge test reads Qix 1's y2 (`$028A`) at `$982F` in place of its own
+  (`$028E`), when it tests its second end's move across alone (a bug, by
+  reading; *live*: a two-Qix replay without the slip drifts from the game
+  at step 288 of 400, and with it every step matches).
 - **Qix colour**: a random 0-3 each step, 0 read as 1, so pattern `$55`
   half the time and `$AA` or `$FF` a quarter each (qix_colour,
   qix_pattern).
@@ -173,7 +180,11 @@ program.
   game for 1,000 recorded steps (3 runs: level 1 in the open field; level
   7's values with a claimed peninsula; level 3's with a claimed box and a
   spur), 4,256 random numbers, 112 bounces off claimed edges and 4
-  fallbacks among them. The minisite's viewer runs it.
+  fallbacks among them. With two ports sharing the planes and the
+  `$982F` slip kept, a fourth recording of two Qix (level 7's values,
+  claimed peninsula, 400 steps, 201 of them by Qix 2) matches every step
+  of both. The minisite's viewer runs it, with two Qix on the levels that
+  have them.
 - **Sparx timer**: the bar right of the field shortens from both ends
   (timer_bar_tick); each time it runs out it counts (timer_runs) and the
   edge walkers are released by those counts (lvl_91D5-$91D7). Pair B, from
@@ -243,8 +254,8 @@ on, levels alternate the settings of 10 and 11 (level_params).
   without a pull), turn times, the largest span, the pull against the
   marker's position (600 of 600 steps on level 7's values), fallbacks,
   kills on erase, and a read watch on `$0273` (Mechanics).
-- The Qix port: 1,000 steps replayed with the game's random numbers,
-  every step equal.
+- The Qix port: 1,000 steps of one Qix and 400 of two replayed with the
+  game's random numbers, every step equal.
 
 ## The listing's error rate
 

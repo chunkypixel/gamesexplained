@@ -28,9 +28,9 @@ a sample checked by a second agent). Copy is `agent-draft`.
 
 ## Ideas for the page
 
-- The Qix viewer (section 07) runs one Qix. On two-Qix levels the two take
-  turns, and a split ends the level: a second Qix and the split test
-  would show both.
+- The Qix viewer (section 07) runs both Qix on two-Qix levels, but has no
+  drawing: a split, which ends the level, and the claim it scores could
+  be shown by letting the reader close a line across the field.
 - The Sparx's edge walk, stepped on a small drawn field, showing the
   junction choice towards the Qix.
 - The spiral death trap from the attract demonstration, replayed from

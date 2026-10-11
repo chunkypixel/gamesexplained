@@ -90,3 +90,11 @@ the generator's return at `$A5F2`): 1,000 steps, all equal, on the first
 attempt for the first 300. The disassembler project was not updated:
 `symbols.json` was edited directly (`work/editsym.py`) and the listing
 rebuilt from the snapshot, as for the checker's fixes.
+
+Asked to continue, the run added Qix 2. Reading qix2_check_line beside
+Qix 1's found one line that differs: at `$982F` it loads Qix 1's y2.
+The two-Qix recording at first timed out on its first step and then
+showed qix2_step never running: `$BB`, like `$6F`, comes back from the
+level table at every round start, so level 1's entry at `$1210` had to
+be poked as well. A second attempt recorded 400 steps; the port with the
+slip matched all of them, and without it drifted at step 288.

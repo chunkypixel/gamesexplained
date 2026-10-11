@@ -153,7 +153,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
   <p class="fig">07 · The Qix</p>
   <h2 class="t">The Qix is two bouncing points that turn back at random</h2>
   <p class="lede">The Qix has no path to follow and no target. Its line joins two points, each with a speed across and a speed down, and every few steps a random draw sends most of those speeds the other way.</p>
-  <p>Once a pass of the main loop, about 14 times a second, the game moves the Qix one step (<code>$946A</code>). The step erases the oldest of the eight lines on screen, moves the two ends, checks the new line against the claimed edges, and draws it. On the levels with two Qix the step serves them in turn, so each moves half as often.</p>
+  <p>Once a pass of the main loop, about 14 times a second, the game moves the Qix one step (<code>$946A</code>). The step erases the oldest of the eight lines on screen, moves the two ends, checks the new line against the claimed edges, and draws it. On the levels with two Qix the step serves them in turn, so each moves half as often. Both start each life on the same short line in the middle.</p>
   <p>A speed is a signed byte: 3 or 4 pixels across, or 4 or 5 lines up or down. The game never changes a speed by a little. Every change draws a new size and flips the sign, because the routine that makes the new speed takes the old one's sign as its input (<code>$A555</code>). These are the only moments a speed changes:</p>
   <div class="qx-scroll"><table class="qx-tab">
     <tr><th>When</th><th>What the game does</th><th>Where</th></tr>
@@ -165,6 +165,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     <tr><td>After every step</td><td>Chooses the pull for the next bounce on each axis: towards the marker, from where the first end now is.</td><td><code>$954F</code></td></tr>
   </table></div>
   <p class="cap">A bounce also draws a new turn time, but stores it at <code>$0273</code>, which nothing reads. In 1,600 steps watched in the emulator, nothing did. A bounce leaves the turn timer running as it was.</p>
+  <p class="cap"><b>Bug:</b> Qix 2 has its own copy of the edge test, and one line of the copy reads Qix 1's height (<code>$982F</code>). When the game tests Qix 2's second end moving across on its own, it tests a line to that end's new position across but at Qix 1's height. So Qix 2 can bounce off an edge its move would not have crossed, or miss one it would. A replay of a two-Qix recording with the line read correctly drifts from the game after 288 steps; with the slip kept, all 400 steps match.</p>
   <p>The turn timer is what changes most between levels. The game draws a random byte and keeps it when it falls between <code>$20</code> and <code>$3E</code>, about one draw in eight; any other value is cut to 0-3. The level's mask (<code>$6F</code>) then caps the result. On level 1 the mask is 3, so the Qix turns every one to four steps and shivers about the middle of the field. From level 2 the one draw in eight lets the Qix run straight across the field.</p>
   <div class="qx-scroll"><table class="qx-tab">
     <tr><th>Levels</th><th>Steps between turns</th><th>Pull added at a bounce</th></tr>
@@ -185,7 +186,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     </div>
     <div class="qm-wrap"><canvas id="qm-cv" class="qx-cv qm-cv" width="280" height="200" aria-label="The Qix moving in the field"></canvas>
       <div class="qm-side"><pre class="qm-read" id="qm-read"></pre><ul class="qm-log" id="qm-log" aria-live="off"></ul></div></div>
-    <p class="cap"><b>The viewer runs the game's own rules.</b> It is a port of the Qix's step and the line routine it uses for every test and every pixel, down to the order of the random draws. Given the random numbers the game drew, it repeats 1,000 steps recorded in the emulator exactly, in an open field and in fields with claimed corners. Click the field to move the marker; the pull points at it. <b>Your line</b> lays a line being drawn up from the marker. The Qix colours are those of the frame in section 02.</p>
+    <p class="cap"><b>The viewer runs the game's own rules.</b> It is a port of the Qix's step and the line routine it uses for every test and every pixel, down to the order of the random draws. Given the random numbers the game drew, it repeats 1,000 steps of one Qix and 400 of two, recorded in the emulator, exactly, in an open field and in fields with claimed corners. Levels 3, 4, 6, 8, 9 and 11 bring a second Qix, as in the game. Click the field to move the marker; the pull points at it. <b>Your line</b> lays a line being drawn up from the marker. The Qix colours are those of the frame in section 02.</p>
   </div>
 </section>
 
@@ -366,6 +367,7 @@ class QixMover {
     this.x1 = 61; this.x2 = 71; this.y1 = 93; this.y2 = 103;
     this.sx1 = 3; this.sx2 = 0xFD; this.sy1 = 4; this.sy2 = 0xFC; this.biasX = 0; this.biasY = 0;
     this.events = []; this.kill = null;
+    this.partner = o.partner || null;                              // set on Qix 2: Qix 1's mover
   }
   setLevel(l) { this.mask = l[0]; this.pullPos = l[1] & 255; this.pullNeg = l[2] & 255; }
 
@@ -460,7 +462,9 @@ class QixMover {
       if (this.test(this.x2, this.y2, this.x1, this.D4)) { this.bounceY1(); this.D4 = this.moveY1(); }
     }
     if (this.test(this.x1, this.y1, this.D5, this.D6)) {
-      if (this.test(this.x1, this.y1, this.D5, this.y2)) { this.bounceX2(); this.D5 = this.moveX2(); }
+      // Qix 2's copy of this test (qix2_check_line, $982F) reads Qix 1's y2 ($028A) instead of its own ($028E)
+      const yAcross = this.partner ? this.partner.y2 : this.y2;
+      if (this.test(this.x1, this.y1, this.D5, yAcross)) { this.bounceX2(); this.D5 = this.moveX2(); }
       if (this.test(this.x1, this.y1, this.x2, this.D6)) { this.bounceY2(); this.D6 = this.moveY2(); }
     }
     if (this.test(this.D3, this.D4, this.D5, this.D6)) {            // $9774: the whole new line still crosses
@@ -594,10 +598,11 @@ sel.onchange = table; table();
   const s8 = (v) => (v > 127 ? v - 256 : v);
   // random_range: a byte reduced by repeated subtraction, as the game does
   const rand = (n) => (Math.random() * 256 | 0) % n;
-  let m, step = 0, timer = null, slow = false, showOld = false, lineOn = false, marker = [67, 198], log = [], dead = null;
+  let m, m2 = null, turn2 = false, step = 0, timer = null, slow = false, showOld = false, lineOn = false, marker = [67, 198], log = [], dead = null;
   const lvSel = $('qm-lvl');
   for (let l = 1; l <= 11; l++) lvSel.insertAdjacentHTML('beforeend', '<option value="' + l + '">' + l + '</option>');
   const level = () => { const l = +lvSel.value; return [LVL.turn[l], LVL.pull[l], LVL.pulln[l]]; };
+  const twoQix = () => !!(LVL.two[+lvSel.value] & 0x80);
   function field(kind) {
     const cls = new Uint8Array(160 * 200), rect = (x0, y0, x1, y1) => { for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) cls[y * 160 + x] = 3; };
     rect(1, 10, 135, 10); rect(1, 198, 135, 198); rect(1, 10, 1, 198); rect(135, 10, 135, 198);
@@ -614,14 +619,19 @@ sel.onchange = table; table();
     }
   }
   function clearLine() { for (let p = 0; p < m.live.length; p++) if (m.live[p]) { m.live[p] = 0; if (m.cls[p] === 1) m.cls[p] = 0; } }
+  function start(q) {
+    q.reset();
+    q.sx1 = q.speed1(rand(2) ? 0 : 0x80); q.sx2 = q.speed1(rand(2) ? 0 : 0x80);
+    q.sy1 = q.negateSpeed(rand(2) ? 0 : 0x80); q.sy2 = q.negateSpeed(rand(2) ? 0 : 0x80);
+    q.biasX = q.x1 < marker[0] ? q.pullPos : q.pullNeg; q.biasY = q.y1 < marker[1] ? q.pullPos : q.pullNeg;
+  }
   function reset() {
-    m = new QixMover({ rand, cls: field($('qm-field').value), live: new Uint8Array(160 * 200), bmp: new Uint8Array(160 * 200),
-                       level: level(), marker: marker });
-    m.reset();
-    m.sx1 = m.speed1(rand(2) ? 0 : 0x80); m.sx2 = m.speed1(rand(2) ? 0 : 0x80);
-    m.sy1 = m.negateSpeed(rand(2) ? 0 : 0x80); m.sy2 = m.negateSpeed(rand(2) ? 0 : 0x80);
-    m.biasX = m.x1 < marker[0] ? m.pullPos : m.pullNeg; m.biasY = m.y1 < marker[1] ? m.pullPos : m.pullNeg;
-    step = 0; log = []; dead = null;
+    const shared = { rand, cls: field($('qm-field').value), live: new Uint8Array(160 * 200), bmp: new Uint8Array(160 * 200), level: level(), marker: marker };
+    m = new QixMover(shared); start(m);
+    // two Qix: both start on the same line (qix_reset), share the planes, and Qix 2 reads Qix 1's y2 in one test ($982F)
+    m2 = twoQix() ? new QixMover(Object.assign({}, shared, { partner: m })) : null;
+    if (m2) start(m2);
+    turn2 = false; step = 0; log = []; dead = null;
     if (lineOn) layLine();
     draw();
   }
@@ -630,14 +640,16 @@ sel.onchange = table; table();
   function tick() {
     if (dead) return;
     step++;
-    const ev = m.step();
+    const q = m2 && turn2 ? m2 : m, who = m2 ? (q === m2 ? 'Qix 2: ' : 'Qix 1: ') : '';
+    if (m2) turn2 = !turn2;
+    const ev = q.step();
     for (const [k, w, pl] of ev) {
-      if (k === 'turn') say('turn: ' + (w ? 'reversed ' + w.split(' ').map((a) => name[a]).join(', ') : 'nothing reversed') + '; next turn in ' + (m.timer + 1) + (m.timer ? ' steps' : ' step'));
-      else if (k === 'wall') say(name[w] + ' hit the box: reversed' + (s8(pl) ? ', pull ' + fmt(s8(pl)) : ''));
-      else if (k === 'block') say(name[w] + ' crossed a claimed edge: reversed' + (s8(pl) ? ', pull ' + fmt(s8(pl)) : ''), 'qm-f');
-      else if (k === 'fallback') say('the new line crossed a claimed edge: back to the line from 8 steps ago', 'qm-f');
+      if (k === 'turn') say(who + 'turn: ' + (w ? 'reversed ' + w.split(' ').map((a) => name[a]).join(', ') : 'nothing reversed') + '; next turn in ' + (q.timer + 1) + (q.timer ? ' steps' : ' step'));
+      else if (k === 'wall') say(who + name[w] + ' hit the box: reversed' + (s8(pl) ? ', pull ' + fmt(s8(pl)) : ''));
+      else if (k === 'block') say(who + name[w] + ' crossed a claimed edge: reversed' + (s8(pl) ? ', pull ' + fmt(s8(pl)) : ''), 'qm-f');
+      else if (k === 'fallback') say(who + 'the new line crossed a claimed edge: back to the line from 8 steps ago', 'qm-f');
     }
-    if (m.kill) { dead = m.kill; say('your line is hit by the Qix ' + (dead.how === 'erase' ? 'erasing its oldest line' : 'drawing its new line') + ' at (' + dead.x + ', ' + dead.y + ')', 'qm-k'); run(false); }
+    if (q.kill) { dead = q.kill; say('your line is hit by ' + (m2 ? (q === m2 ? 'Qix 2 ' : 'Qix 1 ') : 'the Qix ') + (dead.how === 'erase' ? 'erasing its oldest line' : 'drawing its new line') + ' at (' + dead.x + ', ' + dead.y + ')', 'qm-k'); run(false); }
     draw();
   }
   const fmt = (v) => (v > 0 ? '+' : '') + v;
@@ -652,20 +664,22 @@ sel.onchange = table; table();
       if (m.bmp[p]) col = INK[m.bmp[p]];
       put(x, y, col);
     }
-    if (showOld) { const t = m.idx; if (m.tx1[t]) for (const [x, y] of QixMover.linePixels(m.tx1[t], m.ty1[t], m.tx2[t], m.ty2[t])) put(x, y, OLD); }
+    if (showOld) for (const q of m2 ? [m, m2] : [m]) { const t = q.idx; if (q.tx1[t]) for (const [x, y] of QixMover.linePixels(q.tx1[t], q.ty1[t], q.tx2[t], q.ty2[t])) put(x, y, OLD); }
     const [mx, my] = marker;
     for (const [dx, dy] of [[0, -2], [-1, -1], [0, -1], [1, -1], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [-1, 1], [0, 1], [1, 1], [0, 2]])
       if (mx + dx >= 0 && mx + dx < W && my + dy >= 0 && my + dy < H) put(mx + dx, my + dy, [255, 255, 255]);
     if (dead) for (let k = -3; k <= 3; k++) { if (dead.x + k >= 0 && dead.x + k < W) put(dead.x + k, dead.y, LIVE); if (dead.y + k >= 0 && dead.y + k < H) put(dead.x, dead.y + k, LIVE); }
     ctx.putImageData(img, 0, 0);
     const ar = (v, a) => (s8(v) > 0 ? a[1] : a[0]) + ' ' + fmt(s8(v)).padStart(3);
-    const bx = s8(m.x1 < marker[0] ? m.pullPos : m.pullNeg), by = s8(m.y1 < marker[1] ? m.pullPos : m.pullNeg);
-    $('qm-read').textContent =
-      'step ' + step + '\n' +
-      'end 1  across ' + ar(m.sx1, ['←', '→']) + '   down ' + ar(m.sy1, ['↑', '↓']) + '\n' +
-      'end 2  across ' + ar(m.sx2, ['←', '→']) + '   down ' + ar(m.sy2, ['↑', '↓']) + '\n' +
-      'next turn in ' + (((m.timer + 1) & 255) || 1) + ' step' + (m.timer ? 's' : '') + '\n' +
-      'pull at the next bounce  across ' + fmt(bx) + '  down ' + fmt(by);
+    const block = (q, head) => {
+      const bx = s8(q.x1 < marker[0] ? q.pullPos : q.pullNeg), by = s8(q.y1 < marker[1] ? q.pullPos : q.pullNeg);
+      return head +
+        'end 1  across ' + ar(q.sx1, ['←', '→']) + '   down ' + ar(q.sy1, ['↑', '↓']) + '\n' +
+        'end 2  across ' + ar(q.sx2, ['←', '→']) + '   down ' + ar(q.sy2, ['↑', '↓']) + '\n' +
+        'next turn in ' + (((q.timer + 1) & 255) || 1) + ' step' + (q.timer ? 's' : '') + (m2 ? ' of its own' : '') + '\n' +
+        'pull at the next bounce  across ' + fmt(bx) + '  down ' + fmt(by);
+    };
+    $('qm-read').textContent = (m2 ? 'pass ' : 'step ') + step + '\n' + (m2 ? block(m, 'Qix 1\n') + '\n' + block(m2, 'Qix 2\n') : block(m, ''));
     $('qm-log').innerHTML = log.map(([n, t, c]) => '<li' + (c ? ' class="' + c + '"' : '') + '><b>' + n + '</b> ' + t + '</li>').join('');
   }
   function run(on) {
@@ -681,10 +695,10 @@ sel.onchange = table; table();
   $('qm-line').onclick = () => { lineOn = !lineOn; $('qm-line').setAttribute('aria-pressed', lineOn); dead = null; clearLine(); if (lineOn) layLine(); draw(); };
   $('qm-reset').onclick = () => { run(false); reset(); };
   $('qm-field').onchange = () => { run(false); reset(); };
-  lvSel.onchange = () => { m.setLevel(level()); draw(); };
+  lvSel.onchange = () => { if (twoQix() !== !!m2) { run(false); reset(); } else { m.setLevel(level()); if (m2) m2.setLevel(level()); draw(); } };
   cv.onclick = (e) => {
     const r = cv.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / r.width * W), y = Math.floor((e.clientY - r.top) / r.height * H);
-    marker = [Math.max(2, Math.min(134, x)), Math.max(11, Math.min(197, y))]; m.marker = marker;
+    marker = [Math.max(2, Math.min(134, x)), Math.max(11, Math.min(197, y))]; m.marker = marker; if (m2) m2.marker = marker;
     if (lineOn) { clearLine(); layLine(); }
     draw();
   };

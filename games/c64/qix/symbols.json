@@ -15743,7 +15743,7 @@
   {
    "address": 38838,
    "type": "line",
-   "text": "qix1_check_line for Qix 2."
+   "text": "qix1_check_line for Qix 2 (line $028B-$028E, trail slot $B6, timer $0272, qix2_move_*), with one slip. The test of the second endpoint's move across alone, at $982F, loads Y from $028A, Qix 1's old y2, where Qix 2's own is $028E. So that test runs to (new x2, Qix 1's y2), and can bounce Qix 2's x2 off an edge its move would not cross, or miss one it would. A replay of a recorded two-Qix run without the slip drifts from the game after 288 steps; with it, all 400 match."
   },
   {
    "address": 39051,
