@@ -9,7 +9,7 @@
   "title_image": "reference/title.png",
   "build": "",
   "tier": "none",
-  "coverage_percent": null,
+  "coverage_percent": 100.0,
   "copy": "agent-draft",
   "steward": "",
   "credits": [
@@ -66,8 +66,90 @@
     "charset": "$4800"
   },
   "coverage": {
-    "exclude": [],
-    "extra": [],
+    "exclude": [
+      [
+        "$0000",
+        "$03FF",
+        "runtime: zero page, stack and pages 2-3 (the game's pointers and work bytes, the KERNAL's vectors), set by the start-up and the routines that use them"
+      ],
+      [
+        "$0400",
+        "$07FF",
+        "runtime: the monster table (X $0400, Y $04C0, kind $0580, flags $0640, Death's drain $0700), built from each level by objects_place; pinn232 would also use $0400-$040D as work bytes"
+      ],
+      [
+        "$0800",
+        "$09FF",
+        "never written: the emulator's power-on pattern; no file loads here"
+      ],
+      [
+        "$0A51",
+        "$0BFF",
+        "the level buffer beyond level 1's file: the power-on pattern, which a longer level file overwrites"
+      ],
+      [
+        "$0C00",
+        "$0FFF",
+        "runtime: the 32 x 32 tile grid, built from the level file by level_build and changed in play"
+      ],
+      [
+        "$11FC",
+        "$1387",
+        "never written: the power-on pattern between DATATITLE and PINN232"
+      ],
+      [
+        "$1600",
+        "$17FF",
+        "never written: the power-on pattern"
+      ],
+      [
+        "$1800",
+        "$1FFF",
+        "runtime: copies made at load by heroes_load_shapes: $1800-$1BFF the heroes' shot shapes, which each level start puts back at $7600 and $7E00, and $1C00-$1FFF the PLYRS.SPR shapes they replaced, which nothing reads"
+      ],
+      [
+        "$2000",
+        "$3FFF",
+        "runtime: the 64 x 64 colour map ($2000) and character map ($3000), drawn from the tile grid by grid_draw and changed in play (PLYRS.SPR loads here first and is copied away)"
+      ],
+      [
+        "$4000",
+        "$47FF",
+        "runtime: the two screens and their sprite pointers, drawn by maze_draw and the panel routines"
+      ],
+      [
+        "$E6E1",
+        "$E7FF",
+        "never written: the power-on pattern after PLAYER-$E000"
+      ],
+      [
+        "$E9BE",
+        "$E9FF",
+        "never written: the power-on pattern after DATATREASURE"
+      ],
+      [
+        "$EA99",
+        "$EFFF",
+        "never written: the power-on pattern after DITTIDATA"
+      ],
+      [
+        "$F800",
+        "$FFF9",
+        "never written: the power-on pattern above OBJDIS"
+      ]
+    ],
+    "extra": [
+      [
+        "$4800",
+        "$7FFF",
+        "the fonts and sprite shapes: GAUNT CHR $4800 and the PLYRS.SPR shapes copied to $7000"
+      ],
+      [
+        "$F400",
+        "$F7FF",
+        "the tile tables in OBJDIS"
+      ]
+    ],
     "include": []
   },
   "io": [],

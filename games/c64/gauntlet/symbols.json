@@ -20,6 +20,76 @@
     17408,
     18431,
     "screen RAM"
+   ],
+   [
+    0,
+    1023,
+    "runtime: zero page, stack and pages 2-3 (the game's pointers and work bytes, the KERNAL's vectors), set by the start-up and the routines that use them"
+   ],
+   [
+    1024,
+    2047,
+    "runtime: the monster table (X $0400, Y $04C0, kind $0580, flags $0640, Death's drain $0700), built from each level by objects_place; pinn232 would also use $0400-$040D as work bytes"
+   ],
+   [
+    2048,
+    2559,
+    "never written: the emulator's power-on pattern; no file loads here"
+   ],
+   [
+    2641,
+    3071,
+    "the level buffer beyond level 1's file: the power-on pattern, which a longer level file overwrites"
+   ],
+   [
+    3072,
+    4095,
+    "runtime: the 32 x 32 tile grid, built from the level file by level_build and changed in play"
+   ],
+   [
+    4604,
+    4999,
+    "never written: the power-on pattern between DATATITLE and PINN232"
+   ],
+   [
+    5632,
+    6143,
+    "never written: the power-on pattern"
+   ],
+   [
+    6144,
+    8191,
+    "runtime: copies made at load by heroes_load_shapes: $1800-$1BFF the heroes' shot shapes, which each level start puts back at $7600 and $7E00, and $1C00-$1FFF the PLYRS.SPR shapes they replaced, which nothing reads"
+   ],
+   [
+    8192,
+    16383,
+    "runtime: the 64 x 64 colour map ($2000) and character map ($3000), drawn from the tile grid by grid_draw and changed in play (PLYRS.SPR loads here first and is copied away)"
+   ],
+   [
+    16384,
+    18431,
+    "runtime: the two screens and their sprite pointers, drawn by maze_draw and the panel routines"
+   ],
+   [
+    59105,
+    59391,
+    "never written: the power-on pattern after PLAYER-$E000"
+   ],
+   [
+    59838,
+    59903,
+    "never written: the power-on pattern after DATATREASURE"
+   ],
+   [
+    60057,
+    61439,
+    "never written: the power-on pattern after DITTIDATA"
+   ],
+   [
+    63488,
+    65529,
+    "never written: the power-on pattern above OBJDIS"
    ]
   ],
   "extra": [
@@ -27,14 +97,64 @@
     18432,
     20479,
     "character set"
+   ],
+   [
+    18432,
+    32767,
+    "the fonts and sprite shapes: GAUNT CHR $4800 and the PLYRS.SPR shapes copied to $7000"
+   ],
+   [
+    62464,
+    63487,
+    "the tile tables in OBJDIS"
    ]
   ]
  },
  "blocks": [
   {
    "start": 0,
-   "end": 32767,
+   "end": 2559,
    "type": "Undefined"
+  },
+  {
+   "start": 2560,
+   "end": 2640,
+   "type": "Byte"
+  },
+  {
+   "start": 2641,
+   "end": 4095,
+   "type": "Undefined"
+  },
+  {
+   "start": 4096,
+   "end": 4603,
+   "type": "Byte"
+  },
+  {
+   "start": 4604,
+   "end": 4999,
+   "type": "Undefined"
+  },
+  {
+   "start": 5000,
+   "end": 5490,
+   "type": "Code"
+  },
+  {
+   "start": 5491,
+   "end": 5631,
+   "type": "Byte"
+  },
+  {
+   "start": 5632,
+   "end": 18431,
+   "type": "Undefined"
+  },
+  {
+   "start": 18432,
+   "end": 32767,
+   "type": "Byte"
   },
   {
    "start": 32768,
@@ -53,6 +173,16 @@
   },
   {
    "start": 33351,
+   "end": 33380,
+   "type": "Undefined"
+  },
+  {
+   "start": 33381,
+   "end": 33381,
+   "type": "Byte"
+  },
+  {
+   "start": 33382,
    "end": 33383,
    "type": "Undefined"
   },
@@ -1483,23 +1613,73 @@
   },
   {
    "start": 57344,
-   "end": 57935,
-   "type": "Code"
-  },
-  {
-   "start": 57936,
-   "end": 58208,
-   "type": "Undefined"
-  },
-  {
-   "start": 58209,
    "end": 58754,
    "type": "Code"
   },
   {
    "start": 58755,
-   "end": 65535,
+   "end": 58755,
+   "type": "Byte"
+  },
+  {
+   "start": 58756,
+   "end": 58946,
    "type": "Undefined"
+  },
+  {
+   "start": 58947,
+   "end": 59012,
+   "type": "Address"
+  },
+  {
+   "start": 59013,
+   "end": 59038,
+   "type": "Undefined"
+  },
+  {
+   "start": 59039,
+   "end": 59104,
+   "type": "Byte"
+  },
+  {
+   "start": 59105,
+   "end": 59391,
+   "type": "Undefined"
+  },
+  {
+   "start": 59392,
+   "end": 59837,
+   "type": "Byte"
+  },
+  {
+   "start": 59838,
+   "end": 59903,
+   "type": "Undefined"
+  },
+  {
+   "start": 59904,
+   "end": 60056,
+   "type": "Byte"
+  },
+  {
+   "start": 60057,
+   "end": 61439,
+   "type": "Undefined"
+  },
+  {
+   "start": 61440,
+   "end": 63487,
+   "type": "Byte"
+  },
+  {
+   "start": 63488,
+   "end": 65529,
+   "type": "Undefined"
+  },
+  {
+   "start": 65530,
+   "end": 65535,
+   "type": "Byte"
   }
  ],
  "symbols": [
@@ -1554,6 +1734,18 @@
   {
    "address": 43,
    "name": "zpa_2B",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 100,
+   "name": "zpa_64",
+   "type": "ZeroPageAbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 101,
+   "name": "zpa_65",
    "type": "ZeroPageAbsoluteAddress",
    "kind": "auto"
   },
@@ -1841,8 +2033,62 @@
   },
   {
    "address": 1024,
-   "name": "f_0400",
-   "type": "Field",
+   "name": "a_0400",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1025,
+   "name": "a_0401",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1026,
+   "name": "a_0402",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1027,
+   "name": "a_0403",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1028,
+   "name": "a_0404",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1029,
+   "name": "a_0405",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1030,
+   "name": "a_0406",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1035,
+   "name": "a_040B",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1036,
+   "name": "a_040C",
+   "type": "AbsoluteAddress",
+   "kind": "auto"
+  },
+  {
+   "address": 1037,
+   "name": "a_040D",
+   "type": "AbsoluteAddress",
    "kind": "auto"
   },
   {
@@ -1901,39 +2147,45 @@
   },
   {
    "address": 2560,
-   "name": "a_0A00",
+   "name": "level_length",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2561,
-   "name": "a_0A01",
+   "name": "level_flags",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2562,
-   "name": "a_0A02",
+   "name": "level_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2563,
-   "name": "a_0A03",
+   "name": "level_wall_bytes",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2564,
-   "name": "f_0A04",
+   "name": "level_walls",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 2565,
-   "name": "f_0A05",
+   "name": "level_walls_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 2574,
+   "name": "level_objects",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 3072,
@@ -1966,10 +2218,214 @@
    "kind": "auto"
   },
   {
+   "address": 4096,
+   "name": "datatitle",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 4265,
-   "name": "a_10A9",
+   "name": "datatitle_bit_operand",
    "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 5000,
+   "name": "pinn_jumps",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 5009,
+   "name": "pinn_receive_many",
+   "type": "Jump",
+   "kind": "user"
+  },
+  {
+   "address": 5016,
+   "name": "b_1398",
+   "type": "Branch",
    "kind": "auto"
+  },
+  {
+   "address": 5029,
+   "name": "r_13A5",
+   "type": "Return",
+   "kind": "auto"
+  },
+  {
+   "address": 5030,
+   "name": "pinn_send",
+   "type": "Jump",
+   "kind": "user"
+  },
+  {
+   "address": 5090,
+   "name": "b_13E2",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5112,
+   "name": "b_13F8",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5123,
+   "name": "b_1403",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5134,
+   "name": "j_140E",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5148,
+   "name": "b_141C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5162,
+   "name": "pinn_send_byte",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5199,
+   "name": "b_144F",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5212,
+   "name": "b_145C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5256,
+   "name": "pinn_delay",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5258,
+   "name": "b_148A",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5262,
+   "name": "pinn_arg",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5273,
+   "name": "pinn_receive",
+   "type": "Jump",
+   "kind": "user"
+  },
+  {
+   "address": 5276,
+   "name": "pinn_receive_to",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5310,
+   "name": "b_14BE",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5344,
+   "name": "b_14E0",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5356,
+   "name": "b_14EC",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5367,
+   "name": "b_14F7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5378,
+   "name": "j_1502",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5395,
+   "name": "b_1513",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5409,
+   "name": "pinn_receive_byte",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5424,
+   "name": "b_1530",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5431,
+   "name": "j_1537",
+   "type": "Jump",
+   "kind": "auto"
+  },
+  {
+   "address": 5446,
+   "name": "b_1546",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5476,
+   "name": "pinn_delay_rx",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5478,
+   "name": "b_1566",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5482,
+   "name": "pinn_delay_long",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
+   "address": 5484,
+   "name": "b_156C",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 5491,
+   "name": "pinn_tail",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 6144,
@@ -2740,100 +3196,184 @@
    "kind": "auto"
   },
   {
+   "address": 18432,
+   "name": "font_maze_a",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 18440,
-   "name": "f_4808",
+   "name": "font_maze_a_walls",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 18800,
-   "name": "f_4970",
+   "name": "font_maze_a_hidden",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 19456,
+   "name": "font_maze_a_monsters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 20480,
+   "name": "font_maze_b",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 20488,
-   "name": "f_5008",
+   "name": "font_maze_b_walls",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 20848,
-   "name": "f_5170",
+   "name": "font_maze_b_hidden",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 21504,
+   "name": "font_maze_b_monsters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 22528,
+   "name": "font_maze_c",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 22536,
-   "name": "f_5808",
+   "name": "font_maze_c_walls",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 22896,
-   "name": "f_5970",
+   "name": "font_maze_c_hidden",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 23552,
+   "name": "font_maze_c_monsters",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 24576,
+   "name": "font_panel",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 25600,
+   "name": "font_panel_hi",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 25704,
-   "name": "f_6468",
+   "name": "style_block_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 25984,
-   "name": "f_6580",
+   "name": "potion_pictures",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 26624,
+   "name": "sprite_shapes",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 27648,
+   "name": "sprite_shapes_2",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 28160,
-   "name": "f_6E00",
+   "name": "fireball_shapes",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 28416,
-   "name": "f_6F00",
+   "name": "fireball_shapes_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 28672,
+   "name": "player1_shapes",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 28704,
+   "name": "player1_shapes_2",
+   "type": "AbsoluteAddress",
+   "kind": "user"
   },
   {
    "address": 29696,
-   "name": "f_7400",
+   "name": "player1_frames_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 29952,
-   "name": "f_7500",
+   "name": "player1_frames_3b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30208,
-   "name": "f_7600",
+   "name": "player1_shots",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 30464,
-   "name": "f_7700",
+   "name": "player1_shots_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 30720,
+   "name": "player2_sprites",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 31744,
+   "name": "player2_shapes_2",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 32256,
-   "name": "f_7E00",
+   "name": "player2_shots",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32512,
-   "name": "f_7F00",
+   "name": "player2_shots_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32768,
@@ -2849,9 +3389,9 @@
   },
   {
    "address": 32787,
-   "name": "j_8013",
+   "name": "startup",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32827,
@@ -2861,21 +3401,21 @@
   },
   {
    "address": 32913,
-   "name": "j_8091",
+   "name": "game_start",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 32933,
-   "name": "j_80A5",
+   "name": "level_begin",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33056,
-   "name": "b_8120",
+   "name": "treasure_loop",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33102,
@@ -2909,15 +3449,15 @@
   },
   {
    "address": 33163,
-   "name": "b_818B",
+   "name": "play_loop",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33186,
-   "name": "a_81A2",
+   "name": "loop_scroll_check",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33233,
@@ -2957,165 +3497,171 @@
   },
   {
    "address": 33351,
-   "name": "a_8247",
+   "name": "frame_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33352,
-   "name": "a_8248",
+   "name": "frame_count_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33353,
-   "name": "a_8249",
+   "name": "tune_wanted",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33354,
-   "name": "a_824A",
+   "name": "monster_cur",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33355,
-   "name": "a_824B",
+   "name": "pass_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33356,
-   "name": "a_824C",
+   "name": "mask_dummy_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33357,
-   "name": "a_824D",
+   "name": "mask_dummy_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33358,
-   "name": "a_824E",
+   "name": "monster_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33360,
-   "name": "a_8250",
+   "name": "screen_front",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33361,
-   "name": "a_8251",
+   "name": "font_select",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33362,
-   "name": "a_8252",
+   "name": "d011_copy",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33363,
-   "name": "a_8253",
+   "name": "font_timer",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33364,
-   "name": "a_8254",
+   "name": "font_step",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33365,
-   "name": "f_8255",
+   "name": "font_cycle",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33370,
-   "name": "a_825A",
+   "name": "d022_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33371,
-   "name": "a_825B",
+   "name": "scratch",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33372,
-   "name": "a_825C",
+   "name": "scratch_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33373,
-   "name": "a_825D",
+   "name": "scratch_3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33374,
-   "name": "a_825E",
+   "name": "blocked_dirs",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33375,
-   "name": "a_825F",
+   "name": "redraw_due",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33376,
-   "name": "a_8260",
+   "name": "redraw_due_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33377,
-   "name": "a_8261",
+   "name": "freeze_copy",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33378,
-   "name": "a_8262",
+   "name": "scroll_done",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33379,
-   "name": "a_8263",
+   "name": "idle_scroll_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33380,
-   "name": "a_8264",
+   "name": "main_go",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 33381,
+   "name": "pad_8265",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 33382,
-   "name": "a_8266",
+   "name": "scroll_x_units",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33383,
-   "name": "a_8267",
+   "name": "scroll_y_units",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33384,
@@ -3173,9 +3719,9 @@
   },
   {
    "address": 33583,
-   "name": "f_832F",
+   "name": "panel_potion_end",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33585,
@@ -3209,21 +3755,21 @@
   },
   {
    "address": 33713,
-   "name": "f_83B1",
+   "name": "panel_press_fire_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33729,
-   "name": "f_83C1",
+   "name": "panel_press_fire_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33745,
-   "name": "f_83D1",
+   "name": "panel_press_fire_4",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33761,
@@ -3251,15 +3797,15 @@
   },
   {
    "address": 33889,
-   "name": "a_8461",
+   "name": "hero_name_ptr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33890,
-   "name": "a_8462",
+   "name": "hero_name_ptr_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 33928,
@@ -3569,21 +4115,21 @@
   },
   {
    "address": 34850,
-   "name": "a_8822",
+   "name": "keys_row6",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 34855,
-   "name": "a_8827",
+   "name": "keys_row1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 34856,
-   "name": "a_8828",
+   "name": "keys_row0",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 34862,
@@ -3881,33 +4427,33 @@
   },
   {
    "address": 35449,
-   "name": "a_8A79",
+   "name": "copy_col_wrap",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35452,
-   "name": "a_8A7C",
+   "name": "copy_src_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35453,
-   "name": "a_8A7D",
+   "name": "copy_src_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35458,
-   "name": "f_8A82",
+   "name": "copy_src2_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35459,
-   "name": "f_8A83",
+   "name": "copy_rows",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35575,
@@ -3935,33 +4481,33 @@
   },
   {
    "address": 35661,
-   "name": "a_8B4D",
+   "name": "copy_col_wrap_b",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35664,
-   "name": "a_8B50",
+   "name": "copy_src_lo_b",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35665,
-   "name": "a_8B51",
+   "name": "copy_src_hi_b",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35670,
-   "name": "f_8B56",
+   "name": "copy_src2_lo_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35671,
-   "name": "f_8B57",
+   "name": "copy_rows_b",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35787,
@@ -4013,33 +4559,33 @@
   },
   {
    "address": 35838,
-   "name": "a_8BFE",
+   "name": "colour_col_wrap",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35841,
-   "name": "a_8C01",
+   "name": "colour_src_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35842,
-   "name": "a_8C02",
+   "name": "colour_src_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35847,
-   "name": "f_8C07",
+   "name": "colour_src2_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35848,
-   "name": "f_8C08",
+   "name": "colour_rows",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 35964,
@@ -4091,15 +4637,15 @@
   },
   {
    "address": 36060,
-   "name": "a_8CDC",
+   "name": "style_src_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36061,
-   "name": "a_8CDD",
+   "name": "style_src_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36088,
@@ -4127,9 +4673,9 @@
   },
   {
    "address": 36110,
-   "name": "f_8D0E",
+   "name": "maze_style_src_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36119,
@@ -4151,15 +4697,15 @@
   },
   {
    "address": 36353,
-   "name": "f_8E01",
+   "name": "map_wrap_x_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36354,
-   "name": "f_8E02",
+   "name": "map_wrap_x_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36464,
@@ -4175,9 +4721,9 @@
   },
   {
    "address": 36526,
-   "name": "f_8EAE",
+   "name": "stick_index_base",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36528,
@@ -4205,7 +4751,7 @@
   },
   {
    "address": 36532,
-   "name": "unused_screen_reset",
+   "name": "maze_restore",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -4343,9 +4889,9 @@
   },
   {
    "address": 36930,
-   "name": "f_9042",
+   "name": "teleport_dist_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36945,
@@ -4355,9 +4901,9 @@
   },
   {
    "address": 36946,
-   "name": "f_9052",
+   "name": "teleport_x_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36961,
@@ -4367,9 +4913,9 @@
   },
   {
    "address": 36962,
-   "name": "f_9062",
+   "name": "teleport_y_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 36977,
@@ -4427,9 +4973,9 @@
   },
   {
    "address": 37121,
-   "name": "a_9101",
+   "name": "player2_screen_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37122,
@@ -4439,9 +4985,9 @@
   },
   {
    "address": 37123,
-   "name": "a_9103",
+   "name": "player2_screen_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37124,
@@ -4451,9 +4997,9 @@
   },
   {
    "address": 37125,
-   "name": "a_9105",
+   "name": "player2_world_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37126,
@@ -4463,9 +5009,9 @@
   },
   {
    "address": 37127,
-   "name": "a_9107",
+   "name": "player2_world_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37128,
@@ -4529,9 +5075,9 @@
   },
   {
    "address": 37146,
-   "name": "f_911A",
+   "name": "hero_index_base",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37148,
@@ -4577,9 +5123,9 @@
   },
   {
    "address": 37155,
-   "name": "a_9123",
+   "name": "player2_other",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37156,
@@ -4595,9 +5141,9 @@
   },
   {
    "address": 37159,
-   "name": "a_9127",
+   "name": "player2_facing",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37160,
@@ -4631,21 +5177,21 @@
   },
   {
    "address": 37183,
-   "name": "a_913F",
+   "name": "sprite3_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37184,
-   "name": "a_9140",
+   "name": "sprite4_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37185,
-   "name": "a_9141",
+   "name": "sprite5_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37186,
@@ -4655,9 +5201,9 @@
   },
   {
    "address": 37187,
-   "name": "a_9143",
+   "name": "player2_sprite_x",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37188,
@@ -4667,21 +5213,21 @@
   },
   {
    "address": 37189,
-   "name": "a_9145",
+   "name": "sprite3_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37190,
-   "name": "a_9146",
+   "name": "sprite4_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37191,
-   "name": "a_9147",
+   "name": "sprite5_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37192,
@@ -4691,9 +5237,9 @@
   },
   {
    "address": 37193,
-   "name": "a_9149",
+   "name": "player2_sprite_y",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37194,
@@ -4703,9 +5249,9 @@
   },
   {
    "address": 37198,
-   "name": "f_914E",
+   "name": "player_x_high",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37200,
@@ -4721,15 +5267,15 @@
   },
   {
    "address": 37207,
-   "name": "a_9157",
+   "name": "sprite3_ptr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37208,
-   "name": "a_9158",
+   "name": "sprite4_ptr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 37212,
@@ -5159,9 +5705,9 @@
   },
   {
    "address": 38517,
-   "name": "s_9675",
+   "name": "follow_left",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38539,
@@ -5177,9 +5723,9 @@
   },
   {
    "address": 38549,
-   "name": "s_9695",
+   "name": "follow_right",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38571,
@@ -5195,9 +5741,9 @@
   },
   {
    "address": 38581,
-   "name": "s_96B5",
+   "name": "follow_up",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38603,
@@ -5213,9 +5759,9 @@
   },
   {
    "address": 38613,
-   "name": "s_96D5",
+   "name": "follow_down",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38635,
@@ -5315,9 +5861,9 @@
   },
   {
    "address": 38894,
-   "name": "f_97EE",
+   "name": "bit_masks",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38900,
@@ -5327,9 +5873,9 @@
   },
   {
    "address": 38902,
-   "name": "f_97F6",
+   "name": "clear_masks",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 38908,
@@ -5375,9 +5921,9 @@
   },
   {
    "address": 39133,
-   "name": "a_98DD",
+   "name": "level_name_text",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39139,
@@ -5405,39 +5951,39 @@
   },
   {
    "address": 39154,
-   "name": "a_98F2",
+   "name": "name_plyrs",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39163,
-   "name": "a_98FB",
+   "name": "name_objdis",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39169,
-   "name": "a_9901",
+   "name": "name_dittidata",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39182,
-   "name": "a_990E",
+   "name": "name_datatreasure",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39198,
-   "name": "a_991E",
+   "name": "name_player",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39210,
-   "name": "a_992A",
+   "name": "name_gaunt_chr",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39225,
@@ -5447,9 +5993,9 @@
   },
   {
    "address": 39226,
-   "name": "f_993A",
+   "name": "file_loads_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39241,
@@ -5471,9 +6017,9 @@
   },
   {
    "address": 39251,
-   "name": "f_9953",
+   "name": "file_name_ptrs_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39268,
@@ -5483,9 +6029,9 @@
   },
   {
    "address": 39272,
-   "name": "s_9968",
+   "name": "load_level_file",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39274,
@@ -5554,8 +6100,20 @@
    "kind": "user"
   },
   {
+   "address": 39468,
+   "name": "level_start_text",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 39471,
    "name": "arg_9A2F",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 39473,
+   "name": "level_start_end",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -5573,9 +6131,9 @@
   },
   {
    "address": 39505,
-   "name": "b_9A51",
+   "name": "level_messages_2",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39515,
@@ -5585,9 +6143,9 @@
   },
   {
    "address": 39517,
-   "name": "r_9A5D",
+   "name": "level_messages_end",
    "type": "Return",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39518,
@@ -5597,9 +6155,9 @@
   },
   {
    "address": 39519,
-   "name": "a_9A5F",
+   "name": "str_level_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39539,
@@ -5609,9 +6167,9 @@
   },
   {
    "address": 39540,
-   "name": "a_9A74",
+   "name": "str_level_lower_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 39560,
@@ -5951,45 +6509,45 @@
   },
   {
    "address": 40443,
-   "name": "f_9DFB",
+   "name": "power_shot_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40447,
-   "name": "f_9DFF",
+   "name": "power_fight_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40451,
-   "name": "f_9E03",
+   "name": "power_fight_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40455,
-   "name": "f_9E07",
+   "name": "base_shot_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40459,
-   "name": "f_9E0B",
+   "name": "base_shot_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40463,
-   "name": "f_9E0F",
+   "name": "base_fight_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40467,
-   "name": "f_9E13",
+   "name": "base_fight_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40471,
@@ -5999,33 +6557,33 @@
   },
   {
    "address": 40475,
-   "name": "f_9E1B",
+   "name": "armoured_damage_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40479,
-   "name": "f_9E1F",
+   "name": "armoured_damage_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40483,
-   "name": "f_9E23",
+   "name": "armoured_damage_4",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40487,
-   "name": "f_9E27",
+   "name": "armoured_damage_5",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40491,
-   "name": "f_9E2B",
+   "name": "armoured_damage_6",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40495,
@@ -6035,33 +6593,33 @@
   },
   {
    "address": 40499,
-   "name": "f_9E33",
+   "name": "base_damage_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40503,
-   "name": "f_9E37",
+   "name": "base_damage_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40507,
-   "name": "f_9E3B",
+   "name": "base_damage_4",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40511,
-   "name": "f_9E3F",
+   "name": "base_damage_5",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40515,
-   "name": "f_9E43",
+   "name": "base_damage_6",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40521,
@@ -6071,33 +6629,33 @@
   },
   {
    "address": 40525,
-   "name": "f_9E4D",
+   "name": "damage_taken_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40527,
-   "name": "f_9E4F",
+   "name": "damage_taken_3",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40533,
-   "name": "f_9E55",
+   "name": "damage_taken_4",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40537,
-   "name": "f_9E59",
+   "name": "damage_taken_5",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40541,
-   "name": "f_9E5D",
+   "name": "damage_taken_6",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40543,
@@ -6124,6 +6682,12 @@
    "kind": "user"
   },
   {
+   "address": 40585,
+   "name": "power_message_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 40591,
    "name": "arg_9E8F",
    "type": "AbsoluteAddress",
@@ -6131,9 +6695,15 @@
   },
   {
    "address": 40592,
-   "name": "a_9E90",
+   "name": "power_name_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 40593,
+   "name": "power_message_3",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 40605,
@@ -6143,9 +6713,9 @@
   },
   {
    "address": 40606,
-   "name": "f_9E9E",
+   "name": "power_names_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40617,
@@ -6155,39 +6725,39 @@
   },
   {
    "address": 40631,
-   "name": "a_9EB7",
+   "name": "str_extra_carry",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40655,
-   "name": "a_9ECF",
+   "name": "str_extra_magic",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40674,
-   "name": "a_9EE2",
+   "name": "str_extra_shot_power",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40692,
-   "name": "a_9EF4",
+   "name": "str_extra_shot_speed",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40710,
-   "name": "a_9F06",
+   "name": "str_extra_fight",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40729,
-   "name": "a_9F19",
+   "name": "str_now_has",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40738,
@@ -6239,21 +6809,21 @@
   },
   {
    "address": 40848,
-   "name": "s_9F90",
+   "name": "power_reset_call",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40849,
-   "name": "a_9F91",
+   "name": "power_reset_target",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40850,
-   "name": "a_9F92",
+   "name": "power_reset_target_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40854,
@@ -6263,9 +6833,9 @@
   },
   {
    "address": 40855,
-   "name": "f_9F97",
+   "name": "power_resets_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40866,
@@ -6311,9 +6881,9 @@
   },
   {
    "address": 40958,
-   "name": "f_9FFE",
+   "name": "magic_power_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40960,
@@ -6323,39 +6893,39 @@
   },
   {
    "address": 40962,
-   "name": "f_A002",
+   "name": "magic_base_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40966,
-   "name": "f_A006",
+   "name": "magic_base_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40970,
-   "name": "f_A00A",
+   "name": "magic_vs_generators",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40972,
-   "name": "f_A00C",
+   "name": "magic_value",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40974,
-   "name": "f_A00E",
+   "name": "magic_vs_monsters",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40976,
-   "name": "f_A010",
+   "name": "magic_value_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 40978,
@@ -6389,69 +6959,69 @@
   },
   {
    "address": 41022,
-   "name": "a_A03E",
+   "name": "tune_voice1_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41024,
-   "name": "a_A040",
+   "name": "tune_voice1_rest",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41030,
-   "name": "a_A046",
+   "name": "tune_voice1_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41031,
-   "name": "a_A047",
+   "name": "tune_voice2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41032,
-   "name": "a_A048",
+   "name": "tune_voice2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41034,
-   "name": "a_A04A",
+   "name": "tune_voice2_rest",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41040,
-   "name": "a_A050",
+   "name": "tune_voice2_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41041,
-   "name": "a_A051",
+   "name": "tune_voice3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41042,
-   "name": "a_A052",
+   "name": "tune_voice3_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41044,
-   "name": "a_A054",
+   "name": "tune_voice3_rest",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41050,
-   "name": "a_A05A",
+   "name": "tune_voice3_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41051,
@@ -6641,9 +7211,9 @@
   },
   {
    "address": 41570,
-   "name": "j_A262",
+   "name": "tune_reg_write",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41578,
@@ -6677,9 +7247,9 @@
   },
   {
    "address": 41631,
-   "name": "f_A29F",
+   "name": "note_freqs_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41822,
@@ -6695,9 +7265,9 @@
   },
   {
    "address": 41845,
-   "name": "a_A375",
+   "name": "hidden_glyph_src",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 41871,
@@ -6797,9 +7367,9 @@
   },
   {
    "address": 42105,
-   "name": "r_A479",
+   "name": "hidden_potion_end",
    "type": "Return",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42106,
@@ -6917,9 +7487,9 @@
   },
   {
    "address": 42533,
-   "name": "f_A625",
+   "name": "join_offsets_x",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42537,
@@ -6970,22 +7540,28 @@
    "kind": "user"
   },
   {
+   "address": 42669,
+   "name": "unused_side2_wait",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 42702,
-   "name": "a_A6CE",
+   "name": "str_insert_side2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42725,
-   "name": "a_A6E5",
+   "name": "str_press_space",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42747,
-   "name": "a_A6FB",
+   "name": "str_to_continue",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 42765,
@@ -7103,21 +7679,21 @@
   },
   {
    "address": 43093,
-   "name": "a_A855",
+   "name": "shot_type_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 43094,
-   "name": "a_A856",
+   "name": "shot_type_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 43095,
-   "name": "a_A857",
+   "name": "shot_type_3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 43096,
@@ -7517,63 +8093,63 @@
   },
   {
    "address": 44002,
-   "name": "a_ABE2",
+   "name": "rock_dx_half",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44003,
-   "name": "a_ABE3",
+   "name": "rock_dy",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44004,
-   "name": "a_ABE4",
+   "name": "rock_dy_half",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44005,
-   "name": "a_ABE5",
+   "name": "rock_long",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44006,
-   "name": "a_ABE6",
+   "name": "rock_short",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44007,
-   "name": "f_ABE7",
+   "name": "rock_steps",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44009,
-   "name": "f_ABE9",
+   "name": "rock_half",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44011,
-   "name": "f_ABEB",
+   "name": "rock_step_x",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44013,
-   "name": "f_ABED",
+   "name": "rock_step_y",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44015,
-   "name": "a_ABEF",
+   "name": "rock_swapped",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44016,
@@ -7894,8 +8470,20 @@
    "kind": "user"
   },
   {
+   "address": 44638,
+   "name": "treasure_result_none",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 44644,
    "name": "arg_AE64",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 44646,
+   "name": "treasure_result_rows",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -7906,14 +8494,32 @@
    "kind": "auto"
   },
   {
+   "address": 44678,
+   "name": "treasure_result_bcd",
+   "type": "Subroutine",
+   "kind": "user"
+  },
+  {
    "address": 44732,
    "name": "arg_AEBC",
    "type": "UserDefined",
    "kind": "user"
   },
   {
+   "address": 44734,
+   "name": "treasure_result_got",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 44740,
    "name": "arg_AEC4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 44742,
+   "name": "treasure_result_end",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -7925,9 +8531,9 @@
   },
   {
    "address": 44753,
-   "name": "f_AED1",
+   "name": "hero_name_ptrs_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44760,
@@ -7937,21 +8543,21 @@
   },
   {
    "address": 44770,
-   "name": "a_AEE2",
+   "name": "str_valkyrie",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44780,
-   "name": "a_AEEC",
+   "name": "str_wizard",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44788,
-   "name": "a_AEF4",
+   "name": "str_elf",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44794,
@@ -7961,69 +8567,69 @@
   },
   {
    "address": 44795,
-   "name": "a_AEFB",
+   "name": "str_treasures_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44808,
-   "name": "a_AF08",
+   "name": "treasures_digit_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44809,
-   "name": "a_AF09",
+   "name": "treasures_digit_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44810,
-   "name": "a_AF0A",
+   "name": "str_bonus",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44811,
-   "name": "a_AF0B",
+   "name": "str_bonus_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44820,
-   "name": "a_AF14",
+   "name": "bonus_digit_1",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44821,
-   "name": "a_AF15",
+   "name": "bonus_digit_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44824,
-   "name": "a_AF18",
+   "name": "str_no_bonus",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44825,
-   "name": "a_AF19",
+   "name": "str_no_bonus_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44834,
-   "name": "a_AF22",
+   "name": "str_you_lose",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44835,
-   "name": "a_AF23",
+   "name": "str_you_lose_colour",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44856,
@@ -8033,9 +8639,9 @@
   },
   {
    "address": 44857,
-   "name": "a_AF39",
+   "name": "escaped_p2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44858,
@@ -8045,9 +8651,9 @@
   },
   {
    "address": 44859,
-   "name": "a_AF3B",
+   "name": "treasures_got_p2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44860,
@@ -8063,21 +8669,21 @@
   },
   {
    "address": 44862,
-   "name": "f_AF3E",
+   "name": "text_rows_colour_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44865,
-   "name": "f_AF41",
+   "name": "text_rows_screen",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44866,
-   "name": "f_AF42",
+   "name": "text_rows_screen_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 44869,
@@ -8129,15 +8735,15 @@
   },
   {
    "address": 45033,
-   "name": "text_row",
+   "name": "text_row_players",
    "type": "Subroutine",
    "kind": "user"
   },
   {
    "address": 45043,
-   "name": "s_AFF3",
+   "name": "text_row",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45064,
@@ -8200,14 +8806,32 @@
    "kind": "user"
   },
   {
+   "address": 45240,
+   "name": "treasure_intro_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 45246,
    "name": "arg_B0BE",
    "type": "UserDefined",
    "kind": "user"
   },
   {
+   "address": 45248,
+   "name": "treasure_intro_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 45251,
    "name": "arg_B0C3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 45253,
+   "name": "treasure_intro_4",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -8237,15 +8861,15 @@
   },
   {
    "address": 45329,
-   "name": "a_B111",
+   "name": "str_treasure_room_top",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45357,
-   "name": "a_B12D",
+   "name": "str_treasure_room_bottom",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 45385,
@@ -8267,9 +8891,15 @@
   },
   {
    "address": 45413,
-   "name": "a_B165",
+   "name": "hero_name_arg_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 45414,
+   "name": "print_hero_name_end",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 45418,
@@ -8681,21 +9311,21 @@
   },
   {
    "address": 46308,
-   "name": "f_B4E4",
+   "name": "door_pos_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46309,
-   "name": "a_B4E5",
+   "name": "door_pos_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46310,
-   "name": "a_B4E6",
+   "name": "door_pos_2_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46311,
@@ -8909,9 +9539,9 @@
   },
   {
    "address": 46702,
-   "name": "a_B66E",
+   "name": "facing_hold_p2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46703,
@@ -9011,15 +9641,15 @@
   },
   {
    "address": 46952,
-   "name": "a_B768",
+   "name": "pickup_target",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46953,
-   "name": "a_B769",
+   "name": "pickup_target_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 46954,
@@ -9053,9 +9683,15 @@
   },
   {
    "address": 47045,
-   "name": "a_B7C5",
+   "name": "poison_name_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 47046,
+   "name": "poison_eaten_2",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 47052,
@@ -9064,8 +9700,20 @@
    "kind": "user"
   },
   {
+   "address": 47054,
+   "name": "poison_eaten_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 47060,
    "name": "arg_B7D4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 47062,
+   "name": "poison_eaten_4",
    "type": "UserDefined",
    "kind": "user"
   },
@@ -9077,9 +9725,9 @@
   },
   {
    "address": 47098,
-   "name": "a_B7FA",
+   "name": "str_poisoned_food",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 47114,
@@ -9113,9 +9761,9 @@
   },
   {
    "address": 47158,
-   "name": "f_B836",
+   "name": "pickup_routines_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 47187,
@@ -9185,9 +9833,9 @@
   },
   {
    "address": 47399,
-   "name": "f_B927",
+   "name": "score_index_base",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 47400,
@@ -9527,9 +10175,9 @@
   },
   {
    "address": 48120,
-   "name": "r_BBF8",
+   "name": "monster_on_screen_out",
    "type": "Return",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 48121,
@@ -9584,6 +10232,12 @@
    "name": "b_BC89",
    "type": "Branch",
    "kind": "auto"
+  },
+  {
+   "address": 48283,
+   "name": "death_drain",
+   "type": "Subroutine",
+   "kind": "user"
   },
   {
    "address": 48310,
@@ -9929,21 +10583,21 @@
   },
   {
    "address": 49105,
-   "name": "s_BFD1",
+   "name": "turn_call",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49106,
-   "name": "a_BFD2",
+   "name": "turn_target",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49107,
-   "name": "a_BFD3",
+   "name": "turn_target_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49119,
@@ -9971,9 +10625,9 @@
   },
   {
    "address": 49139,
-   "name": "f_BFF3",
+   "name": "turn_routines_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 49146,
@@ -10445,9 +11099,9 @@
   },
   {
    "address": 50404,
-   "name": "b_C4E4",
+   "name": "lobber_shoot",
    "type": "Branch",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 50425,
@@ -10685,21 +11339,21 @@
   },
   {
    "address": 51066,
-   "name": "s_C77A",
+   "name": "wall_join_down",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51069,
-   "name": "s_C77D",
+   "name": "wall_join_right",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51072,
-   "name": "s_C780",
+   "name": "wall_join_up",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51088,
@@ -10901,21 +11555,21 @@
   },
   {
    "address": 51636,
-   "name": "s_C9B4",
+   "name": "wall_unjoin_down",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51639,
-   "name": "s_C9B7",
+   "name": "wall_unjoin_right",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51642,
-   "name": "s_C9BA",
+   "name": "wall_unjoin_up",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51650,
@@ -10943,9 +11597,9 @@
   },
   {
    "address": 51688,
-   "name": "f_C9E8",
+   "name": "wall_steps_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51703,
@@ -10955,9 +11609,9 @@
   },
   {
    "address": 51704,
-   "name": "f_C9F8",
+   "name": "wall_join_bits_opp",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 51711,
@@ -11717,15 +12371,15 @@
   },
   {
    "address": 57344,
-   "name": "s_E000",
+   "name": "music_play",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57347,
-   "name": "s_E003",
+   "name": "music_init",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57354,
@@ -11747,9 +12401,9 @@
   },
   {
    "address": 57374,
-   "name": "s_E01E",
+   "name": "music_frame",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57394,
@@ -11783,15 +12437,15 @@
   },
   {
    "address": 57493,
-   "name": "a_E095",
+   "name": "music_cmd_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57494,
-   "name": "a_E096",
+   "name": "music_cmd_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57501,
@@ -11837,9 +12491,9 @@
   },
   {
    "address": 57574,
-   "name": "s_E0E6",
+   "name": "music_note_step",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57615,
@@ -11903,9 +12557,9 @@
   },
   {
    "address": 57828,
-   "name": "j_E1E4",
+   "name": "music_setup",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57835,
@@ -11927,15 +12581,15 @@
   },
   {
    "address": 57915,
-   "name": "s_E23B",
+   "name": "music_stop",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57920,
-   "name": "s_E240",
+   "name": "music_silence",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 57922,
@@ -11944,10 +12598,238 @@
    "kind": "auto"
   },
   {
-   "address": 58209,
-   "name": "s_E361",
-   "type": "Subroutine",
+   "address": 57936,
+   "name": "music_cmd_volume",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 57940,
+   "name": "music_cmd_ctrl",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 57944,
+   "name": "music_cmd_ad",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 57948,
+   "name": "music_cmd_sr",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 57952,
+   "name": "music_cmd_repeat_a",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 57969,
+   "name": "b_E271",
+   "type": "Branch",
    "kind": "auto"
+  },
+  {
+   "address": 57988,
+   "name": "b_E284",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 57992,
+   "name": "music_cmd_mark_a",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58003,
+   "name": "music_cmd_repeat_b",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58020,
+   "name": "b_E2A4",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 58039,
+   "name": "b_E2B7",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 58043,
+   "name": "music_cmd_mark_b",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58054,
+   "name": "music_cmd_transpose",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58058,
+   "name": "music_cmd_vib_speed",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58062,
+   "name": "music_cmd_slide_hi",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58066,
+   "name": "music_cmd_slide_lo",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58070,
+   "name": "music_cmd_pulse",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58074,
+   "name": "music_cmd_gate_time",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58085,
+   "name": "b_E2E5",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 58089,
+   "name": "music_cmd_arp_a",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58093,
+   "name": "music_cmd_wave",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58104,
+   "name": "b_E2F8",
+   "type": "Branch",
+   "kind": "auto"
+  },
+  {
+   "address": 58108,
+   "name": "music_cmd_effect",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58112,
+   "name": "music_cmd_slide",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58116,
+   "name": "music_cmd_pulse_sweep",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58120,
+   "name": "music_cmd_slide_delay",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58124,
+   "name": "music_cmd_vib_depth",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58141,
+   "name": "music_cmd_sweep_len",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58145,
+   "name": "music_cmd_resonance",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58149,
+   "name": "music_cmd_tempo_reset",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58153,
+   "name": "music_cmd_transpose_add",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58161,
+   "name": "music_cmd_volume_add",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58169,
+   "name": "music_cmd_arp_2",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58173,
+   "name": "music_cmd_tempo",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58189,
+   "name": "music_cmd_arp_1",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58193,
+   "name": "music_cmd_fine",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58197,
+   "name": "music_cmd_sweep_rate",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58201,
+   "name": "music_cmd_length_add",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 58209,
+   "name": "music_slide_start",
+   "type": "Subroutine",
+   "kind": "user"
   },
   {
    "address": 58223,
@@ -11957,9 +12839,9 @@
   },
   {
    "address": 58224,
-   "name": "s_E370",
+   "name": "music_vibrato",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58266,
@@ -11987,9 +12869,9 @@
   },
   {
    "address": 58299,
-   "name": "s_E3BB",
+   "name": "music_waveform",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58318,
@@ -12023,9 +12905,9 @@
   },
   {
    "address": 58353,
-   "name": "s_E3F1",
+   "name": "music_arpeggio",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58364,
@@ -12053,9 +12935,9 @@
   },
   {
    "address": 58404,
-   "name": "s_E424",
+   "name": "music_pulse_sweep",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58415,
@@ -12095,15 +12977,15 @@
   },
   {
    "address": 58481,
-   "name": "s_E471",
+   "name": "music_pulse_up",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58502,
-   "name": "s_E486",
+   "name": "music_pulse_down",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58520,
@@ -12119,9 +13001,9 @@
   },
   {
    "address": 58527,
-   "name": "j_E49F",
+   "name": "music_slide",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58551,
@@ -12155,15 +13037,15 @@
   },
   {
    "address": 58614,
-   "name": "s_E4F6",
+   "name": "music_slide_up",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58633,
-   "name": "s_E509",
+   "name": "music_slide_down",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58649,
@@ -12179,15 +13061,15 @@
   },
   {
    "address": 58664,
-   "name": "j_E528",
+   "name": "music_freq_out",
    "type": "Jump",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58677,
-   "name": "s_E535",
+   "name": "music_freq",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58679,
@@ -12221,9 +13103,9 @@
   },
   {
    "address": 58743,
-   "name": "s_E577",
+   "name": "music_next",
    "type": "Subroutine",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58754,
@@ -12232,442 +13114,586 @@
    "kind": "auto"
   },
   {
+   "address": 58755,
+   "name": "music_pad",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
    "address": 58756,
-   "name": "f_E584",
+   "name": "music_state",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58757,
-   "name": "a_E585",
+   "name": "music_tempo_voice",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58758,
-   "name": "f_E586",
+   "name": "music_voice_freq_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58759,
-   "name": "f_E587",
+   "name": "music_voice_freq_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58760,
-   "name": "f_E588",
+   "name": "music_voice_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58761,
-   "name": "f_E589",
+   "name": "music_voice_arp_limit",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58762,
-   "name": "f_E58A",
+   "name": "music_voice_arp_a",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58763,
-   "name": "f_E58B",
+   "name": "music_voice_wave",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58764,
-   "name": "f_E58C",
+   "name": "music_voice_effect",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58778,
-   "name": "f_E59A",
+   "name": "music_stream_base_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58779,
-   "name": "a_E59B",
+   "name": "music_tempo_frac",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58780,
-   "name": "a_E59C",
+   "name": "music_tempo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58781,
-   "name": "a_E59D",
+   "name": "music_tempo_reset",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58782,
-   "name": "f_E59E",
+   "name": "music_slide_mode",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58785,
-   "name": "f_E5A1",
+   "name": "music_target_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58788,
-   "name": "f_E5A4",
+   "name": "music_target_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58791,
-   "name": "f_E5A7",
+   "name": "music_slide_delay",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58794,
-   "name": "f_E5AA",
+   "name": "music_note_frames",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58797,
-   "name": "f_E5AD",
+   "name": "music_sweep_max",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58800,
-   "name": "f_E5B0",
+   "name": "music_sweep_step",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58803,
-   "name": "f_E5B3",
+   "name": "music_arp_phase",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58806,
-   "name": "f_E5B6",
+   "name": "music_arp_1",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58809,
-   "name": "f_E5B9",
+   "name": "music_arp_2",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58812,
-   "name": "f_E5BC",
+   "name": "music_arp2_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58815,
-   "name": "f_E5BF",
+   "name": "music_arp2_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58818,
-   "name": "f_E5C2",
+   "name": "music_tick",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58821,
-   "name": "f_E5C5",
+   "name": "music_ticks",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58824,
-   "name": "f_E5C8",
+   "name": "music_fine",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58827,
-   "name": "f_E5CB",
+   "name": "music_sweep_rate",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58830,
-   "name": "f_E5CE",
+   "name": "music_note_long",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58833,
-   "name": "f_E5D1",
+   "name": "music_sweep_count",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58836,
-   "name": "f_E5D4",
+   "name": "music_sweep_phase",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58839,
-   "name": "f_E5D7",
+   "name": "music_vib_dir",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58842,
-   "name": "f_E5DA",
+   "name": "music_vib_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58845,
-   "name": "f_E5DD",
+   "name": "music_vib_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 58848,
+   "name": "music_repeat_a_on",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58851,
+   "name": "music_repeat_b_on",
+   "type": "Field",
+   "kind": "user"
   },
   {
    "address": 58854,
-   "name": "f_E5E6",
+   "name": "music_transpose",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58857,
-   "name": "f_E5E9",
+   "name": "music_slide_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58860,
-   "name": "f_E5EC",
+   "name": "music_slide_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58863,
-   "name": "f_E5EF",
+   "name": "music_sr",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58866,
-   "name": "f_E5F2",
+   "name": "music_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58869,
-   "name": "f_E5F5",
+   "name": "music_pulse",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58872,
-   "name": "f_E5F8",
+   "name": "music_ad",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58875,
-   "name": "f_E5FB",
+   "name": "music_vib_step",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 58878,
+   "name": "music_repeat_a_left",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58881,
+   "name": "music_repeat_b_left",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58884,
+   "name": "music_mark_a_lo",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58887,
+   "name": "music_mark_a_hi",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58890,
+   "name": "music_mark_b_lo",
+   "type": "Field",
+   "kind": "user"
+  },
+  {
+   "address": 58893,
+   "name": "music_mark_b_hi",
+   "type": "Field",
+   "kind": "user"
   },
   {
    "address": 58896,
-   "name": "a_E610",
+   "name": "music_work",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58898,
-   "name": "a_E612",
+   "name": "music_freq_hi",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58899,
-   "name": "a_E613",
+   "name": "music_freq_lo",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58900,
-   "name": "f_E614",
+   "name": "music_note_count",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58903,
-   "name": "f_E617",
+   "name": "music_stream_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58906,
-   "name": "f_E61A",
+   "name": "music_stream_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58909,
-   "name": "f_E61D",
+   "name": "music_sweep_len",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58912,
-   "name": "f_E620",
+   "name": "music_voice_offsets",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58914,
-   "name": "f_E622",
+   "name": "music_wave_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58920,
-   "name": "f_E628",
+   "name": "music_freq_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58921,
-   "name": "f_E629",
+   "name": "music_freq_table_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58944,
-   "name": "f_E640",
+   "name": "music_gate_time",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58945,
-   "name": "a_E641",
+   "name": "music_gate_time_2",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58946,
-   "name": "a_E642",
+   "name": "music_gate_time_3",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58947,
-   "name": "f_E643",
+   "name": "music_commands",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 58948,
-   "name": "f_E644",
+   "name": "music_commands_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59013,
-   "name": "f_E685",
+   "name": "sid_shadow",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59014,
-   "name": "f_E686",
+   "name": "sid_shadow_freq_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59015,
-   "name": "f_E687",
+   "name": "sid_shadow_pw_lo",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59016,
-   "name": "f_E688",
+   "name": "sid_shadow_pw_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59017,
-   "name": "f_E689",
+   "name": "sid_shadow_ctrl",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59018,
-   "name": "f_E68A",
+   "name": "sid_shadow_ad",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59019,
-   "name": "f_E68B",
+   "name": "sid_shadow_sr",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59034,
-   "name": "a_E69A",
+   "name": "music_tempo_count",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 59035,
-   "name": "a_E69B",
+   "name": "music_tempo_whole",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 59036,
+   "name": "sid_shadow_res",
+   "type": "AbsoluteAddress",
+   "kind": "user"
+  },
+  {
+   "address": 59037,
+   "name": "sid_shadow_vol",
+   "type": "AbsoluteAddress",
+   "kind": "user"
   },
   {
    "address": 59038,
-   "name": "a_E69E",
+   "name": "music_on",
    "type": "AbsoluteAddress",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 59039,
+   "name": "music_file_tail",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59392,
+   "name": "tune_treasure",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59648,
+   "name": "tune_treasure_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 59904,
+   "name": "tune_jingle",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 61440,
-   "name": "f_F000",
+   "name": "sfx_table",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 61441,
-   "name": "f_F001",
+   "name": "sfx_table_hi",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 61476,
+   "name": "sfx_streams",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 61696,
+   "name": "sfx_streams_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 61952,
+   "name": "sfx_streams_3",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62208,
+   "name": "sfx_streams_4",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62443,
+   "name": "sfx_tail",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62464,
+   "name": "tile_chars",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62720,
+   "name": "tile_chars_2",
+   "type": "UserDefined",
+   "kind": "user"
+  },
+  {
+   "address": 62976,
+   "name": "tile_colours",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 62980,
-   "name": "f_F604",
+   "name": "tile_colours_walls",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
   },
   {
    "address": 63180,
-   "name": "f_F6CC",
+   "name": "tile_colours_cracked",
    "type": "Field",
-   "kind": "auto"
+   "kind": "user"
+  },
+  {
+   "address": 63232,
+   "name": "tile_colours_monsters",
+   "type": "UserDefined",
+   "kind": "user"
   },
   {
    "address": 65466,
@@ -12698,9 +13724,270 @@
    "name": "KERNAL_PLOT",
    "type": "Predefined",
    "kind": "system"
+  },
+  {
+   "address": 65530,
+   "name": "hw_vectors",
+   "type": "UserDefined",
+   "kind": "user"
   }
  ],
  "comments": [
+  {
+   "address": 2560,
+   "type": "line",
+   "text": "Level 1's file as it loads into the level buffer ($0A00, file LEVEL 001): the file's length less 2 ($4F), with bit 7 of $0A02 as its ninth bit. A longer level file fills more of the buffer."
+  },
+  {
+   "address": 2561,
+   "type": "line",
+   "text": "The level header's flags: bit 7 the maze wraps left and right, bit 6 top and bottom, bit 0 shots hurt the other player, bit 1 they stun, bit 2 only one exit (at random), bits 3-5 the maze's look (maze_style). Level 1 has none."
+  },
+  {
+   "address": 2562,
+   "type": "line",
+   "text": "The level header's wall colour in bits 3-5 (maze_style_colours) and the length's ninth bit in bit 7."
+  },
+  {
+   "address": 2563,
+   "type": "line",
+   "text": "How many bytes of wall commands follow the header ($0A in level 1)."
+  },
+  {
+   "address": 2564,
+   "type": "line",
+   "text": "Level 1's wall commands ($0A04-$0A0D): a pair starts a line at a tile (kind in the first byte's top three bits, column and row in the low five), each byte after it extends the line (direction in the top three bits, length - 1 in the low five)."
+  },
+  {
+   "address": 2565,
+   "type": "line",
+   "text": "The second byte of the wall commands, which wall_same_kind and wall_start read as a pair with the first."
+  },
+  {
+   "address": 2574,
+   "type": "line",
+   "text": "Level 1's objects ($0A0E-$0A50): run-length coded tiles from the top-left of the grid (a byte from $80 skips tiles, a smaller one is a tile, repeated when the byte after it is below $13); tiles from $40 are monsters, $3F the players' start."
+  },
+  {
+   "address": 4096,
+   "type": "line",
+   "text": "The file DATATITLE 244, left at $1000 by the title and selection programs (which load it at $6400 and move it): tune data for the music player at $E000, the title music. Nothing in the play program reads it."
+  },
+  {
+   "address": 4265,
+   "type": "line",
+   "text": "A byte inside DATATITLE whose address is also the operand of the BITs at $9CE2 and $AC65, which hide an instruction; those BITs read it and nothing uses the result. The tune data goes on."
+  },
+  {
+   "address": 5000,
+   "type": "line",
+   "text": "The file PINN232 5000: a cable link for moving memory between this machine and another through the user port, called from BASIC (SYS 5000 receives a block, SYS 5003 receives several, SYS 5006 sends one). The game loads it with its other files and never calls it; it looks like a tool the developers used and left on the disk. Three JMPs: 5000, 5003, 5006."
+  },
+  {
+   "address": 5009,
+   "type": "line",
+   "text": "SYS 5003,n: receives n blocks, each to the address its own header gives."
+  },
+  {
+   "address": 5030,
+   "type": "line",
+   "text": "SYS 5006,address,length: sends the block: a nine-byte header from $0402 (its first byte 3, then the length and the address), then the bytes, with the screen blanked and interrupts off; the border colour changes with each byte."
+  },
+  {
+   "address": 5162,
+   "type": "line",
+   "text": "Sends one byte, inverted, as a frame of bits: each bit is put on CIA 2 port A bit 2 (user port PA2) after the other side has signalled on port B bit 6, with a short delay between bits; the border colour steps on."
+  },
+  {
+   "address": 5256,
+   "type": "line",
+   "text": "A short delay (12 loops) between bits."
+  },
+  {
+   "address": 5262,
+   "type": "line",
+   "text": "Takes a number from the BASIC statement into A (low byte, from $65) and Y (high, from $64), by calling two BASIC ROM routines, $AE86 and $BC9B. What those do was not checked here: the snapshot holds the RAM beneath the ROM, where the game has its own code."
+  },
+  {
+   "address": 5273,
+   "type": "line",
+   "text": "SYS 5000,address: receives a block. The nine-byte header comes first, into $0402; a non-zero address from the statement replaces the header's; then the bytes, to that address, with the screen blanked and interrupts off."
+  },
+  {
+   "address": 5276,
+   "type": "line",
+   "text": "The block receive for an address in A/Y (pinn_receive_many calls it with 0, the header's own address)."
+  },
+  {
+   "address": 5409,
+   "type": "line",
+   "text": "Receives one byte: raises the handshake on port B bit 1, waits for the start bit on port B bit 0, then shifts in the bits from port B bit 0 into $040B, and inverts the result; the border colour steps on."
+  },
+  {
+   "address": 5476,
+   "type": "line",
+   "text": "A short delay (13 loops) between received bits."
+  },
+  {
+   "address": 5482,
+   "type": "line",
+   "text": "A longer delay (256 short ones) before a block is sent."
+  },
+  {
+   "address": 5491,
+   "type": "line",
+   "text": "The rest of the file PINN232 5000 after its code: 141 bytes in the pattern of unwritten memory, saved with it."
+  },
+  {
+   "address": 18432,
+   "type": "line",
+   "text": "The first of the three maze fonts (font select 2, from the file GAUNT CHR $4800): 256 multicolour glyphs. $00 is the floor and $01-$5A the maze's other pieces (the walls' brick joins, doors, treasure, food, potions, keys, generators, the trap, the transporter, the exits), four glyphs to a tile (tile_chars). $5B looks like floor and marks a cell as occupied (cell_mark). The rest are the monsters, four glyphs to a facing: the lobber $5C-$5F (one picture for every facing), ghosts $60-$7F, grunts $80-$9F, demons $A0-$BF, sorcerers $C0-$DF, Death $E0-$FF. panel_flash cycles the three fonts, which differ in the monsters' glyphs, so every monster on screen animates at once."
+  },
+  {
+   "address": 18440,
+   "type": "line",
+   "text": "Glyphs 1-12 of the first maze font, which maze_style rewrites per level from one of the style blocks at $6408-$6567 (the walls' look)."
+  },
+  {
+   "address": 18800,
+   "type": "line",
+   "text": "Glyphs $2E and $2F of the first maze font, which hidden_potion_place rewrites with the hidden potion's picture."
+  },
+  {
+   "address": 19456,
+   "type": "line",
+   "text": "The first maze font's glyphs $80-$FF: grunts, demons, sorcerers and Death, frame one."
+  },
+  {
+   "address": 20480,
+   "type": "line",
+   "text": "The second maze font (font select 4): the same maze pieces with the monsters in their second frame."
+  },
+  {
+   "address": 20488,
+   "type": "line",
+   "text": "Glyphs 1-12 of the second maze font, rewritten by maze_style."
+  },
+  {
+   "address": 20848,
+   "type": "line",
+   "text": "The hidden potion's glyphs in the second maze font."
+  },
+  {
+   "address": 21504,
+   "type": "line",
+   "text": "The second maze font's glyphs $80-$FF: grunts, demons, sorcerers and Death, frame two."
+  },
+  {
+   "address": 22528,
+   "type": "line",
+   "text": "The third maze font (font select 6): the monsters in their third frame."
+  },
+  {
+   "address": 22536,
+   "type": "line",
+   "text": "Glyphs 1-12 of the third maze font, rewritten by maze_style."
+  },
+  {
+   "address": 22896,
+   "type": "line",
+   "text": "The hidden potion's glyphs in the third maze font."
+  },
+  {
+   "address": 23552,
+   "type": "line",
+   "text": "The third maze font's glyphs $80-$FF: grunts, demons, sorcerers and Death, frame three."
+  },
+  {
+   "address": 24576,
+   "type": "line",
+   "text": "The panel and message font (font select 8 at $6000, hires): glyph n draws ASCII n + $20 for letters and digits; its own glyphs are the inventory icons ($01-$0F), SCORE ($1A-$1F), ELF ($3B-$3E), the GAUNTLET logo ($40-$6F), WARRIOR ($70-$77), and the big letters of the LEVEL and TREASURE ROOM titles (top halves from $C1, bottom halves from $E1)."
+  },
+  {
+   "address": 25600,
+   "type": "line",
+   "text": "The panel font's glyphs $80-$FF; maze_style takes its wall styles from here ($6408, $6468, $6508) and hidden_potion_place its potion pictures ($6580)."
+  },
+  {
+   "address": 25704,
+   "type": "line",
+   "text": "One of maze_style's 96-byte wall styles."
+  },
+  {
+   "address": 25984,
+   "type": "line",
+   "text": "The six special potions' pictures, 16 bytes (two glyphs) each, for hidden_potion_place."
+  },
+  {
+   "address": 26624,
+   "type": "line",
+   "text": "Sprite shapes $A0-$BF (in video bank 1): $A0 the solid block the side masks use, $A1 a short bar, $A2-$AB the digits 0-9 (the level number and the treasure clock), $AC-$AF a lobbed rock rising, $B0-$B5 growing clouds, $B6-$B7 striped bars, $B8-$BF a fireball in eight directions."
+  },
+  {
+   "address": 27648,
+   "type": "line",
+   "text": "Shapes $B0-$BF: the clouds, the bars and (from $6E00) the fireball, which the start-up copied there from $7400."
+  },
+  {
+   "address": 28160,
+   "type": "line",
+   "text": "The fireball's eight shapes ($B8-$BF), copied here from the font file at load (shapes_7400_to_6E00)."
+  },
+  {
+   "address": 28416,
+   "type": "line",
+   "text": "The last four fireball shapes."
+  },
+  {
+   "address": 28672,
+   "type": "line",
+   "text": "Player one's hero's sprite shapes $C0-$DF, copied from PLYRS.SPR at load (hero_copy_chars): $C0-$D7 walking, eight facings in three frames (anim_frames 0, 8, 16), and $D8-$DF the hero's shot in eight directions (put back from $1800 at each level start)."
+  },
+  {
+   "address": 28704,
+   "type": "line",
+   "text": "The hero's shapes from $C0 + 32 bytes on: the rest of the first walking frames."
+  },
+  {
+   "address": 29696,
+   "type": "line",
+   "text": "Shapes $D0-$D7, the hero's third walking frame."
+  },
+  {
+   "address": 29952,
+   "type": "line",
+   "text": "Shapes $D4-$D7."
+  },
+  {
+   "address": 30208,
+   "type": "line",
+   "text": "Shapes $D8-$DF: player one's hero's shot in eight directions, put here from $1800 at each level start (shapes_from_1800); the end of exit_spin shows them as the player shrinking into the exit."
+  },
+  {
+   "address": 30464,
+   "type": "line",
+   "text": "The last four of player one's shot shapes."
+  },
+  {
+   "address": 30720,
+   "type": "line",
+   "text": "Player two's hero's sprite shapes $E0-$FF, laid out like player one's: $E0-$F7 walking, $F8-$FF the shot."
+  },
+  {
+   "address": 31744,
+   "type": "line",
+   "text": "Shapes $F0-$F7: player two's third walking frame."
+  },
+  {
+   "address": 32256,
+   "type": "line",
+   "text": "Shapes $F8-$FF: player two's shot in eight directions."
+  },
+  {
+   "address": 32512,
+   "type": "line",
+   "text": "The last four of player two's shot shapes."
+  },
   {
    "address": 32768,
    "type": "line",
@@ -12712,6 +13999,36 @@
    "text": "Thirteen zero bytes between the entry jump and the start-up; nothing in the game reads them."
   },
   {
+   "address": 32787,
+   "type": "line",
+   "text": "The start-up, run once after the hand-over. Turns the music player off, sets level_number to 1 and installs the interrupts. Unless the files are already in (heroes_loaded), hands the interrupts to the KERNAL, blanks the screen, loads all eight files (load_files), takes the interrupts back and picks level 8's file at random. Then starts CIA 1's timers, blanks the screen, copies the heroes' graphics (heroes_load_shapes), clears the screens, starts the tune player, resets the sound effects, starts the side masks, resets the game (game_reset), waits, sets multicolour text, video bank 1, screen $4000, the panel font at $6000, colours the panel, sets the treasure-room countdown to 5, shows the screen, and falls into game_start."
+  },
+  {
+   "address": 32913,
+   "type": "line",
+   "text": "A new game: clears the screens, counts from level 1, waits for a first player to press fire (wait_first_player), draws the panel and its digits, and goes on to the first level (level_begin). game_over_check comes back here when every player is gone."
+  },
+  {
+   "address": 32933,
+   "type": "line",
+   "text": "Starts a level: no scroll, the pass counter cleared, the screen cleared; loads the level (level_start), builds it (level_build), picks the exits (exits_pick_one), moves Death to the front (deaths_first), draws the grid, sets the special exits, draws the monsters, hides a potion and scatters the extras, places the screen and players (level_place_players), restores the heroes' shapes (shapes_from_1800), sets the fine scrolls and the screens, draws the maze, moves the monsters once, waits for line $70 and plays sound 3; then runs the treasure-room loop ($8120) for a treasure room or the play loop ($818B) for any other level."
+  },
+  {
+   "address": 33056,
+   "type": "line",
+   "text": "One pass of a treasure room: waits for line $40, redraws the maze and its colours, counts the pass ($824B), fires and moves the shots against tiles, players and monsters, and on a pass with no change of scroll starts the room's tune (treasure_start), the pickups and the panel; then joins, the amulet, the clock (treasure_clock) and the leave timers. When the clock runs out the room ends (treasure_end); when every player in it has left by its exit, the next level begins."
+  },
+  {
+   "address": 33163,
+   "type": "line",
+   "text": "One pass of an ordinary level: waits for line $40, redraws the maze and its colours, counts the pass ($824B), fires the players' shots, and on a pass with no change of scroll: the shots against tiles, players and monsters, the magic keys, the generators, the monsters, a pending trap, the pickups, the doors, the panel, the amulet, the idle timer, joining players and the leave timers. While a player in the game has not left, it loops; then game_over_check, and the next level."
+  },
+  {
+   "address": 33186,
+   "type": "line",
+   "text": "Part of the play loop (the scroll test). Its address is also the operand of a BIT at $CE68 that hides an instruction, which is why it carries a symbol."
+  },
+  {
    "address": 33268,
    "type": "line",
    "text": "Sets the frame flag $8264 and waits for raster line $40 (wait_raster); clears $8248. Used between steps of the start-up and screen changes to let a frame pass."
@@ -12720,6 +14037,146 @@
    "address": 33284,
    "type": "line",
    "text": "Resets per-level state before play starts: all sprites enabled in the copy $9111, the two players' status bytes $9120/$9121 cleared of bits 6 and 7, $912C/$912D set to $C0/$E0, and the counters at $B66B/$B66C, $AF38-$AF3B, $B4E7, $B4E9 and $B65A cleared; $B65B is reloaded from $B65C."
+  },
+  {
+   "address": 33351,
+   "type": "line",
+   "text": "Counted up by the raster interrupt every frame; wait_64_frames waits on it, and routines use it to run every fourth or 64th frame."
+  },
+  {
+   "address": 33352,
+   "type": "line",
+   "text": "A second frame counter, cleared by wait_frame_40."
+  },
+  {
+   "address": 33353,
+   "type": "line",
+   "text": "Set while the tune player should run from the raster interrupt (level_intro, treasure_start)."
+  },
+  {
+   "address": 33354,
+   "type": "line",
+   "text": "The monster slot being handled."
+  },
+  {
+   "address": 33355,
+   "type": "line",
+   "text": "Counts the main loop's passes in a level; monsters_run, generators_run and others use its low bits to spread their work over passes."
+  },
+  {
+   "address": 33356,
+   "type": "line",
+   "text": "Counted up every frame by the raster interrupt; exit_enter clears $824C,x (this and the next byte) for a player going into an exit."
+  },
+  {
+   "address": 33357,
+   "type": "line",
+   "text": "Counted up every frame with $824C."
+  },
+  {
+   "address": 33358,
+   "type": "line",
+   "text": "The index of the last monster in the table ($FF for none): up to $BF, 192 monsters."
+  },
+  {
+   "address": 33360,
+   "type": "line",
+   "text": "The screen being shown, as $D018's high nibble: $00 for $4000, $10 for $4400."
+  },
+  {
+   "address": 33361,
+   "type": "line",
+   "text": "The maze font, as $D018's bits 1-3: 2, 4 or 6 ($4800, $5000, $5800), cycled by panel_flash; 8 for the panel font at $6000 on the message screens."
+  },
+  {
+   "address": 33362,
+   "type": "line",
+   "text": "The value raster_arm writes to $D011 (with the fine scroll ORed in); display_on and display_off set its bit 4."
+  },
+  {
+   "address": 33363,
+   "type": "line",
+   "text": "panel_flash's countdown between font changes."
+  },
+  {
+   "address": 33364,
+   "type": "line",
+   "text": "panel_flash's step through the font cycle."
+  },
+  {
+   "address": 33365,
+   "type": "line",
+   "text": "The maze font selects panel_flash cycles through: 2 4 2 6 (then a spare 0)."
+  },
+  {
+   "address": 33370,
+   "type": "line",
+   "text": "The maze's second colour ($D022), dark grey $0B, white during a potion's blast."
+  },
+  {
+   "address": 33371,
+   "type": "line",
+   "text": "A work byte many routines use."
+  },
+  {
+   "address": 33372,
+   "type": "line",
+   "text": "A second work byte."
+  },
+  {
+   "address": 33373,
+   "type": "line",
+   "text": "A third work byte (direction bits in the scroll and wall tests)."
+  },
+  {
+   "address": 33374,
+   "type": "line",
+   "text": "The directions the walls block for the player being moved (block_dirs)."
+  },
+  {
+   "address": 33375,
+   "type": "line",
+   "text": "Raised when the screen has scrolled a whole cell; the raster interrupt then lets the main loop redraw ($8264)."
+  },
+  {
+   "address": 33376,
+   "type": "line",
+   "text": "Read and cleared with redraw_due by the raster interrupt; nothing in the traced code sets it."
+  },
+  {
+   "address": 33377,
+   "type": "line",
+   "text": "A copy of freeze_p1 taken when the players are read."
+  },
+  {
+   "address": 33378,
+   "type": "line",
+   "text": "Set when a coarse scroll step has finished; scroll_decide waits on it."
+  },
+  {
+   "address": 33379,
+   "type": "line",
+   "text": "scroll_decide's countdown while nothing scrolls."
+  },
+  {
+   "address": 33380,
+   "type": "line",
+   "text": "The raster interrupt's go-ahead for the main loop (wait_raster waits on it)."
+  },
+  {
+   "address": 33381,
+   "type": "line",
+   "text": "A spare byte after main_go."
+  },
+  {
+   "address": 33382,
+   "type": "line",
+   "text": "The scroll's X in 2-pixel units: the world X of the screen's left edge."
+  },
+  {
+   "address": 33383,
+   "type": "line",
+   "text": "The scroll's Y in 2-pixel units."
   },
   {
    "address": 33384,
@@ -12762,6 +14219,11 @@
    "text": "Four bytes beside panel_columns: $00 $10 $0F $1F. $832D,x is read by $A655 and $B9E9, and $832F by $B90D."
   },
   {
+   "address": 33583,
+   "type": "line",
+   "text": "The column after the last potion icon in each player's block, from which potion icons are counted left."
+  },
+  {
    "address": 33585,
    "type": "line",
    "text": "The status panel's text, ASCII with the panel font's own glyphs: four sixteen-byte rows of hero names, in hero order 0 Warrior (glyphs $90-$97, drawn as one word), 1 Valkyrie, 2 Wizard, 3 Elf (glyphs $5B-$5E). panel_draw_players picks the row with the hero number times sixteen."
@@ -12787,6 +14249,21 @@
    "text": "The four rows panel_press_fire_draw puts in an empty player's block, as glyph numbers: the GAUNTLET logo (glyphs $41-$5F) and \"PRESS FIRE\" ($30 $32 $25 $33 $33, $26 $29 $32 $25)."
   },
   {
+   "address": 33713,
+   "type": "line",
+   "text": "The second row of panel_press_fire: the logo's lower half."
+  },
+  {
+   "address": 33729,
+   "type": "line",
+   "text": "The third row of panel_press_fire: the logo's tail."
+  },
+  {
+   "address": 33745,
+   "type": "line",
+   "text": "The fourth row of panel_press_fire: \"PRESS FIRE\"."
+  },
+  {
    "address": 33761,
    "type": "line",
    "text": "Eighty bytes after panel_press_fire: the same logo and PRESS FIRE rows again, with $40 in place of $00 and $20. Nothing in the traced code reads them."
@@ -12795,6 +14272,16 @@
    "address": 33841,
    "type": "line",
    "text": "Draws the status panel for each player who is in the game ($9120,x not zero) and whose pair $B663,x/$B665,x is zero: four rows of sixteen characters from the hero's name row (hero_names, sixteen bytes per hero, chosen by $911C,x), the SCORE/HEALTH legend, the starting digits and a blank row, each byte less $20 (the panel font draws ASCII less $20), into the panel at $4324 + the player's column ($832B,x: $0F for player one, $1F for player two). Then points sprites 2-7 at shape $A1 ($43FA-$43FF)."
+  },
+  {
+   "address": 33889,
+   "type": "line",
+   "text": "The low byte of the hero_names address in panel_draw_players' first LDA, rewritten with the hero's row."
+  },
+  {
+   "address": 33890,
+   "type": "line",
+   "text": "The high byte of that address, rewritten too; the rest of panel_draw_players' copy loop follows."
   },
   {
    "address": 33954,
@@ -12890,6 +14377,21 @@
    "address": 34849,
    "type": "line",
    "text": "The keyboard matrix as keys_scan last read it, one byte per row (row 7 first, $8821 = the row with SPACE; $8828 = row 0 with F1). The player-one joystick also shows in $8821."
+  },
+  {
+   "address": 34850,
+   "type": "line",
+   "text": "keys_state's byte for keyboard row 6 (right SHIFT among them), the magic test's check against joystick one."
+  },
+  {
+   "address": 34855,
+   "type": "line",
+   "text": "keys_state's byte for keyboard row 1 (the 4 and Z keys), the check against joystick one for player two's magic keys."
+  },
+  {
+   "address": 34856,
+   "type": "line",
+   "text": "keys_state's byte for keyboard row 0: F1, F3, F5, F7, player two's magic keys."
   },
   {
    "address": 34862,
@@ -12997,9 +14499,59 @@
    "text": "Redraws the maze into the screen behind the one on show and swaps them: works out the map address of the top-left cell ($2000 + map_y x 64 + map_x), rewrites the operands of twenty LDA/STA pairs (one per screen row, offsets from maze_row_ops), and copies 33 columns of 20 rows from the 64 x 64 map to the screen at column 3; the map wraps at its edges through map_wrap_x. Draws into $4000 or $4400 by $FF, flipping it, and sets $8250 so that the raster chain shows the new screen."
   },
   {
+   "address": 35449,
+   "type": "line",
+   "text": "The operand of maze_draw's LDY map_wrap_x,X, rewritten with map_x so that the copy starts at the screen's left column."
+  },
+  {
+   "address": 35452,
+   "type": "line",
+   "text": "The low byte of the first row's source in maze_draw's copy loop (the character map at $3000)."
+  },
+  {
+   "address": 35453,
+   "type": "line",
+   "text": "The high byte of that source, then the first row's STA."
+  },
+  {
+   "address": 35458,
+   "type": "line",
+   "text": "The second row's source operand, low byte; each row's pair of operands is rewritten by maze_draw through maze_row_ops."
+  },
+  {
+   "address": 35459,
+   "type": "line",
+   "text": "The rest of maze_draw's unrolled copy into the screen at $4000: twenty rows of LDA/STA pairs."
+  },
+  {
    "address": 35575,
    "type": "line",
    "text": "The second half of maze_draw: the same copy into the screen at $4400."
+  },
+  {
+   "address": 35661,
+   "type": "line",
+   "text": "The same column operand in the copy into the screen at $4400."
+  },
+  {
+   "address": 35664,
+   "type": "line",
+   "text": "The first row's source, low byte, for the $4400 copy."
+  },
+  {
+   "address": 35665,
+   "type": "line",
+   "text": "Its high byte."
+  },
+  {
+   "address": 35670,
+   "type": "line",
+   "text": "The second row's source, low byte, for the $4400 copy."
+  },
+  {
+   "address": 35671,
+   "type": "line",
+   "text": "The rest of the unrolled copy into the screen at $4400."
   },
   {
    "address": 35787,
@@ -13017,6 +14569,31 @@
    "text": "Copies the colour of each visible maze cell into colour RAM: the same 33 x 20 window as maze_draw, read from the colour map at $2000 + offset (the operands are set by maze_draw) into $D803 onward."
   },
   {
+   "address": 35838,
+   "type": "line",
+   "text": "The column operand in maze_colours' LDY map_wrap_x,X."
+  },
+  {
+   "address": 35841,
+   "type": "line",
+   "text": "The low byte of the first row's source in maze_colours (the colour map at $2000)."
+  },
+  {
+   "address": 35842,
+   "type": "line",
+   "text": "The high byte of maze_colours' first source address, in the colour map."
+  },
+  {
+   "address": 35847,
+   "type": "line",
+   "text": "The second row's source operand, low byte."
+  },
+  {
+   "address": 35848,
+   "type": "line",
+   "text": "The rest of maze_colours' unrolled copy into colour RAM: twenty rows."
+  },
+  {
    "address": 35964,
    "type": "line",
    "text": "While the maze font select $8251 is below 8: every eighth call steps $8254 and sets $8251 from panel_font_cycle ($8255: 2 4 2 6), so the maze's characters change font in a four-step cycle; and every fourth frame ($8247) advances the animation step $9124,x (0-3) of each player whose direction bits are not $0F."
@@ -13032,6 +14609,16 @@
    "text": "Chooses the maze's look from the level header: bits 3-5 of $0A01 pick a 96-byte block of glyphs (from maze_style_src: $6468, $6408 or $6508) copied into the three fonts at $4808, $5008 and $5808; bits 3-5 of $0A02 pick a colour (maze_style_colours) written over $F604-$F643 and $F6CC-$F6D7."
   },
   {
+   "address": 36060,
+   "type": "line",
+   "text": "The low byte of maze_style's glyph source, rewritten from maze_style_src."
+  },
+  {
+   "address": 36061,
+   "type": "line",
+   "text": "Its high byte; the rest of maze_style follows."
+  },
+  {
    "address": 36103,
    "type": "line",
    "text": "Six colours for maze_style: $0A $0D $0E $0C $0F $0B."
@@ -13040,6 +14627,11 @@
    "address": 36109,
    "type": "line",
    "text": "Five addresses for maze_style's glyph copy: $6468, $6408, $6508, $6408, $6508."
+  },
+  {
+   "address": 36110,
+   "type": "line",
+   "text": "The high bytes of maze_style_src's addresses (read as the second of each pair)."
   },
   {
    "address": 36119,
@@ -13057,6 +14649,16 @@
    "text": "0 to 63 then 0 to 47: a map column plus an offset, wrapped to the map's width, for maze_draw, maze_colours and the routines that look up map cells."
   },
   {
+   "address": 36353,
+   "type": "line",
+   "text": "map_wrap_x read one column on."
+  },
+  {
+   "address": 36354,
+   "type": "line",
+   "text": "map_wrap_x read two columns on."
+  },
+  {
    "address": 36464,
    "type": "line",
    "text": "The low byte of the address of row n (0-31) of a 32 x 32 grid at $0C00-$0FFF: $00 $20 ... $E0, four times."
@@ -13065,6 +14667,11 @@
    "address": 36496,
    "type": "line",
    "text": "The high byte to go with map_row_lo: $0C for rows 0-7, $0D, $0E, $0F."
+  },
+  {
+   "address": 36526,
+   "type": "line",
+   "text": "Two bytes read as stick_p1/stick_p2 by code that indexes with the shot slot (2 or 3): $8EAE + 2 is stick_p1."
   },
   {
    "address": 36528,
@@ -13089,7 +14696,7 @@
   {
    "address": 36532,
    "type": "line",
-   "text": "42 bytes no traced code reaches: a copy of the screen and scroll reset from the start-up (shows screen $4000, clears the freeze masks, sets the font select 2, $D011 scroll 7, redraws the maze and its colours, enables every sprite)."
+   "text": "Puts the maze back after a message screen (power_message, poison_eaten): shows the screen at $4000 and the maze font, lets both players move, sets $D011's scroll to 7, redraws the maze and its colours, and enables every sprite."
   },
   {
    "address": 36574,
@@ -13132,14 +14739,29 @@
    "text": "The distance of each listed transporter from the aim, sixteen bytes ($9041 is the slot before the first, set to $FF)."
   },
   {
+   "address": 36930,
+   "type": "line",
+   "text": "teleport_dist from its second slot, as the sort reads it."
+  },
+  {
    "address": 36945,
    "type": "line",
    "text": "Each listed transporter's map X times four."
   },
   {
+   "address": 36946,
+   "type": "line",
+   "text": "teleport_x from its second slot, as the sort reads it."
+  },
+  {
    "address": 36961,
    "type": "line",
    "text": "Each listed transporter's map Y times four."
+  },
+  {
+   "address": 36962,
+   "type": "line",
+   "text": "teleport_y from its second slot."
   },
   {
    "address": 36977,
@@ -13177,9 +14799,19 @@
    "text": "Each player's X on screen, in 2-pixel units (0 at the play area's left, $78 at its right): the world X less the scroll ($8266)."
   },
   {
+   "address": 37121,
+   "type": "line",
+   "text": "Player two's screen X."
+  },
+  {
    "address": 37122,
    "type": "line",
    "text": "Each player's Y on screen, in 2-pixel units (0 to $48)."
+  },
+  {
+   "address": 37123,
+   "type": "line",
+   "text": "Player two's screen Y."
   },
   {
    "address": 37124,
@@ -13187,9 +14819,19 @@
    "text": "Each player's X in the maze, in 2-pixel units (a maze cell is four)."
   },
   {
+   "address": 37125,
+   "type": "line",
+   "text": "Player two's maze X."
+  },
+  {
    "address": 37126,
    "type": "line",
    "text": "Each player's Y in the maze."
+  },
+  {
+   "address": 37127,
+   "type": "line",
+   "text": "Player two's maze Y."
   },
   {
    "address": 37128,
@@ -13242,6 +14884,11 @@
    "text": "Each hero's sprite colour, the same four."
   },
   {
+   "address": 37146,
+   "type": "line",
+   "text": "Two bytes read as player_hero by code that indexes with the shot slot (2 or 3)."
+  },
+  {
    "address": 37148,
    "type": "line",
    "text": "Player one's hero (0 Warrior, 1 Valkyrie, 2 Wizard, 3 Elf); $911D is player two's."
@@ -13277,6 +14924,11 @@
    "text": "For each player, the index of the other player (or itself in a one-player game), set by level_place_players."
   },
   {
+   "address": 37155,
+   "type": "line",
+   "text": "Player two's other-player link."
+  },
+  {
    "address": 37156,
    "type": "line",
    "text": "Each player's walking animation step, 0-3 (panel_flash advances it)."
@@ -13285,6 +14937,11 @@
    "address": 37158,
    "type": "line",
    "text": "Each player's facing, 0-7."
+  },
+  {
+   "address": 37159,
+   "type": "line",
+   "text": "Player two's facing."
   },
   {
    "address": 37160,
@@ -13312,9 +14969,29 @@
    "text": "Shadow of sprite X positions for sprites 2-7, written to the chip by sprites_place."
   },
   {
+   "address": 37183,
+   "type": "line",
+   "text": "Sprite 3's X (a shot slot, or a digit)."
+  },
+  {
+   "address": 37184,
+   "type": "line",
+   "text": "Sprite 4's X."
+  },
+  {
+   "address": 37185,
+   "type": "line",
+   "text": "Sprite 5's X."
+  },
+  {
    "address": 37186,
    "type": "line",
    "text": "Sprites 6 and 7's X: the players, from player_screen_x."
+  },
+  {
+   "address": 37187,
+   "type": "line",
+   "text": "Sprite 7's X: player two."
   },
   {
    "address": 37188,
@@ -13322,14 +14999,39 @@
    "text": "Shadow Y positions for sprites 2-7."
   },
   {
+   "address": 37189,
+   "type": "line",
+   "text": "Sprite 3's Y."
+  },
+  {
+   "address": 37190,
+   "type": "line",
+   "text": "Sprite 4's Y."
+  },
+  {
+   "address": 37191,
+   "type": "line",
+   "text": "Sprite 5's Y."
+  },
+  {
    "address": 37192,
    "type": "line",
    "text": "The players' sprite Y."
   },
   {
+   "address": 37193,
+   "type": "line",
+   "text": "Sprite 7's Y."
+  },
+  {
    "address": 37194,
    "type": "line",
    "text": "The X high bit of sprites 2-7, one byte each (non-zero for set)."
+  },
+  {
+   "address": 37198,
+   "type": "line",
+   "text": "The players' X high bits (sprites 6 and 7)."
   },
   {
    "address": 37200,
@@ -13340,6 +15042,16 @@
    "address": 37206,
    "type": "line",
    "text": "The shape numbers of sprites 2-5."
+  },
+  {
+   "address": 37207,
+   "type": "line",
+   "text": "Sprite 3's shape (the treasure clock's units digit, or the shot in slot 1)."
+  },
+  {
+   "address": 37208,
+   "type": "line",
+   "text": "Sprite 4's shape; $9159 is sprite 5's."
   },
   {
    "address": 37212,
@@ -13437,6 +15149,26 @@
    "text": "For each player alive: lets the screen scroll left only while the player is in the left part of the play area (X below $41) and the other is not near the right edge ($71), right only while X is $38 or more and the other is not at the left (9); likewise up (Y below $29, the other below $39) and down (Y $20 or more, the other 8 or more)."
   },
   {
+   "address": 38517,
+   "type": "line",
+   "text": "scroll_follow's test for a player pushing left."
+  },
+  {
+   "address": 38549,
+   "type": "line",
+   "text": "scroll_follow's test for a player pushing right."
+  },
+  {
+   "address": 38581,
+   "type": "line",
+   "text": "scroll_follow's test for a player pushing up."
+  },
+  {
+   "address": 38613,
+   "type": "line",
+   "text": "scroll_follow's test for a player pushing down."
+  },
+  {
    "address": 38645,
    "type": "line",
    "text": "Points $94/$95 at the character map cell under (probe_x, probe_y): $3000 + (Y / 4) x 64 + X / 4."
@@ -13487,9 +15219,19 @@
    "text": "Twenty-two bytes: $10-$19, $21-$26, then $01 $02 $04 $08 $10 $20. Nothing in the traced code reads them by address."
   },
   {
+   "address": 38894,
+   "type": "line",
+   "text": "The bytes with one bit set, $01-$20, read through bits_table's neighbours by the power code."
+  },
+  {
    "address": 38900,
    "type": "line",
    "text": "$40 $80 then the bytes with one bit clear ($FE ... $DF), read by $B9A6 and $B9BE."
+  },
+  {
+   "address": 38902,
+   "type": "line",
+   "text": "The bytes with one bit clear for bits 0-5, used to take a power away (poison)."
   },
   {
    "address": 38908,
@@ -13517,6 +15259,11 @@
    "text": "The file name the level loader asks for: two bytes, then \"LEVEL nnn\" with the three digits at $98E3-$98E5 (set by level_name_digits)."
   },
   {
+   "address": 39133,
+   "type": "line",
+   "text": "\"LEVEL \" before the three digits."
+  },
+  {
    "address": 39139,
    "type": "line",
    "text": "The level file's hundreds digit, as ASCII."
@@ -13537,9 +15284,44 @@
    "text": "The other seven file names, one after another without separators: PINN232 5000, PLYRS.SPR, OBJDIS, DITTIDATA 146, DATATREASURE 446, PLAYER-$E000, GAUNT CHR $4800."
   },
   {
+   "address": 39154,
+   "type": "line",
+   "text": "\"PLYRS.SPR\"."
+  },
+  {
+   "address": 39163,
+   "type": "line",
+   "text": "\"OBJDIS\"."
+  },
+  {
+   "address": 39169,
+   "type": "line",
+   "text": "\"DITTIDATA 146\"."
+  },
+  {
+   "address": 39182,
+   "type": "line",
+   "text": "\"DATATREASURE 446\"."
+  },
+  {
+   "address": 39198,
+   "type": "line",
+   "text": "\"PLAYER-$E000\"."
+  },
+  {
+   "address": 39210,
+   "type": "line",
+   "text": "\"GAUNT CHR $4800\"."
+  },
+  {
    "address": 39225,
    "type": "line",
    "text": "Where each of the eight files is loaded, low byte then high: $0A00 (the level), $1388, $2000, $F000, $EA00, $E800, $E000, $4800."
+  },
+  {
+   "address": 39226,
+   "type": "line",
+   "text": "The high bytes of file_loads, read as the second byte of each pair."
   },
   {
    "address": 39241,
@@ -13557,9 +15339,19 @@
    "text": "The address of each file's name, the level's first ($98DD)."
   },
   {
+   "address": 39251,
+   "type": "line",
+   "text": "The high bytes of file_name_ptrs."
+  },
+  {
    "address": 39268,
    "type": "line",
    "text": "Loads files 7 down to 0 of the table (file_names) from disk with the KERNAL: SETLFS (file $20, device 8, secondary 0, so each file goes to the address the table gives), SETNAM, LOAD to file_loads, CLOSE; the status of the last load (the carry) is kept in load_status. The BIT at $9967 hides the LDX #$00 of the second entry, load_level_file ($9968), which loads file 0, the level, alone."
+  },
+  {
+   "address": 39272,
+   "type": "line",
+   "text": "Loads file 0, the level, alone: load_files from its second entry."
   },
   {
    "address": 39339,
@@ -13597,9 +15389,19 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_level at $9A5E, the top half of the big LEVEL title."
   },
   {
+   "address": 39468,
+   "type": "line",
+   "text": "level_start goes on after the first string's argument: prints the bottom half of LEVEL, the level's messages, then $A457 and level_intro."
+  },
+  {
    "address": 39471,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): str_level_lower at $9A73, the bottom half of the big LEVEL title."
+  },
+  {
+   "address": 39473,
+   "type": "line",
+   "text": "level_start goes on after the bottom half of LEVEL: the level's messages, $A457 and level_intro."
   },
   {
    "address": 39483,
@@ -13612,9 +15414,19 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_shots_hurt at $9A88, \"SHOTS NOW HURT OTHER PLAYERS\"."
   },
   {
+   "address": 39505,
+   "type": "line",
+   "text": "level_messages goes on after its first string: the \"stun\" test and message."
+  },
+  {
    "address": 39515,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): str_shots_stun at $9AA6, \"SHOTS NOW STUN OTHER PLAYERS\"."
+  },
+  {
+   "address": 39517,
+   "type": "line",
+   "text": "level_messages' return."
   },
   {
    "address": 39518,
@@ -13622,9 +15434,19 @@
    "text": "The level screen's two lines, each a length, a colour and the characters ($13 long, colour $0A): \"LEVEL :\" in the big glyphs $E1-$E6 for the top half and $01-$06 for the bottom; the number beside it is drawn with sprites."
   },
   {
+   "address": 39519,
+   "type": "line",
+   "text": "The LEVEL title's colour byte, rewritten with player one's hero colour."
+  },
+  {
    "address": 39539,
    "type": "line",
    "text": "The bottom half of the LEVEL title."
+  },
+  {
+   "address": 39540,
+   "type": "line",
+   "text": "The bottom half's colour byte, rewritten the same way."
   },
   {
    "address": 39560,
@@ -13777,9 +15599,69 @@
    "text": "The per-hero values the powers set, four bytes (one per hero) each: shot power $9DF7/$9DFB, fight power $9DFF/$9E03, base shot $9E07/$9E0B, base fight $9E0F/$9E13, armoured damage $9E17-$9E2B."
   },
   {
+   "address": 40443,
+   "type": "line",
+   "text": "The shot-power potion's second value by hero ($ACC0)."
+  },
+  {
+   "address": 40447,
+   "type": "line",
+   "text": "The fight-power potion's values by hero ($ACC8)."
+  },
+  {
+   "address": 40451,
+   "type": "line",
+   "text": "Its second values ($ACCC)."
+  },
+  {
+   "address": 40455,
+   "type": "line",
+   "text": "The heroes' base shot power ($ACAD)."
+  },
+  {
+   "address": 40459,
+   "type": "line",
+   "text": "The heroes' base shot damage ($ACC0)."
+  },
+  {
+   "address": 40463,
+   "type": "line",
+   "text": "The heroes' base fight power ($ACC8)."
+  },
+  {
+   "address": 40467,
+   "type": "line",
+   "text": "The heroes' base fight damage ($ACCC)."
+  },
+  {
    "address": 40471,
    "type": "line",
    "text": "The damage each monster kind does to an armoured hero, six tables of four (one value per hero) at $9E17, $9E1B, $9E1F, $9E23, $9E27, $9E2B."
+  },
+  {
+   "address": 40475,
+   "type": "line",
+   "text": "The second armoured damage table, by hero."
+  },
+  {
+   "address": 40479,
+   "type": "line",
+   "text": "The third armoured damage table, by hero."
+  },
+  {
+   "address": 40483,
+   "type": "line",
+   "text": "The fourth armoured damage table, by hero."
+  },
+  {
+   "address": 40487,
+   "type": "line",
+   "text": "The fifth armoured damage table, by hero."
+  },
+  {
+   "address": 40491,
+   "type": "line",
+   "text": "The sixth."
   },
   {
    "address": 40495,
@@ -13787,9 +15669,59 @@
    "text": "The damage each of six monster kinds does to each hero without armour: six tables of four at $9E2F, $9E33, $9E37, $9E3B, $9E3F, $9E43 (for the first: Warrior 4, Valkyrie 3, Wizard 5, Elf 5)."
   },
   {
+   "address": 40499,
+   "type": "line",
+   "text": "The second base damage table, by hero."
+  },
+  {
+   "address": 40503,
+   "type": "line",
+   "text": "The third base damage table, by hero."
+  },
+  {
+   "address": 40507,
+   "type": "line",
+   "text": "The fourth base damage table, by hero."
+  },
+  {
+   "address": 40511,
+   "type": "line",
+   "text": "The fifth base damage table, by hero."
+  },
+  {
+   "address": 40515,
+   "type": "line",
+   "text": "The sixth, then two spare bytes."
+  },
+  {
    "address": 40521,
    "type": "line",
    "text": "The damage each of six monster kinds does to each player, copied from base_damage by hero at the start (power_reset_armour) and from armoured_damage by the armour potion: pairs at $9E49, $9E4D, $9E4F, $9E55, $9E59, $9E5D."
+  },
+  {
+   "address": 40525,
+   "type": "line",
+   "text": "The second damage_taken pair."
+  },
+  {
+   "address": 40527,
+   "type": "line",
+   "text": "The third pair, then four spare bytes."
+  },
+  {
+   "address": 40533,
+   "type": "line",
+   "text": "The fourth pair."
+  },
+  {
+   "address": 40537,
+   "type": "line",
+   "text": "The fifth pair."
+  },
+  {
+   "address": 40541,
+   "type": "line",
+   "text": "The sixth pair."
   },
   {
    "address": 40543,
@@ -13812,9 +15744,24 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_powers + 112 at $9F19, \"NOW HAS\"."
   },
   {
+   "address": 40585,
+   "type": "line",
+   "text": "power_message goes on after printing \"NOW HAS\": the next row, the power's name."
+  },
+  {
    "address": 40591,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument); the code rewrites it before the call."
+  },
+  {
+   "address": 40592,
+   "type": "line",
+   "text": "The high byte of the power's name in the argument, rewritten from power_names."
+  },
+  {
+   "address": 40593,
+   "type": "line",
+   "text": "power_message goes on after the power's name: the sound, the wait and the maze."
   },
   {
    "address": 40605,
@@ -13822,9 +15769,44 @@
    "text": "The address of each power's message."
   },
   {
+   "address": 40606,
+   "type": "line",
+   "text": "The high bytes of power_names."
+  },
+  {
    "address": 40617,
    "type": "line",
    "text": "The six messages, each a length, a colour and the text: EXTRA ARMOUR, EXTRA CARRYING ABILITY, EXTRA MAGIC POWER, EXTRA SHOT POWER, EXTRA SHOT SPEED, EXTRA FIGHT POWER; then \"NOW HAS\" ($9F1A)."
+  },
+  {
+   "address": 40631,
+   "type": "line",
+   "text": "\"EXTRA CARRYING ABILITY\"."
+  },
+  {
+   "address": 40655,
+   "type": "line",
+   "text": "\"EXTRA MAGIC POWER\"."
+  },
+  {
+   "address": 40674,
+   "type": "line",
+   "text": "\"EXTRA SHOT POWER\"."
+  },
+  {
+   "address": 40692,
+   "type": "line",
+   "text": "\"EXTRA SHOT SPEED\"."
+  },
+  {
+   "address": 40710,
+   "type": "line",
+   "text": "\"EXTRA FIGHT POWER\"."
+  },
+  {
+   "address": 40729,
+   "type": "line",
+   "text": "\"NOW HAS\"."
   },
   {
    "address": 40738,
@@ -13852,9 +15834,29 @@
    "text": "Puts power Y of player X back to the hero's base value through the routine power_resets names (its JSR at $9F90 rewritten)."
   },
   {
+   "address": 40848,
+   "type": "line",
+   "text": "The JSR power_reset rewrites with the routine for the power."
+  },
+  {
+   "address": 40849,
+   "type": "line",
+   "text": "Its target, low byte."
+  },
+  {
+   "address": 40850,
+   "type": "line",
+   "text": "Its target, high byte; then power_reset's return."
+  },
+  {
    "address": 40854,
    "type": "line",
    "text": "The six routines that set a power to its base value."
+  },
+  {
+   "address": 40855,
+   "type": "line",
+   "text": "The high bytes of power_resets."
   },
   {
    "address": 40866,
@@ -13892,9 +15894,44 @@
    "text": "The magic values by hero: with the power $9FFA/$9FFE, without it $A002/$A006; then $A00A, the potion strengths $A00C and $A010, and $A00E, per player."
   },
   {
+   "address": 40958,
+   "type": "line",
+   "text": "The magic potion's second value by hero."
+  },
+  {
    "address": 40960,
    "type": "line",
    "text": "The last two bytes of the magic tables ($C0 $80, part of $9FFE), then the per-player values from $A002."
+  },
+  {
+   "address": 40962,
+   "type": "line",
+   "text": "The heroes' base magic, first value ($A00C)."
+  },
+  {
+   "address": 40966,
+   "type": "line",
+   "text": "The heroes' base magic, second value ($A010)."
+  },
+  {
+   "address": 40970,
+   "type": "line",
+   "text": "Each player's magic against generators ($A00A,x, used by magic_generator)."
+  },
+  {
+   "address": 40972,
+   "type": "line",
+   "text": "Each player's magic value (set by hero and the magic potion)."
+  },
+  {
+   "address": 40974,
+   "type": "line",
+   "text": "Each player's magic damage to monsters (blast_monster)."
+  },
+  {
+   "address": 40976,
+   "type": "line",
+   "text": "Each player's second magic value."
   },
   {
    "address": 40978,
@@ -13920,6 +15957,61 @@
    "address": 41021,
    "type": "line",
    "text": "The tune player's state, ten bytes per voice at $A03D, $A047 and $A051: the stream pointer (bytes 0-1), the high byte of a long count (3), the loop mark (4-5), the loop count (6), the voice's control byte (7), the loop flag (8, bit 7) and the frames left on the note or rest (9)."
+  },
+  {
+   "address": 41022,
+   "type": "line",
+   "text": "Voice 1's stream pointer, high byte."
+  },
+  {
+   "address": 41024,
+   "type": "line",
+   "text": "Voice 1's long-count byte, loop mark, loop count and control byte."
+  },
+  {
+   "address": 41030,
+   "type": "line",
+   "text": "Voice 1's frames left on its note."
+  },
+  {
+   "address": 41031,
+   "type": "line",
+   "text": "Voice 2's stream pointer."
+  },
+  {
+   "address": 41032,
+   "type": "line",
+   "text": "Voice 2's stream pointer, high byte."
+  },
+  {
+   "address": 41034,
+   "type": "line",
+   "text": "Voice 2's other state bytes."
+  },
+  {
+   "address": 41040,
+   "type": "line",
+   "text": "Voice 2's frames left."
+  },
+  {
+   "address": 41041,
+   "type": "line",
+   "text": "Voice 3's stream pointer."
+  },
+  {
+   "address": 41042,
+   "type": "line",
+   "text": "Voice 3's stream pointer, high byte."
+  },
+  {
+   "address": 41044,
+   "type": "line",
+   "text": "Voice 3's other state bytes."
+  },
+  {
+   "address": 41050,
+   "type": "line",
+   "text": "Voice 3's frames left."
   },
   {
    "address": 41051,
@@ -13952,9 +16044,14 @@
    "text": "An RTS byte no code reaches."
   },
   {
+   "address": 41570,
+   "type": "line",
+   "text": "tune_command's common tail for the commands that set a register: writes the value, steps on and reads the next command."
+  },
+  {
    "address": 41578,
    "type": "line",
-   "text": "An RTS byte no code reaches."
+   "text": "A second RTS byte, after tune_reg_write, that no code reaches."
   },
   {
    "address": 41579,
@@ -13972,9 +16069,19 @@
    "text": "The tune player's note table: 96 SID frequencies, two bytes each (low first), from $010C up a semitone a step."
   },
   {
+   "address": 41631,
+   "type": "line",
+   "text": "note_freqs read from its second byte (the high bytes)."
+  },
+  {
    "address": 41822,
    "type": "line",
    "text": "For a level that has a hidden potion (hidden_kind 0-5 but not 4): copies its 16-byte graphic from $6580 + 16 x kind into the three maze fonts at $4970, $5170 and $5970, turns the kind into its tile ($19 + kind) and puts it in a random free place (random_place)."
+  },
+  {
+   "address": 41845,
+   "type": "line",
+   "text": "The low byte of hidden_potion_place's LDA $6580,Y, rewritten with the potion's 16-byte block."
   },
   {
    "address": 41872,
@@ -14015,6 +16122,11 @@
    "address": 42103,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): str_hidden_potion at $A47A, \"FIND THE HIDDEN POTION\"."
+  },
+  {
+   "address": 42105,
+   "type": "line",
+   "text": "hidden_potion_roll's return."
   },
   {
    "address": 42106,
@@ -14062,6 +16174,11 @@
    "text": "Five bytes read as overlapping pairs, Y offset from $A624,y and X from $A625,y: y = 3 above ($F8, 0), 2 left (0, $F8), 1 below (8, 0), 0 right (0, 8)."
   },
   {
+   "address": 42533,
+   "type": "line",
+   "text": "join_offsets read as X offsets."
+  },
+  {
    "address": 42537,
    "type": "line",
    "text": "Marks player X's four character cells occupied."
@@ -14092,6 +16209,26 @@
    "text": "The address of the string the call before prints (print_centred's argument): unused_side2 + 104 at $A6FB, \"TO CONTINUE GAME\"."
   },
   {
+   "address": 42669,
+   "type": "line",
+   "text": "The rest of unused_side2's code: clears bit 5 of $01, waits for $DC01 bit 4 to be pressed and released, sets the bit again, clears the screen and waits; no traced code reaches it."
+  },
+  {
+   "address": 42702,
+   "type": "line",
+   "text": "\"INSERT SIDE 2 OF DISK\"."
+  },
+  {
+   "address": 42725,
+   "type": "line",
+   "text": "\"THEN PRESS SPACE BAR\"."
+  },
+  {
+   "address": 42747,
+   "type": "line",
+   "text": "\"TO CONTINUE GAME\"."
+  },
+  {
    "address": 42765,
    "type": "line",
    "text": "Fires the players' shots: shot slots 3 and 2 (player two's and player one's) through shot_fire."
@@ -14120,6 +16257,21 @@
    "address": 43092,
    "type": "line",
    "text": "Each of the four shot slots' contents: 0 empty; 1-4 a player's shot (the hero + 1; slots 2 and 3); 5 a monster's fireball and 6 a lobbed rock (slots 0 and 1); bit 7 set ends it."
+  },
+  {
+   "address": 43093,
+   "type": "line",
+   "text": "Shot slot 1's contents."
+  },
+  {
+   "address": 43094,
+   "type": "line",
+   "text": "Shot slot 2's contents (player one's shot)."
+  },
+  {
+   "address": 43095,
+   "type": "line",
+   "text": "Shot slot 3's contents (player two's shot)."
   },
   {
    "address": 43096,
@@ -14240,6 +16392,56 @@
    "address": 44001,
    "type": "line",
    "text": "rock_path's work bytes: the two distances with their signs ($ABE1-$ABE6), the step count and its half for each slot ($ABE7, $ABE9), the per-step X and Y moves ($ABEB, $ABED), and whether the axes were swapped ($ABEF)."
+  },
+  {
+   "address": 44002,
+   "type": "line",
+   "text": "rock_path's X distance, halved."
+  },
+  {
+   "address": 44003,
+   "type": "line",
+   "text": "rock_path's Y distance, signed."
+  },
+  {
+   "address": 44004,
+   "type": "line",
+   "text": "The Y distance, halved."
+  },
+  {
+   "address": 44005,
+   "type": "line",
+   "text": "The longer of the two, doubled."
+  },
+  {
+   "address": 44006,
+   "type": "line",
+   "text": "The shorter, doubled."
+  },
+  {
+   "address": 44007,
+   "type": "line",
+   "text": "Each rock slot's steps left."
+  },
+  {
+   "address": 44009,
+   "type": "line",
+   "text": "Each rock slot's half-way step."
+  },
+  {
+   "address": 44011,
+   "type": "line",
+   "text": "Each rock slot's X move per step."
+  },
+  {
+   "address": 44013,
+   "type": "line",
+   "text": "Each rock slot's Y move per step."
+  },
+  {
+   "address": 44015,
+   "type": "line",
+   "text": "Set when the X and Y axes were swapped."
   },
   {
    "address": 44016,
@@ -14402,9 +16604,24 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_treasures + 30 at $AF18, \"NO BONUS\"."
   },
   {
+   "address": 44638,
+   "type": "line",
+   "text": "treasure_result goes on after \"NO BONUS\": \"LOOKS LIKE YOU LOSE!\" and the rows below."
+  },
+  {
    "address": 44644,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): str_treasures + 40 at $AF22, \"LOOKS LIKE YOU LOSE!\"."
+  },
+  {
+   "address": 44646,
+   "type": "line",
+   "text": "treasure_result's rows after its strings."
+  },
+  {
+   "address": 44678,
+   "type": "line",
+   "text": "Part of treasure_result: turns the treasure count's digits into one decimal byte and adds it to the score. Its address is also where pinn232 calls the BASIC ROM ($AE86), which the snapshot shows as this RAM beneath."
   },
   {
    "address": 44732,
@@ -14412,9 +16629,19 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_treasures at $AEFA, \"TREASURES\" and the count."
   },
   {
+   "address": 44734,
+   "type": "line",
+   "text": "treasure_result goes on after \"TREASURES nn\": the BONUS line."
+  },
+  {
    "address": 44740,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): the BONUS line at $AF0A, \"BONUS\" and the bonus."
+  },
+  {
+   "address": 44742,
+   "type": "line",
+   "text": "treasure_result's last rows."
   },
   {
    "address": 44752,
@@ -14422,9 +16649,29 @@
    "text": "The address of each hero's name for the message screens."
   },
   {
+   "address": 44753,
+   "type": "line",
+   "text": "The high bytes of hero_name_ptrs."
+  },
+  {
    "address": 44760,
    "type": "line",
    "text": "The four heroes' names for the message screens, each a length, a colour and the glyphs: WARRIOR ($90-$97), VALKYRIE, WIZARD, ELF ($5B-$5E)."
+  },
+  {
+   "address": 44770,
+   "type": "line",
+   "text": "\"VALKYRIE\" for the message screens."
+  },
+  {
+   "address": 44780,
+   "type": "line",
+   "text": "\"WIZARD\"."
+  },
+  {
+   "address": 44788,
+   "type": "line",
+   "text": "\"ELF\", in the panel font's own glyphs."
   },
   {
    "address": 44794,
@@ -14432,14 +16679,79 @@
    "text": "\"TREASURES \" and two digits ($AF08/$AF09), then \"BONUS \" and digits ($AF14), \"NO BONUS\" ($AF18) and \"LOOKS LIKE YOU LOSE!\" ($AF22): each a length, a colour and the text."
   },
   {
+   "address": 44795,
+   "type": "line",
+   "text": "The TREASURES line's colour byte, set to the hero's colour."
+  },
+  {
+   "address": 44808,
+   "type": "line",
+   "text": "The count's tens digit."
+  },
+  {
+   "address": 44809,
+   "type": "line",
+   "text": "The count's units digit."
+  },
+  {
+   "address": 44810,
+   "type": "line",
+   "text": "The BONUS line: length and colour."
+  },
+  {
+   "address": 44811,
+   "type": "line",
+   "text": "Its colour byte, set to the hero's colour, then \"BONUS\"."
+  },
+  {
+   "address": 44820,
+   "type": "line",
+   "text": "The bonus's first digit."
+  },
+  {
+   "address": 44821,
+   "type": "line",
+   "text": "The bonus's second digit, then \"00\"."
+  },
+  {
+   "address": 44824,
+   "type": "line",
+   "text": "\"NO BONUS\": length and colour."
+  },
+  {
+   "address": 44825,
+   "type": "line",
+   "text": "Its colour byte, then the text."
+  },
+  {
+   "address": 44834,
+   "type": "line",
+   "text": "\"LOOKS LIKE YOU LOSE!\": length and colour."
+  },
+  {
+   "address": 44835,
+   "type": "line",
+   "text": "The colour byte of \"LOOKS LIKE YOU LOSE!\", set to the hero's colour, then its text."
+  },
+  {
    "address": 44856,
    "type": "line",
    "text": "Set for a player who leaves a treasure room through its exit, from the time left ($ADB4)."
   },
   {
+   "address": 44857,
+   "type": "line",
+   "text": "Player two's escape flag."
+  },
+  {
    "address": 44858,
    "type": "line",
    "text": "The treasures each player picked up in a treasure room."
+  },
+  {
+   "address": 44859,
+   "type": "line",
+   "text": "Player two's treasures."
   },
   {
    "address": 44860,
@@ -14450,6 +16762,21 @@
    "address": 44861,
    "type": "line",
    "text": "The rows text_row can choose for the message screens, colour RAM then screen: X = 0 colour $D918 and screen $4118, X = 2 colour $D878 and screen $4078."
+  },
+  {
+   "address": 44862,
+   "type": "line",
+   "text": "The colour row addresses' high bytes."
+  },
+  {
+   "address": 44865,
+   "type": "line",
+   "text": "The screen row addresses, low byte first."
+  },
+  {
+   "address": 44866,
+   "type": "line",
+   "text": "Their high bytes."
   },
   {
    "address": 44869,
@@ -14473,6 +16800,11 @@
   },
   {
    "address": 45033,
+   "type": "line",
+   "text": "Picks the message screen's first row by the number of players in the game (two players start higher), then text_row."
+  },
+  {
+   "address": 45043,
    "type": "line",
    "text": "Points $8C/$8D at a row of the message screen and $8E/$8F at its colour (text_rows, entry X)."
   },
@@ -14507,14 +16839,29 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_treasure_room at $B0FF, \"YOU HAVE FOUND A\"."
   },
   {
+   "address": 45240,
+   "type": "line",
+   "text": "treasure_intro goes on after its first string: the big letters."
+  },
+  {
    "address": 45246,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): the top half of the big TREASURE ROOM at $B111."
   },
   {
+   "address": 45248,
+   "type": "line",
+   "text": "After the top half of the big letters: the bottom half."
+  },
+  {
    "address": 45251,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): the bottom half of the big TREASURE ROOM at $B12D."
+  },
+  {
+   "address": 45253,
+   "type": "line",
+   "text": "After the strings: the clock, the messages and the tune flag."
   },
   {
    "address": 45265,
@@ -14532,6 +16879,16 @@
    "text": "\"YOU HAVE FOUND A\" ($10 long, colour 1), then the big \"TREASURE ROOM\" in two rows of the font's large-letter glyphs ($E3-$F4 for the top halves at $B111, $03-$14 for the bottom at $B12D), $1A long, colour $0E."
   },
   {
+   "address": 45329,
+   "type": "line",
+   "text": "The top half of the big \"TREASURE ROOM\"."
+  },
+  {
+   "address": 45357,
+   "type": "line",
+   "text": "The bottom half."
+  },
+  {
    "address": 45385,
    "type": "line",
    "text": "Moves the text row pointers down X + 1 rows."
@@ -14544,7 +16901,17 @@
   {
    "address": 45412,
    "type": "line",
-   "text": "The address of the string the call before prints (print_centred's argument); the code rewrites it before the call."
+   "text": "print_hero_name's argument: the address of the hero's name, rewritten from hero_name_ptrs before the call."
+  },
+  {
+   "address": 45413,
+   "type": "line",
+   "text": "The high byte of print_hero_name's argument."
+  },
+  {
+   "address": 45414,
+   "type": "line",
+   "text": "print_hero_name goes on after its string: next row and return."
   },
   {
    "address": 45418,
@@ -14670,6 +17037,21 @@
    "address": 46307,
    "type": "line",
    "text": "The tile address each door process has reached (two bytes for each)."
+  },
+  {
+   "address": 46308,
+   "type": "line",
+   "text": "The first door process's tile address, high byte."
+  },
+  {
+   "address": 46309,
+   "type": "line",
+   "text": "The second door process's tile address."
+  },
+  {
+   "address": 46310,
+   "type": "line",
+   "text": "The high byte of the second door process's tile address."
   },
   {
    "address": 46311,
@@ -14817,6 +17199,11 @@
    "text": "A facing that overrides the stick's for each player (read by players_sprites at $917A, set at $BAE3)."
   },
   {
+   "address": 46702,
+   "type": "line",
+   "text": "Player two's facing override."
+  },
+  {
    "address": 46703,
    "type": "line",
    "text": "Set to $30 for a player who steps into an exit ($B784); read by $BAD7."
@@ -14852,6 +17239,16 @@
    "text": "The JMP rewritten by pickup_take with the pickup's routine."
   },
   {
+   "address": 46952,
+   "type": "line",
+   "text": "The low byte of pickup_jump's JMP, rewritten with the pickup's routine."
+  },
+  {
+   "address": 46953,
+   "type": "line",
+   "text": "The high byte of pickup_jump's target."
+  },
+  {
    "address": 46954,
    "type": "line",
    "text": "Player X steps into an exit: its state gets bit 7 (leaving), its escape time is noted ($AF38 = treasure_time), it is frozen, exit_count set to $30 for the spin into the exit, $824C cleared and sound 6 started."
@@ -14869,7 +17266,17 @@
   {
    "address": 47044,
    "type": "line",
-   "text": "The address of the string the call before prints (print_centred's argument); the code rewrites it before the call."
+   "text": "poison_eaten's first argument: the address of the hero's name, rewritten from hero_name_ptrs before the call."
+  },
+  {
+   "address": 47045,
+   "type": "line",
+   "text": "The high byte of poison_eaten's first argument, the hero's name."
+  },
+  {
+   "address": 47046,
+   "type": "line",
+   "text": "poison_eaten goes on after the hero's name: \"HAS JUST EATEN SOME\"."
   },
   {
    "address": 47052,
@@ -14877,14 +17284,29 @@
    "text": "The address of the string the call before prints (print_centred's argument): str_poisoned at $B7E5, \"HAS JUST EATEN SOME\"."
   },
   {
+   "address": 47054,
+   "type": "line",
+   "text": "After it: \"POISONED FOOD!\"."
+  },
+  {
    "address": 47060,
    "type": "line",
    "text": "The address of the string the call before prints (print_centred's argument): str_poisoned + 21 at $B7FA, \"POISONED FOOD\"."
   },
   {
+   "address": 47062,
+   "type": "line",
+   "text": "After the strings: the poison's effect, the sound, the wait and the maze."
+  },
+  {
    "address": 47077,
    "type": "line",
    "text": "\"HAS JUST EATEN SOME\" ($13 long, colour 1) and \"POISONED FOOD!\" ($0D, at $B7FA)."
+  },
+  {
+   "address": 47098,
+   "type": "line",
+   "text": "\"POISONED FOOD!\"."
   },
   {
    "address": 47114,
@@ -14905,6 +17327,11 @@
    "address": 47157,
    "type": "line",
    "text": "The routine for each pickup tile from $11: doors $11 and $12 (door_unlock), chest $13 (chest_take), food $14 and $15 (food_eat), potions $16 and $17 (potion_take), the amulet $18 (amulet_take), the six special potions $19-$1E, the key $1F (key_take)."
+  },
+  {
+   "address": 47158,
+   "type": "line",
+   "text": "pickup_routines read from its second byte."
   },
   {
    "address": 47187,
@@ -14957,6 +17384,11 @@
    "text": "A treasure chest: counts it for the treasure room (treasures_got) and, on an ordinary level, scores 100."
   },
   {
+   "address": 47399,
+   "type": "line",
+   "text": "The last two bytes of chest_take (its JMP's high byte and RTS), which the score routines name as a base: indexed with a shot slot (2 or 3), $B927 + X is score_lo."
+  },
+  {
    "address": 47401,
    "type": "line",
    "text": "The low byte of each player's score in decimal ($B929, $B92A); the middle bytes are at $B92B, the high at $B92D."
@@ -14974,7 +17406,7 @@
   {
    "address": 47404,
    "type": "line",
-   "text": "Player two's."
+   "text": "Player two's middle score byte (hundreds and thousands)."
   },
   {
    "address": 47405,
@@ -14984,7 +17416,7 @@
   {
    "address": 47406,
    "type": "line",
-   "text": "Player two's."
+   "text": "Player two's high score byte."
   },
   {
    "address": 47407,
@@ -14994,7 +17426,7 @@
   {
    "address": 47408,
    "type": "line",
-   "text": "Player two's."
+   "text": "Player two's health, tens and units, in decimal."
   },
   {
    "address": 47409,
@@ -15004,7 +17436,7 @@
   {
    "address": 47410,
    "type": "line",
-   "text": "Player two's."
+   "text": "Player two's health, thousands and hundreds, in decimal."
   },
   {
    "address": 47411,
@@ -15092,9 +17524,19 @@
    "text": "A SEC byte between monster_on_screen's two returns that no code reaches."
   },
   {
+   "address": 48120,
+   "type": "line",
+   "text": "monster_on_screen's return with the carry set (off screen)."
+  },
+  {
    "address": 48121,
    "type": "line",
    "text": "Monster Y next to player X attacks. Except for a ghost, a monster whose chosen facing is odd (monster_facings) does not. A monster on the player's very spot is removed (monster_remove); one more than four cells off on either axis does nothing. A ghost does not attack from a diagonal (ghost_diagonal). Then $C3AC decides whether the attack lands (carry set: it does not). A ghost hits once and vanishes (taken off the map, $C584, and out of the table, sound 0); Death (kind 5) takes 4 health a touch (in decimal) while its drain count ($0700,y) lasts, the player leaving the game if its health runs out, and is removed when the count is used up; the other kinds play sound $0A. Carry set when the monster was removed."
+  },
+  {
+   "address": 48283,
+   "type": "line",
+   "text": "Part of monster_attack: Death's touch, 4 health off in decimal and the player out of the game when it runs out. Its address is also where pinn232 calls the BASIC ROM ($BC9B)."
   },
   {
    "address": 48327,
@@ -15209,7 +17651,7 @@
   {
    "address": 49032,
    "type": "line",
-   "text": "Player two's."
+   "text": "The monster's distance from player two, the two axes added."
   },
   {
    "address": 49033,
@@ -15247,6 +17689,21 @@
    "text": "A blocked monster tries another way: one of four routines (turn_routines, picked by the facing) is called through the JSR at $BFD1, whose operand is rewritten; the facing chosen from the result goes into the monster's byte."
   },
   {
+   "address": 49105,
+   "type": "line",
+   "text": "The JSR monster_turn rewrites with one of turn_routines."
+  },
+  {
+   "address": 49106,
+   "type": "line",
+   "text": "The low byte of turn_call's target."
+  },
+  {
+   "address": 49107,
+   "type": "line",
+   "text": "Its target, high byte; then monster_turn's tail, which turns the routine's answer into a facing."
+  },
+  {
    "address": 49137,
    "type": "line",
    "text": "Set when a monster has attacked this step (blocks its move)."
@@ -15255,6 +17712,11 @@
    "address": 49138,
    "type": "line",
    "text": "The four turning routines: $C105, $C27E, $C1C4, $C043."
+  },
+  {
+   "address": 49139,
+   "type": "line",
+   "text": "turn_routines read from its second byte."
   },
   {
    "address": 49146,
@@ -15374,7 +17836,7 @@
   {
    "address": 50189,
    "type": "line",
-   "text": "Player two's."
+   "text": "Set when player two's health has run out."
   },
   {
    "address": 50190,
@@ -15400,6 +17862,11 @@
    "address": 50403,
    "type": "line",
    "text": "Work: the target's Y distance, compared with its X distance for a diagonal."
+  },
+  {
+   "address": 50404,
+   "type": "line",
+   "text": "monster_shoot's lobber branch: the throw count in bits 6-7 of its flags, and rock_throw once in four moves."
   },
   {
    "address": 50426,
@@ -15497,6 +17964,21 @@
    "text": "For side Y (the BIT instructions give the entries for 0, 4, 8 and 12: up, right, down, left): when the tile that way is a wall, each gets the other's join bit, so the brick pattern meets."
   },
   {
+   "address": 51066,
+   "type": "line",
+   "text": "wall_join's entry for side 8 (down); the BIT instructions hide the other entries' loads."
+  },
+  {
+   "address": 51069,
+   "type": "line",
+   "text": "wall_join's entry for side 4 (right)."
+  },
+  {
+   "address": 51072,
+   "type": "line",
+   "text": "wall_join's entry for side 0 (up), the start of the shared code."
+  },
+  {
    "address": 51164,
    "type": "line",
    "text": "Points $8E/$8F at the tile beside ($8C) in direction Y (wall_steps), wrapping at the grid's edges; carry clear when it is empty or a wall."
@@ -15532,14 +18014,39 @@
    "text": "For side Y (entries for 12, 8, 4, 0 by the BIT instructions): the wall beside loses its join bit for this side."
   },
   {
+   "address": 51636,
+   "type": "line",
+   "text": "wall_unjoin_side's entry for side 8 (down)."
+  },
+  {
+   "address": 51639,
+   "type": "line",
+   "text": "wall_unjoin_side's entry for side 4 (right)."
+  },
+  {
+   "address": 51642,
+   "type": "line",
+   "text": "wall_unjoin_side's entry for side 0 (up), the start of the shared code."
+  },
+  {
    "address": 51687,
    "type": "line",
    "text": "The step in the 32 x 32 tile grid for each of the eight directions: -$20, -$1F, 1, $21, $20, $1F, -1, -$21."
   },
   {
+   "address": 51688,
+   "type": "line",
+   "text": "wall_steps read from its second byte."
+  },
+  {
    "address": 51703,
    "type": "line",
    "text": "The join bit for each side, and the matching bit of the tile opposite: 4 1 8 2 1 4 2 8."
+  },
+  {
+   "address": 51704,
+   "type": "line",
+   "text": "wall_join_bits read from its second byte: the opposite tile's bit."
   },
   {
    "address": 51711,
@@ -15785,6 +18292,766 @@
    "address": 53246,
    "type": "line",
    "text": "The heroes chosen on the selection screen, one byte per player (the selection program writes them here)."
+  },
+  {
+   "address": 57344,
+   "type": "line",
+   "text": "The music player's per-frame entry (file PLAYER-$E000): when music_on is set, runs one frame of the tune (music_frame) and copies the 25 shadow registers (sid_shadow) to the SID at $D400-$D418. level_intro calls it once a frame while the level jingle plays."
+  },
+  {
+   "address": 57347,
+   "type": "line",
+   "text": "The music player's start entry: A/X give the tune's address (the level jingle is at $EA00), kept in $02/$03; goes to music_setup."
+  },
+  {
+   "address": 57374,
+   "type": "line",
+   "text": "One frame of the tune: advances the tempo counter (music_tempo_frac + music_tempo, carrying into music_tempo_count), then for each of the three voices runs its commands, counts its note down and applies its effects (vibrato, slides, pulse sweep, arpeggio), keeping each voice's stream pointer in music_stream_lo/hi."
+  },
+  {
+   "address": 57493,
+   "type": "line",
+   "text": "The low byte of the JSR at $E094, rewritten with the handler of the command being run (music_commands)."
+  },
+  {
+   "address": 57494,
+   "type": "line",
+   "text": "The high byte of that JSR's target."
+  },
+  {
+   "address": 57574,
+   "type": "line",
+   "text": "Counts voice X's note down (music_note_count with music_note_long); near its end ($E640,x) it clears the gate bit in the shadow control register; when the note is over it resets the voice's effects and reads the next note: a byte of $80 or more is a pitch (plus the transposition $E5E6,x, turned into a frequency by music_freq, with the voice's other two arpeggio notes worked out the same way), 0 is a rest, and the byte after it is the length ($FF chains a tied note)."
+  },
+  {
+   "address": 57828,
+   "type": "line",
+   "text": "Starts a tune: clears the player's 126 bytes of state from $E585, sets the gate-off times to 2, each voice's note count and $E61D to 1, takes the three voices' stream addresses from the tune's header (offsets added to the tune's address), silences the shadow registers (music_silence) and turns music_on on."
+  },
+  {
+   "address": 57915,
+   "type": "line",
+   "text": "Command 29: stops the tune (music_on off) and silences the voices."
+  },
+  {
+   "address": 57920,
+   "type": "line",
+   "text": "Writes $09 then $00 into each of the 24 shadow registers from $E685: the gates opened and closed with the test bit, silencing the voices."
+  },
+  {
+   "address": 57936,
+   "type": "line",
+   "text": "Command 0: sets the volume and filter mode byte ($E69D, $D418's shadow)."
+  },
+  {
+   "address": 57940,
+   "type": "line",
+   "text": "Command 2: sets voice X's waveform and gate byte ($E5F2,x)."
+  },
+  {
+   "address": 57944,
+   "type": "line",
+   "text": "Command 1: sets voice X's attack/decay ($E5F8,x)."
+  },
+  {
+   "address": 57948,
+   "type": "line",
+   "text": "Command 9: sets voice X's sustain/release ($E5EF,x)."
+  },
+  {
+   "address": 57952,
+   "type": "line",
+   "text": "Command 15: repeats the stream from the first loop mark ($E604/$E607) the given number of times (counts in $E5E0/$E5FE)."
+  },
+  {
+   "address": 57992,
+   "type": "line",
+   "text": "Command 16: sets the first loop mark at the current stream position."
+  },
+  {
+   "address": 58003,
+   "type": "line",
+   "text": "Command 17: repeats from the second loop mark ($E60A/$E60D), counts in $E5E3/$E601."
+  },
+  {
+   "address": 58043,
+   "type": "line",
+   "text": "Command 18: sets the second loop mark."
+  },
+  {
+   "address": 58054,
+   "type": "line",
+   "text": "Command 19: sets voice X's transposition ($E5E6,x), added to every note's number."
+  },
+  {
+   "address": 58058,
+   "type": "line",
+   "text": "Command 13: sets voice X's vibrato step ($E5FB,x)."
+  },
+  {
+   "address": 58062,
+   "type": "line",
+   "text": "Command 11: sets the high byte of voice X's slide step ($E5EC,x)."
+  },
+  {
+   "address": 58066,
+   "type": "line",
+   "text": "Command 12: sets the low byte of voice X's slide step ($E5E9,x)."
+  },
+  {
+   "address": 58070,
+   "type": "line",
+   "text": "Command 3: sets voice X's pulse width high byte ($E5F5,x)."
+  },
+  {
+   "address": 58074,
+   "type": "line",
+   "text": "Command 4: a value of 100 or more sets how many frames before a note's end its gate closes (value - 100, $E640,x); a smaller one sets the voice's arpeggio limit ($E589,y)."
+  },
+  {
+   "address": 58089,
+   "type": "line",
+   "text": "Command 5: sets a per-voice arpeggio byte ($E58A,y)."
+  },
+  {
+   "address": 58093,
+   "type": "line",
+   "text": "Command 6: a value of 99 or more names the voice whose new notes reset the tempo accumulator (value - 100, $E585); a smaller one sets the voice's waveform-table index ($E58B,y)."
+  },
+  {
+   "address": 58108,
+   "type": "line",
+   "text": "Command 7: sets the voice's frequency effect ($E58C,y: 1 arpeggio between two notes, 2 a third)."
+  },
+  {
+   "address": 58112,
+   "type": "line",
+   "text": "Command 14: sets voice X's slide mode ($E59E,x)."
+  },
+  {
+   "address": 58116,
+   "type": "line",
+   "text": "Command 10: sets voice X's pulse sweep step ($E5AD,x)."
+  },
+  {
+   "address": 58120,
+   "type": "line",
+   "text": "Command 8: sets the frames before voice X's slide starts ($E5A7,x)."
+  },
+  {
+   "address": 58124,
+   "type": "line",
+   "text": "Command 20: sets voice X's vibrato limits from the two nibbles ($E5DA high, $E5DD low)."
+  },
+  {
+   "address": 58141,
+   "type": "line",
+   "text": "Command 21: sets the length of each phase of voice X's pulse sweep ($E61D,x)."
+  },
+  {
+   "address": 58145,
+   "type": "line",
+   "text": "Command 22: sets the filter's resonance and routing byte ($E69C, $D417's shadow)."
+  },
+  {
+   "address": 58149,
+   "type": "line",
+   "text": "Command 23: sets the tempo value a resetting voice restores ($E59D)."
+  },
+  {
+   "address": 58153,
+   "type": "line",
+   "text": "Command 25: adds to voice X's transposition."
+  },
+  {
+   "address": 58161,
+   "type": "line",
+   "text": "Command 26: adds to the volume byte."
+  },
+  {
+   "address": 58169,
+   "type": "line",
+   "text": "Command 27: sets the offset of voice X's second arpeggio note ($E5B9,x)."
+  },
+  {
+   "address": 58173,
+   "type": "line",
+   "text": "Command 28: sets the tempo: the byte's top five bits the whole part ($E59C), the low three the fraction ($E59B)."
+  },
+  {
+   "address": 58189,
+   "type": "line",
+   "text": "Command 30: sets the offset of voice X's first arpeggio note ($E5B6,x)."
+  },
+  {
+   "address": 58193,
+   "type": "line",
+   "text": "Command 31: sets voice X's fine tuning, added to each frequency ($E5C8,x)."
+  },
+  {
+   "address": 58197,
+   "type": "line",
+   "text": "Command 32: sets voice X's pulse sweep rate ($E5CB,x)."
+  },
+  {
+   "address": 58201,
+   "type": "line",
+   "text": "Command 24: adds to the high byte of voice X's note count ($E5CE,x), lengthening the note."
+  },
+  {
+   "address": 58209,
+   "type": "line",
+   "text": "Starts voice Y's slide once its delay ($E5A7) has passed."
+  },
+  {
+   "address": 58224,
+   "type": "line",
+   "text": "Voice Y's vibrato: moves the shadow pulse width or frequency up and down by $E5FB between the limits $E5DA/$E5DD."
+  },
+  {
+   "address": 58299,
+   "type": "line",
+   "text": "Sets voice X's shadow control byte from the waveform table ($E622, by its index $E58B) or from the voice's own control byte ($E588), depending on how far into the note the voice is ($E5AA) against its limit ($E589) and on the tick count's low bit."
+  },
+  {
+   "address": 58353,
+   "type": "line",
+   "text": "Voice X's arpeggio: cycles the frequency through the note and its one or two arpeggio notes ($E5A1/$E5A4, $E5BC/$E5BF) on successive frames."
+  },
+  {
+   "address": 58404,
+   "type": "line",
+   "text": "Voice Y's pulse sweep: steps the pulse width up or down by $E5B0 (which can grow by $E5CB each frame up to $E5AD) in four phases of $E61D frames."
+  },
+  {
+   "address": 58481,
+   "type": "line",
+   "text": "Adds the sweep step to the voice's frequency/pulse pair ($E587/$E586) and its shadow registers."
+  },
+  {
+   "address": 58502,
+   "type": "line",
+   "text": "Subtracts the sweep step."
+  },
+  {
+   "address": 58527,
+   "type": "line",
+   "text": "Slide mode 1: moves the frequency towards the target note ($E5A1/$E5A4) by the slide step, stopping on it; modes 3 and 4 slide down or up without end."
+  },
+  {
+   "address": 58614,
+   "type": "line",
+   "text": "Adds the slide step ($E5E9/$E5EC) to the voice's frequency."
+  },
+  {
+   "address": 58633,
+   "type": "line",
+   "text": "Subtracts the slide step."
+  },
+  {
+   "address": 58664,
+   "type": "line",
+   "text": "Copies the voice's frequency ($E586/$E587) into its shadow registers."
+  },
+  {
+   "address": 58677,
+   "type": "line",
+   "text": "Turns a note number (from $80) into a SID frequency: takes octaves of 12 off the top until it is within the table's octave (music_freq_table, the top octave), then halves the frequency once for each octave taken off, and adds the voice's fine tuning; the result in $E612/$E613."
+  },
+  {
+   "address": 58743,
+   "type": "line",
+   "text": "Steps the stream pointer $02/$03 past one two-byte command."
+  },
+  {
+   "address": 58755,
+   "type": "line",
+   "text": "A zero byte before the player's state."
+  },
+  {
+   "address": 58756,
+   "type": "line",
+   "text": "The start of the player's 126 bytes of state, which music_setup clears."
+  },
+  {
+   "address": 58757,
+   "type": "line",
+   "text": "The voice whose new notes reset the tempo accumulator (command 6 with 99 or more)."
+  },
+  {
+   "address": 58758,
+   "type": "line",
+   "text": "Each voice's frequency, high byte, at the voice's SID offset (Y = 0, 7, 14): the voice state here is laid out like the SID's registers."
+  },
+  {
+   "address": 58759,
+   "type": "line",
+   "text": "Each voice's frequency, low byte."
+  },
+  {
+   "address": 58760,
+   "type": "line",
+   "text": "Each voice's own control byte (waveform and gate)."
+  },
+  {
+   "address": 58761,
+   "type": "line",
+   "text": "Each voice's arpeggio limit (command 4)."
+  },
+  {
+   "address": 58762,
+   "type": "line",
+   "text": "Each voice's arpeggio byte (command 5)."
+  },
+  {
+   "address": 58763,
+   "type": "line",
+   "text": "Each voice's waveform-table index (command 6)."
+  },
+  {
+   "address": 58764,
+   "type": "line",
+   "text": "Each voice's frequency effect (command 7); the rest of the seven-byte group follows."
+  },
+  {
+   "address": 58778,
+   "type": "line",
+   "text": "Work for music_setup: the high bytes of the three voices' start addresses."
+  },
+  {
+   "address": 58779,
+   "type": "line",
+   "text": "The tempo's fractional step (command 28)."
+  },
+  {
+   "address": 58780,
+   "type": "line",
+   "text": "The tempo's whole step."
+  },
+  {
+   "address": 58781,
+   "type": "line",
+   "text": "The tempo a resetting voice restores (command 23), and music_setup's work."
+  },
+  {
+   "address": 58782,
+   "type": "line",
+   "text": "Each voice's slide mode (command 14)."
+  },
+  {
+   "address": 58785,
+   "type": "line",
+   "text": "Each voice's slide target or arpeggio note, high byte."
+  },
+  {
+   "address": 58788,
+   "type": "line",
+   "text": "Its low byte."
+  },
+  {
+   "address": 58791,
+   "type": "line",
+   "text": "Each voice's slide delay (command 8)."
+  },
+  {
+   "address": 58794,
+   "type": "line",
+   "text": "Each voice's frames into its note."
+  },
+  {
+   "address": 58797,
+   "type": "line",
+   "text": "Each voice's largest pulse sweep step (command 10)."
+  },
+  {
+   "address": 58800,
+   "type": "line",
+   "text": "Each voice's pulse sweep step now."
+  },
+  {
+   "address": 58803,
+   "type": "line",
+   "text": "Each voice's arpeggio phase, 0-2."
+  },
+  {
+   "address": 58806,
+   "type": "line",
+   "text": "Each voice's first arpeggio offset (command 30)."
+  },
+  {
+   "address": 58809,
+   "type": "line",
+   "text": "Each voice's second arpeggio offset (command 27)."
+  },
+  {
+   "address": 58812,
+   "type": "line",
+   "text": "Each voice's second arpeggio note, low byte."
+  },
+  {
+   "address": 58815,
+   "type": "line",
+   "text": "The high byte of each voice's second arpeggio note."
+  },
+  {
+   "address": 58818,
+   "type": "line",
+   "text": "Each voice's tempo tick count."
+  },
+  {
+   "address": 58821,
+   "type": "line",
+   "text": "Each voice's count of tempo ticks into the note."
+  },
+  {
+   "address": 58824,
+   "type": "line",
+   "text": "Each voice's fine tuning (command 31)."
+  },
+  {
+   "address": 58827,
+   "type": "line",
+   "text": "Each voice's pulse sweep rate (command 32)."
+  },
+  {
+   "address": 58830,
+   "type": "line",
+   "text": "The high byte of each voice's note count."
+  },
+  {
+   "address": 58833,
+   "type": "line",
+   "text": "Each voice's frames into its pulse sweep phase."
+  },
+  {
+   "address": 58836,
+   "type": "line",
+   "text": "Each voice's pulse sweep phase, 0-3."
+  },
+  {
+   "address": 58839,
+   "type": "line",
+   "text": "Each voice's vibrato direction."
+  },
+  {
+   "address": 58842,
+   "type": "line",
+   "text": "Each voice's vibrato upper limit (command 20, high nibble)."
+  },
+  {
+   "address": 58845,
+   "type": "line",
+   "text": "Each voice's vibrato lower limit (low nibble)."
+  },
+  {
+   "address": 58848,
+   "type": "line",
+   "text": "Each voice's first repeat is running."
+  },
+  {
+   "address": 58851,
+   "type": "line",
+   "text": "Each voice's second repeat is running."
+  },
+  {
+   "address": 58854,
+   "type": "line",
+   "text": "Each voice's transposition (commands 19 and 25)."
+  },
+  {
+   "address": 58857,
+   "type": "line",
+   "text": "Each voice's slide step, low byte (command 12)."
+  },
+  {
+   "address": 58860,
+   "type": "line",
+   "text": "Each voice's slide step, high byte (command 11)."
+  },
+  {
+   "address": 58863,
+   "type": "line",
+   "text": "Each voice's sustain/release (command 9)."
+  },
+  {
+   "address": 58866,
+   "type": "line",
+   "text": "Each voice's waveform and gate (command 2)."
+  },
+  {
+   "address": 58869,
+   "type": "line",
+   "text": "Each voice's pulse width high byte (command 3)."
+  },
+  {
+   "address": 58872,
+   "type": "line",
+   "text": "Each voice's attack/decay (command 1)."
+  },
+  {
+   "address": 58875,
+   "type": "line",
+   "text": "Each voice's vibrato step (command 13)."
+  },
+  {
+   "address": 58878,
+   "type": "line",
+   "text": "Each voice's repeats left on the first loop."
+  },
+  {
+   "address": 58881,
+   "type": "line",
+   "text": "Each voice's repeats left on the second loop."
+  },
+  {
+   "address": 58884,
+   "type": "line",
+   "text": "Each voice's first loop mark, low byte."
+  },
+  {
+   "address": 58887,
+   "type": "line",
+   "text": "The high byte of each voice's first loop mark."
+  },
+  {
+   "address": 58890,
+   "type": "line",
+   "text": "Each voice's second loop mark, low byte."
+  },
+  {
+   "address": 58893,
+   "type": "line",
+   "text": "The high byte of each voice's second loop mark."
+  },
+  {
+   "address": 58896,
+   "type": "line",
+   "text": "Work: a note number or a command's value."
+  },
+  {
+   "address": 58898,
+   "type": "line",
+   "text": "music_freq's result, high byte."
+  },
+  {
+   "address": 58899,
+   "type": "line",
+   "text": "music_freq's result, low byte."
+  },
+  {
+   "address": 58900,
+   "type": "line",
+   "text": "Each voice's frames left on its note (low byte)."
+  },
+  {
+   "address": 58903,
+   "type": "line",
+   "text": "Each voice's stream pointer, high byte."
+  },
+  {
+   "address": 58906,
+   "type": "line",
+   "text": "Each voice's stream pointer, low byte."
+  },
+  {
+   "address": 58909,
+   "type": "line",
+   "text": "Each voice's pulse sweep phase length (command 21)."
+  },
+  {
+   "address": 58912,
+   "type": "line",
+   "text": "Each voice's SID register offset: 0, 7, 14."
+  },
+  {
+   "address": 58914,
+   "type": "line",
+   "text": "The waveforms command 6 picks, read from index 1: $41 pulse, $21 sawtooth, $11 triangle, $81 noise, $51 (index 0 is the last of the voice offsets, 14)."
+  },
+  {
+   "address": 58920,
+   "type": "line",
+   "text": "The top octave's twelve frequencies, high byte first: $8368, $8B39 ... $F810, a semitone apart; music_freq halves them for lower octaves."
+  },
+  {
+   "address": 58921,
+   "type": "line",
+   "text": "music_freq_table read from its second byte."
+  },
+  {
+   "address": 58944,
+   "type": "line",
+   "text": "Each voice's gate-off time before a note's end (command 4 with 100 or more)."
+  },
+  {
+   "address": 58945,
+   "type": "line",
+   "text": "The second voice's gate-off time."
+  },
+  {
+   "address": 58946,
+   "type": "line",
+   "text": "The third voice's gate-off time."
+  },
+  {
+   "address": 58947,
+   "type": "line",
+   "text": "The handlers of the 33 commands, in command order; a command byte n + 1 picks entry n."
+  },
+  {
+   "address": 58948,
+   "type": "line",
+   "text": "music_commands read from its second byte."
+  },
+  {
+   "address": 59013,
+   "type": "line",
+   "text": "The 25 SID registers as the player wants them, copied to $D400-$D418 each frame: voice 1 from $E685."
+  },
+  {
+   "address": 59014,
+   "type": "line",
+   "text": "The shadow of voice 1's frequency high byte (each voice's at +7, +14)."
+  },
+  {
+   "address": 59015,
+   "type": "line",
+   "text": "The shadow of voice 1's pulse width, low byte."
+  },
+  {
+   "address": 59016,
+   "type": "line",
+   "text": "The shadow of voice 1's pulse width, high byte."
+  },
+  {
+   "address": 59017,
+   "type": "line",
+   "text": "The shadow of voice 1's control register."
+  },
+  {
+   "address": 59018,
+   "type": "line",
+   "text": "The shadow of voice 1's attack/decay."
+  },
+  {
+   "address": 59019,
+   "type": "line",
+   "text": "The shadow of voice 1's sustain/release; voices 2 and 3 follow."
+  },
+  {
+   "address": 59034,
+   "type": "line",
+   "text": "The tempo accumulator's fraction."
+  },
+  {
+   "address": 59035,
+   "type": "line",
+   "text": "The tempo accumulator's whole part."
+  },
+  {
+   "address": 59036,
+   "type": "line",
+   "text": "The shadow of $D417, the filter's resonance and routing."
+  },
+  {
+   "address": 59037,
+   "type": "line",
+   "text": "The shadow of $D418, the filter mode and volume."
+  },
+  {
+   "address": 59038,
+   "type": "line",
+   "text": "Non-zero while a tune plays; the start-up clears it, music_setup sets it, music_stop clears it."
+  },
+  {
+   "address": 59039,
+   "type": "line",
+   "text": "The last 66 bytes of the file PLAYER-$E000, after the player's state: leftovers saved with it (the letters \"PINKY\" among them, at $E6AF); nothing reads them."
+  },
+  {
+   "address": 59392,
+   "type": "line",
+   "text": "The file DATATREASURE 446: the treasure-room tune for the tune player (tune_start with $E800). It starts with a header of offsets ($0E, $80) which tune_init adds to $E800 to find the voices' streams of two-byte commands (tune_command)."
+  },
+  {
+   "address": 59648,
+   "type": "line",
+   "text": "The rest of the treasure tune's streams."
+  },
+  {
+   "address": 59904,
+   "type": "line",
+   "text": "The file DITTIDATA 146: the level jingle for the music player at $E000 (music_init with $EA00, from level_intro): a header of the voices' offsets ($3A, $64 ...), then each voice's commands and notes."
+  },
+  {
+   "address": 61440,
+   "type": "line",
+   "text": "The file OBJDIS from its start: the offset from $F000 of each of the 18 sound effects' streams (0-$11), two bytes each, which sfx_start reads."
+  },
+  {
+   "address": 61441,
+   "type": "line",
+   "text": "The offsets' high bytes."
+  },
+  {
+   "address": 61476,
+   "type": "line",
+   "text": "The sound effects' streams: two bytes a frame (the first with sustain/release in its high nibble and the noise choice in its low, the second the pitch), each effect ending with a zero byte."
+  },
+  {
+   "address": 61696,
+   "type": "line",
+   "text": "The sound effects' streams from $F100 to $F1FF."
+  },
+  {
+   "address": 61952,
+   "type": "line",
+   "text": "The sound effects' streams from $F200 to $F2FF."
+  },
+  {
+   "address": 62208,
+   "type": "line",
+   "text": "The last effect streams, to $F3EA."
+  },
+  {
+   "address": 62443,
+   "type": "line",
+   "text": "Bytes after the last effect, before the tile table: nothing reads them."
+  },
+  {
+   "address": 62464,
+   "type": "line",
+   "text": "The four characters of each of the 128 tiles (top left, top right, bottom left, bottom right), four bytes a tile: tile_draw, tile_redraw, drop_tile and level drawing read it."
+  },
+  {
+   "address": 62720,
+   "type": "line",
+   "text": "The characters of tiles $40-$7F: the monsters (six kinds, eight facings)."
+  },
+  {
+   "address": 62976,
+   "type": "line",
+   "text": "The colour of each tile, four bytes a tile (one per character); maze_style rewrites the walls' colours ($F604-$F643, $F6CC-$F6D7) per level."
+  },
+  {
+   "address": 62980,
+   "type": "line",
+   "text": "The colours of tiles 1-16, the walls, set by maze_style."
+  },
+  {
+   "address": 63180,
+   "type": "line",
+   "text": "The colours of tiles $33-$35, the crumbling walls, set by maze_style."
+  },
+  {
+   "address": 63232,
+   "type": "line",
+   "text": "The colours of tiles $40-$7F, the monsters."
+  },
+  {
+   "address": 65530,
+   "type": "line",
+   "text": "The hardware vectors in the RAM under the KERNAL: NMI $827F (nmi_rti), reset $0000 (unused: a reset reads the ROM), IRQ $8268 (irq_entry), set by irq_install."
   }
  ]
 }
