@@ -290,7 +290,13 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
   const MOVES = { 1: 'stand', 2: 'walk forward', 3: 'walk back', 4: 'crouch', 5: 'jump', 6: 'high punch',
     7: 'low punch', 8: 'somersault backwards', 9: 'somersault forwards', 0x0A: 'foot sweep',
     0x0B: 'low kick', 0x0C: 'middle kick', 0x0D: 'high kick', 0x0E: 'flying kick',
-    0x0F: 'back kick', 0x10: 'back sweep', 0x11: 'spinning kick', 0x12: 'turn round', 0x13: 'low block', 0x14: 'high block', 0x18: 'middle punch' };
+    0x0F: 'back kick', 0x10: 'back sweep', 0x11: 'spinning kick', 0x12: 'turn round', 0x13: 'low block', 0x14: 'high block', 0x18: 'middle punch',
+    0x15: 'spinning kick return', 0x16: 'fall backwards', 0x17: 'bow', 0x19: "winner's bow", 0x1A: 'fall forwards', 0x1B: 'double over' };
+  // The animations the game plays itself, in the same numbering: animation, key frame, when it plays.
+  const GAME_CARDS = [
+    [0x17, 0x21, 'both fighters, at the start of every exchange ($1A22)'], [0x19, 0x38, 'the winner, at the end of a bout; both, after a draw ($1E32)'],
+    [0x16, 0x2A, 'hit on the front ($2CA8)'], [0x1A, 0x27, 'hit on the back ($2CA8)'],
+    [0x1B, 0x2E, 'hit by $18, 7 or $0C, fighters facing each other ($2CA8)'], [0x15, 0x18, 'played backwards when a held spinning kick ends ($2A5D)']];
   // The move cards: move, key frame (the strike frame $1204 for a blow), stick as read facing right, fire, how it is reached.
   const MOVE_CARDS = [
     [1, 0x00, '○', 0, 'stick centred'], [2, 0x02, '→', 0, ''], [3, 0x31, '←', 0, 'blocks instead when a blow is in reach'],
@@ -381,7 +387,7 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
       const box = $('stepCards'), strike = ram[0x1176 + move] ? ram[0x1204 + move] : -1;
       const ticks = steps.reduce((a, s) => a + s[0], 0), frames = new Set(steps.map(s => s[1])).size;
       const tx = steps.reduce((a, s) => a + s[0] * s8(s[2]), 0);
-      $('stepHead').textContent = 'Move ' + hex(move) + (MOVES[move] ? ' · ' + MOVES[move] : '') + ' · ' + steps.length + ' steps, ' + frames + ' frames, ' + ticks + ' ticks' + (tx ? ', ' + Math.abs(tx) + ' units ' + (tx > 0 ? 'forward' : 'back') : '');
+      $('stepHead').textContent = (GAME_CARDS.some(g => g[0] === move) ? 'Animation ' : 'Move ') + hex(move) + (MOVES[move] ? ' · ' + MOVES[move] : '') + ' · ' + steps.length + ' steps, ' + frames + ' frames, ' + ticks + ' ticks' + (tx ? ', ' + Math.abs(tx) + ' units ' + (tx > 0 ? 'forward' : 'back') : '') + (move === 0x15 ? ' (played backwards, last step first)' : '');
       $('stepTab').innerHTML = '<tr><th>step</th><th>ticks</th><th>frame</th><th>dx</th><th>dy</th></tr>' +
         steps.map((s, i) => `<tr data-i="${i}"><td>${i}</td><td>${s[0]}</td><td>${hex(s[1])}${s[1] === strike ? ' strike' : ''}</td><td>${s8(s[2])}</td><td>${s8(s[3])}</td></tr>`).join('');
       box.innerHTML = '';
@@ -402,6 +408,18 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
     $('stepTab').onclick = e => { const r = e.target.closest('tr[data-i]'); if (r) selectStep(+r.dataset.i, true); };
     $('stepPlay').onclick = playSteps;
     select(0x0E);
+    if ($('gameCards')) {
+      for (const [m, f, how] of GAME_CARDS) {
+        const b = document.createElement('button'); b.className = 'fx-move'; b.type = 'button';
+        const cv = document.createElement('canvas'); cv.width = 144; cv.height = 126;
+        drawPose(cv, FIST.pose(ram, f, false, false), 2, 1, false);
+        b.appendChild(cv);
+        b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Animation ${hex(m)}</span><b>${MOVES[m][0].toUpperCase() + MOVES[m].slice(1)}</b><span class="fx-move-in">${how}</span>`);
+        b.title = 'Show the steps of animation ' + hex(m) + ' below';
+        b.onclick = () => { select(m); $('stepPlay').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        $('gameCards').appendChild(b);
+      }
+    }
     if ($('moveCards')) {
       const box = $('moveCards');
       for (const [m, f, arrow, fired, how] of MOVE_CARDS) {

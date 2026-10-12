@@ -67,3 +67,4 @@ main a{color:var(--link)}
 .fx-cells{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:1px 6px;font-family:var(--fm);font-size:11px;color:var(--ink-soft);margin-top:2px}
 .fx-cells i{font-style:normal}.fx-cells i.z{color:var(--line)}
 .fx-tab tr[data-i]{cursor:pointer}
+.fx-sub{font-family:var(--fm);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);margin:22px 0 10px}
