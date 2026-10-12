@@ -367,20 +367,52 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         if (left <= 0) {
           if (i >= steps.length) { clearInterval(timer); return; }
           show(steps[i][1]); left = steps[i][0];
-          $('stepTab').querySelectorAll('tr').forEach(r => r.classList.toggle('hl', r.dataset.i == i));
+          mark(i);
           i++;
         }
         left--;
       };
       tick(); timer = setInterval(tick, 40);
+      renderSteps(move, steps);
     }
+    let curSteps = [], curMove = 1;
+    function mark(i) {
+      $('stepTab').querySelectorAll('tr').forEach(r => r.classList.toggle('hl', r.dataset.i == i));
+      $('stepCards').querySelectorAll('.fx-move').forEach((c, j) => c.classList.toggle('on', j === i));
+    }
+    function selectStep(i, scrollCard) {
+      clearInterval(timer); show(curSteps[i][1]); mark(i);
+      if (scrollCard) $('stepCards').children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function renderSteps(move, steps) {
+      curSteps = steps; curMove = move;
+      const box = $('stepCards'), strike = ram[0x1176 + move] ? ram[0x1204 + move] : -1, sgn = v => { v = (v << 24) >> 24; return v > 0 ? '+' + v : String(v); };
+      const ticks = steps.reduce((a, s) => a + s[0], 0), frames = new Set(steps.map(s => s[1])).size;
+      const s8 = v => (v << 24) >> 24, tx = steps.reduce((a, s) => a + s[0] * s8(s[2]), 0);
+      $('stepHead').textContent = 'Move ' + hex(move) + (MOVES[move] ? ' · ' + MOVES[move] : '') + ' · ' + steps.length + ' steps, ' + frames + ' frames, ' + ticks + ' ticks' + (tx ? ', ' + Math.abs(tx) + ' units ' + (tx > 0 ? 'forward' : 'back') : '');
+      box.innerHTML = '';
+      steps.forEach(([t, f, dx, dy], i) => {
+        const b = document.createElement('button'); b.className = 'fx-move'; b.type = 'button';
+        const cv = document.createElement('canvas'); cv.width = 144; cv.height = 126;
+        drawPose(cv, FIST.pose(ram, f, mirrored, false), 2, 1, false);
+        b.appendChild(cv);
+        const cells = Array.from({ length: 9 }, (_, k) => hex(ram[0x7AE0 + k * 79 + f]).slice(1));
+        b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Step ${i} · frame ${hex(f)}${f === strike ? ' <span class="fx-move-fire">strike</span>' : ''}</span>` +
+          `<b>${t} tick${t === 1 ? '' : 's'}</b><span class="fx-move-in">per tick X ${sgn(dx)} · Y ${sgn(dy)}</span>` +
+          `<span class="fx-cells">${cells.map(c => `<i${c === '00' ? ' class="z"' : ''}>${c}</i>`).join('')}</span>`);
+        b.title = 'Show frame ' + hex(f) + ' in the viewer';
+        b.onclick = () => selectStep(i, false);
+        box.appendChild(b);
+      });
+    }
+    $('stepTab').onclick = e => { const r = e.target.closest('tr[data-i]'); if (r) selectStep(+r.dataset.i, true); };
     const pad = $('pad');
     for (const [k, plain, fired] of PADS) {
       const b = document.createElement('button'); b.className = 'fx-btn'; b.textContent = ARROWS[k];
       b.title = k; b.onclick = () => play(fire ? fired : plain); pad.appendChild(b);
     }
     $('fireBtn').onclick = () => { fire = !fire; $('fireBtn').classList.toggle('on', fire); };
-    $('mirBtn').onclick = () => { mirrored = !mirrored; $('mirBtn').textContent = mirrored ? 'Facing left' : 'Facing right'; show(frame); };
+    $('mirBtn').onclick = () => { mirrored = !mirrored; $('mirBtn').textContent = mirrored ? 'Facing left' : 'Facing right'; show(frame); renderSteps(curMove, curSteps); };
     $('gridBtn').onclick = () => { grid = !grid; $('gridBtn').classList.toggle('on', grid); show(frame); };
     $('frameIn').oninput = e => { clearInterval(timer); show(+e.target.value); };
     play(0x0E);
@@ -394,8 +426,8 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         b.appendChild(cv);
         b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Move ${hex(m)}${pts}</span><b>${MOVES[m][0].toUpperCase() + MOVES[m].slice(1)}</b>` +
           `<span class="fx-move-in"><span class="fx-move-arrow">${arrow}</span>${fired ? '<span class="fx-move-fire">fire</span>' : ''}${how ? ' ' + how : ''}</span>`);
-        b.title = 'Play move ' + hex(m) + ' in the viewer below';
-        b.onclick = () => { play(m); $('poseCv').scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+        b.title = 'Show the steps of move ' + hex(m) + ' and play it below';
+        b.onclick = () => { play(m); $('stepHead').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
         box.appendChild(b);
       }
     }
