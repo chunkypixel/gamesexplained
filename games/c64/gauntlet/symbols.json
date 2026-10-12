@@ -5861,7 +5861,7 @@
   },
   {
    "address": 38894,
-   "name": "bit_masks",
+   "name": "power_bits",
    "type": "Field",
    "kind": "user"
   },
@@ -13771,7 +13771,7 @@
   {
    "address": 4096,
    "type": "line",
-   "text": "The file DATATITLE 244, left at $1000 by the title and selection programs (which load it at $6400 and move it): tune data for the music player at $E000, the title music. Nothing in the play program reads it."
+   "text": "The file DATATITLE 244, left at $1000 by the title and selection programs (which load it at $6400 and move it): tune data for the music player at $E000, the title music, 18 seconds long. The play program never plays it; the BIT instructions at $9CE2 (power_shot) and $AC65, which hide a load from the code before them, read its byte at $10A9 and the value goes unused."
   },
   {
    "address": 4265,
@@ -14001,7 +14001,7 @@
   {
    "address": 32787,
    "type": "line",
-   "text": "The start-up, run once after the hand-over. Turns the music player off, sets level_number to 1 and installs the interrupts. Unless the files are already in (heroes_loaded), hands the interrupts to the KERNAL, blanks the screen, loads all eight files (load_files), takes the interrupts back and picks level 8's file at random. Then starts CIA 1's timers, blanks the screen, copies the heroes' graphics (heroes_load_shapes), clears the screens, starts the tune player, resets the sound effects, starts the side masks, resets the game (game_reset), waits, sets multicolour text, video bank 1, screen $4000, the panel font at $6000, colours the panel, sets the treasure-room countdown to 5, shows the screen, and falls into game_start."
+   "text": "The start-up, run once after the hand-over. Turns the music player off, sets level_number to 1 and installs the interrupts. Unless the files are already in (heroes_loaded), hands the interrupts to the KERNAL, blanks the screen, loads all eight files (load_files), takes the interrupts back and picks level 8's file at random. Then starts CIA 1's timers, blanks the screen, copies the heroes' graphics (heroes_load_shapes), clears the screens, starts the tune player, resets the sound effects, starts the side masks, resets the game (game_reset), waits, sets multicolour text, video bank 1 and screen $4000, calls vic_font with 8 (which its AND #$07 turns into character base 0, $4000: the panel's font, $6000, is set each frame by the raster interrupt at $8623), colours the panel, sets the treasure-room countdown to 5, shows the screen, and falls into game_start."
   },
   {
    "address": 32913,
@@ -14221,7 +14221,7 @@
   {
    "address": 33583,
    "type": "line",
-   "text": "The column after the last potion icon in each player's block, from which potion icons are counted left."
+   "text": "The column of the first potion icon in each player's block ($0F and $1F): potion_take puts a new potion's icon at $439C + this less the potions already held, so icons fill leftwards from here, and potion_drop clears the last one."
   },
   {
    "address": 33585,
@@ -15216,12 +15216,12 @@
   {
    "address": 38878,
    "type": "line",
-   "text": "Twenty-two bytes: $10-$19, $21-$26, then $01 $02 $04 $08 $10 $20. Nothing in the traced code reads them by address."
+   "text": "Sixteen bytes, $10-$19 and $21-$26; nothing in the traced code reads them, by name or through an index of up to 16."
   },
   {
    "address": 38894,
    "type": "line",
-   "text": "The bytes with one bit set, $01-$20, read through bits_table's neighbours by the power code."
+   "text": "The bytes with one bit set, $01 $02 $04 $08 $10 $20, then $40 $80 (bits_table): poison reads the bit of the power it tries from here ($9F40, Y from poison_pick), and clear_masks beside it takes the power away."
   },
   {
    "address": 38900,
@@ -15811,12 +15811,12 @@
   {
    "address": 40738,
    "type": "line",
-   "text": "The poison's effect on player X. A player with no special power: $B90A when $B665,x is non-zero, then poison_health. A player with powers loses one, picked at random among those it has (its bit cleared, its base value restored with power_reset, its icon wiped from the panel), and nothing else here."
+   "text": "The poison's effect on player X. A player with no special power loses a potion if it carries any (potion_drop, when potions_held is not zero) and 100 health (poison_health). A player with powers loses one, picked at random among those it has (its bit cleared, its base value restored with power_reset, its icon wiped from the panel), and nothing else here."
   },
   {
    "address": 40802,
    "type": "line",
-   "text": "Takes one from $B931,x and raises $B65F."
+   "text": "Takes one from the hundreds byte of player X's health ($B931,x) with decimal mode off and no test for a borrow, and raises $B65F: from $20 it leaves $1F, from $00 it leaves $FF."
   },
   {
    "address": 40815,
@@ -16021,7 +16021,7 @@
   {
    "address": 41052,
    "type": "line",
-   "text": "Starts a tune whose header is at A (low) and X (high): clears the 30 bytes of voice state, takes the three voices' stream addresses from the header's three offsets (each added to the header's address), steps each pointer past its first command, sets each voice's countdown to 1, sets tune_on and points $84/$85 at the SID ($D400)."
+   "text": "Starts a tune whose header is at A (low) and X (high): clears the 30 bytes of voice state, takes the three voices' stream addresses from the header's three offsets (each added to the header's address), steps each pointer past its first command, sets each voice's countdown to 1, clears tune_on (its caller sets it to start the tune: treasure_start at $B0E8) and points $84/$85 at the SID ($D400)."
   },
   {
    "address": 41149,
@@ -16241,7 +16241,7 @@
   {
    "address": 42856,
    "type": "line",
-   "text": "Moves the four shot slots each frame: a slot holding 6 goes to $A7BF; others step along their direction (shot_dx/shot_dy through $BE70/$BE80, faster with $ACC2,x), with the shape turning every fourth frame for type 1, and their sprite is placed again; a slot with bit 7 set goes to $A92E."
+   "text": "Moves the four shot slots each frame: a slot holding 6 goes to $A7BF; others step along their direction (X by $BE80,y at $A7A1, Y by $BE70,y at $A7AB, the index raised by shot_speed $ACC2,x for a fast shot), with the shape turning every fourth frame for type 1, and their sprite is placed again; a slot with bit 7 set goes to $A92E."
   },
   {
    "address": 42943,
@@ -16591,7 +16591,7 @@
   {
    "address": 44542,
    "type": "line",
-   "text": "The end of a treasure room: plays sound $10, clears the takings of a player who did not escape ($AF38/$AF3A), clears the screen, prints each player's result (treasure_result), starts the treasure tune at $E800 with the tune player, runs $CD77 and waits."
+   "text": "The end of a treasure room: plays sound $10 and waits for it (sfx_wait), clears the takings of a player who did not escape ($AF38/$AF3A), clears the screen, prints each player's result (treasure_result), turns the tune player off (tune_on, tune_wanted $8249 and treasure_tune_due $B0FE cleared) and rewinds the treasure tune at $E800 (tune_init, which leaves it off until treasure_start turns it on), runs $CD77 and waits."
   },
   {
    "address": 44604,
@@ -17196,7 +17196,7 @@
   {
    "address": 46701,
    "type": "line",
-   "text": "A facing that overrides the stick's for each player (read by players_sprites at $917A, set at $BAE3)."
+   "text": "A joystick direction that overrides the stick's for each player, a direction code as the stick gives it (not a facing 0-7): exit_spin stores its spin_facings values here ($BAE3, from $BB26), and players_sprites reads it at $917A in place of the stick and turns it into a facing through facing_of_dir."
   },
   {
    "address": 46702,
@@ -17531,7 +17531,7 @@
   {
    "address": 48121,
    "type": "line",
-   "text": "Monster Y next to player X attacks. Except for a ghost, a monster whose chosen facing is odd (monster_facings) does not. A monster on the player's very spot is removed (monster_remove); one more than four cells off on either axis does nothing. A ghost does not attack from a diagonal (ghost_diagonal). Then $C3AC decides whether the attack lands (carry set: it does not). A ghost hits once and vanishes (taken off the map, $C584, and out of the table, sound 0); Death (kind 5) takes 4 health a touch (in decimal) while its drain count ($0700,y) lasts, the player leaving the game if its health runs out, and is removed when the count is used up; the other kinds play sound $0A. Carry set when the monster was removed."
+   "text": "Monster Y next to player X attacks. Except for a ghost, a monster whose chosen facing is odd (monster_facings) does not. A monster on the player's very spot is removed (monster_remove); one more than four cells off on either axis does nothing. A ghost does not attack from a diagonal (ghost_diagonal). Then monster_hits ($C3AC) takes the health on alternate attempts and lets the player hit back; carry set from it means the player's blow killed the monster, and the routine returns. A ghost hits once and vanishes (taken off the map, $C584, and out of the table, sound 0); Death (kind 5) takes 4 health a touch (in decimal) while its drain count ($0700,y) lasts, the player leaving the game if its health runs out, and is removed when the count is used up; the other kinds play sound $0A. Carry set when the monster was removed."
   },
   {
    "address": 48283,
@@ -18581,7 +18581,7 @@
   {
    "address": 58758,
    "type": "line",
-   "text": "Each voice's frequency, high byte, at the voice's SID offset (Y = 0, 7, 14): the voice state here is laid out like the SID's registers."
+   "text": "Each voice's frequency, high byte, seven bytes a voice (indexed 0, 7, 14 like the SID's registers, but laid out differently): the high byte comes before the low ($E587), and music_freq_out copies them to the shadow of the voice's SID +1 and +0; the voice's control byte is at +2 ($E588)."
   },
   {
    "address": 58759,
