@@ -348,74 +348,60 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
   function main(G) {
     const ram = G.ram;
 
-    if ($('poseCv')) {
-    /* 01 the fighters */
-    const PADS = [['ul', 9, 0x0F], ['u', 5, 0x0E], ['ur', 6, 0x0D], ['l', 3, 0x11], ['c', 1, 1], ['r', 2, 0x0C], ['dl', 8, 0x10], ['d', 4, 0x0A], ['dr', 0x18, 0x0B]];
-    const ARROWS = { ul: '↖', u: '↑', ur: '↗', l: '←', c: '○', r: '→', dl: '↙', d: '↓', dr: '↘' };
-    let fire = false, mirrored = false, grid = false, frame = 0, timer = null;
-    const pc = $('poseCv');
-    const show = f => { frame = f; $('frameIn').value = f; $('frameOut').textContent = hex(f) + (f >= 0x3B ? ' (bull)' : '');
-      drawPose(pc, FIST.pose(ram, f, mirrored, f >= 0x3B), 3, f >= 0x3B ? 9 : 1, grid); };
-    function play(move) {
-      clearInterval(timer);
-      const steps = FIST.anim(ram, move);
-      $('moveOut').textContent = 'Move ' + hex(move) + (MOVES[move] ? ' · ' + MOVES[move] : '') + ' · ' + steps.length + ' steps';
-      $('stepTab').innerHTML = '<tr><th>step</th><th>ticks</th><th>frame</th><th>dx</th><th>dy</th></tr>' +
-        steps.map((s, i) => `<tr data-i="${i}"><td>${i}</td><td>${s[0]}</td><td>${hex(s[1])}</td><td>${(s[2] << 24) >> 24}</td><td>${(s[3] << 24) >> 24}</td></tr>`).join('');
-      let i = 0, left = 0;
-      const tick = () => {
-        if (left <= 0) {
-          if (i >= steps.length) { clearInterval(timer); return; }
-          show(steps[i][1]); left = steps[i][0];
-          mark(i);
-          i++;
-        }
-        left--;
-      };
-      tick(); timer = setInterval(tick, 40);
-      renderSteps(move, steps);
-    }
-    let curSteps = [], curMove = 1;
+    if ($('stepCards')) {
+    /* 01 the fighters: the steps of the chosen move */
+    let timer = null, curSteps = [], curMove = 1;
+    const s8 = v => (v << 24) >> 24, sgn = v => { v = s8(v); return v > 0 ? '+' + v : String(v); };
     function mark(i) {
       $('stepTab').querySelectorAll('tr').forEach(r => r.classList.toggle('hl', r.dataset.i == i));
       $('stepCards').querySelectorAll('.fx-move').forEach((c, j) => c.classList.toggle('on', j === i));
     }
+    function stop() { clearInterval(timer); timer = null; $('stepPlay').textContent = 'Play'; }
     function selectStep(i, scrollCard) {
-      clearInterval(timer); show(curSteps[i][1]); mark(i);
+      stop(); mark(i);
       if (scrollCard) $('stepCards').children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-    function renderSteps(move, steps) {
-      curSteps = steps; curMove = move;
-      const box = $('stepCards'), strike = ram[0x1176 + move] ? ram[0x1204 + move] : -1, sgn = v => { v = (v << 24) >> 24; return v > 0 ? '+' + v : String(v); };
+    // one tick per PAL frame (20 ms): the fight loop's fastest pace, one pass per frame ($1A96)
+    function playSteps() {
+      if (timer) { stop(); return; }
+      let i = 0, left = 0;
+      $('stepPlay').textContent = 'Stop';
+      const tick = () => {
+        if (left <= 0) {
+          if (i >= curSteps.length) { stop(); return; }
+          left = curSteps[i][0]; mark(i); i++;
+        }
+        left--;
+      };
+      tick(); timer = setInterval(tick, 20);
+    }
+    function select(move) {
+      stop();
+      const steps = curSteps = FIST.anim(ram, move); curMove = move;
+      const box = $('stepCards'), strike = ram[0x1176 + move] ? ram[0x1204 + move] : -1;
       const ticks = steps.reduce((a, s) => a + s[0], 0), frames = new Set(steps.map(s => s[1])).size;
-      const s8 = v => (v << 24) >> 24, tx = steps.reduce((a, s) => a + s[0] * s8(s[2]), 0);
+      const tx = steps.reduce((a, s) => a + s[0] * s8(s[2]), 0);
       $('stepHead').textContent = 'Move ' + hex(move) + (MOVES[move] ? ' · ' + MOVES[move] : '') + ' · ' + steps.length + ' steps, ' + frames + ' frames, ' + ticks + ' ticks' + (tx ? ', ' + Math.abs(tx) + ' units ' + (tx > 0 ? 'forward' : 'back') : '');
+      $('stepTab').innerHTML = '<tr><th>step</th><th>ticks</th><th>frame</th><th>dx</th><th>dy</th></tr>' +
+        steps.map((s, i) => `<tr data-i="${i}"><td>${i}</td><td>${s[0]}</td><td>${hex(s[1])}${s[1] === strike ? ' strike' : ''}</td><td>${s8(s[2])}</td><td>${s8(s[3])}</td></tr>`).join('');
       box.innerHTML = '';
       steps.forEach(([t, f, dx, dy], i) => {
         const b = document.createElement('button'); b.className = 'fx-move'; b.type = 'button';
         const cv = document.createElement('canvas'); cv.width = 144; cv.height = 126;
-        drawPose(cv, FIST.pose(ram, f, mirrored, false), 2, 1, false);
+        drawPose(cv, FIST.pose(ram, f, false, false), 2, 1, false);
         b.appendChild(cv);
         const cells = Array.from({ length: 9 }, (_, k) => hex(ram[0x7AE0 + k * 79 + f]).slice(1));
         b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Step ${i} · frame ${hex(f)}${f === strike ? ' <span class="fx-move-fire">strike</span>' : ''}</span>` +
           `<b>${t} tick${t === 1 ? '' : 's'}</b><span class="fx-move-in">per tick X ${sgn(dx)} · Y ${sgn(dy)}</span>` +
           `<span class="fx-cells">${cells.map(c => `<i${c === '00' ? ' class="z"' : ''}>${c}</i>`).join('')}</span>`);
-        b.title = 'Show frame ' + hex(f) + ' in the viewer';
+        b.title = 'Pick step ' + i + ' in the table';
         b.onclick = () => selectStep(i, false);
         box.appendChild(b);
       });
     }
     $('stepTab').onclick = e => { const r = e.target.closest('tr[data-i]'); if (r) selectStep(+r.dataset.i, true); };
-    const pad = $('pad');
-    for (const [k, plain, fired] of PADS) {
-      const b = document.createElement('button'); b.className = 'fx-btn'; b.textContent = ARROWS[k];
-      b.title = k; b.onclick = () => play(fire ? fired : plain); pad.appendChild(b);
-    }
-    $('fireBtn').onclick = () => { fire = !fire; $('fireBtn').classList.toggle('on', fire); };
-    $('mirBtn').onclick = () => { mirrored = !mirrored; $('mirBtn').textContent = mirrored ? 'Facing left' : 'Facing right'; show(frame); renderSteps(curMove, curSteps); };
-    $('gridBtn').onclick = () => { grid = !grid; $('gridBtn').classList.toggle('on', grid); show(frame); };
-    $('frameIn').oninput = e => { clearInterval(timer); show(+e.target.value); };
-    play(0x0E);
+    $('stepPlay').onclick = playSteps;
+    select(0x0E);
     if ($('moveCards')) {
       const box = $('moveCards');
       for (const [m, f, arrow, fired, how] of MOVE_CARDS) {
@@ -426,8 +412,8 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
         b.appendChild(cv);
         b.insertAdjacentHTML('beforeend', `<span class="fx-move-id">Move ${hex(m)}${pts}</span><b>${MOVES[m][0].toUpperCase() + MOVES[m].slice(1)}</b>` +
           `<span class="fx-move-in"><span class="fx-move-arrow">${arrow}</span>${fired ? '<span class="fx-move-fire">fire</span>' : ''}${how ? ' ' + how : ''}</span>`);
-        b.title = 'Show the steps of move ' + hex(m) + ' and play it below';
-        b.onclick = () => { play(m); $('stepHead').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        b.title = 'Show the steps of move ' + hex(m) + ' below';
+        b.onclick = () => { select(m); $('stepPlay').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
         box.appendChild(b);
       }
     }
@@ -721,7 +707,7 @@ const FIST_FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":
   }
 
   if ($('frameCv')) frameWidget();
-  const needs = ['poseCv', 'bdCv', 'music', 'spCv', 'gBar', 'aiTab', 'bullCv'].some(id => $(id));
+  const needs = ['stepCards', 'bdCv', 'music', 'spCv', 'gBar', 'aiTab', 'bullCv'].some(id => $(id));
   if (needs && globalThis.C64) C64.load('listing.json').then(main).catch(e => console.error(e));
   else if (needs) document.querySelectorAll('canvas').forEach(c => { if (c.id !== 'frameCv') c.insertAdjacentHTML('afterend', '<p class="fx-need">' + needSite + '</p>'); });
 })();
