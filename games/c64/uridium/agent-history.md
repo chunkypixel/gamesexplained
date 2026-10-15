@@ -121,3 +121,13 @@ own Overview tab (`index.html`), and the rest of How it works moved to
 `how-it-works.html`, renumbered from 01. The page sources in `work/page/`
 were renamed to match, and `test_ports.py` now reads the map builder from
 `how-it-works.html`.
+
+## The map viewer scrolls (15 October 2026)
+
+At the contributor's request the Maps / levels viewer draws each map as
+one strip of 512 columns in a window that scrolls sideways, with 1× and 2×
+zoom, a slider and drag to scroll, after the Maps tab of Mayhem in
+Monsterland, in place of four wrapped strips of 128 columns. The page
+sources in `work/page/` were brought up to date with the footer and the
+`data-listing` block the site added to the committed pages, and assembling
+them reproduced those pages byte for byte before the change.
