@@ -161,10 +161,20 @@ layout; `orientation.md` lists the moves, each compared byte for byte.
   flashes in the status line (*live*), and waves keep coming as random
   filler waves `$12`-`$15` whose fighters score nothing and count no
   formation (`filler_wave`, `fighter_move` at `$1E4B`).
-- **Homing mines.** While no wave is flying, every eighth frame a mine
-  may appear over a generator port that is on screen (`spawn_mine`), with
-  a chance of a quarter of the wave's firing chance; it homes on the
-  Manta for a while (`home_in`, `mine_move`) and explodes.
+- **Homing mines.** Every eighth frame `spawn_mine` may launch one, but
+  only while a wave is in progress (`$6C` bit 7, from `new_wave` until
+  `wave_control` finds the wave's sprites gone), when a noise byte is no
+  higher than a quarter of the firing chance (4 to 8 in 256 a check on
+  Zinc with three lives), over the last recorded generator port that is
+  on screen, in a free enemy slot. It materialises for 37 to 40 frames (ten shape steps on every fourth frame), then
+  homes for 128 + 4 × level + difficulty frames (132 on Zinc) and bursts
+  (*live*). `home_in` changes its speed by one every fourth frame towards
+  the Manta, within ±6 across and ±4 up and down, with no damping, so it
+  swings through the Manta's position (*live*: Y 156-192 round the
+  Manta's 176). It cannot be shot (`mine_move` tests no characters; the
+  1986 ZZAP! 64 review says the same). It counts in `$6C`, so the next
+  wave waits until it has burst (*live*: with mines made frequent, the
+  wait after Zinc's first wave lasted from frame 116 to 755).
 - **Danger and height.** Bullets and mines destroy the Manta only while
   its height `$3D` is below `$14` (`bullet_move`, `mine_move`); in a
   half-loop it is above them.
@@ -318,3 +328,8 @@ All on VICE vice-mcp v3.13.2 (Linux), 10 October 2026, from
   (`t_spawn.py`, 15 October 2026).
 - Shot banks: `$2A7F` and `$2AA0` read on eight frames of play
   (15 October 2026).
+- Homing mines: the play snapshot stepped frame by frame on Zinc with the
+  Manta held on a clear row and out of reach, once with the game left
+  alone and once with the firing chance `$69` held at `$FC` so that mines
+  came often, recording `$6C` and every enemy slot each frame
+  (`t_mines.py`, `t_minefrac.py`, 16 October 2026).

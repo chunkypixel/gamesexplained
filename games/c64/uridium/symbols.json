@@ -7802,7 +7802,7 @@
   {
    "address": 108,
    "type": "line",
-   "text": "How many enemy sprites are in use; bit 7 set while waiting for the next wave."
+   "text": "Bit 7 set from the moment new_wave launches a wave until wave_control finds every sprite of it gone (then 0 until the next wave starts); the low bits count the enemy sprites in use, homing mines included, so a mine still flying holds back the next wave."
   },
   {
    "address": 109,
@@ -8607,7 +8607,7 @@
   {
    "address": 8063,
    "type": "line",
-   "text": "Called in turn from the play loop every eighth frame: while no formation is flying ($6C bit 7) and with a chance of a quarter of $69, takes a generator port that is on screen ($0240,x positive, from the last of the $54 found) and starts a mine materialising over it in a free sprite slot (state 8, shape $1D, effect $0D), with a lifetime from the level and difficulty."
+   "text": "Called in turn from the play loop every eighth frame: only while a wave is in progress ($6C bit 7 set) and when a noise byte is no higher than a quarter of the firing chance $69, takes the last generator port found ($0240,x positive, searching down from the $54th) that is on the screen and a free sprite slot, and starts a mine materialising over it (state 8, shape $1D, effect $0D, Y = row x 8 + $2C, X = (screen column + 2) x 8), still, with a homing lifetime of 128 + 4 x level + difficulty frames; it counts itself in $6C. The vertical fraction $A4C8 of the slot is not cleared."
   },
   {
    "address": 8176,
@@ -8617,12 +8617,12 @@
   {
    "address": 8225,
    "type": "line",
-   "text": "State 10, a homing mine: moves with the scroll and by its velocity, steers towards the Manta (home_in), counts down its lifetime (with effect $0E at intervals), and like a bullet destroys a low Manta it touches. At the end it explodes."
+   "text": "State 10, a homing mine: moves with the scroll and by its velocity, steers towards the Manta (home_in), counts down its lifetime (effect $0E every 16 frames, on its slot's phase), and like a bullet destroys a Manta flying below height $14 that it touches (hits_manta). It never tests the characters under it, so shots pass through it. At the end it bursts (state 6, shape $14, effect $0A)."
   },
   {
    "address": 8287,
    "type": "line",
-   "text": "Every fourth frame turns the mine's velocity towards the Manta: vertical by one towards $33, horizontal by one towards the Manta's screen column ($A0-$AA), the horizontal kept within -6..6 and the vertical within -4..4."
+   "text": "Every fourth frame turns the mine's velocity towards the Manta, by one each way: vertically towards its Y $33 (up when level with it or below it), horizontally towards the Manta's column, sprite X $AA (from the hidden band, X $1A0 up, to the right; from X $100-$19F, to the left); then the horizontal speed is kept within -6..6 and the vertical within -4..4. Nothing damps it, so the mine overshoots and swings back through the Manta."
   },
   {
    "address": 8428,

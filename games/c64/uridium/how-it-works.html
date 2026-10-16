@@ -200,11 +200,29 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
   <h3 class="ur-h3">The forty paths</h3>
   <div class="ur-scroll"><table class="ur-tbl" id="ur-paths"></table></div>
   <p class="cap">Each path decoded from its bytes: a step and its length in frames. Forwards is the way the fighter entered; the last step holds until the fighter leaves the screen.</p>
-  <p>A new wave starts when the last has gone, checked every 64 frames. A wave shot down to the last fighter counts as a formation, worth 100 at the end of the level. While no wave is flying, a homing mine may materialise over one of the generator ports that flash on the hull (<code>$1F7F</code>).</p>
+  <p>A new wave starts when the last has gone, checked every 64 frames. A wave shot down to the last fighter counts as a formation, worth 100 at the end of the level. While a wave is in progress, homing mines may also rise from the generator ports that flash on the hull (the next section).</p>
+</section>
+
+<section id="mines">
+  <p class="fig">07 · Homing mines</p>
+  <h2 class="t">Homing mines swing back and forth through the Manta</h2>
+  <p class="lede">The flashing generator ports on the hull launch mines that home on the Manta for a few seconds and then burst. Shots pass straight through them.</p>
+  <div class="plate">
+    <div class="ur-ctl"><label>Manta's height on screen <input id="ur-hmy" type="range" min="98" max="215" value="176"></label>
+      <label>Dreadnought <select id="ur-hmlv"></select></label>
+      <button type="button" id="ur-hmgo">Launch</button></div>
+    <div class="ur-scroll"><canvas id="ur-hmview" class="ur-cv ur-click" width="640" height="300"></canvas></div>
+    <p class="ur-out" id="ur-hmout">Choose a point on the screen for the generator port, then Launch.</p>
+    <p class="cap">A mine flown by a port of <code>$1F62</code>, <code>$2021</code> and <code>$205F</code> with the Manta stopped. The port matched the game's code in a 6502 simulator on 600 random mines, every frame from the port to the burst. Recorded live on Zinc, a mine's height swung between 156 and 192 round the Manta's 176.</p>
+  </div>
+  <p>Every eighth frame the play loop calls <code>$1F7F</code>, and it launches a mine only while a wave is in progress: from the moment <code>$1A98</code> sends a wave until <code>$1A75</code> finds every sprite of it gone, the top bit of <code>$6C</code> is set. Then a noise byte no higher than a quarter of the wave's firing chance launches one. On Zinc with three Mantas that is 4 to 8 chances in 256 at each check, a mine every five to ten seconds on average; the later Dreadnoughts and the higher difficulties raise it to as much as 24 in 256. The mine needs a generator port on the screen, and takes the last one the map recorded (<code>$0240</code>), and a free one of the six enemy sprites. Without either, nothing happens.</p>
+  <p>The mine appears over the port and materialises for 37 to 40 frames, depending on where in the four-frame cycle it starts: its shape steps from <code>$1D</code> down through the sparkle shapes every fourth frame until it becomes the mine itself, <code>$11</code> (<code>$1F62</code>). It moves only with the hull while it does.</p>
+  <p>Then it homes. Every fourth frame <code>$205F</code> adds one to its vertical speed towards the Manta's height and one to its horizontal speed towards the Manta's column, at most 4 pixels a frame up or down and 6 across. Nothing slows it as it arrives, so it overshoots and swings back: a mine that misses keeps passing through the Manta's position until its time runs out. It beeps every 16 frames (effect <code>$0E</code>), and after 128 frames, plus four for each level and 16 for each time the game has gone round the fifteen Dreadnoughts, it bursts. That is 132 frames on Zinc, under three seconds.</p>
+  <p>A mine destroys the Manta like a bullet does, inside the same box and only while the Manta flies low, below height <code>$14</code> (<code>$1FF0</code>), so a half-loop carries the Manta over it. It cannot be shot: <code>$2021</code> never looks at the characters under the mine, where a fighter checks for the Manta's shots. A mine also counts as one of the wave's sprites in <code>$6C</code>, so the next wave waits until it has burst (Discoveries).</p>
 </section>
 
 <section id="landing">
-  <p class="fig">07 · Landing</p>
+  <p class="fig">08 · Landing</p>
   <h2 class="t">The landing test is one character and one attitude</h2>
   <p class="lede">After the last wave, the Manta lands only over one particular character, flying level and facing right.</p>
   <div class="ur-shots"><figure><img src="reference/land-now.png" alt="Land now! in the status line above the Dreadnought"><figcaption><i>Land now!</i> in the status line once the wave list is used up.</figcaption></figure></div>
@@ -212,7 +230,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">08 · The bonus game</p>
+  <p class="fig">09 · The bonus game</p>
   <h2 class="t">The fuel rod chamber</h2>
   <p class="lede">The bonus for destroying the ship is a timing game against a countdown.</p>
   <div class="plate">
@@ -224,14 +242,14 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     <p class="cap">The chamber's rule from <code>$114E</code>: six steps from the bottom up, the countdown stepping every 256 - <code>$310A</code>[level] frames, each offer the countdown plus the bonus so far. The flashing here is paced by a timer, not the game's frame counts, and the lit side is random as in the game.</p>
   </div>
   <p>After landing, the fuel rod chamber offers a value and <i>Quit</i> in turn at each of six steps. The value is the countdown digit plus the bonus taken so far, and the bonus starts at the level number, so the first offer is 900 + 100 × level. Fire on the value takes it and moves up a step; fire on <i>Quit</i> leaves with the bonus. Letting the countdown reach zero costs a life (<code>$15BD</code>).</p>
-  <p>The two bonuses are then counted up in hundreds (<code>$176E</code>), and the take-off follows (09, below).</p>
+  <p>The two bonuses are then counted up in hundreds (<code>$176E</code>), and the take-off follows (the next section).</p>
   <div class="ur-shots">
     <figure><img src="reference/fuel-rod-chamber.png" alt="The fuel rod chamber: six rows of paired slots, 1000 lit at the bottom left"><figcaption>The chamber, 1000 offered at level 1.</figcaption></figure>
   </div>
 </section>
 
 <section id="take-off">
-  <p class="fig">09 · The take-off</p>
+  <p class="fig">10 · The take-off</p>
   <h2 class="t">The Dreadnought vaporises faster than the Manta flies</h2>
   <p class="lede">After the bonus game the Manta takes off, turns at the right-hand end of the ship and flies back over it as the hull breaks up behind it, then overtakes it.</p>
   <div class="plate">
@@ -254,7 +272,7 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 </section>
 
 <section>
-  <p class="fig">10 · Quirks</p>
+  <p class="fig">11 · Quirks</p>
   <h2 class="t">Quirks</h2>
   <p class="lede">Smaller rules worth knowing. The <b>Discoveries</b> tab has the findings a player is least likely to know.</p>
   <p>After <i>Land now!</i>, fighters keep coming. Once a level's list of waves is used up, the game picks one of four filler waves at random (<code>$12</code> to <code>$15</code>), and their fighters score nothing and count no formation (<code>$1E4B</code>).</p>
@@ -540,6 +558,40 @@ const FRAME = {"schema":1,"standard":"PAL","lines":312,"cycles":63,"about":"","v
     m[0x7A15] = m[0x7A1A] = m[0x7A1B] = hole;
   }
   // end of stars
+
+  function flyMine(o) {
+    // Port of a homing mine's flight with the Manta stopped ($2E = 0): mine_appear ($1F62) while it
+    // materialises, then mine_move ($2021) with home_in ($205F). o.x and o.y are where spawn_mine put
+    // the sprite, o.mantaY the Manta's Y ($33), o.level and o.diff the level and difficulty, which set
+    // its lifetime, o.phase the frame counter $62 before the first frame, and o.frac the vertical
+    // fraction $A4C8 the slot's last user left: spawn_mine does not clear it, and from $80 up it adds a
+    // pixel a frame downwards (move_by_velocity). Returns [x, y, state,
+    // shape] for each frame until the mine bursts (state 6) or leaves the screen.
+    let x = o.x & 0x1FF, y = o.y & 255, state = 8, shape = 0x1D, vx = 0, vy = 0;
+    let timer = (o.level * 4 + o.diff) & 255 | 0x80, frame = o.phase & 255;
+    const out = [];
+    for (let f = 0; f < (o.frames || 600); f++) {
+      frame = (frame + 1) & 255;
+      if (state === 8) {                                                   // $1F62
+        if (!(frame & 3)) { shape = (shape - 1) & 255; if (shape < 0x14) { state = 10; shape = 0x11; } }
+      } else {                                                             // $2021
+        x = (x + vx) & 0x1FF; y = (y + vy + ((o.frac || 0) >> 7)) & 255;  // move_by_velocity
+        if (!(frame & 3)) {                                                // home_in
+          vy += y >= o.mantaY ? -1 : 1;
+          const right = x & 0x100 ? (x & 255) >= 0xA0 : (x & 255) < 0xAA;  // left of the Manta's column
+          vx += right ? 1 : -1;
+          vx = Math.max(-6, Math.min(6, vx));
+          vy = Math.max(-4, Math.min(4, vy));
+        }
+        timer = (timer - 1) & 255;
+        if (!timer) { out.push([x, y, 6, 0x14]); break; }                 // bursts into an explosion
+      }
+      if ((x & 0x100) && (x & 255) >= 0x9C && (x & 255) < 0xC4) break;    // $1EA6: off the screen, switched off
+      out.push([x, y, state, shape]);
+    }
+    return out;
+  }
+  // end of flyMine
 
 const say = (id, t) => { const e = document.getElementById(id); if (e) e.innerHTML = '<p class="ur-msg">' + t + '</p>'; };
 const hex2 = (n) => '$' + n.toString(16).toUpperCase().padStart(2, '0');
@@ -926,6 +978,50 @@ C64.load('listing.json').then((L) => {
       h += `<tr><td>${p}</td><td>${st}, then holds the last step</td><td>${byPath[p] ? byPath[p].size : 0}</td></tr>`;
     }
     pt.innerHTML = h + '</tbody>';
+  }
+  // ---------------------------------------------------------------- homing mines
+  {
+    const mv = document.getElementById('ur-hmview'), my = document.getElementById('ur-hmy'), ml = document.getElementById('ur-hmlv');
+    for (let lv = 1; lv <= 15; lv++) ml.add(new Option(String(lv).padStart(2, '0') + '. ' + NAMES[lv], lv));
+    const SX = (x) => x < 384 ? x - 24 : x - 512 - 24;
+    const CX = (sx) => (sx + 170) * 1.2, CY = (y) => y * 1.15;
+    let start = { x: 0x60, y: 0x9C }, trail = [], f = 0, timer = 0;
+    const sprite = (shape) => Array.from(ram.slice(0x4000 + shape * 64, 0x4000 + shape * 64 + 63));
+    function plan() {
+      trail = flyMine({ x: start.x, y: start.y, mantaY: +my.value, level: +ml.value, diff: 0, phase: 0 });
+      f = trail.length; draw();
+      const homing = trail.filter(p => p[2] === 10).length, appear = trail.filter(p => p[2] === 8).length;
+      const ys = trail.filter(p => p[2] === 10).map(p => p[1]);
+      document.getElementById('ur-hmout').textContent = `Materialising ${appear} frames, homing ${homing} frames, then it bursts; its height ranges over ${Math.min(...ys)}-${Math.max(...ys)} round the Manta's ${my.value}.`;
+    }
+    function draw() {
+      const ctx = C64.canvas(mv, 640, 300);
+      ctx.fillStyle = '#10131a'; ctx.fillRect(0, 0, 640, 300);
+      ctx.fillStyle = '#000'; ctx.fillRect(CX(0), CY(50), 320 * 1.2, 200 * 1.15);
+      ctx.strokeStyle = '#686868'; ctx.lineWidth = 1; ctx.strokeRect(CX(0) + 0.5, CY(98) + 0.5, 320 * 1.2, 136 * 1.15);
+      C64.drawSpriteMC(ctx, sprite(0x59), CX(0xAA - 24), CY(+my.value), 1, P[0], P[7], P[1]);
+      ctx.strokeStyle = '#ffd400'; ctx.strokeRect(CX(SX(start.x)) - 2, CY(start.y) - 2, 12, 12);
+      ctx.strokeStyle = '#ff7b54'; ctx.lineWidth = 1.5; ctx.beginPath();
+      for (let i = 0; i < Math.min(f, trail.length); i++) {
+        const [x, y] = trail[i]; const px = CX(SX(x) + 12), py = CY(y + 10);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      if (f < trail.length) { const [x, y, , shape] = trail[f]; C64.drawSpriteMC(ctx, sprite(shape), CX(SX(x)), CY(y), 1, P[7], P[7], P[1]); }
+    }
+    function stop() { clearInterval(timer); timer = 0; }
+    document.getElementById('ur-hmgo').addEventListener('click', () => {
+      stop(); plan(); f = 0;
+      timer = setInterval(() => { f++; if (f >= trail.length) stop(); draw(); }, 20);
+    });
+    mv.addEventListener('click', (e) => {
+      const r = mv.getBoundingClientRect(), k = mv.width / r.width;
+      const sx = (e.clientX - r.left) * k / 1.2 - 170, y = (e.clientY - r.top) * k / 1.15;
+      if (sx < 0 || sx > 320 || y < 98 || y > 234) return;           // the playfield
+      start = { x: Math.round(sx) + 24 - 12, y: Math.round(y) - 10 }; stop(); plan();
+    });
+    my.addEventListener('input', () => { stop(); plan(); }); ml.addEventListener('change', () => { stop(); plan(); });
+    plan();
   }
   // ---------------------------------------------------------------- the take-off
   {

@@ -23,7 +23,8 @@ Then the ports on the How it works tab, each against the game's routines in the 
 take-off's vaporising ($173B, $16D2) on every Dreadnought with the same noise, compared at four
 points of its run; the fighters ($1A98, $1C73) on all 57 wave records, both entry sides and two
 Manta heights, every position frame by frame; the shots ($2A17, $2AE9) over random volleys on
-every Dreadnought; and the stars ($2ED7) on random screens.
+every Dreadnought; the stars ($2ED7) on random screens; and the homing mines ($1F62, $2021,
+$205F) over 600 random launches, every frame from materialising to the burst.
 
 Everything it needs is committed: no game image, no snapshot, no emulator.
 It needs node; with KIT_REQUIRE_TOOLS set it fails without it.
@@ -330,6 +331,49 @@ const drawStars = new Function(s.slice(s.indexOf('function drawStars'), s.indexO
 })().catch(e => { console.log(e.stack || e); process.exit(1); });
 """
 
+EXTRA_MINE = r"""'use strict';
+// Written out and run by test_ports.py; see there.
+const fs = require('fs'), path = require('path');
+const GAME = process.argv[2], ROOT = process.argv[3];
+globalThis.fetch = async url => ({ ok: true, json: async () => JSON.parse(fs.readFileSync(path.join(GAME, url), 'utf8')) });
+require(path.join(ROOT, 'site/lib/c64.js'));
+const { CPU } = require(path.join(ROOT, 'kit/c64/cpu6502.js'));
+const s = fs.readFileSync(path.join(GAME, 'how-it-works.html'), 'utf8');
+if (s.indexOf('function flyMine') < 0) throw new Error('flyMine not found in how-it-works.html');
+const flyMine = new Function(s.slice(s.indexOf('function flyMine'), s.indexOf('// end of flyMine')) + '\nreturn flyMine;')();
+(async () => {
+  const ram = (await C64.load('listing.json')).ram;
+  let seed = 4242; const rnd = n => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; return (seed >>> 0) % n; };
+  let fail = 0, frames = 0, burst = 0, gone = 0;
+  for (let t = 0; t < 600; t++) {
+    const m = Uint8Array.from(ram), vic = new Uint8Array(0x2F), s0 = rnd(6);
+    const o = { x: 24 + rnd(320), y: 0x62 + rnd(0x76), mantaY: 0x62 + rnd(0x76), level: 1 + rnd(15), diff: [0, 0x10, 0x20, 0x30][rnd(4)], phase: rnd(256), frac: rnd(256), frames: 600 };
+    for (let a = 0x4800; a < 0x4BE8; a++) m[a] = 0x20;
+    m[0x2E] = m[0x2D] = 0; m[0x33] = o.mantaY; m[0x3D] = 0x20; m[0x62] = o.phase; m[0x26] = o.level; m[0x28] = o.diff;
+    for (let k = 0; k < 6; k++) m[0xA490 + k] = 0;
+    // the slot as spawn_mine leaves it ($1FA6), with the leftover fraction
+    m[0xA490 + s0] = 8; m[0xA4B0 + s0] = (o.level * 4 + o.diff) & 255 | 0x80; m[0xA498 + s0] = m[0xA4A8 + s0] = m[0xA4A0 + s0] = 0; m[0xA4C8 + s0] = o.frac;
+    vic[2 * s0] = o.x & 255; vic[0x10] = (o.x >> 8) << s0; vic[2 * s0 + 1] = o.y; vic[0x15] = 1 << s0; m[0x4BF8 + s0] = 0x1D;
+    const cpu = new CPU(m, { port: { dir: 0x2F, data: 0x35 }, io: {
+      write(a, v) { if (a >= 0xD000 && a < 0xD02F) vic[a - 0xD000] = v; else if (!(a >= 0xD400 && a <= 0xD418)) throw new Error('write ' + a.toString(16)); },
+      read(a) { if (a >= 0xD000 && a < 0xD02F) return vic[a - 0xD000]; if (a === 0xD41B) return 0xFF; throw new Error('read ' + a.toString(16)); } } });
+    const P = flyMine(o);
+    let bad = null;
+    for (let f = 0; f < P.length + 1 && !bad; f++) {
+      cpu.m[0x62] = (cpu.m[0x62] + 1) & 255; cpu.call(0x1BFD); frames++;
+      const st = cpu.m[0xA490 + s0], gx = vic[2 * s0] | ((vic[0x10] >> s0) & 1) << 8, gy = vic[2 * s0 + 1], sh = cpu.m[0x4BF8 + s0];
+      if (f === P.length) { if (st === 8 || st === 10) bad = `frame ${f}: the game's mine flies on`; else gone++; break; }
+      const [px, py, pst, psh] = P[f];
+      if (pst === 6) { burst++; if (st !== 6 || sh !== 0x14) bad = `frame ${f}: the port bursts, the game has state ${st}`; break; }
+      if (st !== pst || gx !== px || gy !== py || sh !== psh) bad = `frame ${f}: game ${st} ${gx},${gy} $${sh.toString(16)}, port ${pst} ${px},${py} $${psh.toString(16)}`;
+    }
+    if (bad) { fail++; if (fail < 6) console.log('trial', t, JSON.stringify(o), bad); }
+  }
+  console.log(`${frames} mine frames compared over 600 mines; ${burst} burst, ${gone - burst > 0 ? gone - burst : 0} left the screen; ${fail ? fail + ' differ' : 'all match'}`);
+  process.exit(fail ? 1 : 0);
+})().catch(e => { console.log(e.stack || e); process.exit(1); });
+"""
+
 
 def main():
     node = shutil.which("node")
@@ -344,7 +388,7 @@ def main():
             f.write(JS)
         r = subprocess.run([node, script, HERE, ROOT] + PAGES)
         codes = [r.returncode]
-        for name, js in (("vaporising", EXTRA_VAPOUR), ("fighters", EXTRA_FIGHTERS), ("shots", EXTRA_SHOTS), ("stars", EXTRA_STARS)):
+        for name, js in (("vaporising", EXTRA_VAPOUR), ("fighters", EXTRA_FIGHTERS), ("shots", EXTRA_SHOTS), ("stars", EXTRA_STARS), ("homing mines", EXTRA_MINE)):
             f = os.path.join(d, name + ".js")
             with open(f, "w") as out:
                 out.write(js)

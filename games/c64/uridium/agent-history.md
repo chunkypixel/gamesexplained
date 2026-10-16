@@ -171,3 +171,17 @@ up the shot's slot without masking off `$10` (`$2B35`). It was not put
 on the Discoveries tab: every target is made only of target characters,
 so no shot can sit inside one without hitting it, and the path looks
 unreachable.
+
+## Homing mines (16 October 2026)
+
+The page and `facts.md` had said mines appear "while no wave is flying",
+read from `spawn_mine`'s `$6C` bit 7 test the wrong way round: the test
+skips the launch when bit 7 is clear, and bit 7 is set from a wave's
+launch until `wave_control` finds its sprites gone. Recorded live, mines
+appeared with fighters on the screen and in the wait after them, never
+between `wave_control`'s reset and the next wave; and since a mine counts
+in `$6C`, it holds that wait open. `spawn_mine` also leaves the slot's
+vertical fraction `$A4C8` as the last user left it, which would give a
+mine a downward drift of a pixel a frame; the simulator shows the effect,
+but in twelve live mines the fraction was always 0, so it is noted here
+and not published.
