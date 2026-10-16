@@ -185,3 +185,16 @@ vertical fraction `$A4C8` as the last user left it, which would give a
 mine a downward drift of a pixel a frame; the simulator shows the effect,
 but in twelve live mines the fraction was always 0, so it is noted here
 and not published.
+
+## Release and reception (16 October 2026)
+
+The Overview gained two sections from primary sources read in scans: ZZAP! 64 issue 11 (the
+ratings, the reviewers' complaints, and the Braybrook interview's 17 and 50 updates a second), Crash
+issue 35 (the Spectrum advertisement naming Dominic Robinson), Popular Computing Weekly of 20 March
+1986 (the Gallup chart), and Computer and Video Games issue 66 (the Golden Joysticks). Spectrum
+Computing gave the Spectrum release date, price and reviews. The release date of the C64 version,
+The Last Starfighter and the Virtual Console release rest on Wikipedia and Nintendo World Report.
+The Gold Medal in ZZAP! 64 issue 11 went to Mercenary, and the advertisement there calling a game a
+"gold medal winner" means Paradroid, so the page claims no ZZAP! award for Uridium. Spectrum
+Computing's "2nd Game of the Year" at the Golden Joysticks was left out: the C&VG report read here
+does not name the runner-up for that award.
