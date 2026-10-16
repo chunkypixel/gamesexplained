@@ -174,7 +174,8 @@
     }
   },
   "tabs": [
-    ["index.html", "How it works"],
+    ["index.html", "Overview"],
+    ["mechanics.html", "How it works"],
     ["discoveries.html", "Discoveries"],
     ["music.html", "Music"],
     ["levels.html", "Maps / levels"],

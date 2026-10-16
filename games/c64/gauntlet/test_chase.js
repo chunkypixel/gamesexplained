@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Hold the How it works page's monster simulation against the game's own code. index.html's
+// Hold the How it works page's monster simulation against the game's own code. mechanics.html's
 // gx-chase block runs level_build, generators_run ($B16A) and monsters_run ($BB2E) on a 6502 core
 // of its own; this runs the same routines on the kit's 6502 simulator, over the same memory (only
 // the listing pieces the page names in its data-listing tag, the rest 0), with the same player
@@ -11,7 +11,7 @@
 const path = require('path'), ROOT = path.resolve(__dirname, '../../..');
 const { game } = require(path.join(ROOT, 'kit/scripts/port_check.js'));
 const { CPU } = require(path.join(ROOT, 'kit/c64/cpu6502.js'));
-const g = game(__dirname), page = process.argv[2] ? path.resolve(process.argv[2]) : 'index.html';
+const g = game(__dirname), page = process.argv[2] ? path.resolve(process.argv[2]) : 'mechanics.html';
 const { makeChase } = g.run(page, 'gx-chase', 'makeChase');
 const html = g.read(page);
 const pm = html.match(/data-listing="listing.json">(\[.*?\])</), lm = html.match(/const CHASE_LEVELS = (\[.*?\]);/);
