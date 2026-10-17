@@ -380,6 +380,12 @@ Never written: `$D01B` (sprite priority), `$D017`'s other bits, `$D024`.
 
 ## Questions still open
 
+- Whether a Death ever inherits a drain count of 0: monster_remove and
+  monster_kill do not move `$0700`, so a Death moved into the slot of a
+  Death that drained its last touch would wrap the count to `$FF` on its
+  next touch (death_drain, `$BC91`-`$BC9A`). Deaths sit at the front of
+  the table, so the last monster is a Death only when no other kind is
+  left; traced, not seen live.
 - Whether the monster colour routines' missing bottom-edge test
   (monster_colour, monster_colour_wrapped compare cell_pos_x twice) shows
   as a wrong colour at a vertically wrapping maze's bottom edge: not
@@ -393,29 +399,43 @@ Never written: `$D01B` (sprite priority), `$D017`'s other bits, `$D024`.
 ## The listing's error rate
 
 Seed 20261011, population 1,064 comments, a sample of 60 checked against
-the bytes by an agent that wrote none of them (`work/reports/checker.md`):
-8 were wrong, 13 % (Wilson 95 % interval 7 % to 24 %), a lower bound on
-the true rate, since a checker misses some. What was wrong: three
-comments misdescribed what the code does (treasure_end said it started
-the treasure tune, which it rewinds and leaves off; monster_attack read
-monster_hits' carry as a missed attack, where it means the player's
-counter-blow killed the monster; music_voice_freq_hi said the voice state
-was laid out like the SID's registers), two swapped or misread a table
-(shots_move paired `$BE70` with X and `$BE80` with Y, the other way round;
-facing_hold called a direction code a facing), one put the panel font's
-setting in the start-up where the raster interrupt makes it, one named
-the column after the potion icons where it is the first icon's, and one
-said nothing read DATATITLE where two BIT instructions do. All eight were
-corrected, with the comments that shared their beliefs: tune_init, which
-was also said to set tune_on and clears it. Then the whole listing was
-audited by the kinds of claim that had gone wrong: every caller or
-jump a comment cites was checked against the instruction there (13
-citations, none wrong), and every comment saying nothing reads, calls
-or reaches something (16) against every instruction that can touch it
-through an index of up to 16. That audit corrected unused_97DE, whose
-last six bytes are the power bits poison reads (`$97EE`, power_bits),
-and poison, which left out the potion a player without powers loses.
-No second sample was drawn after the corrections.
+the bytes by an agent that wrote none of them, on the same model that
+wrote them (`work/reports/checker.md`): 8 were wrong, 13 % (Wilson 95 %
+interval 7 % to 24 %), a lower bound on the true rate, since a checker
+misses some. What was wrong: three comments misdescribed what the code
+does (treasure_end said it started the treasure tune, which it rewinds
+and leaves off; monster_attack read monster_hits' carry as a missed
+attack, where it means the player's counter-blow killed the monster;
+music_voice_freq_hi said the voice state was laid out like the SID's
+registers), two swapped or misread a table (shots_move paired `$BE70`
+with X and `$BE80` with Y, the other way round; facing_hold called a
+direction code a facing), one put the panel font's setting in the
+start-up where the raster interrupt makes it, one named the column after
+the potion icons where it is the first icon's, and one said nothing read
+DATATITLE where two BIT instructions do. All eight were corrected, with
+the comments that shared their beliefs: tune_init, which was also said
+to set tune_on and clears it.
+
+An audit by the kinds of claim the sample found wrong checked 29 of the
+1,064 comments: every caller or jump a comment cites, against the
+instruction there (13, none wrong), and every comment saying nothing
+reads, calls or reaches something (16), against every instruction that
+can touch it through an index of up to 16. It corrected 2: unused_97DE,
+whose last six bytes are the power bits poison reads (`$97EE`,
+power_bits), and poison, which left out the potion a player without
+powers loses (found while the poison widget was built).
+
+A second audit checked the 43 comments on the monster update and the
+maze fonts against the code and the emulator, while How it works was
+written, and corrected 9: monster_step stepped by two, not one;
+monsters_run left out its stride and where it starts again; wrap_delta
+and monster_target left out the distance's slip across the map's edge;
+the three maze fonts said they differed only in the monsters; and
+monster_remove and monster_kill said the last monster moves into the
+slot, where Death's drain count stays behind.
+
+No second sample has been drawn after the corrections, and no full audit
+has been made.
 
 ## Live tests
 
