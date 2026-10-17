@@ -352,6 +352,17 @@ at `$99AC`.
   treasure-room tune (DATATREASURE). Its 96-note table (note_freqs) is
   tuned for NTSC (the tune runs 1,296 frames): 95 of its notes are within 10 cents at the NTSC clock;
   on a PAL machine the tune plays about 65 cents flat.
+- The effects and what starts them (every call to sfx_start, `$CDDB`,
+  and pickup_sounds, `$B853`): 0 a ghost hits and vanishes, 2 Death's
+  touch, 3 a level begins, 4 a player fires, 5 a potion used or shot, 6
+  into the exit, 7 a key, 8 hit by a fireball or a rock, 9 the amulet,
+  `$0A` a monster's blow, `$0B` a transporter, `$0C` a lobber throws,
+  `$0D` magic with no potion or a player joining, `$0E` doors opening, `$0F`
+  a player dying, `$10` a trap, poison, a power, the walls turning to
+  exits or a treasure room ending, `$11` treasure, food and potions.
+  Effect 1 is in the table and nothing starts it. Lengths, run on the
+  game's code in the kit's simulator: 6 frames (a shot) to 86 (a player
+  dying), 492 for all eighteen (`test_sfx.js`).
 - Sound effects: 18 (sfx_table at `$F000`), streams of two-byte steps
   (sfx_play, sfx_note) on whichever voice is free, voice 1 alone while a
   tune plays (sfx_start). When an effect on voice 3 ends, the zeroing
