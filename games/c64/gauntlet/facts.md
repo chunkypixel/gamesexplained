@@ -93,8 +93,11 @@ The machine runs with `$01` = `$35` (RAM at `$A000` and `$E000`, I/O at
   character.
 - Monsters are characters too, four to a monster, drawn into the maps
   (monster_draw). The three maze fonts hold different frames of every
-  monster, and panel_flash cycles them (font selects 2 4 2 6), so all the
-  monsters on screen animate at once.
+  monster, of the transporter (glyphs `$34`-`$37`), the trap (`$38`-`$3B`)
+  and two of the treasure chest's glyphs (`$1A`, `$1B`), and panel_flash
+  cycles them (font selects 2 4 2 6), so all of these animate at once.
+  137 glyphs differ between `$4800` and `$5000`, 135 between `$4800` and
+  `$5800`, 149 between `$5000` and `$5800`.
 - Sprites: 0 and 1 are black masks at the play area's left and right
   edges (sprites_init_masks), re-used four times down the screen,
   covering the columns the scroll brings in. 2-5 are the shots (two for

@@ -50,6 +50,13 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 .gx-mon{display:flex;gap:14px;flex-wrap:wrap}
 .gx-mon figure{margin:0;text-align:center;font-size:13px;color:var(--ink-soft)}
 .gx-mon canvas{width:96px;height:96px;image-rendering:pixelated;background:#000;border-radius:4px;display:block}
+.gx-fnow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-top:22px}
+.gx-fnow canvas{flex:2 1 300px;max-width:542px;width:100%}
+.gx-fnow .gx-fside{flex:1 1 200px;min-width:0;font-size:15px;color:var(--ink-soft)}
+.gx-fonts{display:flex;gap:16px;flex-wrap:wrap}
+.gx-fonts figure{margin:0;flex:1 1 220px;max-width:320px;font-size:14px;color:var(--ink-soft)}
+.gx-sheet{width:100%;image-rendering:pixelated;display:block;border-radius:4px;border:3px solid transparent;box-sizing:border-box;background:#2f3136}
+.gx-sheet.gx-on{border-color:#f2c94c}
 .gx-out{font-family:var(--fm);font-size:15px;line-height:1.8}
 .gx-out b{font-size:17px}
 .gx-panel{width:192px;height:32px;image-rendering:pixelated;background:#000;border-radius:4px;vertical-align:middle}
@@ -102,13 +109,30 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 <section>
   <p class="fig">03 · The monsters</p>
   <h2 class="t">Three fonts animate every monster at once</h2>
-  <p class="lede">The game has three copies of its maze font, identical except for the monsters. Changing font is how the monsters move their arms and legs.</p>
+  <p class="lede">The game has three copies of its maze font. They share the walls, the floor and most of the treasure, and differ in the monsters, the transporter, the trap and the treasure chest. Changing font is how all of them move.</p>
   <div class="plate">
     <div class="gx-ctl"><button type="button" id="gx-anim" aria-pressed="true">Animating</button><button type="button" id="gx-step">Step</button><label>Facing <select id="gx-face"></select></label><span id="gx-fnt" class="gx-out"></span></div>
     <div class="gx-mon" id="gx-mon"></div>
+    <div class="gx-fnow">
+      <canvas id="gx-fnow" class="gx-sheet" width="271" height="271"></canvas>
+      <div class="gx-fside">
+        <p style="margin:0 0 10px"><b id="gx-fname">The font on show</b>, all 256 glyphs, sixteen to a row from <code>$00</code>, switching with the monsters above.</p>
+        <label><input type="checkbox" id="gx-fmark" checked> Mark the glyphs that change between the fonts</label>
+        <p id="gx-fhover" class="gx-out" style="margin:10px 0 0">Point at a glyph to see its number.</p>
+      </div>
+    </div>
     <p class="cap"><b>The six monsters</b>, drawn from the tile table at <code>$F400</code> (four characters a tile), the tile colours at <code>$F600</code> and the three maze fonts at <code>$4800</code>, <code>$5000</code> and <code>$5800</code>, in the order panel_flash steps through them (<code>$8255</code>: font selects 2, 4, 2, 6), one step every eight frames.</p>
   </div>
-  <p>A monster is a tile from <code>$40</code> to <code>$6F</code>: six kinds, each with a tile for every one of eight facings. The lobber has one picture for all eight. The three fonts at <code>$4800</code>, <code>$5000</code> and <code>$5800</code> hold the same walls, floor, and treasure, and the monsters in three different poses. Once a frame panel_flash (<code>$8C7C</code>) counts, and every eighth frame it points the video chip at the next font in the cycle: one write to <code>$D018</code> animates every monster on screen.</p>
+  <p>A monster is a tile from <code>$40</code> to <code>$6F</code>: six kinds, each with a tile for every one of eight facings. The lobber has one picture for all eight. The three fonts at <code>$4800</code>, <code>$5000</code> and <code>$5800</code> hold the same walls and floor, and the monsters in three different poses. Once a frame panel_flash (<code>$8C7C</code>) counts, and every eighth frame it points the video chip at the next font in the cycle: one write to <code>$D018</code> animates every monster on screen.</p>
+  <p>The fonts differ in more than the monsters. Glyphs <code>$34</code>-<code>$37</code> make the transporter, <code>$38</code>-<code>$3B</code> the trap, and <code>$1A</code>-<code>$1B</code> are two of the treasure chest's four, and each has a different picture in each font, so the same switch that animates the monsters animates those too. Of the 256 glyphs, 137 differ between the first font and the second, 135 between the first and the third, and 149 between the second and the third. The cycle shows the first font twice as often as either of the others.</p>
+  <div class="plate">
+    <div class="gx-fonts">
+      <figure><canvas id="gx-f0" class="gx-sheet" width="271" height="271"></canvas><figcaption><code>$4800</code>, font select 2: shown at steps 1 and 3</figcaption></figure>
+      <figure><canvas id="gx-f1" class="gx-sheet" width="271" height="271"></canvas><figcaption><code>$5000</code>, font select 4: step 2</figcaption></figure>
+      <figure><canvas id="gx-f2" class="gx-sheet" width="271" height="271"></canvas><figcaption><code>$5800</code>, font select 6: step 4</figcaption></figure>
+    </div>
+    <p class="cap"><b>The three maze fonts in full</b>, from the listing, each glyph in the colour of the first tile that uses it (the tile table at <code>$F400</code>, its colours at <code>$F600</code>). The one framed in yellow is on show in the animation above. Glyphs <code>$01</code>-<code>$0C</code> are the walls as maze_style (<code>$8CC5</code>) set them for level 1: every level copies its own wall set into all three fonts. Glyph <code>$5B</code> looks like floor and is the mark that a player stands on a cell.</p>
+  </div>
   <p>A monster's byte in the table at <code>$0580</code> holds its facing (bits 0-2), kind (bits 3-5) and level (bits 6-7). The same byte is its strength: a hand-to-hand blow takes <code>$40</code> off it, so a level-one monster dies at the first blow and a level-three one at the third. Death's byte starts at <code>$C0</code> or above, and shots do not hurt it.</p>
 </section>
 
@@ -292,7 +316,51 @@ function drawMonsters() {
     }
   });
 }
-function tick() { phase = (phase + 1) & 3; drawMonsters(); }
+// ---- the fonts in full
+let GCOL = null, CHANGES = null;
+function fontSetup() {
+  GCOL = new Uint8Array(256).fill(1);
+  const seen = new Uint8Array(256);
+  for (let t = 0; t < 128; t++) for (let q = 0; q < 4; q++) {
+    const ch = G.ram[0xF400 + t * 4 + q];
+    if (!seen[ch]) { seen[ch] = 1; GCOL[ch] = G.ram[0xF600 + t * 4 + q]; }
+  }
+  CHANGES = new Set();
+  for (let i = 0; i < 256; i++) for (let r = 0; r < 8; r++) {
+    const a = G.ram[0x4800 + i * 8 + r], b = G.ram[0x5000 + i * 8 + r], c = G.ram[0x5800 + i * 8 + r];
+    if (a !== b || a !== c) { CHANGES.add(i); break; }
+  }
+}
+function drawSheet(cv, font) {
+  const ctx = C64.canvas(cv, 271, 271), f = G.ram.subarray(font, font + 2048), mark = $('gx-fmark').checked;
+  ctx.fillStyle = '#2f3136'; ctx.fillRect(0, 0, 271, 271);
+  for (let i = 0; i < 256; i++) {
+    const x = (i & 15) * 17, y = (i >> 4) * 17, c = GCOL[i];
+    ctx.fillStyle = PALC[BG[0]]; ctx.fillRect(x, y, 16, 16);
+    if (c & 8) C64.drawGlyphMC(ctx, f, i, x, y, 2, [PALC[BG[0]], PALC[BG[1]], PALC[BG[2]], PALC[c & 7]]);
+    else C64.drawGlyph(ctx, f, i, x, y, 2, PALC[c & 15]);
+    if (mark && CHANGES.has(i)) { ctx.strokeStyle = '#f2c94c'; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, 15, 15); }
+  }
+}
+function drawFonts() {
+  if (!G) return;
+  const font = FONTS[phase];
+  drawSheet($('gx-fnow'), font);
+  $('gx-fname').textContent = `$${font.toString(16).toUpperCase()}, step ${phase + 1} of 4`;
+  [0x4800, 0x5000, 0x5800].forEach((a, k) => $('gx-f' + k).classList.toggle('gx-on', a === font));
+}
+function drawAllFonts() { if (!G) return; [0x4800, 0x5000, 0x5800].forEach((a, k) => drawSheet($('gx-f' + k), a)); drawFonts(); }
+$('gx-fmark').onchange = drawAllFonts;
+$('gx-fnow').onmousemove = (e) => {
+  if (!G) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  const i = Math.min(15, Math.floor((e.clientY - r.top) / r.height * 16)) * 16 + Math.min(15, Math.floor((e.clientX - r.left) / r.width * 16));
+  const tiles = [];
+  for (let t = 0; t < 128; t++) for (let q = 0; q < 4; q++) if (G.ram[0xF400 + t * 4 + q] === i && !tiles.includes(t)) tiles.push(t);
+  $('gx-fhover').textContent = `Glyph $${i.toString(16).toUpperCase().padStart(2, '0')}${CHANGES.has(i) ? ', different in each font' : ''}` +
+    (tiles.length ? `; in tile${tiles.length > 1 ? 's' : ''} ${tiles.slice(0, 6).map((t) => '$' + t.toString(16).toUpperCase().padStart(2, '0')).join(', ')}${tiles.length > 6 ? ' ...' : ''}` : '; in no tile');
+};
+function tick() { phase = (phase + 1) & 3; drawMonsters(); drawFonts(); }
 $('gx-step').onclick = () => { if (G) tick(); };
 $('gx-face').onchange = () => { if (G) drawMonsters(); };
 $('gx-anim').onclick = () => {
@@ -376,7 +444,7 @@ $('gx-ch-map').onclick = (e) => {
 
 if (HASC) {
   C64.load('listing.json').then((L) => {
-    G = L; drawMonsters();
+    G = L; fontSetup(); drawMonsters(); drawAllFonts();
     if (typeof C64Cpu !== 'undefined') chaseStart(); else missing($('gx-ch-map'));
     if (anim) timer = setInterval(tick, 160);
   }).catch(() => { missing($('gx-mon')); missing($('gx-ch-map')); });
