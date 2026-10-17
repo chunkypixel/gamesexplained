@@ -13841,7 +13841,7 @@
   {
    "address": 18432,
    "type": "line",
-   "text": "The first of the three maze fonts (font select 2, from the file GAUNT CHR $4800): 256 multicolour glyphs. $00 is the floor and $01-$5A the maze's other pieces (the walls' brick joins, doors, treasure, food, potions, keys, generators, the trap, the transporter, the exits), four glyphs to a tile (tile_chars). $5B looks like floor and marks a cell as occupied (cell_mark). The rest are the monsters, four glyphs to a facing: the lobber $5C-$5F (one picture for every facing), ghosts $60-$7F, grunts $80-$9F, demons $A0-$BF, sorcerers $C0-$DF, Death $E0-$FF. panel_flash cycles the three fonts, which differ in the monsters' glyphs, so every monster on screen animates at once."
+   "text": "The first of the three maze fonts (font select 2, from the file GAUNT CHR $4800): 256 multicolour glyphs. $00 is the floor and $01-$5A the maze's other pieces (the walls' brick joins, doors, treasure, food, potions, keys, generators, the trap, the transporter, the exits), four glyphs to a tile (tile_chars). $5B looks like floor and marks a cell as occupied (cell_mark). The rest are the monsters, four glyphs to a facing: the lobber $5C-$5F (one picture for every facing), ghosts $60-$7F, grunts $80-$9F, demons $A0-$BF, sorcerers $C0-$DF, Death $E0-$FF. panel_flash cycles the three fonts, which differ in the monsters' glyphs and in the transporter ($34-$37), the trap ($38-$3B) and two of the treasure chest's glyphs ($1A, $1B), so all of these animate at once."
   },
   {
    "address": 18440,
@@ -13861,7 +13861,7 @@
   {
    "address": 20480,
    "type": "line",
-   "text": "The second maze font (font select 4): the same maze pieces with the monsters in their second frame."
+   "text": "The second maze font (font select 4): the same walls and floor, with the monsters, the transporter, the trap and the chest's glyphs $1A-$1B in their second frame."
   },
   {
    "address": 20488,
@@ -13881,7 +13881,7 @@
   {
    "address": 22528,
    "type": "line",
-   "text": "The third maze font (font select 6): the monsters in their third frame."
+   "text": "The third maze font (font select 6): the monsters, the transporter, the trap and the chest's glyphs $1A-$1B in their third frame."
   },
   {
    "address": 22536,
