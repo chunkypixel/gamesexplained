@@ -249,7 +249,14 @@ wall, crumbling wall and key becomes an exit (idle_walls_exit, sound
   by bit 0 of pass_count, and stops early once main_go (`$8264`) is set.
   *Live*, level 2, 52 monsters: 26 slots a working pass, even and odd
   slots in turn; passes 88-89, 96-97 and 104-105 skipped; one pass cut
-  short after 10.
+  short after 10. When a move removes the monster (a ghost that
+  attacks), monster_step leaves Y where it is, so the monster
+  monster_remove moved in from the end of the table is visited next, in
+  the same pass if the pass has steps left: on level 1 with the hero at
+  cell 31, 31, passes 13, 15, 18 and 22 each visit a slot twice, the
+  second time for a monster far off screen; in pass 7 the removal came on
+  the pass's last step (the page's core, which `test_chase.js` holds to
+  the game's code).
 - Only monsters inside the 34 x 22 cells from map_x - 1, map_y - 1 move
   (monster_on_screen); generators_run looks only at the 16 x 10 tiles on
   screen. *Live*: of the 26 slots visited each pass, 11 reached
