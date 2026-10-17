@@ -17541,7 +17541,7 @@
   {
    "address": 48327,
    "type": "line",
-   "text": "Takes monster Y out of the table: the last monster moves into its slot and the count goes down."
+   "text": "Takes monster Y out of the table: the last monster's X, Y, kind byte and flags ($0400, $04C0, $0580, $0640) move into its slot and the count goes down. Death's drain count ($0700) does not move with it, so a Death moved into the slot of a Death that drained its last touch takes over that count of 0, and its next touch (death_drain) wraps it to $FF."
   },
   {
    "address": 48362,
@@ -17851,7 +17851,7 @@
   {
    "address": 50251,
    "type": "line",
-   "text": "Takes monster Y off the map (monster_unplot) and out of the table (the last monster into its slot, the count down); carry set."
+   "text": "Takes monster Y off the map (monster_unplot) and out of the table: the last monster's X, Y, kind byte and flags move into its slot (not Death's drain count at $0700, as in monster_remove) and the count goes down; carry set."
   },
   {
    "address": 50334,
