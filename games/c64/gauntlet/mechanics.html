@@ -124,10 +124,10 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
     </div>
     <p class="gx-ch-k">The monster table, slot by slot, on the last pass</p>
     <canvas id="gx-ch-slots" class="gx-ch-slots" width="768" height="40"></canvas>
-    <div class="gx-key"><span><i style="background:#2a8a4a"></i>visited and moved</span><span><i style="background:#80838a"></i>visited, off screen</span><span><i style="background:#e0ded8"></i>not visited this pass</span><span><i style="background:#f2c94c"></i>the hero</span></div>
-    <p class="cap"><b>The game's own code, running in this page.</b> The whole 64 by 64 map of the level; the clear box is the area round the screen where monsters move, and everything in the shaded part stands still. Monsters that moved on the last pass are outlined. Click a floor cell to move the hero; the screen's window follows. Each pass runs generators_run (<code>$B16A</code>) and monsters_run (<code>$BB2E</code>) on the kit's 6502 simulator over the game's bytes from the listing, twelve and a half passes a second, the main loop's pace with the screen still. <code>test_chase.js</code> calls the same routines on the simulator directly for 400 passes of each of these levels: the monster table, the maps and the hero's health come out the same, byte for byte, after every pass.</p>
+    <div class="gx-key"><span><i style="background:#2a8a4a"></i>visited, took its turn</span><span><i style="background:#80838a"></i>visited, no turn (off screen, or it vanished)</span><span><i style="background:#e0ded8"></i>not visited this pass</span><span><i style="background:#f2c94c"></i>the hero</span></div>
+    <p class="cap"><b>The game's own code, running in this page.</b> The whole 64 by 64 map of the level; the clear box is the area round the screen where monsters move, and everything in the shaded part stands still. Monsters that took their turn on the last pass are outlined where the turn left them; a monster blocked on every side takes its turn without moving. Click a floor cell to move the hero; the screen's window follows. Each pass runs generators_run (<code>$B16A</code>) and monsters_run (<code>$BB2E</code>) on a small 6502 core over the game's bytes from the listing, twelve and a half passes a second, the main loop's pace with the screen still. <code>test_chase.js</code> runs the same routines on the kit's 6502 simulator for 400 passes of each of these levels: the monster table, the maps and the hero's health come out the same, byte for byte, after every pass.</p>
   </div>
-  <p>Each monster is a slot in five tables of 192 bytes: its X at <code>$0400</code>, its Y at <code>$04C0</code>, its kind, level and facing at <code>$0580</code>, its flags at <code>$0640</code>, and, for Death, the touches it has left at <code>$0700</code>. monster_count (<code>$824E</code>) holds the index of the last one. The table keeps monsters in the order they arrived: those in the level file from the maze's top-left corner on, with every Death moved to the front (deaths_first, <code>$CC60</code>), then each one a generator releases, added at the end (monster_spawn, <code>$B230</code>). A monster that dies hands its slot to the last monster in the table (monster_remove, <code>$BCC7</code>), so the table never has a gap.</p>
+  <p>Each monster is a slot in five tables of 192 bytes: its X at <code>$0400</code>, its Y at <code>$04C0</code>, its kind, level and facing at <code>$0580</code>, its flags at <code>$0640</code>, and, for Death, the touches it has left at <code>$0700</code>. monster_count (<code>$824E</code>) holds the index of the last one. The table keeps monsters in the order they arrived: those in the level file from the maze's top-left corner on, with every Death moved to the front (deaths_first, <code>$CC60</code>), then each one a generator releases, added at the end (monster_spawn, <code>$B230</code>). A monster that dies hands its slot to the last monster in the table (monster_remove, <code>$BCC7</code>), so the table never has a gap. When that happens in the middle of a pass, monsters_run looks at the same slot next, so the monster moved in from the end is visited straight away: a ghost that touches the hero and vanishes makes way for whatever monster was last, wherever it is in the maze.</p>
   <div class="plate gx-scroll">
     <table class="gx-tab">
       <tr><th>Step</th><th>What runs</th><th>Where</th></tr>
@@ -192,14 +192,16 @@ code{font-family:var(--fm);font-size:.82em;background:var(--chip);color:var(--ch
 function makeChase(base) {
   'use strict';
   const m = new Uint8Array(0x10000);
-  let chance = 0, visited = [], moved = [];
+  let chance = 0, visited = [], moved = [], turns = [], events = [];
   const cpu = new C64Cpu.CPU(m, { port: 0x35, io: {
     read(ad) { if (ad >= 0xDC04 && ad <= 0xDC07) { chance = (chance + 0x3B) & 255; return chance; } return 0; },
     write() {},
   } });
   const hooks = {
-    0xBB8B: (c) => { visited.push(c.y); },          // monster_step: the slot monsters_run visits
-    0xBD06: (c) => { moved.push(c.y); },            // monster_move: the monster was on screen
+    0xBB8B: (c) => { visited.push(c.y); events.push(['v', c.y]); },   // monster_step: a slot visited
+    0xBDB3: (c) => {                                // monster_move's own return: a monster on screen took its turn
+      moved.push(c.y); turns.push({ slot: c.y, x: m[0x0400 + c.y], y: m[0x04C0 + c.y] }); events.push(['t', c.y]);
+    },
   };
   const call = (entry) => cpu.call(entry, { a: 0, x: 0, y: 0, d: 0 }, { hooks, maxSteps: 5000000 });
   const hero = { cx: -1, cy: -1 };
@@ -227,10 +229,13 @@ function makeChase(base) {
       if (Math.max(Math.abs(dx), Math.abs(dy)) === r && place(tx + dx, ty + dy)) return;
   }
   function pass() {
-    visited = []; moved = [];
+    visited = []; moved = []; turns = []; events = [];
     m[0x824B] = (m[0x824B] + 1) & 255; m[0x8264] = 0;
     call(0xB16A); call(0xBB2E);
-    return { visited, moved };
+    // a monster that attacks and vanishes never reaches $BDB3; the last monster in the table takes its
+    // slot (monster_remove) and is visited next, so a slot can come up twice in one pass: events keeps
+    // the order, and turns keeps where each monster that took its turn ended up
+    return { visited, moved, turns, events };
   }
   return { m, load, place, pass, hero };
 }
@@ -297,13 +302,13 @@ $('gx-anim').onclick = () => {
 
 // ---- 04 moving the monsters: the game's own monster code on a level (gx-chase)
 const CHASE_LEVELS = ["TwAGCun+CEMTjpVQSV+1IoMigjiCP4UTrBX8IoIigiKyFf/PQIFAgUCmQg2QQg2QQg2QQg2+H5ohmSG6E4sVhyCRIZkhwyGENoAfjCGMNwAe","TwgBD+bhne37GfPlmfn7GUZDgaATghaAQASAIYMVijaGQASKIY1ABIAhjSKGH4BABJlABIcTkEAE/////+ITyBOnP4MggSCDILsThyKFIgAe","gAAWPvTj++X75/Ln/er46/bu8O7m7sD38P3x7PHo8vv0+fXq9eX27/f99/b46vns+vf68/3o/v/8wv7/AFxdgZ+evh+kP4cTgSCEIMQhuhOCIbITgSD9FKMgkxO2IIkguRSHE4EhjSCVIY4g1hOSIbQhlCGDE8kTgCKRIZUfnDYAHg==","ixgpFf3jmdkZVpbTElCPzAxIh1NTgv7wQKohE4kTjSATiSKDFKkTkCKMJYgUhyKfIoYUE4QTkRMAiiW6JYElmCKLH4UWgCOPJZoTAIMUniSWIaEljD+tOJ0hlEieSJ5IgiKCI41Ig0iCSIIThROeIYkhjyOeE6kTJIcTJI4luxMAjCCMIoQ2giWPIQAe","agAGF+78yRhXmMn46Y7QEE/r8gdGYofH8OIAoCYBihOAE4omAY4VgBWxE5YTkyfVJo4Vv1CrUKonh1CzNo9QAYBQk1CBUAH/xyaNJqxQlFCIUJRQhSaBUJRQgSahUJxQgFCcUIBQjT+NUAAe","hwgWNvb/BUX//MT/9sP/6MT35QPo4YTl6cPh90Tp+oTt/AjI5O1ICPPkiEj888iI5eTj5uT65vz94qAWhBOAE4UshBOAE4QuFKMhvCHbE4ATvBOAE8kthi3rLI0/jSzrLYYtqROoFZQTgBO8IJohhiHAIZgTmyKBE4A2hROAE4QsgxOAFIYTAB4=","VwApEOHkSuHxWOX4WBT95Mn96tigFZw2gmiRIhOIE78hmRODE8IijhOAIqMWwxSIIYETwyGCE4khpxPgFIEgkCDJE4MUhSChE+Bojj+QIJwTnhOeE54TAB4="];
-let CH = null, chLast = { visited: [], moved: [] }, chPass = 0, chTimer = null, chLevel = 0;
+let CH = null, chLast = { visited: [], moved: [], turns: [], events: [] }, chPass = 0, chTimer = null, chLevel = 0;
 CHASE_LEVELS.forEach((s, i) => $('gx-ch-lv').insertAdjacentHTML('beforeend', `<option value="${i}">${i + 1}</option>`));
 function chaseStart() {
   if (!G || typeof C64Cpu === 'undefined') return;
   if (!CH) CH = makeChase(G.ram);
   CH.load(Uint8Array.from(atob(CHASE_LEVELS[chLevel]), (ch) => ch.charCodeAt(0)));
-  chLast = { visited: [], moved: [] }; chPass = 0;
+  chLast = { visited: [], moved: [], turns: [], events: [] }; chPass = 0;
   chaseDraw();
 }
 function chaseStep() {
@@ -327,16 +332,20 @@ function chaseDraw() {
   // the hero
   ctx.strokeStyle = '#f2c94c'; ctx.lineWidth = 2;
   ctx.fillStyle = 'rgba(242,201,76,0.85)'; ctx.fillRect(CH.hero.cx * 8, CH.hero.cy * 8, 16, 16);
-  // monsters that moved on the last pass, where they are now
+  // monsters that took their turn on the last pass, where their turn left them (a slot's monster can
+  // change during a pass, so the position is the one recorded at the end of the turn)
   const count = (m[0x824E] + 1) & 255;
   ctx.strokeStyle = '#7dff8a';
-  for (const s of new Set(chLast.moved)) if (s < count) ctx.strokeRect((m[0x0400 + s] >> 1) * 8 + 1, (m[0x04C0 + s] >> 1) * 8 + 1, 14, 14);
+  for (const t of chLast.turns) ctx.strokeRect((t.x >> 1) * 8 + 1, (t.y >> 1) * 8 + 1, 14, 14);
   // the table, slot by slot
   const sc = $('gx-ch-slots'), sx = C64.canvas(sc, 768, 40), w = Math.max(3, Math.min(24, Math.floor(768 / Math.max(count, 1))));
   sx.fillStyle = '#fff'; sx.fillRect(0, 0, 768, 40);
-  const vis = new Set(chLast.visited), mov = new Set(chLast.moved);
+  // each slot shows what happened to it last in the pass: visited, then a turn taken or not
+  const last = new Map();
+  for (const [k, s] of chLast.events) last.set(s, k);
   for (let s = 0; s < count; s++) {
-    sx.fillStyle = mov.has(s) ? '#2a8a4a' : vis.has(s) ? '#80838a' : '#e0ded8';
+    const k = last.get(s);
+    sx.fillStyle = k === 't' ? '#2a8a4a' : k === 'v' ? '#80838a' : '#e0ded8';
     sx.fillRect(s * w, 6, w - 1, 28);
   }
   const working = (m[0x824B] & 6) !== 0;
@@ -344,7 +353,7 @@ function chaseDraw() {
     ['Pass', chPass ? `${chPass}${working ? '' : ', a pass monsters_run skips'}` : 'not yet run'],
     ['Monsters', count],
     ['Visited', chLast.visited.length ? `${chLast.visited.length}, from slot ${chLast.visited[0]}` : '0'],
-    ['Moved', mov.size],
+    ['Took a turn', chLast.turns.length],
     ['Hero', `cell ${CH.hero.cx}, ${CH.hero.cy}`],
     ['Health', ((m[0xB931] << 8) | m[0xB92F]).toString(16).toUpperCase()],
   ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
