@@ -1,4 +1,4 @@
-## next · 2026-10-30 · Power Drift (C64) · air with Claude
+## 0.0.271 · 2026-10-30 · Power Drift (C64) · air with Claude
 
 - **The decimal flag is whatever the last routine called left it.** The
   stage bonus is a BCD number, two decimal digits in one byte, counted

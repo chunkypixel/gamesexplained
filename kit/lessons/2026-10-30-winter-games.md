@@ -1,4 +1,4 @@
-## next · 2026-10-30 · Winter Games (C64) · air with Claude
+## 0.0.271 · 2026-10-30 · Winter Games (C64) · air with Claude
 
 - **Run a clamp tested by its sign over every input, not only the ones play reaches.** Figure Skating takes 0.7 a fall from a one-byte mark and keeps the result between 0 and 6.0 with `BPL`, which looks only at the top bit; from 19 to 28 falls the penalty wraps round past zero and the cap turns it into 6.0, the best discovery in the game, invisible in normal play. Where a routine limits a value with `BPL`, `BMI` or a carry test after arithmetic, run it in the simulator over each input's whole range, plot the result, and look for the steps that should not be there.
 - **Diff two copies of a routine, instruction by instruction.** Figure and Free Skating mark a program with two near copies of the same code; the one difference is a missing `SEC` before Free Skating's `SBC`, so every Free Skating mark is a tenth short. Where a game holds a routine twice (two modes, two events, a relocated copy), compare the copies before describing either: a one-instruction difference is either the feature that tells them apart or a bug.
