@@ -331,6 +331,12 @@ read the project back; the crates.io release, published on 11 July
 2026, answers both. When a later release is out, try it on a test
 snapshot with `symbols_export.py` before moving the version here.
 
+Keep `--locked`, which builds the release with the dependencies it was
+published with. Without it cargo takes the newest version each
+dependency allows: on 30 October 2026 that was `regenerator2000-tui`
+0.9.21, which does not compile with regenerator2000 0.9.20 (`error[E0308]`
+at `src/main.rs:838`, `CoreError` where `anyhow::Error` was expected).
+
 What it is, and say so when you ask: regenerator2000 is an open-source
 6502 disassembler by Ricardo Quesada, source at
 https://github.com/ricardoquesada/regenerator2000, licensed MIT or
