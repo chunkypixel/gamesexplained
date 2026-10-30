@@ -1,4 +1,4 @@
-## next · 2026-10-30 · The Fourth Protocol (C64) · air with Claude
+## 0.0.270 · 2026-10-30 · The Fourth Protocol (C64) · air with Claude
 
 - **A branch straight after a JSR tests the flags the subroutine left,
   which need not say anything about the number it returned.** Episode
