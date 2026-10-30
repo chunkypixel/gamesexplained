@@ -1,4 +1,4 @@
-## next · 2026-10-30 · Speedball (C64) · air with Claude
+## 0.0.275 · 2026-10-30 · Speedball (C64) · air with Claude
 
 - **A bug in a table that two routines share is tested by running both
   routines together, not by reading the table.** The tackle check reads
