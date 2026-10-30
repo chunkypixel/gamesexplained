@@ -1,4 +1,4 @@
-## next · 2026-10-30 · World Games (C64) · air with Claude
+## 0.0.273 · 2026-10-30 · World Games (C64) · air with Claude
 
 - **A computed jump into unrolled code can land inside an instruction.**
   Weightlifting draws its plates with 75 `STA` instructions in a row,
