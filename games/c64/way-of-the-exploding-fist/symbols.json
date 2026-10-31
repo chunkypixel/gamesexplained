@@ -9091,7 +9091,7 @@
   {
    "address": 39,
    "type": "line",
-   "text": "Sprite pointer for column 1 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $28 is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+   "text": "Sprite pointer for column 1 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $28 is fighter 1's. Set at $3B50 from row4_ptr_col0 ($3B65,Y, Y + 8 when facing left) when the shape frame $51,X is one of the eight listed at $3B5D; for any other frame it keeps its value."
   },
   {
    "address": 41,
@@ -9276,7 +9276,7 @@
   {
    "address": 89,
    "type": "line",
-   "text": "Set to 1 when the fighter's animation has run out ($37E8, $380A), cleared at $2A95. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $5A fighter 1's."
+   "text": "Set to 1 when the fighter's animation has run out ($37E8, $380A); cleared at $2A95, at every animation start ($3887 in anim_start), and for fighter 1 by the bull round ($1399). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $5A fighter 1's."
   },
   {
    "address": 90,
@@ -9316,7 +9316,7 @@
   {
    "address": 99,
    "type": "line",
-   "text": "Fighter 0's requested move, from the stick, the keyboard, the computer or a forced reaction ($2834-$2930); $64 is fighter 1's."
+   "text": "Fighter 0's requested move; $64 is fighter 1's. Written from the stick, the keyboard or a forced reaction ($2838, $2869, in $2834-$2930) or by the computer opponent ($22E2-$26CB, reached by JMP from $2849); then rewritten in the same update by fighter_auto_block, a request for 3 becoming a block ($2B02, $2B30), and fighter_remap_req7, a request for 7 becoming $18 ($2B43)."
   },
   {
    "address": 101,
@@ -9551,7 +9551,7 @@
   {
    "address": 153,
    "type": "line",
-   "text": "A second random byte, stepped every frame by $1AFF; seeded $53 at $190C."
+   "text": "A second random byte, stepped once per pass of the exchange loop by $1AFF; seeded $53 at $190C."
   },
   {
    "address": 154,
@@ -9661,7 +9661,7 @@
   {
    "address": 178,
    "type": "line",
-   "text": "Units left on the bout clock, from 30 ($1B37, $2160)."
+   "text": "Units left on the bout clock: set to 30 at $1B39, $1C01 and $1D19, counted down by bout_clock_tick ($2160)."
   },
   {
    "address": 179,
@@ -10266,7 +10266,7 @@
   {
    "address": 3266,
    "type": "line",
-   "text": "Filter cutoff base, low byte (shared): from a filtered instrument, or 0 at song start; the filter sweep adds to it."
+   "text": "Filter cutoff base, low byte (shared): from a filtered instrument ($0DC1), or 0 at song start ($0BF4). The filter sweep adds the modulation to it ($0E90), or subtracts it when music_filter_mod_direction ($0CC6) is non-zero ($0EA0)."
   },
   {
    "address": 3267,
@@ -10771,7 +10771,7 @@
   {
    "address": 4520,
    "type": "line",
-   "text": "Per-move table, 21 bytes (moves $15-$18 read on into move_full_window, all zero there): non-zero for moves 3, 9, $0F and $10. For the blows $0F and $10 the hit test ($2BE6, $2C71, $2CC4, ...) measures the distance the other way: the opponent must be at or beyond the reach instead of at or inside it."
+   "text": "Per-move table, 21 bytes (moves $15-$18 read on into move_full_window, all zero there): non-zero for moves 3, 9, $0F and $10. For the blows $0F and $10 the hit test swaps its comparison: with the fighters facing each other ($2BE6) the opponent must be at or beyond the reach instead of at or inside it, and with both facing the same way ($2C71), where the unflagged test already looks beyond the reach, at or inside it. Also read to choose the hit reaction ($2CC4, $2CF8) and by blow_in_reach ($2D22, $2D50)."
   },
   {
    "address": 4541,
@@ -10806,7 +10806,7 @@
   {
    "address": 4687,
    "type": "line",
-   "text": "Per-move word table (25 words, $124F-$1280): the reach table for each blow ($7489-$76D7) used by $2BAC when both fighters face the same way, so the blow lands on the opponent's back; tested at $2C44 with the distance taken the other way round."
+   "text": "Per-move word table (25 words, $124F-$1280): the reach table for each blow ($7489-$76D7) used by $2BAC when both fighters face the same way; tested at $2C44 with the distance taken the other way round. A forward blow then lands on the defender's back; the back kick $0F and back sweep $10 land on the front of a defender standing behind the attacker."
   },
   {
    "address": 4688,
@@ -10941,7 +10941,7 @@
   {
    "address": 5622,
    "type": "line",
-   "text": "Low byte of the LDA operand at $15F5, the table hiscore_copy_column reads: written by $1616 ($15, names at $1715) and $162C ($33, scores at $1733)."
+   "text": "Low byte of the LDA operand at $15F5, the table hiscore_copy_column reads: written by $1618 ($15, names at $1715) and $162E ($33, scores at $1733)."
   },
   {
    "address": 5623,
@@ -11181,7 +11181,7 @@
   {
    "address": 6780,
    "type": "line",
-   "text": "Runs one exchange of a bout, frame by frame, until it ends; shared by the attract mode and both game modes. Sets $5D = 0, $1A22, $37BD per fighter, CLI, sprites 0-5 on. Each frame (raster line $FD or later): $2808 for fighter 1 then fighter 0 ($69 = 0, 1), $1AFF (random), $1E64 (keys). Returns: minus if $1E64 did (F1 or fire in the attract mode); $5E if non-zero (set at $2A9B when a fighter's knock-down animation ends, from its $5F,X); A = 1 when the clock has run out ($BC), after resetting both fighters with $3914. The clock ($212F) ticks only while $5F and $60 are both zero and fighter 0's move $61 is not $17."
+   "text": "Runs one exchange of a bout, one pass of its loop at a time, until it ends; shared by the attract mode and both game modes. Sets $5D = 0, $1A22, $37BD per fighter, CLI, sprites 0-5 on. Each pass, begun when the raster's low byte reaches $FD (lines $FD-$FF, so at most once a frame; a long pass misses a frame): $2808 for fighter 1 then fighter 0 ($69 = 0, 1), $1AFF (random), $1E64 (keys). Returns: minus if $1E64 did (F1 or fire in the attract mode); $5E if non-zero (set at $2A9B when a fighter's knock-down animation ends, from its $5F,X); A = 1 when the clock has run out ($BC), after resetting both fighters with $3914. The clock ($212F) ticks only while $5F and $60 are both zero and fighter 0's move $61 is not $17."
   },
   {
    "address": 6893,
@@ -11201,7 +11201,7 @@
   {
    "address": 6911,
    "type": "line",
-   "text": "Advances the random byte $99 one step: shift left, EOR $1D on carry (an 8-bit Galois shift register, never 0 once seeded). Called once per frame by $1A7C, so $99 depends on how many frames have passed; $1BA7 and $1CD2 copy it into $98, the generator stepped by $2589."
+   "text": "Advances the random byte $99 one step: shift left, EOR $1D on carry (an 8-bit Galois shift register, never 0 once seeded). Called only from $1AAD, once per pass of the exchange loop, so $99 counts loop passes during exchanges (a pass is usually one frame, sometimes two); $1BA7 and $1CD2 copy it into $98, the generator stepped by $2589."
   },
   {
    "address": 6921,
@@ -11266,12 +11266,12 @@
   {
    "address": 7730,
    "type": "line",
-   "text": "Fighter X's end-of-bout animation ($1E23) played frame by frame with $37BD until its finished flag $59,X is set. Used for the winner of a bout."
+   "text": "Fighter X's end-of-bout animation ($1E23) played by calling $37BD and waiting for the raster's low byte to reach $FE, repeated until its finished flag $59,X is set. Used for the winner of a bout."
   },
   {
    "address": 7748,
    "type": "line",
-   "text": "Both fighters' end-of-bout animation ($1E23 for each), stepped with $37BD each frame until fighter 1's $59,X is set. Used for a drawn bout."
+   "text": "Both fighters' end-of-bout animation ($1E23 for each), stepped with $37BD, waiting each time for the raster's low byte to reach $FE, until fighter 1's $59,X is set. Used for a drawn bout."
   },
   {
    "address": 7780,
@@ -11661,7 +11661,7 @@
   {
    "address": 10248,
    "type": "line",
-   "text": "Per-frame update of fighter X (0 or 1; $69 holds the other one). Called twice from $1AA3/$1AAA, fighter 1 first. In order: $2B70 hit test on the attack's striking frame, $2834 read the control (stick, keys, computer or forced move) into the request $63,X, $2AF2 turn a pull-back into a block, $29B4 choose the next move $61,X from the request, $2B46 start or hold its animation, $2A8F handle the end of the animation. Then reads the sprite-sprite collision register $D01E (which clears it) and, if any of sprites 0-2 has touched another sprite, sets $24 (which fighter is drawn with sprites 0-2, read at $3220): X when fighter X is in an attack move ($1176,Y non-zero), the opponent $69 when fighter X is in move $11."
+   "text": "Update of fighter X, once per pass of the exchange loop (0 or 1; $69 holds the other one). Called twice from $1AA3/$1AAA, fighter 1 first. In order: $2B70 hit test on the attack's striking frame, $2834 read the control (stick, keys, computer or forced move) into the request $63,X, $2AF2 turn a pull-back into a block, $29B4 choose the next move $61,X from the request, $2B46 start or hold its animation, $2A8F handle the end of the animation. Then reads the sprite-sprite collision register $D01E (which clears it) and returns at once if any of sprites 0-2 has touched another sprite ($281F). Only when none has does it set $24 (which fighter is drawn with sprites 0-2, read at $3220): the opponent $69 when fighter X is in move $11, X when fighter X is in another attack move ($1176,Y non-zero); otherwise $24 is left as it was."
   },
   {
    "address": 10292,
@@ -11741,7 +11741,7 @@
   {
    "address": 11150,
    "type": "line",
-   "text": "Grades fighter X's blow against the opponent $69. A reach profile for the move comes from $121D (fighters facing different ways) or $124F (same way, so the blow lands from behind), as a pointer in $70/$71; the byte for the opponent's pose $51,Y is the distance the blow is aimed at ($80 = that pose cannot be hit). $73 is the X distance between the two ($6A difference, signed by fighter X's facing and reversed when both face the same way) +$80, $72 the aimed distance +$80. For a forward blow ($11A8 = 0): beyond the aim misses; at the aim, or nearer by at most $11BD[move], scores a whole point; nearer by at most $11D6[move], a half; nearer still misses. A backward blow ($11A8 = 1) is the mirror image."
+   "text": "Grades fighter X's blow against the opponent $69. A reach profile for the move comes from $121D (fighters facing different ways) or $124F (same way: a forward blow lands on the defender's back, a backward blow on the front of a defender behind the attacker), as a pointer in $70/$71; the byte for the opponent's pose $51,Y is the distance the blow is aimed at ($80 = that pose cannot be hit). $73 is the X distance between the two ($6A difference, signed by fighter X's facing and reversed when both face the same way) +$80, $72 the aimed distance +$80. For a forward blow ($11A8 = 0): beyond the aim misses; at the aim, or nearer by at most $11BD[move], scores a whole point; nearer by at most $11D6[move], a half; nearer still misses. A backward blow ($11A8 = 1) is the mirror image."
   },
   {
    "address": 11294,
@@ -12891,7 +12891,7 @@
   {
    "address": 30246,
    "type": "line",
-   "text": "Reach profile for blow $0F (fire + up-back) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+   "text": "Reach profile for blow $0F (fire + up-back) when the defender faces the same way as the attacker: a backward blow, so it lands on the front of a defender standing behind the attacker (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
   },
   {
    "address": 30305,
@@ -12906,12 +12906,12 @@
   {
    "address": 30423,
    "type": "line",
-   "text": "Reach profile for blow $10 (fire + down-back) when the defender faces the same way as the attacker, i.e. is struck from behind (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
+   "text": "Reach profile for blow $10 (fire + down-back) when the defender faces the same way as the attacker: a backward blow, so it lands on the front of a defender standing behind the attacker (pointer in move_reach_ptr_same_facing $124F): 59 bytes, one per defender shape frame 0-$3A. Each is the distance at which the blow lands squarely; the hit test ($2B70-$2C40) scores a whole point when the fighters are at that distance or nearer by up to move_full_window[move], a half point when nearer by up to move_half_window, and $80 means a defender in that frame cannot be hit."
   },
   {
    "address": 30496,
    "type": "line",
-   "text": "Animation step lists, one word per animation number (= move number, copied from $61,X at $2B4C): entries 1-31 point at $7762-$79D6, entry 0 is $0000 (no animation) and entry 32 ($79EA) marks the end of list 31. anim_start ($3885) takes a list's length as the difference of the low bytes of two consecutive words, so each list must be shorter than 256 bytes (all are)."
+   "text": "Animation step lists, one word per animation number: the move number for a fighter's move, copied from $61,X at $2B4C, or set directly for the opening bow ($1A3E), the winner's bow ($1E25) and the bull ($1322): entries 1-31 point at $7762-$79D6, entry 0 is $0000 (no animation) and entry 32 ($79EA) marks the end of list 31. anim_start ($3885) takes a list's length as the difference of the low bytes of two consecutive words, so each list must be shorter than 256 bytes (all are)."
   },
   {
    "address": 30497,

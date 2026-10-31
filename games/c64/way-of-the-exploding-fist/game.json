@@ -42,7 +42,8 @@
  "step_models": {"50-coverage": ["claude-opus-5-5"], "60-verify": ["claude-opus-5-5"]},
  "accuracy": [
   {"step": "research", "web": true, "models": ["claude-opus-5-5"]},
-  {"step": "annotate", "models": ["claude-opus-5-5"], "note": "six annotation agents started with the alias opus; the lead did $4000-$FFFF and zero page"}
+  {"step": "annotate", "models": ["claude-opus-5-5"], "note": "six annotation agents started with the alias opus; the lead did $4000-$FFFF and zero page"},
+  {"step": "sample", "size": 80, "wrong": 12, "fixed": 12, "seed": 20261031, "models": ["claude-opus-5-5"], "note": "60 hand-written comments over every annotator's range and 20 from the comments written to a template; 10 and 2 wrong, 14.6 % weighted by stratum size"}
  ],
  "kit_version": "0.0.54",
  "created": "2026-10-02",

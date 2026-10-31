@@ -358,6 +358,31 @@ KERNAL is out and the game owns the vectors: NMI `$2FF2`, RESET `$1990`
 - Never reached: `$3754`, `$379A`, the speech entries for samples 4-7
   (`$3170`-`$3185`), the routine at `$12ED` and `JMP $1AED` at `$115A`.
 
+## The listing's error rate
+
+- **Sample 1** (31 October 2026): seed 20261031, drawn from the 884
+  comments in `symbols.json`, in two strata: 60 of the 605 hand-written
+  comments, spread over each annotator's range in proportion to its size,
+  and 20 of the 279 comments written to a template (families of eight or
+  more with the same opening words: song patterns, instruments, reach
+  profiles, shape cells, sprite pointers). Checked by a checker on
+  claude-opus-5-5 that wrote none of them; its 13 findings were settled
+  against the code, one of them a false alarm (`$26D5`). 12 of the 80 were
+  wrong in a detail and none in their main claim: 10 of 60 hand-written
+  (16.7 %) and 2 of 20 template (10.0 %), 14.6 % weighted by stratum size;
+  95 % interval for 12 of 80, 8.8 % to 24.4 %, a lower bound on the true
+  rate. What was wrong: lists of writers, callers or clearing sites with
+  places missing (`$0059`, `$0063`, `$00B2`); a load cited as the store
+  (`$15F6`); "once per frame" for code run once per pass of the exchange
+  loop (`$1AFF`, `$2808`); the sprite-collision test read the wrong way
+  round (`$2808`); the back kick and back sweep said to land on a
+  defender's back when both fighters face the same way (`$124F`, `$7626`);
+  a hit-test flag described for one facing only (`$11A8`); the filter
+  sweep said only to add (`$0CC2`); a pointer's source table misnamed
+  (`$0027`); animation numbers said always to be move numbers (`$7720`).
+  All 12 were corrected, with six comments that said the same
+  (`$0099`, `$1A7C`, `$1E32`, `$1E44`, `$2B8E`, `$76D7`).
+
 ## Live tests
 
 | Test | How | Result |
