@@ -317,8 +317,8 @@ KERNAL is out and the game owns the vectors: NMI `$2FF2`, RESET `$1990`
   (`$80` + n); 25 instruments with pulse-width and filter modulation from
   three triangle LFOs and voice 3's oscillator and envelope (`$0D3C`-`$0EB2`).
 - **The music is tuned for an NTSC machine:** the note table (`$0D15`-`$0D20`,
-  high byte 1) is within 5 cents of equal temperament at 1,022,727 Hz and
-  65-70 cents flat at the PAL 985,248 Hz (computed from the table with
+  high byte 1) is slightly flat of equal temperament at 1,022,727 Hz, by
+  at most 5.4 cents (D sharp), and 65-70 cents flat at the PAL 985,248 Hz (computed from the table with
   the formula in `c64-reference`), so this PAL release plays two-thirds
   of a semitone flat.
 - **Speech:** a one-bit player (`speech_irq`, `$311A`) toggles the SID's

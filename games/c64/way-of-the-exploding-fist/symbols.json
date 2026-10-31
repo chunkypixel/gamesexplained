@@ -8956,52 +8956,52 @@
   {
    "address": 1,
    "type": "line",
-   "text": "The 6510's port: $05 in play (RAM at $A000 and $E000, I/O at $D000), set by machine_vectors ($1956)."
+   "text": "The 6510's port: $05 in play (RAM at $A000 and $E000, I/O at $D000), set by install_vectors ($1956; it writes $07 at $1946 first)."
   },
   {
    "address": 2,
    "type": "line",
-   "text": "Sprite pointer for row 1, column 1 of fighter 0's 3 x 3 sprite grid; $03 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 1, column 1 of fighter 0's 3 x 3 sprite grid; $03 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 4,
    "type": "line",
-   "text": "Sprite pointer for row 1, column 2 of fighter 0's 3 x 3 sprite grid; $05 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 1, column 2 of fighter 0's 3 x 3 sprite grid; $05 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 6,
    "type": "line",
-   "text": "Sprite pointer for row 1, column 3 of fighter 0's 3 x 3 sprite grid; $07 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 1, column 3 of fighter 0's 3 x 3 sprite grid; $07 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 8,
    "type": "line",
-   "text": "Sprite pointer for row 2, column 1 of fighter 0's 3 x 3 sprite grid; $09 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 2, column 1 of fighter 0's 3 x 3 sprite grid; $09 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 10,
    "type": "line",
-   "text": "Sprite pointer for row 2, column 2 of fighter 0's 3 x 3 sprite grid; $0B is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 2, column 2 of fighter 0's 3 x 3 sprite grid; $0B is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 12,
    "type": "line",
-   "text": "Sprite pointer for row 2, column 3 of fighter 0's 3 x 3 sprite grid; $0D is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 2, column 3 of fighter 0's 3 x 3 sprite grid; $0D is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 14,
    "type": "line",
-   "text": "Sprite pointer for row 3, column 1 of fighter 0's 3 x 3 sprite grid; $0F is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 3, column 1 of fighter 0's 3 x 3 sprite grid; $0F is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 16,
    "type": "line",
-   "text": "Sprite pointer for row 3, column 2 of fighter 0's 3 x 3 sprite grid; $11 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 3, column 2 of fighter 0's 3 x 3 sprite grid; $11 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 18,
    "type": "line",
-   "text": "Sprite pointer for row 3, column 3 of fighter 0's 3 x 3 sprite grid; $13 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, copied into sprite pointers by the multiplexer ($35F1-$37B7)."
+   "text": "Sprite pointer for row 3, column 3 of fighter 0's 3 x 3 sprite grid; $13 is fighter 1's. Written by the sprite builder ($3B13-$3B35) after a pose is built, or straight from the frame-to-cell tables by fighter_ptrs_direct ($3B95-$3BC2) when $5D is non-zero; cleared with $02-$13 by $12ED. Copied into sprite pointers by the multiplexer ($35F1-$37B7)."
   },
   {
    "address": 20,
@@ -9066,7 +9066,7 @@
   {
    "address": 34,
    "type": "line",
-   "text": "Fighter's sprite colour: 1 (white) and 2 (red), set at $19C7; the bull round sets fighter 1's to 9 ($135A). Read at $362F-$363E. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $23 fighter 1's."
+   "text": "Fighter's sprite colour: 1 (white) and 2 (red), set at $19C7/$19CB; the bull round sets fighter 1's to 9 ($135A) and $1A5C sets it back to 2. Read at $362F-$363E. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $23 fighter 1's."
   },
   {
    "address": 35,
@@ -9096,12 +9096,12 @@
   {
    "address": 41,
    "type": "line",
-   "text": "Sprite pointer for column 2 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2A is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+   "text": "Sprite pointer for column 2 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2A is fighter 1's. Set from row4_ptr_col1 ($3B75,Y) when the shape frame $51,X is one of the eight listed at $3B5D, Y + 8 when facing left ($3B44-$3B5A); for any other frame it keeps its value."
   },
   {
    "address": 43,
    "type": "line",
-   "text": "Sprite pointer for column 3 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2C is fighter 1's. Set from the table at $3B5D ($3B50-$3B5A)."
+   "text": "Sprite pointer for column 3 of the extra row drawn at Y $DA under fighter 0 while off the ground (the shadow); $2C is fighter 1's. Set from row4_ptr_col2 ($3B85,Y) when the shape frame $51,X is one of the eight listed at $3B5D, Y + 8 when facing left ($3B44-$3B5A); for any other frame it keeps its value."
   },
   {
    "address": 45,
@@ -9131,7 +9131,7 @@
   {
    "address": 51,
    "type": "line",
-   "text": "0 while a sample plays, $FF when it has finished ($3149, $31C3); the bull round sets $7F ($134A) and waits on it ($141B)."
+   "text": "0 while a sample plays, $FF when it has finished ($3149; cleared at $31C3 and $31E5 when one starts); the bull round sets $7F ($134A), and $141B starts speech sample 3 whenever it is non-zero."
   },
   {
    "address": 52,
@@ -9156,12 +9156,12 @@
   {
    "address": 56,
    "type": "line",
-   "text": "Run length in bitmap_unpack ($17ED, $1805)."
+   "text": "Byte count in bitmap_unpack: the length of a literal copy ($17ED) or of a run ($180A; $1805 sets it to 1 while the source pointer steps past the control byte)."
   },
   {
    "address": 62,
    "type": "line",
-   "text": "X saved by speech_say_0..3 ($3158-$316A) and restored at $31EF."
+   "text": "X saved by every speech entry point, speech_say_0..3 and samples 4-7 ($3158-$3182), and restored at $31EF."
   },
   {
    "address": 63,
@@ -9301,7 +9301,7 @@
   {
    "address": 95,
    "type": "line",
-   "text": "Non-zero while the fighter reacts to a blow: the reaction move, which control reading copies into the request ($2834); set by blow_reaction ($2CD9-$2CEF). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $60 fighter 1's."
+   "text": "Non-zero while the fighter reacts to a blow: the reaction move, which control reading copies into the request ($2834); set by blow_reaction ($2CD9-$2CEF) and, for fighter 0, by the bull round ($13B5); cleared by init_fighter_state ($1A71). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $60 fighter 1's."
   },
   {
    "address": 96,
@@ -9341,7 +9341,7 @@
   {
    "address": 106,
    "type": "line",
-   "text": "Fighter's horizontal position in half-screen units (sprite X = 2 x this); clamped by $12E9/$12EB. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $6B fighter 1's."
+   "text": "Fighter's horizontal position in two-pixel units (sprite X = 2 x this); clamped by $12E9/$12EB. Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $6B fighter 1's."
   },
   {
    "address": 107,
@@ -9381,12 +9381,12 @@
   {
    "address": 114,
    "type": "line",
-   "text": "The reach profile's byte for the defender's frame: the distance at which the blow lands squarely ($2BB0)."
+   "text": "The reach profile's byte for the defender's frame plus $80 ($2BC8, $2C53): the biased distance at which the blow lands squarely, compared with $73. A profile byte of $80 means no hit and is never stored."
   },
   {
    "address": 115,
    "type": "line",
-   "text": "Signed distance from the fighter to its opponent along its own facing, used by the hit test ($2BE2) and the computer."
+   "text": "Distance from the fighter to its opponent along its own facing (opponent X minus own X, reversed when facing left). The hit test stores it plus $80 ($2BE2, $2C6D); the computer and blow_in_reach store it signed ($2436, $248A, $2D1C, $2D4A). Also bull X minus player X in the bull round ($13A6), and name entry's save of Y ($1772-$177E)."
   },
   {
    "address": 116,
@@ -9396,7 +9396,7 @@
   {
    "address": 118,
    "type": "line",
-   "text": "Which of the fighter's two build buffers is shown (0/1 for fighter 0, 2/3 for fighter 1); flipped by every build ($391B, $1A56). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $77 fighter 1's."
+   "text": "Which of the fighter's two build buffers is shown (0/1 for fighter 0, 2/3 for fighter 1); flipped by every copying build ($391B; not when $5D is non-zero), set to 0 and 2 at each exchange start ($1A54-$1A5A). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $77 fighter 1's."
   },
   {
    "address": 119,
@@ -9416,47 +9416,47 @@
   {
    "address": 122,
    "type": "line",
-   "text": "Sprite pointer for grid slot 0 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 0 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3952, $3C11); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 123,
    "type": "line",
-   "text": "Sprite pointer for grid slot 1 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 1 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3986, $3C55); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 124,
    "type": "line",
-   "text": "Sprite pointer for grid slot 2 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 2 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($39BA, $3C99); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 125,
    "type": "line",
-   "text": "Sprite pointer for grid slot 3 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 3 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($39EE, $3CDD); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 126,
    "type": "line",
-   "text": "Sprite pointer for grid slot 4 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 4 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3A22, $3D21); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 127,
    "type": "line",
-   "text": "Sprite pointer for grid slot 5 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 5 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3A56, $3D65); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 128,
    "type": "line",
-   "text": "Sprite pointer for grid slot 6 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 6 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3A8A, $3DA9); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 129,
    "type": "line",
-   "text": "Sprite pointer for grid slot 7 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 7 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3ABE, $3DED); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 130,
    "type": "line",
-   "text": "Sprite pointer for grid slot 8 of the pose being built ($3944), copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
+   "text": "Sprite pointer for grid slot 8 of the pose being built, from the preset table ($3944, or $3C02 in the mirrored build) or 0 when the slot has no cell ($3AF2, $3E31); copied to the fighter's row pointers at $02-$13 when the build is done ($3B13)."
   },
   {
    "address": 131,
@@ -9466,7 +9466,7 @@
   {
    "address": 134,
    "type": "line",
-   "text": "Countdown before the fighter's next move is accepted ($29C2-$29C6). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $87 fighter 1's."
+   "text": "Countdown before a hit-reaction move ($16, $1A or $1B) starts ($29B4-$29CC), holding $74,X at 1 meanwhile; set to 8 at each exchange start ($1A60). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $87 fighter 1's."
   },
   {
    "address": 135,
@@ -9646,12 +9646,12 @@
   {
    "address": 175,
    "type": "line",
-   "text": "Progress: AND 3 picks the backdrop (0 Fuji, 1 lake, 2 dojo, 3 Buddha); counts stages cleared ($1C2F), and is $20 plus a count past tenth dan ($1C63)."
+   "text": "Progress: AND 3 picks the backdrop (0 Fuji, 1 lake, 2 dojo, 3 Buddha). In a one-player game it counts stages cleared ($1C2F) up to 10, then is $20 plus the backdrop number, cycling $20-$23 ($1C5B-$1C63); the two-player game and attract mode step it through 0-3 ($1B4A, $1D2A)."
   },
   {
    "address": 176,
    "type": "line",
-   "text": "0 in the attract mode, 1 in a game; the menu keys work only at 0 ($1E90)."
+   "text": "0 in the attract mode, 1 in a game; fire, F1, F3, F7 and DEL act only at 0 ($1E90-$1ED4), while F5 returns to the attract mode at any time ($1E84)."
   },
   {
    "address": 177,
@@ -9681,7 +9681,7 @@
   {
    "address": 182,
    "type": "line",
-   "text": "Index of the backdrop now unpacked in the bitmap, so it is unpacked only on a change ($1F43; $FF-style reset at $1912)."
+   "text": "Index of the backdrop now unpacked in the bitmap, so it is unpacked only on a change ($1F43); set to 1 at $1912 so that backdrop 0 is unpacked the first time."
   },
   {
    "address": 187,
@@ -9696,7 +9696,7 @@
   {
    "address": 189,
    "type": "line",
-   "text": "Total of the fighter's blow values this bout, the tie-break when time runs out ($2169, $1CAE). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $BE fighter 1's."
+   "text": "Total of the points of the fighter's scoring blows this bout (move_points $12A5[$8C], halved for a half point; $2169), the tie-break after the halves when time runs out ($1CAE). Indexed by fighter (X = 0 or 1): this byte is fighter 0's, $BE fighter 1's."
   },
   {
    "address": 190,
@@ -9771,7 +9771,7 @@
   {
    "address": 206,
    "type": "line",
-   "text": "Scratch byte for the computer opponent and the panel code."
+   "text": "Scratch byte for the computer opponent: ai_lower_if_opp saves the chosen move in it ($269A) and reads it back ($26AF, $26B2)."
   },
   {
    "address": 207,
@@ -9801,7 +9801,7 @@
   {
    "address": 253,
    "type": "line",
-   "text": "Music driver vector, low byte: the order-command handler for JMP ($FD) at $0A8B, then the instrument record pointer ($0D41); $FE is the high byte."
+   "text": "Music driver vector, low byte: the order-command handler for JMP ($FD) at $0A8B, then the instrument record pointer ($0D41), and the low byte of the filter sweep value in music_filter_sweep ($0E86-$0EA4); $FE is the high byte."
   },
   {
    "address": 254,
@@ -9816,12 +9816,12 @@
   {
    "address": 512,
    "type": "line",
-   "text": "Speech timing, low bytes: 256 entries, indexed by a speech data byte, giving the low byte of the CIA 1 timer B period until the next volume flip (speech_irq $311A reads it at $312B). Copied here from $C700 by machine_setup at $18F8; the 512 bytes at $0200-$03FF are the disk file m.prerun byte for byte, which the loader leaves at $C700. The 16-bit periods run from $0001 up to $EA60, growing faster towards the top of the table."
+   "text": "Speech timing, low bytes: 256 entries, indexed by a speech data byte, giving the low byte of the CIA 1 timer B period until the next volume flip (speech_irq $311A reads it at $3131). Copied here from $C700 by machine_setup at $18F8; the 512 bytes at $0200-$03FF are the disk file m.prerun byte for byte, which the loader leaves at $C700. The 16-bit periods run from $0001 up to $EA60, growing faster towards the top of the table."
   },
   {
    "address": 768,
    "type": "line",
-   "text": "Speech timing, high bytes: the high byte of each of the 256 timer periods whose low bytes are at $0200 (read at $3131); the second half of m.prerun, copied from $C800 by $18F8."
+   "text": "Speech timing, high bytes: the high byte of each of the 256 timer periods whose low bytes are at $0200 (read at $312B); the second half of m.prerun, copied from $C800 by $18F8."
   },
   {
    "address": 1024,
@@ -10431,7 +10431,7 @@
   {
    "address": 3348,
    "type": "line",
-   "text": "SID frequency low bytes of the twelve semitones of the lowest octave, indexed 1-12 (entry 0 unused, rests never read it); the high byte is always 1 ($10C-$1FA). They are C to B tuned for the NTSC clock (within 5 cents), so on PAL every note sounds about 66 cents flat."
+   "text": "SID frequency low bytes of the twelve semitones of the lowest octave, indexed 1-12 (entry 0 unused, rests never read it); the high byte is always 1 ($10C-$1FA). They are C to B tuned for the NTSC clock (within 5.5 cents, all slightly flat), so on PAL every note sounds 65 to 70 cents flat."
   },
   {
    "address": 3361,
@@ -10571,7 +10571,7 @@
   {
    "address": 4034,
    "type": "line",
-   "text": "Song 1 voice 1 order list: patterns 0 0 1 1 1 1 0, repeat (back to index 19 once), pattern 2, jump to 0. Commands: 0 stop, 1 n play pattern n, 2 i jump to index i, 3 i c repeat from index i c more times."
+   "text": "Song 1 voice 1 order list: patterns 0 0 1 1 1 1 0, repeat (on to index 19, the jump to 0, once), pattern 2, jump to 0. Commands: 0 stop, 1 n play pattern n, 2 i jump to index i, 3 i c repeat from index i c more times."
   },
   {
    "address": 4055,
@@ -10766,7 +10766,7 @@
   {
    "address": 4495,
    "type": "line",
-   "text": "Per-move table, 25 bytes: the move that defends against each blow. $14 against 6, $0D, $0E, $0F, $11; $13 against 7, $0B, $0C, $18; 5 (the jump, joystick up) against $0A and $10; 0 for moves that are not blows. A player pulling back (requested move 3) while the opponent's blow is in range ($2D00) gets this move instead ($2B2D), and the computer opponent picks it too ($2309, $23B5)."
+   "text": "Per-move table, 25 bytes: the move that defends against each blow. $14 against 6, $0D, $0E, $0F, $11; $13 against 7, $0B, $0C, $18; 5 (the jump, joystick up) against $0A and $10; 0 for moves that are not blows. A fighter requesting move 3 (pulling back) while the opponent's blow is in range ($2D00) gets this move instead ($2B2D), except against $0A and $10 ($2B15-$2B1B) or an opponent playing backwards or holding a pose; the computer opponent picks it too ($2309, $23B5)."
   },
   {
    "address": 4520,
@@ -10776,12 +10776,12 @@
   {
    "address": 4541,
    "type": "line",
-   "text": "Per-move table, 25 bytes: how far inside a blow's reach the opponent may stand and still be hit for a whole point (yin-yang). The hit test at $2BF4/$2C0D/$2C7E/$2C97 compares the distance between the fighters with the reach read for the opponent's current frame: equal, or short of it by up to this many units, scores 2 in $6E,X. Values 1-4; zero for moves that are not blows."
+   "text": "Per-move table, 25 bytes: the margin around a blow's reach within which the opponent is hit for a whole point (yin-yang). The hit test at $2BF4/$2C0D/$2C7E/$2C97 compares the distance between the fighters with the reach read for the opponent's current frame: equal scores 2 in $6E,X; on the side the test looks at, short of the reach by up to this many units ($2BF4, $2C97) or beyond it by fewer than this many ($2C0D, $2C7E) also scores 2. Values 1-4; zero for moves that are not blows."
   },
   {
    "address": 4566,
    "type": "line",
-   "text": "Per-move table, 25 bytes: the wider margin inside a blow's reach that still scores a half point (1 in $6E,X), tested after move_full_window at $2BFD/$2C16/$2C87/$2CA0. Values 5-$0A. An opponent closer than this is not hit at all."
+   "text": "Per-move table, 25 bytes: the wider margin around a blow's reach that still scores a half point (1 in $6E,X), tested after move_full_window at $2BFD/$2C16/$2C87/$2CA0. Values 5-$0A. An opponent farther from the reach than this, on the side the test looks at, is not hit at all."
   },
   {
    "address": 4591,
@@ -10946,7 +10946,7 @@
   {
    "address": 5623,
    "type": "line",
-   "text": "High byte of the LDA operand at $15F5, written as $17 by $161B and $1631; the image holds $80 (the assembled placeholder $8000)."
+   "text": "High byte of the LDA operand at $15F5, written as $17 by $161D and $1633; the image holds $80 (the assembled placeholder $8000)."
   },
   {
    "address": 5646,
